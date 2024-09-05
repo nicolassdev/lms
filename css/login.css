@@ -1,0 +1,182 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+
+/* Container */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #2980b9, #6dd5fa, #ffffff);
+}
+
+/* Row */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+  background-color: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.col-md {
+  flex: 1;
+  min-width: 300px;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ml-xl {
+  background-color: #2980b9;
+  color: #fff;
+}
+
+.ml-xl img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+}
+
+.mr-xl {
+  padding: 40px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #2980b9;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Input Box */
+.input-box {
+  position: relative;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 12px 40px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  outline: none;
+  background-color: #f7f7f7;
+}
+
+.input-box .icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+}
+
+.input-box .icon img {
+  width: 100%;
+  height: auto;
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #2980b9;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #1c5a8d;
+}
+.text-caption {
+  margin-top: 24px;
+  color: #5c5858;
+  /* Muted text color */
+  margin-bottom: 0;
+  font-size: 14px;
+}
+.text-note {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgb(247, 62, 62);
+}
+
+/* Footer styling directly in the page */
+.footer {
+  background-color: #f8f9fa;
+  /* Light gray background */
+  border-top: 1px solid #e7e7e7;
+  /* Top border */
+  padding: 10px 0;
+  /* Padding for space */
+  text-align: center;
+  /* Center the text */
+  position: fixed;
+  /* Fixed at the bottom */
+  bottom: 0;
+  width: 100%;
+  /* Full width */
+}
+
+.footer p {
+  color: #6c757d;
+  /* Muted text color */
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+.footer small {
+  color: #6c757d;
+  /* Additional text muted color */
+}
+@media (max-width: 768px) {
+  /* Show footer on mobile screens */
+  .footer {
+    display: block;
+    position: relative;
+    /* Adjust margin to separate footer from login */
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  h2 {
+    text-align: center;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .ml-xl {
+    padding: 30px;
+  }
+
+  .mr-xl {
+    padding: 30px;
+  }
+}
