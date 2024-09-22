@@ -170,17 +170,15 @@ body {
   height: 100vh;
   background: rgba(0, 0, 0, 0.523);
 }
-.data-table{
+.data-table {
   background: #fff;
   padding: 15px;
   margin-bottom: 15px;
   box-shadow: 1px 3px 15px #aaa;
   border-radius: 5px;
- align-items: center;
- justify-content: center;
- 
+  align-items: center;
+  justify-content: center;
 }
-
 
 /* Custom scrollbar for table */
 .table-responsive::-webkit-scrollbar {
@@ -203,6 +201,6 @@ body {
 
 /* Set a fixed height for the scrollbar container */
 .table-responsive {
-  max-height: 470px; /* You can adjust the height based on your requirement */
+  max-height: 410px; /* You can adjust the height based on your requirement */
   overflow-y: auto; /* Enable vertical scroll */
 }

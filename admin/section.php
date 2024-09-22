@@ -8,51 +8,51 @@ include "../admin/includes/forms/sectionform.php";
 
 
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-        <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <div class="data-table">
-                            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                              <h3 class="text-black">List of Section</h3>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#section" data-bs-whatever="@fat">
-                                    <i class="bi bi-plus-circle-fill"></i>
-                                </button>
-                            </div>
-                      <!-- TABLE -->
-                        <div class="table-responsive small ms-3 me-3">
-                          <table id="example" class="table table-bordered table-striped table-sm align-middle">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="data-table">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
+                        <h3 class="text-black">List of Section</h3>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#section" data-bs-whatever="@fat">
+                            <i class="bi bi-plus-circle-fill"></i>
+                        </button>
+                    </div>
+                    <!-- TABLE -->
+                    <div class="table-responsive small ms-3 me-3">
+                        <table id="example" class="table table-bordered table-striped table-sm align-middle">
                             <thead class="table-dark ">
-                              <tr>
-                                <!-- <th scope="col">#</th> -->
-                                <th scope="col">Section Code</th>
-                                <th scope="col">Strand name</th>
-                                <th scope="col">Year level</th>
-                                <th scope="col">Section name</th>
-                                <th scope="col">Semester</th>
-                                <th scope="col">Adviser</th>
-                                <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
-                
-                              </tr>
+                                <tr>
+                                    <!-- <th scope="col">#</th> -->
+                                    <th scope="col">Section Code</th>
+                                    <th scope="col">Strand name</th>
+                                    <th scope="col">Year level</th>
+                                    <th scope="col">Section name</th>
+                                    <th scope="col">Semester</th>
+                                    <th scope="col">Adviser</th>
+                                    <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
+
+                                </tr>
                             </thead>
                             <tbody>
-                  <?php
-                  $mySQLFunction->connection();
-                
-                    $result = $mySQLFunction->getSection();
-                    if (!empty($result)) {
-                        $count = 0;
-                        foreach ($result as $row) {
-                      echo '<tr>';
-            
-                      echo '<td>' . $row["section_code"] . '</td>';
-                      echo '<td>' . $row["strand_name"] . '</td>';
-                      echo '<td>' . $row["grade_lvl"] . '</td>';
-                      echo '<td>' . $row["section_name"] . '</td>';
-                      echo '<td>' . $row["semester"] . '</td>';
-                      echo '<td>' . $row["adviser"] . '</td>';
-                      echo '
+                                <?php
+                                $mySQLFunction->connection();
+
+                                $result = $mySQLFunction->getSection();
+                                if (!empty($result)) {
+                                    $count = 0;
+                                    foreach ($result as $row) {
+                                        echo '<tr>';
+
+                                        echo '<td>' . $row["section_code"] . '</td>';
+                                        echo '<td>' . $row["strand_name"] . '</td>';
+                                        echo '<td>' . $row["grade_lvl"] . '</td>';
+                                        echo '<td>' . $row["section_name"] . '</td>';
+                                        echo '<td>' . $row["semester"] . '</td>';
+                                        echo '<td>' . $row["adviser"] . '</td>';
+                                        echo '
                       <td class="d-flex justify-content-center">
                           <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#edit_section' . $row['section_code'] . '">
                               <i class="bi bi-pencil-square"></i>Edit
@@ -63,13 +63,13 @@ include "../admin/includes/forms/sectionform.php";
                           </button>
                       </td>
                         ';
-                      echo '</tr>';
+                                        echo '</tr>';
 
-                        $count++;
-                    
+                                        $count++;
 
-                      // Modal for updating section
-                    echo '
+
+                                        // Modal for updating section
+                                        echo '
                     <div class="modal fade" id="edit_section' . htmlspecialchars($row['section_code']) . '" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content b-grey">
@@ -86,14 +86,14 @@ include "../admin/includes/forms/sectionform.php";
                                             <select class="form-select" id="strandSelect' . htmlspecialchars($row['section_code']) . '" name="strand_code" required>
                                                 <option value="" selected disabled>Choose a strand...</option>';
 
-                                                // Fetch and populate strand options
-                                                $mySQLFunction->connection();
-                                                $strands = $mySQLFunction->getStrand();
-                                                foreach ($strands as $strand) {
-                                                    $selected = $strand["strand_name"] == $row['strand_name'] ? ' selected' : '';
-                                                    echo '<option value="' . htmlspecialchars($strand["strand_name"]) . '"' . $selected . '>' . htmlspecialchars($strand["strand_name"]) . '</option>';
-                                                }
-                                                $mySQLFunction->disconnect();
+                                        // Fetch and populate strand options
+                                        $mySQLFunction->connection();
+                                        $strands = $mySQLFunction->getStrand();
+                                        foreach ($strands as $strand) {
+                                            $selected = $strand["strand_name"] == $row['strand_name'] ? ' selected' : '';
+                                            echo '<option value="' . htmlspecialchars($strand["strand_name"]) . '"' . $selected . '>' . htmlspecialchars($strand["strand_name"]) . '</option>';
+                                        }
+                                        $mySQLFunction->disconnect();
 
                                         echo '
                                             </select>
@@ -115,8 +115,7 @@ include "../admin/includes/forms/sectionform.php";
                                             </div>
                                         </div>
                                         ';
-                                        echo'
-                                            <!-- SECTION SELECTION -->
+                                        echo '
                                             <div class="col-md-12">
                                                 <label class="form-label">Section</label>
                                                  <input type="text" class="form-control" name="lastname" value="' . htmlspecialchars($row['section_name']) . '" required>
@@ -129,10 +128,17 @@ include "../admin/includes/forms/sectionform.php";
                                         <div class="col-md-12">
                                             <label class="form-label">Semester</label>
                                             <select class="form-select" name="semester" id="semester' . htmlspecialchars($row['section_code']) . '" required>
-                                                <option selected disabled value="">Select...</option>
-                                                <option value="FIRST"' . ($row['semester'] == 'FIRST' ? ' selected' : '') . '>FIRST</option>
-                                                <option value="SECOND"' . ($row['semester'] == 'SECOND' ? ' selected' : '') . '>SECOND</option>
-                                            </select>
+                                                <option selected disabled value="">Select...</option>';
+
+                                        // Fetch and populate semester options
+                                        $mySQLFunction->connection();
+                                        $result = $mySQLFunction->getSemester();
+                                        foreach ($result as $semester) {
+                                            echo '<option value="' . htmlspecialchars($semester["semester_name"]) . '">' . htmlspecialchars($semester["semester_name"]) . '</option>';
+                                        }
+                                        $mySQLFunction->disconnect();
+                                        echo '
+                                                </select>
                                             <div class="invalid-feedback">
                                                 Please select a semester.
                                             </div>
@@ -144,14 +150,14 @@ include "../admin/includes/forms/sectionform.php";
                                             <select class="form-select" name="teacher_id"  required>
                                                 <option value="" selected disabled>Choose an adviser...</option>';
 
-                                                // Fetch and populate advisor options
-                                                $mySQLFunction->connection();
-                                                $teachers = $mySQLFunction->getTeacher();
-                                                foreach ($teachers as $teacher) {
-                                                    $selected = $teacher["teacher_name"] == $row['teacher_name'] ? ' selected' : '';
-                                                    echo '<option value="' . htmlspecialchars($teacher["teacher_name"]) . '"' . $selected . '>' . htmlspecialchars($teacher["teacher_mname"]) . ' ' . htmlspecialchars($teacher["teacher_lname"]) . '</option>';
-                                                }
-                                                $mySQLFunction->disconnect();
+                                        // Fetch and populate advisor options
+                                        $mySQLFunction->connection();
+                                        $teachers = $mySQLFunction->getTeacher();
+                                        foreach ($teachers as $teacher) {
+                                            $selected = $teacher["teacher_name"] == $row['teacher_name'] ? ' selected' : '';
+                                            echo '<option value="' . htmlspecialchars($teacher["teacher_name"]) . '"' . $selected . '>' . htmlspecialchars($teacher["teacher_mname"]) . ' ' . htmlspecialchars($teacher["teacher_lname"]) . '</option>';
+                                        }
+                                        $mySQLFunction->disconnect();
 
                                         echo '
                                             </select>
@@ -185,8 +191,8 @@ include "../admin/includes/forms/sectionform.php";
                     </script>
                     ';
 
-                      // Modal for deleting section
-                      echo '
+                                        // Modal for deleting section
+                                        echo '
                                   <div class="modal fade" id="del_section' . $row['section_code'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                                       <div class="modal-dialog modal-dialog-centered modal-md">
                                           <div class="modal-content">
@@ -203,39 +209,35 @@ include "../admin/includes/forms/sectionform.php";
                                           </div>
                                       </div>
                                   </div>';
-
-
-                          
-                  
-                    }
-                  } else {
-                    echo '<tr>
+                                    }
+                                } else {
+                                    echo '<tr>
                                 <td colspan="10" class="text-center fs-3"><i class="bi bi-emoji-frown me-2"></i>Section not found.<br>
                                 </td>
                               </tr>';
-                  }
-          
-                  echo '</tbody>';
-                  echo '</table>';
-                  $mySQLFunction->disconnect();
-                  ?>
+                                }
 
-                      </div>
-                  </div>
+                                echo '</tbody>';
+                                echo '</table>';
+                                $mySQLFunction->disconnect();
+                                ?>
+
+                    </div>
                 </div>
-              </div>
             </div>
+        </div>
+    </div>
 
 
-    </main>
- 
- 
+</main>
 
 
 
 
 
-    <script src="../assets/js/validationform.js"></script>
+
+
+<script src="../assets/js/validationform.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>

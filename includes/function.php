@@ -77,24 +77,24 @@ class myDataBase
 
 
     // RANDOM TEACHER ID
-     
-      public function generateTeacherID()
-      {
-          $num = "1234567890";
-          $rand = "";
-  
-          for ($i = 0; $i < 9; $i++) {
-              $rand = $rand . $num[rand(0, strlen($num) - 1)];
-              if ($i == 2) {
+
+    public function generateTeacherID()
+    {
+        $num = "1234567890";
+        $rand = "";
+
+        for ($i = 0; $i < 9; $i++) {
+            $rand = $rand . $num[rand(0, strlen($num) - 1)];
+            if ($i == 2) {
                 $rand = "TEACHER-";
-              }
-              if ($i == 5) {
-                  $rand .= "-";
-              }
-          }
-  
-          return $rand;
-      }
+            }
+            if ($i == 5) {
+                $rand .= "-";
+            }
+        }
+
+        return $rand;
+    }
 
 
     //RANDOM USER ID
@@ -193,7 +193,7 @@ class myDataBase
         return $result;
     }
 
- 
+
 
     // COUNT THE NUMBER OF ROWS IN TABLE
     public function checkRowCount($table, $row = null, $value = null)
@@ -211,16 +211,16 @@ class myDataBase
 
 
     //Check active STATUS in school year
-    public function checkSyStatus($table) 
+    public function checkSyStatus($table)
     {
         // Prepare the SQL query to get the active status and the school_year from the sy table
         $sql = "SELECT `school_year` 
                 FROM `$table`
                 WHERE `status` = 'Active'";
-    
+
         // Execute the query
         $result = $this->con->query($sql);
-    
+
         // Check if the query was successful
         if ($result->num_rows > 0) {
             // Fetch the school year of the active row
@@ -228,7 +228,7 @@ class myDataBase
             while ($row = $result->fetch_assoc()) {
                 $activeSchoolYear[] = $row['school_year'];
             }
-            
+
             // Return the active school year(s)
             return $activeSchoolYear;
         } else {
@@ -237,8 +237,8 @@ class myDataBase
     }
 
     //Check active STATUS in semester
-// Check active STATUS in semester
-    public function checkSemStatus($table) 
+    // Check active STATUS in semester
+    public function checkSemStatus($table)
     {
         $semesters = [];
 
@@ -264,7 +264,7 @@ class myDataBase
         }
     }
 
-    
+
 
 
     // INSERT INTO TABLE SY
@@ -281,74 +281,76 @@ class myDataBase
     //         return false;
     //     }
     // }
- 
+
 
     public function insertSy($table, $sy)
-{
-    // First, check if the school year already exists in the table
-    $checkSql = "SELECT * FROM `$table` WHERE `school_year` = ?";
-    $stmt = $this->con->prepare($checkSql);
-    $stmt->bind_param("s", $sy);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // If a record exists, return false (school year already exists)
-    if ($result->num_rows > 0) {
-        return false; // School year already exists
-    }
-
-    // If no record exists, proceed with updating and inserting
-    $sql = "UPDATE `sy` SET `status` = 'Inactive'";
-    $result = $this->con->query($sql);
-
-    if ($result) {
-        // Prepare to insert the new school year with the status 'Active'
-        $insertSql = "INSERT INTO `$table` (`school_year`, `status`) VALUES (?, 'Active')";
-        $stmt = $this->con->prepare($insertSql);
+    {
+        // First, check if the school year already exists in the table
+        $checkSql = "SELECT * FROM `$table` WHERE `school_year` = ?";
+        $stmt = $this->con->prepare($checkSql);
         $stmt->bind_param("s", $sy);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        // Execute the insert and check if successful
-        if ($stmt->execute()) {
-            return true; // Successfully inserted
-        } else {
-            return false; // Error during insertion
+        // If a record exists, return false (school year already exists)
+        if ($result->num_rows > 0) {
+            return false; // School year already exists
         }
-    } else {
-        return false; // Error during update
-    }
-}
 
- 
+        // If no record exists, proceed with updating and inserting
+        $sql = "UPDATE `sy` SET `status` = 'Inactive'";
+        $result = $this->con->query($sql);
 
-        // // INSERT INTO TABLE SEMESTER
-        public function insertSem($table, $sem)
-        {
-    
-            $sql = "UPDATE `semester` SET `status` = 'Inactive'";
-            $result = $this->con->query($sql);
-    
-            if ($result) {
-                $sql = "INSERT INTO `$table` VALUES ('$sem', 'Active');";
-                $result = $this->con->query($sql);
+        if ($result) {
+            // Prepare to insert the new school year with the status 'Active'
+            $insertSql = "INSERT INTO `$table` (`school_year`, `status`) VALUES (?, 'Active')";
+            $stmt = $this->con->prepare($insertSql);
+            $stmt->bind_param("s", $sy);
+
+            // Execute the insert and check if successful
+            if ($stmt->execute()) {
+                return true; // Successfully inserted
             } else {
-                return false;
+                return false; // Error during insertion
             }
+        } else {
+            return false; // Error during update
         }
-  
+    }
 
-        public function checkExistingSem($table, $semester) {
-            $sql = "SELECT * FROM $table WHERE semester_name = ?";
-            $stmt = $this->con->prepare($sql);
-            $stmt->bind_param("s", $semester);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            return $result->num_rows > 0; // Returns true if a record exists, false otherwise
+
+
+    // // INSERT INTO TABLE SEMESTER
+    public function insertSem($table, $sem)
+    {
+
+        $sql = "UPDATE `semester` SET `status` = 'Inactive'";
+        $result = $this->con->query($sql);
+
+        if ($result) {
+            $sql = "INSERT INTO `$table` VALUES ('$sem', 'Active');";
+            $result = $this->con->query($sql);
+        } else {
+            return false;
         }
-        
-        
+    }
+
+
+    public function checkExistingSem($table, $semester)
+    {
+        $sql = "SELECT * FROM $table WHERE semester_name = ?";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $semester);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0; // Returns true if a record exists, false otherwise
+    }
+
+
 
     //UPDATE INTO TABLE ACTIVE SY
-    public function setSchoolYear($table, $sy, $id) {
+    public function setSchoolYear($table, $sy, $id)
+    {
         try {
             // Step 1: Set all rows to 'Inactive'
             $sql = "UPDATE `$table` SET `status` = 'Inactive'";
@@ -357,7 +359,7 @@ class myDataBase
             // Step 2: Set the selected row to 'Active' based on the passed school year ID
             $sql = "UPDATE `$table` SET `status` = 'Active' WHERE `school_year` = ?";
             $stmt = $this->con->prepare($sql);
-            $stmt->bind_param('i', $id);
+            $stmt->bind_param('s', $id);
             $stmt->execute();
 
             // Step 3: Return the success or failure of the operation
@@ -374,19 +376,22 @@ class myDataBase
     }
 
     //UPDATE INTO TABLE ACTIVE SEMESTER
-    public function setSemester($table, $sy, $id) {
+    public function setSemester($table, $sy, $id)
+    {
         try {
             // Step 1: Set all rows to 'Inactive'
             $sql = "UPDATE `$table` SET `status` = 'Inactive'";
             $this->con->query($sql);
 
-            // Step 2: Set the selected row to 'Active' based on the passed school year ID
+            //Set the selected row to 'Active' based on the passed school year ID
             $sql = "UPDATE `$table` SET `status` = 'Active' WHERE `semester_name` = ?";
             $stmt = $this->con->prepare($sql);
-            $stmt->bind_param('i', $id);
+            $stmt->bind_param('s', $id);
             $stmt->execute();
 
-            // Step 3: Return the success or failure of the operation
+
+
+            // Return the success or failure of the operation
             if ($stmt->affected_rows > 0) {
                 return true;
             } else {
@@ -469,7 +474,7 @@ class myDataBase
             return $stored;
         }
     }
-    
+
     //GET SEMESTER
     public function getSemester($row = null, $value = null)
     {
@@ -535,7 +540,7 @@ class myDataBase
         }
     }
 
- 
+
 
     public function getSection($row = null, $value = null)
     {
@@ -585,10 +590,10 @@ class myDataBase
             return $stored;
         }
     }
- 
 
- 
- 
+
+
+
 
 
     // SEARCH TEACHER TABLE

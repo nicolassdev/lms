@@ -5,52 +5,52 @@
 
  <!-- TABLE -->
 
- 
-     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3 ms-3 me-3">
-             <h3 class="text-black">Users list</h3>
+
+ <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3 ms-3 me-3">
+         <h3 class="text-black">Users list</h3>
+     </div>
+     <!-- Search Form -->
+     <form method="POST" action="index.php?page=users" class="ms-5 me-5">
+         <div class="input-group mb-3 ms-3 me-3">
+             <input type="text" class="form-control form-control-sm " name="find-user" placeholder="Search user..." autocomplete="off" required style="width: 200px;" />
+             <button class="btn btn-outline-primary btn-sm" name="search" type="submit">
+                 <i class="bi bi-search"></i> Search
+             </button>
          </div>
-         <!-- Search Form -->
-         <form method="POST" action="index.php?page=users" class="ms-5 me-5">
-             <div class="input-group mb-3 ms-3 me-3">
-                 <input type="text" class="form-control form-control-sm " name="find-user" placeholder="Search user..." autocomplete="off" required style="width: 200px;" />
-                 <button class="btn btn-outline-primary btn-sm" name="search" type="submit">
-                     <i class="bi bi-search"></i> Search
-                 </button>
-             </div>
-         </form>
+     </form>
 
 
 
-         <div class="table-responsive ms-3 me-3">
-             <table class="table table-bordered table-striped table-sm align-middle">
-                 <thead class="table-dark text-light">
-                     <tr>
-                         <th scope="col">ID</th>
-                         <th scope="col">Username</th>
-                         <th scope="col">Role</th>
-                         <th scope="col">Date Added</th>
-                         <th scope="col" class="text-center" colspan="2">Action</th>
-                     </tr>
-                 </thead>
-                 <tbody
-                     <?php
-                        $mySQLFunction->connection();
-                        if (!isset($_POST["search"])) {
-                            $result = $mySQLFunction->getUsers();
-                        } else {
-                            $find = $_POST["find-user"];
-                            $result = $mySQLFunction->searchUser($find);
-                        }
-                        if (!empty($result)) {
-                            $count = 1;
-                            foreach ($result as $row) {
-                                echo '<tr>';
-                                echo '<td>' .  $row["id"] . '</td>';
-                                echo '<td>' . $row["username"] . '</td>';
-                                echo '<td>' . $row["role"] . '</td>';
-                                echo '<td>' . $row["added_date"] . '</td>';
-                                echo '
+     <div class="table-responsive ms-3 me-3">
+         <table class="table table-bordered table-striped table-sm align-middle">
+             <thead class="table-dark text-light">
+                 <tr>
+                     <th scope="col">ID</th>
+                     <th scope="col">Username</th>
+                     <th scope="col">Role</th>
+                     <th scope="col">Date Added</th>
+                     <th scope="col" class="text-center" colspan="2">Action</th>
+                 </tr>
+             </thead>
+             <tbody
+                 <?php
+                    $mySQLFunction->connection();
+                    if (!isset($_POST["search"])) {
+                        $result = $mySQLFunction->getUsers();
+                    } else {
+                        $find = $_POST["find-user"];
+                        $result = $mySQLFunction->searchUser($find);
+                    }
+                    if (!empty($result)) {
+                        $count = 1;
+                        foreach ($result as $row) {
+                            echo '<tr>';
+                            echo '<td>' .  $row["id"] . '</td>';
+                            echo '<td>' . $row["username"] . '</td>';
+                            echo '<td>' . $row["role"] . '</td>';
+                            echo '<td>' . $row["added_date"] . '</td>';
+                            echo '
                                         <td class="text-center">
                                             <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit_user' . $row['id'] . '"><i class="bi bi-pencil-square"></i></button>
                                         </td>
@@ -60,15 +60,15 @@
                                     ';
 
 
-                                //Modal for updating users 
-                                echo '
+                            //Modal for updating users 
+                            echo '
                                     <div class="modal fade" id="edit_user' . $row['id'] . '" tabindex="-1" aria-labelledby="teachModal" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
+                                        <div class="modal-dialog modal-md">
                                             <div class="modal-content b-grey">
                                                 <div class="modal-body">
                                                     <div class="modal-header">
                                                         <!-- Add id to the header for manipulation -->
-                                                        <h1 class="modal-title fs-3 text-primary" id="modalHeader' . $row['id'] . '">
+                                                        <h1 class="modal-title fs-4 text-primary" id="modalHeader' . $row['id'] . '">
                                                             ' . ($row['role'] == 'TEACHER' ? 'Teacher Details' : 'Student Details') . '
                                                         </h1><i class="bi bi-pencil-square fs-4"></i>
                                                     </div>
@@ -86,15 +86,7 @@
                                                             <input type="password" class="form-control" name="password" id="password" value="' . $row['password'] . '" required>
                                                         </div>
 
-                                                        <div class="col-md-12">
-                                                            <label class="form-label">User type</label>
-                                                            <!-- Add onchange event to call toggleForm() -->
-                                                            <select class="form-select" name="role" id="usertype" required onchange="toggleForm(' . $row['id'] . ')">
-                                                                <option selected disabled value="">Select...</option>
-                                                                <option value="teacher" ' . ($row['role'] == 'TEACHER' ? ' selected' : '') . '>TEACHER</option>
-                                                                <option value="student" ' . ($row['role'] == 'STUDENT' ? ' selected' : '') . '>STUDENT</option>
-                                                            </select>
-                                                        </div>
+                                           
 
 
                                                         <div class="d-flex justify-center gap-2">
@@ -115,8 +107,8 @@
                                     ';
 
 
-                                // Modal for deleting users
-                                echo '
+                            // Modal for deleting users
+                            echo '
                                     <div class="modal fade" id="del_user' . $row['id'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered modal-md">
                                             <div class="modal-content">
@@ -133,21 +125,21 @@
                                             </div>
                                         </div>
                                     </div>';
-                                $count++;
-                            }
-                        } else {
-                            echo '<tr>
+                            $count++;
+                        }
+                    } else {
+                        echo '<tr>
                                         <td colspan="10" class="text-center fs-3"><i class="bi bi-emoji-frown me-2"></i>User not found.</td>              
                                   </tr>';
-                        }
-                        echo '</table>';
-                        echo '<a href="" class="btn btn-primary" title="Refresh"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</a>';
+                    }
+                    echo '</table>';
+                    echo '<a href="" class="btn btn-primary" title="Refresh"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</a>';
 
-                        $mySQLFunction->disconnect();
-                        ?>
-                     </div>
-     </main>
- 
+                    $mySQLFunction->disconnect();
+                    ?>
+                 </div>
+ </main>
+
 
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
