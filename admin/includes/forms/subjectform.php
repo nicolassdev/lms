@@ -14,7 +14,7 @@
             <input type="text" class="form-control" id="sub_name" required>
           </div>
           <div class="col-md-6">
-            <label for="status" class="form-label">Type Of Subject</label>
+            <label for="status" class="form-label">Category</label>
             <select class="form-select" id="status" required>
               <option selected disabled value="">Choose...</option>
               <option value="core">Core Subject</option>

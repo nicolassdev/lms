@@ -46,6 +46,46 @@
 </div>
 
 <script>
+    // Mapping of strand names to descriptions
+    const strandDescriptions = {
+        'STEM': 'Science, Technology, Engineering, and Mathematics',
+        'HUMSS': 'Humanities and Social Sciences',
+        'ABM': 'Accountancy, Business, and Management',
+        'GAS': 'General Academic Strand',
+        'CP': 'Computer Programming',
+        'CSS': 'Computer System Servicing'
+    };
+
+    // Function to update description based on selected strand
+    document.getElementById('strandSelect').addEventListener('change', function() {
+        const selectedStrand = this.value;
+        const descriptionField = document.getElementById('desc');
+
+        // Update the description textarea with the corresponding value
+        if (strandDescriptions[selectedStrand]) {
+            descriptionField.value = strandDescriptions[selectedStrand];
+        } else {
+            descriptionField.value = '';
+        }
+    });
+
+    // Form validation and submission handling
+    (function() {
+        'use strict';
+
+        // Fetch the form we want to apply custom validation to
+        const form = document.getElementById('strandForm');
+
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault(); // Prevent form submission
+                event.stopPropagation(); // Stop further event propagation
+            }
+
+            form.classList.add('was-validated');
+        }, false);
+    })();
+
     // Function to clear the form inputs when "Cancel" is clicked
     function resetFormStrand() {
         const form = document.getElementById('strandForm');

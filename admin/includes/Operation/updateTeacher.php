@@ -29,7 +29,7 @@ if (!isset($_POST["submit"])) {
             $address = strtoupper(trim($_POST["address"]));
 
             // Check if the new firstname and lastname already exist for another teacher
-            $existingTeacher = $mySQLFunction->getFacultyByName($fname, $lname, $id);
+            $existingTeacher = $mySQLFunction->checkFacultyExist($fname, $lname, $id);
 
             if ($existingTeacher) {
                 // If the same firstname and lastname exist and the ID does not match, prevent update
