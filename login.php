@@ -16,18 +16,18 @@
             <div class="col-md ml-xl">
                 <img src="./assets/img/student-login-logo.svg" alt="Login Logo" draggable="false">
             </div>
-            <!-- login form -->
             <div class="col-md mr-xl">
+                <!-- login form -->                
                 <form action="includes/login-inc.php" method="POST">
                     <h2>Login</h2>
                     <div class="input-box">
                         <span class="icon">
-                            <img src="icon/icons8-user-24.png" alt="" /></span>
+                            <img src="assets/img/icons8-user-24.png" alt="" /></span>
                         <input type="text" placeholder="Username" name="username" required autocomplete="off" autofocus />
                     </div>
                     <div class="input-box">
                         <span class="icon">
-                            <img src="icon/icons8-lock-24.png" alt="" /></span>
+                            <img src="assets/img/icons8-lock-24.png" alt="" /></span>
                         <input type="password" placeholder="Password" name="password" required autocomplete="off" autofocus />
                     </div>
                     <button type="submit" name="submit">Login</button>
