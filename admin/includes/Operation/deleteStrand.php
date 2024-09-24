@@ -1,6 +1,6 @@
 
 <?php
-
+session_start();
 if (!isset($_GET["id"])) {
     header("location:../../../index.php?page=strand");
     exit();
@@ -8,8 +8,9 @@ if (!isset($_GET["id"])) {
     include "../../../includes/dbh-inc.php";
     $mySQLFunction->connection();
     $mySQLFunction->delete("strand", "strand_code", $_GET["id"]);
-    // $mySQLFunction->delete("teacher", "teacher_id", $_GET["id"]);
-    $mySQLFunction->disconnect();
+
+    $_SESSION['deleted'] = "Strand has been deleted successfully.";
     header("location:../../index.php?page=strand");
     exit();
+    $mySQLFunction->disconnect();
 }

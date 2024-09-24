@@ -27,14 +27,61 @@ include "../admin/includes/forms/semesterform.php";
             </button>
         </div>
     </div>
+    <!-- NOTFICATION -->
+    <?php
+    if (isset($_SESSION['insert'])) {
+        echo '<div class="alert alert-primary alert-dismissible fade show mt-3 p-2" role="alert" style="font-size: 14px; line-height: 1.2;">';
+        echo '<strong>Notification: </strong> ' . $_SESSION['insert'];
 
+        echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+
+        // Reduced font size for the timestamp
+        echo '<small class="d-block mt-1 text-muted">Just now</small>';
+
+        echo '</div>';
+        unset($_SESSION['insert']);
+    } elseif (isset($_SESSION['setactive'])) {
+        echo '<div class="alert alert-success alert-dismissible fade show mt-3 p-2" role="alert" style="font-size: 14px; line-height: 1.2;">';
+        echo '<strong>Notification: </strong> ' . $_SESSION['setactive'];
+
+        echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+
+        // Reduced font size for the timestamp
+        echo '<small class="d-block mt-1 text-muted">Just now</small>';
+
+        echo '</div>';
+        unset($_SESSION['setactive']);
+    } elseif (isset($_SESSION['deleted'])) {
+        echo '<div class="alert alert-danger alert-dismissible fade show mt-3 p-2" role="alert" style="font-size: 14px; line-height: 1.2;">';
+        echo '<strong>Notification: </strong> ' . $_SESSION['deleted'];
+
+        echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+
+        // Reduced font size for the timestamp
+        echo '<small class="d-block mt-1 text-muted">Just now</small>';
+
+        echo '</div>';
+        unset($_SESSION['deleted']);
+    } elseif (isset($_SESSION['error_insert'])) {
+        echo '<div class="alert alert-danger alert-dismissible fade show mt-3 p-2" role="alert" style="font-size: 14px; line-height: 1.2;">';
+        echo '<strong>Notification: </strong> ' . $_SESSION['error_insert'];
+
+        echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+
+        // Reduced font size for the timestamp
+        echo '<small class="d-block mt-1 text-muted">Just now</small>';
+
+        echo '</div>';
+        unset($_SESSION['error_insert']);
+    }
+    ?>
 
 
     <div class="border rounded p-5 bg-light mb-5 ms-3 me-3 shadow">
         <table id="example" class="table table-bordered table-striped table-sm align-middle ">
 
             <div class="mb-4 col-5">
-                <label class="form-label text- fs-5">Active semester</label>
+                <label class="form-label fs-5">Active semester</label>
                 <input type="text" name="schoolyear" value="<?php if (!empty($activeSemester)) {
                                                                 foreach ($activeSemester as $semester) {
                                                                     echo   "" . $semester . "";

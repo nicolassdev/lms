@@ -612,6 +612,23 @@ class myDataBase
         }
     }
 
+    //GET STUDENT LIST
+
+    public function getStudent($row = null, $value = null)
+    {
+        if ($row != null &&  $value != null) {
+
+            $sql = "SELECT * FROM `student` WHERE `$row` = '$value'";
+            $stored = ($this->con->query($sql))->fetch_assoc();
+            return $stored;
+        } else {
+
+            $sql = "SELECT * FROM `student` ORDER BY `stu_fname`";
+            $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
+
+            return $stored;
+        }
+    }
 
 
 
@@ -644,8 +661,8 @@ class myDataBase
     }
 
 
-    //insert user and teacher with validation
-    public function insertTeacher($table, $columns, $values)
+    //insert user and teacher/student with validation
+    public function insert($table, $columns, $values)
     {
         // Ensure the number of columns matches the number of values
         if (count($columns) != count($values)) {

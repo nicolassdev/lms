@@ -57,16 +57,16 @@ try {
 
     // Encrypt password if provided
     $encryptedPassword = $userpwd ? $mySQLFunction->encrypt($userpwd) : null;
-    
+
     // Insert data into USERS table
     $credentialColumns = ['id', 'username', 'password', 'role', 'added_date'];
     $credentialValues = [$uid, $username, $encryptedPassword, $role, date('Y-m-d H:i:s')];
-    $mySQLFunction->insertTeacher("USERS", $credentialColumns, $credentialValues);
+    $mySQLFunction->insert("USERS", $credentialColumns, $credentialValues);
 
     // Insert data into TEACHER table
     $teacherColumns = ['teacher_id', 'teacher_fname', 'teacher_mname', 'teacher_lname', 'teacher_contact', 'teacher_gender', 'teacher_dob', 'status', 'teacher_address', 'id'];
     $teacherValues = [$teacherID, $fname, isset($_POST["middlename"]) ? strtoupper(trim($_POST["middlename"])) : null, $lname, $contact, $gender, $dob, $status, $address, $uid];
-    $mySQLFunction->insertTeacher("TEACHER", $teacherColumns, $teacherValues);
+    $mySQLFunction->insert("TEACHER", $teacherColumns, $teacherValues);
 
     // Set success session variable and redirect
     $_SESSION['insert_success'] = true;
@@ -80,4 +80,3 @@ try {
     $mySQLFunction->disconnect();
 }
 exit();
-?>

@@ -8,48 +8,61 @@ include "../admin/includes/forms/strandform.php";
 
 
 <!-- THSI THE STRAND TABLE -->
- 
-  <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 mb-5 ms-3 me-3">
-      <h3 class="text-black">List of Strand</h3>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#strand" data-bs-whatever="@fat">
-        <i class="bi bi-plus-circle-fill"></i>
-      </button>
-    </div>
 
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 mb-5 ms-3 me-3">
+    <h3 class="text-black">List of Strand</h3>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#strand" data-bs-whatever="@fat">
+      <i class="bi bi-plus-circle-fill"></i>
+    </button>
+  </div>
 
-    <!-- THSI THE STRAND TABLE -->
-    <!-- TABLE -->
-    <div class="table-responsive small ms-3 me-3">
-      <table id="example" class="table table-bordered table-striped table-sm align-middle">
-        <thead class="table-dark">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Strand name</th>
-            <th scope="col">Description</th>
-            <th scope="col" class="text-center" colspan="2">Action</th> <!-- colspan should be 2 -->
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          $mySQLFunction->connection();
-          if (!isset($_POST["search"])) {
-            $result = $mySQLFunction->getStrand();
-          }
-          // else {
-          //   $find = $_POST["find"];
-          //   $result = $mySQLFunction->searchTeacher($find);
-          // }
+  <?php
+  if (isset($_SESSION['deleted'])) {
+    echo '<div class="alert alert-danger alert-dismissible fade show mt-3 p-2" role="alert" style="font-size: 14px; line-height: 1.2;">';
+    echo '<strong>Notification: </strong> ' . $_SESSION['deleted'];
 
-          if (!empty($result)) {
-            $count = 1;
-            foreach ($result as $row) {
-              echo '<tr>';
-              echo '<td>' . $count . '</td>';
-              // echo '<td>' . $row["strand_code"] . '</td>';
-              echo '<td>' . $row["strand_name"] . '</td>';
-              echo '<td>' . $row["strand_desc"] . '</td>';
-              echo '
+    echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+
+    // Reduced font size for the timestamp
+    echo '<small class="d-block mt-1 text-muted">Just now</small>';
+
+    echo '</div>';
+    unset($_SESSION['deleted']);
+  }
+  ?>
+  <!-- THSI THE STRAND TABLE -->
+  <!-- TABLE -->
+  <div class="table-responsive small ms-3 me-3">
+    <table id="example" class="table table-bordered table-striped table-sm align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Strand name</th>
+          <th scope="col">Description</th>
+          <th scope="col" class="text-center" colspan="2">Action</th> <!-- colspan should be 2 -->
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        $mySQLFunction->connection();
+        if (!isset($_POST["search"])) {
+          $result = $mySQLFunction->getStrand();
+        }
+        // else {
+        //   $find = $_POST["find"];
+        //   $result = $mySQLFunction->searchTeacher($find);
+        // }
+
+        if (!empty($result)) {
+          $count = 1;
+          foreach ($result as $row) {
+            echo '<tr>';
+            echo '<td>' . $count . '</td>';
+            // echo '<td>' . $row["strand_code"] . '</td>';
+            echo '<td>' . $row["strand_name"] . '</td>';
+            echo '<td>' . $row["strand_desc"] . '</td>';
+            echo '
  
                       <td class="text-center">
                           <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_strand' . $row['strand_code'] . '">
@@ -57,11 +70,11 @@ include "../admin/includes/forms/strandform.php";
                           </button>
                       </td>
                     ';
-              echo '</tr>';
+            echo '</tr>';
 
-              // Modal for deleting strand
+            // Modal for deleting strand
 
-              echo '
+            echo '
                           <div class="modal fade" id="del_strand' . $row['strand_code'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                               <div class="modal-dialog modal-dialog-centered modal-md">
                                   <div class="modal-content">
@@ -80,24 +93,24 @@ include "../admin/includes/forms/strandform.php";
                           </div>';
 
 
-              $count++;
-            }
-          } else {
-            echo '<tr>
+            $count++;
+          }
+        } else {
+          echo '<tr>
                         <td colspan="10" class="text-center fs-3"><i class="bi bi-emoji-frown me-2"></i>Strand not found.<br>
                         </td>
                       </tr>';
-          }
+        }
 
-          echo '</tbody>';
-          echo '</table>';
-          $mySQLFunction->disconnect();
-          ?>
+        echo '</tbody>';
+        echo '</table>';
+        $mySQLFunction->disconnect();
+        ?>
 
-    </div>
+  </div>
 
-  </main>
- 
+</main>
+
 
 
 

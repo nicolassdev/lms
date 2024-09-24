@@ -20,6 +20,22 @@ include "../admin/includes/forms/sectionform.php";
                             <i class="bi bi-plus-circle-fill"></i>
                         </button>
                     </div>
+                    <!-- NOTIFICATION -->
+
+                    <?php
+                    if (isset($_SESSION['deleted'])) {
+                        echo '<div class="alert alert-danger alert-dismissible fade show mt-3 p-2" role="alert" style="font-size: 14px; line-height: 1.2;">';
+                        echo '<strong>Notification: </strong> ' . $_SESSION['deleted'];
+
+                        echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+
+                        // Reduced font size for the timestamp
+                        echo '<small class="d-block mt-1 text-muted">Just now</small>';
+
+                        echo '</div>';
+                        unset($_SESSION['deleted']);
+                    }
+                    ?>
                     <!-- TABLE -->
                     <div class="table-responsive small ms-3 me-3">
                         <table id="example" class="table table-bordered table-striped table-sm align-middle">
@@ -85,16 +101,16 @@ include "../admin/includes/forms/sectionform.php";
                                                                             <label class="form-label">STRAND NAME</label>
                                                                             <select class="form-select" id="strandSelect' . htmlspecialchars($row['section_code']) . '" name="strand_code" required>';
 
-                                                                            // Fetch and populate strand options
-                                                                            $mySQLFunction->connection();
-                                                                            $strands = $mySQLFunction->getStrand();
-                                                                            foreach ($strands as $strand) {
-                                                                                $selected = $strand["strand_name"] == $row['strand_name'] ? ' selected' : '';
-                                                                                echo '<option value="' . htmlspecialchars($strand["strand_name"]) . '"' . $selected . '>' . htmlspecialchars($strand["strand_name"]) . '</option>';
-                                                                            }
-                                                                            $mySQLFunction->disconnect();
+                                        // Fetch and populate strand options
+                                        $mySQLFunction->connection();
+                                        $strands = $mySQLFunction->getStrand();
+                                        foreach ($strands as $strand) {
+                                            $selected = $strand["strand_name"] == $row['strand_name'] ? ' selected' : '';
+                                            echo '<option value="' . htmlspecialchars($strand["strand_name"]) . '"' . $selected . '>' . htmlspecialchars($strand["strand_name"]) . '</option>';
+                                        }
+                                        $mySQLFunction->disconnect();
 
-                                                                            echo '
+                                        echo '
                                                                             </select>
                                                                             <div class="invalid-feedback">
                                                                                 Please input a strand name.
@@ -112,7 +128,7 @@ include "../admin/includes/forms/sectionform.php";
                                                                             Please select a grade level.
                                                                         </div>
                                                                     </div>';
-                                                                    echo '
+                                        echo '
                                                                         <div class="col-md-12 mb-3">
                                                                             <label class="form-label id="section' . htmlspecialchars($row['section_code']) . '">Section</label>
                                                                             <input type="text" class="form-control" name="section" value="' . htmlspecialchars($row['section_name']) . '" required>
@@ -125,50 +141,50 @@ include "../admin/includes/forms/sectionform.php";
                                                                     <div class="col-md-12 mb-3">
                                                                         <label class="form-label">Semester</label>
                                                                             <select class="form-select" name="semester" id="semester' . htmlspecialchars($row['section_code']) . '" required>';
-                                                                                // <option selected disabled value="">Select...</option>
+                                        // <option selected disabled value="">Select...</option>
 
-                                                                            // Fetch and populate semester options
-                                                                                $mySQLFunction->connection();
-                                                                                $result = $mySQLFunction->getSemester();
-                                                                                foreach ($result as $semester) {
-                                                                                    // Dynamically set selected if the current semester matches the one from the database
-                                                                                    $selected = ($semester['semester_name'] == $row['semester_name']) ? ' selected' : '';
-                                                                                    echo '<option value="' . htmlspecialchars($semester['semester_name']) . '"' . $selected . '>' . htmlspecialchars($semester['semester_name']) . '</option>';
-                                                                                }
-                                                                                $mySQLFunction->disconnect();
+                                        // Fetch and populate semester options
+                                        $mySQLFunction->connection();
+                                        $result = $mySQLFunction->getSemester();
+                                        foreach ($result as $semester) {
+                                            // Dynamically set selected if the current semester matches the one from the database
+                                            $selected = ($semester['semester_name'] == $row['semester_name']) ? ' selected' : '';
+                                            echo '<option value="' . htmlspecialchars($semester['semester_name']) . '"' . $selected . '>' . htmlspecialchars($semester['semester_name']) . '</option>';
+                                        }
+                                        $mySQLFunction->disconnect();
 
-                                                                                echo '
+                                        echo '
                                                                             </select>
                                                                             <div class="invalid-feedback">
                                                                                 Please select a semester.
                                                                             </div>
                                                                     </div>
 
-                                                                        ';                                                            
-                                                                    echo '
+                                                                        ';
+                                        echo '
                                                                     <div class="col-md-12">
                                                                         <label class="form-label">Adviser</label>
                                                                         <select class="form-select" name="teacher_id" required>
                                                                             <option value="" selected disabled>Choose an adviser...</option>
                                                                             ';
-                                                                            $mySQLFunction->connection();
-                                                                            // Fetch the teachers and populate the dropdown
-                                                                            $result = $mySQLFunction->getTeacher();
-                                                                            foreach ($result as $teacher) {
-                                                                                $selected = ($teacher['teacher_id'] == $row['teacher_id']) ? ' selected' : '';
+                                        $mySQLFunction->connection();
+                                        // Fetch the teachers and populate the dropdown
+                                        $result = $mySQLFunction->getTeacher();
+                                        foreach ($result as $teacher) {
+                                            $selected = ($teacher['teacher_id'] == $row['teacher_id']) ? ' selected' : '';
 
-                                                                                echo '<option value="' . htmlspecialchars($teacher["teacher_id"]) . '">' . htmlspecialchars($teacher["teacher_fname"]) . ' ' . htmlspecialchars($teacher["teacher_mname"]) . ' ' . htmlspecialchars($teacher["teacher_lname"]) . '</option>';
-                                                                            }
-                                                                            $mySQLFunction->disconnect();
+                                            echo '<option value="' . htmlspecialchars($teacher["teacher_id"]) . '">' . htmlspecialchars($teacher["teacher_fname"]) . ' ' . htmlspecialchars($teacher["teacher_mname"]) . ' ' . htmlspecialchars($teacher["teacher_lname"]) . '</option>';
+                                        }
+                                        $mySQLFunction->disconnect();
 
-                                                                    echo '
+                                        echo '
                                                                         </select>
                                                                         <div class="invalid-feedback">
                                                                             Please select an advisor.
                                                                         </div>
                                                                     </div>
                                                                     ';
-                                                                    echo'
+                                        echo '
 
                                                                     <div class="d-flex justify-center gap-2">
                                                                         <div class="col-6">

@@ -1,5 +1,6 @@
 
 <?php
+session_start();
 
 if (!isset($_GET["id"])) {
     header("location:../../../index.php?page=semester");
@@ -8,7 +9,9 @@ if (!isset($_GET["id"])) {
     include "../../../includes/dbh-inc.php";
     $mySQLFunction->connection();
     $mySQLFunction->delete("semester", "semester_name", $_GET["id"]);
-    $mySQLFunction->disconnect();
+
+    $_SESSION['deleted'] = "Semester has been deleted successfully.";
     header("location:../../index.php?page=semester");
     exit();
+    $mySQLFunction->disconnect();
 }

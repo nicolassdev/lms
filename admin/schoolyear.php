@@ -3,7 +3,7 @@ require_once "../includes/dbh-inc.php";
 $mySQLFunction->connection();
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $mySQLFunction->disconnect();
-    
+
 
 
 ?>
@@ -13,7 +13,7 @@ include "../admin/includes/forms/syform.php";
 ?>
 
 <!-- DISPLAY IN HOME  -->
- 
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4">
         <h2 class="ms-3">School year</h2>
@@ -21,65 +21,104 @@ include "../admin/includes/forms/syform.php";
         <div class="d-flex gap-3">
             <!-- Semester button -->
             <button type="button" class="btn btn-success mb-3" title="Semester" data-bs-toggle="modal" data-bs-target="#school_year" data-bs-whatever="@fat">
-            <i class="bi bi-plus me-1"></i>School Year
+                <i class="bi bi-plus me-1"></i>School Year
             </button>
-            <button  class="btn btn-secondary mb-3 me-3 "><a class="nav-link " href="index.php?page=settings"><i class="bi bi-arrow-left-circle me-1"></i>Back</a>
+            <button class="btn btn-secondary mb-3 me-3 "><a class="nav-link " href="index.php?page=settings"><i class="bi bi-arrow-left-circle me-1"></i>Back</a>
             </button>
         </div>
     </div>
- 
+
+    <!-- NOTFICATION -->
+    <?php
+    if (isset($_SESSION['insert'])) {
+        echo '<div class="alert alert-primary alert-dismissible fade show mt-3 p-2" role="alert" style="font-size: 14px; line-height: 1.2;">';
+        echo '<strong>Notification: </strong> ' . $_SESSION['insert'];
+
+        echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+
+        // Reduced font size for the timestamp
+        echo '<small class="d-block mt-1 text-muted">Just now</small>';
+
+        echo '</div>';
+        unset($_SESSION['insert']);
+    } elseif (isset($_SESSION['setactive'])) {
+        echo '<div class="alert alert-success alert-dismissible fade show mt-3 p-2" role="alert" style="font-size: 14px; line-height: 1.2;">';
+        echo '<strong>Notification: </strong> ' . $_SESSION['setactive'];
+
+        echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+
+        // Reduced font size for the timestamp
+        echo '<small class="d-block mt-1 text-muted">Just now</small>';
+
+        echo '</div>';
+        unset($_SESSION['setactive']);
+    } elseif (isset($_SESSION['deleted'])) {
+        echo '<div class="alert alert-danger alert-dismissible fade show mt-3 p-2" role="alert" style="font-size: 14px; line-height: 1.2;">';
+        echo '<strong>Notification: </strong> ' . $_SESSION['deleted'];
+
+        echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+
+        // Reduced font size for the timestamp
+        echo '<small class="d-block mt-1 text-muted">Just now</small>';
+
+        echo '</div>';
+        unset($_SESSION['deleted']);
+    }
+    ?>
 
 
- <div class="border rounded p-5 bg-light mb-5 ms-3 me-3 shadow">
-      <table id="example" class="table table-bordered table-striped table-sm align-middle ">
-              
+
+    <div class="border rounded p-5 bg-light mb-5 ms-3 me-3 shadow">
+        <table id="example" class="table table-bordered table-striped table-sm align-middle ">
+
+
             <div class="mb-4 col-5">
-                    <label  class="form-label text-primary">Active year</label>
-                    <input type="text" name="schoolyear" value="<?php if (!empty($activeSchoolYears)) {
-                            foreach ($activeSchoolYears as $schoolYear) {
-                                echo "" . $schoolYear . "";
-                            }
-                        } else {
-                            echo "No active school year found.";
-                        } ?>" class="form-control form-control-lg" autocomplete="off" disabled >         
+                <label class="form-label fs-5">Active year</label>
+                <input type="text" name="schoolyear" value="<?php if (!empty($activeSchoolYears)) {
+                                                                foreach ($activeSchoolYears as $schoolYear) {
+                                                                    echo "" . $schoolYear . "";
+                                                                }
+                                                            } else {
+                                                                echo "No active school year found.";
+                                                            } ?>" class="form-control form-control-lg" autocomplete="off" disabled>
             </div>
-        <thead class="table-dark">
-          <tr>
-            <th scope="col">School year</th>
-            <th scope="col">Status</th>
-            <th scope="col" class="text-center" colspan="3">Action</th> <!-- colspan should be 2 -->
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          $mySQLFunction->connection();    
-            $result = $mySQLFunction->getSchoolyear();
-          if (!empty($result)) {
-            $count = 1;
-            foreach ($result as $row) {
-              echo '<tr>';
-              echo '<td>' . $row["school_year"] . '</td>';
-              echo '<td>' . $row["status"] . '</td>';
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">School year</th>
+                    <th scope="col">Status</th>
+                    <th scope="col" class="text-center" colspan="3">Action</th> <!-- colspan should be 2 -->
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $mySQLFunction->connection();
+                $result = $mySQLFunction->getSchoolyear();
+                if (!empty($result)) {
+                    $count = 1;
+                    foreach ($result as $row) {
+                        echo '<tr>';
+                        echo '<td>' . $row["school_year"] . '</td>';
+                        echo '<td>' . $row["status"] . '</td>';
 
 
-            // Check if status is Active or Inactive to toggle button label and style
-            if ($row["status"] == 'Active') {
-                echo '
+                        // Check if status is Active or Inactive to toggle button label and style
+                        if ($row["status"] == 'Active') {
+                            echo '
                 <td class="text-center">
                     <button class="btn btn-sm btn-outline-danger">
                         Default
                     </button>
                 </td>';
-            } else {
-                echo '
+                        } else {
+                            echo '
                 <td class="text-center">
                     <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#edit_active' . $row['school_year'] . '">
                         Set Active
                     </button>
                 </td>';
-            }
+                        }
 
-              echo '
+                        echo '
             
                        <td class="text-center">
                           <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_sy' . $row['school_year'] . '">
@@ -87,11 +126,11 @@ include "../admin/includes/forms/syform.php";
                           </button>
                       </td>
                     ';
-              echo '</tr>';
+                        echo '</tr>';
 
-              // Modal for deleting strand
+                        // Modal for deleting strand
 
-                         echo '
+                        echo '
                           <div class="modal fade" id="del_sy' . $row['school_year'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                               <div class="modal-dialog modal-dialog-centered modal-md">
                                   <div class="modal-content">
@@ -109,7 +148,7 @@ include "../admin/includes/forms/syform.php";
                               </div>
                           </div>';
 
-                          echo '
+                        echo '
                           <div class="modal fade" id="edit_active' . $row['school_year'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                               <div class="modal-dialog modal-dialog-centered modal-md">
                                   <div class="modal-content">
@@ -126,30 +165,30 @@ include "../admin/includes/forms/syform.php";
                                   </div>
                               </div>
                           </div>';
-                          
-              $count++;
-            }
-          } else {
-            echo '<tr>
+
+                        $count++;
+                    }
+                } else {
+                    echo '<tr>
                         <td colspan="10" class="text-center fs-3"><i class="bi bi-emoji-frown me-2"></i>No active year found.<br>
                         </td>
                       </tr>';
-          }
+                }
 
-          echo '</tbody>';
-          echo '</table>';
-          $mySQLFunction->disconnect();
-          ?>
-  
- 
-        </div>
-       
-   
+                echo '</tbody>';
+                echo '</table>';
+                $mySQLFunction->disconnect();
+                ?>
 
-    </main>
- 
- 
- 
+
+    </div>
+
+
+
+</main>
+
+
+
 
 
 
