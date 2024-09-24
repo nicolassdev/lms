@@ -266,21 +266,28 @@ class myDataBase
 
 
 
+    public function checkFacultyExist($firstname, $lastname, $excludeID)
+    {
+        $sql = "SELECT * FROM teacher WHERE teacher_fname = ? AND teacher_lname = ? AND teacher_id != ?";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("ssi", $firstname, $lastname, $excludeID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc(); // Return the first row if exists
+    }
 
-    // INSERT INTO TABLE SY
-    // public function insertSy($table, $sy)
-    // {
 
-    //     $sql = "UPDATE `sy` SET `status` = 'Inactive'";
-    //     $result = $this->con->query($sql);
+    public function checkSectionExist($strand, $section, $adviser, $excludeID)
+    {
+        $sql = "SELECT * FROM section WHERE strand_code =? AND section_name =? AND  teacher_id =? AND section_code  != ?";
 
-    //     if ($result) {
-    //         $sql = "INSERT INTO `$table` VALUES ('$sy', 'Active');";
-    //         $result = $this->con->query($sql);
-    //     } else {
-    //         return false;
-    //     }
-    // }
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("sssi", $strand, $section, $adviser, $excludeID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_assoc(); // Return the first row if exists
+    }
 
 
     public function insertSy($table, $sy)
@@ -760,15 +767,25 @@ class myDataBase
         }
     }
 
-    public function getFacultyByName($firstname, $lastname, $excludeID)
+    //UPDATE SECTION
+    public function updateSection($row, $value, $where)
     {
-        $sql = "SELECT * FROM teacher WHERE teacher_fname = ? AND teacher_lname = ? AND teacher_id != ?";
-        $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("ssi", $firstname, $lastname, $excludeID);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc(); // Return the first row if exists
+        $value = mysqli_real_escape_string($this->con, $value);
+        if (is_string($value)) {
+            $value = "'" . $value . "'";
+        }
+        $sql = "UPDATE `section` SET `$row` =  $value WHERE `section_code` = '$where'";
+        $result = $this->con->query($sql);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
+
+
 
 
     // UPDATE USERS

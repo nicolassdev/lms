@@ -27,7 +27,7 @@ include "../admin/includes/forms/sectionform.php";
                                 <tr>
                                     <!-- <th scope="col">#</th> -->
                                     <th scope="col">Section Code</th>
-                                    <th scope="col">Strand name</th>
+                                    <th scope="col">Strand</th>
                                     <th scope="col">Year level</th>
                                     <th scope="col">Section name</th>
                                     <th scope="col">Semester</th>
@@ -53,16 +53,16 @@ include "../admin/includes/forms/sectionform.php";
                                         echo '<td>' . $row["semester"] . '</td>';
                                         echo '<td>' . $row["adviser"] . '</td>';
                                         echo '
-                      <td class="d-flex justify-content-center">
-                          <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#edit_section' . $row['section_code'] . '">
-                              <i class="bi bi-pencil-square"></i>Edit
-                          </button>
-                      
-                          <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_section' . $row['section_code'] . '">
-                              <i class="bi bi-trash"></i>Delete
-                          </button>
-                      </td>
-                        ';
+                                        <td class="d-flex justify-content-center">
+                                            <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#edit_section' . $row['section_code'] . '">
+                                                <i class="bi bi-pencil-square"></i>Edit
+                                            </button>
+                                        
+                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_section' . $row['section_code'] . '">
+                                                <i class="bi bi-trash"></i>Delete
+                                            </button>
+                                        </td>
+                                            ';
                                         echo '</tr>';
 
                                         $count++;
@@ -70,21 +70,21 @@ include "../admin/includes/forms/sectionform.php";
 
                                         // Modal for updating section
                                         echo '
-                    <div class="modal fade" id="edit_section' . htmlspecialchars($row['section_code']) . '" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content b-grey">
-                                <div class="modal-body">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-3 text-primary">Section Details</h1><i class="bi bi-pencil-square fs-4"></i>
-                                    </div>
-                                    <form action="./includes/Operation/updateSection.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editSectionForm' . htmlspecialchars($row['section_code']) . '">
-                                        <!-- Use hidden input -->
-                                        <input type="hidden" name="section_code" value="' . htmlspecialchars($row['section_code']) . '">
+                                            <div class="modal fade" id="edit_section' . htmlspecialchars($row['section_code']) . '" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content b-grey">
+                                                        <div class="modal-body">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-3 text-primary">Section Details</h1><i class="bi bi-pencil-square fs-4"></i>
+                                                            </div>
+                                                            <form action="./includes/Operation/updateSection.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editSectionForm' . htmlspecialchars($row['section_code']) . '">
+                                                                <!-- Use hidden input -->
+                                                                <input type="hidden" name="sectionID" value="' . htmlspecialchars($row['section_code']) . '">
 
-                                        <div class="col-md-12">
-                                            <label class="form-label">STRAND NAME</label>
-                                            <select class="form-select" id="strandSelect' . htmlspecialchars($row['section_code']) . '" name="strand_code" required>
-                                                <option value="" selected disabled>Choose a strand...</option>';
+                                                                <div class="col-md-12">
+                                                                    <label class="form-label">STRAND NAME</label>
+                                                                    <select class="form-select" id="strandSelect' . htmlspecialchars($row['section_code']) . '" name="strand_code" required>
+                                                                        <option value="" selected disabled>Choose a strand...</option>';
 
                                         // Fetch and populate strand options
                                         $mySQLFunction->connection();
@@ -96,119 +96,121 @@ include "../admin/includes/forms/sectionform.php";
                                         $mySQLFunction->disconnect();
 
                                         echo '
-                                            </select>
-                                            <div class="invalid-feedback">
-                                                Please input a strand name.
-                                            </div>
-                                        </div>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                        Please input a strand name.
+                                                                    </div>
+                                                                </div>
 
-                                        <!-- GRADE LEVEL -->
-                                        <div class="col-md-12">
-                                            <label class="form-label">Grade Level</label>
-                                            <select class="form-select" name="gradelvl" id="gradelvl' . htmlspecialchars($row['section_code']) . '" required>
-                                                <option selected disabled value="">Select...</option>
-                                                <option value="GRADE-12"' . ($row['grade_lvl'] == 'GRADE-12' ? ' selected' : '') . '>GRADE-12</option>
-                                                <option value="GRADE-11"' . ($row['grade_lvl'] == 'GRADE-11' ? ' selected' : '') . '>GRADE-11</option>
-                                            </select>
-                                            <div class="invalid-feedback">
-                                                Please select a grade level.
-                                            </div>
-                                        </div>
-                                        ';
+                                                                <!-- GRADE LEVEL -->
+                                                                <div class="col-md-12">
+                                                                    <label class="form-label">Grade Level</label>
+                                                                    <select class="form-select" name="gradelvl" id="gradeLvl' . htmlspecialchars($row['section_code']) . '" required>
+                                                                        <option selected disabled value="">Select...</option>
+                                                                        <option value="GRADE-12"' . ($row['grade_lvl'] == 'GRADE-12' ? ' selected' : '') . '>GRADE-12</option>
+                                                                        <option value="GRADE-11"' . ($row['grade_lvl'] == 'GRADE-11' ? ' selected' : '') . '>GRADE-11</option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                        Please select a grade level.
+                                                                    </div>
+                                                                </div>
+                                                                ';
                                         echo '
-                                            <div class="col-md-12">
-                                                <label class="form-label">Section</label>
-                                                 <input type="text" class="form-control" name="lastname" value="' . htmlspecialchars($row['section_name']) . '" required>
-                                                <div class="invalid-feedback">
-                                                    Please select a section name.
-                                                </div>
-                                            </div>
-                                                            
+                                                                    <div class="col-md-12">
+                                                                        <label class="form-label id="section' . htmlspecialchars($row['section_code']) . '">Section</label>
+                                                                        <input type="text" class="form-control" name="section" value="' . htmlspecialchars($row['section_name']) . '" required>
+                                                                        <div class="invalid-feedback">
+                                                                            Please select a section name.
+                                                                        </div>
+                                                                    </div>
+                                                                                    
 
-                                        <div class="col-md-12">
-                                            <label class="form-label">Semester</label>
-                                            <select class="form-select" name="semester" id="semester' . htmlspecialchars($row['section_code']) . '" required>
-                                                <option selected disabled value="">Select...</option>';
+                                                                <div class="col-md-12">
+                                                                    <label class="form-label">Semester</label>
+                                                                    <select class="form-select" name="semester" id="semester' . htmlspecialchars($row['section_code']) . '" required>
+                                                                        <option selected disabled value="">Select...</option>';
 
                                         // Fetch and populate semester options
                                         $mySQLFunction->connection();
                                         $result = $mySQLFunction->getSemester();
                                         foreach ($result as $semester) {
-                                            echo '<option value="' . htmlspecialchars($semester["semester_name"]) . '">' . htmlspecialchars($semester["semester_name"]) . '</option>';
+                                            // Dynamically set selected if the current semester matches the one from the database
+                                            $selected = ($semester['semester_name'] == $row['semester_name']) ? ' selected' : '';
+                                            echo '<option value="' . htmlspecialchars($semester['semester_name']) . '"' . $selected . '>' . htmlspecialchars($semester['semester_name']) . '</option>';
                                         }
                                         $mySQLFunction->disconnect();
-                                        echo '
-                                                </select>
-                                            <div class="invalid-feedback">
-                                                Please select a semester.
-                                            </div>
-                                        </div>
 
-                                        <!-- ADVISOR SELECTION -->
-                                        <div class="col-md-12">
-                                            <label class="form-label">Adviser</label>
-                                            <select class="form-select" name="teacher_id"  required>
-                                                <option value="" selected disabled>Choose an adviser...</option>';
+                                        echo '</select>
+                                                                    <div class="invalid-feedback">
+                                                                        Please select a semester.
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- ADVISOR SELECTION -->
+                                                                <div class="col-md-12">
+                                                                    <label class="form-label">Adviser</label>
+                                                                    <select class="form-select" id="teacherSelect"  name="teacher_fname"  required>
+                                                                        <option value="" selected disabled>Choose an adviser...</option>';
 
                                         // Fetch and populate advisor options
                                         $mySQLFunction->connection();
                                         $teachers = $mySQLFunction->getTeacher();
                                         foreach ($teachers as $teacher) {
-                                            $selected = $teacher["teacher_name"] == $row['teacher_name'] ? ' selected' : '';
-                                            echo '<option value="' . htmlspecialchars($teacher["teacher_name"]) . '"' . $selected . '>' . htmlspecialchars($teacher["teacher_mname"]) . ' ' . htmlspecialchars($teacher["teacher_lname"]) . '</option>';
+                                            $selected = $teacher["teacher_fname"] == $row['teacher_fname'] ? ' selected' : '';
+                                            echo '<option value="' . htmlspecialchars($teacher["teacher_fname"]) . '"' . $selected . '>' . htmlspecialchars($teacher["teacher_fname"]) . ' ' . htmlspecialchars($teacher["teacher_lname"]) . '  </option>';
                                         }
                                         $mySQLFunction->disconnect();
 
                                         echo '
-                                            </select>
-                                            <div class="invalid-feedback">
-                                                Please select an advisor.
-                                            </div>
-                                        </div>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                        Please select an advisor.
+                                                                    </div>
+                                                                </div>
 
-                                        <div class="d-flex justify-center gap-2">
-                                            <div class="col-6">
-                                                <button name="submit" class="btn btn-primary w-100 mt-3 mb-2" type="submit">Update</button>
+                                                                <div class="d-flex justify-center gap-2">
+                                                                    <div class="col-6">
+                                                                        <button name="submit" class="btn btn-primary w-100 mt-3 mb-2" type="submit">Update</button>
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                    <button type="button" class="btn btn-outline-secondary w-100 mt-3 mb-2" data-bs-dismiss="modal" aria-label="Close" onclick="resetSection(\'' . htmlspecialchars($row['section_code']) . '\')">Cancel</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-6">
-                                              <button type="button" class="btn btn-outline-secondary w-100 mt-3 mb-2" data-bs-dismiss="modal" aria-label="Close" onclick="resetSection(\'' . htmlspecialchars($row['section_code']) . '\')">Cancel</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
- 
-                    <script>
-                    function resetSection(id) {
-                             var form = document.getElementById("editSectionForm" + id);
-                                if (form) {
-                                 form.reset(); // Clears the form fields
-                                form.classList.remove("was-validated"); // Removes the validation styling
-                                }
-                             }
-                    </script>
-                    ';
+                        
+                                            <script>
+                                            function resetSection(id) {
+                                                    var form = document.getElementById("editSectionForm" + id);
+                                                        if (form) {
+                                                        form.reset(); // Clears the form fields
+                                                        form.classList.remove("was-validated"); // Removes the validation styling
+                                                        }
+                                                    }
+                                            </script>
+                                            ';
 
                                         // Modal for deleting section
                                         echo '
-                                  <div class="modal fade" id="del_section' . $row['section_code'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-                                      <div class="modal-dialog modal-dialog-centered modal-md">
-                                          <div class="modal-content">
-                                              <div class="modal-body text-center mt-5">
-                                                  <div class="text-danger">
-                                                      <i class="bi bi-trash fs-1 "></i><br><br>
-                                                  </div>
-                                                  <h5>Are you sure you want to delete '  . $row['section_code'] . ' ?</h5>
-                                              </div>
-                                              <div class="d-flex justify-content-center mt-5 mb-5">
-                                                  <a href="includes/Operation/deleteSection.php?id='  . $row['section_code'] . '" class="btn btn-danger me-3" style="width: 120px;">Remove</a>
-                                                  <button class="btn btn-outline-secondary" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>';
+                                            <div class="modal fade" id="del_section' . $row['section_code'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-md">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body text-center mt-5">
+                                                            <div class="text-danger">
+                                                                <i class="bi bi-trash fs-1 "></i><br><br>
+                                                            </div>
+                                                            <h5>Are you sure you want to delete '  . $row['section_code'] . ' ?</h5>
+                                                        </div>
+                                                        <div class="d-flex justify-content-center mt-5 mb-5">
+                                                            <a href="includes/Operation/deleteSection.php?id='  . $row['section_code'] . '" class="btn btn-danger me-3" style="width: 120px;">Remove</a>
+                                                            <button class="btn btn-outline-secondary" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>';
                                     }
                                 } else {
                                     echo '<tr>

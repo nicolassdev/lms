@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Error </title>
+  <title>404 </title>
   <link rel="icon" type="png" href="../assets/img/csi.png">
   <link
     href="../assets/css/bootstrap.min.css"
