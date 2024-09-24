@@ -66,7 +66,7 @@
     <header>
         <div class="container-fluid">
             <div class="row mt-5">
-                <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar offcanvas-md offcanvas-start">
+                <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar offcanvas-md offcanvas-start"style="max-width: 250px;">
                     <div class="position-sticky">
                         <h3 class="mb-4">Dashboard</h3>
                         <ul class="nav flex-column">

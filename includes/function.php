@@ -80,19 +80,15 @@ class myDataBase
 
     public function generateTeacherID()
     {
-        $num = "1234567890";
+        $num = "1325476980";
         $rand = "";
 
-        for ($i = 0; $i < 9; $i++) {
-            $rand = $rand . $num[rand(0, strlen($num) - 1)];
-            if ($i == 2) {
+        for ($i = 0; $i < 4; $i++) {
+            if ($i == 0) {
                 $rand = "TEACHER-";
             }
-            if ($i == 5) {
-                $rand .= "-";
-            }
+            $rand = $rand . $num[rand(0, strlen($num) - 1)];
         }
-
         return $rand;
     }
 
@@ -500,27 +496,45 @@ class myDataBase
 
 
     //GET STRAND NAME
-    public function getStrand($row = null, $value = null, $limit = 8, $offset = 0)
-    {
-        // Parameterized query to prevent SQL injection
-        if ($row != null && $value != null) {
+    // public function getStrand($row = null, $value = null, $limit = 8, $offset = 0)
+    // {
+    //     // Parameterized query to prevent SQL injection
+    //     if ($row != null && $value != null) {
 
-            $stmt = $this->con->prepare("SELECT * FROM `strand` WHERE `$row` = ?");
-            $stmt->bind_param('s', $value); // 's' denotes the type (string)
-            $stmt->execute();
-            $stored = $stmt->get_result()->fetch_assoc();
-            $stmt->close();
+    //         $stmt = $this->con->prepare("SELECT * FROM `strand` WHERE `$row` = ?");
+    //         $stmt->bind_param('s', $value); // 's' denotes the type (string)
+    //         $stmt->execute();
+    //         $stored = $stmt->get_result()->fetch_assoc();
+    //         $stmt->close();
+    //         return $stored;
+    //     } else {
+    //         // Adjust the limit and offset to ensure at least 8 records are fetched
+    //         $stmt = $this->con->prepare("SELECT * FROM `strand` ORDER BY `strand_code` LIMIT ? OFFSET ?");
+    //         $stmt->bind_param('ii', $limit, $offset); // 'ii' denotes the types (integer, integer)
+    //         $stmt->execute();
+    //         $stored = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    //         $stmt->close();
+    //         return $stored;
+    //     }
+    // }
+
+
+    public function getStrand($row = null, $value = null)
+    {
+        if ($row != null &&  $value != null) {
+
+            $sql = "SELECT * FROM `strand` WHERE `$row` = '$value'";
+            $stored = ($this->con->query($sql))->fetch_assoc();
             return $stored;
         } else {
-            // Adjust the limit and offset to ensure at least 8 records are fetched
-            $stmt = $this->con->prepare("SELECT * FROM `strand` ORDER BY `strand_code` LIMIT ? OFFSET ?");
-            $stmt->bind_param('ii', $limit, $offset); // 'ii' denotes the types (integer, integer)
-            $stmt->execute();
-            $stored = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-            $stmt->close();
+
+            $sql = "SELECT * FROM `strand` ORDER BY `strand_name`";
+            $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
+
             return $stored;
         }
     }
+
 
     //  GET GRADELEVEL LIST 
     public function getStrandList($row = null, $value = null)
@@ -557,7 +571,7 @@ class myDataBase
             CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS adviser FROM `section`
             INNER JOIN `strand`
             ON section.strand_code = strand.strand_code
-            LEFT JOIN `teacher`
+            INNER JOIN `teacher`
             ON section.teacher_id = teacher.teacher_id
             WHERE section.$row = '$value'";
 

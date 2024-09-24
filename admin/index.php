@@ -36,6 +36,9 @@ include "./includes/alert-modal.php";
         case "section":
             require_once 'section.php';
             break;
+        case "enrollment":
+            require_once 'enrollment.php';
+            break;
         case "subject":
             require_once 'subject.php';
             break;

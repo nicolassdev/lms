@@ -24,7 +24,7 @@
 
                     <div class="col-md-12">
                         <label class="form-label">LRN</label>
-                        <input type="text" class="form-control" name="username" id="username" required>
+                        <input type="text" class="form-control" name="username" id="username" maxlength="12" required>
                     </div>
                     <div class="col-md-12">
                         <label class="form-label">Password</label>
@@ -34,7 +34,7 @@
                     <div class="modal-header">
                         <h1 class="modal-title fs-3 text-primary">Student Details</h1>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <label class="form-label">LRN</label>
                         <div class="input-group input-group has-validation">
                             <input type="numeric" class="form-control" name="contact" aria-describedby="inputGroupPrepend"
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <label class="form-label">Last name</label>
                         <input type="text" class="form-control" id="lastName" required>
                     </div>
@@ -52,7 +52,7 @@
                         <label class="form-label">First name</label>
                         <input type="text" class="form-control" id="firstName" required>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-12">
                         <label class="form-label">Middle name</label>
                         <input type="text" class="form-control" id="middleName">
                     </div>

@@ -142,7 +142,7 @@ include "../admin/includes/forms/teacherdelete.php";
 
                                         <div class="col-md-12">
                                             <label for="dob' . htmlspecialchars($row['teacher_id']) . '" class="form-label">Date of Birth</label>
-                                            <input type="date" class="form-control" name="dob" id="dob' . htmlspecialchars($row['teacher_id']) . '" value="' . htmlspecialchars($row['teacher_dob']) . '" required>
+                                            <input type="date" class="form-control" name="dob" id="dob' . htmlspecialchars($row['teacher_dob']) . '" value="' . htmlspecialchars($row['teacher_dob']) . '" required>
                                             <div class="invalid-feedback">
                                                 Please enter a valid date of birth.
                                             </div>

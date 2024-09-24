@@ -30,14 +30,13 @@ body {
 }
 
 .sidebar {
-  background-color: #333;
   color: #fff;
   padding: 20px;
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  width: 230px;
+  width: 200px;
   overflow-y: auto;
 }
 
@@ -73,7 +72,7 @@ body {
 }
 
 .sidebar .nav-link {
-  padding: 10px 20px;
+  padding: 10px 50px;
   font-size: 1rem;
   color: #fff;
   transition: background-color 0.3s ease, color 0.3s ease;

@@ -16,7 +16,6 @@ if (!isset($_POST["submit"])) {
 
         // Fetch the current teacher details
         $sectionRow = $mySQLFunction->getSection("section_code", $sectionID);
-        $semrow = $mySQLFunction->getSemester("semester_name", $semid);
 
         if (isset($_POST["submit"])) {
             // Sanitize and prepare input
@@ -24,7 +23,7 @@ if (!isset($_POST["submit"])) {
             $strand = strtoupper(trim($_POST["strand_code"]));
             $gradelvl = strtoupper(trim($_POST["gradelvl"]));
             $section = strtoupper(trim($_POST["section"]));
-            $semester = trim($_POST["semester"]);
+            $semester = $_POST["semester"];
             $teacher_id = strtoupper(trim($_POST["teacher_id"]));
 
             // Check if the new firstname and lastname already exist for another teacher

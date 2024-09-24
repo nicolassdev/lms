@@ -96,6 +96,12 @@
                                     <i class="bi bi-building-fill-add me-1"></i>Section
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index.php?page=enrollment">
+                                <i class="bi bi-person-lines-fill me-1"></i>Enrollment
+                                </a>
+                            </li>
+
 
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=subject">
