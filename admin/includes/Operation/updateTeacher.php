@@ -33,7 +33,7 @@ if (!isset($_POST["submit"])) {
 
             if ($existingTeacher) {
                 // If the same firstname and lastname exist and the ID does not match, prevent update
-                $_SESSION['teacherupdate_error'] = "A teacher with the same first and last name already exists. Please choose different details.";
+                $_SESSION['teacherupdate_error'] = "Teacher Information with the same first and last name already exists. Please choose different information.";
                 header("location:../../index.php?page=teacher");
                 exit();
             }

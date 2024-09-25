@@ -272,6 +272,17 @@ class myDataBase
         return $result->fetch_assoc(); // Return the first row if exists
     }
 
+    public function checkStudentExist($firstname, $lastname, $excludeID)
+    {
+        $sql = "SELECT * FROM student WHERE stu_fname = ? AND stu_lname = ? AND stu_lrn != ?";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("ssi", $firstname, $lastname, $excludeID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc(); // Return the first row if exists
+    }
+
+
 
     public function checkSectionExist($strand, $section, $adviser, $excludeID)
     {
@@ -344,6 +355,18 @@ class myDataBase
         $sql = "SELECT * FROM $table WHERE semester_name = ?";
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("s", $semester);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0; // Returns true if a record exists, false otherwise
+    }
+
+
+
+    public function checkExistingSY($table, $sy)
+    {
+        $sql = "SELECT * FROM $table WHERE school_year = ?";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $sy);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->num_rows > 0; // Returns true if a record exists, false otherwise
@@ -797,6 +820,24 @@ class myDataBase
             return false;
         }
     }
+
+    // UPDATE STUDENT
+    public function updateStudent($row, $value, $where)
+    {
+        $value = mysqli_real_escape_string($this->con, $value);
+        if (is_string($value)) {
+            $value = "'" . $value . "'";
+        }
+        $sql = "UPDATE `student` SET `$row` =  $value WHERE `stu_lrn` = '$where'";
+        $result = $this->con->query($sql);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     //UPDATE SECTION
     public function updateSection($row, $value, $where)

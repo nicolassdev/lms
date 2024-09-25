@@ -43,8 +43,10 @@
             <!-- Profile Dropdown (Visible on all screen sizes) -->
             <div class="dropdown d-none d-lg-block ms-auto">
                 <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="ms-2 d-none d-sm-inline me-2">Principal</span>
+                    <!-- <span class="ms-2 d-none d-sm-inline me-2">Principal</span> -->
+                    <i class="bi bi-gear me-1 fs-4 text-black"></i>
                 </a>
+
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                     <li><a class="dropdown-item" href="?page=settings">Settings</a></li>
                     <li><a class="dropdown-item" href="?page=admin">Profile</a></li>
@@ -62,7 +64,7 @@
         <div class="container-fluid">
             <div class="row mt-4">
                 <!-- Sidebar -->
-                <nav id="sidebar" class="col-md-3 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
+                <nav id="sidebar" class="col-md-3 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 230px;">
                     <div class="position-sticky">
                         <h3 class="mb-4 text-white">Dashboard</h3>
                         <ul class="nav flex-column">
@@ -72,7 +74,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=users">
+                                <a class="nav-link active sm-5" href="index.php?page=users">
                                     <i class="bi bi-person-vcard me-1"></i>Users
                                 </a>
                             </li>

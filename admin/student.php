@@ -38,14 +38,12 @@ include "../admin/includes/forms/studentform.php";
             <div class="col-12">
                 <div class="data-table">
 
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-5 ms-3 me-3">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3 ms-3 me-3">
                         <h3 class="text-black">List of Student</h3>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#student" data-bs-whatever="@fat">
                             <i class="bi bi-person-plus-fill me-1"></i>Student
                         </button>
                     </div>
-
-
                     <!-- NOTIFICATION -->
                     <?php
                     if (isset($_SESSION['deleted'])) {
@@ -133,13 +131,13 @@ include "../admin/includes/forms/studentform.php";
                                                             <div class="modal-header">
                                                                 <h1 class="modal-title fs-3 text-primary">Student Details</h1><i class="bi bi-pencil-square fs-4"></i>
                                                             </div>
-                                                            <form action="./includes/Operation/updateTeacher.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editTeacherForm' . htmlspecialchars($row['stu_lrn']) . '">
+                                                            <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editTeacherForm' . htmlspecialchars($row['stu_lrn']) . '">
                                                                 <!-- Use hidden input -->
                                                                 <input type="hidden" name="lrnID" value="' . htmlspecialchars($row['stu_lrn']) . '">
 
                                                                 <div class="col-md-12">
                                                                     <label for="firstName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">First name</label>
-                                                                    <input type="text" class="form-control" name="fname" value="' . htmlspecialchars($row['stu_fname']) . '" required>
+                                                                    <input type="text" class="form-control" name="firstname" value="' . htmlspecialchars($row['stu_fname']) . '" required>
                                                                     <div class="invalid-feedback">
                                                                         Please enter a valid first name.
                                                                     </div>
@@ -147,12 +145,12 @@ include "../admin/includes/forms/studentform.php";
 
                                                                 <div class="col-md-12">
                                                                     <label for="middleName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Middle name</label>
-                                                                    <input type="text" class="form-control" name="mname" value="' . htmlspecialchars($row['stu_mname']) . '">
+                                                                    <input type="text" class="form-control" name="middlename" value="' . htmlspecialchars($row['stu_mname']) . '">
                                                                 </div>
 
                                                                 <div class="col-md-12">
                                                                     <label for="lastName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Last name</label>
-                                                                    <input type="text" class="form-control" name="lname" value="' . htmlspecialchars($row['stu_lname']) . '" required>
+                                                                    <input type="text" class="form-control" name="lastname" value="' . htmlspecialchars($row['stu_lname']) . '" required>
                                                                     <div class="invalid-feedback">
                                                                         Please enter a valid last name.
                                                                     </div>
@@ -185,6 +183,11 @@ include "../admin/includes/forms/studentform.php";
                                                                         <option disabled value="">Choose...</option>
                                                                         <option value="male"' . ($row['stu_gender'] == 'MALE' ? ' selected' : '') . '>MALE</option>
                                                                         <option value="female"' . ($row['stu_gender'] == 'FEMALE' ? ' selected' : '') . '>FEMALE</option>
+                                                                        <option value="tmale"' . ($row['stu_gender'] == 'TRANSGENDER MALE' ? ' selected' : '') . '>TRANSGENDERMALE</option>
+                                                                        <option value="tfemale"' . ($row['stu_gender'] == 'TRANSGENDER FEMALE' ? ' selected' : '') . '>TRANSGENDERFEMALE</option>
+                                                                        <option value="nb"' . ($row['stu_gender'] == 'NON-BINARY' ? ' selected' : '') . '>NON-BINARY</option>
+                                                                        <option value="pnts"' . ($row['stu_gender'] == 'PREFER NOT TO SAY' ? ' selected' : '') . '>PREFER NOT TO SAY</option>
+
                                                                     </select>
                                                                     <div class="invalid-feedback">
                                                                         Please select a gender.
@@ -193,7 +196,7 @@ include "../admin/includes/forms/studentform.php";
 
                                                                 <div class="col-md-12">
                                                                     <label for="email' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Email</label>
-                                                                    <input type="text" class="form-control" value="' . htmlspecialchars($row['stu_email']) . '"  placeholder="Enter your email address" name="email" pattern=".*@(gmail|yahoo)\.com$" required>
+                                                                    <input type="text" name="email" class="form-control" value="' . htmlspecialchars($row['stu_email']) . '"  placeholder="Enter your email address" pattern=".*@(gmail|yahoo)\.com$" required>
                                                                     <div class="invalid-feedback">
                                                                         Your email must contain an "@" symbol or gmail address ending with ".com".
                                                                     </div>
@@ -247,7 +250,7 @@ include "../admin/includes/forms/studentform.php";
                                                                     <small style="color:red">( Please enter a valid 10-digit number starting with 9. )</small>
                                                                     <div class="input-group has-validation">
                                                                         <span class="input-group-text bg-primary" style="color:white" id="inputGroupPrepend">+63</span>
-                                                                        <input type="text" class="form-control" name="contact" value="' . htmlspecialchars($row['parent_contact']) . '" aria-describedby="inputGroupPrepend" pattern="9\\d{9}" maxlength="10" required>
+                                                                        <input type="text" class="form-control" name="pcontact" value="' . htmlspecialchars($row['parent_contact']) . '" aria-describedby="inputGroupPrepend" pattern="9\\d{9}" maxlength="10" required>
                                                                         <div class="invalid-feedback">
                                                                             Please enter a valid 10-digit number starting with 9.
                                                                         </div>

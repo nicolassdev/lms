@@ -18,7 +18,7 @@ $mySQLFunction->disconnect();
                         <?php
                         date_default_timezone_set("Asia/Manila");
                         echo '<div class="date-display">Today is ' . date("M d, Y l") . '</div>';
-                        echo '<div class="date-display text-primary">Time ' . date("h:i A") . '</div>';
+                        echo '<div class="date-display">Time ' . date("h:i A") . '</div>';
                         ?>
                     </div>
 

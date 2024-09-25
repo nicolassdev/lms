@@ -10,10 +10,22 @@ if (!isset($_POST["submit"])) {
     $syear = trim($_POST["schoolyear"]);
 
     $mySQLFunction->connection();
-    $mySQLFunction->insertSy("sy", $syear);
 
-    $_SESSION['insert'] = "School year has been inserted successfuly";
-    header("Location: ../index.php?page=schoolyear");
-    exit();
+    // Check if the semester already exists
+    $existingSy = $mySQLFunction->checkExistingSY("sy", $syear);
+
+
+    if ($existingSy) {
+        // If the semester already exists, redirect back with an error
+        $_SESSION['error_insert'] = "School year has been already taken.";
+        header("Location: ../index.php?page=schoolyear");
+    } else {
+        $mySQLFunction->insertSy("sy", $syear);
+
+        $_SESSION['insert'] = "School year has been inserted successfuly";
+        header("Location: ../index.php?page=schoolyear");
+    }
+
     $mySQLFunction->disconnect();
+    exit();
 }
