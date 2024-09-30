@@ -32,7 +32,7 @@ $mySQLFunction->disconnect();
                                 echo '<div class="date-display">Semester: ' . htmlspecialchars($activeSem[$index]) . '</div>';
                             }
                         } else {
-                            echo '<div class="alert alert-warning">No school year or semester found.</div>';
+                            echo '<div class="alert alert-warning">No school year and semester found.</div>';
                         }
                         ?>
                     </div>

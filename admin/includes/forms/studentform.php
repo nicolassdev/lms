@@ -4,13 +4,13 @@
         <div class="modal-content b-grey">
             <div class="modal-body">
 
+
                 <!-- Form -->
                 <!-- action="./includes/student-inc.php " method="POST" -->
                 <form id="studentForm" action="./includes/student-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation" novalidate>
                     <div class="modal-header">
                         <h1 class="modal-title fs-3 text-primary">Create Account</h1>
                     </div>
-
                     <div class="col-md-12">
                         <label class="form-label">User type</label>
                         <select class="form-select" name="role" required>

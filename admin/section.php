@@ -106,7 +106,7 @@ include "../admin/includes/forms/sectionform.php";
                                         $strands = $mySQLFunction->getStrand();
                                         foreach ($strands as $strand) {
                                             $selected = $strand["strand_name"] == $row['strand_name'] ? ' selected' : '';
-                                            echo '<option value="' . htmlspecialchars($strand["strand_name"]) . '"' . $selected . '>' . htmlspecialchars($strand["strand_name"]) . '</option>';
+                                            echo '<option value="' . htmlspecialchars($strand["strand_name"]) . '"' . $selected . '>' . htmlspecialchars($strand["strand_desc"]) . '</option>';
                                         }
                                         $mySQLFunction->disconnect();
 

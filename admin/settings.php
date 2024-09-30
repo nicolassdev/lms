@@ -21,9 +21,9 @@ $mySQLFunction->disconnect();
 
 
             <button class="btn btn-primary mb-3 ms-3"><a class="nav-link " href="index.php?page=semester">Semester</a></button>
-            <button class="btn btn-primary mb-3"><a class="nav-link " href="index.php?page=schoolyear">School year</a></button>
+            <button class="btn btn-primary mb-3"><a class="nav-link " href="index.php?page=schoolyear">School Year</a></button>
             <!-- Edit button -->
-            <button type="button" class="btn btn-secondary mb-3 me-3" title="Edit" data-bs-toggle="modal" data-bs-target="#setting" data-bs-whatever="@fat">
+            <button type="button" class="btn btn-secondary mb-3" title="Edit" data-bs-toggle="modal" data-bs-target="#setting" data-bs-whatever="@fat">
                 <i class="bi bi-pencil-square"></i>
             </button>
         </div>

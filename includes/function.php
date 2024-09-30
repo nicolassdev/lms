@@ -60,22 +60,6 @@ class myDataBase
     }
 
 
-    // RANDOM STUDENT ID
-    public function generateStudentID()
-    {
-        $num = "1234567890";
-        $rand = "";
-
-        for ($i = 0; $i < 4; $i++) {
-            if ($i == 0) {
-                $rand = "SUB-";
-            }
-            $rand = $rand . $num[rand(0, strlen($num) - 1)];
-        }
-        return $rand;
-    }
-
-
     // RANDOM TEACHER ID
 
     public function generateTeacherID()
@@ -559,6 +543,24 @@ class myDataBase
     }
 
 
+
+    public function getDescStrand($row = null, $value = null)
+    {
+        if ($row != null &&  $value != null) {
+
+            $sql = "SELECT * FROM `strand` WHERE `$row` = '$value'";
+            $stored = ($this->con->query($sql))->fetch_assoc();
+            return $stored;
+        } else {
+
+            $sql = "SELECT * FROM `strand` ORDER BY `strand_desc`";
+            $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
+
+            return $stored;
+        }
+    }
+
+
     //  GET GRADELEVEL LIST 
     public function getStrandList($row = null, $value = null)
     {
@@ -585,7 +587,7 @@ class myDataBase
     }
 
 
-
+    //GET LIST OF SECTION
     public function getSection($row = null, $value = null)
     {
         if ($row != null && $value != null) {
@@ -615,6 +617,69 @@ class myDataBase
             return $stored;
         }
     }
+
+
+    //GET LIST OF ENROLLED
+    public function getEnroll($row = null, $value = null)
+    {
+        if ($row != null && $value != null) {
+            $sql = "SELECT
+                `enroll`.`stu_lrn`,
+                CONCAT(`student`.`stu_fname`,' ', `student`.`stu_lname`) AS student,
+                `section`.`section_code`,
+                `section`.`strand_code`,
+                `strand`.`strand_name`,  -- Fetching the strand_name from the strand table
+                `section`.`section_name`,
+                `section`.`grade_lvl`,
+                `section`.`teacher_id`,
+                CONCAT(`teacher`.`teacher_fname`,' ', `teacher`.`teacher_lname`) AS adviser,
+                `enroll`.`section_code`,
+                `enroll`.`semester` AS enroll_semester,
+                `enroll`.`date_enroll`,
+                `enroll`.`enroll_status`,
+                `enroll`.`current_school`,
+                `enroll`.`school_id`,
+                `enroll`.`school_address`,
+                `enroll`.`school_type`
+            FROM `enroll`
+            INNER JOIN `student` ON `enroll`.`stu_lrn` = `student`.`stu_lrn`
+            INNER JOIN `section` ON `enroll`.`section_code` = `section`.`section_code`
+            INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
+            INNER JOIN `teacher` ON `section`.`teacher_id` = `teacher`.`teacher_id` -- Joining the teacher table
+            WHERE `enroll`.`$row` = '$value'";
+
+            $stored = ($this->con->query($sql))->fetch_assoc();
+
+            return $stored;
+        } else {
+            $sql = "SELECT
+                CONCAT(`student`.`stu_fname`,' ', `student`.`stu_lname`) AS student,
+                `section`.`strand_code`,
+                `strand`.`strand_name`,  -- Fetching the strand_name from the strand table
+                `section`.`section_name`,
+                `section`.`teacher_id`,
+                CONCAT(`teacher`.`teacher_fname`,' ', `teacher`.`teacher_lname`) AS adviser,
+                `enroll`.`semester` AS enroll_semester,
+                `enroll`.`date_enroll`,
+                `enroll`.`enroll_status`,
+                `enroll`.`current_school`,
+                `enroll`.`school_id`,
+                `enroll`.`school_address`,
+                `enroll`.`school_type`
+            FROM `enroll`
+            INNER JOIN `student` ON `enroll`.`stu_lrn` = `student`.`stu_lrn`
+            INNER JOIN `section` ON `enroll`.`section_code` = `section`.`section_code`
+            INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
+            INNER JOIN `teacher` ON `section`.`teacher_id` = `teacher`.`teacher_id` -- Joining the teacher table
+            ORDER BY `enroll`.`stu_lrn`";
+
+            $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
+
+            return $stored;
+        }
+    }
+
+
 
 
 
@@ -647,6 +712,7 @@ class myDataBase
         } else {
 
             $sql = "SELECT * FROM `student` ORDER BY `stu_fname`";
+
             $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
 
             return $stored;

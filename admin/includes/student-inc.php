@@ -38,6 +38,16 @@ $uid = trim($mySQLFunction->generateUserID());
 $mySQLFunction->connection();
 
 try {
+
+    // Check if the LRN ID and username are the same
+    if ($lrnID !== $username) {
+        // throw new Exception("The LRN and Username must be the same. No data will be inserted.");
+        $_SESSION['check_id'] = "The LRN and Username must be the same. No data will be inserted.";
+        header("Location: ../index.php?page=student");
+        exit(0);
+    }
+
+
     // Check if username already exists
     $checkUsernameSql = "SELECT * FROM `users` WHERE `username` = ?";
     $stmt = $mySQLFunction->con->prepare($checkUsernameSql);
@@ -84,4 +94,4 @@ try {
     // Close the database connection
     $mySQLFunction->disconnect();
 }
-exit();
+exit(0);

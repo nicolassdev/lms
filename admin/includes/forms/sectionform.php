@@ -14,19 +14,22 @@
                      <div class="col-md-12">
                          <label class="form-label">STRAND NAME</label>
                          <select class="form-select" id="strandSelect" name="strand_code" required>
-                             <option value="" selected disabled>Choose a strand...</option>
+                             <option value="" selected disabled>Select a strand...</option>
                              <?php
                                 $mySQLFunction->connection();
                                 $result = $mySQLFunction->getStrand();
                                 foreach ($result as $row) {
-                                    echo '<option value="' . $row["strand_code"] . '">' . $row["strand_name"] . ' </option>';
+                                    echo '<option value="' . $row["strand_code"] . '">' . $row["strand_desc"] . ' </option>';
                                 }
+
                                 ?>
                          </select>
                          <div class="invalid-feedback">
                              Please input a strand name.
                          </div>
                      </div>
+
+
 
                      <!-- GRADE LEVEL -->
                      <div class="col-md-12">
@@ -75,7 +78,10 @@
                              <?php
                                 $result = $mySQLFunction->getTeacher();
                                 foreach ($result as $row) {
-                                    echo '<option value="' . $row["teacher_id"] . '">' . $row["teacher_fname"] . ' ' . $row["teacher_mname"] . ' ' . $row["teacher_lname"] . '</option>';
+                                    if (($mySQLFunction->checkRowCount("section", "teacher_id", $row["teacher_id"])) == 1) {
+                                    } else {
+                                        echo '<option value="' . $row["teacher_id"] . '">' . $row["teacher_fname"] . ' ' . $row["teacher_mname"] . ' ' . $row["teacher_lname"] . '</option>';
+                                    }
                                 }
                                 ?>
                          </select>
