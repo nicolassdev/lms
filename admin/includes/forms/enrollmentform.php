@@ -101,7 +101,7 @@ $mySQLFunction->disconnect();
                         <input type="text" class="form-control" id="adviserInput" readonly>
                     </div>
 
-<!-- 
+                    <!-- 
                     <div class="col-md-12">
                         <label class="form-label">Semester</label>
                         <select class="form-select" name="semester" id="semester" required>
@@ -159,8 +159,8 @@ $mySQLFunction->disconnect();
 
                     <label class="form-label">Requirements Submitted</label>
                     <div class="col-md-12">
-                        SF9 <input class="me-3" type="checkbox" name="requirement[]" value="SF9" >
-                        SF10 <input class="me-3" type="checkbox" name="requirement[]" value="SF10" >
+                        SF9 <input class="me-3" type="checkbox" name="requirement[]" value="SF9">
+                        SF10 <input class="me-3" type="checkbox" name="requirement[]" value="SF10">
                         PSA Birth Certificate <input class="me-3" type="checkbox" name="requirement[]" value="PSA Birth Certificate">
                         LCR Birth Certificate <input class="me-3" type="checkbox" name="requirement[]" value="LCR Birth Certificate">
                         GMCC <input class="me-3" type="checkbox" name="requirement[]" value="GMCC">

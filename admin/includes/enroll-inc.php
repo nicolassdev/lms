@@ -4,7 +4,7 @@ session_start(); // Start the session
 if (!isset($_POST["submit"])) {
     header("Location: index.php?page=enrollment");
     exit();
-} 
+}
 
 include "../../includes/dbh-inc.php";
 
@@ -38,7 +38,7 @@ try {
     $insertEnrolled = "
     INSERT INTO `enroll` (`stu_lrn`, `section_code`, `semester`, `school_year`, `date_enroll`, `enroll_status`, `current_school`, `school_id`, `school_address`, `school_type`, `requirements`) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    
+
     $stmt = $mySQLFunction->con->prepare($insertEnrolled);
 
     // Bind the correct number of parameters
