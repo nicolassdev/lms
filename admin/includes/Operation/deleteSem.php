@@ -15,3 +15,7 @@ if (!isset($_GET["id"])) {
     exit();
     $mySQLFunction->disconnect();
 }
+
+ 
+
+ 

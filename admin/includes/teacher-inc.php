@@ -7,51 +7,49 @@ if (!isset($_POST["submit"])) {
     exit();
 }
 
-// Include database connection and helper functions
-include "../../includes/dbh-inc.php";
+include "../../includes/dbh-inc.php"; // Include database connection and helper functions
 
-// Set timezone
-date_default_timezone_set('Asia/Manila');
+date_default_timezone_set('Asia/Manila'); // Set timezone
 
 // Initialize variables with POST data and sanitize them
-$username = isset($_POST["username"]) ? trim($_POST["username"]) : null;
-$fname = isset($_POST["firstname"]) ? strtoupper(trim($_POST["firstname"])) : null;
-$lname = isset($_POST["lastname"]) ? strtoupper(trim($_POST["lastname"])) : null;
-$userpwd = isset($_POST["password"]) ? trim($_POST["password"]) : null;
-$role = isset($_POST["role"]) ? strtoupper(trim($_POST["role"])) : null;
-$contact = isset($_POST["contact"]) ? trim($_POST["contact"]) : null;
-$gender = isset($_POST["gender"]) ? strtoupper(trim($_POST["gender"])) : null;
-$dob = isset($_POST["dob"]) ? trim($_POST["dob"]) : null;
-$status = isset($_POST["status"]) ? strtoupper(trim($_POST["status"])) : null;
-$address = isset($_POST["address"]) ? strtoupper(trim($_POST["address"])) : null;
+$username = trim($_POST["username"] ?? null);
+$fname = strtoupper(trim($_POST["firstname"] ?? null));
+$lname = strtoupper(trim($_POST["lastname"] ?? null));
+$userpwd = trim($_POST["password"] ?? null);
+$role = strtoupper(trim($_POST["role"] ?? null));
+$contact = trim($_POST["contact"] ?? null);
+$gender = strtoupper(trim($_POST["gender"] ?? null));
+$dob = trim($_POST["dob"] ?? null);
+$status = strtoupper(trim($_POST["status"] ?? null));
+$address = strtoupper(trim($_POST["address"] ?? null));
 
 // Generate unique IDs
 $uid = trim($mySQLFunction->generateUserID());
 $teacherID = trim($mySQLFunction->generateTeacherID());
 
-// Establish database connection
-$mySQLFunction->connection();
+$mySQLFunction->connection(); // Establish database connection
 
 try {
-    // Check if username already exists
-    $checkUsernameSql = "SELECT * FROM `users` WHERE `username` = ?";
-    $stmt = $mySQLFunction->con->prepare($checkUsernameSql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $checkUsernameResult = $stmt->get_result();
+    // Start transaction
+    $mySQLFunction->con->begin_transaction();
 
-    if ($checkUsernameResult->num_rows > 0) {
+    // Use a single query to check both username and teacher's name
+    $checkSql = "
+        SELECT 
+            (SELECT COUNT(*) FROM `users` WHERE `username` = ?) AS username_exists,
+            (SELECT COUNT(*) FROM `teacher` WHERE `teacher_fname` = ? AND `teacher_lname` = ?) AS teacher_exists
+    ";
+    $stmt = $mySQLFunction->con->prepare($checkSql);
+    $stmt->bind_param("sss", $username, $fname, $lname);
+    $stmt->execute();
+    $stmt->bind_result($username_exists, $teacher_exists);
+    $stmt->fetch();
+    $stmt->close();
+
+    if ($username_exists > 0) {
         throw new Exception("Username already taken. No data will be inserted.");
     }
-
-    // Check if teacher with the same name already exists
-    $checkTeacherSql = "SELECT * FROM `teacher` WHERE `teacher_fname` = ? AND `teacher_lname` = ?";
-    $stmt = $mySQLFunction->con->prepare($checkTeacherSql);
-    $stmt->bind_param("ss", $fname, $lname);
-    $stmt->execute();
-    $checkTeacherResult = $stmt->get_result();
-
-    if ($checkTeacherResult->num_rows > 0) {
+    if ($teacher_exists > 0) {
         throw new Exception("Teacher with this first name and last name already exists. No data will be inserted.");
     }
 
@@ -59,19 +57,44 @@ try {
     $encryptedPassword = $userpwd ? $mySQLFunction->encrypt($userpwd) : null;
 
     // Insert data into USERS table
-    $credentialColumns = ['id', 'username', 'password', 'role', 'added_date'];
-    $credentialValues = [$uid, $username, $encryptedPassword, $role, date('Y-m-d H:i:s')];
-    $mySQLFunction->insert("USERS", $credentialColumns, $credentialValues);
+    $insertUserSql = "INSERT INTO USERS (id, username, password, role, added_date) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $mySQLFunction->con->prepare($insertUserSql);
+    $stmt->bind_param("sssss", $uid, $username, $encryptedPassword, $role, date('Y-m-d H:i:s'));
+    $stmt->execute();
+    $stmt->close();
 
     // Insert data into TEACHER table
-    $teacherColumns = ['teacher_id', 'teacher_fname', 'teacher_mname', 'teacher_lname', 'teacher_contact', 'teacher_gender', 'teacher_dob', 'status', 'teacher_address', 'id'];
-    $teacherValues = [$teacherID, $fname, isset($_POST["middlename"]) ? strtoupper(trim($_POST["middlename"])) : null, $lname, $contact, $gender, $dob, $status, $address, $uid];
-    $mySQLFunction->insert("TEACHER", $teacherColumns, $teacherValues);
+    $insertTeacherSql = "
+        INSERT INTO TEACHER (teacher_id, teacher_fname, teacher_mname, teacher_lname, teacher_contact, teacher_gender, teacher_dob, status, teacher_address, id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ";
+    $stmt = $mySQLFunction->con->prepare($insertTeacherSql);
+    $stmt->bind_param(
+        "ssssssssss",
+        $teacherID,
+        $fname,
+        strtoupper(trim($_POST["middlename"] ?? null)),
+        $lname,
+        $contact,
+        $gender,
+        $dob,
+        $status,
+        $address,
+        $uid
+    );
+    $stmt->execute();
+    $stmt->close();
+
+    // Commit the transaction
+    $mySQLFunction->con->commit();
 
     // Set success session variable and redirect
     $_SESSION['insert_success'] = true;
     header("Location: ../index.php?page=teacher");
 } catch (Exception $e) {
+    // Rollback transaction in case of error
+    $mySQLFunction->con->rollback();
+
     // Set error session variable and redirect
     $_SESSION['insert_error'] = $e->getMessage();
     header("Location: ../index.php?page=teacher");

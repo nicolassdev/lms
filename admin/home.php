@@ -2,6 +2,7 @@
 include "../includes/dbh-inc.php";
 $mySQLFunction->connection();
 $numberOfTeacher = $mySQLFunction->checkRowCount("TEACHER");
+$numberOfStudent = $mySQLFunction->checkRowCount("ENROLL");
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
 $mySQLFunction->disconnect();
@@ -32,7 +33,7 @@ $mySQLFunction->disconnect();
                                 echo '<div class="date-display">Semester: ' . htmlspecialchars($activeSem[$index]) . '</div>';
                             }
                         } else {
-                            echo '<div class="alert alert-warning">No school year or semester found.</div>';
+                            echo '<div class="alert alert-warning">No school year and semester found.</div>';
                         }
                         ?>
                     </div>
@@ -99,7 +100,7 @@ $mySQLFunction->disconnect();
             <div class="card mb-3 mx-auto shadow-sm" style="max-width: 100%;">
                 <div class="card-body">
                     <h5 class="card-title">Teacher</h5>
-                    <p class="card-text">Number of teacher registered.</p>
+                    <p class="card-text">Number of teachers registered.</p>
                     <a href="#" class="btn btn-info text-white text-center fs-1 fw-bold">
                         <?php echo $numberOfTeacher; ?>
                     </a>
@@ -111,9 +112,9 @@ $mySQLFunction->disconnect();
             <div class="card mb-3 mx-auto shadow-sm" style="max-width: 100%;">
                 <div class="card-body">
                     <h5 class="card-title">Student</h5>
-                    <p class="card-text">Number of enrolled student in SHS.</p>
+                    <p class="card-text">Number of Senior High School students enrolled.</p>
                     <a href="#" class="btn btn-warning text-white text-center fs-1 fw-bold">
-                        20
+                    <?php echo $numberOfStudent; ?>
                     </a>
                 </div>
             </div>

@@ -2,55 +2,68 @@
 session_start(); // Start the session
 
 if (!isset($_POST["submit"])) {
-    header("location:index.php?page=section");
+    header("Location: index.php?page=section");
     exit();
 } else {
     include "../../includes/dbh-inc.php";
 
-    // If all checks pass, proceed with the insertion
-
+    // Initialize variables with POST data
     $code = trim($mySQLFunction->generateSectionCode());
-    $strandcode = isset($_POST["strand_code"]) ? trim($_POST["strand_code"]) : null;
-    $gradelvl = isset($_POST["gradelvl"]) ? strtoupper(trim($_POST["gradelvl"])) : null;
-    $section = isset($_POST["section"]) ? strtoupper(trim($_POST["section"])) : null;
+    $strandcode = trim($_POST["strand_code"] ?? null);
+    $gradelvl = strtoupper(trim($_POST["gradelvl"] ?? null));
+    $section = strtoupper(trim($_POST["section"] ?? null));
+    $sem = trim($_POST["semester"] ?? null);
+    $advisor = trim($_POST["teacher_id"] ?? null);
 
-
-    $mySQLFunction->connection();
+    $mySQLFunction->connection(); // Establish database connection
 
     try {
-        // Check if the strand with the same strandname and description already exists
+        // Start transaction
+        $mySQLFunction->con->begin_transaction();
 
-        $checkSectionSql = "SELECT * FROM `section` WHERE `strand_code` = '" . mysqli_real_escape_string($mySQLFunction->con, $strandcode) . "' AND `grade_lvl` = '" . mysqli_real_escape_string($mySQLFunction->con, $gradelvl) . "'  AND `section_name` = '" . mysqli_real_escape_string($mySQLFunction->con, $section) . "' ";
-        $checkSectionResult = $mySQLFunction->con->query($checkSectionSql);
+        // Prepare a statement for checking if section already exists
+        $checkSectionSql = "
+            SELECT 1 FROM `section` 
+            WHERE `strand_code` = ? AND `grade_lvl` = ? AND `section_name` = ?
+            LIMIT 1";
+        $stmt = $mySQLFunction->con->prepare($checkSectionSql);
+        $stmt->bind_param("sss", $strandcode, $gradelvl, $section);
+        $stmt->execute();
+        $stmt->store_result();
 
-        if ($checkSectionResult && $checkSectionResult->num_rows > 0) {
-            throw new Exception("strand grade level with this section name already exists. No data will be inserted.");
+        // Check if a record exists
+        if ($stmt->num_rows > 0) {
+            throw new Exception("Strand grade level with this section name already exists. No data will be inserted.");
         }
 
-        $code = trim($mySQLFunction->generateSectionCode());
-        $strandcode = isset($_POST["strand_code"]) ? trim($_POST["strand_code"]) : null;
-        $gradelvl = isset($_POST["gradelvl"]) ? strtoupper(trim($_POST["gradelvl"])) : null;
-        $section = isset($_POST["section"]) ? strtoupper(trim($_POST["section"])) : null;
-        $sem = isset($_POST["semester"]) ? trim($_POST["semester"]): null;
-        $advisor = isset($_POST["teacher_id"]) ? trim($_POST["teacher_id"]) : null;
+        // Close the prepared statement
+        $stmt->close();
 
+        // Insert section data into `section` table using prepared statements
+        $insertSection = "
+            INSERT INTO `section` (`section_code`, `strand_code`, `grade_lvl`, `section_name`, `semester`, `teacher_id`) 
+            VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $mySQLFunction->con->prepare($insertSection);
+        $stmt->bind_param("ssssss", $code, $strandcode, $gradelvl, $section, $sem, $advisor);
+        $stmt->execute();
 
+        // Commit the transaction
+        $mySQLFunction->con->commit();
 
-        $strandColumns = ['section_code', 'strand_code', 'grade_lvl', 'section_name', 'semester', 'teacher_id '];
-        $strandValues = [$code, $strandcode, $gradelvl, $section, $sem, $advisor];
-
-
-        $mySQLFunction->insertSection("section", $strandColumns, $strandValues);
-
-        $_SESSION['insert_section'] = true; // Set session variable
-        $mySQLFunction->disconnect();
-        header("location:../index.php?page=section");
+        // Set session success message
+        $_SESSION['insert_section'] = true;
+        header("Location: ../index.php?page=section");
         exit();
     } catch (Exception $e) {
-        $_SESSION['error_section'] = $e->getMessage(); // Set session error message
-        header("location:../index.php?page=section"); // Redirect back to the form
-        exit();
-    }
+        // Rollback the transaction in case of an error
+        $mySQLFunction->con->rollback();
 
-    $mySQLFunction->disconnect();
+        // Set error session message
+        $_SESSION['error_section'] = $e->getMessage();
+        header("Location: ../index.php?page=section");
+        exit();
+    } finally {
+        // Close the connection
+        $mySQLFunction->disconnect();
+    }
 }
