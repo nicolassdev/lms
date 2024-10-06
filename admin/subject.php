@@ -16,7 +16,7 @@ include "../admin/includes/forms/subjectform.php";
 
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
             <h3 class="text-black">List of Subject</h3>
-            <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#subject" data-bs-whatever="@fat">
+            <button type="button" class="btn btn-primary btn-animate" data-bs-toggle="modal" data-bs-target="#subject" data-bs-whatever="@fat">
               <i class="bi bi-plus-circle-fill me-2"></i>Subject
             </button>
           </div>
@@ -99,94 +99,96 @@ include "../admin/includes/forms/subjectform.php";
                     //todo Modal for updating subject
                     // Modal for updating section
                     echo '
-                    
-                                      <div class="modal fade" id="edit_subject' . htmlspecialchars($row['sub_code']) . '"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
-                                          <div class="modal-dialog modal-md">
-                                              <div class="modal-content b-grey">
-                                                  <div class="modal-body">
-                                                      <div class="modal-header">
-                                                          <h5 class="modal-title text-primary">Edit Subject Details</h5><i class="bi bi-pencil-square fs-3"></i>
-                                                      </div>
-                                                      <form action="./includes/Operation/updateSubject.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editSubjectForm' . htmlspecialchars($row['sub_code']) . '">
-                                                          <!-- Use hidden input -->
-                                                            <input type="hidden" name="subID" value="' . htmlspecialchars($row['sub_code']) . '">
-
-                                                                  <div class="col-md-12 mb-3">
-                                                                      <label class="form-label">Subject name</label>
-                                                                      <input type="text" class="form-control" name="subject" value="' . htmlspecialchars($row['sub_title']) . '" required>
-                                                                      <div class="invalid-feedback">
-                                                                          Please input a strand name.
-                                                                      </div>
-                                                                  </div>
- 
-                                                                
-                                                                  <div class="col-md-12 mt-2">
-                                                                      <label class="form-label">Category</label>                                                                 
-                                                                      <select class="form-select" name="type" required>
-                                                                          <option disabled value="">Choose...</option>
-                                                                          <option value="SPECIALIZED SUBJECT"' . ($row['sub_type'] == 'SPECIALIZED SUBJECT' ? ' selected' : '') . '>SPECIALIZED SUBJECT</option>
-                                                                          <option value="APPLIED SUBJECT"' . ($row['sub_type'] == 'APPLIED SUBJECT' ? ' selected' : '') . '>APPLIED SUBJECT</option>
-                                                                          <option value="CORE SUBJECT"' . ($row['sub_type'] == 'CORE SUBJECT' ? ' selected' : '') . '>CORE SUBJECT</option>
-                                                                      </select> 
-                                                                      <div class="invalid-feedback">
-                                                                          Please select a type.
-                                                                      </div>
-                                                                  </div>
-                                                                
-
-                                                                  <div class="col-md-12 mt-2">
-                                                                          <label class="form-label">Time</label>
-                                                                          <input type="text" class="form-control" name="time" value="' . htmlspecialchars($row['sub_time']) . '" required>
-                                                                          <div class="invalid-feedback">
-                                                                              Please select a section name.
-                                                                          </div>
-                                                                  </div>                                                              
-
-                                                              <div class="d-flex justify-center gap-1">
-                                                                  <div class="col-6">
-                                                                      <button name="submit" class="btn btn-primary w-100 mt-3 mb-2" type="submit">Save</button>
-                                                                  </div>
-                                                                  <div class="col-6">
-                                                                  <button type="button" class="btn btn-outline-primary w-100 mt-3 mb-2" data-bs-dismiss="modal" aria-label="Close" onclick="resetSubject(\'' . htmlspecialchars($row['sub_code']) . '\')">Cancel</button>
-                                                                  </div>
-                                                              </div>
-                                                      </form>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-
-                                      <script>
-                                      function resetSubject(id) {
-                                              var form = document.getElementById("editSubjectForm" + id);
-                                                  if (form) {
-                                                  form.reset(); // Clears the form fields
-                                                  form.classList.remove("was-validated");
-                                                  }
-                                              }
-                                      </script>
-                                      ';
+                    <div class="modal fade" id="edit_subject' . htmlspecialchars($row['sub_code']) . '"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                                <div class="modal-header bg-primary text-white">
+                                    <h5 class="modal-title">Edit Subject Details</h5>
+                                    <i class="bi bi-pencil-square fs-3 ms-2"></i>
+                                </div>
+                                <div class="modal-body p-4">
+                                    <form action="./includes/Operation/updateSubject.php" method="POST" class="row g-3 needs-validation" novalidate id="editSubjectForm' . htmlspecialchars($row['sub_code']) . '">
+                                        <!-- Use hidden input -->
+                                        <input type="hidden" name="subID" value="' . htmlspecialchars($row['sub_code']) . '">
+                
+                                        <!-- Subject Name -->
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label fw-bold">Subject Name</label>
+                                            <input type="text" class="form-control" name="subject" value="' . htmlspecialchars($row['sub_title']) . '" required>
+                                            <div class="invalid-feedback">
+                                                Please enter a subject name.
+                                            </div>
+                                        </div>
+                
+                                        <!-- Category -->
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label fw-bold">Category</label>
+                                            <select class="form-select" name="type" required>
+                                                <option disabled value="">Choose...</option>
+                                                <option value="SPECIALIZED SUBJECT"' . ($row['sub_type'] == 'SPECIALIZED SUBJECT' ? ' selected' : '') . '>SPECIALIZED SUBJECT</option>
+                                                <option value="APPLIED SUBJECT"' . ($row['sub_type'] == 'APPLIED SUBJECT' ? ' selected' : '') . '>APPLIED SUBJECT</option>
+                                                <option value="CORE SUBJECT"' . ($row['sub_type'] == 'CORE SUBJECT' ? ' selected' : '') . '>CORE SUBJECT</option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select a category.
+                                            </div>
+                                        </div>
+                
+                                        <!-- Time -->
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label fw-bold">Time</label>
+                                            <input type="text" class="form-control" name="time" value="' . htmlspecialchars($row['sub_time']) . '" required>
+                                            <div class="invalid-feedback">
+                                                Please enter a valid time.
+                                            </div>
+                                        </div>
+                
+                                        <!-- Buttons -->
+                                        <div class="d-flex justify-content-between mt-4 gap-1">
+                                            <button name="submit" class="btn btn-primary w-100" type="submit">Save</button>
+                                            <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetSubject(\'' . htmlspecialchars($row['sub_code']) . '\')">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <script>
+                        function resetSubject(id) {
+                            var form = document.getElementById("editSubjectForm" + id);
+                            if (form) {
+                                form.reset(); // Clears the form fields
+                                form.classList.remove("was-validated"); // Removes validation styles
+                            }
+                        }
+                    </script>
+                ';
 
 
 
                     // todo Modal for deleting subject
                     echo '
-                                            <div class="modal fade" id="del_section' . $row['sub_code'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-md">
-                                                    <div class="modal-content">
-                                                        <div class="modal-body text-center mt-5">
-                                                            <div class="text-danger">
-                                                                <i class="bi bi-trash fs-1 "></i><br><br>
-                                                            </div>
-                                                            <h5>Are you sure you want to remove ' . ucwords(strtolower($row['sub_title'])) . ' ?</h5>
-                                                        </div>
-                                                        <div class="d-flex justify-content-center mt-5 mb-5">
-                                                            <a href="includes/Operation/deleteSubject.php?id='  . $row['sub_code'] . '" class="btn btn-danger me-3" style="width: 120px;">Remove</a>
-                                                            <button class="btn btn-outline-danger" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>';
+                    <div class="modal fade" id="del_section' . $row['sub_code'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-md">
+                            <div class="modal-content shadow-lg">
+                                <div class="modal-header border-0">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <div class="text-danger">
+                                        <i class="bi bi-trash fs-1 fade-in"></i>
+                                    </div>
+                                    <h5 class="mt-4 mb-4 text-dark fw-bold">Are you sure you want to remove "<span class="text-danger">' . ucwords(strtolower($row['sub_title'])) . '</span>" ?</h5>
+                                    <p class="text-muted">This action cannot be undone. Please confirm your decision below.</p>
+                                </div>
+                                <div class="modal-footer justify-content-center border-0 mt-3 mb-4">
+                                    <a href="includes/Operation/deleteSubject.php?id=' . $row['sub_code'] . '" class="btn btn-danger btn-md me-3 btn-hover" style="width: 120px;">Remove</a>
+                                    <button class="btn btn-outline-secondary btn-md btn-hover" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>';
                   }
                 } else {
                   echo '<tr>

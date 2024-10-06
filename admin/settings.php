@@ -18,52 +18,56 @@ $mySQLFunction->disconnect();
         <!-- Button container for proper alignment -->
         <div class="d-flex gap-3">
             <!-- Semester button -->
+            <a href="index.php?page=semester" class="btn btn-primary mb-3 ms-3 btn-animate">
+                <span>📅 Semester</span>
+            </a>
 
+            <a href="index.php?page=schoolyear" class="btn btn-primary mb-3 btn-animate">
+                <span>🗓 School Year</span>
+            </a>
 
-            <button class="btn btn-primary mb-3 ms-3"><a class="nav-link " href="index.php?page=semester">Semester</a></button>
-            <button class="btn btn-primary mb-3"><a class="nav-link " href="index.php?page=schoolyear">School Year</a></button>
-            <!-- Edit button -->
-            <button type="button" class="btn btn-secondary mb-3" title="Edit" data-bs-toggle="modal" data-bs-target="#setting" data-bs-whatever="@fat">
+            <!-- Edit button with tooltip -->
+            <button type="button" class="btn btn-secondary mb-3 btn-animate" title="Edit" data-bs-toggle="modal" data-bs-target="#setting" data-bs-whatever="@fat">
                 <i class="bi bi-pencil-square"></i>
             </button>
         </div>
     </div>
 
-
-
-    <form action="?page=settings" method="POST" class="border rounded p-5 bg-light  mb-5 ms-3 me-3 shadow row">
-        <div class="mb-4">
-            <label for="school" class="form-label">School Name</label>
-            <input type="text" id="school" name="school" value="<?php echo $result['SCHOOL_NAME']; ?>" class="form-control form-control-lg" autocomplete="off" disabled>
+    <!-- Form Section -->
+    <form action="?page=settings" method="POST" class="border rounded p-4 bg-light mb-5 ms-3 me-3 shadow-lg row form-hover custom-shadow">
+        <div class="mb-3 fade-in-input">
+            <label for="school" class="form-label fw-bold text-primary">🏫 School Name</label>
+            <input type="text" id="school" name="school" value="<?php echo ucwords(strtolower($result['SCHOOL_NAME'])); ?>" class="form-control" autocomplete="off" disabled>
         </div>
-        <div class="mb-4">
-            <label for="address" class="form-label">Address</label>
-            <input type="text" id="address" name="address" value="<?php echo $result['SCHOOL_ADDRESS']; ?>" class="form-control form-control-lg" autocomplete="off" disabled>
+        <div class="mb-3 fade-in-input">
+            <label for="address" class="form-label fw-bold text-primary">📍 Address</label>
+            <input type="text" id="address" name="address" value="<?php echo ucwords(strtolower($result['SCHOOL_ADDRESS'])); ?>" class="form-control" autocomplete="off" disabled>
         </div>
-        <div class="col-6">
-            <label for="address" class="form-label">School year</label>
-            <input type="text" name="schoolyear" value="<?php if (!empty($activeSchoolYears)) {
+        <div class="col-6 mb-3 fade-in-input">
+            <label for="schoolyear" class="form-label fw-bold text-primary">📅 School Year</label>
+            <input type="text" name="schoolyear" value="<?php
+                                                        if (!empty($activeSchoolYears)) {
                                                             foreach ($activeSchoolYears as $schoolYear) {
-                                                                echo "" . $schoolYear . "";
+                                                                echo $schoolYear;
                                                             }
                                                         } else {
                                                             echo "No active school year found.";
-                                                        } ?>" class="form-control form-control-lg" autocomplete="off" disabled>
+                                                        } ?>" class="form-control" autocomplete="off" disabled>
         </div>
-
-        <div class="col-6">
-            <label for="address" class="form-label">Semester</label>
-            <input type="text" name="schoolyear" value="<?php if (!empty($activeSem)) {
+        <div class="col-6 mb-3 fade-in-input">
+            <label for="semester" class="form-label fw-bold text-primary">📚 Semester</label>
+            <input type="text" name="semester" value="<?php
+                                                        if (!empty($activeSem)) {
                                                             foreach ($activeSem as $semester) {
-                                                                echo "" . $semester . "";
+                                                                echo $semester;
                                                             }
                                                         } else {
                                                             echo "No active semester found.";
-                                                        } ?>" class="form-control form-control-lg" autocomplete="off" disabled>
+                                                        } ?>" class="form-control" autocomplete="off" disabled>
         </div>
-
     </form>
 </main>
+
 
 
 

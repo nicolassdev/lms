@@ -135,22 +135,26 @@
 
                             // Modal for deleting users
                             echo '
-                                    <div class="modal fade" id="del_user' . $row['id'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-md">
-                                            <div class="modal-content">
-                                                <div class="modal-body text-center mt-5">
-                                                    <div class="text-danger">
-                                                        <i class="bi bi-trash fs-1 "></i><br><br>
-                                                    </div>
-                                                    <h5>Are you sure you want to delete ' . $row['id'] . '?</h5>
-                                                </div>
-                                                <div class="d-flex justify-content-center mt-5 mb-5">
-                                                    <a href="includes/Operation/deleteUser.php?id='  . $row['id'] . '" class="btn btn-danger me-3" style="width: 120px;">Remove</a>
-                                                    <button class="btn btn-outline-secondary" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
-                                                </div>
-                                            </div>
+                            <div class="modal fade" id="del_user' . $row['id'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-md">
+                                    <div class="modal-content shadow-lg">
+                                        <div class="modal-header border-0">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                    </div>';
+                                        <div class="modal-body text-center">
+                                            <div class="text-danger">
+                                                <i class="bi bi-trash fs-1 fade-in"></i>
+                                            </div>
+                                            <h5 class="mt-4 mb-4 text-dark fw-bold">Are you sure you want to remove "<span class="text-danger">' . $row['id'] . '</span>" ?</h5>
+                                            <small class="text-muted">This action cannot be undone. Please confirm your decision below.</small>
+                                        </div>
+                                        <div class="modal-footer justify-content-center border-0 mt-3 mb-4">
+                                            <a href="includes/Operation/deleteUser.php?id=' . $row['id'] . '" class="btn btn-danger btn-md me-3" style="width: 120px;">Remove</a>
+                                            <button class="btn btn-outline-secondary btn-md" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>';
                             $count++;
                         }
                     } else {

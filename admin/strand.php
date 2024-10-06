@@ -12,7 +12,7 @@ include "../admin/includes/forms/strandform.php";
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 mb-5 ms-3 me-3">
     <h3 class="text-black">List of Strand</h3>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#strand" data-bs-whatever="@fat">
+    <button type="button" class="btn btn-primary btn-animate" data-bs-toggle="modal" data-bs-target="#strand" data-bs-whatever="@fat">
       <i class="bi bi-plus-circle-fill"></i>
     </button>
   </div>
@@ -74,23 +74,26 @@ include "../admin/includes/forms/strandform.php";
             // Modal for deleting strand
 
             echo '
-                          <div class="modal fade" id="del_strand' . $row['strand_code'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-                              <div class="modal-dialog modal-dialog-centered modal-md">
-                                  <div class="modal-content">
-                                      <div class="modal-body text-center mt-5">
-                                          <div class="text-danger">
-                                              <i class="bi bi-trash fs-1 "></i><br><br>
-                                          </div>
-                                          <h5>Are you sure you want to remove strand ' . $row['strand_name'] . ' ?</h5>
-                                      </div>
-                                      <div class="d-flex justify-content-center mt-5 mb-5">
-                                          <a href="includes/Operation/deleteStrand.php?id='  . $row['strand_code'] . '" class="btn btn-danger me-3" style="width: 120px;">Delete</a>
-                                          <button class="btn btn-outline-danger" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>';
-
+            <div class="modal fade" id="del_strand' . $row['strand_code'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                    <div class="modal-content shadow-lg">
+                        <div class="modal-header border-0">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <div class="text-danger">
+                                <i class="bi bi-trash fs-1 fade-in"></i>
+                            </div>
+                            <h5 class="mt-4 mb-4 text-dark fw-bold">Are you sure you want to remove "<span class="text-danger">' .  ($row['strand_name']) . '</span>"?</h5>
+                            <p class="text-muted">This action cannot be undone. Please confirm your decision below.</p>
+                        </div>
+                        <div class="modal-footer justify-content-center border-0 mt-3 mb-4">
+                            <a href="includes/Operation/deleteStrand.php?id=' . $row['strand_code'] . '" class="btn btn-danger btn-md me-3" style="width: 120px;">Remove</a>
+                            <button class="btn btn-outline-secondary btn-md" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>';
 
             $count++;
           }

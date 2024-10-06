@@ -220,3 +220,50 @@ body {
   padding: 0.1rem;
   /* Adjust padding */
 }
+
+/* =================================================== SETTINGS ANIMATION =========================================== */
+/* Animation for input fields */
+
+/* Input fade-in animation */
+.fade-in-input {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover scale effect for buttons */
+.btn-animate:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Button shadow and smooth animation */
+.btn-animate {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-animate:active {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom form shadow and hover effect */
+.custom-shadow {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.form-hover:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}

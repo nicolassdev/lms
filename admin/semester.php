@@ -20,10 +20,10 @@ include "../admin/includes/forms/semesterform.php";
         <!-- Button container for proper alignment -->
         <div class="d-flex gap-3">
             <!-- Semester button -->
-            <button type="button" class="btn btn-success mb-3" title="Semester" data-bs-toggle="modal" data-bs-target="#semester" data-bs-whatever="@fat">
+            <button type="button" class="btn btn-success mb-3 btn-animate" title="Semester" data-bs-toggle="modal" data-bs-target="#semester" data-bs-whatever="@fat">
                 <i class="bi bi-plus me-1"></i>Semester
             </button>
-            <button class="btn btn-secondary mb-3 me-3"><a class="nav-link " href="index.php?page=settings"><i class="bi bi-arrow-left-circle me-1"></i>Back</a>
+            <button class="btn btn-secondary mb-3 me-3 btn-animate"><a class="nav-link " href="index.php?page=settings"><i class="bi bi-arrow-left-circle me-1"></i>Back</a>
             </button>
         </div>
     </div>

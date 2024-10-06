@@ -22,7 +22,7 @@ include "../admin/includes/forms/enrollmentform.php";
 
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
                         <h3 class="text-black">List of Enrolled Student</h3>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#enroll" data-bs-whatever="@fat">
+                        <button type="button" class="btn btn-primary btn-animate" data-bs-toggle="modal" data-bs-target="#enroll" data-bs-whatever="@fat">
                             <i class="bi bi-person-plus-fill me-1"></i>Enroll Student
                         </button>
                     </div>
@@ -104,57 +104,62 @@ include "../admin/includes/forms/enrollmentform.php";
 
                                         // Modal for updating enrolled
                                         echo '
-                                            <div class="modal fade" id="edit_enrolled' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
-                                                <div class="modal-dialog modal-md">
-                                                    <div class="modal-content b-grey">
-                                                        <div class="modal-body">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title text-primary">Student Enrolled Details</h5><i class="bi bi-pencil-square fs-4"></i>
-                                                            </div>
-                                                            <form action="./includes/Operation/updateEnroll.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editEnrollForm' . htmlspecialchars($row['stu_lrn']) . '"> 
-                                                                    <input type="hidden" name="enrollID" value="' . htmlspecialchars($row['stu_lrn']) . '">                                                                                                                               
-                                                                                                                                       
-                                                                        <div class="col-md-12 mb-3">
-                                                                            <label class="form-label id="section' . htmlspecialchars($row['stu_lrn']) . '">Student name</label>
-                                                                            <input type="text" class="form-control" name="section" value="' . htmlspecialchars($row['student']) . '" required>
-                                                                            <div class="invalid-feedback">
-                                                                                Please select a section name.
-                                                                            </div>
-                                                                        </div>
+                                            
+    <div class="modal fade" id="edit_enrolled' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Edit Student Enrolled</h5>
+                    <i class="bi bi-pencil-square fs-3 ms-2"></i>
+                </div>
+                <div class="modal-body p-4">
+                    <form action="./includes/Operation/updateEnroll.php" method="POST" class="row g-3 needs-validation" novalidate id="editEnrollForm' . htmlspecialchars($row['stu_lrn']) . '"> 
+                        <input type="hidden" name="enrollID" value="' . htmlspecialchars($row['stu_lrn']) . '">
+                        
+                        <!-- Student Name -->
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-bold">Student Name</label>
+                            <input type="text" class="form-control" name="student" value="' . htmlspecialchars($row['student']) . '" required>
+                            <div class="invalid-feedback">
+                                Please enter a student name.
+                            </div>
+                        </div>
 
-                                                                    <div class="col-md-12 mb-3">
-                                                                        <label class="form-label">Status</label>
-                                                                        <select class="form-select" name="status" required>  
-                                                                            <option value="Enrolled"' . ($row['enroll_status'] == 'Enrolled' ? ' selected' : '') . '>Enrolled</option>
-                                                                            <option value="Not Enrolled"' . ($row['enroll_status'] == 'Not Enrolled' ? ' selected' : '') . '>Not Enrolled</option>
-                                                                            <option value="Pending"' . ($row['enroll_status'] == 'Pending' ? ' selected' : '') . '>Pending</option>
-                                                                            <option value="Droppped"' . ($row['enroll_status'] == 'Droppped' ? ' selected' : '') . '>Droppped</option>
+                        <!-- Status -->
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-bold">Status</label>
+                            <select class="form-select" name="status" required>  
+                                <option value="Enrolled"' . ($row['enroll_status'] == 'Enrolled' ? ' selected' : '') . '>Enrolled</option>
+                                <option value="Not Enrolled"' . ($row['enroll_status'] == 'Not Enrolled' ? ' selected' : '') . '>Not Enrolled</option>
+                                <option value="Pending"' . ($row['enroll_status'] == 'Pending' ? ' selected' : '') . '>Pending</option>
+                                <option value="Dropped"' . ($row['enroll_status'] == 'Dropped' ? ' selected' : '') . '>Dropped</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a status.
+                            </div>
+                        </div>
 
-                                                                        </select>
-                                                                        <div class="invalid-feedback">
-                                                                            Please select a grade level.
-                                                                        </div>
-                                                                    </div>
-                 
-                                                                    <div class="text-end me-3 gap-2">                                                                       
-                                                                        <button name="submit" class="btn btn-primary mt-3 mb-2" type="submit">Update</button>                                                                                                                                             
-                                                                        <button type="button" class="btn btn-outline-secondary mt-3 mb-2" data-bs-dismiss="modal" aria-label="Close" onclick="resetSection(\'' . htmlspecialchars($row['stu_lrn']) . '\')">Cancel</button>                                                                      
-                                                                    </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <script>
-                                            function resetSection(id) {
-                                                    var form = document.getElementById("editEnrollForm" + id);
-                                                        if (form) {
-                                                        form.reset(); // Clears the form fields
-                                                        form.classList.remove("was-validated"); // Removes the validation styling
-                                                        }
-                                                    }
-                                            </script>
-                                            ';
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-between mt-4 gap-2">
+                            <button name="submit" class="btn btn-primary w-100" type="submit">Save</button>
+                            <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetSection(\'' . htmlspecialchars($row['stu_lrn']) . '\')">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function resetSection(id) {
+            var form = document.getElementById("editEnrollForm" + id);
+            if (form) {
+                form.reset(); // Clears the form fields
+                form.classList.remove("was-validated"); // Removes the validation styling
+            }
+        }
+    </script>
+    ';
 
 
 
@@ -162,18 +167,21 @@ include "../admin/includes/forms/enrollmentform.php";
                                         echo '
                                         <div class="modal fade" id="del_enrolled' . urlencode($row['stu_lrn']) . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-md">
-                                                <div class="modal-content">
-                                                    <div class="modal-body text-center mt-5">
+                                                <div class="modal-content shadow-lg">
+                                                    <div class="modal-header border-0">
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body text-center">
                                                         <div class="text-danger">
-                                                            <i class="bi bi-trash fs-1 "></i><br><br>
+                                                            <i class="bi bi-trash fs-1 fade-in"></i>
                                                         </div>
-                                                        <h5>Are you sure you want to delete '  .  ucwords(strtolower($row['student'])) . ' ?</h5>
+                                                        <h5 class="mt-4 mb-4 text-dark fw-bold">Are you sure you want to delete "<span class="text-danger">' . ucwords(strtolower($row['student'])) . '</span>"?</h5>
+                                                        <p class="text-muted">This action cannot be undone. Please confirm your decision below.</p>
                                                     </div>
-                                                    <div class="d-flex justify-content-center mt-5 mb-5">
-                                                        <a href="includes/Operation/deleteEnrolled.php?id='  . urlencode($row['stu_lrn']) . '" class="btn btn-danger me-3" style="width: 120px;">Remove</a>      
-                                                        <button class="btn btn-outline-danger" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                                                    <div class="modal-footer justify-content-center border-0 mt-3 mb-4">
+                                                        <a href="includes/Operation/deleteEnrolled.php?id=' . urlencode($row['stu_lrn']) . '" class="btn btn-danger btn-md me-3" style="width: 120px;">Remove</a>
+                                                        <button class="btn btn-outline-secondary btn-md" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
                                                     </div>
-                                                    
                                                 </div>
                                             </div>
                                         </div>';

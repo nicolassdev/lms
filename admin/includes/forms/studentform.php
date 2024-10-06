@@ -47,15 +47,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-5">
                         <label class="form-label">First name</label>
                         <input type="text" class="form-control" name="fname" required>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-3">
                         <label class="form-label">Middle name</label>
                         <input type="text" class="form-control" name="mname">
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <label class="form-label">Last name</label>
                         <input type="text" class="form-control" name="lname" required>
                     </div>

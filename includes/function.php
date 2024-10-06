@@ -1097,19 +1097,31 @@ class myDataBase
     //UPDATE SECTION
     public function updateSection($row, $value, $where)
     {
+        // Sanitize input
         $value = mysqli_real_escape_string($this->con, $value);
         if (is_string($value)) {
             $value = "'" . $value . "'";
         }
+
+        // Check if strand_code exists in strand table
+        if ($row === 'strand_code') {
+            $checkQuery = "SELECT COUNT(*) FROM strand WHERE strand_code = $value";
+            $checkResult = $this->con->query($checkQuery);
+            $count = $checkResult->fetch_row()[0];
+
+            if ($count == 0) {
+                return false; // or handle the error as needed
+            }
+        }
+
+        // Proceed with the update
         $sql = "UPDATE `section` SET `$row` =  $value WHERE `section_code` = '$where'";
         $result = $this->con->query($sql);
 
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        return $result ? true : false;
     }
+
+
 
     //UPDATE SUBJECT
     public function updateSubject($row, $value, $where)

@@ -128,21 +128,27 @@
                 <!-- Logout Modal -->
                 <div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-md">
-                        <div class="modal-content">
+                        <div class="modal-content shadow-lg border-0 rounded-3">
 
-                            <div class="modal-body text-center mt-5">
-                                <div class="text-primary">
-                                    <i class="bi bi-question-circle fs-1 "></i><br><br>
+                            <!-- Modal Body -->
+                            <div class="modal-body text-center py-5">
+                                <!-- Icon and Message -->
+                                <div class="text-danger mb-4">
+                                    <i class="bi bi-box-arrow-right fs-1"></i>
                                 </div>
-                                <h5>Are you sure you want to logout?</h5>
-                            </div>
-                            <div class="d-flex justify-content-center mt-5 mb-5 ">
-                                <button class="btn btn-outline-primary me-3" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
-                                <a href="../logout.php" class="btn btn-primary" style="width: 120px;">Okay</a>
+                                <h5 class="fw-bold mb-4">Are you sure you want to logout?</h5>
+
+                                <!-- Buttons -->
+                                <div class="d-flex justify-content-center gap-3 mt-5">
+                                    <button class="btn btn-outline-secondary btn-md px-4 py-2" data-bs-dismiss="modal">Cancel</button>
+                                    <a href="../logout.php" class="btn btn-danger btn-md px-4 py-2">Logout</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
 
             </div>
         </div>
