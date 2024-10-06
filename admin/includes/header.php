@@ -9,12 +9,13 @@
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <!-- Bootstrap Icons -->
     <!-- <link href="../css/bootstrap-icons.css" rel="stylesheet"> -->
-    <link rel="icon" type="png" href="../assets/img/csi.png">
+    <link rel="icon" type="png" href="../assets/img/lms.png">
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
     <link rel="stylesheet" href="./css/admin.css?v=<?php echo time(); ?>" />
     <!-- <link rel="stylesheet" href="../../assets/css/datatables.min.css"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,7 +37,7 @@
             </button>
 
             <div class="image">
-                <a href="?page=home"><img src="../assets/img/logo.png" alt="LMS Logo"></a>
+                <a href="?page=home"><img src="../assets/img/lms.png" alt="LMS Logo"></a>
                 <span class=" d-none d-lg-inline">Learning Management System</span>
             </div>
 
@@ -136,7 +137,7 @@
                                 <h5>Are you sure you want to logout?</h5>
                             </div>
                             <div class="d-flex justify-content-center mt-5 mb-5 ">
-                                <button class="btn btn-outline-secondary me-3" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                                <button class="btn btn-outline-primary me-3" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
                                 <a href="../logout.php" class="btn btn-primary" style="width: 120px;">Okay</a>
                             </div>
                         </div>

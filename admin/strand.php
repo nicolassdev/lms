@@ -20,8 +20,7 @@ include "../admin/includes/forms/strandform.php";
   <?php
   if (isset($_SESSION['deleted'])) {
     echo '<div class="alert alert-danger alert-dismissible fade show mt-3 p-2" role="alert" style="font-size: 14px; line-height: 1.2;">';
-    echo '<strong>Notification: </strong> ' . $_SESSION['deleted'];
-
+    echo '<i class="bi bi-exclamation-triangle-fill fs-5 me-2"></i> ' . $_SESSION['deleted'];
     echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
 
     // Reduced font size for the timestamp
@@ -85,8 +84,8 @@ include "../admin/includes/forms/strandform.php";
                                           <h5>Are you sure you want to remove strand ' . $row['strand_name'] . ' ?</h5>
                                       </div>
                                       <div class="d-flex justify-content-center mt-5 mb-5">
-                                          <a href="includes/Operation/deleteStrand.php?id='  . $row['strand_code'] . '" class="btn btn-danger me-3" style="width: 120px;">Remove</a>
-                                          <button class="btn btn-outline-secondary" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                                          <a href="includes/Operation/deleteStrand.php?id='  . $row['strand_code'] . '" class="btn btn-danger me-3" style="width: 120px;">Delete</a>
+                                          <button class="btn btn-outline-danger" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
                                       </div>
                                   </div>
                               </div>

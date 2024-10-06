@@ -4,7 +4,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h1 class="modal-title fs-3 text-primary">New Strand</h1>
+                <h1 class="modal-title fs-4 text-primary">New Strand</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetFormStrand()"></button>
             </div>
 

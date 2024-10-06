@@ -6,82 +6,72 @@ include "../includes/dbh-inc.php";
 include "../admin/includes/forms/teacherform.php";
 ?>
 
-<!-- MODAL UPDATE DELETE  -->
-<?php
-include "../admin/includes/forms/teacherdelete.php";
-?>
-
 
 
 <!-- TABLE -->
 <main class="col-md-12 ms-sm-auto col-lg-10 px-md-4">
 
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <div class="data-table">
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-            <h3 class="text-black">List of Faculty</h3>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#teacher">
-              <i class="bi bi-person-plus-fill me-1"></i>Register
-            </button>
-          </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="data-table">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
+                        <h3 class="text-black">List of Faculty</h3>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#teacher">
+                            <i class="bi bi-person-plus-fill me-1"></i>Register
+                        </button>
+                    </div>
 
-          <!-- NOTIFICATION -->
-          <?php
-          if (isset($_SESSION['deleted'])) {
-            echo '<div class="alert alert-danger alert-dismissible fade show mt-3 p-2" role="alert" style="font-size: 14px; line-height: 1.2;">';
-            echo '<strong>Notification: </strong> ' . $_SESSION['deleted'];
+                    <!-- NOTIFICATION -->
+                    <?php
+                    if (isset($_SESSION['deleted'])) {
+                        echo '<div class="alert alert-danger alert-dismissible fade show mt-3 p-2" role="alert" style="font-size: 14px; line-height: 1.2;">';
+                        echo '<i class="bi bi-exclamation-triangle-fill fs-5 me-2"></i> ' . $_SESSION['deleted'];
+                        echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
 
-            echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                        // Reduced font size for the timestamp
+                        echo '<small class="d-block mt-1 text-muted">Just now</small>';
 
-            // Reduced font size for the timestamp
-            echo '<small class="d-block mt-1 text-muted">Just now</small>';
+                        echo '</div>';
+                        unset($_SESSION['deleted']);
+                    }
+                    ?>
 
-            echo '</div>';
-            unset($_SESSION['deleted']);
-          }
-          ?>
+                    <!-- FACULTY TABLE  -->
+                    <div class="table-responsive small ms-3 me-1">
+                        <table id="example" class="table table-bordered table-striped table-sm align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <!-- <th scope="col">#</th> -->
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Middle name</th>
+                                    <th scope="col">Surname</th>
+                                    <th scope="col">Contact</th>
+                                    <th scope="col">Gender</th>
+                                    <th scope="col">Birthday</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
 
-          <!-- FACULTY TABLE  -->
-          <div class="table-responsive small ms-3 me-1">
-            <table id="example" class="table table-bordered table-striped table-sm align-middle">
-              <thead class="table-dark">
-                <tr>
-                  <!-- <th scope="col">#</th> -->
-                  <th scope="col">Name</th>
-                  <th scope="col">Initial</th>
-                  <th scope="col">Surname</th>
-                  <th scope="col">Contact</th>
-                  <th scope="col">Gender</th>
-                  <th scope="col">Birthday</th>
-                  <!-- <th scope="col">Status</th> -->
-                  <th scope="col">Address</th>
-                  <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
-
-                </tr>
-              </thead>
-              <tbody>
-                <?php
-                $mySQLFunction->connection();
-
-                $result = $mySQLFunction->getTeacher();
-
-                if (!empty($result)) {
-                  $count = 0;
-                  foreach ($result as $row) {
-                    echo '<tr>';
-                    // echo '<td>' . $row["teacher_id"] . '</td>';
-                    // echo '<td>' . $count . '</td>';
-                    echo '<td>' . $row["teacher_fname"] . '</td>';
-                    echo '<td>' . $row["teacher_mname"] . '</td>';
-                    echo '<td>' . $row["teacher_lname"] . '</td>';
-                    echo '<td>' . $row["teacher_contact"] . '</td>';
-                    echo '<td>' . $row["teacher_gender"] . '</td>';
-                    echo '<td>' . $row["teacher_dob"] . '</td>';
-                    // echo '<td>' . $row["status"] . '</td>';
-                    echo '<td>' . $row["teacher_address"] . '</td>';
-                    echo '
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $mySQLFunction->connection();
+                                $result = $mySQLFunction->getTeacher();
+                                if (!empty($result)) {
+                                    $count = 0;
+                                    foreach ($result as $row) {
+                                        echo '<tr>';
+                                        // echo '<td>' . $row["teacher_id"] . '</td>';
+                                        // echo '<td>' . $count . '</td>';
+                                        echo '<td>' . $row["teacher_fname"] . '</td>';
+                                        echo '<td>' . $row["teacher_mname"] . '</td>';
+                                        echo '<td>' . $row["teacher_lname"] . '</td>';
+                                        echo '<td>' . $row["teacher_contact"] . '</td>';
+                                        echo '<td>' . $row["teacher_gender"] . '</td>';
+                                        echo '<td>' . $row["teacher_dob"] . '</td>';
+                                        echo '<td>' . $row["teacher_address"] . '</td>';
+                                        echo '
                       <td class="d-flex justify-content-center">
                           <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#edit_teacher' . $row['teacher_id'] . '">
                               <i class="bi bi-pencil-square"></i>Edit
@@ -92,14 +82,14 @@ include "../admin/includes/forms/teacherdelete.php";
                           </button>
                       </td>
                         ';
-                    echo '</tr>';
+                                        echo '</tr>';
 
-                    $count++;
+                                        $count++;
 
 
 
-                    // Modal for updating teacher
-                    echo '
+                                        // Modal for updating teacher
+                                        echo '
                     <div class="modal fade" id="edit_teacher' . htmlspecialchars($row['teacher_id']) . '" tabindex="-1" aria-labelledby="teachModal" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content b-grey">
@@ -213,66 +203,45 @@ include "../admin/includes/forms/teacherdelete.php";
 
 
 
-                    // Modal for deleting teacher
-                    echo '
+                                        // Modal for deleting teacher
+                                        echo '
                                   <div class="modal fade" id="del_teacher' . $row['teacher_id'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                                       <div class="modal-dialog modal-dialog-centered modal-md">
                                           <div class="modal-content">
                                               <div class="modal-body text-center mt-5">
                                                   <div class="text-danger">
-                                                      <i class="bi bi-trash fs-1 "></i><br><br>
+                                                      <i class="bi bi-trash fs-1 "></i><br><br>  
                                                   </div>
-                                                  <h5>Are you sure you want to delete '  . $row['teacher_fname'] . '&nbsp;' . $row['teacher_lname'] . '?</h5>
+                                                  <h5>Are you sure you want to delete '  . ucwords(strtolower($row['teacher_fname'])) . ' ' . ucwords(strtolower($row['teacher_lname'])) . ' ?</h5>
                                               </div>
                                               <div class="d-flex justify-content-center mt-5 mb-5">
-                                                  <a href="includes/Operation/deleteTeacher.php?id='  . $row['id'] . '" class="btn btn-danger me-3" style="width: 120px;">Remove</a>
-                                                  <button class="btn btn-outline-secondary" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                                                  <a href="includes/Operation/deleteTeacher.php?id='  . $row['id'] . '" class="btn btn-danger me-3" style="width: 120px;">Delete</a>
+                                                  <button class="btn btn-outline-danger" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
                                               </div>
                                           </div>
                                       </div>
                                   </div>';
-                  }
-                } else {
-                  echo '<tr>
+                                    }
+                                } else {
+                                    echo '<tr>
                                 <td colspan="10" class="text-center fs-3"><i class="bi bi-emoji-frown me-2"></i>Teacher not found.<br>
                                 </td>
                               </tr>';
-                }
+                                }
 
-                echo '</tbody>';
-                echo '</table>';
-                $mySQLFunction->disconnect();
-                ?>
+                                echo '</tbody>';
+                                echo '</table>';
+                                $mySQLFunction->disconnect();
+                                ?>
 
-          </div>
+                    </div>
 
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
 </main>
-
-
-
-<!-- Notification Insert Modal -->
-<div class="modal fade" id="notificationModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body text-center mt-5">
-        <div class="text-success">
-          <i class="bi bi-check-circle fs-1 "></i><br><br>
-        </div>
-        <p class="mb-4"> Teacher has been added successfully.</p>
-      </div>
-      <div class="d-flex justify-content-center mt-3 mb-5 ">
-        <button class="btn btn-success me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 
 
 

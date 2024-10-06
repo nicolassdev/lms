@@ -1,9 +1,13 @@
 <?php
+
 $mySQLFunction->connection();
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
 $mySQLFunction->disconnect();
+
+
 ?>
+
 <!-- STUDENT INFORMATION ENTRY MODAL   -->
 <div class="modal fade" id="enroll" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-lg ">
@@ -33,7 +37,7 @@ $mySQLFunction->disconnect();
                     <div class="modal-header">
                         <div class="fs-5">Registration/Enrollment Form
                             <?php
-                            if (!empty($activeSchoolYears && !empty($activeSem))) {
+                            if (!empty($activeSchoolYears) && !empty($activeSem)) {
                                 foreach ($activeSchoolYears as $index => $schoolYear) {
                                     echo '<span class="me-3">SY ' . htmlspecialchars($schoolYear) . '</span>';;
                                     echo '<div class=" text-success">' . htmlspecialchars($activeSem[$index]) . '</div>';
@@ -45,7 +49,6 @@ $mySQLFunction->disconnect();
                         </div>
                     </div>
 
-
                     <div class="col-md-12">
                         <label class="form-label">Student</label>
                         <select class="form-select" name="stu_lrn" required>
@@ -53,10 +56,28 @@ $mySQLFunction->disconnect();
                             <?php
                             $mySQLFunction->connection();
                             $result = $mySQLFunction->getStudent();
-                            foreach ($result as $row) {
-                                if (($mySQLFunction->checkRowCount("enroll", "stu_lrn", $row["stu_lrn"])) == 1) {
-                                } else {
-                                    echo '<option value="' . $row["stu_lrn"] . '">' . $row["stu_fname"] . ' ' . $row["stu_mname"] . ' ' . $row["stu_lname"] . '</option>';
+
+                            $activeSemester = $activeSem[0]; // Assuming there's at least one active semester
+                            $selectedSectionCode = isset($_POST['section_code']) ? $_POST['section_code'] : ''; // Ensure you retrieve the selected section
+                            $hasAvailableStudents = false;
+
+                            if (empty($result)) {
+                                echo '<option disabled>No students found in the database.</option>';
+                            } else {
+                                foreach ($result as $row) {
+                                    // Check if the student is enrolled in the active semester and selected section
+                                    $isEnrolledInSem = $mySQLFunction->checkEnrollmentInSemester($row["stu_lrn"], $activeSemester);
+
+                                    if ($isEnrolledInSem == 0) {
+                                        echo '<option value="' . htmlspecialchars($row["stu_lrn"]) . '">';
+                                        echo htmlspecialchars($row["stu_fname"]) . ' ' . htmlspecialchars($row["stu_mname"]) . ' ' . htmlspecialchars($row["stu_lname"]);
+                                        echo '</option>';
+                                        $hasAvailableStudents = true;
+                                    }
+                                }
+
+                                if (!$hasAvailableStudents) {
+                                    echo '<option disabled>No students available for enrollment</option>';
                                 }
                             }
                             ?>
@@ -65,6 +86,8 @@ $mySQLFunction->disconnect();
                             Please select a student.
                         </div>
                     </div>
+
+
 
 
                     <div class="col-md-12">
@@ -101,18 +124,6 @@ $mySQLFunction->disconnect();
                         <input type="text" class="form-control" id="adviserInput" readonly>
                     </div>
 
-                    <!-- 
-                    <div class="col-md-12">
-                        <label class="form-label">Semester</label>
-                        <select class="form-select" name="semester" id="semester" required>
-                            <option selected disabled value="">Select...</option>
-                 
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select a semester.
-                        </div>
-                    </div> -->
-
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Enroll Date</label>
                         <input type="date" class="form-control" name="enrolldate" required>
@@ -137,10 +148,10 @@ $mySQLFunction->disconnect();
                         <input type="text" class="form-control" name="currentchool" required>
                     </div>
                     <div class="col-md-12">
-                        <label class="form-label">School ID</label>
-                        <input type="number" class="form-control" name="schoolid" required min="0" max="999999" oninput="this.value = this.value.slice(0, 6);">
-                        <div class="invalid-feedback">
-                            Only numbers are accepted and must be exactly 6 digits.
+                        <label class="form-label">School ID <small class="text-danger">(Optional)</small></label>
+                        <input type="number" class="form-control" name="schoolid" id="schoolId" oninput="this.value = this.value.slice(0, 6);">
+                        <div class=" invalid-feedback">
+                            School ID must be exactly 6 digits.
                         </div>
                     </div>
 
@@ -165,6 +176,9 @@ $mySQLFunction->disconnect();
                         LCR Birth Certificate <input class="me-3" type="checkbox" name="requirement[]" value="LCR Birth Certificate">
                         GMCC <input class="me-3" type="checkbox" name="requirement[]" value="GMCC">
                         2x2 <input class="me-3" type="checkbox" name="requirement[]" value="2x2">
+                    </div>
+                    <div class="invalid-feedback" id="checkbox-feedback">
+                        Please select at least one requirement.
                     </div>
 
                     <div class="col-6">
@@ -223,5 +237,43 @@ $mySQLFunction->disconnect();
             gradelvlInput.value = gradelvl;
             adviserInput.value = adviser;
         });
+    });
+
+
+    // Custom form validation for School ID to ensure it's exactly 6 digits
+    document.getElementById('schoolId').addEventListener('input', function() {
+        const inputField = this;
+        const value = inputField.value;
+
+        // Check if the input length is exactly 6 digits
+        if (value.length === 6) {
+            inputField.setCustomValidity(''); // Clear invalid state
+        } else {
+            inputField.setCustomValidity('School ID must be exactly 6 digits.'); // Set invalid state
+        }
+    });
+
+
+
+    // Add validation for checkboxes
+    document.getElementById('enrollForm').addEventListener('submit', function(event) {
+        const checkboxes = document.querySelectorAll('input[name="requirement[]"]');
+        const checkboxFeedback = document.getElementById('checkbox-feedback');
+        let checked = false;
+
+        // Loop through checkboxes to check if any is selected
+        checkboxes.forEach(function(checkbox) {
+            if (checkbox.checked) {
+                checked = true;
+            }
+        });
+
+        // If no checkbox is checked, prevent form submission and show feedback
+        if (!checked) {
+            event.preventDefault();
+            checkboxFeedback.style.display = 'block';
+        } else {
+            checkboxFeedback.style.display = 'none';
+        }
     });
 </script>

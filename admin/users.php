@@ -81,12 +81,17 @@
                                                             <input type="text" class="form-control" name="username" id="username" value="' . $row['username'] . '" required>
                                                         </div>
 
-                                                         <div class="col-md-12">
-                                                            <label class="form-label">Password</label>
-                                                            <input type="password" class="form-control" name="password" id="password" value="' . $row['password'] . '" required>
-                                                        </div>
-
-                                           
+                                                    <div class="col-md-12">
+                                                                <label class="form-label">Password</label>
+                                                                <div class="input-group">
+                                                                    <!-- Assign class and data attribute for each password field and toggle button -->
+                                                                    <input type="password" class="form-control password-input" name="password" value="' . $row['password'] . '" required>
+                                                                    <button class="btn btn-outline-secondary toggle-password" type="button" data-target="password' . $row['id'] . '">
+                                                                        <i class="bi bi-eye-slash toggle-icon"></i>
+                                                                    </button>
+                                                                </div>
+                                                    </div>
+                                                                                
 
 
                                                         <div class="d-flex justify-center gap-2">
@@ -102,7 +107,28 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
+                        
+                                    <script>
+                                     document.querySelectorAll(".toggle-password").forEach(function(toggleButton) {
+                                         toggleButton.addEventListener("click", function() {
+                                           const passwordInput = this.parentElement.querySelector(".password-input");
+                                            const toggleIcon = this.querySelector(".toggle-icon");
 
+
+
+                                             if (passwordInput.type === "password") {
+                                                passwordInput.type = "text";
+                                                toggleIcon.classList.remove("bi-eye-slash");
+                                                toggleIcon.classList.add("bi-eye");
+                                            } else {
+                                                passwordInput.type = "password";
+                                                toggleIcon.classList.remove("bi-eye");
+                                                toggleIcon.classList.add("bi-eye-slash");
+                                            }
+                                        });
+                                    });
+                                    </script>
                                     <script src="../assets/js/validationform.js"></script>
                                     ';
 

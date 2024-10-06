@@ -54,9 +54,14 @@ class myDataBase
     }
 
     // ENCRPYT PASSWORD
+    // public function encrypt($password)
+    // {
+    //     return  sha1($password);
+    // }
     public function encrypt($password)
     {
-        return  sha1($password);
+        // Use password_hash with bcrypt (the default algorithm) to securely hash the password
+        return password_hash($password, PASSWORD_DEFAULT);
     }
 
 
@@ -190,6 +195,57 @@ class myDataBase
     }
 
 
+    function checkEnrollmentInSemester($stu_lrn, $semester)
+    {
+        // Connect to the database
+        $this->connection();
+
+        // Query to check if the student is already enrolled in the specified semester and section
+        $sql = "SELECT COUNT(*) as enrolled_count FROM enroll WHERE stu_lrn = ? AND semester = ?";
+
+        // Prepare the SQL statement
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("ss", $stu_lrn, $semester);
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc() ?? ['enrolled_count' => 0];
+
+        // Close the statement and connection
+        $stmt->close();
+        $this->disconnect();
+
+        // Return the count; if it's 0, the student is not enrolled
+        return $row['enrolled_count'];
+    }
+
+
+    // public function checkEnrollmentInYearAndSemester($studentLrn, $schoolYear, $semester)
+    // {
+    //     $count = 0; // Initialize count to 0
+    //     $stmt = $this->con->prepare("SELECT COUNT(*) FROM enroll WHERE stu_lrn = ? AND school_year = ? AND semester = ?");
+
+    //     if ($stmt) {
+    //         $stmt->bind_param("sss", $studentLrn, $schoolYear, $semester);
+    //         $stmt->execute();
+    //         $stmt->bind_result($count);
+    //         $stmt->fetch();
+    //         $stmt->close();
+    //     } else {
+    //         // Handle error in prepared statement
+    //         // You can log the error or throw an exception
+    //         error_log("Failed to prepare the statement: " . $this->con->error);
+    //     }
+
+    //     return $count; // Return the number of enrollments found
+    // }
+
+
+
+
+
+
     //Check active STATUS in school year
     public function checkSyStatus($table)
     {
@@ -279,6 +335,21 @@ class myDataBase
 
         return $result->fetch_assoc(); // Return the first row if exists
     }
+
+    public function checkSubjectExist($subject, $type, $excludeID)
+    {
+        $sql = "SELECT * FROM subject WHERE sub_title =? AND sub_type =? AND sub_code =?";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("ssi", $subject, $type, $excludeID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_assoc(); // Return the first row if exists
+    }
+
+
+
 
 
     public function insertSy($table, $sy)
@@ -587,7 +658,7 @@ class myDataBase
     }
 
 
-    //GET LIST OF SECTION
+    // GET LIST OF SECTION
     public function getSection($row = null, $value = null)
     {
         if ($row != null && $value != null) {
@@ -619,6 +690,101 @@ class myDataBase
     }
 
 
+
+
+
+    //GET LIST OF SUBJECT
+    // public function getSubject($row = null, $value = null)
+    // {
+    //     if ($row != null && $value != null) {
+    //         $sql = "SELECT `sub_code`,
+    //         `sub_title`, `sub_type`, `sub_time`,
+    //         `sub_semester`, `strand_name`, `subject.strand_code`,
+    //         `subject.teacher_id`, 
+    //         CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS teacher 
+    //         FROM `subject`
+    //         LEFT JOIN `strand`
+    //         ON subject.strand_code = strand.strand_code
+    //         LEFT JOIN `teacher`
+    //         ON subject.teacher_id = teacher.teacher_id
+    //         WHERE subject.$row = '$value'";
+
+    //         $stored = ($this->con->query($sql))->fetch_assoc();
+
+    //         return $stored;
+    //     } else {
+    //         $sql = "SELECT `sub_code`, 
+    //         `sub_title` , `sub_type` , `sub_time`,
+    //         `sub_semester` , `strand_name` as strand,
+    //         CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS teacher
+    //         FROM  `subject`
+    //         LEFT JOIN `strand`
+    //         ON subject.strand_code = strand.strand_code
+    //         LEFT JOIN `teacher`
+    //         ON subject.teacher_id = teacher.teacher_id
+    //         ORDER BY subject.sub_title";
+    //         $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
+
+    //         return $stored;
+    //     }
+    // }
+    public function getSubject($row = null, $value = null)
+    {
+        if ($row != null && $value != null) {
+            // Use prepared statements to avoid SQL injection
+            $stmt = $this->con->prepare("SELECT `sub_code`,
+                `sub_title`, `sub_type`, `sub_time`,
+                `sub_semester`, `strand_name`, `subject.strand_code`,
+                `subject.teacher_id`, 
+                CONCAT(`teacher_fname`, ' ', `teacher_mname`, ' ', `teacher_lname`) AS teacher 
+                FROM `subject`
+                LEFT JOIN `strand` ON subject.strand_code = strand.strand_code
+                LEFT JOIN `teacher` ON subject.teacher_id = teacher.teacher_id
+                WHERE subject.$row = ?");
+
+            // Bind the value to the prepared statement
+            $stmt->bind_param("s", $value);
+
+            // Execute the query
+            if ($stmt->execute()) {
+                // Fetch and return the result
+                $result = $stmt->get_result();
+                $stored = $result->fetch_assoc();
+                $stmt->close();
+
+                return $stored;
+            } else {
+                // Handle query error
+                echo "Error executing query: " . $this->con->error;
+                return null;
+            }
+        } else {
+            // Fetch all subjects when no specific row or value is provided
+            $sql = "SELECT `sub_code`, 
+                `sub_title`, `sub_type`, `sub_time`,
+                `sub_semester`, `strand_name` AS strand,
+                CONCAT(`teacher_fname`, ' ', `teacher_mname`, ' ', `teacher_lname`) AS teacher
+                FROM `subject`
+                LEFT JOIN `strand` ON subject.strand_code = strand.strand_code
+                LEFT JOIN `teacher` ON subject.teacher_id = teacher.teacher_id
+                ORDER BY subject.sub_title";
+
+            $result = $this->con->query($sql);
+
+            if ($result) {
+                // Fetch all results as an associative array
+                $stored = $result->fetch_all(MYSQLI_ASSOC);
+                return $stored;
+            } else {
+                // Handle query error
+                echo "Error executing query: " . $this->con->error;
+                return [];
+            }
+        }
+    }
+
+
+
     //GET LIST OF ENROLLED
     public function getEnroll($row = null, $value = null)
     {
@@ -626,6 +792,7 @@ class myDataBase
             $sql = "SELECT
                 `enroll`.`stu_lrn`,
                 CONCAT(`student`.`stu_fname`,' ', `student`.`stu_lname`) AS student,
+                `enroll`.`section_code`,
                 `section`.`section_code`,
                 `section`.`strand_code`,
                 `strand`.`strand_name`,  -- Fetching the strand_name from the strand table
@@ -674,7 +841,7 @@ class myDataBase
             INNER JOIN `section` ON `enroll`.`section_code` = `section`.`section_code`
             INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
             INNER JOIN `teacher` ON `section`.`teacher_id` = `teacher`.`teacher_id` -- Joining the teacher table
-            ORDER BY `enroll`.`stu_lrn`";
+            ORDER BY `student`.`stu_fname`";
 
             $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
 
@@ -722,6 +889,23 @@ class myDataBase
         }
     }
 
+
+    public function getSectionList($row = null, $value = null)
+    {
+        if ($row != null &&  $value != null) {
+
+            $sql = "SELECT * FROM `section` WHERE `$row` = '$value'";
+            $stored = ($this->con->query($sql))->fetch_assoc();
+            return $stored;
+        } else {
+
+            $sql = "SELECT * FROM `section` ORDER BY `section_name`";
+
+            $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
+
+            return $stored;
+        }
+    }
 
 
 
@@ -787,6 +971,8 @@ class myDataBase
             throw new mysqli_sql_exception($this->con->error);
         }
     }
+
+
 
     //insert strand with validation
     public function insertStrand($table, $columns, $values)
@@ -925,6 +1111,40 @@ class myDataBase
         }
     }
 
+    //UPDATE SUBJECT
+    public function updateSubject($row, $value, $where)
+    {
+        $value = mysqli_real_escape_string($this->con, $value);
+        if (is_string($value)) {
+            $value = "'" . $value . "'";
+        }
+        $sql = "UPDATE `subject` SET `$row` =  $value WHERE `sub_code` = '$where'";
+        $result = $this->con->query($sql);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    //UPDATE ENROLLMENT
+    public function updateEnrollment($row, $value, $where)
+    {
+        $value = mysqli_real_escape_string($this->con, $value);
+        if (is_string($value)) {
+            $value = "'" . $value . "'";
+        }
+        $sql = "UPDATE `enroll` SET `$row` =  $value WHERE `stu_lrn` = '$where'";
+        $result = $this->con->query($sql);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 

@@ -79,10 +79,6 @@
                             <option selected disabled value="">Select..</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
-                            <option value="tmale">Transgender Male</option>
-                            <option value="tfemale">Transgender Female</option>
-                            <option value="nb">Non-Binary</option>
-                            <option value="pnts">Prefer not to say</option>
                         </select>
                     </div>
                     <div class="col-md-12">

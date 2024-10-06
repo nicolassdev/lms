@@ -23,6 +23,7 @@ $dob = trim($_POST["dob"] ?? null);
 $status = strtoupper(trim($_POST["status"] ?? null));
 $address = strtoupper(trim($_POST["address"] ?? null));
 
+
 // Generate unique IDs
 $uid = trim($mySQLFunction->generateUserID());
 $teacherID = trim($mySQLFunction->generateTeacherID());

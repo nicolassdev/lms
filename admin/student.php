@@ -19,14 +19,6 @@ include "../admin/includes/forms/studentform.php";
         padding: 0.1rem;
         /* Adjust padding */
     }
-
-    .custom-btn {
-        padding: 0.25rem 0.5rem;
-        margin: 10px;
-        /* Adjust padding */
-        /* font-size: 0.75em; */
-        /* Adjust font size */
-    }
 </style>
 
 
@@ -79,17 +71,17 @@ include "../admin/includes/forms/studentform.php";
                                 <tr>
                                     <th scope="col" style="width: 50px;">LRN</th>
                                     <th scope="col" style="width: 100px;">Name</th>
-                                    <th scope="col" style="width: 50px;">Initial</th>
+                                    <th scope="col" style="width: 50px;">Middle name</th>
                                     <th scope="col" style="width: 100px;">Surname</th>
                                     <th scope="col" style="width: 150px;">Address</th>
                                     <th scope="col" style="width: 100px;">Contact</th>
                                     <th scope="col" style="width: 50px;">Gender</th>
                                     <th scope="col" style="width: 100px;">Email</th>
                                     <th scope="col" style="width: 100px;">Birthday</th>
-                                    <th scope="col" style="width: 150px;">Place of birth</th>
+                                    <!-- <th scope="col" style="width: 150px;">Place of birth</th>
                                     <th scope="col" style="width: 100px;">Father</th>
                                     <th scope="col" style="width: 100px;">Mother</th>
-                                    <th scope="col" style="width: 100px;">CP. No</th>
+                                    <th scope="col" style="width: 100px;">CP. No</th> -->
                                     <th scope="col" class="text-center" style="width: 100px;">Action</th><!-- colspan should be 2 -->
 
                                 </tr>
@@ -105,37 +97,155 @@ include "../admin/includes/forms/studentform.php";
                                     foreach ($result as $row) {
                                         echo '<tr>';
                                         // echo '<td>' . $count . '</td>';
-                                        echo '<td>' . $row["stu_lrn"] . '</td>';
-                                        echo '<td>' . $row["stu_fname"] . '</td>';
-                                        echo '<td>' . $row["stu_mname"] . '</td>';
-                                        echo '<td>' . $row["stu_lname"] . '</td>';
-                                        echo '<td>' . $row["stu_address"] . '</td>';
-                                        echo '<td>' . $row["stu_contact"] . '</td>';
-                                        echo '<td>' . $row["stu_gender"] . '</td>';
-                                        echo '<td>' . $row["stu_email"] . '</td>';
-                                        echo '<td>' . $row["stu_dob"] . '</td>';
-                                        echo '<td>' . $row["stu_pob"] . '</td>';
-                                        echo '<td>' . $row["father_name"] . '</td>';
-                                        echo '<td>' . $row["mother_name"] . '</td>';
-                                        echo '<td>' . $row["parent_contact"] . '</td>';
+                                        echo '<td class="small text-center">' . $row["stu_lrn"] . '</td>';
+                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_fname"])) . '</td>';
+                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_mname"])) . '</td>';
+                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_lname"])) . '</td>';
+                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
+                                        echo '<td class="small text-center">' . $row["stu_contact"] . '</td>';
+                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
+                                        echo '<td class="small text-center">' . $row["stu_email"] . '</td>';
+                                        echo '<td class="small text-center">' . $row["stu_dob"] . '</td>';
+                                        // echo '<td class="small text-center">' . $row["stu_pob"] . '</td>';
+                                        // echo '<td class="small text-center">' . $row["father_name"] . '</td>';
+                                        // echo '<td class="small text-center">' . $row["mother_name"] . '</td>';
+                                        // echo '<td class="small text-center">' . $row["parent_contact"] . '</td>';
                                         echo '
                                             <td class="d-flex justify-content-center">
-                                                <button  class="btn btn-sm btn-outline-primary custom-btn  me-2" data-bs-toggle="modal" data-bs-target="#edit_student' . $row['stu_lrn'] . '">
+                                                <button title="Student Information" class="btn btn-sm btn-outline-success me-2 " data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">
+                                                    <i class="bi bi-person-vcard"></i>
+                                                </button>
+                                                <button title="Edit" class="btn btn-sm btn-outline-primary  me-2" data-bs-toggle="modal" data-bs-target="#edit_student' . $row['stu_lrn'] . '">
                                                     <i class="bi bi-pencil-square"></i> 
                                                 </button>
                                             
-                                                <button class="btn btn-sm btn-outline-danger custom-btn " data-bs-toggle="modal" data-bs-target="#del_student' . $row['stu_lrn'] . '">
+                                                <button title="Delete" class="btn btn-sm btn-outline-danger " data-bs-toggle="modal" data-bs-target="#del_student' . $row['stu_lrn'] . '">
                                                     <i class="bi bi-trash"></i> 
                                                 </button>
+                                         
                                             </td>
                                                 ';
                                         echo '</tr>';
 
                                         $count++;
 
+                                        //todo Mddal for view student information
+                                        echo '
+                                        <div class="modal fade" id="view_student' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="teachModal" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content b-grey">
+                                                    <div class="modal-body">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-3 text-success">Student Information</h1><i class="bi bi-person-vcard-fill fs-1 text-success"></i>
+                                                        </div>
+                                                        <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editTeacherForm' . htmlspecialchars($row['stu_lrn']) . '">
+                                                            <!-- Use hidden input -->
+                                                            <input type="hidden" name="lrnID" value="' . htmlspecialchars($row['stu_lrn']) . '">
+
+                                                            <div class="col-md-12">
+                                                                <label  ' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">First name</label>
+                                                                <input type="text" class="form-control" name="firstname" value="' . htmlspecialchars($row['stu_fname']) . '" readonly disabled>
+                                                               
+                                                            </div>
+
+                                                            <div class="col-md-12 mt-2">
+                                                                <label for="middleName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Middle name</label>
+                                                                <input type="text" class="form-control" name="middlename" value="' . htmlspecialchars($row['stu_mname']) . '" disabled>
+                                                            </div>
+
+                                                            <div class="col-md-12 mt-2">
+                                                                <label for="lastName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Last name</label>
+                                                                <input type="text" class="form-control" name="lastname" value="' . htmlspecialchars($row['stu_lname']) . '" readonly disabled>
+                                                                <div class="invalid-feedback">
+                                                                    Please enter a valid last name.
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 mt-2">
+                                                                <label class="form-label">Address</label>
+                                                                <input type="text" class="form-control" name="address" value="' . htmlspecialchars($row['stu_address']) . '" readonly disabled>
+                                                             </div>
+
+                                                            <div class="col-md-12 mt-2">
+                                                                <label for="contactNumber' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Contact</label>
+                                                                <div class="input-group has-validation">
+                                                                    <span class="input-group-text bg-success" style="color:white" id="inputGroupPrepend">+63</span>
+                                                                    <input type="text" class="form-control" name="contact" value="' . htmlspecialchars($row['stu_contact']) . '" aria-describedby="inputGroupPrepend" pattern="9\\d{9}" maxlength="10" readonly disabled>
+                                                                 </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 mt-2">
+                                                                <label for="gender' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Gender</label>
+                                                                <select class="form-select" name="gender" id="gender' . htmlspecialchars($row['stu_lrn']) . '" readonly disabled>
+                                                                    <option disabled value="">Choose...</option>
+                                                                    <option value="male"' . ($row['stu_gender'] == 'MALE' ? ' selected' : '') . '>MALE</option>
+                                                                    <option value="female"' . ($row['stu_gender'] == 'FEMALE' ? ' selected' : '') . '>FEMALE</option>
+                                                                </select>
+                                                             </div>
+
+                                                            <div class="col-md-12 mt-2">
+                                                                <label for="email' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Email</label>
+                                                                <input type="text" name="email" class="form-control" value="' . htmlspecialchars($row['stu_email']) . '"  placeholder="Enter your email address" pattern=".*@(gmail|yahoo)\.com$" readonly disabled>
+                                                             </div>
 
 
-                                        // Modal for updating teacher
+
+                                                            <div class="col-md-12 mt-2">
+                                                                <label for="dob' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Date of Birth</label>
+                                                                <input type="date" class="form-control" name="dob" id="dob' . htmlspecialchars($row['stu_dob']) . '" value="' . htmlspecialchars($row['stu_dob']) . '" readonly disabled>
+                                                             </div>
+                                               
+
+                                                            <div class="col-md-12 mt-2">
+                                                                <label class="form-label">Address</label>
+                                                                <input type="text" class="form-control" name="pob" value="' . htmlspecialchars($row['stu_pob']) . '" readonly disabled>
+                                                             </div>
+
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title text-success">Guardian Information   </h4> 
+                                                        </div>
+
+                                                        <div class="col-md-12 mt-2">
+                                                                <label class="form-label">Father name</label>
+                                                                <input type="text" class="form-control" name="fathername" value="' . htmlspecialchars($row['father_name']) . '" readonly disabled>
+                                                         </div>
+
+                                                            
+
+                                                            <div class="col-md-12 mt-2">
+                                                                <label class="form-label">Mother name</label>
+                                                                <input type="text" class="form-control" name="mothername" value="' . htmlspecialchars($row['mother_name']) . '" readonly disabled>
+                                                            </div>
+
+
+                                                            <div class="col-md-12 mt-2">
+                                                                <label for="contactNumber' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Contact</label>
+                                                                <div class="input-group has-validation">
+                                                                    <span class="input-group-text bg-success" style="color:white" id="inputGroupPrepend">+63</span>
+                                                                    <input type="text" class="form-control" name="pcontact" value="' . htmlspecialchars($row['parent_contact']) . '" readonly disabled>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class=" justify-center ">
+                                                                <div class="col-12">
+                                                                    <button type="button"  class="btn btn-success w-100 mt-3 mb-2"  data-bs-dismiss="modal">Okay</button>
+                                                                </div>
+                                                              
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ';
+
+
+
+
+
+
+                                        // todo Modal for updating student
                                         echo '
                                             <div class="modal fade" id="edit_student' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="teachModal" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
@@ -195,11 +305,6 @@ include "../admin/includes/forms/studentform.php";
                                                                         <option disabled value="">Choose...</option>
                                                                         <option value="male"' . ($row['stu_gender'] == 'MALE' ? ' selected' : '') . '>MALE</option>
                                                                         <option value="female"' . ($row['stu_gender'] == 'FEMALE' ? ' selected' : '') . '>FEMALE</option>
-                                                                        <option value="transgender male"' . ($row['stu_gender'] == 'TRANSGENDER MALE' ? ' selected' : '') . '>TRANSGENDER MALE</option>
-                                                                        <option value="transgender female"' . ($row['stu_gender'] == 'TRANSGENDER FEMALE' ? ' selected' : '') . '>TRANSGENDER FEMALE</option>
-                                                                        <option value="non-binary"' . ($row['stu_gender'] == 'NON-BINARY' ? ' selected' : '') . '>NON-BINARY</option>
-                                                                        <option value="prefer no to say"' . ($row['stu_gender'] == 'PREFER NOT TO SAY' ? ' selected' : '') . '>PREFER NOT TO SAY</option>
-
                                                                     </select>
                                                                     <div class="invalid-feedback">
                                                                         Please select a gender.
@@ -298,7 +403,7 @@ include "../admin/includes/forms/studentform.php";
 
 
 
-                                        // Modal for deleting teacher
+                                        // todo Modal for deleting student
                                         echo '
                                             <div class="modal fade" id="del_student' . $row['stu_lrn'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered modal-md">
@@ -307,11 +412,11 @@ include "../admin/includes/forms/studentform.php";
                                                             <div class="text-danger">
                                                                 <i class="bi bi-trash fs-1 "></i><br><br>
                                                             </div>
-                                                            <h5>Are you sure you want to delete LRN '  . $row['stu_lrn'] . '?</h5>
+                                                            <h5>Are you sure you want to remove LRN '  . $row['stu_lrn'] . '?</h5>
                                                         </div>
                                                         <div class="d-flex justify-content-center mt-5 mb-5">
                                                             <a href="includes/Operation/deleteStudent.php?id='  . $row['id'] . '" class="btn btn-danger me-3" style="width: 120px;">Remove</a>
-                                                            <button class="btn btn-outline-secondary" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                                                            <button class="btn btn-outline-danger" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -338,29 +443,8 @@ include "../admin/includes/forms/studentform.php";
 
 
 
-
-<script src="../assets/js/validationform.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-
-
-
-
-<!-- jQuery and DataTables JS -->
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<!-- DataTables Buttons JS -->
-<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.flash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+<?php
+include("../admin/includes/footer.php");
+?>
 
 <script src="../assets/js/student.js"></script>

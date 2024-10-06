@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="website icon" type="png" href="assets/img/csi.png">
+    <link rel="website icon" type="png" href="assets/img/lms.png">
     <link rel="stylesheet" href="assets/css/login.css?v=<?php echo time(); ?>" />
     <title>Login</title>
 </head>
@@ -17,7 +17,7 @@
                 <img src="./assets/img/student-login-logo.svg" alt="Login Logo" draggable="false">
             </div>
             <div class="col-md mr-xl">
-                <!-- login form -->                
+                <!-- login form -->
                 <form action="includes/login-inc.php" method="POST">
                     <h2>Login</h2>
                     <div class="input-box">

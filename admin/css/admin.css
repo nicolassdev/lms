@@ -203,3 +203,20 @@ body {
   max-height: 410px; /* You can adjust the height based on your requirement */
   overflow-y: auto; /* Enable vertical scroll */
 }
+
+@media print {
+  .lms-heading {
+    display: none;
+  }
+}
+
+.data-table {
+  font-size: 0.9em;
+  /* Reduce font size */
+}
+
+.table th,
+.table td {
+  padding: 0.1rem;
+  /* Adjust padding */
+}

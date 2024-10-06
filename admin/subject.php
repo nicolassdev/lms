@@ -1,72 +1,276 @@
- 
-<!-- FORM MODAL ADD TEACHER  -->
+<?php
+include "../includes/dbh-inc.php";
+
+?>
 <?php
 include "../admin/includes/forms/subjectform.php";
 ?>
 <!-- THIS THE SUBJECT TABLE -->
 
- 
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 mb-5 ms-3 me-3">
-            <h3 class="ms-3">List of Subject</h3>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="data-table">
 
-            <div class="d-flex gap-3">
-
-            <button type="button" class="btn btn-primary mb-3 me-3" data-bs-toggle="modal" data-bs-target="#subject" data-bs-whatever="@fat">
-              <i class="bi bi-plus-circle-fill me-2"></i>Add new
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
+            <h3 class="text-black">List of Subject</h3>
+            <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#subject" data-bs-whatever="@fat">
+              <i class="bi bi-plus-circle-fill me-2"></i>Subject
             </button>
-            </div>
-      </div>
+          </div>
+          <!-- NOTIFICATION -->
+          <?php
+          if (isset($_SESSION['deleted'])) {
+            echo '<div class="alert alert-danger alert-dismissible fade show mt-3 p-2" role="alert" style="font-size: 14px; line-height: 1.2;">';
+            echo '<i class="bi bi-exclamation-triangle-fill fs-5 me-2"></i> ' . $_SESSION['deleted'];
 
+            echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
 
-      <!-- THSI THE SUBJECT TABLE -->
-      <div class="table-responsive small ms-3 me-3">
-        <table class="table table-bordered table-striped table-sm align-middle">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>
-                <button class="btn btn-sm btn-outline-danger me-2"><i class="bi bi-trash"></i> Delete</button>
-                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i> Edit</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>
-                <button class="btn btn-sm btn-outline-danger me-2"><i class="bi bi-trash"></i> Delete</button>
-                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i> Edit</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
-              <td>
-                <button class="btn btn-sm btn-outline-danger me-2"><i class="bi bi-trash"></i> Delete</button>
-                <button class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i> Edit</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-  </main>
+            // Reduced font size for the timestamp
+            echo '<small class="d-block mt-1 text-muted">Just now</small>';
+
+            echo '</div>';
+            unset($_SESSION['deleted']);
+          } elseif (isset($_SESSION['subject_exist'])) {
+            echo '<div class="alert alert-primary alert-dismissible fade show p-2" role="alert" style="font-size: 14px; line-height: 1.2;  max-width:1000px;">';
+            echo '<i class="bi bi-info-square-fill fs-5 me-2"></i>' . $_SESSION['subject_exist'];
+            echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+
+            // Reduced font size for the timestamp
+            echo '<small class="d-block mt-1 text-muted">Just now</small>';
+
+            echo '</div>';
+            unset($_SESSION['subject_exist']);
+          }
+
+          ?>
+
+          <!-- SUBJECT TABLE -->
+          <div class="table-responsive small ms-3 me-3">
+            <table id="example" class="table table-bordered table-striped table-sm align-middle">
+              <thead class="table-dark ">
+                <tr>
+                  <!-- <th scope="col">#</th> -->
+                  <th scope="col" class="small text-center">Subject Code</th>
+                  <th scope="col" class="small text-center">Subject</th>
+                  <th scope="col" class="small text-center">Category</th>
+                  <th scope="col" class="small text-center">Time</th>
+                  <th scope="col" class="small text-center">Subject semester</th>
+                  <th scope="col" class="small text-center">Strand</th>
+                  <th scope="col" class="small text-center ">Teacher</th>
+                  <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
+
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                $mySQLFunction->connection();
+
+                $result = $mySQLFunction->getSubject();
+                if (!empty($result)) {
+                  $count = 0;
+                  foreach ($result as $row) {
+                    echo '<tr>';
+
+                    echo '<td>' . $row["sub_code"] . '</td>';
+                    echo '<td>' . ucwords(strtolower($row["sub_title"])) . '</td>';
+                    echo '<td>' . ucwords(strtolower($row["sub_type"])) . '</td>';
+                    echo '<td>' . $row["sub_time"] . '</td>';
+                    echo '<td>' . $row["sub_semester"] . '</td>';
+                    echo '<td>' . $row["strand"] . '</td>';
+                    echo '<td>' . ucwords(strtolower($row["teacher"])) . '</td>';
+                    echo '
+                                        <td class="d-flex justify-content-center">
+                                            <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#edit_subject' . $row['sub_code'] . '">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                        
+                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_section' . $row['sub_code'] . '">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                            ';
+                    echo '</tr>';
+
+                    $count++;
+
+                    //todo Modal for updating subject
+                    // Modal for updating section
+                    echo '
+                    
+                                      <div class="modal fade" id="edit_subject' . htmlspecialchars($row['sub_code']) . '"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
+                                          <div class="modal-dialog modal-md">
+                                              <div class="modal-content b-grey">
+                                                  <div class="modal-body">
+                                                      <div class="modal-header">
+                                                          <h5 class="modal-title text-primary">Edit Subject Details</h5><i class="bi bi-pencil-square fs-3"></i>
+                                                      </div>
+                                                      <form action="./includes/Operation/updateSubject.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editSubjectForm' . htmlspecialchars($row['sub_code']) . '">
+                                                          <!-- Use hidden input -->
+                                                            <input type="hidden" name="subID" value="' . htmlspecialchars($row['sub_code']) . '">
+
+                                                                  <div class="col-md-12 mb-3">
+                                                                      <label class="form-label">Subject name</label>
+                                                                      <input type="text" class="form-control" name="subject" value="' . htmlspecialchars($row['sub_title']) . '" required>
+                                                                      <div class="invalid-feedback">
+                                                                          Please input a strand name.
+                                                                      </div>
+                                                                  </div>
  
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
-<script src="../js/clearinput.js"></script>
+                                                                
+                                                                  <div class="col-md-12 mt-2">
+                                                                      <label class="form-label">Category</label>                                                                 
+                                                                      <select class="form-select" name="type" required>
+                                                                          <option disabled value="">Choose...</option>
+                                                                          <option value="SPECIALIZED SUBJECT"' . ($row['sub_type'] == 'SPECIALIZED SUBJECT' ? ' selected' : '') . '>SPECIALIZED SUBJECT</option>
+                                                                          <option value="APPLIED SUBJECT"' . ($row['sub_type'] == 'APPLIED SUBJECT' ? ' selected' : '') . '>APPLIED SUBJECT</option>
+                                                                          <option value="CORE SUBJECT"' . ($row['sub_type'] == 'CORE SUBJECT' ? ' selected' : '') . '>CORE SUBJECT</option>
+                                                                      </select> 
+                                                                      <div class="invalid-feedback">
+                                                                          Please select a type.
+                                                                      </div>
+                                                                  </div>
+                                                                
+
+                                                                  <div class="col-md-12 mt-2">
+                                                                          <label class="form-label">Time</label>
+                                                                          <input type="text" class="form-control" name="time" value="' . htmlspecialchars($row['sub_time']) . '" required>
+                                                                          <div class="invalid-feedback">
+                                                                              Please select a section name.
+                                                                          </div>
+                                                                  </div>                                                              
+
+                                                              <div class="d-flex justify-center gap-1">
+                                                                  <div class="col-6">
+                                                                      <button name="submit" class="btn btn-primary w-100 mt-3 mb-2" type="submit">Save</button>
+                                                                  </div>
+                                                                  <div class="col-6">
+                                                                  <button type="button" class="btn btn-outline-primary w-100 mt-3 mb-2" data-bs-dismiss="modal" aria-label="Close" onclick="resetSubject(\'' . htmlspecialchars($row['sub_code']) . '\')">Cancel</button>
+                                                                  </div>
+                                                              </div>
+                                                      </form>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <script>
+                                      function resetSubject(id) {
+                                              var form = document.getElementById("editSubjectForm" + id);
+                                                  if (form) {
+                                                  form.reset(); // Clears the form fields
+                                                  form.classList.remove("was-validated");
+                                                  }
+                                              }
+                                      </script>
+                                      ';
+
+
+
+                    // todo Modal for deleting subject
+                    echo '
+                                            <div class="modal fade" id="del_section' . $row['sub_code'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-md">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body text-center mt-5">
+                                                            <div class="text-danger">
+                                                                <i class="bi bi-trash fs-1 "></i><br><br>
+                                                            </div>
+                                                            <h5>Are you sure you want to remove ' . ucwords(strtolower($row['sub_title'])) . ' ?</h5>
+                                                        </div>
+                                                        <div class="d-flex justify-content-center mt-5 mb-5">
+                                                            <a href="includes/Operation/deleteSubject.php?id='  . $row['sub_code'] . '" class="btn btn-danger me-3" style="width: 120px;">Remove</a>
+                                                            <button class="btn btn-outline-danger" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>';
+                  }
+                } else {
+                  echo '<tr>
+                                <td colspan="10" class="text-center">Empty subject.<br>
+                                </td>
+                              </tr>';
+                }
+
+                echo '</tbody>';
+                echo '</table>';
+                $mySQLFunction->disconnect();
+                ?>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<?php
+include("../admin/includes/footer.php");
+?>
+<!-- PDF ,EXCEL, PRINT ,CVS -->
+<script>
+  $(document).ready(function() {
+    $("#example").DataTable({
+      dom: "Bfrtip", // Include buttons in the dom
+      buttons: [
+        "copy",
+        {
+          extend: "csvHtml5",
+          text: "CSV",
+          exportOptions: {
+            columns: function(index, data, node) {
+              // Exclude the "Action" column (assuming index 7)
+              return index !== 7;
+            },
+          },
+        },
+        {
+          extend: "excelHtml5",
+          text: "Excel",
+          exportOptions: {
+            columns: function(index, data, node) {
+              // Exclude the "Action" column (assuming index 7)
+              return index !== 7;
+            },
+          },
+        },
+        {
+          extend: "pdfHtml5",
+          text: "PDF",
+          exportOptions: {
+            columns: function(index, data, node) {
+              // Exclude the "Action" column (assuming index 7)
+              return index !== 7;
+            },
+          },
+        },
+        {
+          extend: "print",
+          text: "Print",
+          autoPrint: true, // This will print in the same tab (no new window)
+          customize: function(win) {
+            // Custom styling or adjustments for print can go here
+            $(win.document.body).css("font-size", "10pt").prepend(
+              "<h3>Section DetailsSS</h3>" // Add a custom title for the print view
+            );
+            $(win.document.body)
+              .find("table")
+              .addClass("compact") // Optional: Compact styling for the table in print view
+              .css("font-size", "inherit");
+          },
+          exportOptions: {
+            columns: function(index, data, node) {
+              // Exclude the "Action" column (assuming index 7)
+              return index !== 7;
+            },
+          },
+        },
+      ],
+    });
+  });
+</script>
