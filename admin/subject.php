@@ -49,7 +49,7 @@ include "../admin/includes/forms/subjectform.php";
 
           <!-- SUBJECT TABLE -->
           <div class="table-responsive small ms-3 me-3">
-            <table id="example" class="table table-bordered table-striped table-sm align-middle">
+            <table id="example" class="table table-bordered table-striped table-sm align-middle ">
               <thead class="table-dark ">
                 <tr>
                   <!-- <th scope="col">#</th> -->
@@ -124,7 +124,6 @@ include "../admin/includes/forms/subjectform.php";
                                         <div class="col-12 mb-3">
                                             <label class="form-label fw-bold">Category</label>
                                             <select class="form-select" name="type" required>
-                                                <option disabled value="">Choose...</option>
                                                 <option value="SPECIALIZED SUBJECT"' . ($row['sub_type'] == 'SPECIALIZED SUBJECT' ? ' selected' : '') . '>SPECIALIZED SUBJECT</option>
                                                 <option value="APPLIED SUBJECT"' . ($row['sub_type'] == 'APPLIED SUBJECT' ? ' selected' : '') . '>APPLIED SUBJECT</option>
                                                 <option value="CORE SUBJECT"' . ($row['sub_type'] == 'CORE SUBJECT' ? ' selected' : '') . '>CORE SUBJECT</option>
@@ -137,7 +136,7 @@ include "../admin/includes/forms/subjectform.php";
                                         <!-- Time -->
                                         <div class="col-12 mb-3">
                                             <label class="form-label fw-bold">Time</label>
-                                            <input type="text" class="form-control" name="time" value="' . htmlspecialchars($row['sub_time']) . '" required>
+                                            <input type="text" class="form-control" name="time" value="' . htmlspecialchars($row['sub_time']) . '" >
                                             <div class="invalid-feedback">
                                                 Please enter a valid time.
                                             </div>
@@ -182,9 +181,9 @@ include "../admin/includes/forms/subjectform.php";
                                     <h5 class="mt-4 mb-4 text-dark fw-bold">Are you sure you want to remove "<span class="text-danger">' . ucwords(strtolower($row['sub_title'])) . '</span>" ?</h5>
                                     <p class="text-muted">This action cannot be undone. Please confirm your decision below.</p>
                                 </div>
-                                <div class="modal-footer justify-content-center border-0 mt-3 mb-4">
-                                    <a href="includes/Operation/deleteSubject.php?id=' . $row['sub_code'] . '" class="btn btn-danger btn-md me-3 btn-hover" style="width: 120px;">Remove</a>
-                                    <button class="btn btn-outline-secondary btn-md btn-hover" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                        <div class="modal-footer justify-content-center border-0 mt-3 mb-4">
+                                    <a href="includes/Operation/deleteSubject.php?id=' . $row['sub_code'] . '" class="btn btn-danger px-4 py-2 me-3" style="width: 120px;">Remove</a>
+                                    <button class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -246,6 +245,7 @@ include("../admin/includes/footer.php");
           text: "PDF",
           exportOptions: {
             columns: function(index, data, node) {
+
               // Exclude the "Action" column (assuming index 7)
               return index !== 7;
             },
@@ -258,8 +258,12 @@ include("../admin/includes/footer.php");
           customize: function(win) {
             // Custom styling or adjustments for print can go here
             $(win.document.body).css("font-size", "10pt").prepend(
-              "<h3>Section DetailsSS</h3>" // Add a custom title for the print view
+              "<h3>Section Details</h3>" // Add a custom title for the print view
             );
+            $(win.document.body)
+              .find('h1:contains("LMS")') // Adjust the selector if needed
+              .css("display", "none");
+
             $(win.document.body)
               .find("table")
               .addClass("compact") // Optional: Compact styling for the table in print view

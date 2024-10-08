@@ -22,13 +22,50 @@ if (!isset($_POST["submit"])) {
         // Start transaction
         $mySQLFunction->con->begin_transaction();
 
-        // Prepare a statement for checking if the subject already exists
+        // Prepare a statement for checking if the subject , subject type, and strand subject already exists
         $checkSubjectSql = "
             SELECT 1 FROM `subject` 
             WHERE `sub_title` = ? AND `sub_type` = ? AND `strand_code` = ? 
             LIMIT 1";
         $stmt = $mySQLFunction->con->prepare($checkSubjectSql);
         $stmt->bind_param("sss", $subtitle, $subtype, $strand);
+        $stmt->execute();
+        $stmt->store_result();
+
+        // Check if a record exists
+        if ($stmt->num_rows > 0) {
+            throw new Exception("A subject with this title already exists for the selected strand.");
+        }
+
+        // Close the prepared statement
+        $stmt->close();
+
+
+
+        // Prepare a statement for checking if the subject and type of subject already exists in database
+        $checkDuplicateSubandType = "
+             SELECT 1 FROM `subject` 
+             WHERE `sub_title` = ? AND `sub_type` = ? LIMIT 1";
+        $stmt = $mySQLFunction->con->prepare($checkDuplicateSubandType);
+        $stmt->bind_param("ss", $subtitle, $subtype);
+        $stmt->execute();
+        $stmt->store_result();
+
+        // Check if a record exists
+        if ($stmt->num_rows > 0) {
+            throw new Exception("A subject with this title already exists for the selected strand.");
+        }
+
+        // Close the prepared statement
+        $stmt->close();
+
+
+        // Prepare a statement for checking if the subject already exists in database
+        $checkDuplicateSubject = "
+            SELECT 1 FROM `subject` 
+            WHERE `sub_title` = ? LIMIT 1";
+        $stmt = $mySQLFunction->con->prepare($checkDuplicateSubject);
+        $stmt->bind_param("s", $subtitle);
         $stmt->execute();
         $stmt->store_result();
 

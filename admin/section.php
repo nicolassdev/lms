@@ -46,7 +46,6 @@ include "../admin/includes/forms/sectionform.php";
                                     <th scope="col" class="small text-center">Strand</th>
                                     <th scope="col" class="small text-center">Year level</th>
                                     <th scope="col" class="small text-center">Section name</th>
-                                    <th scope="col" class="small text-center">Semester</th>
                                     <th scope="col" class="small text-center">Adviser</th>
                                     <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
 
@@ -68,8 +67,7 @@ include "../admin/includes/forms/sectionform.php";
                                         echo '<td class="small text-center">' . $row["strand_name"] . '</td>';
                                         echo '<td class="small text-center">' . $row["grade_lvl"] . '</td>';
                                         echo '<td class="small text-center">' . $row["section_name"] . '</td>';
-                                        echo '<td class="small text-center">' . $row["semester"] . '</td>';
-                                        echo '<td class="small text-center">' . $row["adviser"] . '</td>';
+                                        echo '<td class="small text-center">' . ucwords(strtolower($row["adviser"])) . '</td>';
 
                                         echo '
                                         <td class="d-flex justify-content-center">
@@ -100,26 +98,29 @@ include "../admin/includes/forms/sectionform.php";
                                                             <!-- Use hidden input -->
                                                             <input type="hidden" name="sectionID" value="' . htmlspecialchars($row['section_code']) . '">
                                     
-                                                            <!-- Strand Name -->
-                                                            <div class="col-md-12 mb-3">
-                                                                <label class="form-label fw-bold">Strand Name</label>
-                                                                <select class="form-select" id="strandSelect' . htmlspecialchars($row['section_code']) . '" name="strand_code" required>';
+                                                           
+                                <div class="col-md-12 mb-3">
+                                    <label class="form-label fw-bold">Strand Name</label>
+                                    <select name="strand_code" class="form-select" id="strandSelect' . htmlspecialchars($row['section_code']) . '" disabled>';
 
                                         // Fetch and populate strand options
                                         $mySQLFunction->connection();
                                         $strands = $mySQLFunction->getStrand();
                                         foreach ($strands as $strand) {
+                                            // Check if the strand matches the current row
                                             $selected = $strand["strand_name"] == $row['strand_name'] ? ' selected' : '';
                                             echo '<option value="' . htmlspecialchars($strand["strand_name"]) . '"' . $selected . '>' . htmlspecialchars($strand["strand_desc"]) . '</option>';
                                         }
                                         $mySQLFunction->disconnect();
 
                                         echo '
-                                                                </select>
-                                                                <div class="invalid-feedback">
-                                                                    Please input a strand name.
-                                                                </div>
-                                                            </div>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Please input a strand name.
+                                                </div>
+                                            </div>
+                                        
+                                    
                                     
                                                             <!-- Grade Level -->
                                                             <div class="col-md-12 mb-3">
@@ -140,82 +141,17 @@ include "../admin/includes/forms/sectionform.php";
                                                                 <div class="invalid-feedback">
                                                                     Please select a section name.
                                                                 </div>
-                                                            </div>
-                                    
-                                                            <!-- Semester -->
-                                                            <div class="col-md-12 mb-3">
-                                                                <label class="form-label fw-bold">Semester</label>
-                                                                <select class="form-select" name="semester" id="semester' . htmlspecialchars($row['section_code']) . '" required>';
+                                                            </div>      
 
-                                        // Fetch and populate semester options
-                                        $mySQLFunction->connection();
-                                        $result = $mySQLFunction->getSemester();
-                                        foreach ($result as $semester) {
-                                            $selected = ($semester['semester_name'] == $row['semester_name']) ? ' selected' : '';
-                                            echo '<option value="' . htmlspecialchars($semester['semester_name']) . '"' . $selected . '>' . htmlspecialchars($semester['semester_name']) . '</option>';
-                                        }
-                                        $mySQLFunction->disconnect();
 
-                                        echo '
-                                                                </select>
-                                                                <div class="invalid-feedback">
-                                                                    Please select a semester.
-                                                                </div>
-                                                            </div>
-                                    
-                                                         
-                                                           
-                                        <div class="col-md-12 mb-3">
-                                            <label class="form-label fw-bold">Adviser</label>
-                                            <select class="form-select" name="teacher_id" required>
-                                            <option selected disabled value="">Select available adviser...</option>';
-                                        $mySQLFunction->connection();
-                                        $result = $mySQLFunction->getTeacher();
-                                        $hasAvailableAdviser = false;
 
-                                        // CHECK IF ADVISER IS AVAILABLE
-                                        if (empty($result)) {
-                                            echo '<option disabled>No adviser found in the database.</option>';
-                                        } else {
-                                            foreach ($result as $teacher) {
-                                                if (!isset($teacher["teacher_id"])) {
-                                                    continue; // Skip if no teacher_id is found in the result
-                                                }
-                                                // Ensure $row contains 'teacher_id' for the current section's teacher (adviser)
-                                                $currentTeacherId = isset($row["teacher_id"]) ? $row["teacher_id"] : null;
-
-                                                // Check if the teacher is already assigned to another section
-                                                $isAssigned = ($mySQLFunction->checkRowCount("section", "teacher_id", $teacher["teacher_id"]) == 1);
-
-                                                // Allow selection of the current adviser even if already assigned
-                                                if ($isAssigned && $teacher["teacher_id"] != $currentTeacherId) {
-                                                    continue; // Skip if the teacher is assigned to another section and isn't the current adviser
-                                                }
-
-                                                // Determine if this teacher should be selected in the dropdown (current adviser)
-                                                $selected = ($teacher["teacher_id"] == $currentTeacherId) ? ' selected' : '';
-
-                                                // Output the option with the 'selected' attribute if necessary
-                                                echo '<option value="' . htmlspecialchars($teacher["teacher_id"]) . '"' . $selected . '>';
-                                                echo htmlspecialchars($teacher["teacher_fname"]) . ' ' . htmlspecialchars($teacher["teacher_mname"]) . ' ' . htmlspecialchars($teacher["teacher_lname"]);
-                                                echo '</option>';
-                                                // Mark that there is at least one available adviser
-                                                $hasAvailableAdviser = true;
-                                            }
-                                        }
-
-                                        // Check if no available adviser was found after the loop
-                                        if (!$hasAvailableAdviser) {
-                                            echo '<option disabled>No adviser available for section.</option>';
-                                        }
-
-                                        $mySQLFunction->disconnect();
-
-                                        echo '</select>';
-                                        echo '<div class="invalid-feedback">';
-                                        echo 'Please select an adviser.';
-                                        echo '</div>';
-                                        echo '</div>';
+                                                    <div class="col-md-12 mb-3">
+                                                            <label class="form-label fw-bold">Adviser</label>
+                                                            <input text="text" class="form-control" name="teacher_id" value="' . htmlspecialchars($row['adviser']) . '"  disabled>                                                                                             
+                                                            <div class="invalid-feedback">
+                                                                Please select an adviser.
+                                                        </div>
+                                                    </div>';
 
 
 
@@ -307,7 +243,7 @@ include("../admin/includes/footer.php");
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 6;
+                            return index !== 5;
                         },
                     },
                 },
@@ -317,7 +253,7 @@ include("../admin/includes/footer.php");
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 6;
+                            return index !== 5;
                         },
                     },
                 },
@@ -327,7 +263,7 @@ include("../admin/includes/footer.php");
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 6;
+                            return index !== 5;
                         },
                     },
                 },
@@ -338,7 +274,7 @@ include("../admin/includes/footer.php");
                     customize: function(win) {
                         // Custom styling or adjustments for print can go here
                         $(win.document.body).css("font-size", "10pt").prepend(
-                            "<h3>Section DetailsSS</h3>" // Add a custom title for the print view
+                            "<h3>Section Details</h3>" // Add a custom title for the print view
                         );
                         $(win.document.body)
                             .find("table")
@@ -348,7 +284,7 @@ include("../admin/includes/footer.php");
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 6;
+                            return index !== 5;
                         },
                     },
                 },

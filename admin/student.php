@@ -409,8 +409,8 @@ include "../admin/includes/forms/studentform.php";
                                                         <p class="text-muted">This action cannot be undone. Please confirm your decision below.</p>
                                                     </div>
                                                     <div class="modal-footer justify-content-center border-0 mt-3 mb-4">
-                                                        <a href="includes/Operation/deleteStudent.php?id=' . $row['id'] . '" class="btn btn-danger btn-md me-3" style="width: 120px;">Remove</a>
-                                                        <button class="btn btn-outline-secondary btn-md" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                                                        <a href="includes/Operation/deleteStudent.php?id=' . $row['id'] . '" class="btn btn-danger px-4 py-2 me-3" style="width: 120px;">Remove</a>
+                                                        <button class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
                                                     </div>
                                                 </div>
                                             </div>

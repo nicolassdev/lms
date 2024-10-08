@@ -195,6 +195,26 @@ class myDataBase
     }
 
 
+    // COUNT THE NUMBER OF ROWS IN TABLE TO VALIDATION SELECTED IN UPDATE
+    public function checkRowCountSubject($table, $row = null, $value = null, $id = null)
+    {
+        if ($row != null && $value != null) {
+            // Adjust the query to exclude the current subject ID
+            $sql = "SELECT * FROM `$table` WHERE `$row` = '$value'";
+            if ($id != null) {
+                $sql .= " AND `sub_code` != '$id'"; // Assuming `sub_id` is the primary key
+            }
+        } else {
+            $sql = "SELECT * FROM `$table`";
+        }
+
+        $result = mysqli_num_rows($this->con->query($sql));
+
+        return $result;
+    }
+
+
+
     function checkEnrollmentInSemester($stu_lrn, $semester)
     {
         // Connect to the database
@@ -219,28 +239,6 @@ class myDataBase
         // Return the count; if it's 0, the student is not enrolled
         return $row['enrolled_count'];
     }
-
-
-    // public function checkEnrollmentInYearAndSemester($studentLrn, $schoolYear, $semester)
-    // {
-    //     $count = 0; // Initialize count to 0
-    //     $stmt = $this->con->prepare("SELECT COUNT(*) FROM enroll WHERE stu_lrn = ? AND school_year = ? AND semester = ?");
-
-    //     if ($stmt) {
-    //         $stmt->bind_param("sss", $studentLrn, $schoolYear, $semester);
-    //         $stmt->execute();
-    //         $stmt->bind_result($count);
-    //         $stmt->fetch();
-    //         $stmt->close();
-    //     } else {
-    //         // Handle error in prepared statement
-    //         // You can log the error or throw an exception
-    //         error_log("Failed to prepare the statement: " . $this->con->error);
-    //     }
-
-    //     return $count; // Return the number of enrollments found
-    // }
-
 
 
 
@@ -273,7 +271,6 @@ class myDataBase
     }
 
     //Check active STATUS in semester
-    // Check active STATUS in semester
     public function checkSemStatus($table)
     {
         $semesters = [];
@@ -324,12 +321,12 @@ class myDataBase
 
 
 
-    public function checkSectionExist($strand, $section, $adviser, $excludeID)
+    public function checkSectionExist($strand, $section, $adviser)
     {
-        $sql = "SELECT * FROM section WHERE strand_code =? AND section_name =? AND  teacher_id =? AND section_code  != ?";
+        $sql = "SELECT * FROM section WHERE strand_code =? AND section_name =? AND  teacher_id =?";
 
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("sssi", $strand, $section, $adviser, $excludeID);
+        $stmt->bind_param("ssi", $strand, $section, $adviser);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -663,7 +660,7 @@ class myDataBase
     {
         if ($row != null && $value != null) {
             $sql = "SELECT `section_code`, `strand_name` ,`section.strand_code` , `grade_lvl` ,
-            `section_name`,`semester`,`section.teacher_id` , 
+            `section_name`, `teacher_fname` , `teacher_lname` , `section.teacher_id` , 
             CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS adviser FROM `section`
             INNER JOIN `strand`
             ON section.strand_code = strand.strand_code
@@ -675,7 +672,7 @@ class myDataBase
 
             return $stored;
         } else {
-            $sql = "SELECT `section_code`, `strand_name` , `grade_lvl` , `section_name`, `semester`,
+            $sql = "SELECT `section_code`, `strand_name` , `grade_lvl` , `section_name`, `teacher_fname` , `teacher_lname` ,
             CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS adviser FROM  `section`
             INNER JOIN `strand`
             ON section.strand_code = strand.strand_code
@@ -1114,12 +1111,42 @@ class myDataBase
             }
         }
 
+
+        // Check if teacher exists in strand table
+        if ($row === 'teacher_id') {
+            $checkQuery = "SELECT COUNT(*) FROM teacher WHERE teacher_id = $value";
+            $checkResult = $this->con->query($checkQuery);
+            $count = $checkResult->fetch_row()[0];
+
+            if ($count == 0) {
+                return false; // or handle the error as needed
+            }
+        }
+
         // Proceed with the update
         $sql = "UPDATE `section` SET `$row` =  $value WHERE `section_code` = '$where'";
         $result = $this->con->query($sql);
 
         return $result ? true : false;
     }
+
+
+    // UPDATE SECTION
+    // public function updateSection($row, $value, $where)
+    // {
+    //     $value = mysqli_real_escape_string($this->con, $value);
+    //     if (is_string($value)) {
+    //         $value = "'" . $value . "'";
+    //     }
+    //     $sql = "UPDATE `section` SET `$row` =  $value WHERE `section_code` = '$where'";
+    //     $result = $this->con->query($sql);
+
+    //     if ($result) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
 
 

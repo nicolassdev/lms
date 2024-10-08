@@ -329,7 +329,7 @@ if (isset($_SESSION['error_section']) && $_SESSION['error_section'] == true) {
                         <div class="text-danger">
                             <i class="bbi bi-exclamation-circle fs-1"></i><br><br>
                         </div>
-                        <p class="mb-4"> Section name has been already taken.</p>
+                        <p class="mb-4">Section and Grade level has been already exist</p>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5 ">
                         <button class="btn btn-danger me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
@@ -779,4 +779,34 @@ if (isset($_SESSION['sectionupdate_error'])) {
         </script>
     ';
     unset($_SESSION['sectionupdate_error']); // Unset the session variable after displaying
+}
+
+
+//SUBJECT EXIST 
+if (isset($_SESSION['subject_error'])) {
+    echo '
+        <div class="modal fade" id="errorupdateModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body text-center mt-5">
+                        <div class="text-danger">
+                            <i class="bi bi-exclamation-circle fs-1"></i><br><br>
+                        </div>
+                        <p class="mb-4">' . $_SESSION['subject_error'] . '</p>
+                    </div>
+                    <div class="d-flex justify-content-center mt-3 mb-5">
+                        <button class="btn btn-danger me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var errorupdateModal = new bootstrap.Modal(document.getElementById("errorupdateModal"));
+                errorupdateModal.show();
+            });
+        </script>
+    ';
+    unset($_SESSION['subject_error']); // Unset the session variable after displaying
 }

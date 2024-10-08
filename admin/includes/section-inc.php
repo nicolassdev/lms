@@ -12,9 +12,8 @@ if (!isset($_POST["submit"])) {
     $strandcode = trim($_POST["strand_code"] ?? null);
     $gradelvl = strtoupper(trim($_POST["gradelvl"] ?? null));
     $section = strtoupper(trim($_POST["section"] ?? null));
-    $sem = trim($_POST["semester"] ?? null);
     $advisor = trim($_POST["teacher_id"] ?? null);
-
+    $date_created = date("Ymd");
     $mySQLFunction->connection(); // Establish database connection
 
     try {
@@ -41,10 +40,10 @@ if (!isset($_POST["submit"])) {
 
         // Insert section data into `section` table using prepared statements
         $insertSection = "
-            INSERT INTO `section` (`section_code`, `strand_code`, `grade_lvl`, `section_name`, `semester`, `teacher_id`) 
+            INSERT INTO `section` (`section_code`, `strand_code`, `grade_lvl`, `section_name`, `teacher_id`, `date_created`) 
             VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $mySQLFunction->con->prepare($insertSection);
-        $stmt->bind_param("ssssss", $code, $strandcode, $gradelvl, $section, $sem, $advisor);
+        $stmt->bind_param("ssssss", $code, $strandcode, $gradelvl, $section, $advisor, $date_created);
         $stmt->execute();
 
         // Commit the transaction

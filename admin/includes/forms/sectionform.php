@@ -73,21 +73,6 @@
                          </div>
                      </div>
 
-                     <div class="col-md-12">
-                         <label class="form-label">Semester</label>
-                         <select class="form-select" name="semester" id="semester" required>
-                             <option selected disabled value="">Select...</option>
-                             <?php
-                                $result = $mySQLFunction->getSemester();
-                                foreach ($result as $row) {
-                                    echo '<option value="' . $row["semester_name"] . '">' . $row["semester_name"] . '</option>';
-                                }
-                                ?>
-                         </select>
-                         <div class="invalid-feedback">
-                             Please select a semester.
-                         </div>
-                     </div>
 
                      <!-- ADVISOR SELECTION -->
                      <div class="col-md-12">

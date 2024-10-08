@@ -64,13 +64,13 @@ include "../admin/includes/forms/teacherform.php";
                                         echo '<tr>';
                                         // echo '<td>' . $row["teacher_id"] . '</td>';
                                         // echo '<td>' . $count . '</td>';
-                                        echo '<td>' . $row["teacher_fname"] . '</td>';
-                                        echo '<td>' . $row["teacher_mname"] . '</td>';
-                                        echo '<td>' . $row["teacher_lname"] . '</td>';
+                                        echo '<td>' . ucwords(strtolower($row["teacher_fname"])) . '</td>';
+                                        echo '<td>' .  ucwords(strtolower($row["teacher_mname"])) . '</td>';
+                                        echo '<td>' .  ucwords(strtolower($row["teacher_lname"])) . '</td>';
                                         echo '<td>' . $row["teacher_contact"] . '</td>';
-                                        echo '<td>' . $row["teacher_gender"] . '</td>';
+                                        echo '<td>' .  ucwords(strtolower($row["teacher_gender"])) . '</td>';
                                         echo '<td>' . $row["teacher_dob"] . '</td>';
-                                        echo '<td>' . $row["teacher_address"] . '</td>';
+                                        echo '<td>' .  ucwords(strtolower($row["teacher_address"])) . '</td>';
                                         echo '
                       <td class="d-flex justify-content-center">
                           <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#edit_teacher' . $row['teacher_id'] . '">
@@ -211,9 +211,9 @@ include "../admin/includes/forms/teacherform.php";
                                                         <h5 class="mt-4 mb-4 text-dark fw-bold">Are you sure you want to delete "<span class="text-danger">' . ucwords(strtolower($row['teacher_fname'])) . ' ' . ucwords(strtolower($row['teacher_lname'])) . '</span>"?</h5>
                                                         <p class="text-muted">This action cannot be undone. Please confirm your decision below.</p>
                                                     </div>
-                                                    <div class="modal-footer justify-content-center border-0 mt-3 mb-4">
-                                                        <a href="includes/Operation/deleteTeacher.php?id=' . $row['id'] . '" class="btn btn-danger btn-md me-3" style="width: 120px;">Delete</a>
-                                                        <button class="btn btn-outline-secondary btn-md" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                                                    <div class="modal-footer justify-content-center border-0 mt-2 mb-4">
+                                                        <a href="includes/Operation/deleteTeacher.php?id=' . $row['id'] . '" class="btn btn-danger px-4 py-2 me-3" style="width: 120px;">Delete</a>
+                                                        <button class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
                                                     </div>
                                                 </div>
                                             </div>
