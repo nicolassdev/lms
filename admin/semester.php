@@ -146,7 +146,7 @@ include "../admin/includes/forms/semesterform.php";
                                             <div class="text-danger">
                                                 <i class="bi bi-trash fs-1"></i><br><br>
                                             </div>
-                                                <h5>Are you sure you want to remove ' . str_replace('+', ' ', $row['semester_name']) . ' Semester?</h5>
+                                                <h5>Are you sure you want to remove "<span class="text-danger">' . str_replace('+', ' ', $row['semester_name']) . '</span>" ?</h5>
                                         </div>
                                         <div class="d-flex justify-content-center mt-5 mb-5">
                                             <a href="includes/Operation/deleteSem.php?id=' . urlencode($row['semester_name']) . '" class="btn btn-danger me-3" style="width: 120px;">Remove</a>
@@ -165,7 +165,7 @@ include "../admin/includes/forms/semesterform.php";
                                           <div class="text-success">
                                               <i class="bi bi-question-circle fs-1 "></i><br><br>
                                           </div>
-                                          <h6>Are you sure you want to set the school year '  . str_replace('+', ' ', $row['semester_name']) . ' to Active?</h5>
+                                          <h6>Are you sure you want to set the school year "<span class="text-success">'  . str_replace('+', ' ', $row['semester_name']) . '</span>" to Active?</h5>
                                       </div>
                                       <div class="d-flex justify-content-center mt-5 mb-5">
                                           <a href="includes/Operation/activeSem.php?id='  . urlencode($row['semester_name']) . '" class="btn btn-success me-3" style="width: 120px;">Active</a>

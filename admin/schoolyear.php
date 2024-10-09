@@ -148,7 +148,7 @@ include "../admin/includes/forms/syform.php";
                                           <div class="text-danger">
                                               <i class="bi bi-trash fs-1 "></i><br><br>
                                           </div>
-                                          <h5>Are you sure you want to remove SY ' . $row['school_year'] . ' ?</h5>
+                                          <h5>Are you sure you want to remove SY "<span class="text-danger">' . $row['school_year'] . '</span>" ?</h5>
                                       </div>
                                       <div class="d-flex justify-content-center mt-5 mb-5">
                                           <a href="includes/Operation/deleteSy.php?id='  . $row['school_year'] . '" class="btn btn-danger me-3" style="width: 120px;">Remove</a>
@@ -166,7 +166,7 @@ include "../admin/includes/forms/syform.php";
                                           <div class="text-success">
                                               <i class="bi bi-question-circle fs-1 "></i><br><br>
                                           </div>
-                                          <h6>Are you sure you want to set the school year ' . $row['school_year'] . ' to Active?</h5>
+                                          <h6>Are you sure you want to set the school year "<span class="text-success">' . $row['school_year'] . '</span>" to Active?</h5>
                                       </div>
                                       <div class="d-flex justify-content-center mt-5 mb-5">
                                           <a href="includes/Operation/activeSy.php?id='  . $row['school_year'] . '" class="btn btn-success me-3" style="width: 120px;">Active</a>

@@ -2,124 +2,236 @@
 include "../includes/dbh-inc.php";
 $mySQLFunction->connection();
 $numberOfTeacher = $mySQLFunction->checkRowCount("TEACHER");
+
+$numberOfAdviser = $mySQLFunction->checkRowCount("SECTION");
+
+
 $numberOfStudent = $mySQLFunction->checkRowCount("ENROLL");
+
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
 $mySQLFunction->disconnect();
 ?>
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-        <div class="ms-3">
-            <h4>Welcome Back!</h4>
-            <div class="container mt-3">
-                <div class="row">
-                    <!-- Date and Time Display -->
-                    <div class="col-md-6">
-                        <?php
-                        date_default_timezone_set("Asia/Manila");
-                        echo '<div class="date-display">Today is ' . date("M d, Y l") . '</div>';
-                        echo '<div class="date-display">Time ' . date("h:i A") . '</div>';
-                        ?>
-                    </div>
+<style>
+    /* Add card hover effects and modern shadow */
+    .card {
+        border: 1px solid #e0e0e0;
+        transition: box-shadow 0.3s ease;
+    }
 
-                    <!-- School Year and Semester Display -->
-                    <div class="col-md-6">
-                        <?php
-                        if (!empty($activeSchoolYears) && !empty($activeSem)) {
-                            // Assuming both arrays have the same length and represent corresponding data
-                            foreach ($activeSchoolYears as $index => $schoolYear) {
-                                echo '<div class="date-display">School Year: ' . htmlspecialchars($schoolYear) . '</div>';
-                                echo '<div class="date-display">Semester: ' . htmlspecialchars($activeSem[$index]) . '</div>';
+    .card:hover {
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Customize button styles */
+    /* .btn {
+        transition: background-color 0.3s ease, color 0.3s ease;
+    } */
+
+    /* 
+    .btn:hover {
+        background-color: #343a40;
+        color: #fff;
+    } */
+
+    /* Add padding and margin for date/time display */
+    /* .date-display {
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin-bottom: 10px;
+    } */
+
+    /* Styling for school year and semester */
+    /* .school-semester-info {
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        margin-top: 20px;
+    } */
+
+    /* .school-semester-info h6 {
+        font-weight: bold;
+        color: #343a40;
+    } */
+
+    /* Morris.js chart container */
+    /* #teacherChart {
+        margin-top: 10px;
+    } */
+</style>
+</head>
+
+<body>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <div class="ms-3">
+                <h4>Welcome Back!</h4>
+                <div class="container mt-3">
+                    <div class="row">
+                        <!-- Date and Time Display -->
+                        <div class="col-md-6">
+                            <div id="date" class="date-display"></div>
+                            <div id="time" class="date-display"></div>
+                        </div>
+
+                        <!-- School Year and Semester Display -->
+                        <div class="col-md-6 school-semester-info">
+                            <?php
+                            if (!empty($activeSchoolYears) && !empty($activeSem)) {
+                                foreach ($activeSchoolYears as $index => $schoolYear) {
+                                    echo '<h6>School Year: ' . htmlspecialchars($schoolYear) . '</h6>';
+                                    echo '<h6>Semester: ' . htmlspecialchars($activeSem[$index]) . '</h6>';
+                                }
+                            } else {
+                                echo '<div class="alert alert-warning">No school year and semester found.</div>';
                             }
-                        } else {
-                            echo '<div class="alert alert-warning">No school year and semester found.</div>';
-                        }
-                        ?>
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <!-- Account Card -->
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width:100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Account</h5>
+                        <p class="card-text">Manage your account here.</p>
+                        <a href="?page=admin" class="btn btn-primary text-white text-center btn-animate">
+                            Manage Account
+                            <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
                     </div>
                 </div>
             </div>
 
-        </div>
-    </div>
-    <div class="row g-3">
-        <!-- Example Cards -->
-        <div class="col-md-3 col-sm-6 col-12">
-            <div class="card mb-3 mx-auto shadow-sm" style="max-width:100%;">
-                <div class="card-body">
-                    <h5 class="card-title">Account</h5>
-                    <p class="card-text">Manage your account here.</p>
-                    <a href="?page=admin" class="btn btn-primary text-white text-center">
-                        Manage account
-                        <i class="bi bi-arrow-right ms-2"></i>
-                    </a>
+            <!-- Strand Card -->
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Strand</h5>
+                        <p class="card-text">Manage all strands here.</p>
+                        <a href="index.php?page=strand" class="btn btn-success text-white text-center btn-animate">
+                            Manage Strand
+                            <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Card -->
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Subject</h5>
+                        <p class="card-text">Manage subjects here.</p>
+                        <a href="index.php?page=subject" class="btn btn-danger text-white text-center btn-animate">
+                            Manage Subject
+                            <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Card -->
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Section</h5>
+                        <p class="card-text">Manage sections here.</p>
+                        <a href="index.php?page=section" class="btn btn-warning text-black text-center btn-animate">
+                            Manage Section
+                            <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teachers Card with count -->
+            <div class="col-lg-6 col-sm-12">
+                <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Teacher</h5>
+                        <p class="card-text">Number of teachers registered.</p>
+                        <!-- Morris.js chart for teachers and students -->
+                        <div id="teacherChart" style="height: 200px; max-width:100%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Students Card with count -->
+            <div class="col-lg-6 col-sm-12">
+                <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Student</h5>
+                        <p class="card-text">Number of Senior High School students enrolled.</p>
+                        <!-- Morris.js chart for teachers and students -->
+                        <div id="studentChart" style="height: 200px; max-width:100%;"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3 col-sm-6 col-12">
-            <div class="card mb-3 mx-auto shadow-sm" style="max-width: 100%;">
-                <div class="card-body">
-                    <h5 class="card-title">Strand</h5>
-                    <p class="card-text">Manage all strand here.</p>
-                    <a href="#" class="btn btn-success text-white text-center">
-                        Manage strand
-                        <i class="bi bi-arrow-right ms-2"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 col-12">
-            <div class="card mb-3 mx-auto shadow-sm" style="max-width: 100%;">
-                <div class="card-body">
-                    <h5 class="card-title">Subject</h5>
-                    <p class="card-text">Manage subject here.</p>
-                    <a href="#" class="btn btn-danger text-white text-center">
-                        Manage subject
-                        <i class="bi bi-arrow-right ms-2"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3 col-sm-6 col-12">
-            <div class="card mb-3 mx-auto shadow-sm" style="max-width: 100%;">
-                <div class="card-body">
-                    <h5 class="card-title">Section</h5>
-                    <p class="card-text">Manage section an here.</p>
-                    <a href="#" class="btn btn-secondary text-white text-center">
-                        Manage subject
-                        <i class="bi bi-arrow-right ms-2"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-sm-12">
-            <div class="card mb-3 mx-auto shadow-sm" style="max-width: 100%;">
-                <div class="card-body">
-                    <h5 class="card-title">Teacher</h5>
-                    <p class="card-text">Number of teachers registered.</p>
-                    <a href="#" class="btn btn-info text-white text-center fs-1 fw-bold">
-                        <?php echo $numberOfTeacher; ?>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-sm-12">
-            <div class="card mb-3 mx-auto shadow-sm" style="max-width: 100%;">
-                <div class="card-body">
-                    <h5 class="card-title">Student</h5>
-                    <p class="card-text">Number of Senior High School students enrolled.</p>
-                    <a href="#" class="btn btn-warning text-white text-center fs-1 fw-bold">
-                    <?php echo $numberOfStudent; ?>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
-</main>
+
+    </main>
+
+    <!-- Time and Date Script -->
+    <script>
+        function updateTime() {
+            var now = new Date();
+            var timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            var dateString = now.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                weekday: 'long'
+            });
+
+            document.getElementById('time').innerHTML = 'Time: ' + timeString;
+            document.getElementById('date').innerHTML = 'Today is: ' + dateString;
+        }
+
+        setInterval(updateTime, 1000); // Update time every second
+        updateTime(); // Initial call
+    </script>
+
+    <!-- Morris.js Chart Script -->
+    <script>
+        $(document).ready(function() {
+            new Morris.Donut({
+                element: 'teacherChart',
+                data: [{
+                        label: 'Teachers',
+                        value: <?php echo $numberOfTeacher; ?>
+                    },
+                    {
+                        label: 'Advisers',
+                        value: <?php echo $numberOfAdviser; ?>
+                    }
+                ],
+                colors: ['#D91656', '#640D5F'],
+                resize: true
+            });
+        });
+
+        $(document).ready(function() {
+            new Morris.Donut({
+                element: 'studentChart',
+                data: [{
+                    label: 'Students',
+                    value: <?php echo $numberOfStudent; ?>
+                }],
+                colors: ['#10375C'],
+                resize: true
+            });
+        });
+    </script>

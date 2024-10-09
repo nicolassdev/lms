@@ -1,4 +1,3 @@
-
 <?php
 session_start(); // Ensure session is started
 
@@ -10,32 +9,25 @@ if (!isset($_POST["submit"])) {
     include "../../../includes/dbh-inc.php";
 
     try {
-
         $mySQLFunction->connection();
-
 
         if (isset($_POST["submit"])) {
             // Sanitize and prepare input
-            $id = $_POST["sectionID"];
+            $sec_id = $_POST["sectionID"];
             $strand = strtoupper(trim($_POST["strand_code"]));
             $gradelvl = strtoupper(trim($_POST["gradelvl"]));
             $section = strtoupper(trim($_POST["section"]));
-            // $teacher = trim($_POST["teacher_id"]);
 
-
-            if ($mySQLFunction->checkRowCount("section", "grade_lvl", $gradelvl) == 1) {
-                $_SESSION['sectionupdate_error'] = "<small>Section and Grade level has already exists. Please choose different details.</small>";
+            // Check if the same grade level and section name already exist, excluding the current record (using sectionID)
+            if ($mySQLFunction->checkRowCountSection("section", $section, $gradelvl, $sec_id) > 0) {
+                $_SESSION['sectionupdate_error'] = "<small>Section and Grade level combination already exists. Please choose different details.</small>";
                 header("location:../../index.php?page=section");
                 exit();
             } else {
-                // Reconnect to the database for updating the information
-                $mySQLFunction->connection();
-
-                // Update the teacher details
-                $mySQLFunction->updateSection("strand_code", $strand, $id);
-                $mySQLFunction->updateSection("grade_lvl", $gradelvl, $id);
-                $mySQLFunction->updateSection("section_name", $section, $id);
-                // $mySQLFunction->updateSection("teacher_id", $teacher, $id);
+                // Proceed with updating the section details
+                $mySQLFunction->updateSection("strand_code", $strand, $sec_id);
+                $mySQLFunction->updateSection("grade_lvl", $gradelvl, $sec_id);
+                $mySQLFunction->updateSection("section_name", $section, $sec_id);
 
                 // Disconnect after updating
                 $mySQLFunction->disconnect();
@@ -48,7 +40,7 @@ if (!isset($_POST["submit"])) {
         }
     } catch (Exception $e) {
         // Handle exceptions and errors
-        error_log("Error updating teacher details: " . $e->getMessage());
+        error_log("Error updating section details: " . $e->getMessage());
         $_SESSION['sectionupdate_error'] = "An error occurred while updating the section details.";
         header("location:../../error.php");
         exit();

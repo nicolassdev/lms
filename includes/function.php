@@ -214,6 +214,38 @@ class myDataBase
     }
 
 
+    public function checkRowCountSection($table, $section_name, $grade_lvl, $section_id = null)
+    {
+        // Prepare the SQL query to check for the section name and grade level
+        $sql = "SELECT * FROM `$table` WHERE `section_name` = ? AND `grade_lvl` = ?";
+
+        // If we are updating an existing record, exclude that record from the check
+        if ($section_id != null) {
+            $sql .= " AND `section_code` != ?";
+        }
+
+        // Prepare the SQL statement
+        $stmt = $this->con->prepare($sql);
+
+        // Bind the parameters dynamically based on whether section_id is provided
+        if ($section_id != null) {
+            $stmt->bind_param("sss", $section_name, $grade_lvl, $section_id);
+        } else {
+            $stmt->bind_param("ss", $section_name, $grade_lvl);
+        }
+
+        $stmt->execute();
+        $stmt->store_result();
+
+        // Return the number of rows found (if > 0, it means the combination exists)
+        return $stmt->num_rows;
+    }
+
+
+
+
+
+
 
     function checkEnrollmentInSemester($stu_lrn, $semester)
     {
