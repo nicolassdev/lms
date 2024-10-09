@@ -180,3 +180,47 @@ button:hover {
     padding: 30px;
   }
 }
+
+.alert-1 {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -20%);
+  text-align: center;
+  padding: 20px 40px;
+  font-size: 24px;
+  font-weight: bold;
+  z-index: 1000;
+  border-radius: 10px;
+  width: 40%;
+  color: #721c24;
+  background-color: #f8d7da; /* Red background for error */
+  border: 1px solid #f5c6cb;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow for better visibility */
+  animation: fadeIn 0.5s ease-in-out;
+}
+.alert-1 .alert-icon {
+  display: inline-block;
+  font-size: 35px;
+  color: #f44336; /* Red warning icon */
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -30%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -20%);
+  }
+}
+@media (max-width: 768px) {
+  .alert-1 {
+    font-size: 18px;
+    padding: 15px 30px;
+    max-width: 80%;
+  }
+}

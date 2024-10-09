@@ -73,11 +73,14 @@
         </div>
     </nav>
 
+
+
+    <!-- Sidebar -->
     <header>
         <div class="container-fluid">
             <div class="row mt-4">
                 <!-- Sidebar -->
-                <nav id="sidebar" class="col-md-3 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 230px;">
+                <nav id="sidebar" class="col-md-3 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
                     <div class="position-sticky">
                         <h3 class="mb-4 text-white">Dashboard</h3>
                         <ul class="nav flex-column">

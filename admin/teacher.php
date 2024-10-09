@@ -221,7 +221,7 @@ include "../admin/includes/forms/teacherform.php";
                                     }
                                 } else {
                                     echo '<tr>
-                                <td colspan="10" class="text-center fs-3"><i class="bi bi-emoji-frown me-2"></i>Teacher not found.<br>
+                                <td colspan="10" class="text-center">Teacher not found.<br>
                                 </td>
                               </tr>';
                                 }

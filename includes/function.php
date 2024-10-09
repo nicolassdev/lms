@@ -54,15 +54,16 @@ class myDataBase
     }
 
     // ENCRPYT PASSWORD
-    // public function encrypt($password)
-    // {
-    //     return  sha1($password);
-    // }
     public function encrypt($password)
     {
-        // Use password_hash with bcrypt (the default algorithm) to securely hash the password
-        return password_hash($password, PASSWORD_DEFAULT);
+        $hash = sha1($password);
+        return $hash;
     }
+    // public function encrypt($password)
+    // {
+    //     // Use password_hash with bcrypt (the default algorithm) to securely hash the password
+    //     return password_hash($password, PASSWORD_DEFAULT);
+    // }
 
 
     // RANDOM TEACHER ID
@@ -177,6 +178,52 @@ class myDataBase
         $result = $this->con->query($sql);
         return $result;
     }
+
+
+    //CHECK USER LOGIN 
+    function checkLogin($username, $password)
+    {
+        $username = mysqli_real_escape_string($this->con, $username);
+        $password = mysqli_real_escape_string($this->con, $password);
+
+        $query = "SELECT * FROM `users` WHERE `username` = '$username' AND `password` = '$password'";
+        $result = $this->con->query($query);
+
+        if (mysqli_num_rows($result) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+    // GET USER INDIVIDUAL CREDENTIAL 
+    function getCredential($row, $value)
+    {
+        $sql = "SELECT * FROM `users` WHERE `$row` = '$value'";
+        $stored = ($this->con->query($sql))->fetch_assoc();
+        return $stored;
+    }
+
+    // GET STUDENT CREDENTIAL 
+    function getStudentCredential($row, $value)
+    {
+        $sql = "SELECT * FROM `student` WHERE `$row` = '$value'";
+        $stored = ($this->con->query($sql))->fetch_assoc();
+        return $stored;
+    }
+    // GET TEACHER CREDENTIAL 
+    function getTeacherCredential($row, $value)
+    {
+        $sql = "SELECT * FROM `teacher` WHERE `$row` = '$value'";
+        $stored = ($this->con->query($sql))->fetch_assoc();
+        return $stored;
+    }
+
+
+
+
 
 
 

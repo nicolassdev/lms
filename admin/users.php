@@ -159,7 +159,7 @@
                         }
                     } else {
                         echo '<tr>
-                                        <td colspan="10" class="text-center fs-3"><i class="bi bi-emoji-frown me-2"></i>User not found.</td>              
+                                        <td colspan="10" class="text-center">User not found.</td>              
                                   </tr>';
                     }
                     echo '</table>';

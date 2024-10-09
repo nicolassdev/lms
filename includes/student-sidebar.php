@@ -46,7 +46,7 @@
             <div class="me-2">
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="ms-2 d-none d-sm-inline">John Doe</span>
+                        <span class="ms-2 d-none d-sm-inline">SAMPLE</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                         <li><a class="dropdown-item" href="#">Settings</a></li>
@@ -66,7 +66,7 @@
     <header>
         <div class="container-fluid">
             <div class="row mt-5">
-                <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar offcanvas-md offcanvas-start"style="max-width: 250px;">
+                <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
                     <div class="position-sticky">
                         <h3 class="mb-4">Dashboard</h3>
                         <ul class="nav flex-column">

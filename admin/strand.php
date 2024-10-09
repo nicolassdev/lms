@@ -99,7 +99,7 @@ include "../admin/includes/forms/strandform.php";
           }
         } else {
           echo '<tr>
-                        <td colspan="10" class="text-center fs-3"><i class="bi bi-emoji-frown me-2"></i>Strand not found.<br>
+                        <td colspan="10" class="text-center">Strand not found.<br>
                         </td>
                       </tr>';
         }

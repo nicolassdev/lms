@@ -5,8 +5,9 @@ $numberOfTeacher = $mySQLFunction->checkRowCount("TEACHER");
 
 $numberOfAdviser = $mySQLFunction->checkRowCount("SECTION");
 
+$numberOfStudent = $mySQLFunction->checkRowCount("STUDENT");
 
-$numberOfStudent = $mySQLFunction->checkRowCount("ENROLL");
+$numberOfEnrolled = $mySQLFunction->checkRowCount("ENROLL");
 
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
@@ -191,13 +192,17 @@ $mySQLFunction->disconnect();
             new Morris.Donut({
                 element: 'studentChart',
                 data: [{
-                        label: 'Section',
-                        value: <?php echo $numberOfAdviser; ?>
 
+                        label: 'Student',
+                        value: <?php echo $numberOfStudent; ?>
                     },
                     {
-                        label: 'Students',
-                        value: <?php echo $numberOfStudent; ?>
+                        label: 'Section',
+                        value: <?php echo $numberOfAdviser; ?>
+                    },
+                    {
+                        label: 'Enrolled',
+                        value: <?php echo $numberOfEnrolled; ?>
                     }
                 ],
                 colors: ['#10375C', '#091057'],
