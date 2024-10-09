@@ -97,14 +97,22 @@ $mySQLFunction->disconnect();
                             <?php
                             $mySQLFunction->connection();
                             $result = $mySQLFunction->getSection();
-                            foreach ($result as $row) {
-                                echo '<option value="' . $row["section_code"] . '" 
-                                        data-strand="' . htmlspecialchars($row["strand_name"]) . '" 
-                                        data-gradelvl="' . htmlspecialchars($row["grade_lvl"]) . '" 
-                                        data-adviser="' . htmlspecialchars($row["adviser"]) . '">'
-                                    . htmlspecialchars($row["section_name"]) . '</option>';
+
+                            if (empty($result)) {
+                                // If no data is found, display a message
+                                echo '<option value="">No data available in the database</option>';
+                            } else {
+                                // If data is available, loop through the result and display the options
+                                foreach ($result as $row) {
+                                    echo '<option value="' . $row["section_code"] . '" 
+                                                data-strand="' . htmlspecialchars($row["strand_name"]) . '" 
+                                                data-gradelvl="' . htmlspecialchars($row["grade_lvl"]) . '" 
+                                                data-adviser="' . htmlspecialchars($row["adviser"]) . '">'
+                                        . htmlspecialchars($row["section_name"]) . '</option>';
+                                }
                             }
                             ?>
+
                         </select>
                         <div class="invalid-feedback">
                             Please select a section.

@@ -26,7 +26,6 @@ if (!isset($_POST["submit"])) {
             $id = $_POST["userID"];
             $username = trim($_POST["username"]);
             $password = isset($_POST["password"]) ? $mySQLFunction->encrypt(trim($_POST["password"])) : null;
-            $role = strtoupper(trim($_POST["role"]));
 
             // Check if the new username already exists and is not the current user's username
             $existingUser = $mySQLFunction->getUsers("username", $username);
@@ -49,9 +48,7 @@ if (!isset($_POST["submit"])) {
             if ($password) {
                 $mySQLFunction->updateUser("password", $password, $id);
             }
-            if ($role !== $userRow['role']) {
-                $mySQLFunction->updateUser("role", $role, $id);
-            }
+
 
             // Disconnect after updating
             $mySQLFunction->disconnect();
