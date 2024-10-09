@@ -28,8 +28,9 @@ if (!isset($_POST["submit"])) {
         // Redirect based on user role
         if ($userRole === "STUDENT") {
             $studentCredential = $mySQLFunction->getStudentCredential("ID", $credential["ID"]);
-            $_SESSION["STU_LRN"] = $studentCredential["STU_LRN"];
-            $_SESSION["STU_FNAME"] = $studentCredential["STU_FNAME"];
+            $_SESSION["stu_lrn"] = $studentCredential["stu_lrn"];
+            $_SESSION["stu_fname"] = $studentCredential["stu_fname"];
+            $_SESSION["stu_lname"] = $studentCredential["stu_lname"];
 
             // Redirect student to student dashboard
             header("location:../index.php?page=student_home");
