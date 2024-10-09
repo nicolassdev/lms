@@ -23,42 +23,6 @@ $mySQLFunction->disconnect();
     .card:hover {
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     }
-
-    /* Customize button styles */
-    /* .btn {
-        transition: background-color 0.3s ease, color 0.3s ease;
-    } */
-
-    /* 
-    .btn:hover {
-        background-color: #343a40;
-        color: #fff;
-    } */
-
-    /* Add padding and margin for date/time display */
-    /* .date-display {
-        font-size: 1.1rem;
-        font-weight: 500;
-        margin-bottom: 10px;
-    } */
-
-    /* Styling for school year and semester */
-    /* .school-semester-info {
-        padding: 15px;
-        background-color: #f8f9fa;
-        border-radius: 8px;
-        margin-top: 20px;
-    } */
-
-    /* .school-semester-info h6 {
-        font-weight: bold;
-        color: #343a40;
-    } */
-
-    /* Morris.js chart container */
-    /* #teacherChart {
-        margin-top: 10px;
-    } */
 </style>
 </head>
 
@@ -227,10 +191,16 @@ $mySQLFunction->disconnect();
             new Morris.Donut({
                 element: 'studentChart',
                 data: [{
-                    label: 'Students',
-                    value: <?php echo $numberOfStudent; ?>
-                }],
-                colors: ['#10375C'],
+                        label: 'Section',
+                        value: <?php echo $numberOfAdviser; ?>
+
+                    },
+                    {
+                        label: 'Students',
+                        value: <?php echo $numberOfStudent; ?>
+                    }
+                ],
+                colors: ['#10375C', '#091057'],
                 resize: true
             });
         });

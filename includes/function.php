@@ -214,6 +214,25 @@ class myDataBase
     }
 
 
+    public function checkSectionName($table, $row = null, $value = null, $id = null)
+    {
+        if ($row != null && $value != null) {
+            // Adjust the query to exclude the current subject ID
+            $sql = "SELECT * FROM `$table` WHERE `$row` = '$value'";
+            if ($id != null) {
+                $sql .= " AND `section_code` != '$id'"; // Assuming `sub_id` is the primary key
+            }
+        } else {
+            $sql = "SELECT * FROM `$table`";
+        }
+
+        $result = mysqli_num_rows($this->con->query($sql));
+
+        return $result;
+    }
+
+
+
     public function checkRowCountSection($table, $section_name, $grade_lvl, $section_id = null)
     {
         // Prepare the SQL query to check for the section name and grade level
@@ -236,7 +255,6 @@ class myDataBase
 
         $stmt->execute();
         $stmt->store_result();
-
         // Return the number of rows found (if > 0, it means the combination exists)
         return $stmt->num_rows;
     }
@@ -880,8 +898,6 @@ class myDataBase
 
 
 
-
-
     // GET TEACHER LIST    
     public function getTeacher($row = null, $value = null)
     {
@@ -1143,18 +1159,6 @@ class myDataBase
             }
         }
 
-
-        // Check if teacher exists in strand table
-        if ($row === 'teacher_id') {
-            $checkQuery = "SELECT COUNT(*) FROM teacher WHERE teacher_id = $value";
-            $checkResult = $this->con->query($checkQuery);
-            $count = $checkResult->fetch_row()[0];
-
-            if ($count == 0) {
-                return false; // or handle the error as needed
-            }
-        }
-
         // Proceed with the update
         $sql = "UPDATE `section` SET `$row` =  $value WHERE `section_code` = '$where'";
         $result = $this->con->query($sql);
@@ -1163,22 +1167,7 @@ class myDataBase
     }
 
 
-    // UPDATE SECTION
-    // public function updateSection($row, $value, $where)
-    // {
-    //     $value = mysqli_real_escape_string($this->con, $value);
-    //     if (is_string($value)) {
-    //         $value = "'" . $value . "'";
-    //     }
-    //     $sql = "UPDATE `section` SET `$row` =  $value WHERE `section_code` = '$where'";
-    //     $result = $this->con->query($sql);
 
-    //     if ($result) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
 
 
 

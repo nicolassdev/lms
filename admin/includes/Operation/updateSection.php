@@ -18,7 +18,14 @@ if (!isset($_POST["submit"])) {
             $gradelvl = strtoupper(trim($_POST["gradelvl"]));
             $section = strtoupper(trim($_POST["section"]));
 
-            // Check if the same grade level and section name already exist, excluding the current record (using sectionID)
+            // Check if section name already exist 
+            if ($mySQLFunction->checkSectionName("section", "section_name", $section, $sec_id) == 1) {
+                $_SESSION['sectionupdate_error'] = "<small>Section already exists. Please choose different details.</small>";
+                header("location:../../index.php?page=section");
+                exit();
+            }
+
+            // Check if the same grade level and section name already exist (excluding the current record)
             if ($mySQLFunction->checkRowCountSection("section", $section, $gradelvl, $sec_id) > 0) {
                 $_SESSION['sectionupdate_error'] = "<small>Section and Grade level combination already exists. Please choose different details.</small>";
                 header("location:../../index.php?page=section");

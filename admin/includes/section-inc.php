@@ -20,6 +20,26 @@ if (!isset($_POST["submit"])) {
         // Start transaction
         $mySQLFunction->con->begin_transaction();
 
+
+        // Prepare a statement for checking if section name already exists
+        $checkSectionNameSql = "
+            SELECT 1 FROM `section` 
+            WHERE AND `section_name` = ?
+            LIMIT 1";
+        $stmt = $mySQLFunction->con->prepare($checkSectionNameSql);
+        $stmt->bind_param("s", $strandcode, $gradelvl, $section);
+        $stmt->execute();
+        $stmt->store_result();
+
+        // Check if a record exists
+        if ($stmt->num_rows > 0) {
+            throw new Exception("Section name already exists. No data will be inserted.");
+        }
+
+        // Close the prepared statement
+        $stmt->close();
+
+
         // Prepare a statement for checking if section already exists
         $checkSectionSql = "
             SELECT 1 FROM `section` 
@@ -37,6 +57,8 @@ if (!isset($_POST["submit"])) {
 
         // Close the prepared statement
         $stmt->close();
+
+
 
         // Insert section data into `section` table using prepared statements
         $insertSection = "
