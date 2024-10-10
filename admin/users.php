@@ -62,75 +62,94 @@
 
                             //Modal for updating users 
                             echo '
-                                    <div class="modal fade" id="edit_user' . $row['id'] . '" tabindex="-1" aria-labelledby="teachModal" aria-hidden="true">
-                                        <div class="modal-dialog modal-md">
-                                            <div class="modal-content b-grey">
-                                                <div class="modal-body">
-                                                    <div class="modal-header">
-                                                        <!-- Add id to the header for manipulation -->
-                                                        <h1 class="modal-title fs-4 text-primary" id="modalHeader' . $row['id'] . '">
-                                                            ' . ($row['role'] == 'TEACHER' ? 'Teacher Details' : 'Student Details') . '
-                                                        </h1><i class="bi bi-pencil-square fs-4"></i>
-                                                    </div>
-                                                    <form action="./includes/Operation/updateUser.php" method="POST" class="row g-2 needs-validation mb-3" novalidate>
-                                                   <!-- Use hidden input instead of disabled input -->
-                                                        <input type="hidden" name="userID" value="' . $row['id'] . '">
-                                                    
-                                                        <div class="col-md-12">
-                                                            <label class="form-label">Username</label>
-                                                            <input type="text" class="form-control" name="username" id="username" value="' . $row['username'] . '" required>
-                                                        </div>
-
-                                                    <div class="col-md-12">
-                                                                <label class="form-label">Password</label>
-                                                                <div class="input-group">
-                                                                    <!-- Assign class and data attribute for each password field and toggle button -->
-                                                                    <input type="password" class="form-control password-input" name="password" value="' . $row['password'] . '" required>
-                                                                    <button class="btn btn-outline-secondary toggle-password" type="button" data-target="password' . $row['id'] . '">
-                                                                        <i class="bi bi-eye-slash toggle-icon"></i>
-                                                                    </button>
-                                                                </div>
-                                                    </div>
-                                                                                
-
-
-                                                        <div class="d-flex justify-center gap-2">
-                                                            <div class="col-6">
-                                                                <button name="submit" class="btn btn-primary w-100 mt-3 mb-2" type="submit">Update</button>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <button type="button" class="btn btn-outline-secondary w-100 mt-3 mb-2" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm()">Cancel</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
+                            <div class="modal fade" id="edit_user' . $row['id'] . '" tabindex="-1" aria-labelledby="teachModal" aria-hidden="true">
+                                <div class="modal-dialog modal-md">
+                                    <div class="modal-content shadow">
+                                        <div class="modal-header border-bottom-0">
+                                            <h1 class="modal-title fs-5 text-primary" id="modalHeader' . $row['id'] . '">
+                                                ' . ($row['role'] == 'TEACHER' ? 'Teacher Account' : 'Student Account') . '
+                                            </h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="./includes/Operation/updateUser.php" method="POST" class="needs-validation" novalidate onsubmit="return validatePasswords()">
+                                                <input type="hidden" name="userID" value="' . $row['id'] . '">
+                                                
+                                                <div class="mb-3">
+                                                    <label for="username" class="form-label">Username</label>
+                                                    <input type="text" class="form-control" name="username" id="username" value="' . $row['username'] . '" required>
+                                                    <div class="invalid-feedback">Please enter a username.</div>
                                                 </div>
-                                            </div>
+                            
+                                                <div class="mb-3">
+                                                    <label for="password" class="form-label">Password</label>
+                                                    <div class="input-group">
+                                                        <input type="password" class="form-control password-input" name="password" required placeholder="Enter new password">
+                                                        <button class="btn btn-outline-secondary toggle-password" type="button">
+                                                            <i class="bi bi-eye-slash toggle-icon"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="invalid-feedback">Please enter a password.</div>
+                                                </div>
+                            
+                                                <div class="mb-3">
+                                                    <label for="confirm_password" class="form-label">Confirm Password</label>
+                                                    <div class="input-group">
+                                                        <input type="password" class="form-control" name="confirm_password" required placeholder="Confirm your password">
+                                                        <button class="btn btn-outline-secondary toggle-password" type="button">
+                                                            <i class="bi bi-eye-slash toggle-icon"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="invalid-feedback">Please confirm your password.</div>
+                                                </div>
+                            
+                                                        <div class="d-flex justify-content-between mt-4 gap-1">
+                                                            <div class="col-6">
+                                                                <button name="submit" class="btn btn-primary w-100" type="submit">Update</button>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm()">Cancel</button>
+                                                            </div>
+                                                        </div>
+                                            </form>
                                         </div>
                                     </div>
-                                    
-                        
-                                    <script>
-                                     document.querySelectorAll(".toggle-password").forEach(function(toggleButton) {
-                                         toggleButton.addEventListener("click", function() {
-                                           const passwordInput = this.parentElement.querySelector(".password-input");
-                                            const toggleIcon = this.querySelector(".toggle-icon");
-
-
-
-                                             if (passwordInput.type === "password") {
-                                                passwordInput.type = "text";
-                                                toggleIcon.classList.remove("bi-eye-slash");
-                                                toggleIcon.classList.add("bi-eye");
-                                            } else {
-                                                passwordInput.type = "password";
-                                                toggleIcon.classList.remove("bi-eye");
-                                                toggleIcon.classList.add("bi-eye-slash");
-                                            }
-                                        });
-                                    });
-                                    </script>
-                                    <script src="../assets/js/validationform.js"></script>
-                                    ';
+                                </div>
+                            </div>
+                            
+                            <script>
+                            function validatePasswords() {
+                                const password = document.querySelector("input[name=\'password\']").value;
+                                const confirmPassword = document.querySelector("input[name=\'confirm_password\']").value;
+                            
+                                if (password !== confirmPassword) {
+                                    alert("Passwords do not match. Please try again.");
+                                    return false; // Prevent form submission
+                                }
+                                return true; // Allow form submission
+                            }
+                            
+                            document.querySelectorAll(".toggle-password").forEach(function(toggleButton) {
+                                toggleButton.addEventListener("click", function() {
+                                    const passwordInput = this.previousElementSibling; // Get the input field before the button
+                                    const toggleIcon = this.querySelector(".toggle-icon");
+                            
+                                    if (passwordInput.type === "password") {
+                                        passwordInput.type = "text";
+                                        toggleIcon.classList.remove("bi-eye-slash");
+                                        toggleIcon.classList.add("bi-eye");
+                                    } else {
+                                        passwordInput.type = "password";
+                                        toggleIcon.classList.remove("bi-eye");
+                                        toggleIcon.classList.add("bi-eye-slash");
+                                    }
+                                });
+                            });
+                            </script>
+                            <script src="../assets/js/validationform.js"></script>
+                            ';
+                            
+                            
 
 
                             // Modal for deleting users

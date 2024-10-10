@@ -9,7 +9,7 @@ session_start();
 include "./includes/alert-modal.php";
 ?>
 
-    <?php include "./includes/sidebar.php"; ?>
+    <?php require_once "./includes/sidebar.php"; ?>
 
     <?php
     // Determine the page from the URL parameter, default to 'home' if not set

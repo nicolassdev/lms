@@ -1,0 +1,234 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f8; /* Softer background color */
+}
+
+/* Sidebar Styles */
+#sidebar {
+    height: 100vh;
+    width: 200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #343a40;
+    padding-top: 60px;
+    transition: all 0.3s;
+}
+
+#sidebar .nav-link {
+    color: #fff;
+    margin: 10px 0;
+}
+
+.carousel-item {
+    padding: 20px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f0f0f0;
+}
+.modal-body {
+    padding: 15px;
+}
+
+.table {
+    width: 100%; /* Make sure the table takes full width */
+}
+
+.table th, .table td {
+    white-space: nowrap; /* Prevent text wrapping in table cells */
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .active:hover {
+    background-color: #444;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* General Content Styles */
+.container {
+    max-width: 1200px; /* Limit container width for better layout */
+    margin: auto; /* Center the container */
+}
+
+h2.content-title {
+    font-size: 2.2rem; /* Adjust title size */
+    color: #34495e; /* Softer blue-grey for the title */
+    text-align: center; /* Center align the title */
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.card {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+}
+
+.card-title {
+    font-size: 1.5rem; /* Adjust title size */
+    margin-bottom: 15px;
+    color: #2980b9; /* Blue color for card titles */
+}
+
+.form-group {
+    margin-bottom: 20px; /* Space between form groups */
+}
+
+.form-label {
+    display: block; /* Block display for labels */
+    font-weight: bold; /* Bold text for labels */
+    margin-bottom: 5px; /* Space below labels */
+    color: #34495e; /* Darker color for labels */
+}
+
+.form-input {
+    width: 100%; /* Full width inputs */
+    padding: 12px; /* Padding inside inputs */
+    border: 1px solid #bdc3c7; /* Lighter border for inputs */
+    border-radius: 8px; /* Rounded corners for inputs */
+    font-size: 1rem; /* Font size for inputs */
+    transition: border-color 0.3s; /* Transition for border color */
+}
+
+.form-input:focus {
+    border-color: #2980b9; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
+#uploaded-modules .card {
+    margin-bottom: 15px; /* Space between dynamically added modules */
+}
+
+.module-item {
+    padding: 12px; /* Padding for individual items */
+    border-bottom: 1px solid #ecf0f1; /* Divider between items */
+    color: #34495e; /* Darker gray for better readability */
+    transition: background-color 0.3s; /* Transition for hover effect */
+}
+
+.module-item:hover {
+    background-color: #ecf0f1; /* Light background on hover */
+}
+
+.module-item:last-child {
+    border-bottom: none; /* Remove divider for last item */
+}
+
+/* Button Enhancements */
+.btn {
+    display: block; /* Make the button a block element */
+    width: 100%; /* Full-width button */
+    margin-top: 15px; /* Space above the button */
+    background: linear-gradient(90deg, #007bff, #0056b3); /* Gradient background for button */
+    color: white; /* White text for the button */
+    padding: 12px; /* Padding inside the button */
+    border: none; /* Remove border */
+    border-radius: 8px; /* Rounded corners */
+    transition: background 0.3s, transform 0.3s; /* Smooth transitions for hover states */
+}
+
+.btn:hover {
+    transform: translateY(-3px); /* Lift effect on hover */
+}
+
+/* Top Navbar Styles */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    background-color: #343a40 !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 1);
+    transition: all 0.3s;
+}
+
+#content {
+    margin-top: 40px; 
+    padding: 20px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.9);
+    border-radius: 10px;
+    border: black solid 1px;
+}
+
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    .navbar {
+        display: flex; /* Use flexbox for alignment */
+        align-items: center; /* Center items vertically */
+        justify-content: space-between; /* Space items evenly */
+        padding: 20px; /* Reduced padding for mobile */
+    }
+
+    .navbar-brand {
+        font-size: 12px; /* Smaller font size for mobile */
+        display: flex; 
+        align-items: center;
+        letter-spacing: 1px;
+    }
+
+    .nav-link {
+        font-size: 0.8rem; /* Smaller font size for mobile */
+    }
+
+    .container {
+        padding-top: 10px;
+    }
+
+    /* Align settings and logout icons next to the brand name */
+    .settings-icon {
+        margin-left: 10px; /* Add space between icons and text */
+        font-size: 0.8rem; /* Adjust icon font size */
+    }
+
+    .responsive-logo {
+        display: none;
+    }   
+    
+    .text-white {
+        width: 210px;
+        padding-left: 10px; 
+    }
+    
+    .btn.bi.bi-plus-lg {
+        font-size: 12px; 
+    }
+    
+    .classroom-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        padding: 1px;
+        width: 100%; 
+        padding-bottom: 50%;
+        gap: 10px;
+        margin: 1px;
+    }
+   
+    #content {
+        margin-top: 50px; /* Add margin to avoid content sticking to header */
+        padding: 20px;
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 7px;
+    }
+    
+}
+/* Media Query  1366x768 screens */
+@media only screen and (width: 1366px) and (height: 768px) {
+
+}

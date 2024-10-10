@@ -69,21 +69,34 @@
           <div class="col-md-12">
             <label class="form-label">Teacher</label>
             <select class="form-select" name="teacher_id" required>
-              <option value="" selected disabled>Choose a teacher...</option>
-              <?php
-              $mySQLFunction->connection();
-              $result = $mySQLFunction->getTeacher();
-              foreach ($result as $row) {
-                if (($mySQLFunction->checkRowCount("subject", "teacher_id", $row["teacher_id"])) == 2) {
-                  continue;
-                } else {
-                  echo '<option value="' . $row["teacher_id"] . '">' . $row["teacher_fname"] . ' ' . $row["teacher_mname"] . ' ' . $row["teacher_lname"] . '</option>';
-                }
-              }
-              ?>
+                <option value="" selected disabled>Choose a teacher...</option>
+                <?php
+                    $mySQLFunction->connection();
+                    $result = $mySQLFunction->getTeacher();
+                    $hasAvailableTeacher = false;
+
+                    if (empty($result)) {
+                      echo '<option disabled>No teaecher found in the database.</option>';
+                    } else {
+                        foreach ($result as $row) {
+                            if (($mySQLFunction->checkRowCount("subject", "teacher_id", $row["teacher_id"])) == 2) {
+                                continue;
+                            } else {
+                                echo '<option value="' . $row["teacher_id"] . '">' . $row["teacher_fname"] . ' ' . $row["teacher_mname"] . ' ' . $row["teacher_lname"] . '</option>';
+                                $hasAvailableTeacher = true;
+                              }
+                        }
+                    }
+                    if (!$hasAvailableTeacher) {
+                      echo '<option disabled>No teacher available for subject.</option>';
+                  }
+                  $mySQLFunction->disconnect();
+
+                ?>
             </select>
             <div class="invalid-feedback">Please select a teacher.</div>
-          </div>
+           </div>
+
 
           <div class="col-md-12">
             <button name="submit" class="btn btn-primary w-100 mt-3" type="submit">Save</button>
