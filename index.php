@@ -19,4 +19,5 @@ if (isset($_GET["page"]) && $_GET["page"] == "student_activity") {
 if (isset($_GET["page"]) && $_GET["page"] == "student_grade") {
     include "student_grade.php";
 }
+ 
 ?>

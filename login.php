@@ -8,6 +8,7 @@
      <link rel="website icon" type="png" href="assets/img/lms.png">
      <link rel="stylesheet" href="assets/css/login.css?v=<?php echo time(); ?>" />
      <title>Login</title>
+ 
  </head>
 
  <body>
@@ -21,7 +22,7 @@
              </div>
              <div class="col-md mr-xl">
                  <!-- login form -->
-                 <form action="./includes/login-inc.php" method="POST">
+                 <form action="./includes/login-inc.php" method="POST"  onsubmit="showLoading()">
                      <h2>Login</h2>
                      <div class="input-box">
                          <span class="icon">
@@ -35,6 +36,12 @@
                      </div>
                      <button type="submit" name="submit">Login</button>
                  </form>
+                 <script>
+    function showLoading() {
+        // Redirect to the loading page
+        window.location.href = "loading.php";
+    }
+</script>
                  <div class="text-caption">
                      <span class="text-note">Note: </span>
                      Only Students and Faculty of CSI can access this website.
@@ -42,6 +49,8 @@
              </div>
          </div>
      </div>
+     <script>
+ 
 
      <!-- Footer included directly on the page -->
 

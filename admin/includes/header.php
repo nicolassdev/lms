@@ -36,6 +36,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
 
+    <style>
+        .color{
+            color:#FABC3F;
+        }
+    </style>
+
 
 </head>
 
@@ -50,7 +56,7 @@
 
             <div class="image">
                 <a href="?page=home"><img src="../assets/img/lms.png" alt="LMS Logo"></a>
-                <span class=" d-none d-lg-inline">Learning Management System</span>
+                <span class=" d-none d-lg-inline"><span class="color">L</span>earning <span class="color">M</span>anagement <span class="color">S</span>ystem</span>
             </div>
 
             <!-- Profile Dropdown (Visible on all screen sizes) -->

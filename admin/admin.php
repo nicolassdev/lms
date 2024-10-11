@@ -1,3 +1,7 @@
+
+<?php
+include "../admin/includes/update-inc.php"; 
+?>
 <style>
     /* Custom styling for profile */
     .profile-card {
@@ -59,7 +63,7 @@
                     <!-- Profile Header -->
                     <div class="profile-header">
                         <h2>John Doe</h2>
-                        <p class="text-muted">Admin, Pixel8 Company</p>
+                        <p class="text-muted"><?php echo ucwords(strtolower($result['SCHOOL_NAME'])); ?></p>
                     </div>
 
                     <!-- Profile Details -->
