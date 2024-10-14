@@ -9,7 +9,7 @@ $mySQLFunction->disconnect();
 ?>
 <?php
 
-include "../admin/includes/forms/syform.php";
+include "../admin/includes/Forms/syform.php";
 ?>
 
 <!-- DISPLAY IN HOME  -->

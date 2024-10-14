@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSI Student</title>
+    <title>Teacher</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="website icon" type="png" href="./img/csi.png">
-    <link rel="stylesheet" href="./assets/css/student.css?v=<?php echo time(); ?>" />
+    <link rel="icon" type="png" href="../assets/img/lms.png">
+    <link rel="stylesheet" href="../assets/css/student.css?v=<?php echo time(); ?>" />
 </head>
 
 <body>
@@ -96,20 +96,28 @@
         </div>
     </div>
 
-    <!-- Logout Modal -->
-    <div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body text-center mt-5">
-                    <h4>Are you sure you want to logout?</h5>
+                <!-- Logout Modal -->
+                <div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-md">
+                        <div class="modal-content shadow-lg border-0 rounded-3">
+
+                            <!-- Modal Body -->
+                            <div class="modal-body text-center py-5">
+                                <!-- Icon and Message -->
+                                <div class="text-primary mb-4">
+                                    <i class="bi bi-box-arrow-right fs-1"></i>
+                                </div>
+                                <h5 class="fw-bold mb-5">Are you sure you want to logout?</h5>
+
+                                <!-- Buttons -->
+                                <div class="d-flex justify-content-center mt-5 mb-3">
+                                    <button class="btn btn-outline-secondary px-4 py-2 me-3" style="width: 120px; margin-top: 20px;" data-bs-dismiss="modal">Cancel</button>
+                                    <a href="../logout.php" class="btn btn-primary px-4 py-2" style="width: 120px; margin-top: 20px;">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="d-flex justify-content-center mt-5 mb-3">
-                    <button class="btn btn-outline-secondary me-2" data-bs-dismiss="modal" style="width: 190px;">Cancel</button>
-                    <a href="logout.php" class="btn btn-primary" style="width: 190px;">Okay</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Bootstrap JS and Dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

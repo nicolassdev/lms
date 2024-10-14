@@ -2,9 +2,9 @@
 include "../includes/dbh-inc.php";
 ?>
 
-<!-- FORM MODAL ADD TEACHER  -->
+<!-- FORM MODAL ADD STUDENT  -->
 <?php
-include "../admin/includes/forms/studentform.php";
+include "../admin/includes/Forms/studentform.php";
 ?>
 
 
@@ -95,17 +95,20 @@ include "../admin/includes/forms/studentform.php";
                                 if (!empty($result)) {
                                     $count = 0;
                                     foreach ($result as $row) {
-                                        echo '<tr>';
+                                                                                 // Create a DateTime object and format the added_date
+                                        $addedDate = new DateTime($row['stu_dob']); 
+                                        $formattedBdate = $addedDate->format('F j, Y');  
+
                                         // echo '<td>' . $count . '</td>';
                                         echo '<td class="small text-center">' . $row["stu_lrn"] . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_fname"])) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_mname"])) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_lname"])) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
-                                        echo '<td class="small text-center">' . $row["stu_contact"] . '</td>';
+                                        echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
                                         echo '<td class="small text-center">' . $row["stu_email"] . '</td>';
-                                        echo '<td class="small text-center">' . $row["stu_dob"] . '</td>';
+                                        echo '<td class="small text-center">' . $formattedBdate . '</td>';
                                         // echo '<td class="small text-center">' . $row["stu_pob"] . '</td>';
                                         // echo '<td class="small text-center">' . $row["father_name"] . '</td>';
                                         // echo '<td class="small text-center">' . $row["mother_name"] . '</td>';
@@ -248,7 +251,7 @@ include "../admin/includes/forms/studentform.php";
                                         // todo Modal for updating student
                                         echo '
                                         <div class="modal fade" id="edit_student' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="editStudentModal" aria-hidden="true">
-                                            <div class="modal-dialog modal-md">
+                                            <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header bg-primary text-white">
                                                         <h5 class="modal-title">Edit Student Information</h5>

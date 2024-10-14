@@ -1,17 +1,16 @@
 <!-- FORM MODAL ADD TEACHER  -->
-<div class="modal fade" id="teacher" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="admin" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content b-grey">
             <div class="modal-body">
-                <form id="teacherForm" action="./includes/teacher-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation " novalidate>
+                <form id="adminForm" action="./includes/admin-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation " novalidate>
                     <div class="modal-header">
-                        <h1 class="modal-title fs-3 text-primary">Create Account</h1>
+                        <h5 class="modal-title text-primary">Create Account</h5>
 
                     </div>
 
-                    <!-- hide the role of user which is TEACHER  -->
-                    <input type="text" class="form-control d-none" name="role" value="TEACHER" required>
-        
+                        <!-- hide the role of value which is ADMIN  -->
+                 <input type="text" class="form-control d-none" name="role" value="ADMIN" required>
 
 
                     <div class="col-md-12">
@@ -29,7 +28,7 @@
           </div> -->
 
                     <div class="modal-header">
-                        <h1 class="modal-title fs-3 text-primary">Teacher Details</h1>
+                    <h5 class="modal-title text-primary">Principal Details</h5>
                     </div>
 
                     <div class="col-md-5">
@@ -38,7 +37,7 @@
                     </div>
                     <div class="col-md-3">
                         <label for="middleName" class="form-label">Middle name</label>
-                        <input type="text" class="form-control" name="middlename" required>
+                        <input type="text" class="form-control" name="middlename" >
                     </div>
                     <div class="col-md-4">
                         <label for="lastName" class="form-label">Last name</label>
@@ -64,17 +63,13 @@
                             <option value="female">FEMALE</option>
                         </select>
                     </div>
-                    <div class="col-md-6">
-                        <label for="dob" class="form-label">Date of Birth</label>
-                        <input type="date" class="form-control" name="dob" id="dob" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="employmentStatus" class="form-label">Employment Status</label>
-                        <select class="form-select" name="status" id="employmentStatus" required>
-                            <option selected disabled value="">Choose...</option>
-                            <option value="full time">Full-time job</option>
-                            <option value="part time">Part-time job</option>
-                        </select>
+                    <div class="col-md-12">
+                        <label class="form-label">Email</label>
+                        <input type="text" class="form-control" placeholder="Enter your email address" name="email"
+                            pattern=".*@(gmail|yahoo)\.com$" required>
+                        <div class="invalid-feedback">
+                            Your email must contain an "@" symbol or gmail address ending with ".com".
+                        </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <label class="form-label">Address</label>
@@ -91,7 +86,7 @@
                     </div> -->
 
                     <div class="col-6">
-                        <button name="submit" class="btn btn-primary w-100 mt-3 mb-2" type="submit"><i class="bi bi-pencil-fill me-2"></i>Create</button>
+                        <button name="submit" class="btn btn-primary w-100 mt-3 mb-2" type="submit">Save</button>
                     </div>
                     <div class="col-6">
                         <button type="button" class="btn btn-outline-secondary w-100 mt-3 mb-2" data-bs-dismiss="modal" aria-label="Close" onclick="resetFormTeacher()">Cancel</button>
@@ -101,12 +96,14 @@
         </div>
     </div>
 </div>
-
+ 
+ 
+<script src="../assets/js/validationform.js"></script>
 <script>
     // Function to clear the form inputs when " Cancel" is clicked
     function resetFormTeacher() {
-        document.getElementById('teacherForm').reset();
-        teacherForm.classList.remove('was-validated');
+        document.getElementById('adminForm').reset();
+        adminForm.classList.remove('was-validated');
 
     }
 </script>

@@ -145,7 +145,7 @@ class myDataBase
 
 
 
-
+ 
     public function getUpdateTeacher()
     {
         $sql = "SELECT * FROM `TEACHER`";
@@ -160,6 +160,21 @@ class myDataBase
         $sql = "SELECT * FROM `SCHOOL`";
         $stored = ($this->con->query($sql))->fetch_assoc();
         return $stored;
+    }
+
+        //GET ADMIN INFORMATIONM
+    public function getAdminInfo()
+    {
+            $sql = "SELECT * FROM `PRINCIPAL`";
+            $stored = ($this->con->query($sql))->fetch_assoc();
+            return $stored;
+    }
+
+    public function getUserInfo()
+    {
+            $sql = "SELECT * FROM `USERS`";
+            $stored = ($this->con->query($sql))->fetch_assoc();
+            return $stored;
     }
 
     //GET SEMESTER AND SY
@@ -178,6 +193,22 @@ class myDataBase
         $result = $this->con->query($sql);
         return $result;
     }
+
+    
+    public function updateAdminInfo($data)
+    {
+        $setClause = [];
+        foreach ($data as $column => $value) {
+            $escapedValue = mysqli_real_escape_string($this->con, $value);
+            $setClause[] = "`$column` = '$escapedValue'";
+        }
+    
+        $setString = implode(", ", $setClause);
+        $sql = "UPDATE `PRINCIPAL` SET $setString"; // You might want to add a WHERE clause to specify which record to update
+        $result = $this->con->query($sql);
+        return $result;
+    }
+    
 
 
     //CHECK USER LOGIN 

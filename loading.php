@@ -41,7 +41,7 @@
         }
         h1 {
             margin-top: 20px;
-            font-size: 4rem; /* Larger font size */
+            font-size: 2rem; /* Larger font size */
             color: #ecf0f1;
         }
         p {

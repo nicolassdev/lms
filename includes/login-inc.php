@@ -30,6 +30,7 @@ if (!isset($_POST["submit"])) {
             $_SESSION["stu_lrn"] = $studentCredential["stu_lrn"];
             $_SESSION["stu_fname"] = $studentCredential["stu_fname"];
             $_SESSION["stu_lname"] = $studentCredential["stu_lname"];
+
             header("location: ../loading.php?redirect=" . urlencode("./index.php?page=student_home"));
             exit();
             
@@ -37,11 +38,15 @@ if (!isset($_POST["submit"])) {
             $teacherCredential = $mySQLFunction->getTeacherCredential("ID", $credential["ID"]);
             $_SESSION["TEACHER_ID"] = $teacherCredential["TEACHER_ID"];
             $_SESSION["TEACHER_FNAME"] = $teacherCredential["TEACHER_FNAME"];
-            $redirectUrl = "../index.php?page=teacher_home";
+            header("location: ../loading.php?redirect=" . urlencode("./faculty/index.php?page=teacher_dashboard"));
+            exit();
+            // $redirectUrl = "../index.php?page=teacher_home";
         } elseif ($userRole === "ADMIN") {
             $_SESSION["ADMIN_ID"] = $credential["ID"];
             $_SESSION["ADMIN_FNAME"] = $credential["FNAME"];
-            $redirectUrl = "../admin/index.php?page=admin_home";
+
+            header("location:../loading.php?redirect=" . urlencode ("./admin/index.php?page=home"));
+            exit();
         } else {
             header("location:../login.php?error=invalidrole");
             exit();

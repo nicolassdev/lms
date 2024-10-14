@@ -9,7 +9,7 @@ $mySQLFunction->disconnect();
 ?>
 <?php
 
-include "../admin/includes/forms/semesterform.php";
+include "../admin/includes/Forms/semesterform.php";
 ?>
 
 <!-- DISPLAY IN HOME  -->

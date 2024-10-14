@@ -12,8 +12,8 @@
      </div>
      <!-- Search Form -->
      <form method="POST" action="index.php?page=users" class="ms-5 me-5">
-         <div class="input-group mb-3 ms-3 me-3">
-             <input type="text" class="form-control form-control-sm " name="find-user" placeholder="Search user..." autocomplete="off" required style="width: 200px;" />
+         <div class="input-group mb-3">
+             <input type="text" class="form-control form-control-sm " name="find-user" placeholder="Search user..." autocomplete="off" required style="width: 150px;" />
              <button class="btn btn-outline-primary btn-sm" name="search" type="submit">
                  <i class="bi bi-search"></i> Search
              </button>
@@ -34,7 +34,7 @@
                  </tr>
              </thead>
              <tbody
-                 <?php
+             <?php
                     $mySQLFunction->connection();
                     if (!isset($_POST["search"])) {
                         $result = $mySQLFunction->getUsers();
@@ -42,14 +42,19 @@
                         $find = $_POST["find-user"];
                         $result = $mySQLFunction->searchUser($find);
                     }
+
                     if (!empty($result)) {
                         $count = 1;
                         foreach ($result as $row) {
+                            // Create a DateTime object and format the added_date
+                            $addedDate = new DateTime($row['added_date']); // Create a DateTime object for the current row
+                            $formattedDate = $addedDate->format('F j, Y'); // Format to "August 11, 2024"
+
                             echo '<tr>';
-                            echo '<td>' .  $row["id"] . '</td>';
+                            echo '<td>' . $row["id"] . '</td>';
                             echo '<td>' . $row["username"] . '</td>';
                             echo '<td>' . $row["role"] . '</td>';
-                            echo '<td>' . $row["added_date"] . '</td>';
+                            echo '<td>' . $formattedDate . '</td>';
                             echo '
                                         <td class="text-center">
                                             <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit_user' . $row['id'] . '"><i class="bi bi-pencil-square"></i></button>
@@ -67,7 +72,7 @@
                                     <div class="modal-content shadow">
                                         <div class="modal-header border-bottom-0">
                                             <h1 class="modal-title fs-5 text-primary" id="modalHeader' . $row['id'] . '">
-                                                ' . ($row['role'] == 'TEACHER' ? 'Teacher Account' : 'Student Account') . '
+                                                ' . ($row['role'] == 'TEACHER' ? 'Teacher Account' : ($row['role'] == 'ADMIN' ? 'Admin Account' : 'Student Account')) . '
                                             </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
@@ -116,36 +121,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            <script>
-                            function validatePasswords() {
-                                const password = document.querySelector("input[name=\'password\']").value;
-                                const confirmPassword = document.querySelector("input[name=\'confirm_password\']").value;
-                            
-                                if (password !== confirmPassword) {
-                                    alert("Passwords do not match. Please try again.");
-                                    return false; // Prevent form submission
-                                }
-                                return true; // Allow form submission
-                            }
-                            
-                            document.querySelectorAll(".toggle-password").forEach(function(toggleButton) {
-                                toggleButton.addEventListener("click", function() {
-                                    const passwordInput = this.previousElementSibling; // Get the input field before the button
-                                    const toggleIcon = this.querySelector(".toggle-icon");
-                            
-                                    if (passwordInput.type === "password") {
-                                        passwordInput.type = "text";
-                                        toggleIcon.classList.remove("bi-eye-slash");
-                                        toggleIcon.classList.add("bi-eye");
-                                    } else {
-                                        passwordInput.type = "password";
-                                        toggleIcon.classList.remove("bi-eye");
-                                        toggleIcon.classList.add("bi-eye-slash");
-                                    }
-                                });
-                            });
-                            </script>
                             <script src="../assets/js/validationform.js"></script>
                             ';
                             

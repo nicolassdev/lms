@@ -11,14 +11,8 @@
                     <div class="modal-header">
                         <h1 class="modal-title fs-3 text-primary">Create Account</h1>
                     </div>
-                    <div class="col-md-12">
-                        <label class="form-label">User type</label>
-                        <select class="form-select" name="role" required>
-                            <option selected disabled value="">Select...</option>
-                            <option value="student">STUDENT</option>
-                            <option value="teacher" disabled>TEACHER</option>
-                        </select>
-                    </div>
+                   <!-- hide the role of user which is STUDENT  -->
+                   <input type="text" class="form-control d-none" name="role" value="STUDENT" required>
 
                     <!-- this is will be the username  -->
                     <div class="col-md-12">

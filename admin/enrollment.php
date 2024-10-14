@@ -5,7 +5,7 @@ include "../includes/dbh-inc.php";
 
 <!-- FORM MODAL ADD TEACHER  -->
 <?php
-include "../admin/includes/forms/enrollmentform.php";
+include "../admin/includes/Forms/enrollmentform.php";
 ?>
 
 

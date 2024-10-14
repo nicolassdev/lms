@@ -3,7 +3,7 @@ include "../includes/dbh-inc.php";
 ?>
 <!-- FORM MODAL ADD TEACHER  -->
 <?php
-include "../admin/includes/forms/teacherform.php";
+include "../admin/includes/Forms/teacherform.php";
 ?>
 
 
@@ -61,15 +61,18 @@ include "../admin/includes/forms/teacherform.php";
                                 if (!empty($result)) {
                                     $count = 0;
                                     foreach ($result as $row) {
-                                        echo '<tr>';
+                                          // Create a DateTime object and format the added_date
+                                        $addedDate = new DateTime($row['teacher_dob']); 
+                                        $formattedBdate = $addedDate->format('F j, Y');  
+
                                         // echo '<td>' . $row["teacher_id"] . '</td>';
                                         // echo '<td>' . $count . '</td>';
                                         echo '<td>' . ucwords(strtolower($row["teacher_fname"])) . '</td>';
                                         echo '<td>' .  ucwords(strtolower($row["teacher_mname"])) . '</td>';
                                         echo '<td>' .  ucwords(strtolower($row["teacher_lname"])) . '</td>';
-                                        echo '<td>' . $row["teacher_contact"] . '</td>';
+                                        echo '<td>+63' . $row["teacher_contact"] . '</td>';
                                         echo '<td>' .  ucwords(strtolower($row["teacher_gender"])) . '</td>';
-                                        echo '<td>' . $row["teacher_dob"] . '</td>';
+                                        echo '<td>' . $formattedBdate  . '</td>';
                                         echo '<td>' .  ucwords(strtolower($row["teacher_address"])) . '</td>';
                                         echo '
                       <td class="d-flex justify-content-center">

@@ -3,7 +3,7 @@ include "../includes/dbh-inc.php";
 ?>
 <!-- FORM MODAL ADD TEACHER  -->
 <?php
-include "../admin/includes/forms/sectionform.php";
+include "../admin/includes/Forms/sectionform.php";
 ?>
 
 

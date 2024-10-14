@@ -36,12 +36,7 @@
                      </div>
                      <button type="submit" name="submit">Login</button>
                  </form>
-                 <script>
-    function showLoading() {
-        // Redirect to the loading page
-        window.location.href = "loading.php";
-    }
-</script>
+
                  <div class="text-caption">
                      <span class="text-note">Note: </span>
                      Only Students and Faculty of CSI can access this website.
@@ -49,14 +44,21 @@
              </div>
          </div>
      </div>
-     <script>
+</body>
+</html>
+
+<script>
+    function showLoading() {
+        // Redirect to the loading page
+        window.location.href = "loading.php";
+    }
+</script>
+<?php
+    require_once('includes/footer.php');
+?>
  
 
      <!-- Footer included directly on the page -->
 
 
 
-     <?php
-        require('includes/footer.php');
-
-        ?>

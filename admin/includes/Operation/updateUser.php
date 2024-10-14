@@ -25,7 +25,15 @@ if (!isset($_POST["submit"])) {
             // Sanitize and prepare input
             $id = $_POST["userID"];
             $username = trim($_POST["username"]);
-            $password = isset($_POST["password"]) ? $mySQLFunction->encrypt(trim($_POST["password"])) : null;
+            $password = isset($_POST["password"]) ? trim($_POST["password"]) : null;
+            $confirmPassword = isset($_POST["confirm_password"]) ? trim($_POST["confirm_password"]) : null;
+
+            // Password validation
+            if ($password !== $confirmPassword) {
+                $_SESSION['password_error'] = "Password does not match.";
+                header("location:../../index.php?page=users");
+                exit();
+            }
 
             // Check if the new username already exists and is not the current user's username
             $existingUser = $mySQLFunction->getUsers("username", $username);
@@ -33,7 +41,6 @@ if (!isset($_POST["submit"])) {
             if ($existingUser && $existingUser['id'] != $id) {
                 // Username is taken and is not the current user's username
                 $_SESSION['user_taken'] = true;
-                // header("location:../../error.php");
                 header("location:../../index.php?page=users");
                 exit();
             }
@@ -46,9 +53,8 @@ if (!isset($_POST["submit"])) {
                 $mySQLFunction->updateUser("username", $username, $id);
             }
             if ($password) {
-                $mySQLFunction->updateUser("password", $password, $id);
+                $mySQLFunction->updateUser("password", $mySQLFunction->encrypt($password), $id); // Encrypt and update password
             }
-
 
             // Disconnect after updating
             $mySQLFunction->disconnect();
@@ -66,3 +72,4 @@ if (!isset($_POST["submit"])) {
         exit();
     }
 }
+?>
