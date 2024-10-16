@@ -15,7 +15,7 @@ if (!isset($_POST["submit"])) {
         $enrollID = $_GET["id"];
         // Establish the database connection
         $mySQLFunction->connection();
-
+        $activeSem = $mySQLFunction->checkSemStatus('semester');
         // Fetch the current teacher details
         // todo $enrollRow = $mySQLFunction->getEnroll("stu_lrn", $enrollID);
 
@@ -24,11 +24,9 @@ if (!isset($_POST["submit"])) {
             $id = $_POST["enrollID"];
             $status = strtoupper(trim($_POST["status"]));
 
-            $mySQLFunction->connection();
-
             // Update the teacher details
             // $mySQLFunction->updateEnrollment("section_code	", $section, $id);
-            $mySQLFunction->updateEnrollment("enroll_status", $status, $id);
+            $mySQLFunction->updateEnrollment("enroll_status", $status, $id, $activeSem);
 
             // Disconnect after updating
             $mySQLFunction->disconnect();

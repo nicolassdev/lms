@@ -132,19 +132,7 @@ $mySQLFunction->disconnect();
                         <input type="text" class="form-control" id="adviserInput" readonly>
                     </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Enroll Date</label>
-                        <input type="date" class="form-control" name="enrolldate" required>
-                    </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Status</label>
-                        <select class="form-select" name="status" required>
-                            <option selected disabled value="">Select...</option>
-                            <option value="Enrolled">Enrolled</option>
-                            <option value="Not Enrolled">Not Enrolled</option>
-                        </select>
-                    </div>
                     <!-- CURRENT ATTEND SCHOOL OF STUDENT  -->
 
                     <div class="modal-header">

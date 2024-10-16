@@ -43,9 +43,9 @@ include "../admin/includes/Forms/sectionform.php";
                                 <tr>
                                     <!-- <th scope="col">#</th> -->
                                     <th scope="col" class="small text-center">Section Code</th>
+                                    <th scope="col" class="small text-center">Section</th>
                                     <th scope="col" class="small text-center">Strand</th>
                                     <th scope="col" class="small text-center">Year level</th>
-                                    <th scope="col" class="small text-center">Section name</th>
                                     <th scope="col" class="small text-center">Adviser</th>
                                     <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
 
@@ -64,9 +64,9 @@ include "../admin/includes/Forms/sectionform.php";
                                         echo '<tr>';
 
                                         echo '<td class="small text-center">' . $row["section_code"] . '</td>';
+                                        echo '<td class="small text-center">' . $row["section_name"] . '</td>';
                                         echo '<td class="small text-center">' . $row["strand_name"] . '</td>';
                                         echo '<td class="small text-center">' . $row["grade_lvl"] . '</td>';
-                                        echo '<td class="small text-center">' . $row["section_name"] . '</td>';
                                         echo '<td class="small text-center">' . ucwords(strtolower($row["adviser"])) . '</td>';
 
                                         echo '

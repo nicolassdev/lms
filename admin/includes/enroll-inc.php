@@ -19,8 +19,8 @@ $sec = trim($_POST["section_code"] ?? null);
 $sem = isset($activeSem) && !empty($activeSem) ? $activeSem[0] : null; // Use active semester directly
 $sy = isset($activeSchoolYears) && !empty($activeSchoolYears) ? $activeSchoolYears[0] : null; // Use active school year directly
 
-$enrolldate = trim($_POST["enrolldate"] ?? null);
-$status = strtoupper(trim($_POST["status"] ?? null));
+$enrolldate = date("Ymd"); //set active date and store to database
+$status = "ENROLLED";
 $currentschool = strtoupper(trim($_POST["currentchool"] ?? null));
 $schoolid = !empty(trim($_POST["schoolid"])) ? trim($_POST["schoolid"]) : null; // Make school ID optional
 $address = strtoupper(trim($_POST["address"] ?? null));

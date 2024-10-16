@@ -51,6 +51,10 @@ if (!isset($_POST["submit"])) {
             // Update the user details
             if ($username !== $userRow['username']) {
                 $mySQLFunction->updateUser("username", $username, $id);
+                // Update session username for admin
+                if ($userRow['role'] === 'ADMIN') {
+                    $_SESSION["username"] = $username; // Update admin session username
+                }
             }
             if ($password) {
                 $mySQLFunction->updateUser("password", $mySQLFunction->encrypt($password), $id); // Encrypt and update password
@@ -72,4 +76,3 @@ if (!isset($_POST["submit"])) {
         exit();
     }
 }
-?>

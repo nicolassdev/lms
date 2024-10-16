@@ -24,9 +24,6 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
 
 
-
-
-
     <!-- Include Morris.js and jQuery -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
@@ -36,34 +33,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
 
-    <style>
-        .color{
-            color:#FABC3F;
-        }
-    </style>
-
-
 </head>
 
 <body>
     <!-- Top Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark nav-shadow">
         <div class="container-fluid">
             <!-- Sidebar Toggle Button -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+            <button class="navbar-toggler bg-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="image">
                 <a href="?page=home"><img src="../assets/img/lms.png" alt="LMS Logo"></a>
-                <span class=" d-none d-lg-inline"><span class="color">L</span>earning <span class="color">M</span>anagement <span class="color">S</span>ystem</span>
+                <span class=" d-none d-lg-inline text-white"><span class="color">L</span>earning <span class="color">M</span>anagement <span class="color">S</span>ystem</span>
             </div>
 
             <!-- Profile Dropdown (Visible on all screen sizes) -->
-            <div class="dropdown d-none d-lg-block ms-auto">
-                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <!-- <span class="ms-2 d-none d-sm-inline me-2">Principal</span> -->
-                    <i class="bi bi-gear me-1 fs-4 text-black"></i>
+            <div class="dropdown d-none d-lg-block ms-auto text-success">
+                <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="text-white me-2" style="font-weight: 400;">
+                        <?php echo ucwords(strtolower($_SESSION["username"])); ?>
+                        <i class="bi bi-person-circle ms-1"></i>
+                    </div>
                 </a>
 
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
@@ -88,7 +79,7 @@
                 <!-- Sidebar -->
                 <nav id="sidebar" class="col-md-3 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
                     <div class="position-sticky">
-                        <h3 class="mb-4 text-white">Dashboard</h3>
+                        <h3 class="mb-4 color ms-3">Dashboard</h3>
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=home ">
@@ -154,7 +145,7 @@
                             <!-- Modal Body -->
                             <div class="modal-body text-center py-5">
                                 <!-- Icon and Message -->
-                                <div class="text-primary mb-4">
+                                <div class="text-danger mb-4">
                                     <i class="bi bi-box-arrow-right fs-1"></i>
                                 </div>
                                 <h5 class="fw-bold mb-5">Are you sure you want to logout?</h5>
@@ -162,7 +153,7 @@
                                 <!-- Buttons -->
                                 <div class="d-flex justify-content-center mt-5 mb-3">
                                     <button class="btn btn-outline-secondary px-4 py-2 me-3" style="width: 120px; margin-top: 20px;" data-bs-dismiss="modal">Cancel</button>
-                                    <a href="../logout.php" class="btn btn-primary px-4 py-2" style="width: 120px; margin-top: 20px;">Logout</a>
+                                    <a href="../logout.php" class="btn btn-danger px-4 py-2" style="width: 120px; margin-top: 20px;">Logout</a>
                                 </div>
                             </div>
                         </div>

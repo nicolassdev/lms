@@ -59,12 +59,24 @@ class myDataBase
         $hash = sha1($password);
         return $hash;
     }
-    // public function encrypt($password)
-    // {
-    //     // Use password_hash with bcrypt (the default algorithm) to securely hash the password
-    //     return password_hash($password, PASSWORD_DEFAULT);
-    // }
 
+
+
+    // RANDOM ADMIN ID
+
+    public function generateAdminID()
+    {
+        $num = "1325476980";
+        $rand = "";
+
+        for ($i = 0; $i < 4; $i++) {
+            if ($i == 0) {
+                $rand = "PRIN-";
+            }
+            $rand = $rand . $num[rand(0, strlen($num) - 1)];
+        }
+        return $rand;
+    }
 
     // RANDOM TEACHER ID
 
@@ -81,6 +93,8 @@ class myDataBase
         }
         return $rand;
     }
+
+
 
 
     //RANDOM USER ID
@@ -145,7 +159,7 @@ class myDataBase
 
 
 
- 
+
     public function getUpdateTeacher()
     {
         $sql = "SELECT * FROM `TEACHER`";
@@ -162,19 +176,19 @@ class myDataBase
         return $stored;
     }
 
-        //GET ADMIN INFORMATIONM
+    //GET ADMIN INFORMATIONM
     public function getAdminInfo()
     {
-            $sql = "SELECT * FROM `PRINCIPAL`";
-            $stored = ($this->con->query($sql))->fetch_assoc();
-            return $stored;
+        $sql = "SELECT * FROM `PRINCIPAL`";
+        $stored = ($this->con->query($sql))->fetch_assoc();
+        return $stored;
     }
 
     public function getUserInfo()
     {
-            $sql = "SELECT * FROM `USERS`";
-            $stored = ($this->con->query($sql))->fetch_assoc();
-            return $stored;
+        $sql = "SELECT * FROM `USERS`";
+        $stored = ($this->con->query($sql))->fetch_assoc();
+        return $stored;
     }
 
     //GET SEMESTER AND SY
@@ -194,7 +208,7 @@ class myDataBase
         return $result;
     }
 
-    
+
     public function updateAdminInfo($data)
     {
         $setClause = [];
@@ -202,13 +216,13 @@ class myDataBase
             $escapedValue = mysqli_real_escape_string($this->con, $value);
             $setClause[] = "`$column` = '$escapedValue'";
         }
-    
+
         $setString = implode(", ", $setClause);
         $sql = "UPDATE `PRINCIPAL` SET $setString"; // You might want to add a WHERE clause to specify which record to update
         $result = $this->con->query($sql);
         return $result;
     }
-    
+
 
 
     //CHECK USER LOGIN 
@@ -244,6 +258,16 @@ class myDataBase
         $stored = ($this->con->query($sql))->fetch_assoc();
         return $stored;
     }
+    //GET ADMIN CREDENTIAL
+    function getAdminCredential($row, $value)
+    {
+        $sql = "SELECT * FROM `principal` WHERE `$row` = '$value'";
+        $stored = ($this->con->query($sql))->fetch_assoc();
+        return $stored;
+    }
+
+
+
     // GET TEACHER CREDENTIAL 
     function getTeacherCredential($row, $value)
     {
@@ -913,10 +937,21 @@ class myDataBase
     //GET LIST OF ENROLLED
     public function getEnroll($row = null, $value = null)
     {
+        // Get the active semester
+        $activeSemesters = $this->checkSemStatus('semester');
+
+        // Check if there are any active semesters
+        if (empty($activeSemesters)) {
+            return []; // Return an empty array if no active semester
+        }
+
+        // Prepare the active semester condition
+        $activeSemesterCondition = "enroll.semester IN ('" . implode("','", $activeSemesters) . "')";
+
         if ($row != null && $value != null) {
             $sql = "SELECT
                 `enroll`.`stu_lrn`,
-                CONCAT(`student`.`stu_fname`,' ', `student`.`stu_lname`) AS student,
+                CONCAT(`student`.`stu_fname`, ' ', `student`.`stu_lname`) AS student,
                 `enroll`.`section_code`,
                 `section`.`section_code`,
                 `section`.`strand_code`,
@@ -924,8 +959,7 @@ class myDataBase
                 `section`.`section_name`,
                 `section`.`grade_lvl`,
                 `section`.`teacher_id`,
-                CONCAT(`teacher`.`teacher_fname`,' ', `teacher`.`teacher_lname`) AS adviser,
-                `enroll`.`section_code`,
+                CONCAT(`teacher`.`teacher_fname`, ' ', `teacher`.`teacher_lname`) AS adviser,
                 `enroll`.`semester` AS enroll_semester,
                 `enroll`.`school_year` AS sy,
                 `enroll`.`date_enroll`,
@@ -939,20 +973,19 @@ class myDataBase
             INNER JOIN `section` ON `enroll`.`section_code` = `section`.`section_code`
             INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
             INNER JOIN `teacher` ON `section`.`teacher_id` = `teacher`.`teacher_id` -- Joining the teacher table
-             WHERE `enroll`.`$row` = '$value'";
+            WHERE `enroll`.`$row` = '$value' AND $activeSemesterCondition"; // Add semester condition
 
             $stored = ($this->con->query($sql))->fetch_assoc();
-
             return $stored;
         } else {
             $sql = "SELECT
                 `enroll`.`stu_lrn`,
-                CONCAT(`student`.`stu_fname`,' ', `student`.`stu_lname`) AS student,
+                CONCAT(`student`.`stu_fname`, ' ', `student`.`stu_lname`) AS student,
                 `section`.`strand_code`,
                 `strand`.`strand_name`,  -- Fetching the strand_name from the strand table
                 `section`.`section_name`,
                 `section`.`teacher_id`,
-                CONCAT(`teacher`.`teacher_fname`,' ', `teacher`.`teacher_lname`) AS adviser,
+                CONCAT(`teacher`.`teacher_fname`, ' ', `teacher`.`teacher_lname`) AS adviser,
                 `enroll`.`semester` AS enroll_semester,
                 `enroll`.`school_year` AS sy,
                 `enroll`.`date_enroll`,
@@ -966,13 +999,14 @@ class myDataBase
             INNER JOIN `section` ON `enroll`.`section_code` = `section`.`section_code`
             INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
             INNER JOIN `teacher` ON `section`.`teacher_id` = `teacher`.`teacher_id` -- Joining the teacher table
+            WHERE $activeSemesterCondition -- Add semester condition
             ORDER BY `student`.`stu_fname`";
 
             $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
-
             return $stored;
         }
     }
+
 
 
 
@@ -1288,16 +1322,17 @@ class myDataBase
 
 
     // UPDATE USERS
-    public function updateUser($row, $value, $where)
+    public function updateUser($row, $value, $where, $role = null)
     {
         $value = mysqli_real_escape_string($this->con, $value);
         if (is_string($value)) {
             $value = "'" . $value . "'";
         }
-        $sql = "UPDATE `users` SET `$row` =  $value WHERE `id` = '$where'";
+        $sql = "UPDATE `users` SET `$row` = $value WHERE `id` = '$where'";
         $result = $this->con->query($sql);
 
         if ($result) {
+
             return true;
         } else {
             return false;

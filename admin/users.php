@@ -34,7 +34,7 @@
                  </tr>
              </thead>
              <tbody
-             <?php
+                 <?php
                     $mySQLFunction->connection();
                     if (!isset($_POST["search"])) {
                         $result = $mySQLFunction->getUsers();
@@ -123,8 +123,8 @@
                             </div>
                             <script src="../assets/js/validationform.js"></script>
                             ';
-                            
-                            
+
+
 
 
                             // Modal for deleting users
