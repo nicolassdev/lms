@@ -90,9 +90,6 @@
                                                     <label for="password" class="form-label">Password</label>
                                                     <div class="input-group">
                                                         <input type="password" class="form-control password-input" name="password" required placeholder="Enter new password">
-                                                        <button class="btn btn-outline-secondary toggle-password" type="button">
-                                                            <i class="bi bi-eye-slash toggle-icon"></i>
-                                                        </button>
                                                     </div>
                                                     <div class="invalid-feedback">Please enter a password.</div>
                                                 </div>
@@ -101,9 +98,6 @@
                                                     <label for="confirm_password" class="form-label">Confirm Password</label>
                                                     <div class="input-group">
                                                         <input type="password" class="form-control" name="confirm_password" required placeholder="Confirm your password">
-                                                        <button class="btn btn-outline-secondary toggle-password" type="button">
-                                                            <i class="bi bi-eye-slash toggle-icon"></i>
-                                                        </button>
                                                     </div>
                                                     <div class="invalid-feedback">Please confirm your password.</div>
                                                 </div>

@@ -29,11 +29,16 @@
 
             <!-- Profile Dropdown -->
             <div class="me-2">
-                <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="ms-2 d-none d-sm-inline">John Doe</span>
+                <div class="dropdown d-none d-lg-block ms-auto text-success nav-shadow">
+                    <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="text-black me-2" style="font-weight: 400;">
+                            <?php
+                            echo ucwords(strtolower($_SESSION["teacher_fname"] . ' ' . $_SESSION["teacher_lname"]));
+                            ?>
+                            <i class="bi bi-person-circle ms-1" style="font-size: 1.3rem;"></i>
+                        </div>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                    <ul class=" dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li><a class="dropdown-item" href="#">Profile</a></li>
                         <li>
@@ -96,28 +101,28 @@
         </div>
     </div>
 
-                <!-- Logout Modal -->
-                <div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-md">
-                        <div class="modal-content shadow-lg border-0 rounded-3">
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content shadow-lg border-0 rounded-3">
 
-                            <!-- Modal Body -->
-                            <div class="modal-body text-center py-5">
-                                <!-- Icon and Message -->
-                                <div class="text-primary mb-4">
-                                    <i class="bi bi-box-arrow-right fs-1"></i>
-                                </div>
-                                <h5 class="fw-bold mb-5">Are you sure you want to logout?</h5>
+                <!-- Modal Body -->
+                <div class="modal-body text-center py-5">
+                    <!-- Icon and Message -->
+                    <div class="text-danger mb-4">
+                        <i class="bi bi-box-arrow-right fs-1"></i>
+                    </div>
+                    <h5 class="fw-bold mb-5">Are you sure you want to logout?</h5>
 
-                                <!-- Buttons -->
-                                <div class="d-flex justify-content-center mt-5 mb-3">
-                                    <button class="btn btn-outline-secondary px-4 py-2 me-3" style="width: 120px; margin-top: 20px;" data-bs-dismiss="modal">Cancel</button>
-                                    <a href="../logout.php" class="btn btn-primary px-4 py-2" style="width: 120px; margin-top: 20px;">Logout</a>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-center mt-5 mb-3">
+                        <button class="btn btn-outline-secondary px-4 py-2 me-3" style="width: 120px; margin-top: 20px;" data-bs-dismiss="modal">Cancel</button>
+                        <a href="../logout.php" class="btn btn-danger px-4 py-2" style="width: 120px; margin-top: 20px;">Logout</a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap JS and Dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

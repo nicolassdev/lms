@@ -208,8 +208,8 @@ include "../admin/includes/Forms/enrollmentform.php";
             <?php
             if (!empty($activeSchoolYears && !empty($activeSem))) {
                 foreach ($activeSchoolYears as $index => $schoolYear) {
-                    echo '<div class="me-3 text-success">' . htmlspecialchars($activeSem[$index]) . '</div>';
-                    echo '<span class="">SY ' . htmlspecialchars($schoolYear) . '</span>';;
+                    echo '<div class="me-3 date-display">' . htmlspecialchars($activeSem[$index]) . '</div>';
+                    echo '<span class="date-display">SY ' . htmlspecialchars($schoolYear) . '</span>';;
                 }
             } else {
                 echo '<div class="alert alert-warning">No school year and semester found.</div>';

@@ -1,5 +1,6 @@
-<?php 
- include ("./includes/teacher_dashboard.php");
+<?php
+session_start();
+include("./includes/teacher-header.php");
 ?>
 
 <?php

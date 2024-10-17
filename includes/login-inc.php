@@ -18,47 +18,53 @@ if (!isset($_POST["submit"])) {
         $userID = $mySQLFunction->getCredential("id", $user_id);
         $userRole = $credential["role"];
 
-        // Common session variables
-        // $_SESSION["ID"] = $credential["ID"];
-        // $_SESSION["USERNAME"] = $username;
-
-        // Prepare redirect URL
         $redirectUrl = '';
 
         // Determine the redirect URL based on user role
         if ($userRole === "STUDENT") {
-
-            $studentCredential = $mySQLFunction->getStudentCredential("ID", $credential["ID"]);
+            session_start();
+            $user = $mySQLFunction->getCredential("username", $username);
+            $studentCredential = $mySQLFunction->getStudentCredential("id", $user["id"]);
+            $_SESSION["id"] = $studentCredential["id"];
             $_SESSION["stu_lrn"] = $studentCredential["stu_lrn"];
             $_SESSION["stu_fname"] = $studentCredential["stu_fname"];
             $_SESSION["stu_lname"] = $studentCredential["stu_lname"];
 
+            $_SESSION["username"] = $username;   // username of student
+
             //redirect to url 
-            header("location: ../loading.php?redirect=" . urlencode("./index.php?page=student_home"));
+            header("location: ../loading.php?redirect=" . urlencode("./index.php"));
             exit();
         } elseif ($userRole === "TEACHER") {
+            session_start();
+            $user = $mySQLFunction->getCredential("username", $username);
+            $teacherCredential = $mySQLFunction->getTeacherCredential("id", $user["id"]);
+            $_SESSION["id"] = $teacherCredential["id"];
 
-            $teacherCredential = $mySQLFunction->getTeacherCredential("ID", $credential["ID"]);
-            $_SESSION["TEACHER_ID"] = $teacherCredential["TEACHER_ID"];
-            $_SESSION["TEACHER_FNAME"] = $teacherCredential["TEACHER_FNAME"];
+            $_SESSION["teacher_id"] = $teacherCredential["teacher_id"];
+            $_SESSION["teacher_fname"] = $teacherCredential["teacher_fname"];
+            $_SESSION["teacher_lname"] = $teacherCredential["teacher_lname"];
+
+            $_SESSION["username"] = $username;
 
             //redirect to url 
-            header("location: ../loading.php?redirect=" . urlencode("./faculty/index.php?page=teacher_dashboard"));
+            header("location: ../loading.php?redirect=" . urlencode("./faculty/index.php"));
             exit();
-            // $redirectUrl = "../index.php?page=teacher_home";
         } elseif ($userRole === "ADMIN") {
             session_start();
+
             $user = $mySQLFunction->getCredential("username", $username);
             $adminCredential = $mySQLFunction->getAdminCredential("id", $user["id"]);
 
             $_SESSION["id"] = $adminCredential["id"];
             $_SESSION["principal_id"] = $adminCredential["principal_id"];
-            $_SESSION["username"] = $username;
+            $_SESSION["firstname"] = $adminCredential["firstname"];
+            $_SESSION["lastname"] = $adminCredential["lastname"];
 
-
+            $_SESSION["username"] = $username;  // username of admin
 
             //redirect to url 
-            header("location:../loading.php?redirect=" . urlencode("./admin/index.php?page=home"));
+            header("location:../loading.php?redirect=" . urlencode("./admin/index.php"));
             exit();
         } else {
             header("location:../login.php?error=invalidrole");

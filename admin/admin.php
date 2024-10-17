@@ -153,7 +153,7 @@ include "../admin/includes/Forms/adminform.php";
                         <i class="bi bi-pencil-square"></i>
                     </button>
 
-                    <!--  Add new admin -->
+                    <!-- Add new admin -->
                     <!-- <button type="button" class="btn btn-success btn-sm-custom" title="New" data-bs-toggle="modal" data-bs-target="#admin">
                         <i class="bi bi-plus-lg"></i>
                     </button> -->

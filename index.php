@@ -1,8 +1,48 @@
-<?php include "./includes/student-sidebar.php"; ?>
- 
 <?php
+session_start();
+include "./includes/student-header.php"; ?>
+
+<?php
+
+$page = isset($_GET["page"]) ? $_GET["page"] : "student_home";
+
+// Use switch case to load the appropriate page
+switch ($page) {
+    case "student_module":
+        require_once 'student_module.php';
+        break;
+
+    case "student_prof":
+        require_once 'student_prof.php';
+        break;
+    case "student_quiz":
+        require_once 'student_quiz.php';
+        break;
+    case "student_exam":
+        require_once 'student_exam.php';
+        break;
+    case "student_assignment":
+        require_once 'student_assignment.php';
+        break;
+    case "student_grade":
+        require_once 'student_grade.php';
+        break;
+
+    default:
+        require_once 'student_home.php'; // Default page is 'home'
+        break;
+}
+
+
+?>
+<!-- 
+
 if (isset($_GET["page"]) && $_GET["page"] == "student_home") {
     include "student_home.php";
+}
+
+if (isset($_GET["page"]) && $_GET["page"] == "student_module") {
+    include "student_module.php";
 }
 if (isset($_GET["page"]) && $_GET["page"] == "student_prof") {
     include "student_prof.php";
@@ -13,11 +53,9 @@ if (isset($_GET["page"]) && $_GET["page"] == "student_quiz") {
 if (isset($_GET["page"]) && $_GET["page"] == "student_exam") {
     include "student_exam.php";
 }
-if (isset($_GET["page"]) && $_GET["page"] == "student_activity") {
-    include "student_activity.php";
+if (isset($_GET["page"]) && $_GET["page"] == "student_assignment") {
+    include "student_assignment.php";
 }
 if (isset($_GET["page"]) && $_GET["page"] == "student_grade") {
     include "student_grade.php";
-}
-
-?>
+} -->

@@ -19,18 +19,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Activity Card -->
-                        <div class="col-md-4 mb-4">
-                            <div class="card shadow-sm h-100">
-                                <div class="card-body text-center">
-                                    <i class="bi bi-pencil-fill display-4 text-success mb-3"></i>
-                                    <h5 class="card-title">Activity</h5>
-                                    <p class="card-text">Submit and track your Activity.</p>
-                                    <a href="#" class="btn btn-success">View Activity</a>
-                                </div>
-                            </div>
-                        </div>
-
 
                         <!-- Module Card -->
                         <div class="col-md-4 mb-4">
@@ -43,6 +31,18 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Activity Card -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-pencil-fill display-4 text-success mb-3"></i>
+                                    <h5 class="card-title">Activity</h5>
+                                    <p class="card-text">Submit and track your Activity.</p>
+                                    <a href="#" class="btn btn-success">View Activity</a>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <!-- Quiz Card -->
                         <div class="col-md-4 mb-4">
