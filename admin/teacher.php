@@ -1,8 +1,12 @@
+<!-- VALIDATION CAN'T ACCESS THE URL -->
 <?php
-include "../includes/dbh-inc.php";
+if (!isset($_SESSION['principal_id'])) {
+    header("location:../login.php?error=accessdenied");
+}
 ?>
 <!-- FORM MODAL ADD TEACHER  -->
 <?php
+include "../includes/dbh-inc.php";
 include "../admin/includes/Forms/teacherform.php";
 ?>
 
@@ -61,9 +65,9 @@ include "../admin/includes/Forms/teacherform.php";
                                 if (!empty($result)) {
                                     $count = 0;
                                     foreach ($result as $row) {
-                                          // Create a DateTime object and format the added_date
-                                        $addedDate = new DateTime($row['teacher_dob']); 
-                                        $formattedBdate = $addedDate->format('F j, Y');  
+                                        // Create a DateTime object and format the added_date
+                                        $addedDate = new DateTime($row['teacher_dob']);
+                                        $formattedBdate = $addedDate->format('F j, Y');
 
                                         // echo '<td>' . $row["teacher_id"] . '</td>';
                                         // echo '<td>' . $count . '</td>';

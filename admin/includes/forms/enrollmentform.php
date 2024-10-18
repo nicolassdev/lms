@@ -1,10 +1,16 @@
 <?php
 
+if (!isset($_SESSION['principal_id'])) {
+    header("location:../../../login.php?error=accessdenied");
+    exit();
+}
+?>
+
+<?php
 $mySQLFunction->connection();
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
 $mySQLFunction->disconnect();
-
 
 ?>
 

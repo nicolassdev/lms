@@ -1,9 +1,13 @@
+<!-- VALIDATION CAN'T ACCESS THE URL -->
 <?php
-include "../includes/dbh-inc.php";
+if (!isset($_SESSION['principal_id'])) {
+    header("location:../login.php?error=accessdenied");
+}
 ?>
 
 <!-- FORM MODAL ADD STUDENT  -->
 <?php
+include "../includes/dbh-inc.php";
 include "../admin/includes/Forms/studentform.php";
 ?>
 

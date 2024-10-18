@@ -1,15 +1,18 @@
 <?php
 session_start();
+if (!isset($_SESSION['principal_id'])) {
+    header("location:../login.php?error=accessdenied");
+    exit();
+}
 ?>
 
 
-<?php include "./includes/header.php"; ?>
- 
 <?php
+include "./includes/header.php";
+// alert modal 
 include "./includes/alert-modal.php";
 ?>
-
-
+  
     <?php
     // Determine the page from the URL parameter, default to 'home' if not set
     $page = isset($_GET["page"]) ? $_GET["page"] : "home";

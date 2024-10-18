@@ -1,3 +1,9 @@
+<!-- VALIDATION CAN'T ACCESS THE URL -->
+<?php
+if (!isset($_SESSION['principal_id'])) {
+    header("location:../login.php?error=accessdenied");
+}
+?>
 <?php
 include "../admin/includes/update-inc.php";
 include "../admin/includes/Operation/updateSetting.php";

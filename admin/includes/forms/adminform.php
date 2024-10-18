@@ -1,3 +1,13 @@
+<?php
+
+if (!isset($_SESSION["principal_id"])) {
+
+    header("location:../../../login.php?error=accessdenied");   //Redirect to URL login When trying to go this file
+    exit();
+}
+?>
+
+
 <!-- FORM MODAL ADD TEACHER  -->
 <div class="modal fade" id="admin" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -9,8 +19,8 @@
 
                     </div>
 
-                        <!-- hide the role of value which is ADMIN  -->
-                 <input type="text" class="form-control d-none" name="role" value="ADMIN" required>
+                    <!-- hide the role of value which is ADMIN  -->
+                    <input type="text" class="form-control d-none" name="role" value="ADMIN" required>
 
 
                     <div class="col-md-12">
@@ -28,7 +38,7 @@
           </div> -->
 
                     <div class="modal-header">
-                    <h5 class="modal-title text-primary">Principal Details</h5>
+                        <h5 class="modal-title text-primary">Principal Details</h5>
                     </div>
 
                     <div class="col-md-5">
@@ -37,7 +47,7 @@
                     </div>
                     <div class="col-md-3">
                         <label for="middleName" class="form-label">Middle name</label>
-                        <input type="text" class="form-control" name="middlename" >
+                        <input type="text" class="form-control" name="middlename">
                     </div>
                     <div class="col-md-4">
                         <label for="lastName" class="form-label">Last name</label>
@@ -96,8 +106,8 @@
         </div>
     </div>
 </div>
- 
- 
+
+
 <script src="../assets/js/validationform.js"></script>
 <script>
     // Function to clear the form inputs when " Cancel" is clicked

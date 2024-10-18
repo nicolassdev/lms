@@ -1,3 +1,9 @@
+<!-- VALIDATION CAN'T ACCESS THE URL -->
+<?php
+if (!isset($_SESSION['principal_id'])) {
+    header("location:../login.php?error=accessdenied");
+}
+?>
 <?php
 require_once "../includes/dbh-inc.php";
 $mySQLFunction->connection();

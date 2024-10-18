@@ -53,7 +53,10 @@
                  <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                      <div class="text-white me-2" style="font-weight: 400;">
                          <?php
-                            echo ucwords(strtolower($_SESSION["firstname"] . ' ' . $_SESSION["lastname"]));
+                            // echo ucwords(strtolower($_SESSION["username"]));
+
+                            echo ucwords(strtolower($_SESSION["principal_id"]));
+                            // echo ucwords(strtolower($_SESSION["firstname"] . ' ' . $_SESSION["lastname"]));
                             ?>
                          <i class="bi bi-person-fill-gear" style="font-size: 1.5rem;"></i>
                      </div>

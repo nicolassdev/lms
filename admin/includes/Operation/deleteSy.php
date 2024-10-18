@@ -1,8 +1,9 @@
-
 <?php
-session_start();
-if (!isset($_GET["id"])) {
-    header("location:../../../index.php?page=schoolyear");
+session_start(); // Ensure session is started
+
+if (!isset($_SESSION["principal_id"])) {
+
+    header("location:../../../login.php?error=accessdenied");   //Redirect to URL login When trying to go this file
     exit();
 } else {
     include "../../../includes/dbh-inc.php";

@@ -48,7 +48,9 @@
                      <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                          <div class="text-black" style="font-weight: 400;">
                              <?php
-                                echo ucwords(strtolower($_SESSION["stu_fname"] . ' ' . $_SESSION["stu_lname"]));
+                                echo ucwords(strtolower($_SESSION["stu_lrn"]));
+
+                                // echo ucwords(strtolower($_SESSION["stu_fname"] . ' ' . $_SESSION["stu_lname"]));
                                 ?>
                              <i class="bi bi-person-circle ms-1" style="font-size: 1.3rem;"></i>
                          </div>

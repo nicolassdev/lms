@@ -1,6 +1,12 @@
  <!-- MODAL TO UPDATE school information  -->
+ <?php
+    if (!isset($_SESSION["principal_id"])) {
 
- 
+        header("location:../../../login.php?error=accessdenied");   //Redirect to URL login When trying to go this file
+        exit();
+    }
+    ?>
+
  <div class="modal fade" id="setting" tabindex="-1" aria-hidden="true">
      <div class="modal-dialog">
          <div class="modal-content bg-gray">
@@ -22,7 +28,7 @@
                          <label for="address" class="form-label">Address</label>
                          <input type="text" id="address" name="address" value="<?php echo $result['SCHOOL_ADDRESS']; ?>" class="form-control" autocomplete="off">
                      </div>
- 
+
 
                      <div class="text-end">
                          <button name="submit" class="btn btn-success">Update</button>
@@ -32,5 +38,3 @@
          </div>
      </div>
  </div>
-
- 

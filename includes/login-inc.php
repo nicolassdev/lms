@@ -30,7 +30,7 @@ if (!isset($_POST["submit"])) {
             $_SESSION["stu_fname"] = $studentCredential["stu_fname"];
             $_SESSION["stu_lname"] = $studentCredential["stu_lname"];
 
-            $_SESSION["username"] = $username;   // username of student
+            $_SESSION["username"] = $user;  // username of student
 
             //redirect to url 
             header("location: ../loading.php?redirect=" . urlencode("./index.php"));

@@ -1,3 +1,10 @@
+<!-- VALIDATION CAN'T ACCESS THE URL -->
+<?php
+if (!isset($_SESSION['principal_id'])) {
+    header("location:../login.php?error=accessdenied");
+}
+?>
+
 <?php
 include "../includes/dbh-inc.php";
 $mySQLFunction->connection();
@@ -34,7 +41,7 @@ $mySQLFunction->disconnect();
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <div class="ms-3">
-                <h4>Welcome Back <?php echo ucwords(strtolower($_SESSION["username"])); ?> ! </h4>
+                <h4>Welcome Back <?php echo ucwords(strtolower($_SESSION["principal_id"])); ?> ! </h4>
                 <div class="container mt-3">
                     <div class="row">
                         <!-- Date and Time Display -->

@@ -1,3 +1,10 @@
+<!-- VALIDATION CAN'T ACCESS THE URL -->
+<?php
+if (!isset($_SESSION['principal_id'])) {
+    header("location:../login.php?error=accessdenied");
+}
+?>
+
 <?php
 include "../includes/dbh-inc.php";
 

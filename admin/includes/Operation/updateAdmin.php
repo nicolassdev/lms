@@ -1,11 +1,11 @@
 <?php
 session_start(); // Ensure session is started
 
-if (!isset($_POST["submit"])) {
-    // Redirect if form is not submitted
-    header("location:../../../index.php?page=admin");
+if (!isset($_SESSION["principal_id"])) {
+
+    header("location:../../../login.php?error=accessdenied");   //Redirect to URL login When trying to go this file
     exit();
-} else{
+} else {
     include "../../../includes/dbh-inc.php";
     try {
         if (isset($_POST["submit"])) {
@@ -16,7 +16,7 @@ if (!isset($_POST["submit"])) {
             $gender = isset($_POST["gender"]) ? strtoupper(trim($_POST["gender"])) : null;
             $email = isset($_POST["email"]) ? trim($_POST["email"]) : null;
             $address = isset($_POST["address"]) ? strtoupper(trim($_POST["address"])) : null;
-        
+
             $store = [
                 'firstname' => $name,
                 'middlename' => $mname,
@@ -26,7 +26,7 @@ if (!isset($_POST["submit"])) {
                 'email' => $email,
                 'address' => $address,
             ];
-             
+
             $mySQLFunction->connection();
             $mySQLFunction->updateAdminInfo($store); // Pass the array directly
 
@@ -34,19 +34,12 @@ if (!isset($_POST["submit"])) {
             header("location:../../index.php?page=admin");
             exit();
             $mySQLFunction->disconnect();
-        
         }
- 
-    }catch (Exception $e) {
+    } catch (Exception $e) {
         // Handle exceptions and errors
         error_log("Error updating admin details: " . $e->getMessage());
         $_SESSION['update_error'] = "An error occurred while updating the user's details.";
         header("location:../../error.php");
         exit();
     }
-
 }
-
-
-
- 
