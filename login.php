@@ -16,10 +16,17 @@
     session_start();
 
     // Check if the user is already logged in
-    if (isset($_SESSION['username'])) {
+    if(sset(strtolower($_SESSION['user_role']) == "admin")){
+        header('Location: /lms/admin/index.php'); // Change to the actual homepage path
+        exit(); 
+    }
+    elseif (strtolower($_SESSION['user_role'] == "student")) {
         // If logged in, redirect to the homepage
         header('Location: /lms/index.php'); // Change to the actual homepage path
         exit(); // Exit after redirection to prevent further code execution
+    } elseif (strtolower($_SESSION['user_role'] == "teacher")){
+        header('Location: /lms/index.php'); // Change to the actual homepage path
+        exit(); 
     }
     ?>
 
