@@ -11,6 +11,18 @@
 
  </head>
 
+ <?php
+    // Start the session
+    session_start();
+
+    // Check if the user is already logged in
+    if (isset($_SESSION['username'])) {
+        // If logged in, redirect to the homepage
+        header('Location: /lms/index.php'); // Change to the actual homepage path
+        exit(); // Exit after redirection to prevent further code execution
+    }
+    ?>
+
  <body>
      <div class="container">
          <?php

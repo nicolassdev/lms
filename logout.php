@@ -4,6 +4,9 @@ session_start();
 // Check if a session exists before destroying
 // if (isset($_SESSION['role'])) {
 // Destroy all session data and log out user regardless of role
+
+unset($_SESSION['username']);
+
 session_destroy();
 header("refresh:1; url=login.php"); // Redirect to the single login page
 exit();

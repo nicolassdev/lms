@@ -1,7 +1,14 @@
 <?php
 session_start();
 
-include "./includes/student-header.php"; ?>
+if (!isset($_SESSION['username'])) {
+    header("location:login.php?error=accessdenied");
+    exit();
+} else {
+    include "./includes/student-header.php";
+}
+?>
+
 
 <?php
 
