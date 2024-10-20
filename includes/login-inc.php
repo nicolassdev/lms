@@ -30,7 +30,7 @@ if (!isset($_POST["submit"])) {
             $_SESSION["stu_fname"] = $studentCredential["stu_fname"];
             $_SESSION["stu_lname"] = $studentCredential["stu_lname"];
 
-            $_SESSION["username"] = $user;  // username of student
+            $_SESSION["username"] = $user["username"];  // username of student
             $_SESSION["user_role"] = $user["role"];
 
             //redirect to url 
@@ -46,7 +46,8 @@ if (!isset($_POST["submit"])) {
             $_SESSION["teacher_fname"] = $teacherCredential["teacher_fname"];
             $_SESSION["teacher_lname"] = $teacherCredential["teacher_lname"];
 
-            $_SESSION["username"] = $username;
+            $_SESSION["username"] = $user["username"];
+        
             $_SESSION["user_role"] = $user["role"];
 
             //redirect to url 
@@ -63,7 +64,7 @@ if (!isset($_POST["submit"])) {
             $_SESSION["firstname"] = $adminCredential["firstname"];
             $_SESSION["lastname"] = $adminCredential["lastname"];
 
-            $_SESSION["username"] = $username;  // username of admin
+            $_SESSION["username"] = $user["username"];;  // username of admin
             $_SESSION["user_role"] = $user["role"];
 
             //redirect to url 

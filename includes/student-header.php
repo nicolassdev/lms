@@ -48,7 +48,7 @@
                      <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                          <div class="text-black" style="font-weight: 400;">
                              <?php
-                                echo ucwords(strtolower($_SESSION["stu_lrn"]));
+                                echo $_SESSION["username"];
 
                                 // echo ucwords(strtolower($_SESSION["stu_fname"] . ' ' . $_SESSION["stu_lname"]));
                                 ?>

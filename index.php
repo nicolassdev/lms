@@ -1,12 +1,19 @@
 <?php
 session_start();
+ if (isset($_SESSION['user_role'])) {
+    
+    $user_role = strtolower($_SESSION['user_role']);
+    if( $user_role !== 'student'){
+        header("location:login.php?error=accessdenied");
+        exit();
+    }else {
+        include "./includes/student-header.php";
+    }
 
-if (!isset($_SESSION['username'])) {
-    header("location:login.php?error=accessdenied");
-    exit();
-} else {
-    include "./includes/student-header.php";
-}
+} else{
+    header("location:login.php");
+        exit();
+}  
 ?>
 
 

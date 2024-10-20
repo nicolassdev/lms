@@ -41,6 +41,7 @@ if (!isset($_SESSION["principal_id"])) {
             if ($existingUser && $existingUser['id'] != $id) {
                 // Username is taken and is not the current user's username
                 $_SESSION['user_taken'] = true;
+                $_SESSION["username"] = $username;
                 header("location:../../index.php?page=users");
                 exit();
             }

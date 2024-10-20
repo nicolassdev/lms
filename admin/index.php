@@ -1,15 +1,25 @@
+
 <?php
 session_start();
-if (!isset($_SESSION['principal_id'])) {
-    header("location:../login.php?error=accessdenied");
+ if (isset($_SESSION['user_role'])) {  //check if the user role variables is exist
+    
+    $user_role = strtolower($_SESSION['user_role']);
+    if( $user_role !== 'admin'){
+        header("location:../login.php?error=accessdenied"); // redirect access denied if user role is not admin
+        exit();
+    }
+
+} else{
+    header("location:../login.php"); // Redirect to login page if user role is not exist 
     exit();
 }
 ?>
 
 
+
 <?php
-include "./includes/header.php";
 // alert modal 
+include "./includes/header.php";
 include "./includes/alert-modal.php";
 ?>
   
