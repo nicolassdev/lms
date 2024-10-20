@@ -59,8 +59,10 @@
 
 
                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                         <li><a class="dropdown-item" href="#">Settings</a></li>
-                         <li><a class="dropdown-item" href="#">Profile</a></li>
+                     <li class="ms-3"> <?php echo ucwords(strtolower($_SESSION["user_role"])) ?> </li>   
+                          <hr class="mx-3 my-1">
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
                          <li>
                              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                  Logout
