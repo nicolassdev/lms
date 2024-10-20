@@ -19,7 +19,7 @@ $mySQLFunction->disconnect();
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4">
-        <h3 class="ms-3">School Information</h3>
+        <h4 class="ms-3">School Information</h4>
 
         <!-- Button container for proper alignment -->
         <div class="d-flex gap-3">
@@ -42,15 +42,15 @@ $mySQLFunction->disconnect();
     <!-- Form Section -->
     <form action="?page=settings" method="POST" class="border rounded p-4 bg-light mb-5 ms-3 me-3 shadow-lg row form-hover custom-shadow">
         <div class="mb-3 fade-in-input">
-            <label for="school" class="form-label fw-bold text-primary">🏫 School Name</label>
+            <label for="school" class="form-label"><i class="bi bi-bank text-primary"></i> School Name</label>
             <input type="text" id="school" name="school" value="<?php echo ucwords(strtolower($result['SCHOOL_NAME'])); ?>" class="form-control" autocomplete="off" disabled>
         </div>
         <div class="mb-3 fade-in-input">
-            <label for="address" class="form-label fw-bold text-primary">📍 Address</label>
+            <label for="address" class="form-label"><i class="bi bi-geo-alt-fill me-2 text-danger"></i>Address</label>
             <input type="text" id="address" name="address" value="<?php echo ucwords(strtolower($result['SCHOOL_ADDRESS'])); ?>" class="form-control" autocomplete="off" disabled>
         </div>
         <div class="col-6 mb-3 fade-in-input">
-            <label for="schoolyear" class="form-label fw-bold text-primary">📅 School Year</label>
+            <label for="schoolyear" class="form-label"><i class="bi bi-calendar4-week text-warning"></i> School Year</label>
             <input type="text" name="schoolyear" value="<?php
                                                         if (!empty($activeSchoolYears)) {
                                                             foreach ($activeSchoolYears as $schoolYear) {
@@ -61,7 +61,7 @@ $mySQLFunction->disconnect();
                                                         } ?>" class="form-control" autocomplete="off" disabled>
         </div>
         <div class="col-6 mb-3 fade-in-input">
-            <label for="semester" class="form-label fw-bold text-primary">📚 Semester</label>
+            <label for="semester" class="form-label"><i class="bi bi-calendar-month text-success"></i> Semester</label>
             <input type="text" name="semester" value="<?php
                                                         if (!empty($activeSem)) {
                                                             foreach ($activeSem as $semester) {

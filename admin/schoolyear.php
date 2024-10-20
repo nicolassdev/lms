@@ -22,7 +22,7 @@ include "../admin/includes/Forms/syform.php";
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4">
-        <h3 class="ms-3">School Year</h3>
+        <h4 class="ms-3">School Year</h4>
         <!-- Button container for proper alignment -->
         <div class="d-flex gap-3">
             <!-- Semester button -->
@@ -89,14 +89,14 @@ include "../admin/includes/Forms/syform.php";
 
 
             <div class="mb-4 col-5">
-                <label class="form-label fs-5">Active year</label>
-                <input type="text" name="schoolyear" value="<?php if (!empty($activeSchoolYears)) {
-                                                                foreach ($activeSchoolYears as $schoolYear) {
-                                                                    echo "" . $schoolYear . "";
-                                                                }
-                                                            } else {
-                                                                echo "No active school year found.";
-                                                            } ?>" class="form-control form-control-lg" autocomplete="off" disabled>
+                <label class="form-label">Active year <i class="bi bi-check-circle-fill text-success"></i></label>
+                <input type="text" class="col-md-12" name="schoolyear" value="<?php if (!empty($activeSchoolYears)) {
+                                                                                    foreach ($activeSchoolYears as $schoolYear) {
+                                                                                        echo "" . $schoolYear . "";
+                                                                                    }
+                                                                                } else {
+                                                                                    echo "No active school year found.";
+                                                                                } ?>" class="form-control form-control-lg" autocomplete="off" disabled>
             </div>
             <thead class="table-dark">
                 <tr>
@@ -122,14 +122,14 @@ include "../admin/includes/Forms/syform.php";
                             echo '
                 <td class="text-center">
                     <button class="btn btn-sm btn-outline-danger">
-                        Default
+                        Default 
                     </button>
                 </td>';
                         } else {
                             echo '
                 <td class="text-center">
                     <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#edit_active' . $row['school_year'] . '">
-                        Set Active
+                        Set Active 
                     </button>
                 </td>';
                         }

@@ -48,9 +48,8 @@
                      <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                          <div class="text-black" style="font-weight: 400;">
                              <?php
-                                echo $_SESSION["username"];
-
-                                // echo ucwords(strtolower($_SESSION["stu_fname"] . ' ' . $_SESSION["stu_lname"]));
+                                // echo $_SESSION["username"];
+                                echo ucwords(strtolower($_SESSION["stu_fname"] . ' ' . $_SESSION["stu_lname"]));
                                 ?>
                              <i class="bi bi-person-circle ms-1" style="font-size: 1.3rem;"></i>
                          </div>
@@ -59,10 +58,10 @@
 
 
                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                     <li class="ms-3"> <?php echo ucwords(strtolower($_SESSION["user_role"])) ?> </li>   
-                          <hr class="mx-3 my-1">
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                         <li class="ms-3"><i class="bi bi-patch-check-fill text-success"></i> <?php echo ucwords(strtolower($_SESSION["user_role"])) ?> </li>
+                         <hr class="mx-3 my-1">
+                         <li><a class="dropdown-item" href="#">Profile</a></li>
+                         <li><a class="dropdown-item" href="#">Settings</a></li>
                          <li>
                              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                  Logout

@@ -19,7 +19,7 @@
          <div class="data-table">
 
            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-             <h3 class="text-black">List of Subject</h3>
+             <h4 class="text-black">List of Subject</h4>
              <button type="button" class="btn btn-primary btn-animate" data-bs-toggle="modal" data-bs-target="#subject" data-bs-whatever="@fat">
                <i class="bi bi-plus-circle-fill me-2"></i>Subject
              </button>

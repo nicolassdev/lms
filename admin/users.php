@@ -16,7 +16,7 @@ include "../includes/dbh-inc.php";
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3 ms-3 me-3">
-        <h3 class="text-black">Users list</h3>
+        <h4 class="text-black">Users list</h4>
     </div>
     <!-- Search Form -->
     <form method="POST" action="index.php?page=users" class="ms-5 me-5">
@@ -59,9 +59,9 @@ include "../includes/dbh-inc.php";
                         $formattedDate = $addedDate->format('F j, Y'); // Format to "August 11, 2024"
 
                         echo '<tr>';
-                        echo '<td><a href="includes/Operation/userDetails.php?id=' . $row["id"] . '" class="text-primary">' . $row["id"] . '</a></td>'; // Clickable ID
+                        echo '<td>' . $row["id"] . '</td>'; // Clickable ID
                         echo '<td>' . $row["username"] . '</td>';
-                        echo '<td>' . $row["role"] . '</td>';
+                        echo '<td>' . ucwords(strtolower($row["role"])) . '</td>';
                         echo '<td>' . $formattedDate . '</td>';
                         echo '
                                         <td class="text-center">

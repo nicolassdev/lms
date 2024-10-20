@@ -143,7 +143,7 @@ include "../admin/includes/Forms/adminform.php";
                 </div>
                 <div class="profile-header text-center mb-3">
                     <img src="includes/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2">
-                    <h2><?php echo ucwords(strtolower($fullName)); ?></h2>
+                    <h4><?php echo ucwords(strtolower($fullName)); ?><i class="bi bi-patch-check-fill text-success ms-2"></i></h4>
                     <p class="text-muted"><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
                 </div>
 
@@ -162,7 +162,7 @@ include "../admin/includes/Forms/adminform.php";
                     <div class="row mb-1">
                         <div class="col-md-6">
                             <strong>Role:</strong>
-                            <p><?php echo ucwords(strtolower($showUser['role'])); ?></p>
+                            <p><?php echo ucwords(strtolower($_SESSION['user_role'])); ?></p>
                         </div>
                         <div class="col-md-6">
                             <strong>Joined:</strong>

@@ -22,7 +22,7 @@ include "../admin/includes/Forms/semesterform.php";
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4">
-        <h3 class="ms-3">Semester</h3>
+        <h4 class="ms-3">Semester</h4>
         <!-- Button container for proper alignment -->
         <div class="d-flex gap-3">
             <!-- Semester button -->
@@ -87,14 +87,15 @@ include "../admin/includes/Forms/semesterform.php";
             ?>
 
             <div class="mb-4 col-5">
-                <label class="form-label fs-5">Active semester</label>
-                <input type="text" name="schoolyear" value="<?php if (!empty($activeSemester)) {
-                                                                foreach ($activeSemester as $semester) {
-                                                                    echo   "" . $semester . "";
-                                                                }
-                                                            } else {
-                                                                echo "No active semester found.";
-                                                            } ?>" class="form-control form-control-lg" autocomplete="off" disabled>
+                <label class="form-label">Active semester <i class="bi bi-check-circle-fill text-success"></i> </label>
+                <input type="text" class="col-md-12" name="schoolyear" value="<?php if (!empty($activeSemester)) {
+                                                                                    foreach ($activeSemester as $semester) {
+                                                                                        echo   "" . $semester . "";
+                                                                                    }
+                                                                                } else {
+                                                                                    echo "No active semester found.";
+                                                                                } ?>" class="form-control form-control-lg" autocomplete="off" disabled />
+
             </div>
             <thead class="table-dark">
                 <tr>
