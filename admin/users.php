@@ -7,6 +7,7 @@ if (!isset($_SESSION['principal_id'])) {
 
 <?php
 include "../includes/dbh-inc.php";
+
 ?>
 
 
@@ -58,7 +59,7 @@ include "../includes/dbh-inc.php";
                         $formattedDate = $addedDate->format('F j, Y'); // Format to "August 11, 2024"
 
                         echo '<tr>';
-                        echo '<td>' . $row["id"] . '</td>';
+                        echo '<td><a href="includes/Operation/userDetails.php?id=' . $row["id"] . '" class="text-primary">' . $row["id"] . '</a></td>'; // Clickable ID
                         echo '<td>' . $row["username"] . '</td>';
                         echo '<td>' . $row["role"] . '</td>';
                         echo '<td>' . $formattedDate . '</td>';

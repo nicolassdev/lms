@@ -76,10 +76,10 @@ include "../admin/includes/Forms/studentform.php";
                                     <th scope="col" style="width: 50px;">LRN</th>
                                     <th scope="col" style="width: 100px;">Name</th>
                                     <th scope="col" style="width: 50px;">Middle name</th>
-                                    <th scope="col" style="width: 100px;">Surname</th>
+                                    <th scope="col" style="width: 100px;">Lastname</th>
+                                    <th scope="col" style="width: 50px;">Gender</th>
                                     <th scope="col" style="width: 150px;">Address</th>
                                     <th scope="col" style="width: 100px;">Contact</th>
-                                    <th scope="col" style="width: 50px;">Gender</th>
                                     <th scope="col" style="width: 100px;">Email</th>
                                     <th scope="col" style="width: 100px;">Birthday</th>
                                     <!-- <th scope="col" style="width: 150px;">Place of birth</th>
@@ -104,24 +104,28 @@ include "../admin/includes/Forms/studentform.php";
                                         $formattedBdate = $addedDate->format('F j, Y');
 
                                         // echo '<td>' . $count . '</td>';
-                                        echo '<td class="small text-center">' . $row["stu_lrn"] . '</td>';
+                                        echo '<td class="text-center text-primary"> <a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">'
+                                            . $row["stu_lrn"] . '</a></td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_fname"])) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_mname"])) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_lname"])) . '</td>';
+                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
                                         echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
                                         echo '<td class="small text-center">' . $row["stu_email"] . '</td>';
                                         echo '<td class="small text-center">' . $formattedBdate . '</td>';
                                         // echo '<td class="small text-center">' . $row["stu_pob"] . '</td>';
                                         // echo '<td class="small text-center">' . $row["father_name"] . '</td>';
                                         // echo '<td class="small text-center">' . $row["mother_name"] . '</td>';
                                         // echo '<td class="small text-center">' . $row["parent_contact"] . '</td>';
+
+                                        // button
+                                        //   <button title="Student Information" class="btn btn-sm btn-outline-success me-2 " data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">
+                                        //     <i class="bi bi-person-vcard"></i>
+                                        // </button>
                                         echo '
                                             <td class="d-flex justify-content-center">
-                                                <button title="Student Information" class="btn btn-sm btn-outline-success me-2 " data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">
-                                                    <i class="bi bi-person-vcard"></i>
-                                                </button>
+                                           
                                                 <button title="Edit" class="btn btn-sm btn-outline-primary  me-2" data-bs-toggle="modal" data-bs-target="#edit_student' . $row['stu_lrn'] . '">
                                                     <i class="bi bi-pencil-square"></i> 
                                                 </button>
@@ -142,9 +146,15 @@ include "../admin/includes/Forms/studentform.php";
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content b-grey">
                                                     <div class="modal-body">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-3 text-success">Student Information</h1><i class="bi bi-person-vcard-fill fs-1 text-success"></i>
+                                                       <div class="modal-header">
+                                                            <h1 class="modal-title fs-4 text-success">Student Information</h1>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="me-2">' . htmlspecialchars($row['stu_lrn']) . '</div>
+                                                                <i class="bi bi-person-vcard-fill fs-1 text-success"></i>
+                                                            </div>
                                                         </div>
+
+                                                           
                                                         <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editTeacherForm' . htmlspecialchars($row['stu_lrn']) . '">
                                                             <!-- Use hidden input -->
                                                             <input type="hidden" name="lrnID" value="' . htmlspecialchars($row['stu_lrn']) . '">
