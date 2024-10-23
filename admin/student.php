@@ -149,7 +149,7 @@ include "../admin/includes/Forms/studentform.php";
                                                        <div class="modal-header">
                                                             <h1 class="modal-title fs-4 text-success">Student Information</h1>
                                                             <div class="d-flex align-items-center">
-                                                                <div class="me-2">' . htmlspecialchars($row['stu_lrn']) . '</div>
+                                                                <div class="me-2 text-success fw-bold">LRN: ' . htmlspecialchars($row['stu_lrn']) . '</div>
                                                                 <i class="bi bi-person-vcard-fill fs-1 text-success"></i>
                                                             </div>
                                                         </div>
@@ -193,12 +193,8 @@ include "../admin/includes/Forms/studentform.php";
 
                                                             <div class="col-md-12 mt-2">
                                                                 <label for="gender' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Gender</label>
-                                                                <select class="form-select" name="gender" id="gender' . htmlspecialchars($row['stu_lrn']) . '" readonly disabled>
-                                                                    <option disabled value="">Choose...</option>
-                                                                    <option value="male"' . ($row['stu_gender'] == 'MALE' ? ' selected' : '') . '>MALE</option>
-                                                                    <option value="female"' . ($row['stu_gender'] == 'FEMALE' ? ' selected' : '') . '>FEMALE</option>
-                                                                </select>
-                                                             </div>
+                                                                <input type="text" class="form-control" name="gender" id="gender' . htmlspecialchars($row['stu_lrn']) . '" value="' . htmlspecialchars($row['stu_gender']) . '" readonly disabled>
+                                                            </div>
 
                                                             <div class="col-md-12 mt-2">
                                                                 <label for="email' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Email</label>

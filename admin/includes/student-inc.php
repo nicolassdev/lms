@@ -74,12 +74,12 @@ if (!isset($_POST["submit"])) {
         $encryptedPassword = $userpwd ? $mySQLFunction->encrypt($userpwd) : null;
 
         // Insert data into USERS table
-        $credentialColumns = ['id', 'username', 'password', 'role', 'added_date'];
+        $credentialColumns = ['id', 'username', 'password', 'role', 'date_added'];
         $credentialValues = [$uid, $username, $encryptedPassword, $role, date('Y-m-d H:i:s')];
         $mySQLFunction->insert("USERS", $credentialColumns, $credentialValues);
 
         // Insert data into TEACHER table
-        $studentColumns = ['stu_lrn', 'stu_fname', 'stu_mname', 'stu_lname', 'stu_address', 'stu_contact', 'stu_gender', 'stu_email', 'stu_dob', 'stu_pob', 'father_name', 'mother_name', 'parent_contact	', 'id'];
+        $studentColumns = ['stu_lrn', 'stu_fname', 'stu_mname', 'stu_lname', 'stu_address', 'stu_contact', 'stu_gender', 'stu_email', 'stu_dob', 'stu_pob', 'father_name', 'mother_name', 'parent_contact', 'id'];
         $studentValues = [$lrnID, $fname, isset($_POST["mname"]) ? strtoupper(trim($_POST["mname"])) : null, $lname, $address, $scontact, $gender, $email, $dob, $pob, $father, $mother, $pcontact, $uid];
         $mySQLFunction->insert("STUDENT", $studentColumns, $studentValues);
 
