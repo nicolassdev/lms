@@ -25,7 +25,7 @@ $mySQLFunction->disconnect();
                 <form id="enrollForm" action="./includes/enroll-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation" novalidate>
                     <div class="modal-header d-flex justify-content-between align-items-center">
                         <!-- Left Image -->
-                        <img src="../assets/img/edukasyon.png" alt="Edukasyon Logo" class="img-fluid" style="max-height: 100px;">
+                        <img src="../assets/img/edukasyon.webp" alt="Edukasyon Logo" class="img-fluid" style="max-height: 100px;">
 
                         <!-- Centered Modal Title -->
                         <div class="text-center">
@@ -37,7 +37,7 @@ $mySQLFunction->disconnect();
                         </div>
 
                         <!-- Right Image -->
-                        <img src="../assets/img/csi.png" alt="CSI Logo" class="img-fluid" style="max-height: 100px;">
+                        <img src="../assets/img/csi.webp" alt="CSI Logo" class="img-fluid" style="max-height: 100px;">
                     </div>
 
                     <div class="modal-header">
@@ -149,13 +149,22 @@ $mySQLFunction->disconnect();
                         <label class="form-label">School name</label>
                         <input type="text" class="form-control" name="currentchool" required>
                     </div>
-                    <div class="col-md-12">
+                    <!-- <div class="col-md-12">
                         <label class="form-label">School ID <small class="text-danger">(Optional)</small></label>
                         <input type="number" class="form-control" name="schoolid" id="schoolId" oninput="this.value = this.value.slice(0, 6);">
                         <div class=" invalid-feedback">
                             School ID must be exactly 6 digits.
                         </div>
+                    </div> -->
+                    <div class="col-md-12">
+                        <label class="form-label">School ID <small class="text-danger">(Optional)</small></label>
+                        <input type="number" class="form-control" name="schoolid" id="schoolId"
+                            min="100000" max="999999" pattern="\d{6}">
+                        <div class="invalid-feedback">
+                            School ID must be exactly 6 digits.
+                        </div>
                     </div>
+
 
                     <div class="col-md-12">
                         <label class="form-label">School Address</label>
