@@ -676,7 +676,7 @@ class myDataBase
                     WHERE `username` LIKE '$value%' 
                     OR `role` LIKE '$value%' 
                     OR `added_date` LIKE '$value%'
-                    ORDER BY `username`, `role`, `added_date`";
+                    ORDER BY `username`, `role`, `date_added`";
 
         // Execute the query
         $result = $this->con->query($sql);

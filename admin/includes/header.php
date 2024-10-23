@@ -8,7 +8,7 @@
      <!-- <link href="../css/bootstrap-icons.min.css" rel="stylesheet"> -->
      <!-- Bootstrap Icons -->
      <!-- <link href="../css/bootstrap-icons.css" rel="stylesheet"> -->
-     <link rel="icon" type="png" href="../assets/img/lms.png">
+     <link rel="icon" type="webp" href="../assets/img/lms.webp">
      <link href="./css/bootstrap.min.css" rel="stylesheet">
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
@@ -44,7 +44,7 @@
                  <span class="navbar-toggler-icon"></span>
              </button>
              <div class="image">
-                 <a href="?page=home"><img src="../assets/img/lms.png" alt="LMS Logo"></a>
+                 <a href="?page=home"><img src="../assets/img/lms.webp" alt="LMS Logo"></a>
                  <span class=" d-none d-lg-inline text-white"><span class="color">L</span>earning <span class="color">M</span>anagement <span class="color">S</span>ystem</span>
              </div>
 

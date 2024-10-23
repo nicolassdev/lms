@@ -41,14 +41,14 @@ if (!isset($_POST["submit"])) {
         $checkUsernameResult = $stmt->get_result();
 
         if ($checkUsernameResult->num_rows > 0) {
-            throw new Exception("LRN already taken. No data will be inserted.");
+            throw new Exception("user already taken. No data will be inserted.");
         }
 
         // Encrypt password if provided
         $encryptedPassword = $userpwd ? $mySQLFunction->encrypt($userpwd) : null;
 
         // Insert data into USERS table
-        $credentialColumns = ['id', 'username', 'password', 'role', 'added_date'];
+        $credentialColumns = ['id', 'username', 'password', 'role', 'date_added'];
         $credentialValues = [$uid, $username, $encryptedPassword, $role, date('Y-m-d H:i:s')];
         $mySQLFunction->insert("USERS", $credentialColumns, $credentialValues);
 

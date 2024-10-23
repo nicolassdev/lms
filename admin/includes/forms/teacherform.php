@@ -11,7 +11,7 @@
 
                     <!-- hide the role of user which is TEACHER  -->
                     <input type="text" class="form-control d-none" name="role" value="TEACHER" required>
-        
+
 
 
                     <div class="col-md-12">
@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-md-3">
                         <label for="middleName" class="form-label">Middle name</label>
-                        <input type="text" class="form-control" name="middlename" required>
+                        <input type="text" class="form-control" name="middlename">
                     </div>
                     <div class="col-md-4">
                         <label for="lastName" class="form-label">Last name</label>

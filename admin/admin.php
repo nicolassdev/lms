@@ -9,7 +9,7 @@ $showSchool = $mySQLFunction->getSchool();
 $showResult = $mySQLFunction->getAdminInfo();
 $showUser = $mySQLFunction->getUserInfo();
 $fullName = $showResult['firstname'] . ' ' . $showResult['middlename'] . ' ' . $showResult['lastname'];
-$addedDate = new DateTime($showUser['added_date']);
+$addedDate = new DateTime($showUser['date_added']);
 $formattedDate = $addedDate->format('F j, Y');
 $mySQLFunction->disconnect();
 include "../admin/includes/Forms/adminform.php";
@@ -139,6 +139,10 @@ include "../admin/includes/Forms/adminform.php";
                     </button>
                     <button type="button" class="btn btn-primary btn-sm-custom me-2" title="Edit" data-bs-toggle="modal" data-bs-target="#updateadmininfo">
                         <i class="bi bi-pencil-square"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-success btn-sm-custom me-2" title="Edit" data-bs-toggle="modal" data-bs-target="#admin">
+                        <i class="bi bi-person-add"></i>
                     </button>
                 </div>
                 <div class="profile-header text-center mb-3">

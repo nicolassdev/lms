@@ -5,13 +5,13 @@
      <meta charset="UTF-8" />
      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <link rel="website icon" type="png" href="assets/img/lms.png">
+     <link rel="website icon" type="webp" href="assets/img/lms.webp">
      <link rel="stylesheet" href="assets/css/login.css?v=<?php echo time(); ?>" />
      <title>Login</title>
 
  </head>
 
-    <?php
+ <?php
     // Start the session
     session_start();
 
@@ -19,18 +19,19 @@
     if (isset($_SESSION['user_role'])) {
         // Check user role and redirect accordingly
         $user_role = strtolower($_SESSION['user_role']);
-        
+
         if ($user_role === "admin") {
+
             header('Location: /lms/admin/index.php'); // Change to the actual homepage path
+            exit();
+        } elseif ($user_role === "teacher") {
+
+            header('Location: /lms/index.php');
             exit();
         } elseif ($user_role === "student") {
             // If logged in, redirect to the homepage
             header('Location: /lms/index.php'); // Change to the actual homepage path
             exit(); // Exit after redirection to prevent further code execution
-        }elseif($user_role === "teacher"){
-            
-            header('Location: /lms/index.php');
-            exit();
         }
     }
     ?>
@@ -51,12 +52,12 @@
                      <h2>Login</h2>
                      <div class="input-box">
                          <span class="icon">
-                             <img src="assets/img/icons8-user-24.png" alt="user icon" /></span>
+                             <img src="assets/img/icons8-user-24.webp" alt="user icon" /></span>
                          <input type="text" placeholder="Username" name="username" required autocomplete="off" autofocus />
                      </div>
                      <div class="input-box">
                          <span class="icon">
-                             <img src="assets/img/icons8-lock-24.png" alt="lock icon" /></span>
+                             <img src="assets/img/icons8-lock-24.webp" alt="lock icon" /></span>
                          <input type="password" placeholder="Password" name="password" required autocomplete="off" autofocus />
                      </div>
                      <button type="submit" name="submit">Login</button>

@@ -22,6 +22,7 @@ $gender = strtoupper(trim($_POST["gender"] ?? null));
 $dob = trim($_POST["dob"] ?? null);
 $status = strtoupper(trim($_POST["status"] ?? null));
 $address = strtoupper(trim($_POST["address"] ?? null));
+$date_added = date("Ymd");
 
 
 // Generate unique IDs
@@ -58,7 +59,7 @@ try {
     $encryptedPassword = $userpwd ? $mySQLFunction->encrypt($userpwd) : null;
 
     // Insert data into USERS table
-    $insertUserSql = "INSERT INTO USERS (id, username, password, role, added_date) VALUES (?, ?, ?, ?, ?)";
+    $insertUserSql = "INSERT INTO USERS (id, username, password, role, date_added) VALUES (?, ?, ?, ?, ?)";
     $stmt = $mySQLFunction->con->prepare($insertUserSql);
     $stmt->bind_param("sssss", $uid, $username, $encryptedPassword, $role, date('Y-m-d H:i:s'));
     $stmt->execute();
@@ -66,12 +67,12 @@ try {
 
     // Insert data into TEACHER table
     $insertTeacherSql = "
-        INSERT INTO TEACHER (teacher_id, teacher_fname, teacher_mname, teacher_lname, teacher_contact, teacher_gender, teacher_dob, status, teacher_address, id)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO TEACHER (teacher_id, teacher_fname, teacher_mname, teacher_lname, teacher_contact, teacher_gender, teacher_dob, status, teacher_address, date_added, id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ";
     $stmt = $mySQLFunction->con->prepare($insertTeacherSql);
     $stmt->bind_param(
-        "ssssssssss",
+        "sssssssssss",
         $teacherID,
         $fname,
         strtoupper(trim($_POST["middlename"] ?? null)),
@@ -81,6 +82,7 @@ try {
         $dob,
         $status,
         $address,
+        $date_added,
         $uid
     );
     $stmt->execute();

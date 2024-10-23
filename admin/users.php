@@ -55,7 +55,7 @@ include "../includes/dbh-inc.php";
                     $count = 1;
                     foreach ($result as $row) {
                         // Create a DateTime object and format the added_date
-                        $addedDate = new DateTime($row['added_date']); // Create a DateTime object for the current row
+                        $addedDate = new DateTime($row['date_added']); // Create a DateTime object for the current row
                         $formattedDate = $addedDate->format('F j, Y'); // Format to "August 11, 2024"
 
                         echo '<tr>';

@@ -10,7 +10,7 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="icon" type="png" href="../assets/img/lms.png">
+    <link rel="icon" type="webp" href="../assets/img/lms.webp">
     <link rel="stylesheet" href="../assets/css/student.css?v=<?php echo time(); ?>" />
 </head>
 

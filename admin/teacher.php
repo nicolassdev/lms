@@ -46,10 +46,10 @@ include "../admin/includes/Forms/teacherform.php";
                         <table id="example" class="table table-bordered table-striped table-sm align-middle">
                             <thead class="table-dark">
                                 <tr>
-                                    <!-- <th scope="col">#</th> -->
+                                    <th scope="col">#</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Middle name</th>
-                                    <th scope="col">Surname</th>
+                                    <th scope="col">Last name</th>
                                     <th scope="col">Contact</th>
                                     <th scope="col">Gender</th>
                                     <th scope="col">Birthday</th>
@@ -63,14 +63,14 @@ include "../admin/includes/Forms/teacherform.php";
                                 $mySQLFunction->connection();
                                 $result = $mySQLFunction->getTeacher();
                                 if (!empty($result)) {
-                                    $count = 0;
+                                    $count = 1;
                                     foreach ($result as $row) {
                                         // Create a DateTime object and format the added_date
                                         $addedDate = new DateTime($row['teacher_dob']);
                                         $formattedBdate = $addedDate->format('F j, Y');
 
                                         // echo '<td>' . $row["teacher_id"] . '</td>';
-                                        // echo '<td>' . $count . '</td>';
+                                        echo '<td>' . $count . '</td>';
                                         echo '<td>' . ucwords(strtolower($row["teacher_fname"])) . '</td>';
                                         echo '<td>' .  ucwords(strtolower($row["teacher_mname"])) . '</td>';
                                         echo '<td>' .  ucwords(strtolower($row["teacher_lname"])) . '</td>';
