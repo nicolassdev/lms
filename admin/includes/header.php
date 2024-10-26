@@ -93,13 +93,13 @@ foreach ($users as $user) {
                 </a>
 
                 <!-- Small title for mobile view -->
-                <span class="me-4 text-white text-center fs-6 d-inline d-lg-none">
+                <div class="navbar-brand text-white d-none d-lg-inline">
                     <span class="color">L</span>earning <span class="color">M</span>anagement
                     <span class="color">S</span>ystem
-                </span>
+                </div>
 
                 <!-- Large title for desktop view -->
-                <span class="ms-2 text-white fs-4 d-none d-lg-inline">
+                <span class="text-white fs-6 me-3 d-inline d-lg-none">
                     <span class="color">L</span>earning <span class="color">M</span>anagement
                     <span class="color">S</span>ystem
                 </span>

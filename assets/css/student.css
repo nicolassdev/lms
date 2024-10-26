@@ -55,13 +55,13 @@ body {
 }
 
 /* Add some margin for larger screens */
-.container {
+/* .container {
   max-width: 800px;
   border: 1px solid #e4e0e0;
   background-color: #e4e0e0;
   border-radius: 10px;
   padding: 20px 50px;
-}
+} */
 
 .title h1 {
   font-size: 1.75rem;

@@ -38,9 +38,12 @@
                  <span class="navbar-toggler-icon"></span>
              </button>
              <!--  Title -->
-             <div class="navbar-brand">
+             <div class="navbar-brand d-none d-lg-inline">
                  Learning Management System
              </div>
+             <span class="text-black text-center fs-6 d-inline d-lg-none">
+                 Learning Management System
+             </span>
 
              <!-- Profile Dropdown -->
              <div class="me-2">
