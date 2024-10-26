@@ -60,6 +60,16 @@ include "../admin/includes/Forms/adminform.php";
         margin: 0 auto;
     }
 
+    @media (max-width: 576px) {
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            /* Smaller padding */
+            font-size: 0.875rem;
+            /* Smaller font size */
+        }
+    }
+
+
     /* .profile-header h2,
     .profile-header p {
         font-size: 1.5rem;
@@ -99,15 +109,6 @@ include "../admin/includes/Forms/adminform.php";
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="profileImage" class="form-label">Profile Image</label>
-                        <input type="file" class="form-control" id="profileImage" name="profileImage" accept="image/*" onchange="previewImage(event)" required>
-                        <div class="invalid-feedback">Please upload an image.</div>
-                    </div>
-
-                    <div class="mb-3 text-center">
-                        <img id="imagePreview" class="profile-img" src="#" alt="Image Preview" style="display:none;">
-                    </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
@@ -120,6 +121,16 @@ include "../admin/includes/Forms/adminform.php";
                         <div class="invalid-feedback">Please enter your address.</div>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="profileImage" class="form-label">Profile Image</label>
+                        <input type="file" class="form-control" id="profileImage" name="image" accept="image/*" onchange="previewImage(event)" required>
+                        <div class="invalid-feedback">Please upload an image.</div>
+                    </div>
+
+                    <div class="mb-3 text-center">
+                        <img id="imagePreview" class="profile-img" src="#" alt="Image Preview" style="display:none;">
+                    </div>
+
                     <div class="text-end">
                         <button name="submit" class="btn btn-primary" type="submit">Update Information</button>
                     </div>
@@ -129,66 +140,82 @@ include "../admin/includes/Forms/adminform.php";
     </div>
 </div>
 
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-md-12" style="margin-left: 12px;">
-            <div class="profile-card">
-                <div class="d-flex justify-content-end mb-3">
-                    <button class="btn btn-secondary btn-sm-custom me-2" onclick="location.href='index.php?page=index'">
-                        <i class="bi bi-arrow-left-circle me-1"></i> Back
-                    </button>
-                    <button type="button" class="btn btn-primary btn-sm-custom me-2" title="Edit" data-bs-toggle="modal" data-bs-target="#updateadmininfo">
-                        <i class="bi bi-pencil-square"></i>
-                    </button>
 
-                    <button type="button" class="btn btn-success btn-sm-custom me-2" title="Edit" data-bs-toggle="modal" data-bs-target="#admin">
-                        <i class="bi bi-person-add"></i>
-                    </button>
-                </div>
-                <div class="profile-header text-center mb-3">
-                    <img src="includes/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2">
-                    <h4><?php echo ucwords(strtolower($fullName)); ?></h4>
-                    <p class="text-muted"><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
-                </div>
 
-                <div class="profile-details">
-                    <div class="row mb-1">
-                        <div class="col-md-6">
-                            <strong>Email:</strong>
-                            <p><?php echo $showResult['email']; ?></p>
-                        </div>
-                        <div class="col-md-6">
-                            <strong>Phone:</strong>
-                            <p>+63<?php echo $showResult['contact']; ?></p>
-                        </div>
+<!-- TABLE -->
+<main class="col-md-12 ms-sm-auto col-lg-10">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="profile-card">
+                    <div class="d-flex flex-wrap justify-content-end mb-3">
+                        <button class="btn btn-secondary btn-sm me-2 mb-2"
+                            onclick="location.href='index.php?page=index'">
+                            <i class="bi bi-arrow-left-circle me-1"></i> Back
+                        </button>
+
+                        <button type="button" class="btn btn-primary btn-sm mb-2"
+                            title="Edit" data-bs-toggle="modal" data-bs-target="#updateadmininfo">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <!-- this is adding another admin button -->
+                        <!-- <button type="button" class="btn btn-success btn-sm me-2 mb-2"
+                            title="Add Admin" data-bs-toggle="modal" data-bs-target="#admin">
+                            <i class="bi bi-person-add"></i>
+                        </button> -->
                     </div>
 
-                    <div class="row mb-1">
-                        <div class="col-md-6">
-                            <strong>Role:</strong>
-                            <p><?php echo ucwords(strtolower($showUser['role'])); ?></p>
-                        </div>
-                        <div class="col-md-6">
-                            <strong>Joined:</strong>
-                            <p><?php echo htmlspecialchars($formattedDate); ?></p>
-                        </div>
+                    <div class="profile-header text-center mb-3">
+                        <img src="includes/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2">
+                        <h4><?php echo ucwords(strtolower($fullName)); ?></h4>
+                        <p class="text-muted"><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
                     </div>
 
-                    <div class="row mb-1">
-                        <div class="col-md-6">
-                            <strong>Address:</strong>
-                            <p><?php echo ucwords(strtolower($showResult['address'])); ?></p>
+                    <div class="profile-details">
+                        <div class="row mb-1">
+                            <div class="col-md-6">
+                                <strong>Email:</strong>
+                                <p><?php echo $showResult['email']; ?></p>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Phone:</strong>
+                                <p>+63<?php echo $showResult['contact']; ?></p>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <strong>Status:</strong>
-                            <p>Active</p>
+
+                        <div class="row mb-1">
+                            <div class="col-md-6">
+                                <strong>Role:</strong>
+                                <p><?php echo ucwords(strtolower($showUser['role'])); ?></p>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Joined:</strong>
+                                <p><?php echo htmlspecialchars($formattedDate); ?></p>
+                            </div>
                         </div>
+
+                        <div class="row mb-1">
+                            <div class="col-md-6">
+                                <strong>Address:</strong>
+                                <p><?php echo ucwords(strtolower($showResult['address'])); ?></p>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Status:</strong>
+                                <p>Active</p>
+                            </div>
+                        </div>
+
+
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</main>
+
+
 <script>
     function resetForm() {
         var form = document.getElementById("editAdminInfo");

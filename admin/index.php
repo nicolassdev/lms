@@ -1,15 +1,14 @@
 
 <?php
 session_start();
- if (isset($_SESSION['user_role'])) {  //check if the user role variables is exist
-    
+if (isset($_SESSION['user_role'])) {  //check if the user role variables is exist
+
     $user_role = strtolower($_SESSION['user_role']);
-    if( $user_role !== 'admin'){
+    if ($user_role !== 'admin') {
         header("location:../login.php?error=accessdenied"); // redirect access denied if user role is not admin
         exit();
     }
-
-} else{
+} else {
     header("location:../login.php"); // Redirect to login page if user role is not exist 
     exit();
 }

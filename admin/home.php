@@ -51,12 +51,12 @@ $mySQLFunction->disconnect();
                         </div>
 
                         <!-- School Year and Semester Display -->
-                        <div class="col-md-6 school-semester-info">
+                        <div class="col-md-6 date-display">
                             <?php
                             if (!empty($activeSchoolYears) && !empty($activeSem)) {
                                 foreach ($activeSchoolYears as $index => $schoolYear) {
-                                    echo '<h6>School Year: ' . htmlspecialchars($schoolYear) . '</h6>';
-                                    echo '<h6>Semester: ' . htmlspecialchars($activeSem[$index]) . '</h6>';
+                                    echo '<div>Semester: ' . htmlspecialchars($activeSem[$index]) . '</div>';
+                                    echo '<div>School Year: ' . htmlspecialchars($schoolYear) . '</div>';
                                 }
                             } else {
                                 echo '<div class="alert alert-warning">No school year and semester found.</div>';
