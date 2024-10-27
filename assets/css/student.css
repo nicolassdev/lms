@@ -132,6 +132,19 @@ body {
   font-weight: bolder;
 }
 
+.footer {
+  text-align: center;
+  color: #6c757d;
+  padding: 20px 0;
+  background-color: #f8f9fa;
+  font-size: 15px;
+  border-top: 1px solid #e9ecef;
+}
+
+.footer p {
+  margin: 0;
+}
+
 /* PROFILE MODULE CSS  */
 /* Custom styling for profile */
 .profile-card {

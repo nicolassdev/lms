@@ -149,7 +149,9 @@ $mySQLFunction->disconnect();
                 </div>
             </div>
         </div>
-
+        <?php
+        include "../includes/footer.php";
+        ?>
     </main>
 
     <!-- Time and Date Script -->

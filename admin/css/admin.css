@@ -253,3 +253,17 @@ body {
   transform: scale(1.02);
   transition: transform 0.3s ease;
 }
+
+/* =================================== FOOTER ====================================== */
+.footer {
+  text-align: center;
+  color: #6c757d;
+  padding: 20px 0;
+  background-color: #f8f9fa;
+  font-size: 15px;
+  border-top: 1px solid #e9ecef;
+}
+
+.footer p {
+  margin: 0;
+}
