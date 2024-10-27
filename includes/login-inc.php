@@ -15,7 +15,7 @@ if (!isset($_POST["submit"])) {
 
         // Get user credentials
         $credential = $mySQLFunction->getCredential("USERNAME", $username);
-        $userID = $mySQLFunction->getCredential("id", $user_id);
+        // $userID = $mySQLFunction->getCredential("id", $user_id);
         $userRole = $credential["role"];
 
         $redirectUrl = '';
@@ -25,6 +25,9 @@ if (!isset($_POST["submit"])) {
             session_start();
             $user = $mySQLFunction->getCredential("username", $username);
             $studentCredential = $mySQLFunction->getStudentCredential("id", $user["id"]);
+
+
+
             $_SESSION["id"] = $studentCredential["id"];
             $_SESSION["stu_lrn"] = $studentCredential["stu_lrn"];
             $_SESSION["stu_fname"] = $studentCredential["stu_fname"];
@@ -32,6 +35,15 @@ if (!isset($_POST["submit"])) {
 
             $_SESSION["username"] = $user["username"];  // username of student
             $_SESSION["user_role"] = $user["role"];
+
+
+            // Assuming $userInfo['date_added'] contains the date added
+            $addedDate = new DateTime($user['date_added']);
+            $formattedDate = $addedDate->format('F j, Y');
+
+            // Store the formatted date in the session
+            $_SESSION["user_added"] = $formattedDate;
+
 
             //redirect to url 
             header("location: ../loading.php?redirect=" . urlencode("./index.php"));
@@ -47,7 +59,7 @@ if (!isset($_POST["submit"])) {
             $_SESSION["teacher_lname"] = $teacherCredential["teacher_lname"];
 
             $_SESSION["username"] = $user["username"];
-        
+
             $_SESSION["user_role"] = $user["role"];
 
             //redirect to url 

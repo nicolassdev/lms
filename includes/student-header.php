@@ -63,7 +63,7 @@
                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                          <li class="ms-3"><i class="bi bi-patch-check-fill text-success"></i> <?php echo ucwords(strtolower($_SESSION["user_role"])) ?> </li>
                          <hr class="mx-3 my-1">
-                         <li><a class="dropdown-item" href="#">Profile</a></li>
+                         <li><a class="dropdown-item" href="?page=student_prof">Profile</a></li>
                          <li><a class="dropdown-item" href="#">Settings</a></li>
                          <li>
                              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">

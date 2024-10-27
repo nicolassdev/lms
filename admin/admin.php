@@ -2,13 +2,17 @@
 // PHP Logic
 if (!isset($_SESSION['principal_id'])) {
     header("location:../login.php?error=accessdenied");
+    exit();
 }
 require_once "../includes/dbh-inc.php";
 $mySQLFunction->connection();
 $showSchool = $mySQLFunction->getSchool();
+$showUser = $mySQLFunction->getUserInfo($_SESSION['principal_id']);
+
+
 $showResult = $mySQLFunction->getAdminInfo();
-$showUser = $mySQLFunction->getUserInfo();
 $fullName = $showResult['firstname'] . ' ' . $showResult['middlename'] . ' ' . $showResult['lastname'];
+
 $addedDate = new DateTime($showUser['date_added']);
 $formattedDate = $addedDate->format('F j, Y');
 $mySQLFunction->disconnect();

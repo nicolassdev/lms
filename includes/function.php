@@ -183,13 +183,35 @@ class myDataBase
         $stored = ($this->con->query($sql))->fetch_assoc();
         return $stored;
     }
+    //GET STUDENT INFORMATION BY INDIVIDUAL
 
-    public function getUserInfo()
+    public function getStudentInfo($student_id)
     {
-        $sql = "SELECT * FROM `USERS`";
-        $stored = ($this->con->query($sql))->fetch_assoc();
-        return $stored;
+        $sql = "SELECT * FROM `STUDENT` WHERE stu_lrn = ?";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("i", $student_id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result;
     }
+
+
+    // USERS ID AND INFO 
+    public function getUserInfo($user_id)
+    {
+        $sql = "SELECT id, username, role, date_added FROM USERS WHERE id = ?";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+
+        if (!$result) {
+            throw new Exception("User not found");
+        }
+
+        return $result;
+    }
+
 
     //GET SEMESTER AND SY
     public function getActiveSy()
@@ -243,6 +265,9 @@ class myDataBase
 
 
 
+
+
+
     // GET USER INDIVIDUAL CREDENTIAL 
     function getCredential($row, $value)
     {
@@ -258,6 +283,17 @@ class myDataBase
         $stored = ($this->con->query($sql))->fetch_assoc();
         return $stored;
     }
+
+
+    function getStudentEnrolled($row, $value)
+    {
+        $sql = "SELECT * FROM `enroll` WHERE `$row` = '$value'";
+        $stored = ($this->con->query($sql))->fetch_assoc();
+        return $stored;
+    }
+
+
+
     //GET ADMIN CREDENTIAL
     function getAdminCredential($row, $value)
     {

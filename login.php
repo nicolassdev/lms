@@ -16,24 +16,43 @@
     session_start();
 
     // Check if the user role is set
+    // if (isset($_SESSION['user_role'])) {
+    //     // Check user role and redirect accordingly
+    //     $user_role = strtolower($_SESSION['user_role']);
+
+    //     if ($user_role === "admin") {
+
+    //         header('Location: /lms/admin/index.php'); // Change to the actual homepage path
+    //         exit();
+    //     } elseif ($user_role === "teacher") {
+
+    //         header('Location: /lms/index.php');
+    //         exit();
+    //     } elseif ($user_role === "student") {
+    //         // If logged in, redirect to the homepage
+    //         header('Location: /lms/index.php'); // Change to the actual homepage path
+    //         exit(); // Exit after redirection to prevent further code execution
+    //     }
+    // }
+
+    // USING SWITCH CASE TO IDENTIFY THE USER TYPE 
     if (isset($_SESSION['user_role'])) {
-        // Check user role and redirect accordingly
-        $user_role = strtolower($_SESSION['user_role']);
-
-        if ($user_role === "admin") {
-
-            header('Location: /lms/admin/index.php'); // Change to the actual homepage path
-            exit();
-        } elseif ($user_role === "teacher") {
-
-            header('Location: /lms/index.php');
-            exit();
-        } elseif ($user_role === "student") {
-            // If logged in, redirect to the homepage
-            header('Location: /lms/index.php'); // Change to the actual homepage path
-            exit(); // Exit after redirection to prevent further code execution
+        switch (strtolower($_SESSION['user_role'])) {
+            case 'admin':
+                header('Location: /lms/admin/index.php');
+                break;
+            case 'teacher':
+                header('Location: /lms/faculty/index.php');
+                break;
+            case 'student':
+                header('Location: /lms/student/index.php');
+                break;
+            default:
+                header('Location: /lms/login.php?error=invalidcredentials');
         }
+        exit();
     }
+
     ?>
 
 
