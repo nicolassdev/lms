@@ -11,7 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="icon" type="webp" href="../assets/img/lms.webp">
-    <link rel="stylesheet" href="../assets/css/student.css?v=<?php echo time(); ?>" />
+    <link rel="stylesheet" href="../assets/css/teacher.css?v=<?php echo time(); ?>" />
 </head>
 
 <body>
@@ -22,10 +22,19 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <!--  Title -->
-            <div class="navbar-brand">
+
+
+
+            <!-- Desktop LMS Title (Left-aligned on large screens) -->
+            <div class="navbar-brand text-black d-none d-lg-block">
                 Learning Management System
             </div>
+
+            <!-- Mobile LMS Title (Centered on mobile screens, hidden on larger screens) -->
+            <div class="navbar-brand text-black mx-auto text-center d-block d-lg-none fs-6">
+                Learning Management System
+            </div>
+
 
             <!-- Profile Dropdown -->
             <div class="me-2">
@@ -58,37 +67,49 @@
     <div class="side">
         <div class="container-fluid">
             <div class="row mt-5">
-                <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar offcanvas-md offcanvas-start">
-                    <div class="position-sticky mt-4">
+                <nav id="sidebar" class="col-md-5 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
+                    <div class="text-white ms-3 mb-4 " style="font-weight: 00;">
+                        <?php
+                        echo ucwords(strtolower($_SESSION["teacher_fname"] . ' ' . $_SESSION["teacher_lname"]));
+                        ?>
+                        <i class="bi bi-person-circle ms-5"></i>
+                    </div>
+                    <div class="position-sticky mt-1">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=student_home">
-                                    <i class="bi bi-house-door me-2"></i> Home
+                                <a class="nav-link active" href="index.php?page=teacher_home">
+                                    <i class="bi bi-graph-up-arrow me-2"></i> Dashboard
                                 </a>
                             </li>
+                            <hr class="mx-1 my-1 mb-3">
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=student_prof">
+                                <a class="nav-link active" href="index.php?page=teacher_prof">
                                     <i class="bi bi-person-lines-fill me-2"></i> Profile
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=student_quiz">
+                                <a class="nav-link active" href="index.php?page=teachaer_quiz">
+                                    <i class="bi bi-buildings"></i> Section Handled
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index.php?page=teachaer_quiz">
                                     <i class="bi bi-lightbulb me-2"></i> Quiz
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=student_exam">
+                                <a class="nav-link active" href="index.php?page=teachaer_exam">
                                     <i class="bi bi-book me-2"></i></i>Exam
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=student_assignment">
+                                <a class="nav-link active" href="index.php?page=teachaer_assignment">
                                     <i class="bi bi-pencil  me-2"></i> Assignments
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=student_grade">
-                                    <i class="bi bi-bar-chart me-2"></i> Grades
+                                <a class="nav-link active" href="index.php?page=teachaer_grade">
+                                    <i class="bi bi-bar-chart me-2"></i> Reports
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -114,7 +135,7 @@
                     <div class="text-danger mb-4">
                         <i class="bi bi-box-arrow-right fs-1"></i>
                     </div>
-                    <h5 class="fw-bold mb-5">Are you sure you want to logout?</h5>
+                    <h5 class="mb-5">Are you sure you want to logout?</h5>
 
                     <!-- Buttons -->
                     <div class="d-flex justify-content-center mt-5 mb-3">

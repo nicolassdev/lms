@@ -46,7 +46,7 @@ $mySQLFunction->disconnect();
                             if (!empty($activeSchoolYears) && !empty($activeSem)) {
                                 foreach ($activeSchoolYears as $index => $schoolYear) {
                                     echo '<span class="me-3">SY ' . htmlspecialchars($schoolYear) . '</span>';;
-                                    echo '<div class=" text-success">' . htmlspecialchars($activeSem[$index]) . '</div>';
+                                    echo '<div>' . htmlspecialchars($activeSem[$index]) . '<i class="bi bi-check-circle-fill text-success ms-2"></i> </div>';
                                 }
                             } else {
                                 echo '<div class="alert alert-warning">No school year and semester found.</div>';
@@ -180,13 +180,12 @@ $mySQLFunction->disconnect();
                     </div>
 
                     <label class="form-label">Requirements Submitted</label>
-                    <div class="col-md-12">
-                        SF9 <input class="me-3" type="checkbox" name="requirement[]" value="SF9">
-                        SF10 <input class="me-3" type="checkbox" name="requirement[]" value="SF10">
-                        PSA Birth Certificate <input class="me-3" type="checkbox" name="requirement[]" value="PSA Birth Certificate">
-                        LCR Birth Certificate <input class="me-3" type="checkbox" name="requirement[]" value="LCR Birth Certificate">
-                        GMCC <input class="me-3" type="checkbox" name="requirement[]" value="GMCC">
-                        2x2 <input class="me-3" type="checkbox" name="requirement[]" value="2x2">
+                    <div class="col-md-12 mb-3">
+                         <input class="ms-3" type="checkbox" name="requirement[]" value="SF9"> SF9
+                         <input class="ms-3" type="checkbox" name="requirement[]" value="SF10"> SF10
+                         <input class="ms-3" type="checkbox" name="requirement[]" value="PSA Birth Certificate"> PSA Birth Certificate
+                        <input class="ms-3" type="checkbox" name="requirement[]" value="LCR Birth Certificate"> LCR Birth Certificate
+                        <input class="ms-3" type="checkbox" name="requirement[]" value="GMCC"> GMCC 
                     </div>
                     <div class="invalid-feedback" id="checkbox-feedback">
                         Please select at least one requirement.

@@ -186,7 +186,7 @@ include "../admin/includes/Forms/syform.php";
                     }
                 } else {
                     echo '<tr>
-                        <td colspan="10" class="text-center fs-3"><i class="bi bi-emoji-frown me-2"></i>No active year found.<br>
+                        <td colspan="10" class="text-center">No active year found.<br>
                         </td>
                       </tr>';
                 }

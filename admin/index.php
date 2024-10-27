@@ -14,11 +14,9 @@ if (isset($_SESSION['user_role'])) {  //check if the user role variables is exis
 }
 ?>
 
-
-
 <?php
-// alert modal 
 include "./includes/header.php";
+// alert modal 
 include "./includes/alert-modal.php";
 ?>
   

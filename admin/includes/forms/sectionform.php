@@ -65,7 +65,7 @@
 
                      <!-- SECTION SELECTION -->
                      <div class="col-md-12">
-                         <label class="form-label">Section</label>
+                         <label class="form-label">Section Name</label>
                          <input type="text" class="form-control" name="section" required>
 
                          <div class="invalid-feedback">

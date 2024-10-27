@@ -43,9 +43,9 @@ $mySQLFunction->disconnect();
             <div class="ms-3">
                 <h4>Welcome Back <?php echo ucwords(strtolower($_SESSION["user_role"])); ?> ! </h4>
                 <div class="container mt-3">
-                    <div class="row">
+                    <div class="row g-2">
                         <!-- Date and Time Display -->
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div id="date" class="date-display"></div>
                             <div id="time" class="date-display"></div>
                         </div>
@@ -68,7 +68,7 @@ $mySQLFunction->disconnect();
             </div>
         </div>
 
-        <div class="row g-3">
+        <div class="row g-1">
             <!-- Account Card -->
             <div class="col-md-3 col-sm-6 col-12">
                 <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width:100%;">

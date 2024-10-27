@@ -215,7 +215,7 @@ include "../admin/includes/Forms/enrollmentform.php";
             <?php
             if (!empty($activeSchoolYears && !empty($activeSem))) {
                 foreach ($activeSchoolYears as $index => $schoolYear) {
-                    echo '<div class="me-3 date-display">' . htmlspecialchars($activeSem[$index]) . '</div>';
+                    echo '<div class="me-3 date-display">' . htmlspecialchars($activeSem[$index]) . '<i class="bi bi-check-circle-fill text-success ms-2"></i> </div>';
                     echo '<span class="date-display">SY ' . htmlspecialchars($schoolYear) . '</span>';;
                 }
             } else {

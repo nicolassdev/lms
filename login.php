@@ -14,7 +14,6 @@
  <?php
     // Start the session
     session_start();
-
     // Check if the user role is set
     // if (isset($_SESSION['user_role'])) {
     //     // Check user role and redirect accordingly

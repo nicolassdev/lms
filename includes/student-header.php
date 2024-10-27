@@ -10,7 +10,7 @@
      <!-- Bootstrap Icons -->
      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
      <!-- Custom CSS -->
-     <link rel="website icon" type="webp" href="./assets/img/lms.webp">
+     <link rel="website icon" type="png" href="./assets/img/lms.png">
      <link rel="stylesheet" href="./assets/css/student.css?v=<?php echo time(); ?>" />
      <!-- <style>
         .footer {
@@ -38,12 +38,18 @@
                  <span class="navbar-toggler-icon"></span>
              </button>
              <!--  Title -->
-             <div class="navbar-brand d-none d-lg-inline">
+
+             <!-- Desktop LMS Title (Left-aligned on large screens) -->
+             <div class="navbar-brand text-black d-none d-lg-block">
                  Learning Management System
              </div>
-             <span class="text-black text-center fs-6 d-inline d-lg-none">
+
+             <!-- Mobile LMS Title (Centered on mobile screens, hidden on larger screens) -->
+             <div class="navbar-brand text-black mx-auto text-center d-block d-lg-none fs-6">
                  Learning Management System
-             </span>
+             </div>
+
+
 
              <!-- Profile Dropdown -->
              <div class="me-2">
@@ -63,7 +69,7 @@
                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                          <li class="ms-3"><i class="bi bi-patch-check-fill text-success"></i> <?php echo ucwords(strtolower($_SESSION["user_role"])) ?> </li>
                          <hr class="mx-3 my-1">
-                         <li><a class="dropdown-item" href="?page=student_prof">Profile</a></li>
+                         <li><a class="dropdown-item" href="#">Profile</a></li>
                          <li><a class="dropdown-item" href="#">Settings</a></li>
                          <li>
                              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
@@ -136,7 +142,7 @@
 
                              <div class="modal-body text-center mt-5">
                                  <div class="text-danger">
-                                     <i class="bi bi-question-circle fs-1 "></i><br><br>
+                                     <i class="bi bi-question-circle fs-1"></i><br><br>
                                  </div>
                                  <h5>Are you sure you want to logout?</h5>
                              </div>
