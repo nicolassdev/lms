@@ -1,3 +1,48 @@
+<?php
+
+// Database credentials
+$host = 'localhost';
+$dbname = 'lms_db';
+$username = 'root';
+$password = 'Nicolas051002';
+
+// Establish the database connection
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+    exit();
+}
+
+// Function to get the logged-in teacher's info
+function getLoggedInTeacher($conn, $teacherId)
+{
+    $sql = "SELECT teacher_fname, teacher_lname FROM teacher WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(['id' => $teacherId]);
+
+    return $stmt->fetch();
+}
+
+// Check if the teacher is logged in
+if (isset($_SESSION['id'])) {
+    // Get the latest teacher info from the database
+    $teacherInfo = getLoggedInTeacher($conn, $_SESSION['id']);
+
+    // Update session variables with the latest data
+    $_SESSION['teacher_fname'] = $teacherInfo['teacher_fname'];
+    $_SESSION['teacher_lname'] = $teacherInfo['teacher_lname'];
+} else {
+    echo "Teacher not logged in.";
+    exit();
+}
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,7 +95,7 @@
                     <ul class=" dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                         <li class="ms-3"><i class="bi bi-patch-check-fill text-success"></i> <?php echo ucwords(strtolower($_SESSION["user_role"])) ?> </li>
                         <hr class="mx-3 my-1">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="?page=teacher_prof">Profile</a></li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li>
                             <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
@@ -68,23 +113,28 @@
         <div class="container-fluid">
             <div class="row mt-5">
                 <nav id="sidebar" class="col-md-5 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
-                    <div class="text-white ms-3 mb-4 " style="font-weight: 00;">
-                        <?php
-                        echo ucwords(strtolower($_SESSION["teacher_fname"] . ' ' . $_SESSION["teacher_lname"]));
-                        ?>
-                        <i class="bi bi-person-circle ms-5"></i>
-                    </div>
-                    <div class="position-sticky mt-1">
+                    <div class="position-sticky">
+                        <div class="text-white ms-4 d-lg-none mt-2">
+                            <?php
+                            echo ucwords(strtolower($_SESSION['teacher_fname'] . ' ' . $_SESSION['teacher_lname']));
+                            echo '<i class="bi bi-person-circle ms-3 fs-2"></i>';
+                            ?>
+                        </div>
+                        <hr class=" d-lg-none">
+
+
                         <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=teacher_home">
-                                    <i class="bi bi-graph-up-arrow me-2"></i> Dashboard
+                            <li class="nav-item d-none d-md-block">
+                                <a class="nav-link active">
+                                    <i class="bi bi-graph-up-arrow me-2"></i> Blanktext
                                 </a>
                             </li>
-                            <hr class="mx-1 my-1 mb-3">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=teacher_prof">
-                                    <i class="bi bi-person-lines-fill me-2"></i> Profile
+
+
+
+                            <li class="nav-item mt-2">
+                                <a class="nav-link active" href="index.php?page=dashboard">
+                                    <i class="bi bi-graph-up-arrow me-2"></i> Dashboard
                                 </a>
                             </li>
                             <li class="nav-item">

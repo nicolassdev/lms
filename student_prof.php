@@ -10,11 +10,11 @@ $mySQLFunction->connection();
 $showSchool = $mySQLFunction->getSchool();
 
 
-$showUserID = $mySQLFunction->getUserInfo($_SESSION['id']);
+
 
 $studentInfo  = $mySQLFunction->getStudentInfo($_SESSION['stu_lrn']);
 
-$fullName = $studentInfo['stu_fname'] . ' ' . $studentInfo['stu_mname'] . ' ' . $studentInfo['stu_lname'];
+$studentFullName = $studentInfo['stu_fname'] . ' ' . $studentInfo['stu_mname'] . ' ' . $studentInfo['stu_lname'];
 
 
 
@@ -175,8 +175,8 @@ $mySQLFunction->disconnect();
                     </div>
 
                     <div class="profile-header text-center mb-3">
-                        <img src="admin/includes/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2">
-                        <h4><?php echo ucwords(strtolower($fullName)); ?>
+                        <img src="./assets/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2">
+                        <h4><?php echo ucwords(strtolower($studentFullName)); ?>
                             <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
                         </h4>
 
@@ -265,7 +265,7 @@ $mySQLFunction->disconnect();
                             </div>
                             <div class="col-md-6">
                                 <strong>Joined:</strong>
-                                <p><?php echo htmlspecialchars($_SESSION["user_added"]); ?></p>
+                                <p><?php echo htmlspecialchars($_SESSION["student_added"]); ?></p>
                             </div>
 
                         </div>

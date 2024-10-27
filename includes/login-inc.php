@@ -40,7 +40,7 @@ if (!isset($_POST["submit"])) {
             $formattedDate = $addedDate->format('F j, Y');
 
             // Store the formatted date in the session
-            $_SESSION["user_added"] = $formattedDate;
+            $_SESSION["student_added"] = $formattedDate;
 
 
             //redirect to url 
@@ -60,6 +60,14 @@ if (!isset($_POST["submit"])) {
 
             $_SESSION["user_role"] = $user["role"];
 
+
+            // Assuming $userInfo['date_added'] contains the date added
+            $addedDate = new DateTime($user['date_added']);
+            $formattedDate = $addedDate->format('F j, Y');
+
+            // Store the formatted date in the session
+            $_SESSION["teacher_added"] = $formattedDate;
+
             //redirect to url 
             header("location: ../loading.php?redirect=" . urlencode("./faculty/index.php"));
             exit();
@@ -76,6 +84,13 @@ if (!isset($_POST["submit"])) {
 
             $_SESSION["username"] = $user["username"];;  // username of admin
             $_SESSION["user_role"] = $user["role"];
+
+
+            $addedDate = new DateTime($user['date_added']);
+            $formattedDate = $addedDate->format('F j, Y');
+
+            // Store the formatted date in the session
+            $_SESSION["admin_added"] = $formattedDate;
 
             //redirect to url 
             header("location:../loading.php?redirect=" . urlencode("./admin/index.php"));

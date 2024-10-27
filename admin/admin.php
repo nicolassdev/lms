@@ -7,78 +7,15 @@ if (!isset($_SESSION['principal_id'])) {
 require_once "../includes/dbh-inc.php";
 $mySQLFunction->connection();
 $showSchool = $mySQLFunction->getSchool();
-$showUser = $mySQLFunction->getUserInfo($_SESSION['principal_id']);
-
 
 $showResult = $mySQLFunction->getAdminInfo();
+
 $fullName = $showResult['firstname'] . ' ' . $showResult['middlename'] . ' ' . $showResult['lastname'];
 
-$addedDate = new DateTime($showUser['date_added']);
-$formattedDate = $addedDate->format('F j, Y');
 $mySQLFunction->disconnect();
 include "../admin/includes/Forms/adminform.php";
 ?>
 
-<style>
-    body,
-    html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        overflow-x: hidden;
-        /* Remove horizontal scrollbar */
-    }
-
-
-    /* Custom styling for profile */
-    .profile-card {
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background: linear-gradient(135deg, #2980b9, #6dd5fa, #ffffff);
-        width: 100%;
-        /* Ensure full width */
-        max-width: 1200px;
-        /* Optional max width */
-        margin: 0 auto;
-        /* Center the container */
-    }
-
-    .profile-header,
-    .profile-details {
-        text-align: center;
-    }
-
-    .profile-img-circle {
-        border-radius: 50%;
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-        border: 3px solid #007bff;
-    }
-
-    .modal-content {
-        width: 100%;
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-
-    @media (max-width: 576px) {
-        .btn-sm {
-            padding: 0.25rem 0.5rem;
-            /* Smaller padding */
-            font-size: 0.875rem;
-            /* Smaller font size */
-        }
-    }
-
-
-    /* .profile-header h2,
-    .profile-header p {
-        font-size: 1.5rem;
-    } */
-</style>
 
 <!-- Modal to Update Admin Information -->
 <div class="modal fade" id="updateadmininfo" tabindex="-1" aria-hidden="true">
@@ -171,7 +108,7 @@ include "../admin/includes/Forms/adminform.php";
                     </div>
 
                     <div class="profile-header text-center mb-3">
-                        <img src="includes/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2">
+                        <img src="../assets/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2">
                         <h4>
                             <?php echo ucwords(strtolower($fullName)); ?>
                             <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
@@ -195,11 +132,11 @@ include "../admin/includes/Forms/adminform.php";
                         <div class="row mb-1">
                             <div class="col-md-6">
                                 <strong>Role:</strong>
-                                <p><?php echo ucwords(strtolower($showUser['role'])); ?></p>
+                                <p><?php echo ucwords(strtolower($_SESSION["user_role"])); ?></p>
                             </div>
                             <div class="col-md-6">
                                 <strong>Joined:</strong>
-                                <p><?php echo htmlspecialchars($formattedDate); ?></p>
+                                <p><?php echo htmlspecialchars($_SESSION["admin_added"]); ?></p>
                             </div>
                         </div>
 

@@ -196,21 +196,17 @@ class myDataBase
     }
 
 
-    // USERS ID AND INFO 
-    public function getUserInfo($user_id)
+    public function getTeacherInfo($student_id)
     {
-        $sql = "SELECT id, username, role, date_added FROM USERS WHERE id = ?";
+        $sql = "SELECT * FROM `TEACHER` WHERE teacher_id = ?";
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("i", $user_id);
+        $stmt->bind_param("i", $student_id);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();
-
-        if (!$result) {
-            throw new Exception("User not found");
-        }
-
         return $result;
     }
+
+
 
 
     //GET SEMESTER AND SY
