@@ -245,6 +245,37 @@ class myDataBase
         return $result;
     }
 
+    public function updateStudentInfo($data, $student_id)
+    {
+        $setClause = [];
+        foreach ($data as $column => $value) {
+            $escapedValue = mysqli_real_escape_string($this->con, $value);
+            $setClause[] = "`$column` = '$escapedValue'";
+        }
+
+        $setString = implode(", ", $setClause);
+
+        // Ensure the WHERE clause uses the correct student identifier
+        $sql = "UPDATE `student` SET $setString WHERE `stu_lrn` = ?";
+
+        $stmt = $this->con->prepare($sql);
+        if (!$stmt) {
+            throw new Exception("Query preparation failed: " . $this->con->error);
+        }
+
+        $stmt->bind_param("s", $student_id);  // Assuming stu_lrn is an integer
+        $stmt->execute();
+
+        if ($stmt->affected_rows === 0) {
+            throw new Exception("No records updated. Check if the student ID is valid.");
+        }
+
+        $stmt->close();
+        return true;
+    }
+
+
+
 
 
     //CHECK USER LOGIN 

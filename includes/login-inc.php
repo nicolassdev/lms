@@ -26,8 +26,6 @@ if (!isset($_POST["submit"])) {
             $user = $mySQLFunction->getCredential("username", $username);
             $studentCredential = $mySQLFunction->getStudentCredential("id", $user["id"]);
 
-
-
             $_SESSION["id"] = $studentCredential["id"];
             $_SESSION["stu_lrn"] = $studentCredential["stu_lrn"];
             $_SESSION["stu_fname"] = $studentCredential["stu_fname"];

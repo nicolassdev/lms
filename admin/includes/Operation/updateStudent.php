@@ -74,7 +74,7 @@ if (!isset($_SESSION["principal_id"])) {
         // Handle exceptions and errors
         error_log("Error updating teacher details: " . $e->getMessage());
         $_SESSION['teacherupdate_error'] = "An error occurred while updating the teacher's details.";
-        header("location:../../404.php");
+        header("location:../../error.php");
         exit();
     }
 }

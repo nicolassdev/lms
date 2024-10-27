@@ -15,6 +15,8 @@ if (isset($_SESSION['user_role'])) {
 
 <?php
 include "./includes/student-header.php";
+
+include "./includes/alert-notify.php";
 ?>
 
 <?php

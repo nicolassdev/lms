@@ -34,8 +34,8 @@
                                 <?php
                                 if (!empty($activeSchoolYears) && !empty($activeSem)) {
                                     foreach ($activeSchoolYears as $index => $schoolYear) {
-                                        echo 'Semester: ' . htmlspecialchars($activeSem[$index]) . '</br>';
-                                        echo 'School Year: ' . htmlspecialchars($schoolYear) . '';
+                                        echo 'Semester: ' . htmlspecialchars($activeSem[$index]) . '<i class="bi bi-check-circle-fill text-success ms-2"></i> </br>';
+                                        echo 'School Year: ' . htmlspecialchars($schoolYear) . '<i class="bi bi-check-circle-fill text-success ms-2"></i> ';
                                     }
                                 } else {
                                     echo '<div class="alert alert-warning">No school year and semester found.</div>';
