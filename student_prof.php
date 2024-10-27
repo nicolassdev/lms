@@ -28,70 +28,9 @@ $mySQLFunction->disconnect();
 // include "../lms/includes/Forms/studentinfoform.php";
 ?>
 
-<style>
-    body,
-    html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        overflow-x: hidden;
-        /* Remove horizontal scrollbar */
-    }
 
-
-    /* Custom styling for profile */
-    .profile-card {
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background: linear-gradient(135deg, #2980b9, #6dd5fa, #ffffff);
-        width: 100%;
-        /* Ensure full width */
-        max-width: 1200px;
-        /* Optional max width */
-        margin: 0 auto;
-        /* Center the container */
-    }
-
-    .profile-header,
-    .profile-details {
-        text-align: center;
-    }
-
-    .profile-img-circle {
-        border-radius: 50%;
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-        border: 3px solid #007bff;
-    }
-
-    .modal-content {
-        width: 100%;
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-
-    @media (max-width: 576px) {
-        .btn-sm {
-            padding: 0.25rem 0.5rem;
-            /* Smaller padding */
-            font-size: 0.875rem;
-            /* Smaller font size */
-        }
-    }
-
-
-    /* .profile-header h2,
-    .profile-header p {
-        font-size: 1.5rem;
-    } */
-</style>
 
 <!-- Modal to Update STUDENT Information -->
-
-
 <div class="modal fade" id="updatestudentinfo" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content bg-light shadow">
@@ -104,22 +43,22 @@ $mySQLFunction->disconnect();
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label class="form-label">First Name</label>
-                            <input type="text" name="firstname" value="<?php echo htmlspecialchars($studentInfo['stu_fname']); ?>" class="form-control" required>
+                            <input type="text" name="firstname" value="<?php echo htmlspecialchars(ucwords(strtolower($studentInfo['stu_fname']))); ?>" class="form-control" required>
                             <div class="invalid-feedback">Please enter the first name.</div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Middle Name</label>
-                            <input type="text" name="middlename" value="<?php echo htmlspecialchars($studentInfo['stu_mname']); ?>" class="form-control">
+                            <input type="text" name="middlename" value="<?php echo htmlspecialchars(ucwords(strtolower($studentInfo['stu_mname']))); ?>" class="form-control">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Last Name</label>
-                            <input type="text" name="lastname" value="<?php echo htmlspecialchars($studentInfo['stu_lname']); ?>" class="form-control" required>
+                            <input type="text" name="lastname" value="<?php echo htmlspecialchars(ucwords(strtolower($studentInfo['stu_lname']))); ?>" class="form-control" required>
                             <div class="invalid-feedback">Please enter the last name.</div>
                         </div>
 
                         <div class="mb-3">
                             <label for="address" class="form-label">Address</label>
-                            <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($studentInfo['stu_address']); ?>" class="form-control" required>
+                            <input type="text" id="address" name="address" value="<?php echo htmlspecialchars(ucwords(strtolower($studentInfo['stu_address']))); ?>" class="form-control" required>
                             <div class="invalid-feedback">Please enter your address.</div>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -144,7 +83,7 @@ $mySQLFunction->disconnect();
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($studentInfo['stu_email']); ?>" class="form-control" required>
+                            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars(strtolower($studentInfo['stu_email'])); ?>" class="form-control" required>
                             <div class="invalid-feedback">Please enter a valid email address.</div>
                         </div>
 
@@ -157,7 +96,7 @@ $mySQLFunction->disconnect();
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Place of Birth</label>
-                            <input type="text" name="pob" value="<?php echo htmlspecialchars($studentInfo['stu_pob']); ?>" class="form-control" required>
+                            <input type="text" name="pob" value="<?php echo htmlspecialchars(ucwords(strtolower($studentInfo['stu_pob']))); ?>" class="form-control" required>
                             <div class="invalid-feedback">Please enter the first name.</div>
                         </div>
 
@@ -183,13 +122,13 @@ $mySQLFunction->disconnect();
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Father's Name</label>
-                            <input type="text" name="fathername" value="<?php echo htmlspecialchars($studentInfo['father_name']); ?>" class="form-control" required>
+                            <input type="text" name="fathername" value="<?php echo htmlspecialchars(ucwords(strtolower($studentInfo['father_name']))); ?>" class="form-control" required>
                             <div class="invalid-feedback">Please enter the first name.</div>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Mother's Name</label>
-                            <input type="text" name="mothername" value="<?php echo htmlspecialchars($studentInfo['mother_name']); ?>" class="form-control" required>
+                            <input type="text" name="mothername" value="<?php echo htmlspecialchars(ucwords(strtolower($studentInfo['mother_name']))); ?>" class="form-control" required>
                             <div class="invalid-feedback">Please enter the first name.</div>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -233,11 +172,6 @@ $mySQLFunction->disconnect();
                             title="Edit" data-bs-toggle="modal" data-bs-target="#updatestudentinfo">
                             <i class="bi bi-pencil-square"></i>
                         </button>
-                        <!-- this is adding another admin button -->
-                        <!-- <button type="button" class="btn btn-success btn-sm me-2 mb-2"
-                            title="Add Admin" data-bs-toggle="modal" data-bs-target="#admin">
-                            <i class="bi bi-person-add"></i>
-                        </button> -->
                     </div>
 
                     <div class="profile-header text-center mb-3">
@@ -245,8 +179,14 @@ $mySQLFunction->disconnect();
                         <h4><?php echo ucwords(strtolower($fullName)); ?>
                             <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
                         </h4>
-                        <p class="text-muted">LRN: <?php echo  $studentInfo['stu_lrn']; ?></p>
-                        <p class="text-muted"></p>
+
+                        <span class="badge bg-success text-white">LRN</span>
+                        <small class="text-muted fw-semibold">
+                            <?php echo htmlspecialchars($studentInfo['stu_lrn'], ENT_QUOTES, 'UTF-8'); ?>
+                        </small>
+
+
+
 
                     </div>
 
@@ -254,7 +194,7 @@ $mySQLFunction->disconnect();
                         <div class="row mb-1">
                             <div class="col-md-6">
                                 <strong>Email:</strong>
-                                <p><?php echo $studentInfo['stu_email']; ?></p>
+                                <p><?php echo strtolower($studentInfo['stu_email']); ?></p>
                             </div>
                             <div class="col-md-6">
                                 <strong>Phone:</strong>
@@ -269,7 +209,7 @@ $mySQLFunction->disconnect();
                             </div>
                             <div class="col-md-6">
                                 <strong>Gender</strong>
-                                <p><?php echo $studentInfo['stu_gender']; ?></p>
+                                <p><?php echo ucwords(strtolower($studentInfo['stu_gender'])); ?></p>
                             </div>
                         </div>
 

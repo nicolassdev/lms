@@ -131,3 +131,47 @@ body {
 .time-display {
   font-weight: bolder;
 }
+
+/* PROFILE MODULE CSS  */
+/* Custom styling for profile */
+.profile-card {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #2980b9, #6dd5fa, #ffffff);
+  width: 100%;
+  /* Ensure full width */
+  max-width: 1200px;
+  /* Optional max width */
+  margin: 0 auto;
+  /* Center the container */
+}
+
+.profile-header,
+.profile-details {
+  text-align: center;
+}
+
+.profile-img-circle {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 3px solid #007bff;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media (max-width: 576px) {
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    /* Smaller padding */
+    font-size: 0.875rem;
+    /* Smaller font size */
+  }
+}
