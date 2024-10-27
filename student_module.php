@@ -1,10 +1,29 @@
-    <!-- Main Module -->
+    <!-- LOGIN Content -->
+<?php
+
+if (isset($_SESSION['user_role'])) {
+
+    $user_role = strtolower($_SESSION['user_role']);
+    if ($user_role !== 'student') {
+        header("location:login.php?error=accessdenied"); // redirect access denied if user role is not admin
+        exit();
+    }
+} else {
+    header("location:login.php"); // Redirect to login page if user role is not exist 
+    exit();
+}
+?>
+ 
+ 
+
+ 
+ <!-- Main Module -->
     <div class="my-5">
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <div class="row">
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="row g-1">
                 <div class="container-fluid">
-                    <h2>Module</h2>
-                    <p class="text-muted">Here, you can take your subject module and view the results.</p>
+                    <h3>Module</h3>
+                    <p class="text-muted ">Here, you can take your subject module and view the results.</p>
 
                     <div class="row mt-4">
 

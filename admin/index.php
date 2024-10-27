@@ -15,11 +15,9 @@ session_start();
 }
 ?>
 
-
-
 <?php
-// alert modal 
 include "./includes/header.php";
+// alert modal 
 include "./includes/alert-modal.php";
 ?>
   

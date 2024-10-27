@@ -38,9 +38,18 @@
                  <span class="navbar-toggler-icon"></span>
              </button>
              <!--  Title -->
-             <div class="navbar-brand">
-                 Learning Management System
-             </div>
+       
+        <!-- Desktop LMS Title (Left-aligned on large screens) -->
+        <div class="navbar-brand text-black d-none d-lg-block">
+            Learning Management System
+        </div>
+
+        <!-- Mobile LMS Title (Centered on mobile screens, hidden on larger screens) -->
+        <div class="navbar-brand text-black mx-auto text-center d-block d-lg-none fs-6">
+            Learning Management System
+        </div>
+
+
 
              <!-- Profile Dropdown -->
              <div class="me-2">
@@ -133,7 +142,7 @@
 
                              <div class="modal-body text-center mt-5">
                                  <div class="text-danger">
-                                     <i class="bi bi-question-circle fs-1 "></i><br><br>
+                                     <i class="bi bi-question-circle fs-1"></i><br><br>
                                  </div>
                                  <h5>Are you sure you want to logout?</h5>
                              </div>

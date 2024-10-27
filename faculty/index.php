@@ -6,13 +6,33 @@ session_start();
     if( $user_role !== 'teacher'){
         header("location:../login.php?error=accessdenied");
         exit();
-    }else {
-       include("./includes/teacher-header.php");
     }
-
 } else{
     header("location:../login.php");
     exit();
 }  
 ?>
  
+ <?php
+    include("./includes/teacher-header.php");
+?>
+
+    
+<?php
+    // Determine the page from the URL parameter, default to 'home' if not set
+    $page = isset($_GET["page"]) ? $_GET["page"] : "teacher_prof";
+
+    // Use switch case to load the appropriate page
+    switch ($page) {
+        case "teacher_prof":
+            require_once 'teacher_prof.php';
+            break;
+
+     
+
+        default:
+            require_once 'teacher_prof.php'; // Default page is 'home'
+            break;
+    }
+    ?>
+  

@@ -43,20 +43,20 @@ $mySQLFunction->disconnect();
             <div class="ms-3">
                 <h4>Welcome Back <?php echo ucwords(strtolower($_SESSION["user_role"])); ?> ! </h4>
                 <div class="container mt-3">
-                    <div class="row">
+                    <div class="row g-2">
                         <!-- Date and Time Display -->
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div id="date" class="date-display"></div>
                             <div id="time" class="date-display"></div>
                         </div>
 
                         <!-- School Year and Semester Display -->
-                        <div class="col-md-6 school-semester-info">
+                        <div class="col-md-12 date-display">
                             <?php
                             if (!empty($activeSchoolYears) && !empty($activeSem)) {
                                 foreach ($activeSchoolYears as $index => $schoolYear) {
-                                    echo '<h6>School Year: ' . htmlspecialchars($schoolYear) . '</h6>';
-                                    echo '<h6>Semester: ' . htmlspecialchars($activeSem[$index]) . '</h6>';
+                                    echo '<h6>School Year: ' . htmlspecialchars($schoolYear) . '<i class="bi bi-check-circle-fill text-success ms-2"></i> </h6>';
+                                    echo '<h6>Semester: ' . htmlspecialchars($activeSem[$index]) . '<i class="bi bi-check-circle-fill text-success ms-2"></i> </h6>';
                                 }
                             } else {
                                 echo '<div class="alert alert-warning">No school year and semester found.</div>';
@@ -68,7 +68,7 @@ $mySQLFunction->disconnect();
             </div>
         </div>
 
-        <div class="row g-3">
+        <div class="row g-1">
             <!-- Account Card -->
             <div class="col-md-3 col-sm-6 col-12">
                 <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width:100%;">

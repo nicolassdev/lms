@@ -14,7 +14,6 @@
     <?php
     // Start the session
     session_start();
-
     // Check if the user role is set
     if (isset($_SESSION['user_role'])) {
         // Check user role and redirect accordingly
@@ -22,15 +21,13 @@
         
         if ($user_role === "admin") {
             header('Location: /lms/admin/index.php'); // Change to the actual homepage path
-            exit();
-        } elseif ($user_role === "student") {
-            // If logged in, redirect to the homepage
-            header('Location: /lms/index.php'); // Change to the actual homepage path
+            exit();// Exit after redirection to prevent further code execution
+        } elseif ($user_role === "student") {// Change to the actual homepage path
+            header('Location: /lms/index.php'); 
             exit(); // Exit after redirection to prevent further code execution
-        }elseif($user_role === "teacher"){
-            
-            header('Location: /lms/index.php');
-            exit();
+        }elseif($user_role === "teacher"){  // Change to the actual homepage path
+            header('Location: /lms/faculty/index.php');
+            exit();// Exit after redirection to prevent further code execution
         }
     }
     ?>

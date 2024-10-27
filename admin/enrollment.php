@@ -28,7 +28,7 @@ include "../admin/includes/Forms/enrollmentform.php";
                 <div class="data-table">
 
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h4 class="text-black">Enrolled Students</h4>
+                        <h4 class="text-black">List of Enrolled Students</h4>
                         <button type="button" class="btn btn-primary btn-animate" data-bs-toggle="modal" data-bs-target="#enroll" data-bs-whatever="@fat">
                             <i class="bi bi-person-plus-fill me-1"></i>Enroll Student
                         </button>
@@ -215,7 +215,7 @@ include "../admin/includes/Forms/enrollmentform.php";
             <?php
             if (!empty($activeSchoolYears && !empty($activeSem))) {
                 foreach ($activeSchoolYears as $index => $schoolYear) {
-                    echo '<div class="me-3 date-display">' . htmlspecialchars($activeSem[$index]) . '</div>';
+                    echo '<div class="me-3 date-display">' . htmlspecialchars($activeSem[$index]) . '<i class="bi bi-check-circle-fill text-success ms-2"></i> </div>';
                     echo '<span class="date-display">SY ' . htmlspecialchars($schoolYear) . '</span>';;
                 }
             } else {

@@ -44,9 +44,14 @@
                  <span class="navbar-toggler-icon"></span>
              </button>
              <div class="image">
+                        <!-- Mobile LMS Title (Centered on mobile screens, hidden on larger screens) -->
+                 <div class="navbar-brand me-1 text-white mx-auto text-center d-block d-lg-none fs-6">
+                         Learning Management System
+                </div>
                  <a href="?page=home"><img src="../assets/img/lms.png" alt="LMS Logo"></a>
                  <span class=" d-none d-lg-inline text-white"><span class="color">L</span>earning <span class="color">M</span>anagement <span class="color">S</span>ystem</span>
              </div>
+             
 
              <!-- Profile Dropdown (Visible on all screen sizes) -->
              <div class="dropdown d-none d-lg-block ms-auto text-success">
@@ -86,7 +91,7 @@
                  <nav id="sidebar" class="col-md-3 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
                      <div class="position-sticky">
                          <h3 class="mb-4 color ms-3">Dashboard</h3>
-                         <ul class="nav flex-column">
+                         <ul class="nav flex-column g-1">
                              <li class="nav-item">
                                  <a class="nav-link active" href="index.php?page=home ">
                                      <i class="bi bi-house me-1"></i>Home
@@ -154,7 +159,7 @@
                                  <div class="text-danger mb-4">
                                      <i class="bi bi-box-arrow-right fs-1"></i>
                                  </div>
-                                 <h5 class="fw-bold mb-5">Are you sure you want to logout?</h5>
+                                 <h5 class="mb-5">Are you sure you want to logout?</h5>
 
                                  <!-- Buttons -->
                                  <div class="d-flex justify-content-center mt-5 mb-3">
