@@ -738,7 +738,7 @@ class myDataBase
         $sql = "SELECT * FROM `users` 
                     WHERE `username` LIKE '$value%' 
                     OR `role` LIKE '$value%' 
-                    OR `added_date` LIKE '$value%'
+                    OR `date_added` LIKE '$value%'
                     ORDER BY `username`, `role`, `date_added`";
 
         // Execute the query
