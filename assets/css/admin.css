@@ -1,0 +1,314 @@
+/* General Reset */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f1f4f9;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  padding: 0.5rem 1rem; /* Adjust the padding to make the navbar shorter */
+}
+
+.color {
+  color: #fabc3f;
+}
+
+.nav-shadow {
+  box-shadow: 0 14px 8px rgba(49, 49, 49, 0.2);
+}
+
+.navbar .image {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  font-size: 20px;
+}
+.navbar .image img {
+  height: 40px;
+  /* Adjust the logo height */
+}
+.navbar .dropdown-menu {
+  font-size: 0.875rem;
+  /* Adjust font size if needed */
+}
+
+.sidebar {
+  color: #fff;
+  padding: 20px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid #444;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: 5px;
+}
+
+.sidebar a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  color: #ccc;
+}
+
+.sidebar .active:hover {
+  background-color: #444;
+  padding: 10px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.sidebar .nav-link {
+  padding: 10px 30px;
+  font-size: 1rem;
+  color: #fff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 5px;
+}
+
+.form-label {
+  font-weight: 600;
+}
+
+.form-control {
+  border-radius: 0.375rem;
+}
+
+.input-group-text {
+  background-color: #1976d2;
+  color: white;
+}
+
+.btn-primary {
+  background-color: #1976d2;
+  border-color: #1976d2;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #155a99;
+  border-color: #155a99;
+}
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.small-form .form-control,
+.small-form .form-select,
+.small-form .input-group-text {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.small-form .form-label {
+  font-size: 0.875rem;
+}
+.b-grey {
+  background-color: #f0eeee;
+}
+
+.title {
+  color: #ccc;
+  font-weight: 800;
+  align-items: center;
+}
+
+.date-display {
+  color: #6c757d;
+}
+
+.time-display {
+  font-weight: bolder;
+}
+
+.container-form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  z-index: 1500;
+
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.523);
+}
+.data-table {
+  background: #fff;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 1px 3px 15px #aaa;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Custom scrollbar for table */
+.table-responsive::-webkit-scrollbar {
+  width: 8px; /* Scrollbar width */
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Scrollbar track color */
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background-color: #888; /* Scrollbar thumb color */
+  border-radius: 10px; /* Rounded scrollbar thumb */
+  border: 1px solid transparent; /* Add padding to make it appear shorter */
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker thumb on hover */
+}
+
+/* Set a fixed height for the scrollbar container */
+.table-responsive {
+  max-height: 410px; /* You can adjust the height based on your requirement */
+  overflow-y: auto; /* Enable vertical scroll */
+}
+
+@media print {
+  .lms-heading {
+    display: none;
+  }
+}
+
+.data-table {
+  font-size: 0.9em;
+  /* Reduce font size */
+}
+
+.table th,
+.table td {
+  padding: 0.1rem;
+  /* Adjust padding */
+}
+
+/* ======================================================== PROFILE =================================================================== */
+
+/* Custom styling for profile */
+.profile-card {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #2980b9, #6dd5fa, #ffffff);
+  width: 100%;
+  /* Ensure full width */
+  max-width: 1200px;
+  /* Optional max width */
+  margin: 0 auto;
+  /* Center the container */
+}
+
+.profile-header,
+.profile-details {
+  text-align: center;
+}
+
+.profile-img-circle {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 3px solid #007bff;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media (max-width: 576px) {
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    /* Smaller padding */
+    font-size: 0.875rem;
+    /* Smaller font size */
+  }
+}
+
+/* =================================================== SETTINGS ANIMATION =========================================== */
+/* Animation for input fields */
+
+/* Input fade-in animation */
+.fade-in-input {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover scale effect for buttons */
+.btn-animate:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Button shadow and smooth animation */
+.btn-animate {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-animate:active {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom form shadow and hover effect */
+.custom-shadow {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.form-hover:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
+
+/* =================================== FOOTER ====================================== */
+.footer {
+  text-align: center;
+  color: #6c757d;
+  padding: 20px 0;
+  background-color: #f8f9fa;
+  font-size: 15px;
+  border-top: 1px solid #e9ecef;
+}
+
+.footer p {
+  margin: 0;
+}

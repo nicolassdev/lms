@@ -187,7 +187,7 @@ class myDataBase
 
     public function getStudentInfo($student_id)
     {
-        $sql = "SELECT * FROM `STUDENT` WHERE stu_lrn = ?";
+        $sql = "SELECT * FROM `student` WHERE stu_lrn = ?";
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("i", $student_id);
         $stmt->execute();
@@ -196,11 +196,11 @@ class myDataBase
     }
 
 
-    public function getTeacherInfo($student_id)
+    public function getTeacherInfo($teacher_id)
     {
-        $sql = "SELECT * FROM `TEACHER` WHERE teacher_id = ?";
+        $sql = "SELECT * FROM `teacher` WHERE teacher_id = ?";
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("i", $student_id);
+        $stmt->bind_param("i", $teacher_id);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();
         return $result;

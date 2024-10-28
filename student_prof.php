@@ -175,7 +175,16 @@ $mySQLFunction->disconnect();
                     </div>
 
                     <div class="profile-header text-center mb-3">
-                        <img src="./assets/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2">
+                        <!-- <img src="./assets/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2"> -->
+                        <?php if ($studentInfo['stu_gender'] === "MALE") { ?>
+                            <img src="./assets/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2">
+                        <?php } else { ?>
+                            <img src="./assets/Upload/female.jpg" alt="Profile Image" class="profile-img-circle mb-2">
+                        <?php } ?>
+
+
+
+
                         <h4><?php echo ucwords(strtolower($studentFullName)); ?>
                             <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
                         </h4>

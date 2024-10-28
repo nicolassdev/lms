@@ -42,16 +42,17 @@ foreach ($users as $user) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LMS</title>
+    <title>Learning Management System</title>
     <!-- <link href="../css/bootstrap-icons.min.css" rel="stylesheet"> -->
     <!-- Bootstrap Icons -->
     <!-- <link href="../css/bootstrap-icons.css" rel="stylesheet"> -->
     <link rel="icon" type="webp" href="../assets/img/lms.webp">
     <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/admin.css?v=<?php echo time(); ?>" />
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
-    <link rel="stylesheet" href="./css/admin.css?v=<?php echo time(); ?>" />
-    <!-- <link rel="stylesheet" href="../../assets/css/datatables.min.css"> -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
 

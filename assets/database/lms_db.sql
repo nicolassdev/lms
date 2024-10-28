@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2024 at 10:31 PM
+-- Generation Time: Oct 28, 2024 at 07:06 PM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.12
 
@@ -41,6 +41,14 @@ CREATE TABLE `enroll` (
   `requirements_submit` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `enroll`
+--
+
+INSERT INTO `enroll` (`stu_lrn`, `section_code`, `semester`, `school_year`, `date_enroll`, `enroll_status`, `current_school`, `school_id`, `school_address`, `school_type`, `requirements_submit`) VALUES
+('114422222222', 'SECTION-3577', '1st Semester', '2024-2025', '2024-10-23', 'ENROLLED', 'CABANGAN HIGH SCHOOL', NULL, 'BURAGUIS', 'PUBLIC', 'SF9, SF10, PSA Birth Certificate'),
+('114482392392', 'SECTION-3577', '1st Semester', '2024-2025', '2024-10-23', 'ENROLLED', 'CABANGAN HIGH SCHOOL', 323232, 'CABANGAN', 'PUBLIC', 'SF9');
+
 -- --------------------------------------------------------
 
 --
@@ -64,7 +72,7 @@ CREATE TABLE `principal` (
 --
 
 INSERT INTO `principal` (`principal_id`, `firstname`, `middlename`, `lastname`, `contact`, `gender`, `email`, `address`, `id`) VALUES
-('PRIN-2451', 'Anthony', 'Dado', 'Daen', '9247282819', 'MALE', 'anthony@gmail.com', 'buraguis', 'USER-2551');
+('PRIN-2346', 'ANTHONY', 'DADO', 'DAEN', '9329392932', '', 'anthony@gmail.com', 'BRGY.58 BURAGUIS', 'USER-1436');
 
 -- --------------------------------------------------------
 
@@ -83,7 +91,7 @@ CREATE TABLE `school` (
 --
 
 INSERT INTO `school` (`ID`, `SCHOOL_NAME`, `SCHOOL_ADDRESS`) VALUES
-(1, 'COMPUTER SYSTEM INSTITUTE, INC.', 'F. IMPERIAL ST., BRGY. 36 - CAPANTAWAN, LEGAZPI CITY');
+(1, 'COMPUTER SYSTEMS INSTITUTE, INC.', 'F. IMPERIAL ST., BRGY. 36 - CAPANTAWAN, LEGAZPI CITY');
 
 -- --------------------------------------------------------
 
@@ -105,7 +113,7 @@ CREATE TABLE `section` (
 --
 
 INSERT INTO `section` (`section_code`, `strand_code`, `grade_lvl`, `section_name`, `teacher_id`, `date_created`) VALUES
-('SECTION-3577', 'STRAND-5688', 'GRADE-12', 'ST.PADRE PIO', 'TEACHER-5651', '2024-10-23');
+('SECTION-3577', 'STRAND-5688', 'GRADE-12', 'ST.PADRE PIO', NULL, '2024-10-23');
 
 -- --------------------------------------------------------
 
@@ -173,6 +181,16 @@ CREATE TABLE `student` (
   `id` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'User ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`stu_lrn`, `stu_fname`, `stu_mname`, `stu_lname`, `stu_address`, `stu_contact`, `stu_gender`, `stu_email`, `stu_dob`, `stu_pob`, `father_name`, `mother_name`, `parent_contact`, `id`) VALUES
+('114422222222', 'JINKY', 'BALBE', 'JAQUIE', 'BURAUGIS', '9239293929', 'FEMALE', 'JINKY25@GMAIL.COM', '2024-10-24', 'LEGAZPI', 'MALIKONS JAQUIE', 'JACKKIEEE JAQUIE', '9392392932', 'USER-2931'),
+('114482392392', 'CALOY', 'HALBE', 'SMITH', 'LEGAZPI CITY', '9392392939', 'MALE', 'JAMES@GMAIL.COM', '2024-12-02', 'BURAGUIS', 'JUAN BALDO SMITH', 'GLINDA SMITH', '9392932939', 'USER-9991'),
+('114497326715', 'GEORGE', 'JAKIB', 'HALBES', 'BITANO LEGAZPI CITY', '9239239293', 'MALE', 'GEORGEHALBES@GMAIL.COM', '2001-10-05', 'BRTTH LEGAZPI', 'JONNY HALBES', 'KRISTINE HALBES', '9329392932', 'USER-1322'),
+('114498343414', 'DWAYNE', 'HILBE', 'TUWEZA', 'BURAGUIS LEGAZPI CITY', '9123421321', 'MALE', 'DWAYNETUWEZA@GMAIL.COM', '2024-10-16', 'BURAGUIS LEGAZPI CITY', 'JOHN BALDES TUIZA', 'CRISTINE BALDES TUIZA', '9123123123', 'USER-3431');
+
 -- --------------------------------------------------------
 
 --
@@ -188,13 +206,6 @@ CREATE TABLE `subject` (
   `strand_code` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `teacher_id` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `subject`
---
-
-INSERT INTO `subject` (`sub_code`, `sub_title`, `sub_type`, `sub_time`, `sub_semester`, `strand_code`, `teacher_id`) VALUES
-('SUB-6691', 'FILIPINO', 'SPECIALIZED SUBJECT', '--:-- --', '1st Semester', 'STRAND-3453', 'TEACHER-5651');
 
 -- --------------------------------------------------------
 
@@ -240,7 +251,7 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`teacher_id`, `teacher_fname`, `teacher_mname`, `teacher_lname`, `teacher_contact`, `teacher_gender`, `teacher_dob`, `status`, `teacher_address`, `date_added`, `id`) VALUES
-('TEACHER-5651', 'SELVA', 'MARQUEZ', 'ABAD', 9923293929, 'MALE', '2024-05-01', 'FULL TIME', 'ALBAY', '2024-10-24', 'USER-2996'),
+('TEACHER-1345', 'KEVIN', 'SWABE', 'DURANT', 9329329392, 'MALE', '2024-12-05', 'FULL TIME', 'BURAGUIS', '2024-10-29', 'USER-8661'),
 ('TEACHER-7938', 'MARY ANN', '', 'AJERO', 9392932939, 'FEMALE', '2024-10-24', 'FULL TIME', 'DARAGA', '2024-10-24', 'USER-6861');
 
 -- --------------------------------------------------------
@@ -263,9 +274,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_added`) VALUES
-(36, 'USER-2551', 'admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'ADMIN', '2024-10-24 04:24:38'),
-(35, 'USER-2996', 'silvana', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-10-24 03:25:31'),
-(34, 'USER-6861', 'ajero', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-10-24 03:17:11');
+(41, 'USER-1322', '114497326715', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-27 21:56:03'),
+(40, 'USER-1436', 'csi@legazpi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'ADMIN', '2024-10-26 22:30:33'),
+(37, 'USER-2931', '114422222222', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-24 04:41:21'),
+(39, 'USER-3431', '114498343414', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-26 21:36:50'),
+(34, 'USER-6861', 'ajero', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-10-24 03:17:11'),
+(43, 'USER-8661', 'daen', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-10-29 01:44:39'),
+(38, 'USER-9991', '114482392392', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-24 04:47:41');
 
 --
 -- Indexes for dumped tables
@@ -348,7 +363,7 @@ ALTER TABLE `school`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_num` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `user_num` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- Constraints for dumped tables

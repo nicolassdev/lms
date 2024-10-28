@@ -50,13 +50,15 @@ if (isset($_SESSION['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher</title>
+
+    <link rel="icon" type="webp" href="../assets/img/lms.webp">
+
+    <link rel="stylesheet" href="../assets/css/teacher.css?v=<?php echo time(); ?>" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="icon" type="webp" href="../assets/img/lms.webp">
-    <link rel="stylesheet" href="../assets/css/teacher.css?v=<?php echo time(); ?>" />
 </head>
 
 <body>
@@ -138,7 +140,7 @@ if (isset($_SESSION['id'])) {
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=teachaer_quiz">
+                                <a class="nav-link active" href="index.php?page=section_handled">
                                     <i class="bi bi-buildings"></i> Section Handled
                                 </a>
                             </li>
