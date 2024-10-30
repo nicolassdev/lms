@@ -78,45 +78,31 @@ class myDataBase
         return $rand;
     }
 
-    // RANDOM TEACHER ID
+    // GENERATE TEACHER ID 
+    // FORMAT : LAST 2 DIGIT OF THE YEAR / DOB/ RANDOM 4 DIGIT
 
-    // public function generateTeacherID()
-    // {
-    //     $num = "1325476980";
-    //     $rand = "";
-
-    //     for ($i = 0; $i < 4; $i++) {
-    //         if ($i == 0) {
-    //             $rand = "TEACHER-";
-    //         }
-    //         $rand = $rand . $num[rand(0, strlen($num) - 1)];
-    //     }
-    //     return $rand;
-    // }
-
-    public function generateTeacherID()
+    public function generateTeacherID($dob)
     {
         $year = date('y'); // Get the last 2 digits of the current year
-        $randomThreeNumbers = "";
-        $randomFourNumbers = "";
-
-
-        // Generate a 3-digit random number
-        for ($i = 0; $i < 3; $i++) {
-            $randomThreeNumbers .= rand(0, 9);
+        // Ensure the input is a valid date
+        if (!$dob) {
+            throw new Exception("Invalid date of birth provided.");
         }
-
+    
+        // Extract the year, month, and day from the teacher's date of birth
+        $dob = new DateTime($dob);
+        $dobyear = $dob->format('y'); // Last 2 digits of the birth year
+        $month = $dob->format('m'); // Month in MM format
+        $day = $dob->format('d'); // Day in DD format
+    
         // Generate a 4-digit random number
-        for ($i = 0; $i < 4; $i++) {
-            $randomFourNumbers .= rand(0, 9);
-        }
-
-        // Construct the ID: <year>-<count>-<4-random-digits>
-        $teacherID = "{$year}-{$randomThreeNumbers}-{$randomFourNumbers}";
-
+        $randomFourNumbers = rand(1000, 9999); // Ensures a 4-digit number
+    
+        // Construct the ID: <last-digit-of-year>-<MMDD>-<4-random-digits>
+        $teacherID = "{$year}-{$day}{$dobyear}{$month}-{$randomFourNumbers}";
+    
         return $teacherID;
     }
-
 
 
 
@@ -224,7 +210,7 @@ class myDataBase
     {
         $sql = "SELECT * FROM `teacher` WHERE teacher_id = ?";
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("i", $teacher_id);
+        $stmt->bind_param("s", $teacher_id);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();
         return $result;

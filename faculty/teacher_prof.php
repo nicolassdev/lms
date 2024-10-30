@@ -189,12 +189,9 @@ $mySQLFunction->disconnect();
                         </h4>
 
                         <p class="text-muted"><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
-
                         <span class="badge bg-success text-white">ID:</span>
                         <small class="text-muted fw-semibold">
-
-                            <?php echo htmlspecialchars($teacherInfo['teacher_id'], ENT_QUOTES, 'UTF-8'); ?> |
-                            <?php echo  $_SESSION["id"]; ?>
+                            <?php echo htmlspecialchars($teacherInfo['teacher_id'], ENT_QUOTES, 'UTF-8'); ?>
                         </small>
 
 
