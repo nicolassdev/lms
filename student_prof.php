@@ -1,8 +1,17 @@
 <?php
 
-// PHP Logic
-if (!isset($_SESSION['stu_lrn'])) {
-    header("location:./login.php?error=accessdenied");
+if (!isset($_SESSION['username'])) {
+    header("location:login.php?error=accessdenied");
+    exit();
+} elseif (isset($_SESSION['user_role'])) {
+
+    $user_role = strtolower($_SESSION['user_role']);
+    if ($user_role !== 'student') {
+        header("location:login.php?error=accessdenied"); // redirect access denied if user role is not admin
+        exit();
+    }
+} else {
+    header("location:login.php"); // Redirect to login page if user role is not exist 
     exit();
 }
 require_once "./includes/dbh-inc.php";
@@ -176,6 +185,8 @@ $mySQLFunction->disconnect();
 
                     <div class="profile-header text-center mb-3">
                         <!-- <img src="./assets/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2"> -->
+
+                        <!-- SWITCHING IMAGE IF USER IS MALE OR FEMALE  -->
                         <?php if ($studentInfo['stu_gender'] === "MALE") { ?>
                             <img src="./assets/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2">
                         <?php } else { ?>

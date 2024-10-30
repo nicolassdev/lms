@@ -80,19 +80,43 @@ class myDataBase
 
     // RANDOM TEACHER ID
 
+    // public function generateTeacherID()
+    // {
+    //     $num = "1325476980";
+    //     $rand = "";
+
+    //     for ($i = 0; $i < 4; $i++) {
+    //         if ($i == 0) {
+    //             $rand = "TEACHER-";
+    //         }
+    //         $rand = $rand . $num[rand(0, strlen($num) - 1)];
+    //     }
+    //     return $rand;
+    // }
+
     public function generateTeacherID()
     {
-        $num = "1325476980";
-        $rand = "";
+        $year = date('y'); // Get the last 2 digits of the current year
+        $randomThreeNumbers = "";
+        $randomFourNumbers = "";
 
-        for ($i = 0; $i < 4; $i++) {
-            if ($i == 0) {
-                $rand = "TEACHER-";
-            }
-            $rand = $rand . $num[rand(0, strlen($num) - 1)];
+
+        // Generate a 3-digit random number
+        for ($i = 0; $i < 3; $i++) {
+            $randomThreeNumbers .= rand(0, 9);
         }
-        return $rand;
+
+        // Generate a 4-digit random number
+        for ($i = 0; $i < 4; $i++) {
+            $randomFourNumbers .= rand(0, 9);
+        }
+
+        // Construct the ID: <year>-<count>-<4-random-digits>
+        $teacherID = "{$year}-{$randomThreeNumbers}-{$randomFourNumbers}";
+
+        return $teacherID;
     }
+
 
 
 

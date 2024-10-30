@@ -25,7 +25,7 @@
             exit();
         } elseif ($user_role === "teacher") {
 
-            header('Location: /lms/index.php');
+            header('Location: /lms/faculty/index.php');
             exit();
         } elseif ($user_role === "student") {
             // If logged in, redirect to the homepage

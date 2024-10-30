@@ -16,8 +16,6 @@ if (isset($_SESSION['user_role'])) {
  <?php
     include("./includes/teacher-header.php");
     ?>
-
-    
 <?php
 // Determine the page from the URL parameter, default to 'home' if not set
 $page = isset($_GET["page"]) ? $_GET["page"] : "dashboard";
@@ -32,9 +30,6 @@ switch ($page) {
     case "section_handled":
         require_once 'section_handled.php';
         break;
-
-
-
 
     default:
         require_once 'dashboard.php'; // Default page is 'home'

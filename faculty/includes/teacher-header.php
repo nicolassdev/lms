@@ -19,17 +19,17 @@ try {
 // Function to get the logged-in teacher's info
 function getLoggedInTeacher($conn, $teacherId)
 {
-    $sql = "SELECT teacher_fname, teacher_lname FROM teacher WHERE id = :id";
+    $sql = "SELECT teacher_fname, teacher_lname FROM teacher WHERE teacher_id = :teacher_id";
     $stmt = $conn->prepare($sql);
-    $stmt->execute(['id' => $teacherId]);
+    $stmt->execute(['teacher_id' => $teacherId]);
 
     return $stmt->fetch();
 }
 
 // Check if the teacher is logged in
-if (isset($_SESSION['id'])) {
+if (isset($_SESSION['teacher_id'])) {
     // Get the latest teacher info from the database
-    $teacherInfo = getLoggedInTeacher($conn, $_SESSION['id']);
+    $teacherInfo = getLoggedInTeacher($conn, $_SESSION['teacher_id']);
 
     // Update session variables with the latest data
     $_SESSION['teacher_fname'] = $teacherInfo['teacher_fname'];
@@ -53,12 +53,33 @@ if (isset($_SESSION['id'])) {
 
     <link rel="icon" type="webp" href="../assets/img/lms.webp">
 
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/teacher.css?v=<?php echo time(); ?>" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Custom CSS -->
+
+
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+    <!-- DataTables Buttons CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+
+
+    <!-- Include Morris.js and jQuery -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <!-- Include Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 
 <body>
@@ -96,7 +117,9 @@ if (isset($_SESSION['id'])) {
                     </a>
                     <ul class=" dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                         <li class="ms-3"><i class="bi bi-patch-check-fill text-success"></i> <?php echo ucwords(strtolower($_SESSION["user_role"])) ?> </li>
+                        <li class="ms-3"><small><?php echo  $_SESSION["teacher_id"]; ?></small></li>
                         <hr class="mx-3 my-1">
+
                         <li><a class="dropdown-item" href="?page=teacher_prof">Profile</a></li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li>
@@ -126,9 +149,9 @@ if (isset($_SESSION['id'])) {
 
 
                         <ul class="nav flex-column">
-                            <li class="nav-item d-none d-md-block">
+                            <li class="nav-item d-none d-md-block mt-4">
                                 <a class="nav-link active">
-                                    <i class="bi bi-graph-up-arrow me-2"></i> Blanktext
+                                    <!-- <i class="bi bi-graph-up-arrow me-2"></i> Blanktext -->
                                 </a>
                             </li>
 

@@ -1,18 +1,35 @@
 <?php
 // PHP Logic
-if (!isset($_SESSION['teacher_id'])) {
+if (!isset($_SESSION['username'])) {
     header("location:../login.php?error=accessdenied");
     exit();
+} elseif (isset($_SESSION['user_role'])) {
+
+    $user_role = strtolower($_SESSION['user_role']);
+    if ($user_role !== 'teacher') {
+        header("location:../login.php?error=accessdenied"); // redirect access denied if user role is not admin
+        exit();
+    }
+} else {
+    header("location:../login.php"); // Redirect to login page if user role is not exist 
+    exit();
 }
+
+
 require_once "../includes/dbh-inc.php";
 $mySQLFunction->connection();
 $showSchool = $mySQLFunction->getSchool();
 
+// Debugging: Check if teacher_id is set in session
+if (!isset($_SESSION['teacher_id'])) {
+    echo "Teacher ID not set in session.";
+    exit();
+}
 
 $teacherInfo = $mySQLFunction->getTeacherInfo($_SESSION['teacher_id']);
 
 
-$teacherFullName = $teacherInfo['teacher_fname'] . ' ' . $teacherInfo['teacher_mname'] . ' ' . $teacherInfo['teacher_lname'];
+$teacherName = $teacherInfo['teacher_fname'] . ' ' . $teacherInfo['teacher_mname'] . ' ' . $teacherInfo['teacher_lname'];
 
 
 
@@ -20,8 +37,6 @@ $teacherFullName = $teacherInfo['teacher_fname'] . ' ' . $teacherInfo['teacher_m
 $birthDate = new DateTime($teacherInfo['teacher_dob']);
 
 $formattedbirthDate = $birthDate->format('F j, Y');
-
-
 
 
 $mySQLFunction->disconnect();
@@ -140,11 +155,6 @@ $mySQLFunction->disconnect();
 
 
 
-
-
-
-
-
 <!-- TABLE -->
 <main class="col-md-12 ms-sm-auto col-lg-10">
 
@@ -164,19 +174,17 @@ $mySQLFunction->disconnect();
                         </button>
                     </div>
 
-                    <div class="profile-header text-center mb-3">
-
+                    <div class="profile-header text-center">
+                        <!-- SWITCHING IMAGE IF USER IS MALE OR FEMALE  -->
                         <?php if ($teacherInfo['teacher_gender'] === "MALE") { ?>
                             <img src="../assets/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2">
                         <?php } else { ?>
                             <img src="../assets/Upload/female.jpg" alt="Profile Image" class="profile-img-circle mb-2">
                         <?php } ?>
 
+                        <h4>
+                            <?php echo ucwords(strtolower($teacherName)); ?>
 
-
-
-
-                        <h4><?php echo ucwords(strtolower($teacherFullName)); ?>
                             <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
                         </h4>
 
@@ -184,10 +192,10 @@ $mySQLFunction->disconnect();
 
                         <span class="badge bg-success text-white">ID:</span>
                         <small class="text-muted fw-semibold">
-                            <?php echo htmlspecialchars($teacherInfo['teacher_id'], ENT_QUOTES, 'UTF-8'); ?>
+
+                            <?php echo htmlspecialchars($teacherInfo['teacher_id'], ENT_QUOTES, 'UTF-8'); ?> |
+                            <?php echo  $_SESSION["id"]; ?>
                         </small>
-
-
 
 
                     </div>
@@ -264,6 +272,7 @@ $mySQLFunction->disconnect();
         </div>
     </div>
 </main>
+
 
 
 <script>

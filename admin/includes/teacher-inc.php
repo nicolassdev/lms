@@ -27,6 +27,7 @@ $date_added = date("Ymd");
 
 // Generate unique IDs
 $uid = trim($mySQLFunction->generateUserID());
+
 $teacherID = trim($mySQLFunction->generateTeacherID());
 
 $mySQLFunction->connection(); // Establish database connection

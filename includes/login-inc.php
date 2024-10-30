@@ -11,10 +11,10 @@ if (!isset($_POST["submit"])) {
 
     // Check if username and password match
     if ($mySQLFunction->checkLogin($username, $passwordHash)) {
-        session_start();
+
 
         // Get user credentials
-        $credential = $mySQLFunction->getCredential("USERNAME", $username);
+        $credential = $mySQLFunction->getCredential("username", $username);
         // $userID = $mySQLFunction->getCredential("id", $user_id);
         $userRole = $credential["role"];
 
