@@ -48,7 +48,7 @@ $mySQLFunction->disconnect();
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm()"></button>
             </div>
             <div class="modal-body">
-                <form action="./includes/Operation/updateProfile.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate id="editStudentInfo">
+                <form action="./includes/Operation/updateStudentProfile.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate id="editStudentInfo">
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label class="form-label">First Name</label>

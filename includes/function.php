@@ -169,15 +169,6 @@ class myDataBase
 
 
 
-
-    public function getUpdateTeacher()
-    {
-        $sql = "SELECT * FROM `TEACHER`";
-        $stored = ($this->con->query($sql))->fetch_assoc();
-        return $stored;
-    }
-
-
     //GET SCHOOL INFORMATIONM
     public function getSchool()
     {
@@ -195,11 +186,11 @@ class myDataBase
     }
     //GET STUDENT INFORMATION BY INDIVIDUAL
 
-    public function getStudentInfo($student_id)
+    public function getStudentInfo($studentID)
     {
         $sql = "SELECT * FROM `student` WHERE stu_lrn = ?";
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("i", $student_id);
+        $stmt->bind_param("i", $studentID);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();
         return $result;
@@ -251,7 +242,9 @@ class myDataBase
         return $result;
     }
 
-    public function updateStudentInfo($data, $student_id)
+    // UPDATE ACCOUNT STUDENT PROFILE 
+
+    public function updateStudentInfo($data, $studentID)
     {
         $setClause = [];
         foreach ($data as $column => $value) {
@@ -269,7 +262,7 @@ class myDataBase
             throw new Exception("Query preparation failed: " . $this->con->error);
         }
 
-        $stmt->bind_param("s", $student_id);  // Assuming stu_lrn is an integer
+        $stmt->bind_param("s", $studentID);  // Assuming stu_lrn is an integer
         $stmt->execute();
 
         if ($stmt->affected_rows === 0) {
@@ -280,9 +273,36 @@ class myDataBase
         return true;
     }
 
+  // UPDATE ACCOUNT TEACHER PROFILE 
+  public function updateTeacherInfo($data, $teacherID)
+  {
+      $setClause = [];
+      foreach ($data as $column => $value) {
+          $escapedValue = mysqli_real_escape_string($this->con, $value);
+          $setClause[] = "`$column` = '$escapedValue'";
+      }
 
+      $setString = implode(", ", $setClause);
 
+      // Ensure the WHERE clause uses the correct teacher identifier
+      $sql = "UPDATE `teacher` SET $setString WHERE `teacher_id` = ?";
 
+      $stmt = $this->con->prepare($sql);
+      if (!$stmt) {
+          throw new Exception("Query preparation failed: " . $this->con->error);
+      }
+
+      $stmt->bind_param("s", $teacherID);  // Assuming stu_lrn is an integer
+      $stmt->execute();
+
+      if ($stmt->affected_rows === 0) {
+          throw new Exception("No records updated. Check if the teacher ID is valid.");
+      }
+
+      $stmt->close();
+      return true;
+  }
+ 
 
     //CHECK USER LOGIN 
     function checkLogin($username, $password)

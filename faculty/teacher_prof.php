@@ -52,7 +52,7 @@ $mySQLFunction->disconnect();
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm()"></button>
             </div>
             <div class="modal-body">
-                <form action="./includes/Operation/updateTeacher.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate id="editTeacherInfo">
+                <form action="./includes/Operation/updateTeacherProfile.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate id="editTeacherInfo">
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label class="form-label">First Name</label>
@@ -78,7 +78,7 @@ $mySQLFunction->disconnect();
                             <label class="form-label fw-bold">Contact</label>
                             <div class="input-group has-validation">
                                 <span class="input-group-text bg-primary text-white" id="inputGroupPrepend">+63</span>
-                                <input type="text" class="form-control" name="scontact" value="<?php echo htmlspecialchars($teacherInfo['teacher_contact']); ?>" aria-describedby="inputGroupPrepend" maxlength="10" required>
+                                <input type="text" class="form-control" name="contact" value="<?php echo htmlspecialchars($teacherInfo['teacher_contact']); ?>" aria-describedby="inputGroupPrepend" maxlength="10" required>
                                 <div class="invalid-feedback">Please enter a valid 10-digit number starting with 9.</div>
                             </div>
                         </div>
@@ -103,8 +103,8 @@ $mySQLFunction->disconnect();
 
 
                         <div class="col-md-6 mb-3">
-                            <label for="employmentStatus" class="form-label">Employment Status</label>
-                            <select name="employmentStatus" id="employmentStatus" class="form-select" required>
+                            <label for="employementstatus" class="form-label">Employment Status</label>
+                            <select name="employementstatus" id="employementstatus" class="form-select" required>
                                 <option value="" disabled selected>Select Employment Status</option>
                                 <option value="full time"
                                     <?php echo (strtolower($teacherInfo['status']) === 'full time') ? 'selected' : ''; ?>>
@@ -127,20 +127,7 @@ $mySQLFunction->disconnect();
                             <div class="invalid-feedback">Please select an employment status.</div>
                         </div>
 
-
-
-                        <!-- 
-                        <div class="mb-3">
-                            <label for="profileImage" class="form-label">Profile Image</label>
-                            <input type="file" class="form-control" id="profileImage" name="image" accept="image/*" onchange="previewImage(event)" required>
-                            <div class="invalid-feedback">Please upload an image.</div>
-                            
-                        <div class="mb-3 text-center">
-                            <img id="imagePreview" class="profile-img" src="#" alt="Image Preview" style="display:none;">
-                        </div>
-
-                        </div> -->
-
+ 
 
                         <div class="text-end">
                             <button name="submit" class="btn btn-primary" type="submit">Update Information</button>

@@ -9,7 +9,7 @@ if (empty($_SESSION['stu_lrn'])) {
 
     try {
         if (isset($_POST['submit'])) {
-            $student_id = $_SESSION['stu_lrn'];
+            $studentID = $_SESSION['stu_lrn'];
 
             // Clean and transform input data
             $fname = isset($_POST['firstname']) ? strtoupper(trim($_POST['firstname'])) : null;
@@ -45,7 +45,7 @@ if (empty($_SESSION['stu_lrn'])) {
             $mySQLFunction->connection();
 
             // Update student information in the database
-            $mySQLFunction->updateStudentInfo($store, $student_id);
+            $mySQLFunction->updateStudentInfo($store, $studentID);
 
             // Set session variable for successful update
             $_SESSION['update_student'] = true;
