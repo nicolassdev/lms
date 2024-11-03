@@ -29,7 +29,7 @@ include "../admin/includes/Forms/enrollmentform.php";
 
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
                         <h4 class="text-black">List of Enrolled Students</h4>
-                        <button type="button" class="btn btn-primary btn-animate" data-bs-toggle="modal" data-bs-target="#enroll" data-bs-whatever="@fat">
+                        <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#enroll" data-bs-whatever="@fat">
                             <i class="bi bi-person-plus-fill me-1"></i>Enroll Student
                         </button>
                     </div>
@@ -224,12 +224,12 @@ include "../admin/includes/Forms/enrollmentform.php";
             ?>
         </div>
     </div>
+    <?php
+    include("../admin/includes/extension.php");
+    ?>
 </main>
 
-
-<?php
-include("../admin/includes/footer.php");
-?>
+ 
 <!-- <script src="../assets/js/enrollment.js"></script> -->
 <!-- PDF ,EXCEL, PRINT ,CVS -->
 <script>

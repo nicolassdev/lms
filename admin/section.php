@@ -230,12 +230,12 @@ include "../admin/includes/Forms/sectionform.php";
             </div>
         </div>
     </div>
+    <?php
+    include("../admin/includes/extension.php");
+    ?>
 </main>
 
-
-<?php
-include("../admin/includes/footer.php");
-?>
+ 
 
 <!-- PDF ,EXCEL, PRINT ,CVS -->
 <script>

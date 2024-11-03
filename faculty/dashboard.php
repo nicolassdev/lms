@@ -75,7 +75,7 @@ $mySQLFunction->disconnect();
                     <div class="card-body">
                         <h5 class="card-title">Account</h5>
                         <p class="card-text">Manage your account here.</p>
-                        <a href="?page=admin" class="btn btn-primary text-white text-center btn-animate">
+                        <a href="?page=teacher_prof" class="btn btn-primary text-white text-center btn-animate">
                             Manage Account
                             <i class="bi bi-arrow-right ms-2"></i>
                         </a>

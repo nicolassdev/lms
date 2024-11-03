@@ -24,12 +24,12 @@ include "../admin/includes/Forms/semesterform.php";
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4">
         <h4 class="ms-3">Semester</h4>
         <!-- Button container for proper alignment -->
-        <div class="d-flex gap-3">
+        <div class="d-flex gap-2">
             <!-- Semester button -->
-            <button type="button" class="btn btn-success mb-3 btn-animate" title="Semester" data-bs-toggle="modal" data-bs-target="#semester" data-bs-whatever="@fat">
+            <button type="button" class="btn btn-success btn-sm btn-animate" title="Semester" data-bs-toggle="modal" data-bs-target="#semester" data-bs-whatever="@fat">
                 <i class="bi bi-plus me-1"></i>Semester
             </button>
-            <button class="btn btn-secondary mb-3 me-3 btn-animate"><a class="nav-link " href="index.php?page=settings"><i class="bi bi-arrow-left-circle me-1"></i>Back</a>
+            <button class="btn btn-secondary btn-sm me-3 btn-animate"><a class="nav-link " href="index.php?page=settings"><i class="bi bi-arrow-left-circle me-1"></i>Back</a>
             </button>
         </div>
     </div>

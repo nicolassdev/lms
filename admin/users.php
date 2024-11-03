@@ -159,7 +159,7 @@ include "../includes/dbh-inc.php";
                                   </tr>';
                 }
                 echo '</table>';
-                echo '<a href="" class="btn btn-primary" title="Refresh"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</a>';
+                echo '<a href="" class="btn btn-primary btn-sm" title="Refresh"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</a>';
 
                 $mySQLFunction->disconnect();
                 ?>

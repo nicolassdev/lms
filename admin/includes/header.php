@@ -171,12 +171,12 @@ foreach ($users as $user) {
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=student">
-                                    <i class="bi bi-person me-1"></i>Student
+                                    <i class="bi bi-person me-1"></i>Students
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=enrollment">
-                                    <i class="bi bi-person-lines-fill me-1"></i>Enrollment
+                                    <i class="bi bi-bookmark-star me-1"></i>Enrolled Student
                                 </a>
                             </li>
                             <li class="nav-item">

@@ -37,9 +37,9 @@ include "../admin/includes/Forms/studentform.php";
 
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3 ms-3 me-3">
                         <h4 class="text-black">List of Students</h4>
-                        <button type="button" class="btn btn-primary btn-animate" data-bs-toggle="modal" data-bs-target="#student" data-bs-whatever="@fat">
+                        <!-- <button type="button" class="btn btn-primary btn-animate" data-bs-toggle="modal" data-bs-target="#student" data-bs-whatever="@fat">
                             <i class="bi bi-person-plus-fill me-1"></i>Student
-                        </button>
+                        </button> -->
                     </div>
                     <!-- NOTIFICATION -->
                     <?php
@@ -446,13 +446,14 @@ include "../admin/includes/Forms/studentform.php";
             </div>
         </div>
     </div>
+    <?php
+    include("../admin/includes/extension.php");
+    ?>
+
+     
 </main>
 
-
-
-<?php
-include("../admin/includes/footer.php");
-?>
+ 
 <!-- PDF ,EXCEL, PRINT ,CVS -->
 <script>
     $(document).ready(function() {

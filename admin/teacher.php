@@ -244,14 +244,13 @@ include "../admin/includes/Forms/teacherform.php";
             </div>
         </div>
     </div>
+    <?php
+    include("../includes/footer.php");
+    ?>
 
 </main>
 
-
-
-<?php
-include("../admin/includes/footer.php");
-?>
+ 
 
 <!-- PDF ,EXCEL, PRINT ,CVS -->
 <script src="../assets/js/faculty.js"></script>

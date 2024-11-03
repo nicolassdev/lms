@@ -22,18 +22,18 @@ $mySQLFunction->disconnect();
         <h4 class="ms-3">School Information</h4>
 
         <!-- Button container for proper alignment -->
-        <div class="d-flex gap-3">
+        <div class="d-flex gap-2 ms-2">
             <!-- Semester button -->
-            <a href="index.php?page=semester" class="btn btn-primary mb-3 ms-3 btn-animate">
+            <a href="index.php?page=semester" class="btn btn-primary btn-sm btn-animate">
                 <span>📅 Semester</span>
             </a>
 
-            <a href="index.php?page=schoolyear" class="btn btn-primary mb-3 btn-animate">
+            <a href="index.php?page=schoolyear" class="btn btn-primary  btn-sm btn-animate">
                 <span>🗓 School Year</span>
             </a>
 
             <!-- Edit button with tooltip -->
-            <button type="button" class="btn btn-secondary mb-3 btn-animate" title="Edit" data-bs-toggle="modal" data-bs-target="#setting" data-bs-whatever="@fat">
+            <button type="button" class="btn btn-secondary btn-sm btn-animate" title="Edit" data-bs-toggle="modal" data-bs-target="#setting" data-bs-whatever="@fat">
                 <i class="bi bi-pencil-square"></i>
             </button>
         </div>

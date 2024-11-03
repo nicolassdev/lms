@@ -29,10 +29,23 @@ switch ($page) {
         require_once 'teacher_prof.php';
         break;
 
+    case "new_student":
+        require_once 'new_student.php';
+        break;
 
+    case "register_student":
+        require_once 'register_student.php';
+        break;
+       
+   
     case "section_handled":
         require_once 'section_handled.php';
         break;
+
+    case "teacher_quiz":
+        require_once 'teacher_quiz.php';
+        break;
+    
 
     default:
         require_once 'dashboard.php'; // Default page is 'home'

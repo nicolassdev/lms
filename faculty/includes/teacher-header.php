@@ -135,7 +135,7 @@ if (isset($_SESSION['teacher_id'])) {
     <!-- Sidebar -->
     <div class="side">
         <div class="container-fluid">
-            <div class="row mt-5">
+            <div class="row mt-3">
                 <nav id="sidebar" class="col-md-5 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
                     <div class="position-sticky">
                         <div class="text-white ms-4 d-lg-none mt-2">
@@ -154,21 +154,24 @@ if (isset($_SESSION['teacher_id'])) {
                                 </a>
                             </li>
 
-
-
                             <li class="nav-item mt-2">
                                 <a class="nav-link active" href="index.php?page=dashboard">
                                     <i class="bi bi-graph-up-arrow me-2"></i> Dashboard
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=section_handled">
-                                    <i class="bi bi-buildings"></i> Section Handled
+                            <li class="nav-item mt-2">
+                                <a class="nav-link active" href="index.php?page=new_student">
+                                <i class="bi bi-person me-1"></i>Student
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=teachaer_quiz">
-                                    <i class="bi bi-lightbulb me-2"></i> Quiz
+                                <a class="nav-link active" href="index.php?page=section_handled">
+                                    <i class="bi bi-buildings me-1"></i>Section Handled
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index.php?page=teacher_quiz">
+                                    <i class="bi bi-lightbulb me-2"></i>Quiz
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -176,14 +179,10 @@ if (isset($_SESSION['teacher_id'])) {
                                     <i class="bi bi-book me-2"></i></i>Exam
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=teachaer_assignment">
-                                    <i class="bi bi-pencil  me-2"></i> Assignments
-                                </a>
-                            </li>
+         
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=teachaer_grade">
-                                    <i class="bi bi-bar-chart me-2"></i> Reports
+                                    <i class="bi bi-bar-chart me-2"></i>Reports
                                 </a>
                             </li>
                             <li class="nav-item">
