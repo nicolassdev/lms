@@ -106,6 +106,31 @@ class myDataBase
 
 
 
+    /*GEENERATE PASSWORD  */
+
+    public function generateStudentPassword($dob)
+    {
+        $year = date('Y'); // Get the last 2 digits of the current year
+        // Ensure the input is a valid date
+        if (!$dob) {
+            throw new Exception("Invalid date of birth provided.");
+        }
+
+        // Extract the year, month, and day from the teacher's date of birth
+        $dob = new DateTime($dob);
+        $dobyear = $dob->format('y'); // Last 2 digits of the birth year
+        $month = $dob->format('m'); // Month in MM format
+        $day = $dob->format('d'); // Day in DD format
+
+
+
+        // Construct the ID: <last-digit-of-year>-<MMDD>-<4-random-digits>
+        $studPassword = "csi-{$year}-{$day}{$dobyear}{$month}";    //csi-2024-051002
+
+        return $studPassword;
+    }
+
+
 
     //RANDOM USER ID
     public function generateUserID()

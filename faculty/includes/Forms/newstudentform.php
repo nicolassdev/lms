@@ -11,8 +11,8 @@
                     <div class="modal-header">
                         <h1 class="modal-title fs-3 text-primary">Create Account</h1>
                     </div>
-                   <!-- hide the role of user which is STUDENT  -->
-                   <input type="text" class="form-control d-none" name="role" value="STUDENT" required>
+                    <!-- hide the role of user which is STUDENT  -->
+                    <input type="text" class="form-control d-none" name="role" value="STUDENT" required>
 
                     <!-- this is will be the username  -->
                     <div class="col-md-12">
@@ -23,11 +23,11 @@
                             Also ensure the LRN (Username) matches the Student LRN.
                         </div>
                     </div>
-
+                    <!-- 
                     <div class="col-md-12">
                         <label class="form-label">Password</label>
                         <input type="password" class="form-control" name="password" id="password" required>
-                    </div>
+                    </div> -->
 
                     <div class="modal-header">
                         <h1 class="modal-title fs-3 text-primary">Student Details</h1>
