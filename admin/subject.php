@@ -20,8 +20,8 @@
 
            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
              <h4 class="text-black">List of Subject</h4>
-             <button type="button" class="btn btn-primary btn-animate" data-bs-toggle="modal" data-bs-target="#subject" data-bs-whatever="@fat">
-               <i class="bi bi-plus-circle-fill me-2"></i>Subject
+             <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#subject" data-bs-whatever="@fat">
+               <i class="bi bi-plus-circle-fill me-2"></i>Add Subject
              </button>
            </div>
            <!-- NOTIFICATION -->
@@ -62,7 +62,7 @@
                    <th scope="col" class="small text-center">Category</th>
                    <th scope="col" class="small text-center">Time</th>
                    <th scope="col" class="small text-center">Subject semester</th>
-                   <th scope="col" class="small text-center">Strand</th>
+                   <th scope="col" class="small text-center">Strand and Grade level </th>
                    <th scope="col" class="small text-center ">Teacher</th>
                    <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
 
@@ -79,11 +79,11 @@
                       echo '<tr>';
 
                       echo '<td>' . $row["sub_code"] . '</td>';
-                      echo '<td>' . ucwords(strtolower($row["sub_title"])) . '</td>';
+                      echo '<td>' . $row["sub_title"] . '</td>';
                       echo '<td>' . ucwords(strtolower($row["sub_type"])) . '</td>';
                       echo '<td>' . $row["sub_time"] . '</td>';
                       echo '<td>' . $row["sub_semester"] . '</td>';
-                      echo '<td>' . $row["strand"] . '</td>';
+                      echo '<td>' . $row["strand"] . ' ' . $row["sub_gradelvl"] . '</td>';
                       echo '<td>' . ucwords(strtolower($row["teacher"])) . '</td>';
                       echo '
                                         <td class="d-flex justify-content-center">
@@ -215,7 +215,7 @@
     include("../admin/includes/extension.php");
     ?>
  </main>
- 
+
  <!-- PDF ,EXCEL, PRINT ,CVS -->
  <script>
    $(document).ready(function() {

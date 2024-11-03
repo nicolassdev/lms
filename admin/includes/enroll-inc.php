@@ -2,7 +2,7 @@
 session_start(); // Start the session
 
 if (!isset($_POST["submit"])) {
-    header("Location: index.php?page=enrollment");
+    header("Location: index.php?page=enrolled");
     exit();
 }
 
@@ -43,7 +43,7 @@ try {
     if ($result->num_rows > 0) {
         // Student is already enrolled in this semester for this school year
         $_SESSION['check_enrolled'] = "The student is already enrolled in this semester.";
-        header("location:../../index.php?page=enrollment");
+        header("location:../../index.php?page=enrolled");
         exit();
     }
 
@@ -83,7 +83,7 @@ try {
 
     // Set session success message
     $_SESSION['insert_enrolled'] = true;
-    header("Location: ../index.php?page=enrollment");
+    header("Location: ../index.php?page=enrolled");
     exit();
 } catch (Exception $e) {
     // Rollback the transaction in case of an error
@@ -91,7 +91,7 @@ try {
 
     // Set error session message
     $_SESSION['error_enrolled'] = $e->getMessage();
-    header("Location: ../index.php?page=enrollment");
+    header("Location: ../index.php?page=enrolled");
     exit();
 } finally {
     // Close the connection

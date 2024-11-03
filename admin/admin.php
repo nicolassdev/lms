@@ -27,53 +27,66 @@ include "../admin/includes/Forms/adminform.php";
             </div>
             <div class="modal-body">
                 <form action="./includes/Operation/updateAdmin.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate id="editAdminInfo">
-                    <div class="mb-3">
-                        <label for="firstname" class="form-label">First Name</label>
-                        <input type="text" id="firstname" name="firstname" value="<?php echo htmlspecialchars($showResult['firstname']); ?>" class="form-control" required>
-                        <div class="invalid-feedback">Please enter the first name.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="middlename" class="form-label">Middle Name</label>
-                        <input type="text" id="middlename" name="middlename" value="<?php echo htmlspecialchars($showResult['middlename']); ?>" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label for="lastname" class="form-label">Last Name</label>
-                        <input type="text" id="lastname" name="lastname" value="<?php echo htmlspecialchars($showResult['lastname']); ?>" class="form-control" required>
-                        <div class="invalid-feedback">Please enter the last name.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Contact</label>
-                        <div class="input-group has-validation">
-                            <span class="input-group-text bg-primary text-white" id="inputGroupPrepend">+63</span>
-                            <input type="text" class="form-control" name="contact" value="<?php echo htmlspecialchars($showResult['contact']); ?>" aria-describedby="inputGroupPrepend" maxlength="10" required>
-                            <div class="invalid-feedback">Please enter a valid 10-digit number starting with 9.</div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="firstname" class="form-label">First Name</label>
+                            <input type="text" id="firstname" name="firstname" value="<?php echo htmlspecialchars($showResult['firstname']); ?>" class="form-control" required>
+                            <div class="invalid-feedback">Please enter the first name.</div>
                         </div>
-                    </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="middlename" class="form-label">Middle Name</label>
+                            <input type="text" id="middlename" name="middlename" value="<?php echo htmlspecialchars($showResult['middlename']); ?>" class="form-control">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="lastname" class="form-label">Last Name</label>
+                            <input type="text" id="lastname" name="lastname" value="<?php echo htmlspecialchars($showResult['lastname']); ?>" class="form-control" required>
+                            <div class="invalid-feedback">Please enter the last name.</div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Contact</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text bg-primary text-white" id="inputGroupPrepend">+63</span>
+                                <input type="text" class="form-control" name="contact" value="<?php echo htmlspecialchars($showResult['contact']); ?>" aria-describedby="inputGroupPrepend" maxlength="10" required>
+                                <div class="invalid-feedback">Please enter a valid 10-digit number starting with 9.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="gender" class="form-label">Gender</label>
+                            <select id="gender" name="gender" class="form-select" required>
+                                <option value="" disabled selected>Select gender</option>
+                                <option value="male" <?php echo ($showResult['gender'] === 'male') ? 'selected' : ''; ?>>Male</option>
+                                <option value="female" <?php echo ($showResult['gender'] === 'female') ? 'selected' : ''; ?>>Female</option>
+                            </select>
+                            <div class="invalid-feedback">Please select your gender.</div>
+                        </div>
 
 
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($showResult['email']); ?>" class="form-control" required>
-                        <div class="invalid-feedback">Please enter a valid email address.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($showResult['address']); ?>" class="form-control" required>
-                        <div class="invalid-feedback">Please enter your address.</div>
-                    </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($showResult['email']); ?>" class="form-control" required>
+                            <div class="invalid-feedback">Please enter a valid email address.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($showResult['address']); ?>" class="form-control" required>
+                            <div class="invalid-feedback">Please enter your address.</div>
+                        </div>
+                        <!-- 
+                        <div class="mb-3">
+                            <label for="profileImage" class="form-label">Profile Image</label>
+                            <input type="file" class="form-control" id="profileImage" name="image" accept="image/*" onchange="previewImage(event)" required>
+                            <div class="invalid-feedback">Please upload an image.</div>
+                        </div> -->
 
-                    <div class="mb-3">
-                        <label for="profileImage" class="form-label">Profile Image</label>
-                        <input type="file" class="form-control" id="profileImage" name="image" accept="image/*" onchange="previewImage(event)" required>
-                        <div class="invalid-feedback">Please upload an image.</div>
-                    </div>
+                        <div class="mb-3 text-center">
+                            <img id="imagePreview" class="profile-img" src="#" alt="Image Preview" style="display:none;">
+                        </div>
 
-                    <div class="mb-3 text-center">
-                        <img id="imagePreview" class="profile-img" src="#" alt="Image Preview" style="display:none;">
-                    </div>
-
-                    <div class="text-end">
-                        <button name="submit" class="btn btn-primary" type="submit">Update Information</button>
+                        <div class="text-end">
+                            <button name="submit" class="btn btn-primary" type="submit">Update Information</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -108,7 +121,11 @@ include "../admin/includes/Forms/adminform.php";
                     </div>
 
                     <div class="profile-header text-center mb-3">
-                        <img src="../assets/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2">
+                        <?php if ($showResult['gender'] === "MALE") { ?>
+                            <img src="../assets/Upload/maleadmin.png" alt="Profile Image" class="profile-img-circle mb-2">
+                        <?php } else { ?>
+                            <img src="../assets/Upload/femaleadmin.png" alt="Profile Image" class="profile-img-circle mb-2">
+                        <?php } ?>
                         <h4>
                             <?php echo ucwords(strtolower($fullName)); ?>
                             <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
@@ -146,8 +163,8 @@ include "../admin/includes/Forms/adminform.php";
                                 <p><?php echo ucwords(strtolower($showResult['address'])); ?></p>
                             </div>
                             <div class="col-md-6">
-                                <strong>Status:</strong>
-                                <p>Active</p>
+                                <strong>Gender:</strong>
+                                <p><?php echo ucwords(strtolower($showResult['gender'])); ?></p>
                             </div>
                         </div>
 

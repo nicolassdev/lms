@@ -88,19 +88,19 @@ class myDataBase
         if (!$dob) {
             throw new Exception("Invalid date of birth provided.");
         }
-    
+
         // Extract the year, month, and day from the teacher's date of birth
         $dob = new DateTime($dob);
         $dobyear = $dob->format('y'); // Last 2 digits of the birth year
         $month = $dob->format('m'); // Month in MM format
         $day = $dob->format('d'); // Day in DD format
-    
+
         // Generate a 4-digit random number
         $randomFourNumbers = rand(1000, 9999); // Ensures a 4-digit number
-    
+
         // Construct the ID: <last-digit-of-year>-<MMDD>-<4-random-digits>
         $teacherID = "{$year}-{$day}{$dobyear}{$month}-{$randomFourNumbers}";
-    
+
         return $teacherID;
     }
 
@@ -206,6 +206,60 @@ class myDataBase
         $result = $stmt->get_result()->fetch_assoc();
         return $result;
     }
+    //GET TEACHER SECTION HANDLED by id
+    public function getTeacherSectionHandled($teacher_id)
+    {
+        $sql = "SELECT * FROM `section` WHERE teacher_id = ?";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $teacher_id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result;
+    }
+    //GET TEACHER  SUBJECT HANDLED by id
+    public function getTeacherSubjectHandled($teacher_id)
+    {
+        $sql = "SELECT subject.sub_title, subject.strand_code, strand.strand_name , subject.sub_gradelvl
+                FROM subject 
+                JOIN strand ON subject.strand_code = strand.strand_code 
+                WHERE subject.teacher_id = ?";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $teacher_id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC); // Fetch all rows as an associative array
+        return $result;
+    }
+
+    //GET STUDENT SECTION HANDLED by id
+    public function getStudentSection($student_id)
+    {
+        $sql = "SELECT enroll.semester, enroll.school_year, enroll.section_code, section.section_name, section.grade_lvl
+                FROM enroll 
+                JOIN section ON enroll.section_code = section.section_code
+                WHERE enroll.stu_lrn = ?";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $student_id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC); // Fetch all rows as an associative array
+        return $result;
+    }
+    //GET STUDENT STRAND NAME by id
+    public function getStudentStrandName($student_id)
+    {
+        $sql = "SELECT section.strand_code, strand.strand_name
+            FROM enroll
+            JOIN section ON enroll.section_code = section.section_code
+            JOIN strand ON section.strand_code = strand.strand_code
+            WHERE enroll.stu_lrn = ?";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $student_id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $result;
+    }
 
 
 
@@ -273,36 +327,36 @@ class myDataBase
         return true;
     }
 
-  // UPDATE ACCOUNT TEACHER PROFILE 
-  public function updateTeacherInfo($data, $teacherID)
-  {
-      $setClause = [];
-      foreach ($data as $column => $value) {
-          $escapedValue = mysqli_real_escape_string($this->con, $value);
-          $setClause[] = "`$column` = '$escapedValue'";
-      }
+    // UPDATE ACCOUNT TEACHER PROFILE 
+    public function updateTeacherInfo($data, $teacherID)
+    {
+        $setClause = [];
+        foreach ($data as $column => $value) {
+            $escapedValue = mysqli_real_escape_string($this->con, $value);
+            $setClause[] = "`$column` = '$escapedValue'";
+        }
 
-      $setString = implode(", ", $setClause);
+        $setString = implode(", ", $setClause);
 
-      // Ensure the WHERE clause uses the correct teacher identifier
-      $sql = "UPDATE `teacher` SET $setString WHERE `teacher_id` = ?";
+        // Ensure the WHERE clause uses the correct teacher identifier
+        $sql = "UPDATE `teacher` SET $setString WHERE `teacher_id` = ?";
 
-      $stmt = $this->con->prepare($sql);
-      if (!$stmt) {
-          throw new Exception("Query preparation failed: " . $this->con->error);
-      }
+        $stmt = $this->con->prepare($sql);
+        if (!$stmt) {
+            throw new Exception("Query preparation failed: " . $this->con->error);
+        }
 
-      $stmt->bind_param("s", $teacherID);  // Assuming stu_lrn is an integer
-      $stmt->execute();
+        $stmt->bind_param("s", $teacherID);  // Assuming stu_lrn is an integer
+        $stmt->execute();
 
-      if ($stmt->affected_rows === 0) {
-          throw new Exception("No records updated. Check if the teacher ID is valid.");
-      }
+        if ($stmt->affected_rows === 0) {
+            throw new Exception("No records updated. Check if the teacher ID is valid.");
+        }
 
-      $stmt->close();
-      return true;
-  }
- 
+        $stmt->close();
+        return true;
+    }
+
 
     //CHECK USER LOGIN 
     function checkLogin($username, $password)
@@ -976,7 +1030,7 @@ class myDataBase
             // Use prepared statements to avoid SQL injection
             $stmt = $this->con->prepare("SELECT `sub_code`,
                 `sub_title`, `sub_type`, `sub_time`,
-                `sub_semester`, `strand_name`, `subject.strand_code`,
+                `sub_semester`, `strand_name`, `subject.strand_code`, `sub_gradelvl`,
                 `subject.teacher_id`, 
                 CONCAT(`teacher_fname`, ' ', `teacher_mname`, ' ', `teacher_lname`) AS teacher 
                 FROM `subject`
@@ -1004,7 +1058,7 @@ class myDataBase
             // Fetch all subjects when no specific row or value is provided
             $sql = "SELECT `sub_code`, 
                 `sub_title`, `sub_type`, `sub_time`,
-                `sub_semester`, `strand_name` AS strand,
+                `sub_semester`, `strand_name` AS strand, `sub_gradelvl`,
                 CONCAT(`teacher_fname`, ' ', `teacher_mname`, ' ', `teacher_lname`) AS teacher
                 FROM `subject`
                 LEFT JOIN `strand` ON subject.strand_code = strand.strand_code
@@ -1077,6 +1131,7 @@ class myDataBase
                 `section`.`strand_code`,
                 `strand`.`strand_name`,  -- Fetching the strand_name from the strand table
                 `section`.`section_name`,
+                `section`.`grade_lvl`,
                 `section`.`teacher_id`,
                 CONCAT(`teacher`.`teacher_fname`, ' ', `teacher`.`teacher_lname`) AS adviser,
                 `enroll`.`semester` AS enroll_semester,
@@ -1395,7 +1450,7 @@ class myDataBase
 
 
     //UPDATE ENROLLMENT
-    public function updateEnrollment($row, $value, $where)
+    public function updateEnrolled($row, $value, $where)
     {
         $value = mysqli_real_escape_string($this->con, $value);
         if (is_string($value)) {

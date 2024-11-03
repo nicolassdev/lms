@@ -55,6 +55,7 @@ if (!isset($_POST["submit"])) {
             $_SESSION["teacher_id"] = $teacherCredential["teacher_id"];
             $_SESSION["teacher_fname"] = $teacherCredential["teacher_fname"];
             $_SESSION["teacher_lname"] = $teacherCredential["teacher_lname"];
+            $_SESSION["teacher_gender"] = $teacherCredential["teacher_gender"];
 
             $_SESSION["username"] = $user["username"];
 

@@ -16,7 +16,7 @@ include "../includes/dbh-inc.php";
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3 ms-3 me-3">
-        <h4 class="text-black">Users list</h4>
+        <h4 class="text-black">List of User Accounts</h4>
     </div>
     <!-- Search Form -->
     <form method="POST" action="index.php?page=users" class="ms-5 me-5">

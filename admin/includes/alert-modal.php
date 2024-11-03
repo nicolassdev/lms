@@ -317,8 +317,8 @@ if (isset($_SESSION['error_student']) && $_SESSION['error_student'] == true) {
 
 
 //INSERT ERROR ADMIN
-    if (isset($_SESSION['error_principal']) && $_SESSION['error_principal'] == true) {
-        echo '
+if (isset($_SESSION['error_principal']) && $_SESSION['error_principal'] == true) {
+    echo '
         
         <div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -342,9 +342,9 @@ if (isset($_SESSION['error_student']) && $_SESSION['error_student'] == true) {
                     errorModal.show();
                 });
             </script>';
-        unset($_SESSION['error_principal']); // Unset the session variable
-    }
- 
+    unset($_SESSION['error_principal']); // Unset the session variable
+}
+
 
 // INSERT ERROR STRAND
 if (isset($_SESSION['error_strand']) && $_SESSION['error_strand'] == true) {
@@ -612,7 +612,7 @@ if (isset($_SESSION['update_enroll']) && $_SESSION['update_enroll'] == true) {
                         <div class="text-success">
                             <i class="bi bi-check-circle fs-1 "></i><br><br>
                         </div>
-                        <p class="mb-4">Enrollment has been updated successfully.</p>
+                        <p class="mb-4">Student Enrolled has been updated successfully.</p>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5 ">
                         <button class="btn btn-success me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>

@@ -23,7 +23,9 @@ include "./includes/alert-modal.php";
     <?php
     // Determine the page from the URL parameter, default to 'home' if not set
     $page = isset($_GET["page"]) ? $_GET["page"] : "home";
-
+    /**
+     Route of page
+     */
     // Use switch case to load the appropriate page
     switch ($page) {
         case "admin":
@@ -45,8 +47,8 @@ include "./includes/alert-modal.php";
         case "section":
             require_once 'section.php';
             break;
-        case "enrollment":
-            require_once 'enrollment.php';
+        case "enrolled":
+            require_once 'enrolled.php';
             break;
         case "subject":
             require_once 'subject.php';
@@ -60,6 +62,28 @@ include "./includes/alert-modal.php";
         case "semester":
             require_once 'semester.php';
             break;
+            /**
+                 ROUTE FOR STRAND SUBJECT
+             */
+        case "stem_subjects":
+            require_once 'stem_subjects.php';
+            break;
+        case "abm_subjects":
+            require_once 'abm_subjects.php';
+            break;
+        case "humss_subjects":
+            require_once 'humss_subjects.php';
+            break;
+        case "gas_subjects":
+            require_once 'gas_subjects.php';
+            break;
+        case "css_subjects":
+            require_once 'css_subjects.php';
+            break;
+        case "cp_subjects":
+            require_once 'cp_subjects.php';
+            break;
+
 
         default:
             require_once 'home.php'; // Default page is 'home'

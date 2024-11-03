@@ -24,7 +24,7 @@ if (!isset($_SESSION["teacher_id"])) {
 
             // Update the teacher details
             // $mySQLFunction->updateEnrollment("section_code	", $section, $id);
-            $mySQLFunction->updateEnrollment("enroll_status", $status, $id, $activeSem);
+            $mySQLFunction->updateEnrolled("enroll_status", $status, $id, $activeSem);
 
             // Disconnect after updating
             $mySQLFunction->disconnect();

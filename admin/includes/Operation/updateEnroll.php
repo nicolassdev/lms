@@ -24,14 +24,14 @@ if (!isset($_SESSION["principal_id"])) {
 
             // Update the teacher details
             // $mySQLFunction->updateEnrollment("section_code	", $section, $id);
-            $mySQLFunction->updateEnrollment("enroll_status", $status, $id, $activeSem);
+            $mySQLFunction->updateEnrolled("enroll_status", $status, $id, $activeSem);
 
             // Disconnect after updating
             $mySQLFunction->disconnect();
 
             // Set session variable to indicate successful update
             $_SESSION['update_enroll'] = true;
-            header("location:../../index.php?page=enrollment");
+            header("location:../../index.php?page=enrolled");
             exit();
         }
     } catch (Exception $e) {

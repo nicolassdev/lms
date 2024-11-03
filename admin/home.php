@@ -74,8 +74,8 @@ $mySQLFunction->disconnect();
                 <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width:100%;">
                     <div class="card-body">
                         <h5 class="card-title">Account</h5>
-                        <p class="card-text">Manage your account here.</p>
-                        <a href="?page=admin" class="btn btn-primary text-white text-center btn-animate">
+                        <p class="card-text">Manage users' accounts here.</p>
+                        <a href="?page=users" class="btn btn-primary text-white text-center btn-animate">
                             Manage Account
                             <i class="bi bi-arrow-right ms-2"></i>
                         </a>

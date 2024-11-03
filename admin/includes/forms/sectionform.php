@@ -11,6 +11,19 @@
              <div class="modal-body">
                  <form id="sectionForm" action="./includes/section-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation" novalidate>
 
+                     <!-- SECTION SELECTION -->
+                     <div class="col-md-12">
+                         <label class="form-label">Section Name</label>
+                         <input type="text" class="form-control" name="section" required>
+
+                         <div class="invalid-feedback">
+                             Please select a section name.
+                         </div>
+                     </div>
+
+
+
+                     <!-- STRAND NAME  -->
                      <div class="col-md-12">
                          <label class="form-label">Strand Name</label>
                          <select class="form-select" id="strandSelect" name="strand_code" required>
@@ -60,16 +73,6 @@
                          </select>
                          <div class="invalid-feedback">
                              Please select a grade level.
-                         </div>
-                     </div>
-
-                     <!-- SECTION SELECTION -->
-                     <div class="col-md-12">
-                         <label class="form-label">Section Name</label>
-                         <input type="text" class="form-control" name="section" required>
-
-                         <div class="invalid-feedback">
-                             Please select a section name.
                          </div>
                      </div>
 

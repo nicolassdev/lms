@@ -37,6 +37,8 @@ body {
 
 .sidebar li {
   margin-bottom: 10px;
+  font-size: 14px;
+  margin-left: 4px;
 }
 
 .sidebar a {
@@ -154,7 +156,7 @@ body {
   width: 150px;
   height: 150px;
   object-fit: cover;
-  border: 3px solid #007bff;
+  border: 3px solid #198754;
 }
 
 .modal-content {
@@ -171,7 +173,6 @@ body {
     /* Smaller font size */
   }
 }
-
 
 .container-form {
   position: absolute;
@@ -236,21 +237,23 @@ body {
   /* Adjust padding */
 }
 
+/* ================================ PAGINATION AND SEARCH ======================== */
 
+.text-sm {
+  font-size: 0.7em;
+}
 
+.dataTables_filter {
+  margin-bottom: 5px;
+  /* Space below the search bar */
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
+.dataTables_filter input {
+  margin-left: 5px;
+  /* Space between the label and input */
+  padding: 5px;
+  /* Padding inside the input for better appearance */
+}
 
 /* =================================== FOOTER ====================================== */
 .footer {

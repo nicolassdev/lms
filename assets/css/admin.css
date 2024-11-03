@@ -33,10 +33,6 @@ body {
   height: 40px;
   /* Adjust the logo height */
 }
-.navbar .dropdown-menu {
-  font-size: 0.875rem;
-  /* Adjust font size if needed */
-}
 
 .sidebar {
   color: #fff;
@@ -82,7 +78,7 @@ body {
 
 .sidebar .nav-link {
   padding: 10px 30px;
-  font-size: 1rem;
+  font-size: 12px;
   color: #fff;
   transition: background-color 0.3s ease, color 0.3s ease;
   border-radius: 5px;

@@ -41,17 +41,17 @@ $mySQLFunction->disconnect();
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <div class="ms-3">
-                <h4>Welcome Back <?php echo ucwords(strtolower($_SESSION["user_role"])); ?> ! </h4>
-                <div class="container mt-3">
-                    <div class="row g-2">
+                <h5>Welcome Back <?php echo ucwords(strtolower($_SESSION["user_role"])); ?> ! </h5>
+                <div class="container mt-2">
+                    <div class="row g-1">
                         <!-- Date and Time Display -->
-                        <div class="col-md-12">
+                        <div class="col-lg-6">
                             <div id="date" class="date-display"></div>
                             <div id="time" class="date-display"></div>
                         </div>
 
                         <!-- School Year and Semester Display -->
-                        <div class="col-md-6 date-display">
+                        <div class="col-lg-6 date-display justify-content-end">
                             <?php
                             if (!empty($activeSchoolYears) && !empty($activeSem)) {
                                 foreach ($activeSchoolYears as $index => $schoolYear) {
@@ -69,68 +69,13 @@ $mySQLFunction->disconnect();
         </div>
 
         <div class="row g-1">
-            <!-- Account Card -->
-            <div class="col-md-3 col-sm-6 col-12">
-                <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width:100%;">
-                    <div class="card-body">
-                        <h5 class="card-title">Account</h5>
-                        <p class="card-text">Manage your account here.</p>
-                        <a href="?page=teacher_prof" class="btn btn-primary text-white text-center btn-animate">
-                            Manage Account
-                            <i class="bi bi-arrow-right ms-2"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Strand Card -->
-            <div class="col-md-3 col-sm-6 col-12">
-                <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
-                    <div class="card-body">
-                        <h5 class="card-title">Strand</h5>
-                        <p class="card-text">Manage all strands here.</p>
-                        <a href="index.php?page=strand" class="btn btn-primary text-white text-center btn-animate">
-                            Manage Strand
-                            <i class="bi bi-arrow-right ms-2"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Subject Card -->
-            <div class="col-md-3 col-sm-6 col-12">
-                <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
-                    <div class="card-body">
-                        <h5 class="card-title">Subject</h5>
-                        <p class="card-text">Manage subjects here.</p>
-                        <a href="index.php?page=subject" class="btn btn-primary text-white text-center btn-animate">
-                            Manage Subject
-                            <i class="bi bi-arrow-right ms-2"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section Card -->
-            <div class="col-md-3 col-sm-6 col-12">
-                <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
-                    <div class="card-body">
-                        <h5 class="card-title">Section</h5>
-                        <p class="card-text">Manage sections here.</p>
-                        <a href="index.php?page=section" class="btn btn-primary text-white text-center btn-animate">
-                            Manage Section
-                            <i class="bi bi-arrow-right ms-2"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
 
             <!-- Teachers Card with count -->
             <div class="col-lg-6 col-sm-12">
                 <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Teacher</h5>
-                        <p class="card-text">Number of teachers registered.</p>
+                        <small class="card-text date-display">Number of teachers registered.</small>
                         <!-- Morris.js chart for teachers and students -->
                         <div id="teacherChart" style="height: 250px; max-width:100%;"></div>
                     </div>
@@ -139,19 +84,20 @@ $mySQLFunction->disconnect();
 
             <!-- Students Card with count -->
             <div class="col-lg-6 col-sm-12">
-                <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
+                <div class="card mb-2 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Student</h5>
-                        <p class="card-text">Number of Senior High School students enrolled.</p>
+                        <small class="card-text date-display">Number of senior high school students registered.</small>
                         <!-- Morris.js chart for teachers and students -->
                         <div id="studentChart" style="height: 250px; max-width:100%;"></div>
                     </div>
                 </div>
             </div>
+            <?php
+            include "../includes/footer.php";
+            ?>
         </div>
-        <?php
-        include "../includes/footer.php";
-        ?>
+
     </main>
 
     <!-- Time and Date Script -->
@@ -213,7 +159,7 @@ $mySQLFunction->disconnect();
                         value: <?php echo $numberOfAdviser; ?>
                     },
                     {
-                        label: 'Enrolled',
+                        label: 'Registered students',
                         value: <?php echo $numberOfEnrolled; ?>
                     }
                 ],

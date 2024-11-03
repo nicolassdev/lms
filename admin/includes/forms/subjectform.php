@@ -65,37 +65,52 @@
             <div class="invalid-feedback">Please input a strand name.</div>
           </div>
 
+
+          <!-- GRADE LEVEL -->
+          <div class="col-md-12">
+            <label class="form-label">Grade Level</label>
+            <select class="form-select" name="gradelvl" id="gradelvl" required>
+              <option selected disabled value="">Select...</option>
+              <option value="GRADE-12">GRADE-12</option>
+              <option value="GRADE-11">GRADE-11</option>
+            </select>
+            <div class="invalid-feedback">
+              Please select a grade level.
+            </div>
+          </div>
+
+
           <!-- TEACHER SELECTION -->
           <div class="col-md-12">
             <label class="form-label">Teacher</label>
             <select class="form-select" name="teacher_id" required>
-                <option value="" selected disabled>Choose a teacher...</option>
-                <?php
-                    $mySQLFunction->connection();
-                    $result = $mySQLFunction->getTeacher();
-                    $hasAvailableTeacher = false;
+              <option value="" selected disabled>Choose a teacher...</option>
+              <?php
+              $mySQLFunction->connection();
+              $result = $mySQLFunction->getTeacher();
+              $hasAvailableTeacher = false;
 
-                    if (empty($result)) {
-                      echo '<option disabled>No teaecher found in the database.</option>';
-                    } else {
-                        foreach ($result as $row) {
-                            if (($mySQLFunction->checkRowCount("subject", "teacher_id", $row["teacher_id"])) == 2) {
-                                continue;
-                            } else {
-                                echo '<option value="' . $row["teacher_id"] . '">' . $row["teacher_fname"] . ' ' . $row["teacher_mname"] . ' ' . $row["teacher_lname"] . '</option>';
-                                $hasAvailableTeacher = true;
-                              }
-                        }
-                    }
-                    if (!$hasAvailableTeacher) {
-                      echo '<option disabled>No teacher available for subject.</option>';
+              if (empty($result)) {
+                echo '<option disabled>No teaecher found in the database.</option>';
+              } else {
+                foreach ($result as $row) {
+                  if (($mySQLFunction->checkRowCount("subject", "teacher_id", $row["teacher_id"])) == 2) {
+                    continue;
+                  } else {
+                    echo '<option value="' . $row["teacher_id"] . '">' . $row["teacher_fname"] . ' ' . $row["teacher_mname"] . ' ' . $row["teacher_lname"] . '</option>';
+                    $hasAvailableTeacher = true;
                   }
-                  $mySQLFunction->disconnect();
+                }
+              }
+              if (!$hasAvailableTeacher) {
+                echo '<option disabled>No teacher available for subject.</option>';
+              }
+              $mySQLFunction->disconnect();
 
-                ?>
+              ?>
             </select>
             <div class="invalid-feedback">Please select a teacher.</div>
-           </div>
+          </div>
 
 
           <div class="col-md-12">

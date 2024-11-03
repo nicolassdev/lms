@@ -14,6 +14,7 @@ if (!isset($_POST["submit"])) {
     $subtime = trim($_POST["time"] ?? ''); // Handle AM/PM
     $sem = trim($_POST["semester"] ?? ''); // Ensure default is empty string
     $strand = trim($_POST["strand_code"] ?? ''); // Ensure default is empty string
+    $gradelvl = strtoupper(trim($_POST["gradelvl"] ?? ''));
     $teacher = trim($_POST["teacher_id"] ?? ''); // Ensure default is empty string
 
     $mySQLFunction->connection(); // Establish database connection
@@ -79,10 +80,10 @@ if (!isset($_POST["submit"])) {
 
         // Insert subject data into `subject` table using prepared statements
         $insertSubject = "
-            INSERT INTO `subject` (`sub_code`, `sub_title`, `sub_type`, `sub_time`, `sub_semester`, `strand_code`, `teacher_id`) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+            INSERT INTO `subject` (`sub_code`, `sub_title`, `sub_type`, `sub_time`, `sub_semester`, `strand_code`, `sub_gradelvl`, `teacher_id`) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $mySQLFunction->con->prepare($insertSubject);
-        $stmt->bind_param("sssssss", $code, $subtitle, $subtype, $subtime, $sem, $strand, $teacher); // Use $teacher
+        $stmt->bind_param("ssssssss", $code, $subtitle, $subtype, $subtime, $sem, $strand,  $gradelvl, $teacher); // Use $teacher
         $stmt->execute();
 
         // Commit the transaction

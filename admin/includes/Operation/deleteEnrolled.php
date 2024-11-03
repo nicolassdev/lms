@@ -11,8 +11,8 @@ if (!isset($_SESSION["principal_id"])) {
     $mySQLFunction->delete("enroll", "stu_lrn", $_GET["id"]);
 
 
-    $_SESSION['deleted'] = "Enrollment record has been marked as deleted successfully.";
-    header("location:../../index.php?page=enrollment");
+    $_SESSION['deleted'] = "Enrolled record has been marked as deleted successfully.";
+    header("location:../../index.php?page=enrolled");
     exit();
     $mySQLFunction->disconnect();
 }

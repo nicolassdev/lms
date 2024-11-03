@@ -28,6 +28,9 @@ if (!isset($_SESSION['teacher_id'])) {
 
 $teacherInfo = $mySQLFunction->getTeacherInfo($_SESSION['teacher_id']);
 
+$teacherSectionHandled = $mySQLFunction->getTeacherSectionHandled($_SESSION['teacher_id']);  //section handled by teacher
+
+$teacherSubjectHandled = $mySQLFunction->getTeacherSubjectHandled($_SESSION['teacher_id']); //get subject array in database
 
 $teacherName = $teacherInfo['teacher_fname'] . ' ' . $teacherInfo['teacher_mname'] . ' ' . $teacherInfo['teacher_lname'];
 
@@ -127,7 +130,7 @@ $mySQLFunction->disconnect();
                             <div class="invalid-feedback">Please select an employment status.</div>
                         </div>
 
- 
+
 
                         <div class="text-end">
                             <button name="submit" class="btn btn-primary" type="submit">Update Information</button>
@@ -164,9 +167,9 @@ $mySQLFunction->disconnect();
                     <div class="profile-header text-center">
                         <!-- SWITCHING IMAGE IF USER IS MALE OR FEMALE  -->
                         <?php if ($teacherInfo['teacher_gender'] === "MALE") { ?>
-                            <img src="../assets/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2">
+                            <img src="../assets/Upload/maleteacher.png" alt="Profile Image" class="profile-img-circle mb-2">
                         <?php } else { ?>
-                            <img src="../assets/Upload/female.jpg" alt="Profile Image" class="profile-img-circle mb-2">
+                            <img src="../assets/Upload/femaleteacher.png" alt="Profile Image" class="profile-img-circle mb-2">
                         <?php } ?>
 
                         <h4>
@@ -176,7 +179,7 @@ $mySQLFunction->disconnect();
                         </h4>
 
                         <p class="text-muted"><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
-                        <span class="badge bg-success text-white">ID:</span>
+                        <span class="badge bg-success text-white">ID</span>
                         <small class="text-muted fw-semibold">
                             <?php echo htmlspecialchars($teacherInfo['teacher_id'], ENT_QUOTES, 'UTF-8'); ?>
                         </small>
@@ -227,7 +230,7 @@ $mySQLFunction->disconnect();
                         <div class="row mb-1">
                             <div class="col-md-6">
                                 <strong>Username:</strong>
-                                <p>N/A</p>
+                                <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
                             </div>
                             <div class="col-md-6">
                                 <strong>Status:</strong>
@@ -235,20 +238,49 @@ $mySQLFunction->disconnect();
                             </div>
                         </div>
 
-
-
-
                         <div class="row mb-1">
                             <div class="col-md-6">
-                                <strong>School Name:</strong>
-                                <p><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
+                                <strong>Section Handled:</strong>
+                                <p>
+                                    <?php
+                                    if (isset($teacherSectionHandled["grade_lvl"]) && isset($teacherSectionHandled["section_name"])) {
+                                        echo ucwords(strtolower($teacherSectionHandled["grade_lvl"])) . ' ' . ucwords(strtolower($teacherSectionHandled["section_name"]));
+                                    } else {
+                                        echo '<div class="text-danger">Section information not available !</div>';
+                                    }
+                                    ?>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Subjects Handled:</strong>
+                                <p>
+                                    <?php
+                                    if (!empty($teacherSubjectHandled)) {
+                                        foreach ($teacherSubjectHandled as $subject) {
+                                            echo ucwords(strtolower($subject["sub_title"])) . ' | ' . htmlspecialchars($subject["strand_name"]) . ' | ' . ucwords(strtolower($subject["sub_gradelvl"])) . '<br>'; // Display each subject with strand code
+                                        }
+                                    } else {
+                                        echo '<div class="text-danger">Subject information not available !</div>';
+                                    }
+                                    ?>
+                                </p>
                             </div>
                             <div class="col-md-6">
                                 <strong>Joined:</strong>
-                                <p><?php echo htmlspecialchars($_SESSION["teacher_added"]); ?></p>
+                                <p>
+                                    <?php
+                                    if (isset($_SESSION["teacher_added"])) {
+                                        echo htmlspecialchars($_SESSION["teacher_added"]);
+                                    } else {
+                                        echo 'Join date not available.';
+                                    }
+                                    ?>
+                                </p>
                             </div>
-
                         </div>
+
+
+
 
                     </div>
                 </div>

@@ -21,7 +21,12 @@ $showSchool = $mySQLFunction->getSchool();
 
 
 
-$studentInfo  = $mySQLFunction->getStudentInfo($_SESSION['stu_lrn']);
+$studentInfo  = $mySQLFunction->getStudentInfo($_SESSION['stu_lrn']); //handled by student 
+
+$studentSection = $mySQLFunction->getStudentSection($_SESSION['stu_lrn']); //get student section array in database
+
+$studentStrandName = $mySQLFunction->getStudentStrandName($_SESSION['stu_lrn']); // Get strand name
+
 
 $studentFullName = $studentInfo['stu_fname'] . ' ' . $studentInfo['stu_mname'] . ' ' . $studentInfo['stu_lname'];
 
@@ -188,9 +193,9 @@ $mySQLFunction->disconnect();
 
                         <!-- SWITCHING IMAGE IF USER IS MALE OR FEMALE  -->
                         <?php if ($studentInfo['stu_gender'] === "MALE") { ?>
-                            <img src="./assets/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2">
+                            <img src="./assets/Upload/malestudent.webp" alt="Profile Image" class="profile-img-circle mb-2">
                         <?php } else { ?>
-                            <img src="./assets/Upload/female.jpg" alt="Profile Image" class="profile-img-circle mb-2">
+                            <img src="./assets/Upload/femalestudent.webp" alt="Profile Image" class="profile-img-circle mb-2">
                         <?php } ?>
 
 
@@ -204,8 +209,7 @@ $mySQLFunction->disconnect();
                         <small class="text-muted fw-semibold">
                             <?php echo htmlspecialchars($studentInfo['stu_lrn'], ENT_QUOTES, 'UTF-8'); ?>
                         </small>
-
-
+                        <br />
 
 
                     </div>
@@ -251,13 +255,34 @@ $mySQLFunction->disconnect();
 
                         <div class="row mb-1">
                             <div class="col-md-6">
-                                <strong>Address:</strong>
-                                <p><?php echo ucwords(strtolower($studentInfo['stu_address'])); ?></p>
+                                <strong>Strand:</strong>
+                                <p>
+                                    <?php
+                                    if (!empty($studentStrandName)) {
+                                        foreach ($studentStrandName as $strand) {
+                                            echo htmlspecialchars($strand["strand_name"]);
+                                        }
+                                    } else {
+                                        echo '<div class="text-danger">Strand name information not available !</div>';
+                                    }
+                                    ?>
+                                </p>
                             </div>
                             <div class="col-md-6">
-                                <strong>Status:</strong>
-                                <p>Active</p>
+                                <strong>Section and Grade level:</strong>
+                                <p>
+                                    <?php
+                                    if (!empty($studentSection)) {
+                                        foreach ($studentSection as $section) {
+                                            echo ucwords(strtolower($section["grade_lvl"])) . ' - ' . htmlspecialchars($section["section_name"]) . ' <br>'; // Display each subject with strand code
+                                        }
+                                    } else {
+                                        echo '<div class="text-danger">Section information not available !</div>';
+                                    }
+                                    ?>
+                                </p>
                             </div>
+
                         </div>
 
 
@@ -284,11 +309,27 @@ $mySQLFunction->disconnect();
                                 <p><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
                             </div>
                             <div class="col-md-6">
+                                <strong>Address:</strong>
+                                <p><?php echo ucwords(strtolower($studentInfo['stu_address'])); ?></p>
+                            </div>
+
+                        </div>
+
+
+
+
+                        <div class="row mb-1">
+                            <div class="col-md-6">
+                                <strong> Status:</strong>
+                                <p>Active</p>
+                            </div>
+                            <div class="col-md-6">
                                 <strong>Joined:</strong>
                                 <p><?php echo htmlspecialchars($_SESSION["student_added"]); ?></p>
                             </div>
 
                         </div>
+
 
                     </div>
                 </div>

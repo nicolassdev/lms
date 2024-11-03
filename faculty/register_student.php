@@ -17,32 +17,28 @@ $mySQLFunction->disconnect();
 ?>
 
 <!-- FORM MODAL ADD TEACHER  -->
- 
+
 
 <style>
- 
-    .text-sm{
-        font-size: 0.7em;
-    }
+
 </style>
 
 
 <!-- TABLE -->
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="data-table">
 
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h4 class="text-black">List of Enrolled Students</h4>
+                        <h5 class="text-black">List of Registered Students</h5>
                         <div class="d-flex">
                             <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#enroll" data-bs-whatever="@fat">
-                                <i class="bi bi-person-plus-fill me-1"></i>Enroll Student
+                                <i class="bi bi-person-plus-fill me-1"></i>Register Student
                             </button>
-                            <button class="btn btn-secondary btn-sm ms-2 btn-animate"><a class="nav-link " href="index.php?page=new_student"><i class="bi bi-arrow-left-circle me-1"></i>Back</a>
-                            </button>
+
                         </div>
                     </div>
                     <!-- NOTIFICATION -->
@@ -79,11 +75,11 @@ $mySQLFunction->disconnect();
                                 <tr>
                                     <th scope="col" class="small text-center">Student name</th>
                                     <th scope="col" class="small text-center">Strand</th>
-                                    <th scope="col" class="small text-center">Section</th>
+                                    <th scope="col" class="small text-center">Section and Grade level</th>
                                     <th scope="col" class="small text-center">Adviser</th>
                                     <th scope="col" class="small text-center">Semester</th>
                                     <th scope="col" class="small text-center">School year</th>
-                                    <th scope="col" class="small text-center">Date Enrolled</th>
+                                    <th scope="col" class="small text-center">Date Registered</th>
                                     <th scope="col" class="small text-center">Status</th>
                                     <th scope="col" class="text-center">Action</th>
                                 </tr>
@@ -99,7 +95,7 @@ $mySQLFunction->disconnect();
                                         echo '<tr>';
                                         echo '<td>' . ucwords(strtolower($row["student"])) . '</td>';
                                         echo '<td>' . $row["strand_name"] . '</td>';
-                                        echo '<td>' . $row["section_name"] . '</td>';
+                                        echo '<td>' . $row["section_name"] . ' ' . $row["grade_lvl"] . ' </td>';
                                         echo '<td>' . ucwords(strtolower($row["adviser"])) . '</td>';
                                         echo '<td>' . $row["enroll_semester"] . '</td>';
                                         echo '<td>' . $row["sy"] . '</td>';
@@ -231,130 +227,23 @@ $mySQLFunction->disconnect();
                     echo '<span class="date-display text-sm">SY ' . htmlspecialchars($schoolYear) . '</span>';;
                 }
             } else {
-                echo '<div class="alert alert-warning">No school year and semester found.</div>';
+                echo '<div class="alert alert-warning text-sm">No school year and semester found.</div>';
             }
             ?>
         </div>
     </div>
-       <?php
-    include("../includes/footer.php");
+    <?php
+    include("../faculty/includes/extension.php");
     ?>
 </main>
 
- 
-<!-- <script src="../assets/js/enrollment.js"></script> -->
-<!-- PDF ,EXCEL, PRINT ,CVS -->
+<!-- PAGINATION AND SEARCH -->
 <script>
     $(document).ready(function() {
         $("#example").DataTable({
-            dom: "Bfrtip", // Include buttons in the dom
-            buttons: [{
-                    extend: "copy",
-                    text: '<i class="fas fa-copy"></i> Copy',
-                    className: "btn btn-sm btn-primary",
-                    titleAttr: "Copy to clipboard",
-                },
-                {
-                    extend: "csvHtml5",
-                    text: '<i class="fas fa-file-csv"></i> CSV',
-                    className: "btn btn-sm btn-success",
-                    titleAttr: "Export as CSV",
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 8)
-                            return index !== 8;
-                        },
-                    },
-                },
-                {
-                    extend: "excelHtml5",
-                    text: '<i class="fas fa-file-excel"></i> Excel',
-                    className: "btn btn-sm btn-success",
-                    titleAttr: "Export as Excel",
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            return index !== 8;
-                        },
-                    },
-                },
-                {
-                    extend: "pdfHtml5",
-                    text: '<i class="fas fa-file-pdf"></i> PDF',
-                    className: "btn btn-sm btn-danger",
-                    titleAttr: "Export as PDF",
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            return index !== 8;
-                        },
-                    },
-                },
-                {
-                    extend: "print",
-                    text: '<i class="fas fa-print"></i> Print',
-                    className: "btn btn-sm btn-info",
-                    titleAttr: "Print Table",
-                    autoPrint: true,
-                    customize: function(win) {
-                        // Hide the LMS heading during print
-                        $(win.document.body)
-                            .find('h1:contains("LMS")') // Adjust the selector if needed
-                            .css("display", "none");
-
-                        $(win.document.body)
-                            .css("font-size", "10pt")
-                            .prepend(
-                                // This is the container that holds both left and right aligned text
-                                '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-                                // Left-aligned: List of Enrolled Students
-                                '<div style="text-align:left; flex: 1;">' +
-                                "<h5 style='font-size: 14px;'>List of Enrolled Students</h5>" +
-                                "<small>" +
-                                schoolYearSemester +
-                                "</small>" + // Inject the dynamically generated school year/semester
-                                "</div>" +
-                                // Right-aligned: Computer Systems Institute
-                                '<div style="text-align:right; flex: 1;">' +
-                                "<h6>Computer Systems Institute</h6>" +
-                                "<small>F. Imperial st., Brgy. 36 - Capantawan, Legazpi City</small><br>" +
-                                "</div>" +
-                                "</div>"
-                            );
-
-                        $(win.document.body)
-                            .find("table thead th")
-                            .css("background-color", "#007bff") // Header color
-                            .css("color", "#ffffff")
-                            .css("padding", "10px");
-
-                        $(win.document.body)
-                            .find("table")
-                            .addClass("compact")
-                            .css("font-size", "inherit");
-                    },
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            return index !== 8;
-                        },
-                    },
-                },
-            ],
+            // dom: "Bfrtip", // Include buttons in the dom
+            responsive: true,
+            buttons: [],
         });
     });
-</script>
-
-<?php
-$school_year_semester = '';
-
-if (!empty($activeSchoolYears) && !empty($activeSem)) {
-    foreach ($activeSchoolYears as $index => $schoolYear) {
-        $school_year_semester .= '<div class="me-3 text-success">' . htmlspecialchars($activeSem[$index]) . '</div>';
-        $school_year_semester .= '<span class="">SY ' . htmlspecialchars($schoolYear) . '</span>';
-    }
-} else {
-    $school_year_semester = '<div class="alert alert-warning">No school year and semester found.</div>';
-}
-?>
-
-<script>
-    var schoolYearSemester = `<?php echo $school_year_semester; ?>`;
 </script>

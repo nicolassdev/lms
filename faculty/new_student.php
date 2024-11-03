@@ -27,28 +27,22 @@ $mySQLFunction->disconnect();
         padding: 0.1rem;
         /* Adjust padding */
     }
-    .text-sm{
-        font-size: 0.7em;
-    }
 </style>
 
 
 <!-- TABLE -->
 
 
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-2">
+<main class="col-md-12 ms-sm-auto col-lg-10">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h4 class="text-black">List of Students</h4>
-
+                        <h5 class="text-black">List of Students</h5>
                         <div class="d-flex">
-                            <button class="btn btn-primary btn-sm btn-animate"><a class="nav-link " href="index.php?page=register_student"> <i class="bi bi-bookmark-star me-1"></i>Enrollment</a>
-                            </button>
 
-                            <button type="button" class="btn btn-primary btn-sm btn-animate ms-2" data-bs-toggle="modal" data-bs-target="#student" data-bs-whatever="@fat">
+                            <button type="button" class="btn btn-primary btn-sm ms-2 btn-animate" data-bs-toggle="modal" data-bs-target="#student" data-bs-whatever="@fat">
                                 <i class="bi bi-person-plus-fill me-1"></i>Add Student
                             </button>
                         </div>
@@ -283,9 +277,10 @@ $mySQLFunction->disconnect();
                                                     <div class="modal-body p-4">
                                                         <form action="./includes/Operation/updateNewStudent.php" method="POST" class="row g-3 needs-validation" novalidate id="editTeacherForm' . htmlspecialchars($row['stu_lrn']) . '">
                                                             <!-- Use hidden input -->
+                                                            <div class="row">
                                                             <input type="hidden" name="lrnID" value="' . htmlspecialchars($row['stu_lrn']) . '">
                                     
-                                                            <div class="col-12 mb-3">
+                                                            <div class="col-md-4 mb-3">
                                                                 <label for="firstName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">First name</label>
                                                                 <input type="text" class="form-control" name="firstname" value="' . htmlspecialchars($row['stu_fname']) . '" required>
                                                                 <div class="invalid-feedback">
@@ -293,12 +288,12 @@ $mySQLFunction->disconnect();
                                                                 </div>
                                                             </div>
                                     
-                                                            <div class="col-12 mb-3">
+                                                            <div class="col-md-4 mb-3">
                                                                 <label for="middleName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Middle name</label>
                                                                 <input type="text" class="form-control" name="middlename" value="' . htmlspecialchars($row['stu_mname']) . '">
                                                             </div>
                                     
-                                                            <div class="col-12 mb-3">
+                                                            <div class="col-md-4 mb-3">
                                                                 <label for="lastName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Last name</label>
                                                                 <input type="text" class="form-control" name="lastname" value="' . htmlspecialchars($row['stu_lname']) . '" required>
                                                                 <div class="invalid-feedback">
@@ -314,7 +309,8 @@ $mySQLFunction->disconnect();
                                                                 </div>
                                                             </div>
                                     
-                                                            <div class="col-12 mb-3">
+                                                            
+                                                            <div class="col-md-6 mb-3">
                                                                 <label for="contactNumber' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Contact</label>
                                                                 <small style="color:red">( Please enter a valid 10-digit number starting with 9. )</small>
                                                                 <div class="input-group has-validation">
@@ -326,7 +322,8 @@ $mySQLFunction->disconnect();
                                                                 </div>
                                                             </div>
                                     
-                                                            <div class="col-12 mb-3">
+                                                           
+                                                            <div class="col-md-6 mb-3">
                                                                 <label for="gender' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Gender</label>
                                                                 <select class="form-select" name="gender" id="gender' . htmlspecialchars($row['stu_lrn']) . '" required>
                                                                     <option disabled value="">Choose...</option>
@@ -346,7 +343,7 @@ $mySQLFunction->disconnect();
                                                                 </div>
                                                             </div>
                                     
-                                                            <div class="col-12 mb-3">
+                                                             <div class="col-md-6 mb-3">
                                                                 <label for="dob' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Date of Birth</label>
                                                                 <input type="date" class="form-control" name="dob" id="dob' . htmlspecialchars($row['stu_dob']) . '" value="' . htmlspecialchars($row['stu_dob']) . '" required>
                                                                 <div class="invalid-feedback">
@@ -354,7 +351,7 @@ $mySQLFunction->disconnect();
                                                                 </div>
                                                             </div>
                                     
-                                                            <div class="col-12 mb-3">
+                                                             <div class="col-md-6 mb-3">
                                                                 <label for="pob' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Place of Birth</label>
                                                                 <input type="text" class="form-control" name="pob" value="' . htmlspecialchars($row['stu_pob']) . '" required>
                                                                 <div class="invalid-feedback">
@@ -362,7 +359,7 @@ $mySQLFunction->disconnect();
                                                                 </div>
                                                             </div>
                                     
-                                                            <div class="modal-header">
+                                                            <div class="modal-header mb-2">
                                                                 <h4 class="modal-title text-primary">Guardian Details</h4> 
                                                             </div>
                                     
@@ -398,12 +395,15 @@ $mySQLFunction->disconnect();
                                                                 <button name="submit" class="btn btn-primary w-100" type="submit">Save</button>
                                                                 <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm(\'' . htmlspecialchars($row['stu_lrn']) . '\')">Cancel</button>
                                                             </div>
+                                                            </div>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                         
                                     
+
                                         <script>
                                             function resetForm(id) {
                                                 var form = document.getElementById("editTeacherForm" + id);
@@ -414,6 +414,7 @@ $mySQLFunction->disconnect();
                                             }
                                         </script>
                                     ';
+
 
 
 
@@ -471,96 +472,19 @@ $mySQLFunction->disconnect();
             ?>
         </div>
     </div>
+
     <?php
-    include("../includes/footer.php");
-    ?>
-        <?php
     include("../faculty/includes/extension.php");
     ?>
 </main>
- 
-<!-- PDF ,EXCEL, PRINT ,CVS -->
+
+<!-- PAGINATION AND SEARCH -->
 <script>
     $(document).ready(function() {
         $("#example").DataTable({
-            dom: "Bfrtip", // Include buttons in the dom
-            buttons: [
-                "copy",
-                {
-                    extend: "csvHtml5",
-                    text: "CSV",
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 13)
-                            return index !== 13;
-                        },
-                    },
-                },
-                {
-                    extend: "excelHtml5",
-                    text: "Excel",
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 13)
-                            return index !== 13;
-                        },
-                    },
-                },
-                {
-                    extend: "pdfHtml5",
-                    text: "PDF",
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 13)
-                            return index !== 13;
-                        },
-                    },
-                },
-                {
-                    extend: "print",
-                    text: "Print",
-                    autoPrint: true, // This will print in the same tab (no new window)
-                    customize: function(win) {
-                        // Custom styling or adjustments for print can go here
-                        $(win.document.body)
-                            .find('h1:contains("LMS")') // Adjust the selector if needed
-                            .css("display", "none");
-
-                        $(win.document.body)
-                            .css("font-size", "10pt")
-                            .prepend(
-                                // This is the container that holds both left and right aligned text
-                                '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-                                // Left-aligned: List of Enrolled Students
-                                '<div style="text-align:left; flex: 1;">' +
-                                "<h5 style='font-size: 14px;'>Enrolled Students</h5>" +
-                                "</div>" +
-                                // Right-aligned: Computer Systems Institute
-                                '<div style="text-align:right; flex: 1;">' +
-                                "<h6>Computer Systems Institute</h6>" +
-                                "<small>F. Imperial st., Brgy. 36 - Capantawan, Legazpi City</small><br>" +
-                                "</div>" +
-                                "</div>"
-                            );
-
-                        $(win.document.body)
-                            .find("table thead th")
-                            .css("background-color", "#007bff") // Header color
-                            .css("color", "#ffffff")
-                            .css("padding", "10px");
-                        $(win.document.body)
-                            .find("table")
-                            .addClass("compact") // Optional: Compact styling for the table in print view
-                            .css("font-size", "inherit");
-                    },
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 13)
-                            return index !== 13;
-                        },
-                    },
-                },
-            ],
+            // dom: "Bfrtip", // Include buttons in the dom
+            responsive: true,
+            buttons: [],
         });
     });
 </script>

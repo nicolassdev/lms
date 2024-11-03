@@ -32,6 +32,9 @@ foreach ($users as $user) {
     $fullName = ucwords(strtolower($user['firstname'] . ' ' . $user['lastname']));
     // echo "<p>$fullName</p>";
 }
+
+
+
 ?>
 
 
@@ -143,7 +146,7 @@ foreach ($users as $user) {
         <div class="container-fluid">
             <div class="row mt-4">
                 <!-- Sidebar -->
-                <nav id="sidebar" class="col-md-3 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
+                <nav id="sidebar" class="col-md-3 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 280px;">
                     <div class="position-sticky text-white ">
 
                         <div class="text-white ms-4 d-lg-none">
@@ -175,7 +178,7 @@ foreach ($users as $user) {
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=enrollment">
+                                <a class="nav-link active" href="index.php?page=enrolled">
                                     <i class="bi bi-bookmark-star me-1"></i>Enrolled Student
                                 </a>
                             </li>
@@ -196,11 +199,55 @@ foreach ($users as $user) {
                             </li>
 
 
+
+
+
+                            <!-- Dropdown for Subject -->
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=subject">
-                                    <i class="bi bi-journal-bookmark me-1"></i>Subject
+                                <a class="nav-link text-white" href="#subjectMenu" data-bs-toggle="collapse" aria-expanded="false" id="subjectDropdown">
+                                    <i class="bi bi-journal-bookmark me-1"></i> Subject
+                                    <i class="bi bi-chevron-down" style="margin-left: 48px;" id="subjectIcon"></i>
                                 </a>
+                                <ul class="collapse list-unstyled " id="subjectMenu">
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=subject">
+                                            <i class="bi bi-plus-circle me-2"></i> Subject Teacher
+                                        </a>
+                                    </li>
+
+                                    <!-- Nested Dropdown for Strand Subject -->
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link text-white" href="#strandSubjectMenu" data-bs-toggle="collapse" aria-expanded="false" id="strandDropdown">
+                                            <i class="bi bi-journals me-1"></i> Strand Subject
+                                            <i class="bi bi-chevron-down" style="margin-left: 10px;" id="strandIcon"></i>
+                                        </a>
+                                        <ul class="collapse list-unstyled ps-3" id="strandSubjectMenu">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="index.php?page=stem_subjects">STEM</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="index.php?page=abm_subjects">ABM</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="index.php?page=humss_subjects">HUMSS</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="index.php?page=gas_subjects">GAS</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="index.php?page=css_subjects">CSS</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="index.php?page=cp_subjects">CP</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
                             </li>
+
+
+
+
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=settings">
                                     <i class="bi bi-gear me-1"></i>Settings
@@ -246,5 +293,48 @@ foreach ($users as $user) {
     </header>
 
 
+
+
+
+    <!-- JavaScript to toggle icons using Bootstrap collapse events -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const subjectIcon = document.getElementById("subjectIcon");
+            const strandIcon = document.getElementById("strandIcon");
+
+            // Immediate icon toggle on click
+            document.getElementById("subjectDropdown").addEventListener("click", function() {
+                toggleIcon(subjectIcon);
+            });
+
+            document.getElementById("strandDropdown").addEventListener("click", function() {
+                toggleIcon(strandIcon);
+            });
+
+            // Confirm final state based on collapse event
+            document.getElementById("subjectMenu").addEventListener("shown.bs.collapse", function() {
+                subjectIcon.className = "bi bi-chevron-up";
+            });
+            document.getElementById("subjectMenu").addEventListener("hidden.bs.collapse", function() {
+                subjectIcon.className = "bi bi-chevron-down";
+            });
+
+            document.getElementById("strandSubjectMenu").addEventListener("shown.bs.collapse", function() {
+                strandIcon.className = "bi bi-chevron-up";
+            });
+            document.getElementById("strandSubjectMenu").addEventListener("hidden.bs.collapse", function() {
+                strandIcon.className = "bi bi-chevron-down";
+            });
+
+            // Function to toggle icon immediately
+            function toggleIcon(icon) {
+                if (icon.classList.contains("bi-chevron-down")) {
+                    icon.className = "bi bi-chevron-up";
+                } else {
+                    icon.className = "bi bi-chevron-down";
+                }
+            }
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
