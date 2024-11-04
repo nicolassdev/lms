@@ -54,6 +54,14 @@ switch ($page) {
         require_once 'teacher_report.php';
         break;
 
+        /** 
+         student root */
+
+    case "student_accounts":
+        require_once 'student_accounts.php';
+        break;
+    
+
     default:
         require_once 'dashboard.php'; // Default page is 'home'
         break;

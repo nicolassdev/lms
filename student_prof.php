@@ -193,9 +193,9 @@ $mySQLFunction->disconnect();
 
                         <!-- SWITCHING IMAGE IF USER IS MALE OR FEMALE  -->
                         <?php if ($studentInfo['stu_gender'] === "MALE") { ?>
-                            <img src="./assets/Upload/malestudent.webp" alt="Profile Image" class="profile-img-circle mb-2">
+                            <img src="./assets/Upload/malestudent.webp" alt="Profile Image"  draggable="false"  class="profile-img-circle mb-2">
                         <?php } else { ?>
-                            <img src="./assets/Upload/femalestudent.webp" alt="Profile Image" class="profile-img-circle mb-2">
+                            <img src="./assets/Upload/femalestudent.webp" alt="Profile Image"  draggable="false"  class="profile-img-circle mb-2">
                         <?php } ?>
 
 
@@ -263,7 +263,7 @@ $mySQLFunction->disconnect();
                                             echo htmlspecialchars($strand["strand_name"]);
                                         }
                                     } else {
-                                        echo '<div class="text-danger">Strand name information not available !</div>';
+                                        echo '<div class="text-danger">No strand assigned.</div>';
                                     }
                                     ?>
                                 </p>
@@ -277,7 +277,7 @@ $mySQLFunction->disconnect();
                                             echo ucwords(strtolower($section["grade_lvl"])) . ' - ' . htmlspecialchars($section["section_name"]) . ' <br>'; // Display each subject with strand code
                                         }
                                     } else {
-                                        echo '<div class="text-danger">Section information not available !</div>';
+                                        echo '<div class="text-danger">No section assigned to this student.</div>';
                                     }
                                     ?>
                                 </p>

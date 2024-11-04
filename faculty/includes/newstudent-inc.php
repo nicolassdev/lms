@@ -88,8 +88,7 @@ if (!isset($_POST["submit"])) {
         $mySQLFunction->insert("STUDENT", $studentColumns, $studentValues);
 
         // Set success session variable and redirect
-        // $_SESSION['insert_student'] = true;
-        $_SESSION['generate_pass'] = "Student password is: " . $userpwd;
+        $_SESSION['insert_student'] = true;
         header("Location: ../index.php?page=new_student");
     } catch (Exception $e) {
         // Set error session variable and redirect

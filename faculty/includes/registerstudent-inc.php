@@ -82,7 +82,7 @@ try {
     $mySQLFunction->con->commit();
 
     // Set session success message
-    $_SESSION['insert_enrolled'] = true;
+    $_SESSION['insert_registered'] = true;
     header("Location: ../index.php?page=register_student");
     exit();
 } catch (Exception $e) {

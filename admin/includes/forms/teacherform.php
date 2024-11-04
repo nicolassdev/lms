@@ -6,7 +6,7 @@
             <div class="modal-body">
                 <form id="teacherForm" action="./includes/teacher-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation " novalidate>
                     <div class="modal-header">
-                        <h1 class="modal-title fs-3 text-primary">Create Account</h1>
+                        <h1 class="modal-title fs-4 text-primary">Create Account</h1>
 
                     </div>
 
@@ -30,7 +30,7 @@
           </div> -->
 
                     <div class="modal-header">
-                        <h1 class="modal-title fs-3 text-primary">Teacher Details</h1>
+                        <h1 class="modal-title fs-4 text-primary">Teacher Details</h1>
                     </div>
 
                     <div class="col-md-5">

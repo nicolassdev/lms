@@ -4,7 +4,7 @@
 $host = 'localhost';
 $dbname = 'lms_db';
 $username = 'root';
-$password = 'Nicolas051002';
+$password = '';
 
 // Establish the database connection
 try {
@@ -175,6 +175,11 @@ if (isset($_SESSION['teacher_id'])) {
                                         </a>
                                     </li>
                                     <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=student_accounts">
+                                            <i class="bi bi-database-fill me-2"></i>Student Accounts
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
                                         <a class="nav-link active" href="index.php?page=register_student">
                                             <i class="bi bi-person-check me-2"></i>Section Registration
 
@@ -187,9 +192,9 @@ if (isset($_SESSION['teacher_id'])) {
 
                                         </a>
                                     </li>
+
                                 </ul>
                             </li>
-
 
 
                             <li class="nav-item">

@@ -11,7 +11,7 @@ if (!isset($_SESSION["teacher_id"])) {
     $mySQLFunction->delete("enroll", "stu_lrn", $_GET["id"]);
 
 
-    $_SESSION['deleted'] = "Enrollment record has been marked as deleted successfully.";
+    $_SESSION['deleted'] = "Registration record has been marked as deleted successfully.";
     header("location:../../index.php?page=register_student");
     exit();
     $mySQLFunction->disconnect();

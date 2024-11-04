@@ -124,8 +124,8 @@ class myDataBase
 
 
 
-        // Construct the ID: <last-digit-of-year>-<MMDD>-<4-random-digits>
-        $studPassword = "csi-{$year}-{$day}{$dobyear}{$month}";    //csi-2024-051002
+        // Construct the ID: csi <last-digit-of-year>-<MMDD>-
+        $studPassword = "CSI-{$year}-{$day}{$dobyear}{$month}";    //csi-2024-051002
 
         return $studPassword;
     }
@@ -427,6 +427,25 @@ class myDataBase
         $stored = ($this->con->query($sql))->fetch_assoc();
         return $stored;
     }
+
+    // GET STUDENT ACCOUNTS
+// GET STUDENT ACCOUNTS
+public function getStudentAccounts($role = 'STUDENT')
+{
+    // Prepare the query to get only users with the specified role and their corresponding student info
+    $stmt = $this->con->prepare("
+        SELECT u.id, u.username, u.password, u.role, u.date_added, s.stu_dob 
+        FROM `users` u 
+        JOIN `student` s ON u.username = s.stu_lrn 
+        WHERE u.role = ? 
+        ORDER BY u.id
+    ");
+    $stmt->bind_param('s', $role); // 's' denotes the type (string)
+    $stmt->execute();
+    $stored = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+    return $stored;
+}
 
 
 

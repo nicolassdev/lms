@@ -140,7 +140,7 @@ if (isset($_SESSION['update_student']) && $_SESSION['update_student'] == true) {
 }
 
 //INSERT ENROLLED MODAL
-if (isset($_SESSION['insert_enrolled']) && $_SESSION['insert_enrolled'] == true) {
+if (isset($_SESSION['insert_registered']) && $_SESSION['insert_registered'] == true) {
     echo ' 
             <div class="modal fade" id="insertModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -149,7 +149,7 @@ if (isset($_SESSION['insert_enrolled']) && $_SESSION['insert_enrolled'] == true)
                         <div class="text-success">
                         <i class="bi bi-check-circle fs-1 "></i><br><br>
                         </div>
-                        <p class="mb-4"> Student has been enrolled.</p>
+                        <p class="mb-4"> Student has been registered.</p>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5 ">
                         <button class="btn btn-success me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
@@ -164,7 +164,7 @@ if (isset($_SESSION['insert_enrolled']) && $_SESSION['insert_enrolled'] == true)
             });
           </script>";
     ';
-    unset($_SESSION['insert_enrolled']); // Unset the session variable
+    unset($_SESSION['insert_registered']); // Unset the session variable
 }
 
 
