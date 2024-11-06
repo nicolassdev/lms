@@ -24,6 +24,9 @@ include "./includes/alert-notify.php";
 $page = isset($_GET["page"]) ? $_GET["page"] : "student_home";
 
 // Use switch case to load the appropriate page
+/** 
+ This is Student Routes 
+ */
 switch ($page) {
     case "student_module":
         require_once 'student_module.php';
@@ -44,7 +47,9 @@ switch ($page) {
     case "student_grade":
         require_once 'student_grade.php';
         break;
-
+    case "student_account":
+        require_once 'student_account.php';
+        break;
     default:
         require_once 'student_home.php'; // Default page is 'home'
         break;

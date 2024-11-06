@@ -75,7 +75,8 @@ $mySQLFunction->disconnect();
                                 <tr>
                                     <th scope="col" class="small text-center">Student name</th>
                                     <th scope="col" class="small text-center">Strand</th>
-                                    <th scope="col" class="small text-center">Section and Grade level</th>
+                                    <th scope="col" class="small text-center">Section</th>
+                                    <th scope="col" class="small text-center">Grade level</th>
                                     <th scope="col" class="small text-center">Adviser</th>
                                     <th scope="col" class="small text-center">Semester</th>
                                     <th scope="col" class="small text-center">School year</th>
@@ -95,7 +96,8 @@ $mySQLFunction->disconnect();
                                         echo '<tr>';
                                         echo '<td>' . ucwords(strtolower($row["student"])) . '</td>';
                                         echo '<td>' . $row["strand_name"] . '</td>';
-                                        echo '<td>' . $row["section_name"] . ' ' . $row["grade_lvl"] . ' </td>';
+                                        echo '<td>' . $row["section_name"] . ' </td>';
+                                        echo '<td>' . $row["grade_lvl"] . '  </td>';
                                         echo '<td>' . ucwords(strtolower($row["adviser"])) . '</td>';
                                         echo '<td>' . $row["enroll_semester"] . '</td>';
                                         echo '<td>' . $row["sy"] . '</td>';

@@ -37,7 +37,7 @@ $mySQLFunction->disconnect();
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h5 class="text-black">Student Accounts</h5>
+                        <h5 class="text-black">List of Student Accounts</h5>
                         <div class="d-flex">
                         </div>
                     </div>
@@ -77,7 +77,7 @@ $mySQLFunction->disconnect();
                                     <th scope="col">ID</th>
                                     <th scope="col">Username</th>
                                     <th scope="col">Generated Password</th>
-                                    <th scope="col">Role</th>
+                                    <!-- <th scope="col">Role</th> -->
                                     <th scope="col">Date Added</th>
                                     <th scope="col" class="text-center" style="width: 100px;">Action</th><!-- colspan should be 2 -->
                                 </tr>
@@ -85,27 +85,27 @@ $mySQLFunction->disconnect();
                             <tbody>
                                 <?php
                                 $mySQLFunction->connection();
-                                     $result = $mySQLFunction->getStudentAccounts('STUDENT');
-                                        if (!empty($result)) {
-                                            $count = 1;
-                                            foreach ($result as $row) {
-                                                // Create a DateTime object and format the added_date
-                                                $addedDate = new DateTime($row['date_added']); // Create a DateTime object for the current row
-                                                $formattedDate = $addedDate->format('F j, Y'); // Format to "August 11, 2024"
-                                                // Check if stu_dob is set and valid before using it
-                                                if (isset($row['stu_dob'])) {
-                                                    $formattedPassword = $mySQLFunction->generateStudentPassword($row['stu_dob']);
-                                                } else {
-                                                    $formattedPassword = "N/A"; // Handle missing DOB
-                                                }
+                                $result = $mySQLFunction->getStudentAccounts('STUDENT');
+                                if (!empty($result)) {
+                                    $count = 1;
+                                    foreach ($result as $row) {
+                                        // Create a DateTime object and format the added_date
+                                        $addedDate = new DateTime($row['date_added']); // Create a DateTime object for the current row
+                                        $formattedDate = $addedDate->format('F j, Y'); // Format to "August 11, 2024"
+                                        // Check if stu_dob is set and valid before using it
+                                        if (isset($row['stu_dob'])) {
+                                            $formattedPassword = $mySQLFunction->generateStudentPassword($row['stu_dob']);
+                                        } else {
+                                            $formattedPassword = "N/A"; // Handle missing DOB
+                                        }
 
-                                                echo '<tr>';
-                                                echo '<td>' . $row["id"] . '</td>'; // Clickable ID
-                                                echo '<td>' . $row["username"] . '</td>';
-                                                echo '<td>' .  $formattedPassword . '</td>';
-                                                echo '<td>' . ucwords(strtolower($row["role"])) . '</td>';
-                                                echo '<td>' . $formattedDate . '</td>';
-                                                
+                                        echo '<tr>';
+                                        echo '<td>' . $row["id"] . '</td>'; // Clickable ID
+                                        echo '<td>' . $row["username"] . '</td>';
+                                        echo '<td>' .  $formattedPassword . '</td>';
+                                        // echo '<td>' . ucwords(strtolower($row["role"])) . '</td>';
+                                        echo '<td>' . $formattedDate . '</td>';
+
                                         echo '
                                             <td class="d-flex justify-content-center">
                                            
@@ -120,7 +120,7 @@ $mySQLFunction->disconnect();
                                             </td>
                                                 ';
                                         echo '</tr>';
- 
+
                                         //Modal for updating users 
                                         echo '
                                         <div class="modal fade" id="edit_student' . $row['id'] . '" tabindex="-1" aria-labelledby="teachModal" aria-hidden="true">
@@ -178,7 +178,7 @@ $mySQLFunction->disconnect();
 
 
                                         // Modal for deleting users
-                                            echo '
+                                        echo '
                                             <div class="modal fade" id="del_student' . $row['id'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered modal-md">
                                                     <div class="modal-content shadow-lg">
@@ -199,8 +199,7 @@ $mySQLFunction->disconnect();
                                                     </div>
                                                 </div>
                                             </div>';
-                                      $count++;
- 
+                                        $count++;
                                     }
                                 } else {
                                     echo '<tr>
@@ -218,18 +217,7 @@ $mySQLFunction->disconnect();
                 </div>
             </div>
         </div>
-        <div class="ms-2">
-            <?php
-            if (!empty($activeSchoolYears && !empty($activeSem))) {
-                foreach ($activeSchoolYears as $index => $schoolYear) {
-                    echo '<div class="me-3 text-sm date-display">' . htmlspecialchars($activeSem[$index]) . '<i class="bi bi-check-circle-fill text-success ms-2"></i> </div>';
-                    echo '<span class="date-display text-sm">SY ' . htmlspecialchars($schoolYear) . '</span>';;
-                }
-            } else {
-                echo '<div class="alert alert-warning">No school year and semester found.</div>';
-            }
-            ?>
-        </div>
+
     </div>
 
     <?php
@@ -248,15 +236,3 @@ $mySQLFunction->disconnect();
         });
     });
 </script>
-
-
-
-
-
-
-
-
-
-
-
- 

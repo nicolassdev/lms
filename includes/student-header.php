@@ -4,7 +4,7 @@
 $host = 'localhost';
 $dbname = 'lms_db';
 $username = 'root';
-$password = '';
+$password = 'Nicolas051002';
 
 // Establish the database connection
 try {
@@ -103,8 +103,8 @@ if (isset($_SESSION['stu_lrn'])) {
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                         <li class="ms-3"><i class="bi bi-patch-check-fill text-success"></i> <?php echo ucwords(strtolower($_SESSION["user_role"])) ?> </li>
                         <hr class="mx-3 my-1">
-                        <li><a class="dropdown-item" href="?page=student_prof">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="?page=student_prof">My Profile</a></li>
+                        <li><a class="dropdown-item" href="?page=student_account">Account</a></li>
                         <li>
                             <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                 Logout
@@ -113,6 +113,7 @@ if (isset($_SESSION['stu_lrn'])) {
                     </ul>
                 </div>
             </div>
+
         </div>
     </nav>
 
@@ -144,7 +145,7 @@ if (isset($_SESSION['stu_lrn'])) {
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=student_prof">
-                                    <i class="bi bi-person-lines-fill me-2"></i> Profile
+                                    <i class="bi bi-person-lines-fill me-2"></i>Profile
                                 </a>
                             </li>
                             <li class="nav-item">

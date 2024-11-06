@@ -293,7 +293,7 @@ include "../admin/includes/Forms/enrollmentform.php";
                     customize: function(win) {
                         // Hide the LMS heading during print
                         $(win.document.body)
-                            .find('h1:contains("LMS")') // Adjust the selector if needed
+                            .find('h1:contains("Learning Management System")') // Adjust the selector if needed
                             .css("display", "none");
 
                         $(win.document.body)
@@ -303,7 +303,7 @@ include "../admin/includes/Forms/enrollmentform.php";
                                 '<div style="display: flex; justify-content: space-between; align-items: center;">' +
                                 // Left-aligned: List of Enrolled Students
                                 '<div style="text-align:left; flex: 1;">' +
-                                "<h5 style='font-size: 14px;'>List of Enrolled Students</h5>" +
+                                "<h5 style='font-size: 14px; margin-left: 15px;'>List of Enrolled Students</h5>" +
                                 "<small>" +
                                 schoolYearSemester +
                                 "</small>" + // Inject the dynamically generated school year/semester

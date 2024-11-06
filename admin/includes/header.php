@@ -3,7 +3,7 @@
 $host = 'localhost';
 $dbname = 'lms_db';
 $username = 'root';
-$password = '';
+$password = 'Nicolas051002';
 
 
 // Establish the database connection
@@ -159,7 +159,7 @@ foreach ($users as $user) {
 
 
                         <ul class="nav flex-column ">
-                            <div class="nav-link fw-bold dasboard d-none d-lg-inline">
+                            <div class="nav-link fw-bold dasboard d-none d-lg-inline mb-3">
                                 DASHBOARD
                             </div>
                             <li class="nav-item">
@@ -179,7 +179,7 @@ foreach ($users as $user) {
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=enrolled">
-                                    <i class="bi bi-bookmark-star me-1"></i>Enrolled Student
+                                    <i class="bi bi-bookmark-star me-1"></i>Enrolled Students
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -197,7 +197,6 @@ foreach ($users as $user) {
                                     <i class="bi bi-building-fill-add me-1"></i>Section
                                 </a>
                             </li>
-
 
 
 

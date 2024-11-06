@@ -268,7 +268,7 @@ if (isset($_SESSION['insert_error']) && $_SESSION['insert_error'] == true) {
                         <div class="text-danger">
                             <i class="bbi bi-exclamation-circle fs-1"></i><br><br>
                         </div>
-                        <p class="mb-4"> Username or Faculty Details has been already taken.</p>
+                        <p class="mb-4"> Username or Faculty Details have been already taken.</p>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5 ">
                         <button class="btn btn-danger me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
@@ -297,7 +297,7 @@ if (isset($_SESSION['error_student']) && $_SESSION['error_student'] == true) {
                         <div class="text-danger">
                             <i class="bbi bi-exclamation-circle fs-1"></i><br><br>
                         </div>
-                        <p class="mb-4"> Username or Student Details has been already taken.</p>
+                        <p class="mb-4"> Username or Student Details have been already taken.</p>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5 ">
                         <button class="btn btn-danger me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
@@ -327,7 +327,7 @@ if (isset($_SESSION['error_principal']) && $_SESSION['error_principal'] == true)
                             <div class="text-danger">
                                 <i class="bbi bi-exclamation-circle fs-1"></i><br><br>
                             </div>
-                            <p class="mb-4"> Username has been already taken.</p>
+                            <p class="mb-4">Username has been already taken.</p>
                         </div>
                         <div class="d-flex justify-content-center mt-3 mb-5 ">
                             <button class="btn btn-danger me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
@@ -357,7 +357,7 @@ if (isset($_SESSION['error_strand']) && $_SESSION['error_strand'] == true) {
                         <div class="text-danger">
                             <i class="bbi bi-exclamation-circle fs-1"></i><br><br>
                         </div>
-                        <p class="mb-4"> Strand name or description has been already taken.</p>
+                        <p class="mb-4"> Strand name or description have been already taken.</p>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5 ">
                         <button class="btn btn-danger me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
@@ -557,7 +557,7 @@ if (isset($_SESSION['update_section']) && $_SESSION['update_section'] == true) {
                         <div class="text-success">
                             <i class="bi bi-check-circle fs-1 "></i><br><br>
                         </div>
-                        <p class="mb-4">Section     has been updated successfully.</p>
+                        <p class="mb-4">Section has been updated successfully.</p>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5 ">
                         <button class="btn btn-success me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>

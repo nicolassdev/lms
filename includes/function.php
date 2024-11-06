@@ -221,6 +221,15 @@ class myDataBase
         return $result;
     }
 
+    public function getAccountStudent($id)
+    {
+        $sql = "SELECT * FROM `users` WHERE id = ?";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result;
+    }
 
     public function getTeacherInfo($teacher_id)
     {
@@ -429,23 +438,23 @@ class myDataBase
     }
 
     // GET STUDENT ACCOUNTS
-// GET STUDENT ACCOUNTS
-public function getStudentAccounts($role = 'STUDENT')
-{
-    // Prepare the query to get only users with the specified role and their corresponding student info
-    $stmt = $this->con->prepare("
+    // GET STUDENT ACCOUNTS
+    public function getStudentAccounts($role = 'STUDENT')
+    {
+        // Prepare the query to get only users with the specified role and their corresponding student info
+        $stmt = $this->con->prepare("
         SELECT u.id, u.username, u.password, u.role, u.date_added, s.stu_dob 
         FROM `users` u 
         JOIN `student` s ON u.username = s.stu_lrn 
         WHERE u.role = ? 
         ORDER BY u.id
     ");
-    $stmt->bind_param('s', $role); // 's' denotes the type (string)
-    $stmt->execute();
-    $stored = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    $stmt->close();
-    return $stored;
-}
+        $stmt->bind_param('s', $role); // 's' denotes the type (string)
+        $stmt->execute();
+        $stored = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $stored;
+    }
 
 
 

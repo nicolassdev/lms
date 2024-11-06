@@ -17,7 +17,7 @@
                          <input type="text" class="form-control" name="section" required>
 
                          <div class="invalid-feedback">
-                             Please select a section name.
+                             Please input a section name.
                          </div>
                      </div>
 
@@ -57,7 +57,7 @@
                                 ?>
                          </select>
                          <div class="invalid-feedback">
-                             Please input a strand name.
+                             Please select a strand name.
                          </div>
                      </div>
 
