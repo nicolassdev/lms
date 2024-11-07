@@ -395,10 +395,12 @@ class myDataBase
     //CHECK USER LOGIN 
     function checkLogin($username, $password)
     {
+        // Escape the inputs to prevent SQL injection
         $username = mysqli_real_escape_string($this->con, $username);
         $password = mysqli_real_escape_string($this->con, $password);
 
-        $query = "SELECT * FROM `users` WHERE `username` = '$username' AND `password` = '$password'";
+        // Run a case-sensitive query by using the BINARY keyword
+        $query = "SELECT * FROM `users` WHERE BINARY `username` = '$username' AND BINARY `password` = '$password'";
         $result = $this->con->query($query);
 
         if (mysqli_num_rows($result) > 0) {

@@ -67,7 +67,7 @@ $mySQLFunction->disconnect();
                         <div class="row justify-content-between">
                             <!-- Left side: Profile -->
                             <div class="col-md-6 col-12 text-center">
-                                <div class="profile-header mb-5">
+                                <div class="profile-header" style="margin-top: 60px;">
                                     <!-- SWITCHING IMAGE IF USER IS MALE OR FEMALE -->
                                     <?php if ($studentInfo['stu_gender'] === "MALE") { ?>
                                         <img src="./assets/Upload/malestudent.webp" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
@@ -105,6 +105,13 @@ $mySQLFunction->disconnect();
                                         <div class="invalid-feedback">Please enter the username.</div>
                                     </div>
 
+                                    <!-- Old Password Field -->
+                                    <div class="mb-2">
+                                        <small>Enter old password <span class="text-danger">*</span></small>
+                                        <input type="password" name="oldpass" placeholder="Enter the old password" class="form-control" required>
+                                        <div class="invalid-feedback">Please enter the old password.</div>
+                                    </div>
+
                                     <!-- New Password Field -->
                                     <div class="mb-2">
                                         <small>New Password <span class="text-danger">*</span></small>
@@ -120,7 +127,7 @@ $mySQLFunction->disconnect();
                                         <small class="error-message text-danger" style="display: none;">Passwords do not match!</small>
                                     </div>
 
-                                    <div style="margin-bottom: 125px;">
+                                    <div style="margin-bottom: 50px;">
                                         <button name="submit" class="btn btn-success" type="submit">Update Account</button>
                                     </div>
                                 </form>
@@ -137,23 +144,6 @@ $mySQLFunction->disconnect();
 
 
 <script>
-    // for student account validation input
-    // JavaScript validation for matching passwords
-    // function validateForm() {
-    //     var newPass = document.getElementById("newpass").value;
-    //     var confirmPass = document.getElementById("confirmpass").value;
-
-    //     // Check if passwords match
-    //     if (newPass !== confirmPass) {
-    //         // Show error message if passwords don't match
-    //         document.querySelector(".error-message").style.display = "block";
-    //         return false; // Prevent form submission
-    //     }
-
-    //     // If everything is valid, return true to submit the form
-    //     return true;
-    // }
-
     // Bootstrap's custom validation
     (function() {
         "use strict";

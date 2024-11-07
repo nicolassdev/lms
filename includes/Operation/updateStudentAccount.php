@@ -1,5 +1,5 @@
 <?php
-session_start(); // Ensure session is started
+session_start();
 
 if (!isset($_SESSION["stu_lrn"])) {
     header("location:../../login.php?error=accessdenied");
@@ -8,36 +8,45 @@ if (!isset($_SESSION["stu_lrn"])) {
     include "../../includes/dbh-inc.php";
 
     try {
-        // Get the student ID from the POST data
+        // Get the student ID and old password input from the POST data
         $studentid = $_POST["studentid"];
+        $oldPasswordInput = trim($_POST["oldpass"]);
 
         // Establish the database connection
         $mySQLFunction->connection();
 
-        // Fetch the current user details
-        $userRow = $mySQLFunction->getUsers("id", $studentid);
+        // Fetch the current user details using getAccountStudent
+        $userRow = $mySQLFunction->getAccountStudent($studentid);
 
         if (!$userRow) {
             throw new Exception("User not found.");
         }
 
-        if (isset($_POST["submit"])) {
+        // Encrypt the provided old password to compare
+        $oldPasswordEncrypted = $mySQLFunction->encrypt($oldPasswordInput);
 
-            $studentid = $_POST["studentid"];
+        // Verify the old password
+        if ($oldPasswordEncrypted !== $userRow['password']) {
+            $_SESSION['password_error'] = "Incorrect old password. Please try again.";
+            header("location:/lms/index.php?page=student_account");
+            exit();
+        }
+
+        // Proceed to update if passwords match
+        if (isset($_POST["submit"])) {
             $username = trim($_POST["username"]);
-            $password = isset($_POST["newpass"]) ? trim($_POST["newpass"]) : null;
+            $newPassword = isset($_POST["newpass"]) ? trim($_POST["newpass"]) : null;
             $confirmPassword = isset($_POST["confirmpass"]) ? trim($_POST["confirmpass"]) : null;
 
-            // Password validation
-            if ($password !== $confirmPassword) {
-                $_SESSION['password_error'] = "Password does not match.";
+            // Confirm password validation
+            if ($newPassword !== $confirmPassword) {
+                $_SESSION['password_error'] = "Passwords do not match. Please try again.";
                 header("location:/lms/index.php?page=student_account");
                 exit();
             }
 
-            // Check if the new username already exists
+            // Check for duplicate username
             $existingUser = $mySQLFunction->getUsers("username", $username);
-
             if ($existingUser && $existingUser['id'] != $studentid) {
                 $_SESSION['user_taken'] = true;
                 $_SESSION["username"] = $username;
@@ -45,19 +54,19 @@ if (!isset($_SESSION["stu_lrn"])) {
                 exit();
             }
 
-
-            // Update the username in the database
+            // Update username if changed
             if ($username !== $userRow['username']) {
                 $mySQLFunction->updateUser("username", $username, $studentid);
             }
-            // Update the STUDENT ACCOUNT details
-            if ($password) {
-                $mySQLFunction->updateUser("password", $mySQLFunction->encrypt($password), $studentid); // Encrypt and update password
+
+            // Update the password if provided
+            if ($newPassword) {
+                $newPasswordEncrypted = $mySQLFunction->encrypt($newPassword);
+                $mySQLFunction->updateUser("password", $newPasswordEncrypted, $studentid);
             }
 
-            // Disconnect after updating
+            // Disconnect and finalize the update
             $mySQLFunction->disconnect();
-
             $_SESSION['update_user'] = true;
             header("location:/lms/index.php?page=student_account");
             exit();
