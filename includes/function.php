@@ -122,8 +122,6 @@ class myDataBase
         $month = $dob->format('m'); // Month in MM format
         $day = $dob->format('d'); // Day in DD format
 
-
-
         // Construct the ID: csi <last-digit-of-year>-<MMDD>-
         $studPassword = "CSI-{$year}-{$day}{$dobyear}{$month}";    //csi-2024-051002
 

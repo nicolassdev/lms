@@ -181,7 +181,7 @@ if (isset($_SESSION['teacher_id'])) {
                                     </li>
                                     <li class="nav-item mt-2">
                                         <a class="nav-link active" href="index.php?page=register_student">
-                                            <i class="bi bi-person-check me-2"></i>Section Registration
+                                            <i class="bi bi-list-columns-reverse me-2"></i>Section Registration
 
 
                                         </a>

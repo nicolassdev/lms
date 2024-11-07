@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2024 at 07:06 PM
+-- Generation Time: Nov 07, 2024 at 10:55 AM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.12
 
@@ -46,8 +46,10 @@ CREATE TABLE `enroll` (
 --
 
 INSERT INTO `enroll` (`stu_lrn`, `section_code`, `semester`, `school_year`, `date_enroll`, `enroll_status`, `current_school`, `school_id`, `school_address`, `school_type`, `requirements_submit`) VALUES
-('114422222222', 'SECTION-3577', '1st Semester', '2024-2025', '2024-10-23', 'ENROLLED', 'CABANGAN HIGH SCHOOL', NULL, 'BURAGUIS', 'PUBLIC', 'SF9, SF10, PSA Birth Certificate'),
-('114482392392', 'SECTION-3577', '1st Semester', '2024-2025', '2024-10-23', 'ENROLLED', 'CABANGAN HIGH SCHOOL', 323232, 'CABANGAN', 'PUBLIC', 'SF9');
+('114403203289', 'SECTION-1847', '1st Semester', '2024-2025', '2024-11-03', 'ENROLLED', 'LEGAZPI CITY', NULL, 'LEGAZPI', 'PUBLIC', 'SF9, SF10, PSA Birth Certificate'),
+('114483293271', 'SECTION-3371', '1st Semester', '2024-2025', '2024-11-03', 'ENROLLED', 'LEGAZPI HIGH SCHOOL', NULL, 'LEGAZPI', 'PUBLIC', 'SF9, SF10'),
+('114497326715', 'SECTION-3371', '1st Semester', '2024-2025', '2024-11-03', 'ENROLLED', 'QWEQW', NULL, 'QWEWQ', 'PUBLIC', 'SF9, SF10'),
+('114498343414', 'SECTION-1847', '1st Semester', '2024-2025', '2024-11-03', 'ENROLLED', 'DASDAS', NULL, 'ASDAS', 'PUBLIC', 'SF9');
 
 -- --------------------------------------------------------
 
@@ -72,7 +74,7 @@ CREATE TABLE `principal` (
 --
 
 INSERT INTO `principal` (`principal_id`, `firstname`, `middlename`, `lastname`, `contact`, `gender`, `email`, `address`, `id`) VALUES
-('PRIN-2346', 'ANTHONY', 'DADO', 'DAEN', '9329392932', '', 'anthony@gmail.com', 'BRGY.58 BURAGUIS', 'USER-1436');
+('PRIN-2346', 'ANTHONY', 'DADO', 'DAEN', '9329392932', 'MALE', 'anthony@gmail.com', 'BRGY.58 BURAGUIS', 'USER-1436');
 
 -- --------------------------------------------------------
 
@@ -113,7 +115,21 @@ CREATE TABLE `section` (
 --
 
 INSERT INTO `section` (`section_code`, `strand_code`, `grade_lvl`, `section_name`, `teacher_id`, `date_created`) VALUES
-('SECTION-3577', 'STRAND-5688', 'GRADE-12', 'ST.PADRE PIO', NULL, '2024-10-23');
+('SECTION-1847', 'STRAND-2745', 'GRADE-11', 'ST.PAUL', '24-032411-5896', '2024-11-03'),
+('SECTION-2971', 'STRAND-2745', 'GRADE-12', 'FIREFOX', '24-252011-1122', '2024-11-03'),
+('SECTION-3371', 'STRAND-2745', 'GRADE-12', 'OPERA', '24-095-4031', '2024-11-03'),
+('SECTION-3747', 'STRAND-2745', 'GRADE-12', 'EDGE', '24-785-3713', '2024-11-03'),
+('SECTION-4873', 'STRAND-3453', 'GRADE-12', 'ENERGY', '24-032411-6451', '2024-11-03'),
+('SECTION-5833', 'STRAND-3453', 'GRADE-11', 'ST.PADRE PIO', '24-032411-1206', '2024-11-03'),
+('SECTION-6133', 'STRAND-2745', 'GRADE-11', 'ST.JOHN', '24-032411-7529', '2024-11-03'),
+('SECTION-6295', 'STRAND-9457', 'GRADE-11', 'ST.JUDE', '24-032411-4108', '2024-11-03'),
+('SECTION-6537', 'STRAND-2745', 'GRADE-12', 'ST.BENEDICT', '24-032411-1172', '2024-11-03'),
+('SECTION-6737', 'STRAND-2745', 'GRADE-11', 'ST.GREGORY', '24-032411-9968', '2024-11-03'),
+('SECTION-6965', 'STRAND-2745', 'GRADE-11', 'ST.PHILIP', '24-032411-9030', '2024-11-03'),
+('SECTION-8583', 'STRAND-6675', 'GRADE-11', 'ST.THERESE', '24-032411-7367', '2024-11-03'),
+('SECTION-9127', 'STRAND-2745', 'GRADE-12', 'GENESIS', '24-032411-2022', '2024-11-03'),
+('SECTION-9227', 'STRAND-2745', 'GRADE-12', 'CHROME', '24-032411-2684', '2024-11-03'),
+('SECTION-9994', 'STRAND-7781', 'GRADE-11', 'ST.CLAIRE', '24-032411-7324', '2024-11-03');
 
 -- --------------------------------------------------------
 
@@ -186,10 +202,17 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`stu_lrn`, `stu_fname`, `stu_mname`, `stu_lname`, `stu_address`, `stu_contact`, `stu_gender`, `stu_email`, `stu_dob`, `stu_pob`, `father_name`, `mother_name`, `parent_contact`, `id`) VALUES
+('114403203289', 'ALIKON', 'JACK', 'POTSAS', 'DARAGA', '9329392932', 'FEMALE', 'alikon@gmail.com', '2000-11-28', 'LEGAZPI', 'TEST', 'TEST', '9329392932', 'USER-8636'),
 ('114422222222', 'JINKY', 'BALBE', 'JAQUIE', 'BURAUGIS', '9239293929', 'FEMALE', 'JINKY25@GMAIL.COM', '2024-10-24', 'LEGAZPI', 'MALIKONS JAQUIE', 'JACKKIEEE JAQUIE', '9392392932', 'USER-2931'),
-('114482392392', 'CALOY', 'HALBE', 'SMITH', 'LEGAZPI CITY', '9392392939', 'MALE', 'JAMES@GMAIL.COM', '2024-12-02', 'BURAGUIS', 'JUAN BALDO SMITH', 'GLINDA SMITH', '9392932939', 'USER-9991'),
+('114432325251', 'JOHN RAY', 'BALDO', 'GUMAWADOD', 'LEGAZPI', '9329391239', 'MALE', 'jonhray@gmail.com', '2015-09-02', 'SAMPLE', 'ASDASDAS', 'ASDAS', '9329392932', 'USER-1316'),
+('114455667788', 'DARIUS', 'VALDEZ', 'GAMOZA', 'LEGAZPI CITY', '9239239293', 'MALE', 'darius@gmail.com', '2024-11-03', 'LEGAZPI CITY', 'GAMOZA SALVE', 'GAMOZA CRISTAL', '9329329392', 'USER-3616'),
+('114482392392', 'CALOY', 'HALBE', 'SMITH', 'LEGAZPI CITY', '9392392939', 'FEMALE', 'caloysmith24@gmail.com', '2024-12-02', 'BURAGUIS', 'JUAN BALDO SMITH', 'GLINDA SMITH', '9392932939', 'USER-9991'),
+('114483293271', 'JOHN', 'BELBIS', 'UYALS', 'PAWA', '9329392932', 'MALE', 'leon@gmail.com', '2002-10-03', 'BITANO', 'SAMPLE', 'SAMNPLE', '9392932939', 'USER-9986'),
+('114492392932', 'SAMPLE', 'SAMPLE', 'SAMPLE', 'SAMPLE', '9329139123', 'MALE', 'sample@gmail.com', '2022-11-30', 'SAMPLE', 'SAMPLE', 'SAMPLE', '9342939239', 'USER-8341'),
 ('114497326715', 'GEORGE', 'JAKIB', 'HALBES', 'BITANO LEGAZPI CITY', '9239239293', 'MALE', 'GEORGEHALBES@GMAIL.COM', '2001-10-05', 'BRTTH LEGAZPI', 'JONNY HALBES', 'KRISTINE HALBES', '9329392932', 'USER-1322'),
-('114498343414', 'DWAYNE', 'HILBE', 'TUWEZA', 'BURAGUIS LEGAZPI CITY', '9123421321', 'MALE', 'DWAYNETUWEZA@GMAIL.COM', '2024-10-16', 'BURAGUIS LEGAZPI CITY', 'JOHN BALDES TUIZA', 'CRISTINE BALDES TUIZA', '9123123123', 'USER-3431');
+('114497427472', 'LESTER', '', 'SAPULA', 'BITANO', '9329392932', 'MALE', 'lester@gmail.com', '2002-07-04', 'BITANO', 'ASDAS', 'DASDSA', '9329329932', 'USER-9261'),
+('114498343414', 'DWAYNE', 'HILBE', 'TUWEZA', 'BURAGUIS LEGAZPI CITY', '9123421321', 'MALE', 'dwaynetuweza@gmail.com', '2024-10-16', 'Buraguis Legazpi City', 'JOHN BALDES TUIZA', 'CRISTINE BALDES TUIZA', '9123123123', 'USER-3431'),
+('114499887766', 'MARVIN', '', 'TAUZON', 'BURAGUIS', '9329392392', 'MALE', 'marvin@gmail.com', '2024-11-10', 'Legazpi City', 'PAPA TAUZON', 'MAMA TAUZON', '9412949194', 'USER-6346');
 
 -- --------------------------------------------------------
 
@@ -204,8 +227,17 @@ CREATE TABLE `subject` (
   `sub_time` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `sub_semester` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `strand_code` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `sub_gradelvl` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `teacher_id` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subject`
+--
+
+INSERT INTO `subject` (`sub_code`, `sub_title`, `sub_type`, `sub_time`, `sub_semester`, `strand_code`, `sub_gradelvl`, `teacher_id`) VALUES
+('SUB-7153', 'SOFTWARE ENGINEERING', 'SPECIALIZED SUBJECT', '--:-- --', '1st Semester', 'STRAND-3453', 'GRADE-12', '24-095-4031'),
+('SUB-7634', 'P.E', 'APPLIED SUBJECT', '--:-- --', '1st Semester', 'STRAND-2745', 'GRADE-11', '24-095-4031');
 
 -- --------------------------------------------------------
 
@@ -251,8 +283,21 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`teacher_id`, `teacher_fname`, `teacher_mname`, `teacher_lname`, `teacher_contact`, `teacher_gender`, `teacher_dob`, `status`, `teacher_address`, `date_added`, `id`) VALUES
-('TEACHER-1345', 'KEVIN', 'SWABE', 'DURANT', 9329329392, 'MALE', '2024-12-05', 'FULL TIME', 'BURAGUIS', '2024-10-29', 'USER-8661'),
-('TEACHER-7938', 'MARY ANN', '', 'AJERO', 9392932939, 'FEMALE', '2024-10-24', 'FULL TIME', 'DARAGA', '2024-10-24', 'USER-6861');
+('24-032411-1172', 'DUMMY5', 'DUMMY5', 'DUMMY5', 9235230235, 'FEMALE', '2024-11-03', 'FULL TIME', 'DUMMY5', '2024-11-03', 'USER-3834'),
+('24-032411-1206', 'DUMMY3', 'DUMMY3', 'DUMMY3', 9235221341, 'MALE', '2024-11-03', 'PART TIME', 'DUMMY3', '2024-11-03', 'USER-3396'),
+('24-032411-2022', 'DUMMY11', 'DUMMY11', 'DUMMY11', 9242124124, 'MALE', '2024-11-03', 'FULL TIME', 'DUMMY11', '2024-11-03', 'USER-3496'),
+('24-032411-2684', 'DUMMY13', 'DUMMY13', 'DUMMY13', 9123151251, 'FEMALE', '2024-11-03', 'FULL TIME', 'DUMMY13', '2024-11-03', 'USER-8664'),
+('24-032411-4108', 'DUMMY9', 'DUMMY9', 'DUMMY9', 9320582492, 'FEMALE', '2024-11-03', 'FULL TIME', 'DUMMY9', '2024-11-03', 'USER-4392'),
+('24-032411-5896', 'JOHN', 'BALDE', 'TRANDO', 9463463463, 'MALE', '2024-11-03', 'FULL TIME', 'DUMMY', '2024-11-03', 'USER-3969'),
+('24-032411-6451', 'DUMMY7', 'DUMMY7', 'DUMMY7', 9392139129, 'FEMALE', '2024-11-03', 'FULL TIME', 'DUMMY7', '2024-11-03', 'USER-8619'),
+('24-032411-7324', 'DUMMY8', 'DUMMY8', 'DUMMY8', 9855123412, 'MALE', '2024-11-03', 'PART TIME', 'DUMMY8', '2024-11-03', 'USER-3111'),
+('24-032411-7367', 'DUMMY6', 'DUMMY6', 'DUMMY6', 9124123421, 'FEMALE', '2024-11-03', 'FULL TIME', 'DUMMY6', '2024-11-03', 'USER-4122'),
+('24-032411-7529', 'DUMMY10', 'DUMMY10', 'DUMMY10', 9042747247, 'FEMALE', '2024-11-03', 'FULL TIME', 'DUMMY10', '2024-11-03', 'USER-6683'),
+('24-032411-9030', 'DUMMY2', 'DUMMY2', 'DUMMY2', 9329392932, 'MALE', '2024-11-03', 'FULL TIME', 'DUMMY2', '2024-11-03', 'USER-6669'),
+('24-032411-9968', 'DUMMY4', 'DUMMY4', 'DUMMY4', 9236590342, 'MALE', '2024-11-03', 'FULL TIME', 'DUMMY4', '2024-11-03', 'USER-3233'),
+('24-095-4031', 'MARY ANN', '', 'AJERO', 9329392939, 'FEMALE', '1995-11-02', 'FULL TIME', 'DARAGA', '2024-10-29', 'USER-6216'),
+('24-252011-1122', 'DUMMY12', 'DUMMY12', 'DUMMY12', 9329329392, 'MALE', '2020-11-25', 'FULL TIME', 'BRGY.58 BURAGUIS', '2024-11-03', 'USER-6486'),
+('24-785-3713', 'ZAC', 'GAMBO', 'SALCEDA', 9329392932, 'MALE', '1990-11-01', 'PART TIME', 'BURAGUIS', '2024-10-29', 'USER-3196');
 
 -- --------------------------------------------------------
 
@@ -274,12 +319,32 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_added`) VALUES
+(69, 'USER-1316', '114432325251', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-04 06:56:15'),
 (41, 'USER-1322', '114497326715', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-27 21:56:03'),
 (40, 'USER-1436', 'csi@legazpi', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'ADMIN', '2024-10-26 22:30:33'),
 (37, 'USER-2931', '114422222222', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-24 04:41:21'),
+(61, 'USER-3111', 'dummy8', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-03 18:23:47'),
+(52, 'USER-3196', 'zac', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-10-29 22:57:57'),
+(57, 'USER-3233', 'dummy4', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-03 18:21:42'),
+(56, 'USER-3396', 'dummy3', '7b52009b64fd0a2a49e6d8a939753077792b0554', 'TEACHER', '2024-11-03 18:21:18'),
 (39, 'USER-3431', '114498343414', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-26 21:36:50'),
-(34, 'USER-6861', 'ajero', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-10-24 03:17:11'),
-(43, 'USER-8661', 'daen', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-10-29 01:44:39'),
+(64, 'USER-3496', 'dummy11', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-03 18:41:26'),
+(72, 'USER-3616', '114455667788', '51330c0985ecdbf0eb4af46ac0d39c589bec37af', 'STUDENT', '2024-11-06 04:55:03'),
+(58, 'USER-3834', 'dummy5', 'c96f36c50461c0654e7219e8bc68df6e4c4e62d9', 'TEACHER', '2024-11-03 18:22:07'),
+(54, 'USER-3969', 'dummy1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-03 18:20:27'),
+(59, 'USER-4122', 'dummy6', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-03 18:22:28'),
+(62, 'USER-4392', 'dummy9', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-03 18:24:08'),
+(53, 'USER-6216', 'ajero', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-10-29 23:00:05'),
+(73, 'USER-6346', '114499887766', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-06 15:50:17'),
+(65, 'USER-6486', 'dummy12', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-03 18:41:50'),
+(55, 'USER-6669', 'dummy2', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-03 18:20:55'),
+(63, 'USER-6683', 'dummy10', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-03 18:26:18'),
+(71, 'USER-8341', '114492392932', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-04 06:59:43'),
+(60, 'USER-8619', 'dummy7', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-03 18:23:22'),
+(46, 'USER-8636', '114403203289', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-29 02:18:33'),
+(66, 'USER-8664', 'dummy13', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-03 18:42:17'),
+(68, 'USER-9261', '114497427472', 'csi-24-040207', 'STUDENT', '2024-11-04 06:41:01'),
+(45, 'USER-9986', '114483293271', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-29 02:16:11'),
 (38, 'USER-9991', '114482392392', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-24 04:47:41');
 
 --
@@ -363,7 +428,7 @@ ALTER TABLE `school`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_num` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `user_num` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- Constraints for dumped tables

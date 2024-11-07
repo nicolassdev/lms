@@ -153,11 +153,11 @@ if (isset($_SESSION['stu_lrn'])) {
                                     <i class="bi bi-journal me-2"></i> Module
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=student_assignment">
                                     <i class="bi bi-pencil me-2"></i> Assignment
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=student_quiz">
                                     <i class="bi bi-lightbulb me-2"></i> Quiz

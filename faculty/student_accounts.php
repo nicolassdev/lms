@@ -74,7 +74,7 @@ $mySQLFunction->disconnect();
                         <table id="example" class="table table-bordered table-striped table-sm align-middle">
                             <thead class="table-dark">
                                 <tr>
-                                    <th scope="col">ID</th>
+                                    <th scope="col">#</th>
                                     <th scope="col">Username</th>
                                     <th scope="col">Generated Password</th>
                                     <!-- <th scope="col">Role</th> -->
@@ -100,9 +100,10 @@ $mySQLFunction->disconnect();
                                         }
 
                                         echo '<tr>';
-                                        echo '<td>' . $row["id"] . '</td>'; // Clickable ID
+                                        // echo '<td>' . $row["id"] . '</td>'; // Clickable ID
+                                        echo '<td>' . $count . '</td>';
                                         echo '<td>' . $row["username"] . '</td>';
-                                        echo '<td>' .  $formattedPassword . '</td>';
+                                        echo '<td style="color: #6610f2;">' . $formattedPassword . '</td>';
                                         // echo '<td>' . ucwords(strtolower($row["role"])) . '</td>';
                                         echo '<td>' . $formattedDate . '</td>';
 
