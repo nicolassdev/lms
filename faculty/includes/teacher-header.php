@@ -4,7 +4,7 @@
 $host = 'localhost';
 $dbname = 'lms_db';
 $username = 'root';
-$password = 'Nicolas051002';
+$password = '';
 
 // Establish the database connection
 try {
@@ -121,7 +121,7 @@ if (isset($_SESSION['teacher_id'])) {
                         <li class="ms-3"><i class="bi bi-patch-check-fill text-success"></i> <?php echo ucwords(strtolower($_SESSION["user_role"])) ?> </li>
                         <hr class="mx-3 my-1">
                         <li><a class="dropdown-item" href="?page=teacher_prof">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="?page=teacher_account">Account</a></li>
                         <li>
                             <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                 Logout

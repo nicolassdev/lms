@@ -59,7 +59,7 @@ $mySQLFunction->disconnect();
                                     echo '<div>School Year: ' . htmlspecialchars($schoolYear) . '<i class="bi bi-check-circle-fill text-success ms-2"></i></div>';
                                 }
                             } else {
-                                echo '<div class="alert alert-warning">No school year and semester found.</div>';
+                                echo '<div class="alert alert-warning" style="font-size: small;">No active school year and semester found.</div>';
                             }
                             ?>
                         </div>

@@ -25,9 +25,13 @@ $page = isset($_GET["page"]) ? $_GET["page"] : "dashboard";
 
 // Use switch case to load the appropriate page
 switch ($page) {
-    case "teacher_prof":
-        require_once 'teacher_prof.php';
-        break;
+
+        /** 
+         student route */
+
+    case "student_accounts":
+        require_once 'student_accounts.php';
+        break;       
 
     case "new_student":
         require_once 'new_student.php';
@@ -37,7 +41,21 @@ switch ($page) {
         require_once 'register_student.php';
         break;
 
+        /** 
+         teacher route */
 
+     case "teacher_prof":
+        require_once 'teacher_prof.php';
+        break;
+
+    case "teacher_account":
+        require_once 'teacher_account.php';
+        break;
+
+    case "teacher_prof":
+        require_once 'teacher_prof.php';
+        break;
+    
     case "section_handled":
         require_once 'section_handled.php';
         break;
@@ -54,12 +72,7 @@ switch ($page) {
         require_once 'teacher_report.php';
         break;
 
-        /** 
-         student root */
 
-    case "student_accounts":
-        require_once 'student_accounts.php';
-        break;
     
 
     default:

@@ -59,6 +59,16 @@ class myDataBase
         $hash = sha1($password);
         return $hash;
     }
+    
+
+    function begin_transaction($pdo) {
+        try {
+            $pdo->beginTransaction();
+            echo '<div class="alert alert-success" style="font-size: small;">Transaction started successfully.</div>';
+        } catch (PDOException $e) {
+            echo '<div class="alert alert-warning" style="font-size: small;">Failed to start transaction: ' . $e->getMessage() . '</div>';
+        }
+    }
 
 
 
@@ -128,7 +138,27 @@ class myDataBase
         return $studPassword;
     }
 
+    public function generateFacultyUsername($teacher_id)
+    {
+        try {
+            // Fetch teacher info using the method in the class
+            $teacher = $this->getTeacherInfo($teacher_id);
 
+            if ($teacher) {
+                // Remove spaces in teacher's name and concatenate to form the username
+                $teacher_name = str_replace(' ', '', $teacher['teacher_name']); // Ensure no spaces
+                $username = 'LMS-' . $teacher_name;
+
+                // Return the generated username
+                return $username;
+            } else {
+                throw new Exception("Teacher not found.");
+            }
+        } catch (Exception $e) {
+            // Handle exceptions and return the error message
+            return 'Error: ' . $e->getMessage();
+        }
+    }
 
     //RANDOM USER ID
     public function generateUserID()
@@ -220,6 +250,16 @@ class myDataBase
     }
 
     public function getAccountStudent($id)
+    {
+        $sql = "SELECT * FROM `users` WHERE id = ?";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result;
+    }
+
+    public function getAccountTeacher($id)
     {
         $sql = "SELECT * FROM `users` WHERE id = ?";
         $stmt = $this->con->prepare($sql);

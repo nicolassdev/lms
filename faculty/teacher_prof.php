@@ -164,125 +164,139 @@ $mySQLFunction->disconnect();
                         </button>
                     </div>
 
-                    <div class="profile-header text-center">
-                        <!-- SWITCHING IMAGE IF USER IS MALE OR FEMALE  -->
-                        <?php if ($teacherInfo['teacher_gender'] === "MALE") { ?>
-                            <img src="../assets/Upload/maleteacher.png" alt="Profile Image" class="profile-img-circle mb-2">
-                        <?php } else { ?>
-                            <img src="../assets/Upload/femaleteacher.png" alt="Profile Image" class="profile-img-circle mb-2">
-                        <?php } ?>
-
-                        <h4>
-                            <?php echo ucwords(strtolower($teacherName)); ?>
-
-                            <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
-                        </h4>
-
-                        <p class="text-muted"><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
-                        <span class="badge bg-success text-white">ID</span>
-                        <small class="text-muted fw-semibold">
-                            <?php echo htmlspecialchars($teacherInfo['teacher_id'], ENT_QUOTES, 'UTF-8'); ?>
-                        </small>
 
 
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+        <div class="row">
+            
+            <!-- Right Column: Profile Header -->
+            <div class="col-md-4 text-center profile-header">
+                <!-- SWITCHING IMAGE IF USER IS MALE OR FEMALE -->
+                <?php if ($teacherInfo['teacher_gender'] === "MALE") { ?>
+                    <img src="../assets/Upload/maleteacher.png" alt="Profile Image" class="profile-img-circle mb-2">
+                <?php } else { ?>
+                    <img src="../assets/Upload/femaleteacher.png" alt="Profile Image" class="profile-img-circle mb-2">
+                <?php } ?>
+
+                <h4>
+                    <?php echo ucwords(strtolower($teacherName)); ?>
+                    <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
+                </h4>
+
+                <p class="text-muted"><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
+                <span class="badge bg-success text-white">ID</span>
+                <small class="text-muted fw-semibold">
+                    <?php echo htmlspecialchars($teacherInfo['teacher_id'], ENT_QUOTES, 'UTF-8'); ?>
+                </small>
+            </div>
+            <!-- Left Column: Profile Details -->
+            <div class="col-md-8 profile-details">
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <strong>Role:</strong>
+                        <p><?php echo ucwords(strtolower($_SESSION["user_role"])); ?></p>
                     </div>
-
-                    <div class="profile-details">
-                        <div class="row mb-1">
-                            <div class="col-md-6">
-                                <strong>Role:</strong>
-                                <p><?php echo ucwords(strtolower($_SESSION["user_role"])); ?></p>
-                            </div>
-                            <div class="col-md-6">
-                                <strong>Phone:</strong>
-                                <p>+63<?php echo $teacherInfo['teacher_contact']; ?></p>
-                            </div>
-                        </div>
-
-                        <div class="row mb-1">
-
-                            <div class="col-md-6">
-                                <strong>Gender</strong>
-                                <p><?php echo ucwords(strtolower($teacherInfo['teacher_gender'])); ?></p>
-                            </div>
-                            <div class="col-md-6">
-                                <strong>Employment Status:</strong>
-                                <p><?php echo ucwords(strtolower($teacherInfo['status'])); ?></p>
-                            </div>
-                        </div>
-
-
-                        <div class="row mb-1">
-                            <div class="col-md-6">
-                                <strong>Date of Birth</strong>
-                                <p><?php echo htmlspecialchars($formattedbirthDate); ?></p>
-                            </div>
-
-                            <div class="col-md-6">
-                                <strong>Address:</strong>
-                                <p><?php echo ucwords(strtolower($teacherInfo['teacher_address'])); ?></p>
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="row mb-1">
-                            <div class="col-md-6">
-                                <strong>Username:</strong>
-                                <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
-                            </div>
-                            <div class="col-md-6">
-                                <strong>Status:</strong>
-                                <p>Active</p>
-                            </div>
-                        </div>
-
-                        <div class="row mb-1">
-                            <div class="col-md-6">
-                                <strong>Section Handled:</strong>
-                                <p>
-                                    <?php
-                                    if (isset($teacherSectionHandled["grade_lvl"]) && isset($teacherSectionHandled["section_name"])) {
-                                        echo ucwords(strtolower($teacherSectionHandled["grade_lvl"])) . ' ' . ucwords(strtolower($teacherSectionHandled["section_name"]));
-                                    } else {
-                                        echo '<div class="text-danger">Section information not available !</div>';
-                                    }
-                                    ?>
-                                </p>
-                            </div>
-                            <div class="col-md-6">
-                                <strong>Subjects Handled:</strong>
-                                <p>
-                                    <?php
-                                    if (!empty($teacherSubjectHandled)) {
-                                        foreach ($teacherSubjectHandled as $subject) {
-                                            echo ucwords(strtolower($subject["sub_title"])) . ' | ' . htmlspecialchars($subject["strand_name"]) . ' | ' . ucwords(strtolower($subject["sub_gradelvl"])) . '<br>'; // Display each subject with strand code
-                                        }
-                                    } else {
-                                        echo '<div class="text-danger">Subject information not available !</div>';
-                                    }
-                                    ?>
-                                </p>
-                            </div>
-                            <div class="col-md-6">
-                                <strong>Joined:</strong>
-                                <p>
-                                    <?php
-                                    if (isset($_SESSION["teacher_added"])) {
-                                        echo htmlspecialchars($_SESSION["teacher_added"]);
-                                    } else {
-                                        echo 'Join date not available.';
-                                    }
-                                    ?>
-                                </p>
-                            </div>
-                        </div>
-
-
-
-
+                    <div class="col-md-6">
+                        <strong>Phone:</strong>
+                        <p>+63<?php echo $teacherInfo['teacher_contact']; ?></p>
                     </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <strong>Gender:</strong>
+                        <p><?php echo ucwords(strtolower($teacherInfo['teacher_gender'])); ?></p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Employment Status:</strong>
+                        <p><?php echo ucwords(strtolower($teacherInfo['status'])); ?></p>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <strong>Date of Birth:</strong>
+                        <p><?php echo htmlspecialchars($formattedbirthDate); ?></p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Address:</strong>
+                        <p><?php echo ucwords(strtolower($teacherInfo['teacher_address'])); ?></p>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <strong>Username:</strong>
+                        <p><?php echo htmlspecialchars($_SESSION["username"]); ?></p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Status:</strong>
+                        <p>Active</p>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-6">
+                        <strong>Section Handled:</strong>
+                        <p>
+                            <?php
+                            if (isset($teacherSectionHandled["grade_lvl"]) && isset($teacherSectionHandled["section_name"])) {
+                                echo ucwords(strtolower($teacherSectionHandled["grade_lvl"])) . ' ' . ucwords(strtolower($teacherSectionHandled["section_name"]));
+                            } else {
+                                echo '<div class="text-danger">Section information not available!</div>';
+                            }
+                            ?>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Subjects Handled:</strong>
+                        <p>
+                            <?php
+                            if (!empty($teacherSubjectHandled)) {
+                                foreach ($teacherSubjectHandled as $subject) {
+                                    echo ucwords(strtolower($subject["sub_title"])) . ' | ' . htmlspecialchars($subject["strand_name"]) . ' | ' . ucwords(strtolower($subject["sub_gradelvl"])) . '<br>';
+                                }
+                            } else {
+                                echo '<div class="text-danger">Subject information not available!</div>';
+                            }
+                            ?>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Joined:</strong>
+                        <p>
+                            <?php
+                            if (isset($_SESSION["teacher_added"])) {
+                                echo htmlspecialchars($_SESSION["teacher_added"]);
+                            } else {
+                                echo 'Join date not available.';
+                            }
+                            ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</div>
+>
+
+
+
+
+
+
+
+
+
+
+                    
                 </div>
             </div>
         </div>
