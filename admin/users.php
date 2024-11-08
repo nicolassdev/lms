@@ -42,36 +42,42 @@ include "../includes/dbh-inc.php";
                 </tr>
             </thead>
             <tbody
-                <?php
-                $mySQLFunction->connection();
-                if (!isset($_POST["search"])) {
-                    $result = $mySQLFunction->getUsers();
-                } else {
-                    $find = $_POST["find-user"];
-                    $result = $mySQLFunction->searchUser($find);
-                }
+            <?php
+                    $mySQLFunction->connection();
 
-                if (!empty($result)) {
-                    $count = 1;
-                    foreach ($result as $row) {
-                        // Create a DateTime object and format the added_date
-                        $addedDate = new DateTime($row['date_added']); // Create a DateTime object for the current row
-                        $formattedDate = $addedDate->format('F j, Y'); // Format to "August 11, 2024"
+                    if (!isset($_POST["search"])) {
+                        $result = $mySQLFunction->getUsers();
+                    } else {
+                        $find = $_POST["find-user"];
+                        $result = $mySQLFunction->searchUser($find);
+                    }
 
-                        echo '<tr>';
-                        echo '<td>' . $row["id"] . '</td>'; // Clickable ID
-                        echo '<td>' . $row["username"] . '</td>';
-                        echo '<td>' . ucwords(strtolower($row["role"])) . '</td>';
-                        echo '<td>' . $formattedDate . '</td>';
-                        echo '
-                                        <td class="text-center">
-                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit_user' . $row['id'] . '"><i class="bi bi-pencil-square"></i></button>
-                                        </td>
-                                        <td class="text-center">
-                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_user' . $row['id'] . '"><i class="bi bi-trash"></i></button>
-                                        </td>
-                                    ';
+                    if (!empty($result)) {
+                        $count = 1;
+                        foreach ($result as $row) {
+                            // Skip users with the 'ADMIN' role
+                            if (strtoupper($row["role"]) == 'ADMIN') {
+                                continue;  // Skip this iteration and move to the next user
+                            }
 
+                            // Create a DateTime object and format the added_date
+                            $addedDate = new DateTime($row['date_added']); // Create a DateTime object for the current row
+                            $formattedDate = $addedDate->format('F j, Y'); // Format to "August 11, 2024"
+
+                            echo '<tr>';
+                            echo '<td>' . $row["id"] . '</td>'; // Clickable ID
+                            echo '<td>' . $row["username"] . '</td>';
+                            echo '<td>' . ucwords(strtolower($row["role"])) . '</td>';
+                            echo '<td>' . $formattedDate . '</td>';
+                            echo '
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit_user' . $row['id'] . '"><i class="bi bi-pencil-square"></i></button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_user' . $row['id'] . '"><i class="bi bi-trash"></i></button>
+                                </td>
+                            ';
+                            echo '</tr>';
 
                         //Modal for updating users 
                         echo '

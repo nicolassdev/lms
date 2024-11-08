@@ -878,7 +878,7 @@ class myDataBase
 
 
     //  GET TEACHER LIST 
-    public function getUsers($row = null, $value = null, $limit = 6, $offset = 0)
+    public function getUsers($row = null, $value = null, $limit =15, $offset = 0)
     {
         // Parameterized query to prevent SQL injection
         if ($row != null && $value != null) {
