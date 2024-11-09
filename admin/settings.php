@@ -25,7 +25,7 @@ $mySQLFunction->disconnect();
         <div class="d-flex gap-2 ms-2">
                         <!-- Admin ACCOUNT button -->
             <a href="index.php?page=account" class="btn btn-dark btn-sm btn-animate">
-            <i class="bi bi-person-gear me-2" style="color:red;"></i><span>Account</span>
+            <i class="bi bi-person-vcard-fill me-2"></i><span>Account</span>
             </a>
             <!-- Semester button -->
             <a href="index.php?page=semester" class="btn btn-primary btn-sm btn-animate">

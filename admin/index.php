@@ -53,6 +53,9 @@ include "./includes/alert-modal.php";
         case "subject":
             require_once 'subject.php';
             break;
+            /**
+                 ROUTE FOR SETTINGS ADMIN
+             */
         case "settings":
             require_once 'settings.php';
             break;
@@ -62,6 +65,10 @@ include "./includes/alert-modal.php";
         case "semester":
             require_once 'semester.php';
             break;
+        case "account":
+            require_once 'account.php';
+            break;
+
             /**
                  ROUTE FOR STRAND SUBJECT
              */

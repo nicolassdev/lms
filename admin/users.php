@@ -21,7 +21,7 @@ include "../includes/dbh-inc.php";
     <!-- Search Form -->
     <form method="POST" action="index.php?page=users" class="ms-5 me-5">
         <div class="input-group mb-3">
-            <input type="text" class="form-control form-control-sm " name="find-user" placeholder="Search user..." autocomplete="off" required style="width: 150px;" />
+            <input type="text" class="form-control form-control-sm " name="find-user" placeholder="Search user accounts ..." autocomplete="off" required style="width: 150px;" />
             <button class="btn btn-outline-primary btn-sm" name="search" type="submit">
                 <i class="bi bi-search"></i> Search
             </button>
@@ -34,7 +34,7 @@ include "../includes/dbh-inc.php";
         <table class="table table-bordered table-striped table-sm align-middle">
             <thead class="table-dark text-light">
                 <tr>
-                    <th scope="col">ID</th>
+                    <th scope="col">#</th>
                     <th scope="col">Username</th>
                     <th scope="col">Role</th>
                     <th scope="col">Date Added</th>
@@ -65,7 +65,7 @@ include "../includes/dbh-inc.php";
                             $formattedDate = $addedDate->format('F j, Y'); // Format to "August 11, 2024"
 
                             echo '<tr>';
-                            echo '<td>' . $row["id"] . '</td>'; // Clickable ID
+                            echo '<td>' . $count. '</td>'; // Clickable ID
                             echo '<td>' . $row["username"] . '</td>';
                             echo '<td>' . ucwords(strtolower($row["role"])) . '</td>';
                             echo '<td>' . $formattedDate . '</td>';

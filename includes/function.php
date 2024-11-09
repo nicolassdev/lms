@@ -269,6 +269,27 @@ class myDataBase
         return $result;
     }
 
+    public function getAccountAdmin($id)
+    {
+        $sql = "SELECT * FROM `users` WHERE id = ?";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        return $result;
+    }
+
+    // public function getAdminInfo($teacher_id)
+    // {
+    //     $sql = "SELECT * FROM `teacher` WHERE teacher_id = ?";
+    //     $stmt = $this->con->prepare($sql);
+    //     $stmt->bind_param("s", $teacher_id);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result()->fetch_assoc();
+    //     return $result;
+    // }
+
+
     public function getTeacherInfo($teacher_id)
     {
         $sql = "SELECT * FROM `teacher` WHERE teacher_id = ?";
