@@ -1,6 +1,6 @@
 <!-- VALIDATION CAN'T ACCESS THE URL -->
 <?php
-if (!isset($_SESSION['principal_id'])) {
+if (!isset($_SESSION['registrar_id'])) {
     header("location:../login.php?error=accessdenied");
 }
 ?>
@@ -22,6 +22,17 @@ include "../admin/includes/Forms/enrollmentform.php";
     .text-sm {
         font-size: 0.7em;
     }
+
+    .data-table {
+        font-size: 0.7em;
+        /* Reduce font size */
+    }
+
+    .table th,
+    .table td {
+        padding: 0.1rem;
+        /* Adjust padding */
+    }
 </style>
 
 
@@ -34,12 +45,12 @@ include "../admin/includes/Forms/enrollmentform.php";
                 <div class="data-table">
 
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h4 class="text-black">List of Enrolled Students</h4>
+                        <h5 class="text-black">List of Enrolled Students</h5>
 
                         <!-- DISABLED THE BUTTON IN ADMIN ! TAKE NOT TO ENABLE THE BUTTON YOU NEED A PERMISSION IN DEVELOPER  -->
-                        <!-- <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#enroll" data-bs-whatever="@fat">
+                        <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#enroll" data-bs-whatever="@fat">
                             <i class="bi bi-person-plus-fill me-1"></i>Enroll Student
-                        </button> -->
+                        </button>
                     </div>
                     <!-- NOTIFICATION -->
                     <?php
@@ -101,15 +112,18 @@ include "../admin/includes/Forms/enrollmentform.php";
                                         echo '<td>' . $row["sy"] . '</td>';
                                         echo '<td>' . $row["date_enroll"] . '</td>';
                                         echo '<td>' . ucwords(strtolower($row["enroll_status"])) . '</td>';
+                                        // THIS IS THE DELETE BUTTON I WILL LEAVE IT AS COMMENT IF NEEDED JUST UNCOMMENT 
+
+                                        //     <button class="btn btn-sm btn-outline-danger mt-2" data-bs-toggle="modal" data-bs-target="#del_enrolled' . urlencode($row['stu_lrn']) . '">
+                                        //     <i class="bi bi-trash"></i>
+                                        // </button>
                                         echo '
+                                        
                                         <td class="d-flex justify-content-center pt-2 pb-3 ">
-                                            <button class="btn btn-sm btn-outline-primary me-2 mt-2" data-bs-toggle="modal" data-bs-target="#edit_enrolled' . urlencode($row['stu_lrn']) . '">
+                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit_enrolled' . urlencode($row['stu_lrn']) . '">
                                                 <i class="bi bi-pencil-square "></i>
                                             </button>
                                         
-                                            <button class="btn btn-sm btn-outline-danger mt-2" data-bs-toggle="modal" data-bs-target="#del_enrolled' . urlencode($row['stu_lrn']) . '">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
                                         </td>
                                             ';
                                         echo '</tr>';

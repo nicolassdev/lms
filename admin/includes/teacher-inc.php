@@ -12,10 +12,8 @@ include "../../includes/dbh-inc.php"; // Include database connection and helper 
 date_default_timezone_set('Asia/Manila'); // Set timezone
 
 // Initialize variables with POST data and sanitize them
-$username = trim($_POST["username"] ?? null);
 $fname = strtoupper(trim($_POST["firstname"] ?? null));
 $lname = strtoupper(trim($_POST["lastname"] ?? null));
-$userpwd = trim($_POST["password"] ?? null);
 $role = strtoupper(trim($_POST["role"] ?? null));
 $contact = trim($_POST["contact"] ?? null);
 $gender = strtoupper(trim($_POST["gender"] ?? null));
@@ -27,8 +25,12 @@ $date_added = date("Ymd");
 
 // Generate unique IDs
 $uid = trim($mySQLFunction->generateUserID());
-
+// Generate unique teacher IDs
 $teacherID = trim($mySQLFunction->generateTeacherID($dob));
+//Genertate unique teacher username
+$username = trim($mySQLFunction->generateFacultyUsername($dob));
+//Generate unique password
+$userpwd = trim($mySQLFunction->generatePassword($dob));
 
 $mySQLFunction->connection(); // Establish database connection
 
@@ -68,12 +70,12 @@ try {
 
     // Insert data into TEACHER table
     $insertTeacherSql = "
-        INSERT INTO TEACHER (teacher_id, teacher_fname, teacher_mname, teacher_lname, teacher_contact, teacher_gender, teacher_dob, status, teacher_address, date_added, id)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO TEACHER (teacher_id, teacher_fname, teacher_mname, teacher_lname, teacher_contact, teacher_gender, teacher_dob, status, teacher_address, id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ";
     $stmt = $mySQLFunction->con->prepare($insertTeacherSql);
     $stmt->bind_param(
-        "sssssssssss",
+        "ssssssssss",
         $teacherID,
         $fname,
         strtoupper(trim($_POST["middlename"] ?? null)),
@@ -83,7 +85,6 @@ try {
         $dob,
         $status,
         $address,
-        $date_added,
         $uid
     );
     $stmt->execute();

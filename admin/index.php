@@ -35,9 +35,21 @@ include "./includes/alert-modal.php";
         case "users":
             require_once 'users.php';
             break;
+
+            /**
+                ROUTE FOR STUDENTS
+             */
         case "student":
             require_once 'student.php';
             break;
+        case "student_accounts":
+            require_once 'student_accounts.php';
+            break;
+
+
+            /**
+                ROUTE FOR FACULTY
+             */
         case "teacher":
             require_once 'teacher.php';
             break;
@@ -53,6 +65,11 @@ include "./includes/alert-modal.php";
         case "subject":
             require_once 'subject.php';
             break;
+        case "teacher_accounts":
+            require_once 'teacher_accounts.php';
+            break;
+
+
             /**
                  ROUTE FOR SETTINGS ADMIN
              */

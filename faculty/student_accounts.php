@@ -94,7 +94,7 @@ $mySQLFunction->disconnect();
                                         $formattedDate = $addedDate->format('F j, Y'); // Format to "August 11, 2024"
                                         // Check if stu_dob is set and valid before using it
                                         if (isset($row['stu_dob'])) {
-                                            $formattedPassword = $mySQLFunction->generateStudentPassword($row['stu_dob']);
+                                            $formattedPassword = $mySQLFunction->generatePassword($row['stu_dob']);
                                         } else {
                                             $formattedPassword = "N/A"; // Handle missing DOB
                                         }

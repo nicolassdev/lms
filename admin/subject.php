@@ -1,6 +1,6 @@
  <!-- VALIDATION CAN'T ACCESS THE URL -->
  <?php
-  if (!isset($_SESSION['principal_id'])) {
+  if (!isset($_SESSION['registrar_id'])) {
     header("location:../login.php?error=accessdenied");
   }
   ?>
@@ -62,7 +62,8 @@
                    <th scope="col" class="small text-center">Category</th>
                    <th scope="col" class="small text-center">Time</th>
                    <th scope="col" class="small text-center">Subject semester</th>
-                   <th scope="col" class="small text-center">Strand and Grade level </th>
+                   <th scope="col" class="small text-center">Strand</th>
+                   <th scope="col" class="small text-center">Grade level </th>
                    <th scope="col" class="small text-center ">Teacher</th>
                    <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
 
@@ -83,7 +84,8 @@
                       echo '<td>' . ucwords(strtolower($row["sub_type"])) . '</td>';
                       echo '<td>' . $row["sub_time"] . '</td>';
                       echo '<td>' . $row["sub_semester"] . '</td>';
-                      echo '<td>' . $row["strand"] . ' ' . $row["sub_gradelvl"] . '</td>';
+                      echo '<td>' . $row["strand"] . ' </td>';
+                      echo '<td>' . $row["sub_gradelvl"] . '</td>';
                       echo '<td>' . ucwords(strtolower($row["teacher"])) . '</td>';
                       echo '
                                         <td class="d-flex justify-content-center">

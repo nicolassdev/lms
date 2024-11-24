@@ -1,5 +1,5 @@
 <?php
-if (!isset($_SESSION["principal_id"])) {
+if (!isset($_SESSION["registrar_id"])) {
 
     header("location:../../../login.php?error=accessdenied");   //Redirect to URL login When trying to go this file
     exit();
@@ -37,7 +37,7 @@ if (!isset($_SESSION["principal_id"])) {
           </div> -->
 
                     <div class="modal-header">
-                        <h5 class="modal-title text-primary">Principal Details</h5>
+                        <h5 class="modal-title text-primary">Registrar Details</h5>
                     </div>
 
                     <div class="col-md-5">

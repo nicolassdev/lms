@@ -27,7 +27,7 @@ if (!isset($_POST["submit"])) {
 
     // Generate unique IDs
     $uid = trim($mySQLFunction->generateUserID());
-    $prin_id = trim($mySQLFunction->generateAdminID());
+    $reg_id = trim($mySQLFunction->generateAdminID());
 
     // Establish database connection
     $mySQLFunction->connection();
@@ -52,10 +52,10 @@ if (!isset($_POST["submit"])) {
         $credentialValues = [$uid, $username, $encryptedPassword, $role, date('Y-m-d H:i:s')];
         $mySQLFunction->insert("USERS", $credentialColumns, $credentialValues);
 
-        // Insert data into principal table
-        $principalColumns = ['principal_id', 'firstname', 'middlename', 'lastname', 'contact', 'gender', 'email', 'address', 'id'];
-        $principalValues = [$prin_id, $fname, isset($_POST["middlename"]) ? strtoupper(trim($_POST["middlename"])) : null, $lname, $contact, $gender, $email, $address,  $uid];
-        $mySQLFunction->insert("PRINCIPAL", $principalColumns, $principalValues);
+        // Insert data into registrar table
+        $registrarColumns = ['registrar_id', 'firstname', 'middlename', 'lastname', 'contact', 'gender', 'email', 'address', 'id'];
+        $registrarValues = [$reg_id, $fname, isset($_POST["middlename"]) ? strtoupper(trim($_POST["middlename"])) : null, $lname, $contact, $gender, $email, $address,  $uid];
+        $mySQLFunction->insert("REGISTRAR", $registrarColumns, $registrarValues);
 
         // Set success session variable and redirect
         $_SESSION['insert_admin'] = true;

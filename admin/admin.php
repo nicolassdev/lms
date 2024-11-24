@@ -1,6 +1,6 @@
 <?php
 // PHP Logic
-if (!isset($_SESSION['principal_id'])) {
+if (!isset($_SESSION['registrar_id'])) {
     header("location:../login.php?error=accessdenied");
     exit();
 }
@@ -22,7 +22,7 @@ include "../admin/includes/Forms/adminform.php";
     <div class="modal-dialog modal-lg">
         <div class="modal-content bg-light shadow">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">Update Principal Information</h5>
+                <h5 class="modal-title">Update Registrar Information</h5>
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm()"></button>
             </div>
             <div class="modal-body">
@@ -113,11 +113,11 @@ include "../admin/includes/Forms/adminform.php";
                             title="Edit" data-bs-toggle="modal" data-bs-target="#updateadmininfo">
                             <i class="bi bi-pencil-square"></i>
                         </button>
-                        <!-- this is adding another admin button -->
-                        <!-- <button type="button" class="btn btn-success btn-sm me-2 mb-2"
+                        <!-- this is adding another admin button i will leave it comment , if needed just uncomment this button down-->
+                        <button type="button" class="btn btn-success btn-sm me-2 mb-2"
                             title="Add Admin" data-bs-toggle="modal" data-bs-target="#admin">
                             <i class="bi bi-person-add"></i>
-                        </button> -->
+                        </button>
                     </div>
 
                     <div class="profile-header text-center mb-3">
@@ -166,8 +166,9 @@ include "../admin/includes/Forms/adminform.php";
                                 <strong>Gender:</strong>
                                 <p><?php echo ucwords(strtolower($showResult['gender'])); ?></p>
                             </div>
-                        </div>
 
+
+                        </div>
 
 
                     </div>

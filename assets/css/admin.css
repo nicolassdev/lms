@@ -41,7 +41,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 200px;
+  /* width: 200px; */
   overflow-y: auto;
 }
 
@@ -71,13 +71,13 @@ body {
 
 .sidebar .active:hover {
   background-color: #444;
-  padding: 10px;
+  /* padding: 10px; */
   border-radius: 5px;
   color: #fff;
 }
 
 .sidebar .nav-link {
-  padding: 10px 30px;
+  padding: 6px 20px;
   font-size: 12px;
   color: #fff;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -294,7 +294,23 @@ body {
   transform: scale(1.02);
   transition: transform 0.3s ease;
 }
+/* ================================ PAGINATION AND SEARCH ======================== */
 
+.text-sm {
+  font-size: 0.7em;
+}
+
+.dataTables_filter {
+  margin-bottom: 5px;
+  /* Space below the search bar */
+}
+
+.dataTables_filter input {
+  margin-left: 5px;
+  /* Space between the label and input */
+  padding: 5px;
+  /* Padding inside the input for better appearance */
+}
 /* =================================== FOOTER ====================================== */
 .footer {
   text-align: center;

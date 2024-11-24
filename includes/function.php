@@ -53,22 +53,15 @@ class myDataBase
         }
     }
 
+
     // ENCRPYT PASSWORD
     public function encrypt($password)
     {
         $hash = sha1($password);
         return $hash;
     }
-    
 
-    function begin_transaction($pdo) {
-        try {
-            $pdo->beginTransaction();
-            echo '<div class="alert alert-success" style="font-size: small;">Transaction started successfully.</div>';
-        } catch (PDOException $e) {
-            echo '<div class="alert alert-warning" style="font-size: small;">Failed to start transaction: ' . $e->getMessage() . '</div>';
-        }
-    }
+
 
 
 
@@ -81,7 +74,7 @@ class myDataBase
 
         for ($i = 0; $i < 4; $i++) {
             if ($i == 0) {
-                $rand = "PRIN-";
+                $rand = "REG-";
             }
             $rand = $rand . $num[rand(0, strlen($num) - 1)];
         }
@@ -114,11 +107,32 @@ class myDataBase
         return $teacherID;
     }
 
+    /*GEENERATE PASSWORD  */
 
+    public function generateFacultyUsername($dob)
+    {
+        // Ensure the input is a valid date
+        if (!$dob) {
+            throw new Exception("Invalid date of birth provided.");
+        }
+
+        // Extract the year, month, and day from the teacher's date of birth
+        $dob = new DateTime($dob);
+        $dobyear = $dob->format('y'); // Last 2 digits of the birth year
+        $month = $dob->format('m'); // Month in MM format
+        $day = $dob->format('d'); // Day in DD format
+
+        // Generate a 4-digit random number
+        $randomFourNum = rand(1000, 9999); // Ensures a 4-digit number
+        // Construct the ID: csi <last-digit-of-year>-<MMDD>-
+        $facultyUsername = "LMS-{$day}{$dobyear}{$month}-{$randomFourNum}";    //LMS-051002-2152
+
+        return $facultyUsername;
+    }
 
     /*GEENERATE PASSWORD  */
 
-    public function generateStudentPassword($dob)
+    public function generatePassword($dob)
     {
         $year = date('Y'); // Get the last 2 digits of the current year
         // Ensure the input is a valid date
@@ -138,27 +152,6 @@ class myDataBase
         return $studPassword;
     }
 
-    public function generateFacultyUsername($teacher_id)
-    {
-        try {
-            // Fetch teacher info using the method in the class
-            $teacher = $this->getTeacherInfo($teacher_id);
-
-            if ($teacher) {
-                // Remove spaces in teacher's name and concatenate to form the username
-                $teacher_name = str_replace(' ', '', $teacher['teacher_name']); // Ensure no spaces
-                $username = 'LMS-' . $teacher_name;
-
-                // Return the generated username
-                return $username;
-            } else {
-                throw new Exception("Teacher not found.");
-            }
-        } catch (Exception $e) {
-            // Handle exceptions and return the error message
-            return 'Error: ' . $e->getMessage();
-        }
-    }
 
     //RANDOM USER ID
     public function generateUserID()
@@ -233,7 +226,7 @@ class myDataBase
     //GET ADMIN INFORMATIONM
     public function getAdminInfo()
     {
-        $sql = "SELECT * FROM `PRINCIPAL`";
+        $sql = "SELECT * FROM `REGISTRAR`";
         $stored = ($this->con->query($sql))->fetch_assoc();
         return $stored;
     }
@@ -384,7 +377,7 @@ class myDataBase
         }
 
         $setString = implode(", ", $setClause);
-        $sql = "UPDATE `PRINCIPAL` SET $setString"; // You might want to add a WHERE clause to specify which record to update
+        $sql = "UPDATE `REGISTRAR` SET $setString"; // You might want to add a WHERE clause to specify which record to update
         $result = $this->con->query($sql);
         return $result;
     }
@@ -499,14 +492,13 @@ class myDataBase
     }
 
     // GET STUDENT ACCOUNTS
-    // GET STUDENT ACCOUNTS
     public function getStudentAccounts($role = 'STUDENT')
     {
         // Prepare the query to get only users with the specified role and their corresponding student info
         $stmt = $this->con->prepare("
-        SELECT u.id, u.username, u.password, u.role, u.date_added, s.stu_dob 
-        FROM `users` u 
-        JOIN `student` s ON u.username = s.stu_lrn 
+         SELECT u.id, u.username, u.password, u.role, u.date_added, s.stu_dob, s.stu_fname, s.stu_mname, s.stu_lname
+        FROM `users` u
+        JOIN `student` s ON u.username = s.stu_lrn
         WHERE u.role = ? 
         ORDER BY u.id
     ");
@@ -518,11 +510,32 @@ class myDataBase
     }
 
 
+    // GET TEACHER ACCOUNTS
+    public function getTeacherAccounts($role = 'TEACHER')
+    {
+        // Prepare the query to get only users with the specified role and their corresponding student info
+        $stmt = $this->con->prepare("
+        SELECT u.id, u.username, u.password, u.role, u.date_added, 
+        t.teacher_dob, t.teacher_fname, t.teacher_mname, t.teacher_lname
+        FROM `users` u
+        JOIN `teacher` t ON u.id = t.id
+        WHERE u.role = ?
+        ORDER BY u.id
+        ");
+        $stmt->bind_param('s', $role); // 's' denotes the type (string)
+        $stmt->execute();
+        $stored = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $stored;
+    }
+
+
+
 
     //GET ADMIN CREDENTIAL
     function getAdminCredential($row, $value)
     {
-        $sql = "SELECT * FROM `principal` WHERE `$row` = '$value'";
+        $sql = "SELECT * FROM `registrar` WHERE `$row` = '$value'";
         $stored = ($this->con->query($sql))->fetch_assoc();
         return $stored;
     }
@@ -899,7 +912,7 @@ class myDataBase
 
 
     //  GET TEACHER LIST 
-    public function getUsers($row = null, $value = null, $limit =15, $offset = 0)
+    public function getUsers($row = null, $value = null, $limit = 15, $offset = 0)
     {
         // Parameterized query to prevent SQL injection
         if ($row != null && $value != null) {

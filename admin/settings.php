@@ -1,6 +1,6 @@
 <!-- VALIDATION CAN'T ACCESS THE URL -->
 <?php
-if (!isset($_SESSION['principal_id'])) {
+if (!isset($_SESSION['registrar_id'])) {
     header("location:../login.php?error=accessdenied");
 }
 ?>
@@ -23,9 +23,9 @@ $mySQLFunction->disconnect();
 
         <!-- Button container for proper alignment -->
         <div class="d-flex gap-2 ms-2">
-                        <!-- Admin ACCOUNT button -->
+            <!-- Admin ACCOUNT button -->
             <a href="index.php?page=account" class="btn btn-dark btn-sm btn-animate">
-            <i class="bi bi-person-vcard-fill me-2"></i><span>Account</span>
+                <i class="bi bi-person-vcard-fill me-2"></i><span>Account</span>
             </a>
             <!-- Semester button -->
             <a href="index.php?page=semester" class="btn btn-primary btn-sm btn-animate">
@@ -45,12 +45,12 @@ $mySQLFunction->disconnect();
 
     <!-- Form Section -->
     <form action="?page=settings" method="POST" class="border rounded p-4 bg-light mb-5 ms-3 me-3 shadow-lg row form-hover custom-shadow">
-              <!-- Edit button with tooltip -->
-               <div class="text-end">
-              <button type="button" class="btn btn-success btn-sm btn-animate" title="Edit" data-bs-toggle="modal" data-bs-target="#setting" data-bs-whatever="@fat">
+        <!-- Edit button with tooltip -->
+        <div class="text-end">
+            <button type="button" class="btn btn-success btn-sm btn-animate" title="Edit" data-bs-toggle="modal" data-bs-target="#setting" data-bs-whatever="@fat">
                 <i class="bi bi-pencil-square"></i>
             </button>
-            </div>
+        </div>
         <div class="mb-3 fade-in-input">
             <label for="school" class="form-label"><i class="bi bi-bank text-primary"></i> School Name</label>
             <input type="text" id="school" name="school" value="<?php echo ucwords(strtolower($result['SCHOOL_NAME'])); ?>" class="form-control" autocomplete="off" disabled>

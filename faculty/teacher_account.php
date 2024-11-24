@@ -26,7 +26,7 @@ $teacherInfo = $mySQLFunction->getTeacherInfo($_SESSION['teacher_id']);
 
 $teacherFullName = $teacherInfo['teacher_fname'] . ' ' . $teacherInfo['teacher_mname'] . ' ' . $teacherInfo['teacher_lname'];
 
- 
+
 
 // Birthday formatted
 $birthDate = new DateTime($teacherInfo['teacher_dob']);
@@ -58,7 +58,14 @@ $mySQLFunction->disconnect();
 
                     <!-- STUDENT UPDATE FORM -->
 
-                    <div class="container">
+                    <div class="container position-relative">
+                        <!-- CSI Logo as Background -->
+                        <img
+                            style="position: absolute; top: 50%; left: 50%; transform: translate(-20%, -50%); 
+               width: 500px; opacity: 0.1; z-index: -1;"
+                            src="../assets/img/csi.webp"
+                            alt="LMS Logo">
+
                         <div class="row justify-content-between">
                             <!-- Left side: Profile -->
                             <div class="col-md-6 col-12 text-center">
@@ -85,12 +92,11 @@ $mySQLFunction->disconnect();
                             <!-- Right side: Update Form -->
                             <div class="col-md-6 col-12">
                                 <form action="./includes/Operation/updateTeacherAccount.php" method="POST" class="needs-validation" novalidate>
-
                                     <div class="mb-3">
                                         <strong class="fs-5">Your Account</strong>
                                         <p style="font-size: 13px;">Change username and password</p>
                                     </div>
-                                    <!-- hide id of student d-none -->
+                                    <!-- Hide ID of student -->
                                     <input type="hidden" class="form-control" name="teacherid" value="<?php echo $account['id']; ?>" required>
 
                                     <!-- Username Field -->
@@ -129,6 +135,8 @@ $mySQLFunction->disconnect();
                             </div>
                         </div>
                     </div>
+
+
 
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <?php
 
-if (!isset($_SESSION['principal_id'])) {
+if (!isset($_SESSION['registrar_id'])) {
     header("location:../../../login.php?error=accessdenied");
     exit();
 }
@@ -181,11 +181,11 @@ $mySQLFunction->disconnect();
 
                     <label class="form-label">Requirements Submitted</label>
                     <div class="col-md-12 mb-3">
-                         <input class="ms-3" type="checkbox" name="requirement[]" value="SF9"> SF9
-                         <input class="ms-3" type="checkbox" name="requirement[]" value="SF10"> SF10
-                         <input class="ms-3" type="checkbox" name="requirement[]" value="PSA Birth Certificate"> PSA Birth Certificate
+                        <input class="ms-3" type="checkbox" name="requirement[]" value="SF9"> SF9
+                        <input class="ms-3" type="checkbox" name="requirement[]" value="SF10"> SF10
+                        <input class="ms-3" type="checkbox" name="requirement[]" value="PSA Birth Certificate"> PSA Birth Certificate
                         <input class="ms-3" type="checkbox" name="requirement[]" value="LCR Birth Certificate"> LCR Birth Certificate
-                        <input class="ms-3" type="checkbox" name="requirement[]" value="GMCC"> GMCC 
+                        <input class="ms-3" type="checkbox" name="requirement[]" value="GMCC"> GMCC
                     </div>
                     <div class="invalid-feedback" id="checkbox-feedback">
                         Please select at least one requirement.

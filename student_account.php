@@ -50,20 +50,26 @@ $mySQLFunction->disconnect();
 <main class="col-md-12 ms-sm-auto col-lg-10">
 
     <div class="container">
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-md-12">
                 <div class="profile-card">
                     <div class="d-flex flex-wrap justify-content-end mb-3">
-                        <button class="btn btn-secondary btn-sm me-2 mb-2"
+                        <!-- <button class="btn btn-secondary btn-sm me-2 mb-2"
                             onclick="location.href='index.php?page=student_prof'">
                             <i class="bi bi-arrow-left-circle me-1"></i> Back
-                        </button>
+                        </button> -->
                     </div>
 
 
                     <!-- STUDENT UPDATE FORM -->
 
-                    <div class="container">
+
+                    <div class="container position-relative">
+                        <img
+                            style="position: absolute; top: 50%; left: 50%; transform: translate(-20%, -50%); 
+               width: 500px; opacity: 0.10; z-index: -1;"
+                            src="./assets/img/csi.webp"
+                            alt="LMS Logo">
                         <div class="row justify-content-between">
                             <!-- Left side: Profile -->
                             <div class="col-md-6 col-12 text-center">

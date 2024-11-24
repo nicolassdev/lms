@@ -57,16 +57,16 @@ $mySQLFunction->disconnect();
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label class="form-label">First Name</label>
-                            <input type="text" name="firstname" value="<?php echo htmlspecialchars(ucwords(strtolower($studentInfo['stu_fname']))); ?>" class="form-control" required>
+                            <input type="text" name="firstname" value="<?php echo htmlspecialchars(ucwords(strtolower($studentInfo['stu_fname']))); ?>" class="form-control" readonly>
                             <div class="invalid-feedback">Please enter the first name.</div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Middle Name</label>
-                            <input type="text" name="middlename" value="<?php echo htmlspecialchars(ucwords(strtolower($studentInfo['stu_mname']))); ?>" class="form-control">
+                            <input type="text" name="middlename" value="<?php echo htmlspecialchars(ucwords(strtolower($studentInfo['stu_mname']))); ?>" class="form-control" readonly>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Last Name</label>
-                            <input type="text" name="lastname" value="<?php echo htmlspecialchars(ucwords(strtolower($studentInfo['stu_lname']))); ?>" class="form-control" required>
+                            <input type="text" name="lastname" value="<?php echo htmlspecialchars(ucwords(strtolower($studentInfo['stu_lname']))); ?>" class="form-control" readonly>
                             <div class="invalid-feedback">Please enter the last name.</div>
                         </div>
 
@@ -173,7 +173,13 @@ $mySQLFunction->disconnect();
 <main class="col-md-12 ms-sm-auto col-lg-10">
 
     <div class="container">
-        <div class="row">
+
+        <div class="row mt-3">
+            <img
+                style="position: absolute; top: 50%; left: 50%; transform: translate(-10%, -20%); 
+                   width:600px; opacity: 0.1; z-index: -1;"
+                src="./assets/img/csi.webp"
+                alt="LMS Logo">
             <div class="col-md-12">
                 <div class="profile-card">
                     <div class="d-flex flex-wrap justify-content-end mb-3">
@@ -193,9 +199,9 @@ $mySQLFunction->disconnect();
 
                         <!-- SWITCHING IMAGE IF USER IS MALE OR FEMALE  -->
                         <?php if ($studentInfo['stu_gender'] === "MALE") { ?>
-                            <img src="./assets/Upload/malestudent.webp" alt="Profile Image"  draggable="false"  class="profile-img-circle mb-2">
+                            <img src="./assets/Upload/malestudent.webp" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
                         <?php } else { ?>
-                            <img src="./assets/Upload/femalestudent.webp" alt="Profile Image"  draggable="false"  class="profile-img-circle mb-2">
+                            <img src="./assets/Upload/femalestudent.webp" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
                         <?php } ?>
 
 
@@ -336,6 +342,8 @@ $mySQLFunction->disconnect();
             </div>
         </div>
     </div>
+
+
 </main>
 
 

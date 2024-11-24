@@ -3,7 +3,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-4 text-primary">Add Subject</h1>
+        <h1 class="modal-title fs-5 text-primary">Add Subject</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetFormSubject()"></button>
       </div>
 

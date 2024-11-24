@@ -36,7 +36,7 @@ if (!isset($_POST["submit"])) {
     // Generate unique IDs
     $uid = trim($mySQLFunction->generateUserID());
     //GENERATE unique passsword for students
-    $userpwd = trim($mySQLFunction->generateStudentPassword($dob));
+    $userpwd = trim($mySQLFunction->generatePassword($dob));
 
     // Establish database connection
     $mySQLFunction->connection();

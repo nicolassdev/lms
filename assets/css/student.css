@@ -147,19 +147,6 @@ body {
 
 /* PROFILE MODULE CSS  */
 /* Custom styling for profile */
-.profile-card {
-  background-color: #f8f9fa;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(135deg, #2980b9, #6dd5fa, #ffffff);
-  width: 100%;
-  /* Ensure full width */
-  max-width: 1200px;
-  /* Optional max width */
-  margin: 0 auto;
-  /* Center the container */
-}
 
 .profile-header,
 .profile-details {
@@ -171,7 +158,7 @@ body {
   width: 150px;
   height: 150px;
   object-fit: cover;
-  border: 3px solid #007bff;
+  border: 3px solid #198754;
 }
 
 .modal-content {

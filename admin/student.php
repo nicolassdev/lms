@@ -1,6 +1,6 @@
 <!-- VALIDATION CAN'T ACCESS THE URL -->
 <?php
-if (!isset($_SESSION['principal_id'])) {
+if (!isset($_SESSION['registrar_id'])) {
     header("location:../login.php?error=accessdenied");
 }
 ?>
@@ -34,12 +34,14 @@ include "../admin/includes/Forms/studentform.php";
         <div class="row">
             <div class="col-12">
                 <div class="data-table">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
+                        <h5 class="text-black">List of Students</h5>
+                        <div class="d-flex">
 
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3 ms-3 me-3">
-                        <h4 class="text-black">List of Students</h4>
-                        <!-- <button type="button" class="btn btn-primary btn-animate" data-bs-toggle="modal" data-bs-target="#student" data-bs-whatever="@fat">
-                            <i class="bi bi-person-plus-fill me-1"></i>Student
-                        </button> -->
+                            <button type="button" class="btn btn-primary btn-sm ms-2 btn-animate" data-bs-toggle="modal" data-bs-target="#student" data-bs-whatever="@fat">
+                                <i class="bi bi-person-plus-fill me-1"></i>Add Student
+                            </button>
+                        </div>
                     </div>
                     <!-- NOTIFICATION -->
                     <?php
@@ -74,9 +76,7 @@ include "../admin/includes/Forms/studentform.php";
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col" style="width: 50px;">LRN</th>
-                                    <th scope="col" style="width: 100px;">Name</th>
-                                    <th scope="col" style="width: 50px;">Middle name</th>
-                                    <th scope="col" style="width: 100px;">Lastname</th>
+                                    <th scope="col" style="width: 100px;">Full name</th>
                                     <th scope="col" style="width: 50px;">Gender</th>
                                     <th scope="col" style="width: 150px;">Address</th>
                                     <th scope="col" style="width: 100px;">Contact</th>
@@ -106,13 +106,11 @@ include "../admin/includes/Forms/studentform.php";
                                         // echo '<td>' . $count . '</td>';
                                         echo '<td class="text-center text-primary"> <a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">'
                                             . $row["stu_lrn"] . '</a></td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_fname"])) . '</td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_mname"])) . '</td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_lname"])) . '</td>';
+                                        echo '<td class="small text-center"> ' . $row["stu_lname"] . '  ' .  ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"] . '')) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
                                         echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
-                                        echo '<td class="small text-center">' . $row["stu_email"] . '</td>';
+                                        echo '<td class="small text-center">' . strtolower($row["stu_email"]) . '</td>';
                                         echo '<td class="small text-center">' . $formattedBdate . '</td>';
                                         // echo '<td class="small text-center">' . $row["stu_pob"] . '</td>';
                                         // echo '<td class="small text-center">' . $row["father_name"] . '</td>';
@@ -123,15 +121,15 @@ include "../admin/includes/Forms/studentform.php";
                                         //   <button title="Student Information" class="btn btn-sm btn-outline-success me-2 " data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">
                                         //     <i class="bi bi-person-vcard"></i>
                                         // </button>
+                                        // THIS IS THE DELETE BUTTON I WILL UNCOMMENT THIS IF NEED TO DELETE PLEASE UNCOMMENT THE LINE
+                                        // <button title="Delete" class="btn btn-sm btn-outline-danger " data-bs-toggle="modal" data-bs-target="#del_student' . $row['stu_lrn'] . '">
+                                        //     <i class="bi bi-trash"></i> 
+                                        // </button>
                                         echo '
                                             <td class="d-flex justify-content-center">
                                            
                                                 <button title="Edit" class="btn btn-sm btn-outline-primary  me-2" data-bs-toggle="modal" data-bs-target="#edit_student' . $row['stu_lrn'] . '">
                                                     <i class="bi bi-pencil-square"></i> 
-                                                </button>
-                                            
-                                                <button title="Delete" class="btn btn-sm btn-outline-danger " data-bs-toggle="modal" data-bs-target="#del_student' . $row['stu_lrn'] . '">
-                                                    <i class="bi bi-trash"></i> 
                                                 </button>
                                          
                                             </td>

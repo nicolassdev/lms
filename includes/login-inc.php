@@ -21,7 +21,7 @@ if (!isset($_POST["submit"])) {
         $redirectUrl = '';
 
         // Determine the redirect URL based on user role
-        if ($userRole === "STUDENT") {
+        if ($userRole === "STUDENT") {                                          // STUDENT
             session_start();
             $user = $mySQLFunction->getCredential("username", $username);
             $studentCredential = $mySQLFunction->getStudentCredential("id", $user["id"]);
@@ -46,7 +46,7 @@ if (!isset($_POST["submit"])) {
             //redirect to url 
             header("location: ../loading.php?redirect=" . urlencode("./index.php"));
             exit();
-        } elseif ($userRole === "TEACHER") {
+        } elseif ($userRole === "TEACHER") {                                          // TEACHER
             session_start();
             $user = $mySQLFunction->getCredential("username", $username);
             $teacherCredential = $mySQLFunction->getTeacherCredential("id", $user["id"]);
@@ -72,14 +72,21 @@ if (!isset($_POST["submit"])) {
             //redirect to url 
             header("location: ../loading.php?redirect=" . urlencode("./faculty/index.php"));
             exit();
-        } elseif ($userRole === "ADMIN") {
+        } elseif ($userRole === "PRINCIPAL") {                                          // PRINCIPAL
+            session_start();
+
+
+
+            header("location: ../loading.php?redirect=" . urlencode("./principal/index.php"));
+            exit();
+        } elseif ($userRole === "ADMIN") {                                            // REGISTRAR SET AS ADMIN
             session_start();
 
             $user = $mySQLFunction->getCredential("username", $username);
             $adminCredential = $mySQLFunction->getAdminCredential("id", $user["id"]);
 
             $_SESSION["id"] = $adminCredential["id"];
-            $_SESSION["principal_id"] = $adminCredential["principal_id"];
+            $_SESSION["registrar_id"] = $adminCredential["registrar_id"];
             $_SESSION["firstname"] = $adminCredential["firstname"];
             $_SESSION["lastname"] = $adminCredential["lastname"];
 

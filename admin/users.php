@@ -1,6 +1,6 @@
 <!-- VALIDATION CAN'T ACCESS THE URL -->
 <?php
-if (!isset($_SESSION['principal_id'])) {
+if (!isset($_SESSION['registrar_id'])) {
     header("location:../login.php?error=accessdenied");
 }
 ?>
@@ -42,34 +42,34 @@ include "../includes/dbh-inc.php";
                 </tr>
             </thead>
             <tbody
-            <?php
-                    $mySQLFunction->connection();
+                <?php
+                $mySQLFunction->connection();
 
-                    if (!isset($_POST["search"])) {
-                        $result = $mySQLFunction->getUsers();
-                    } else {
-                        $find = $_POST["find-user"];
-                        $result = $mySQLFunction->searchUser($find);
-                    }
+                if (!isset($_POST["search"])) {
+                    $result = $mySQLFunction->getUsers();
+                } else {
+                    $find = $_POST["find-user"];
+                    $result = $mySQLFunction->searchUser($find);
+                }
 
-                    if (!empty($result)) {
-                        $count = 1;
-                        foreach ($result as $row) {
-                            // Skip users with the 'ADMIN' role
-                            if (strtoupper($row["role"]) == 'ADMIN') {
-                                continue;  // Skip this iteration and move to the next user
-                            }
+                if (!empty($result)) {
+                    $count = 1;
+                    foreach ($result as $row) {
+                        // Skip users with the 'ADMIN' role
+                        if (strtoupper($row["role"]) == 'ADMIN') {
+                            continue;  // Skip this iteration and move to the next user
+                        }
 
-                            // Create a DateTime object and format the added_date
-                            $addedDate = new DateTime($row['date_added']); // Create a DateTime object for the current row
-                            $formattedDate = $addedDate->format('F j, Y'); // Format to "August 11, 2024"
+                        // Create a DateTime object and format the added_date
+                        $addedDate = new DateTime($row['date_added']); // Create a DateTime object for the current row
+                        $formattedDate = $addedDate->format('F j, Y'); // Format to "August 11, 2024"
 
-                            echo '<tr>';
-                            echo '<td>' . $count. '</td>'; // Clickable ID
-                            echo '<td>' . $row["username"] . '</td>';
-                            echo '<td>' . ucwords(strtolower($row["role"])) . '</td>';
-                            echo '<td>' . $formattedDate . '</td>';
-                            echo '
+                        echo '<tr>';
+                        echo '<td>' . $count . '</td>'; // Clickable ID
+                        echo '<td>' . $row["username"] . '</td>';
+                        echo '<td>' . ucwords(strtolower($row["role"])) . '</td>';
+                        echo '<td>' . $formattedDate . '</td>';
+                        echo '
                                 <td class="text-center">
                                     <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit_user' . $row['id'] . '"><i class="bi bi-pencil-square"></i></button>
                                 </td>
@@ -77,7 +77,7 @@ include "../includes/dbh-inc.php";
                                     <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_user' . $row['id'] . '"><i class="bi bi-trash"></i></button>
                                 </td>
                             ';
-                            echo '</tr>';
+                        echo '</tr>';
 
                         //Modal for updating users 
                         echo '

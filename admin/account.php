@@ -15,18 +15,18 @@ if (!isset($_SESSION['username'])) {
 }
 require_once "../includes/dbh-inc.php";
 $mySQLFunction->connection();
- 
+
 
 // Getters
 
 $account = $mySQLFunction->getAccountAdmin($_SESSION['id']);
 
-$principalInfo = $mySQLFunction->getAdminInfo($_SESSION['principal_id']);
+$registrarlInfo = $mySQLFunction->getAdminInfo($_SESSION['registrar_id']);
 
-$principalFullName = $principalInfo['firstname'] . ' ' . $principalInfo['middlename'] . ' ' . $principalInfo['lastname'];
+$registrarFullName = $registrarlInfo['firstname'] . ' ' . $registrarlInfo['middlename'] . ' ' . $registrarlInfo['lastname'];
 
- 
- 
+
+
 $mySQLFunction->disconnect();
 // include "../lms/includes/Forms/studentinfoform.php";
 ?>
@@ -57,19 +57,19 @@ $mySQLFunction->disconnect();
                             <div class="col-md-6 col-12 text-center">
                                 <div class="profile-header" style="margin-top: 60px;">
                                     <!-- SWITCHING IMAGE IF USER IS MALE OR FEMALE -->
-                                    <?php if ($principalInfo['gender'] === "MALE") { ?>
+                                    <?php if ($registrarlInfo['gender'] === "MALE") { ?>
                                         <img src="../assets/Upload/maleadmin.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
                                     <?php } else { ?>
                                         <img src="../assets/Upload/femaleadmin.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
                                     <?php } ?>
 
-                                    <h4><?php echo ucwords(strtolower($principalFullName)); ?>
+                                    <h4><?php echo ucwords(strtolower($registrarFullName)); ?>
                                         <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
                                     </h4>
 
                                     <span class="badge bg-success text-white">ID</span>
                                     <small class="text-muted fw-semibold">
-                                        <?php echo $principalInfo['principal_id']; ?>
+                                        <?php echo $registrarlInfo['registrar_id']; ?>
                                     </small>
                                     <br />
                                 </div>

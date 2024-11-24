@@ -5,7 +5,7 @@
      <meta charset="UTF-8" />
      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <link rel="website icon" type="webp" href="assets/img/lms.webp">
+     <link rel="website icon" type="webp" href="assets/img/csi.webp">
      <link rel="stylesheet" href="assets/css/login.css?v=<?php echo time(); ?>" />
      <title>Login</title>
 
@@ -22,6 +22,10 @@
         if ($user_role === "admin") {
 
             header('Location: /lms/admin/index.php'); // Change to the actual homepage path
+            exit();
+        } elseif ($user_role === "principal") {
+
+            header('Location: /lms/principal/index.php');
             exit();
         } elseif ($user_role === "teacher") {
 
@@ -81,10 +85,6 @@
                      <button type="submit" name="submit">Login</button>
                  </form>
 
-                 <div class="text-caption">
-                     <span class="text-note">Note: </span>
-                     Only Students and Faculty of CSI can access this website.
-                 </div>
              </div>
          </div>
      </div>

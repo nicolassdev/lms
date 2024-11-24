@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["principal_id"])) {
+if (!isset($_SESSION["registrar_id"])) {
     header("location:../../../login.php?error=accessdenied");
     exit();
 } else {

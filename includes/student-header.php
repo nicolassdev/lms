@@ -4,7 +4,7 @@
 $host = 'localhost';
 $dbname = 'lms_db';
 $username = 'root';
-$password = '';
+$password = 'Nicolas051002';
 
 // Establish the database connection
 try {
@@ -55,7 +55,7 @@ if (isset($_SESSION['stu_lrn'])) {
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="website icon" type="webp" href="./assets/img/lms.webp">
+    <link rel="website icon" type="webp" href="./assets/img/csi.webp">
     <link rel="stylesheet" href="./assets/css/student.css?v=<?php echo time(); ?>" />
     <style>
 

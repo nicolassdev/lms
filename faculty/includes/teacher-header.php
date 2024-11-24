@@ -4,7 +4,7 @@
 $host = 'localhost';
 $dbname = 'lms_db';
 $username = 'root';
-$password = '';
+$password = 'Nicolas051002';
 
 // Establish the database connection
 try {
@@ -51,7 +51,7 @@ if (isset($_SESSION['teacher_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher</title>
 
-    <link rel="icon" type="webp" href="../assets/img/lms.webp">
+    <link rel="icon" type="webp" href="../assets/img/csi.webp">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/teacher.css?v=<?php echo time(); ?>" />

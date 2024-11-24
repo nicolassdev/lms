@@ -18,7 +18,10 @@ if (!isset($_POST["submit"])) {
     $lrnID = isset($_POST["lrn"]) ? trim($_POST["lrn"]) : null;
     $fname = isset($_POST["fname"]) ? strtoupper(trim($_POST["fname"])) : null;
     $lname = isset($_POST["lname"]) ? strtoupper(trim($_POST["lname"])) : null;
-    $userpwd = isset($_POST["password"]) ? trim($_POST["password"]) : null;
+
+    // $userpwd = isset($_POST["password"]) ? trim($_POST["password"]) : null;
+
+
     $role = isset($_POST["role"]) ? strtoupper(trim($_POST["role"])) : null;
     $address = isset($_POST["address"]) ? strtoupper(trim($_POST["address"])) : null;
     $scontact = isset($_POST["stu_contact"]) ? trim($_POST["stu_contact"]) : null;
@@ -32,7 +35,8 @@ if (!isset($_POST["submit"])) {
 
     // Generate unique IDs
     $uid = trim($mySQLFunction->generateUserID());
-
+    //GENERATE unique passsword for students
+    $userpwd = trim($mySQLFunction->generatePassword($dob));
 
     // Establish database connection
     $mySQLFunction->connection();

@@ -3,7 +3,7 @@
 $host = 'localhost';
 $dbname = 'lms_db';
 $username = 'root';
-$password = '';
+$password = 'Nicolas051002';
 
 
 // Establish the database connection
@@ -19,7 +19,7 @@ try {
 // Function to get user information from the database
 function getAdminInfo($conn)
 {
-    $sql = "SELECT * FROM principal";  // SQL query to get all users
+    $sql = "SELECT * FROM registrar";  // SQL query to get all users
     $stmt = $conn->query($sql);  // Execute the query
     return $stmt ? $stmt->fetchAll() : [];  // Return fetched data or an empty array
 }
@@ -49,7 +49,7 @@ foreach ($users as $user) {
     <!-- <link href="../css/bootstrap-icons.min.css" rel="stylesheet"> -->
     <!-- Bootstrap Icons -->
     <!-- <link href="../css/bootstrap-icons.css" rel="stylesheet"> -->
-    <link rel="icon" type="webp" href="../assets/img/lms.webp">
+    <link rel="icon" type="webp" href="../assets/img/csi.webp">
     <link href="./css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="../assets/css/admin.css?v=<?php echo time(); ?>" />
@@ -92,7 +92,7 @@ foreach ($users as $user) {
             <div class="image d-flex align-items-center">
                 <a href="?page=home">
                     <span class="d-none d-lg-inline">
-                        <img src="../assets/img/lms.webp" alt="LMS Logo">
+                        <img src="../assets/img/csi.webp" alt="LMS Logo">
                     </span>
                 </a>
 
@@ -146,7 +146,7 @@ foreach ($users as $user) {
         <div class="container-fluid">
             <div class="row mt-4">
                 <!-- Sidebar -->
-                <nav id="sidebar" class="col-md-3 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 280px;">
+                <nav id="sidebar" class="col-md-3 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 230px;">
                     <div class="position-sticky text-white ">
 
                         <div class="text-white ms-4 d-lg-none">
@@ -167,85 +167,117 @@ foreach ($users as $user) {
                                     <i class="bi bi-house me-1"></i>Home
                                 </a>
                             </li>
-         
+
                             <li class="nav-item">
                                 <a class="nav-link active sm-5" href="index.php?page=users">
                                     <i class="bi bi-person-vcard me-1"></i>Users
                                 </a>
                             </li>
+
+
+                            <!-- THIS IS STUDENT DROP DOWN SELECT IN SIDE BAR  -->
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=student">
-                                    <i class="bi bi-person me-1"></i>Students
+                                <a class="nav-link  text-white" href="#studentMenu" data-bs-toggle="collapse" aria-expanded="false" id="studentDropdown">
+                                    <i class="bi bi-person me-1"></i>Student Management <i class="bi bi-chevron-down" style="margin-left: 1px;" id="studentIcon"></i>
                                 </a>
+                                <ul class="collapse list-unstyled ps-1" id="studentMenu">
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=student">
+
+                                            <i class="bi bi-plus-circle me-2"></i>New Student
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=student_accounts">
+                                            <i class="bi bi-database-fill me-2"></i>Student Accounts
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=enrolled">
+                                            <i class="bi bi-list-columns-reverse me-2"></i>Section Registration
+
+
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=register_student">
+                                            <i class="bi bi-journal-check me-2"></i>Subject Registration
+
+                                        </a>
+                                    </li>
+
+                                </ul>
                             </li>
+
+                            <!-- THIS IS FACULTY DROP DOWN SELECT IN SIDE BAR  -->
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=enrolled">
-                                    <i class="bi bi-bookmark-star me-1"></i>Enrolled Students
+                                <a class="nav-link  text-white" href="#facultyMenu" data-bs-toggle="collapse" aria-expanded="false" id="studentDropdown">
+                                    <i class="bi bi-people me-1"></i>Faculty Management <i class="bi bi-chevron-down" style="margin-left: 5px;" id="facultyIcon"></i>
                                 </a>
+                                <ul class="collapse list-unstyled ps-1" id="facultyMenu">
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=teacher">
+
+                                            <i class="bi bi-plus-circle me-2"></i>New Faculty
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=teacher_accounts">
+                                            <i class="bi bi-database-fill me-2"></i>Faculty Accounts
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=section">
+                                            <i class="bi bi-building-fill-add me-2"></i>Section
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=subject">
+                                            <i class="bi bi-journal-bookmark me-2"></i>Subject
+                                        </a>
+                                    </li>
+
+                                </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=teacher">
-                                    <i class="bi bi-people me-1"></i>Faculty
-                                </a>
-                            </li>
+
+
+
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=strand">
                                     <i class="bi bi-mortarboard me-1"></i>Strand
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=section">
-                                    <i class="bi bi-building-fill-add me-1"></i>Section
+
+
+                            <!-- Dropdown for STRAND Subject -->
+
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-white" href="#strandSubjectMenu" data-bs-toggle="collapse" aria-expanded="false" id="strandDropdown">
+                                    <i class="bi bi-journals me-1"></i> Strand Subject
+                                    <i class="bi bi-chevron-down" style="margin-left: 10px;" id="strandIcon"></i>
                                 </a>
-                            </li>
-
-
-
-
-                            <!-- Dropdown for Subject -->
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="#subjectMenu" data-bs-toggle="collapse" aria-expanded="false" id="subjectDropdown">
-                                    <i class="bi bi-journal-bookmark me-1"></i> Subject
-                                    <i class="bi bi-chevron-down" style="margin-left: 48px;" id="subjectIcon"></i>
-                                </a>
-                                <ul class="collapse list-unstyled " id="subjectMenu">
-                                    <li class="nav-item mt-2">
-                                        <a class="nav-link active" href="index.php?page=subject">
-                                            <i class="bi bi-plus-circle me-2"></i> Subject Teacher
-                                        </a>
+                                <ul class="collapse list-unstyled ps-3" id="strandSubjectMenu">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="index.php?page=stem_subjects">STEM</a>
                                     </li>
-
-                                    <!-- Nested Dropdown for Strand Subject -->
-                                    <li class="nav-item mt-2">
-                                        <a class="nav-link text-white" href="#strandSubjectMenu" data-bs-toggle="collapse" aria-expanded="false" id="strandDropdown">
-                                            <i class="bi bi-journals me-1"></i> Strand Subject
-                                            <i class="bi bi-chevron-down" style="margin-left: 10px;" id="strandIcon"></i>
-                                        </a>
-                                        <ul class="collapse list-unstyled ps-3" id="strandSubjectMenu">
-                                            <li class="nav-item">
-                                                <a class="nav-link active" href="index.php?page=stem_subjects">STEM</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active" href="index.php?page=abm_subjects">ABM</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active" href="index.php?page=humss_subjects">HUMSS</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active" href="index.php?page=gas_subjects">GAS</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active" href="index.php?page=css_subjects">CSS</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link active" href="index.php?page=cp_subjects">CP</a>
-                                            </li>
-                                        </ul>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="index.php?page=abm_subjects">ABM</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="index.php?page=humss_subjects">HUMSS</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="index.php?page=gas_subjects">GAS</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="index.php?page=css_subjects">CSS</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="index.php?page=cp_subjects">CP</a>
                                     </li>
                                 </ul>
+
                             </li>
-
-
 
 
                             <li class="nav-item">
@@ -298,26 +330,51 @@ foreach ($users as $user) {
 
     <!-- JavaScript to toggle icons using Bootstrap collapse events -->
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentMenu = document.getElementById('studentMenu');
+            const studentIcon = document.getElementById('studentIcon');
+
+            studentMenu.addEventListener('show.bs.collapse', function() {
+                studentIcon.classList.remove('bi-chevron-down'); // Original icon
+                studentIcon.classList.add('bi-chevron-up'); // Change to up icon
+            });
+
+            studentMenu.addEventListener('hide.bs.collapse', function() {
+                studentIcon.classList.remove('bi-chevron-up'); // Remove up icon
+                studentIcon.classList.add('bi-chevron-down'); // Change back to original icon
+            });
+        });
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const facultyMenu = document.getElementById('facultyMenu');
+            const facultyIcon = document.getElementById('facultyIcon');
+
+            facultyMenu.addEventListener('show.bs.collapse', function() {
+                facultyIcon.classList.remove('bi-chevron-down'); // Original icon
+                facultyIcon.classList.add('bi-chevron-up'); // Change to up icon
+            });
+
+            facultyMenu.addEventListener('hide.bs.collapse', function() {
+                facultyIcon.classList.remove('bi-chevron-up'); // Remove up icon
+                facultyIcon.classList.add('bi-chevron-down'); // Change back to original icon
+            });
+        });
+
+
         document.addEventListener("DOMContentLoaded", function() {
-            const subjectIcon = document.getElementById("subjectIcon");
+
             const strandIcon = document.getElementById("strandIcon");
 
             // Immediate icon toggle on click
-            document.getElementById("subjectDropdown").addEventListener("click", function() {
-                toggleIcon(subjectIcon);
-            });
 
             document.getElementById("strandDropdown").addEventListener("click", function() {
                 toggleIcon(strandIcon);
             });
 
             // Confirm final state based on collapse event
-            document.getElementById("subjectMenu").addEventListener("shown.bs.collapse", function() {
-                subjectIcon.className = "bi bi-chevron-up";
-            });
-            document.getElementById("subjectMenu").addEventListener("hidden.bs.collapse", function() {
-                subjectIcon.className = "bi bi-chevron-down";
-            });
+
 
             document.getElementById("strandSubjectMenu").addEventListener("shown.bs.collapse", function() {
                 strandIcon.className = "bi bi-chevron-up";

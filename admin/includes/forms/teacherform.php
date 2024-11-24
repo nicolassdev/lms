@@ -1,36 +1,14 @@
-
 <!-- FORM MODAL ADD TEACHER  -->
 <div class="modal fade" id="teacher" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content b-grey">
             <div class="modal-body">
                 <form id="teacherForm" action="./includes/teacher-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation " novalidate>
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-4 text-primary">Create Account</h1>
-
-                    </div>
-
                     <!-- hide the role of user which is TEACHER  -->
                     <input type="text" class="form-control d-none" name="role" value="TEACHER" required>
 
-
-
-                    <div class="col-md-12">
-                        <label class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" id="username" required>
-                    </div>
-                    <div class="col-md-12">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" id="password" required>
-                    </div>
-
-                    <!-- <div class="col-md-6">
-            <label class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" name="confirmpwd" id="confirmpwd" required>
-          </div> -->
-
                     <div class="modal-header">
-                        <h1 class="modal-title fs-4 text-primary">Teacher Details</h1>
+                        <h1 class="modal-title fs-5 text-primary">Teacher Details</h1>
                     </div>
 
                     <div class="col-md-5">
