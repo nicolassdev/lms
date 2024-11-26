@@ -27,7 +27,6 @@ $teacherInfo = $mySQLFunction->getTeacherInfo($_SESSION['teacher_id']);
 $teacherFullName = $teacherInfo['teacher_fname'] . ' ' . $teacherInfo['teacher_mname'] . ' ' . $teacherInfo['teacher_lname'];
 
 
-
 // Birthday formatted
 $birthDate = new DateTime($teacherInfo['teacher_dob']);
 $formattedbirthDate = $birthDate->format('F j, Y');

@@ -8,6 +8,8 @@ require_once "../includes/dbh-inc.php";
 $mySQLFunction->connection();
 $showSchool = $mySQLFunction->getSchool();
 
+
+
 $showResult = $mySQLFunction->getInfo('PRINCIPAL');
 if ($showResult) { // Check if data was returned
     $principalfullName = $showResult['firstname'] . ' ' . $showResult['middlename'] . ' ' . $showResult['lastname'];
@@ -18,14 +20,29 @@ if ($showResult) { // Check if data was returned
 $mySQLFunction->disconnect();
 include "../admin/includes/Forms/principalform.php";
 ?>
+<style>
+    .profile-img-circle {
+        border-radius: 50%;
+        border: 2px solid #f1f1f1;
+    }
 
+    .profile-header h4 {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .profile-header p {
+        font-size: 1rem;
+        color: #777;
+    }
+</style>
 
 <!-- Modal to Update Admin Information -->
 <div class="modal fade" id="updateprincipalinfo" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content bg-light shadow">
             <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">Update Registrar Information</h5>
+                <h5 class="modal-title">Update Principal Information</h5>
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm()"></button>
             </div>
             <div class="modal-body">
@@ -104,77 +121,101 @@ include "../admin/includes/Forms/principalform.php";
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="profile-card">
-                    <div class="d-flex flex-wrap justify-content-end">
-                        <button class="btn btn-secondary btn-sm me-2 mb-2"
-                            onclick="location.href='index.php?page=index'">
-                            <i class="bi bi-arrow-left-circle me-1"></i> Back
-                        </button>
 
-                        <button type="button" class="btn btn-primary btn-sm mb-2"
-                            title="Edit" data-bs-toggle="modal" data-bs-target="#updateprincipalinfo">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-                        <!-- this is adding another admin button i will leave it comment , if needed just uncomment this button down-->
-                        <button type="button" class="btn btn-success btn-sm me-2 mb-2"
-                            title="Add Admin" data-bs-toggle="modal" data-bs-target="#principal">
-                            <i class="bi bi-person-add"></i>
-                        </button>
-                    </div>
+                <div class="d-flex flex-wrap justify-content-end">
+                    <!-- <button class="btn btn-secondary btn-sm me-2 mb-2"
+                        onclick="location.href='index.php?page=index'">
+                        <i class="bi bi-arrow-left-circle me-1"></i> Back
+                    </button> -->
 
-                    <div class="profile-header text-center mb-3">
-                        <?php if ($showResult['gender'] === "MALE") { ?>
-                            <img src="../assets/Upload/maleadmin.png" alt="Profile Image" class="profile-img-circle mb-2">
-                        <?php } else { ?>
-                            <img src="../assets/Upload/femaleadmin.png" alt="Profile Image" class="profile-img-circle mb-2">
-                        <?php } ?>
-                        <h4>
-                            <?php echo ucwords(strtolower($principalfullName)); ?>
-                            <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
-                        </h4>
+                    <button type="button" class="btn btn-primary btn-sm mb-2"
+                        title="Edit" data-bs-toggle="modal" data-bs-target="#updateprincipalinfo">
+                        <i class="bi bi-pencil-square me-2"></i>Edit information
+                    </button>
+                    <!-- this is adding another principal button i will leave it comment , if needed just uncomment this button down-->
+                    <!-- <button type="button" class="btn btn-success btn-sm me-2 mb-2"
+                        title="Add Principal" data-bs-toggle="modal" data-bs-target="#principal">
+                        <i class="bi bi-person-add"></i>
+                    </button> -->
+                </div>
 
-                        <p class="text-muted"><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
-                    </div>
+                <div class="container py-4">
+                    <img
+                        style="position: absolute; top: 50%; right: 10%; transform: translate(-10%, -45%); 
+               width: 450px; opacity: 0.1; z-index: -1;"
+                        src="../assets/img/csi.webp"
+                        alt="LMS Logo">
+                    <div class="row">
+                        <!-- Left side: Image and Name -->
+                        <div class="col-md-4 d-flex flex-column align-items-center text-center">
+                            <!-- Profile Image -->
+                            <?php if ($showResult['gender'] === "MALE") { ?>
+                                <img src="../assets/Upload/maleadmin.png" alt="Profile Image" class="profile-img-circle mb-2" style="width: 150px; height: 150px; object-fit: cover;">
+                            <?php } else { ?>
+                                <img src="../assets/Upload/femaleadmin.png" alt="Profile Image" class="profile-img-circle mb-2" style="width: 150px; height: 150px; object-fit: cover;">
+                            <?php } ?>
 
-                    <div class="profile-details">
-                        <div class="row mb-1">
-                            <div class="col-md-6">
-                                <strong>Email:</strong>
-                                <p><?php echo $showResult['email']; ?></p>
-                            </div>
-                            <div class="col-md-6">
-                                <strong>Phone:</strong>
-                                <p>+63<?php echo $showResult['contact']; ?></p>
-                            </div>
-                        </div>
-
-                        <div class="row mb-1">
-                            <div class="col-md-6">
-                                <strong>Role:</strong>
-                                <p><?php echo ucwords(strtolower($_SESSION["user_role"])); ?></p>
-                            </div>
-                            <div class="col-md-6">
-                                <strong>Joined:</strong>
-                                <p><?php echo htmlspecialchars($_SESSION["admin_added"]); ?></p>
+                            <!-- Principal's Name and School -->
+                            <div class="profile-header mb-4">
+                                <h4 class="mb-2"><?php echo ucwords(strtolower($principalfullName)); ?>
+                                    <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
+                                </h4>
+                                <p class="text-muted"><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
                             </div>
                         </div>
 
-                        <div class="row mb-1">
-                            <div class="col-md-6">
-                                <strong>Address:</strong>
-                                <p><?php echo ucwords(strtolower($showResult['address'])); ?></p>
-                            </div>
-                            <div class="col-md-6">
-                                <strong>Gender:</strong>
-                                <p><?php echo ucwords(strtolower($showResult['gender'])); ?></p>
-                            </div>
+                        <!-- Right side: Information -->
+                        <div class="col-md-8">
+                            <form>
+                                <!-- Email and Phone Row -->
+                                <div class="mb-3 row">
+                                    <label for="email" class="col-sm-3 col-form-label">Email:</label>
+                                    <div class="col-sm-9">
+                                        <input type="email" class="form-control" id="email" value="<?php echo $showResult['email']; ?>" readonly>
+                                    </div>
+                                </div>
 
+                                <div class="mb-3 row">
+                                    <label for="phone" class="col-sm-3 col-form-label">Phone:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="phone" value="+63<?php echo $showResult['contact']; ?>" readonly>
+                                    </div>
+                                </div>
 
+                                <!-- Role and Join Date Row -->
+                                <div class="mb-3 row">
+                                    <label for="role" class="col-sm-3 col-form-label">Role:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="role" value="<?php echo ucwords(strtolower($showResult["role"])); ?>" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="joined" class="col-sm-3 col-form-label">Joined:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="joined" value="<?php echo htmlspecialchars($_SESSION["admin_added"]); ?>" readonly>
+                                    </div>
+                                </div>
+
+                                <!-- Address and Gender Row -->
+                                <div class="mb-3 row">
+                                    <label for="address" class="col-sm-3 col-form-label">Address:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="address" value="<?php echo ucwords(strtolower($showResult['address'])); ?>" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="gender" class="col-sm-3 col-form-label">Gender:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="gender" value="<?php echo ucwords(strtolower($showResult['gender'])); ?>" readonly>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-
-
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

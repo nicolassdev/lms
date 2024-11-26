@@ -75,6 +75,23 @@ if (!isset($_POST["submit"])) {
         } elseif ($userRole === "PRINCIPAL") {                                          // PRINCIPAL
             session_start();
 
+            $user = $mySQLFunction->getCredential("username", $username);
+            $principalCredential = $mySQLFunction->getPrincipalCredential("id", $user["id"]);
+
+            $_SESSION["id"] = $principalCredential["id"];
+            $_SESSION["principal_id"] = $principalCredential["principal_id"];
+            $_SESSION["firstname"] = $principalCredential["firstname"];
+            $_SESSION["lastname"] = $principalCredential["lastname"];
+
+            $_SESSION["username"] = $user["username"];;  // username of admin
+            $_SESSION["user_role"] = $user["role"];
+
+
+            $addedDate = new DateTime($user['date_added']);
+            $formattedDate = $addedDate->format('F j, Y');
+
+            // Store the formatted date in the session
+            $_SESSION["admin_added"] = $formattedDate;
 
 
             header("location: ../loading.php?redirect=" . urlencode("./principal/index.php"));

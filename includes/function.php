@@ -221,8 +221,17 @@ class myDataBase
             throw new Exception("Invalid table name");
         }
 
-        $sql = "SELECT * FROM `$tableName`";
+        // Modified SQL to include an inner join with the 'users' table to get role information
+        $sql = "
+        SELECT 
+            t.*, 
+            u.role
+        FROM `$tableName` t
+        INNER JOIN `users` u ON u.id = t.id";
+
+        // Execute the query and fetch the result
         $stored = ($this->con->query($sql))->fetch_assoc();
+
         return $stored;
     }
 
@@ -268,6 +277,9 @@ class myDataBase
         $result = $stmt->get_result()->fetch_assoc();
         return $result;
     }
+
+
+
 
     // public function getAdminInfo($teacher_id)
     // {
@@ -582,7 +594,13 @@ class myDataBase
         $stored = ($this->con->query($sql))->fetch_assoc();
         return $stored;
     }
-
+    //GET ADMIN CREDENTIAL
+    function getPrincipalCredential($row, $value)
+    {
+        $sql = "SELECT * FROM `principal` WHERE `$row` = '$value'";
+        $stored = ($this->con->query($sql))->fetch_assoc();
+        return $stored;
+    }
 
 
     // GET TEACHER CREDENTIAL 
@@ -968,11 +986,13 @@ class myDataBase
                     CASE 
                         WHEN u.role = 'teacher' THEN CONCAT(t.teacher_fname, ' ', t.teacher_mname, ' ', t.teacher_lname)
                         WHEN u.role = 'student' THEN CONCAT(s.stu_fname, ' ', s.stu_mname, ' ', s.stu_lname)
+                        WHEN u.role = 'principal' THEN CONCAT(p.firstname, ' ', p.middlename, ' ', p.lastname)
                         ELSE 'Unknown Role'
                     END AS full_name
                 FROM users u
                 LEFT JOIN teacher t ON u.id = t.id
                 LEFT JOIN student s ON u.id = s.id
+                LEFT JOIN principal p ON u.id = p.id
                 WHERE `$row` = ?
             ");
             $stmt->bind_param('s', $value); // 's' denotes the type (string)
@@ -991,11 +1011,13 @@ class myDataBase
                     CASE 
                         WHEN u.role = 'teacher' THEN CONCAT(t.teacher_fname, ' ', t.teacher_mname, ' ', t.teacher_lname)
                         WHEN u.role = 'student' THEN CONCAT(s.stu_fname, ' ', s.stu_mname, ' ', s.stu_lname)
+                        WHEN u.role = 'principal' THEN CONCAT(p.firstname, ' ', p.middlename, ' ', p.lastname)
                         ELSE 'Unknown Role'
                     END AS full_name
                 FROM users u
                 LEFT JOIN teacher t ON u.id = t.id
                 LEFT JOIN student s ON u.id = s.id
+                LEFT JOIN principal p ON u.id = p.id
                 ORDER BY u.id
                 LIMIT ? OFFSET ?
             ");

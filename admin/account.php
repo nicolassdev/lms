@@ -21,9 +21,20 @@ $mySQLFunction->connection();
 
 $account = $mySQLFunction->getAccountAdmin($_SESSION['id']);
 
-$registrarlInfo = $mySQLFunction->getAdminInfo($_SESSION['registrar_id']);
+// $registrarlInfo = $mySQLFunction->getAdminInfo($_SESSION['registrar_id']);
 
-$registrarFullName = $registrarlInfo['firstname'] . ' ' . $registrarlInfo['middlename'] . ' ' . $registrarlInfo['lastname'];
+// $registrarFullName = $registrarlInfo['firstname'] . ' ' . $registrarlInfo['middlename'] . ' ' . $registrarlInfo['lastname'];
+
+
+$registrarlInfo = $mySQLFunction->getInfo('REGISTRAR', $_SESSION['registrar_id']);
+if ($registrarlInfo) { // Check if data was returned
+    $registrarFullName = $registrarlInfo['firstname'] . ' ' . $registrarlInfo['middlename'] . ' ' . $registrarlInfo['lastname'];
+    // echo "Full Name: $fullName";
+} else {
+    echo "No data found for the specified table.";
+}
+
+
 
 
 
