@@ -3,7 +3,7 @@ session_start(); // Start the session
 
 if (!isset($_POST["submit"])) {
     // If the form was not submitted, redirect to the teacher page
-    header("Location: index.php?page=admin");
+    header("Location: index.php?page=principal");
     exit();
 } else {
 
@@ -27,8 +27,8 @@ if (!isset($_POST["submit"])) {
 
     // Generate unique IDs
     $uid = trim($mySQLFunction->generateID("USER-"));
-    // Generate registrar ID
-    $reg_id = trim($mySQLFunction->generateID("REG-"));
+    // Generate principal ID
+    $prin_id = trim($mySQLFunction->generateID("PR-"));
 
     // Establish database connection
     $mySQLFunction->connection();
@@ -54,17 +54,17 @@ if (!isset($_POST["submit"])) {
         $mySQLFunction->insert("USERS", $credentialColumns, $credentialValues);
 
         // Insert data into registrar table
-        $registrarColumns = ['registrar_id', 'firstname', 'middlename', 'lastname', 'contact', 'gender', 'email', 'address', 'id'];
-        $registrarValues = [$reg_id, $fname, isset($_POST["middlename"]) ? strtoupper(trim($_POST["middlename"])) : null, $lname, $contact, $gender, $email, $address,  $uid];
-        $mySQLFunction->insert("REGISTRAR", $registrarColumns, $registrarValues);
+        $principalColumns = ['principal_id', 'firstname', 'middlename', 'lastname', 'contact', 'gender', 'email', 'address', 'id'];
+        $principalValues = [$prin_id, $fname, isset($_POST["middlename"]) ? strtoupper(trim($_POST["middlename"])) : null, $lname, $contact, $gender, $email, $address,  $uid];
+        $mySQLFunction->insert("PRINCIPAL", $principalColumns, $principalValues);
 
         // Set success session variable and redirect
         $_SESSION['insert_admin'] = true;
-        header("Location: ../index.php?page=admin");
+        header("Location: ../index.php?page=principal");
     } catch (Exception $e) {
         // Set error session variable and redirect
         $_SESSION['error_principal'] = $e->getMessage();
-        header("Location: ../index.php?page=admin");
+        header("Location: ../index.php?page=principal");
     } finally {
         // Close the database connection
         $mySQLFunction->disconnect();

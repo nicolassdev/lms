@@ -8,22 +8,20 @@ require_once "../includes/dbh-inc.php";
 $mySQLFunction->connection();
 $showSchool = $mySQLFunction->getSchool();
 
-
-$showResult = $mySQLFunction->getInfo('REGISTRAR');
+$showResult = $mySQLFunction->getInfo('PRINCIPAL');
 if ($showResult) { // Check if data was returned
-    $fullName = $showResult['firstname'] . ' ' . $showResult['middlename'] . ' ' . $showResult['lastname'];
+    $principalfullName = $showResult['firstname'] . ' ' . $showResult['middlename'] . ' ' . $showResult['lastname'];
     // echo "Full Name: $fullName";
 } else {
     echo "No data found for the specified table.";
 }
-
 $mySQLFunction->disconnect();
-include "../admin/includes/Forms/adminform.php";
+include "../admin/includes/Forms/principalform.php";
 ?>
 
 
 <!-- Modal to Update Admin Information -->
-<div class="modal fade" id="updateadmininfo" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="updateprincipalinfo" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content bg-light shadow">
             <div class="modal-header bg-primary text-white">
@@ -31,7 +29,7 @@ include "../admin/includes/Forms/adminform.php";
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm()"></button>
             </div>
             <div class="modal-body">
-                <form action="./includes/Operation/updateAdmin.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate id="editAdminInfo">
+                <form action="./includes/Operation/updatePrincipal.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate id="editAdminInfo">
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label for="firstname" class="form-label">First Name</label>
@@ -114,12 +112,12 @@ include "../admin/includes/Forms/adminform.php";
                         </button>
 
                         <button type="button" class="btn btn-primary btn-sm mb-2"
-                            title="Edit" data-bs-toggle="modal" data-bs-target="#updateadmininfo">
+                            title="Edit" data-bs-toggle="modal" data-bs-target="#updateprincipalinfo">
                             <i class="bi bi-pencil-square"></i>
                         </button>
                         <!-- this is adding another admin button i will leave it comment , if needed just uncomment this button down-->
                         <button type="button" class="btn btn-success btn-sm me-2 mb-2"
-                            title="Add Admin" data-bs-toggle="modal" data-bs-target="#admin">
+                            title="Add Admin" data-bs-toggle="modal" data-bs-target="#principal">
                             <i class="bi bi-person-add"></i>
                         </button>
                     </div>
@@ -131,7 +129,7 @@ include "../admin/includes/Forms/adminform.php";
                             <img src="../assets/Upload/femaleadmin.png" alt="Profile Image" class="profile-img-circle mb-2">
                         <?php } ?>
                         <h4>
-                            <?php echo ucwords(strtolower($fullName)); ?>
+                            <?php echo ucwords(strtolower($principalfullName)); ?>
                             <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
                         </h4>
 

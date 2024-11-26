@@ -28,10 +28,10 @@ if (!isset($_SESSION["registrar_id"])) {
             ];
 
             $mySQLFunction->connection();
-            $mySQLFunction->updateUserInfo('REGISTRAR', $store); // Pass the array directly
+            $mySQLFunction->updateUserInfo('PRINCIPAL', $store); // Pass the array directly
 
-            $_SESSION['update_admin'] = true;
-            header("location:../../index.php?page=admin");
+            $_SESSION['update_principal'] = true;
+            header("location:../../index.php?page=principal");
             exit();
             $mySQLFunction->disconnect();
         }

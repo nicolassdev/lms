@@ -39,6 +39,7 @@ include "../admin/includes/Forms/strandform.php";
   <!-- THSI THE STRAND TABLE -->
   <!-- TABLE -->
   <div class="table-responsive small ms-3 me-3">
+
     <table id="example" class="table table-bordered table-striped table-sm align-middle">
       <thead class="table-dark">
         <tr>

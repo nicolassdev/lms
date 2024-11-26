@@ -21,7 +21,7 @@ if (empty($_SESSION['teacher_id'])) {
             $dob = isset($_POST['dob']) ? trim($_POST['dob']) : null;
             $employement = isset($_POST['employementstatus']) ? strtoupper(trim($_POST['employementstatus'])) : null;
             $address = isset($_POST['address']) ? strtoupper(trim($_POST['address'])) : null;
-     
+
 
             // Store cleaned data in an associative array
             $store = [
@@ -33,15 +33,15 @@ if (empty($_SESSION['teacher_id'])) {
                 'teacher_dob' => $dob,
                 'status' => $employement,
                 'teacher_address' => $address,
-          
-               
+
+
             ];
 
             // Establish database connection
             $mySQLFunction->connection();
 
             // Update student information in the database
-            $mySQLFunction->updateTeacherInfo($store, $teacherID);
+            $mySQLFunction->updateTeacherAndStudentInfo('TEACHER', $store, 'teacher_id',  $teacherID);
 
             // Set session variable for successful update
             $_SESSION['update_faculty'] = true;

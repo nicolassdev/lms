@@ -22,7 +22,7 @@ $mySQLFunction->disconnect();
 
     .table th,
     .table td {
-        /* padding: 0.1rem; */
+        padding: 0.1rem;
         /* Adjust padding */
     }
 </style>

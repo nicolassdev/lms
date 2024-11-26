@@ -24,7 +24,7 @@ $date_added = date("Ymd");
 
 
 // Generate unique IDs
-$uid = trim($mySQLFunction->generateUserID());
+$uid = trim($mySQLFunction->generateID("USER-"));
 // Generate unique teacher IDs
 $teacherID = trim($mySQLFunction->generateTeacherID($dob));
 //Genertate unique teacher username

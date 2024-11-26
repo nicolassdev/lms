@@ -50,9 +50,16 @@ foreach ($users as $user) {
     <!-- Bootstrap Icons -->
     <!-- <link href="../css/bootstrap-icons.css" rel="stylesheet"> -->
     <link rel="icon" type="webp" href="../assets/img/csi.webp">
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
 
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/admin.css?v=<?php echo time(); ?>" />
+
+    <!-- this is material icon  -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"> -->
+
+    <!-- SET THE ICON  -->
+
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
@@ -178,7 +185,7 @@ foreach ($users as $user) {
                             <!-- THIS IS STUDENT DROP DOWN SELECT IN SIDE BAR  -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#studentMenu" data-bs-toggle="collapse" aria-expanded="false" id="studentDropdown">
-                                    <i class="bi bi-person me-1"></i>Student Management <i class="bi bi-chevron-down" style="margin-left: 1px;" id="studentIcon"></i>
+                                    <i class="bi  bi-people me-1"></i>Student Management <i class="bi bi-chevron-down" style="margin-left: 1px;" id="studentIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="studentMenu">
                                     <li class="nav-item mt-2">
@@ -212,7 +219,7 @@ foreach ($users as $user) {
                             <!-- THIS IS FACULTY DROP DOWN SELECT IN SIDE BAR  -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#facultyMenu" data-bs-toggle="collapse" aria-expanded="false" id="studentDropdown">
-                                    <i class="bi bi-people me-1"></i>Faculty Management <i class="bi bi-chevron-down" style="margin-left: 5px;" id="facultyIcon"></i>
+                                    <i class="bi bi-person-video3 me-1"></i>Faculty Management <i class="bi bi-chevron-down" style="margin-left: 5px;" id="facultyIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="facultyMenu">
                                     <li class="nav-item mt-2">
@@ -241,6 +248,11 @@ foreach ($users as $user) {
                             </li>
 
 
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index.php?page=principal">
+                                    <i class="bi bi-person me-1"></i>Principal
+                                </a>
+                            </li>
 
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=strand">

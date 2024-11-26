@@ -62,28 +62,22 @@ class myDataBase
     }
 
 
-
-
-
-    // RANDOM ADMIN ID
-
-    public function generateAdminID()
+    //RANDOM PRIMARY ID FOR TABLE USERS | PRINCIPAL | REGISTRAR
+    public function generateID($prefix)
     {
         $num = "1325476980";
-        $rand = "";
+        $rand = $prefix;
 
         for ($i = 0; $i < 4; $i++) {
-            if ($i == 0) {
-                $rand = "REG-";
-            }
-            $rand = $rand . $num[rand(0, strlen($num) - 1)];
+            $rand .= $num[rand(0, strlen($num) - 1)];
         }
+
         return $rand;
     }
 
+
     // GENERATE TEACHER ID 
     // FORMAT : LAST 2 DIGIT OF THE YEAR / DOB/ RANDOM 4 DIGIT
-
     public function generateTeacherID($dob)
     {
         $year = date('y'); // Get the last 2 digits of the current year
@@ -108,7 +102,6 @@ class myDataBase
     }
 
     /*GEENERATE PASSWORD  */
-
     public function generateFacultyUsername($dob)
     {
         // Ensure the input is a valid date
@@ -131,7 +124,6 @@ class myDataBase
     }
 
     /*GEENERATE PASSWORD  */
-
     public function generatePassword($dob)
     {
         $year = date('Y'); // Get the last 2 digits of the current year
@@ -153,20 +145,8 @@ class myDataBase
     }
 
 
-    //RANDOM USER ID
-    public function generateUserID()
-    {
-        $num = "24683691";
-        $rand = "";
 
-        for ($i = 0; $i < 4; $i++) {
-            if ($i == 0) {
-                $rand = "USER-";
-            }
-            $rand = $rand . $num[rand(0, strlen($num) - 1)];
-        }
-        return $rand;
-    }
+
 
 
     //RANDOM STRAND CODE
@@ -224,12 +204,29 @@ class myDataBase
     }
 
     //GET ADMIN INFORMATIONM
-    public function getAdminInfo()
+    // public function getAdminInfo()
+    // {
+    //     $sql = "SELECT * FROM `REGISTRAR`";
+    //     $stored = ($this->con->query($sql))->fetch_assoc();
+    //     return $stored;
+    // }
+
+
+    // Get information from a specified table PRINCIPAL | REGISTRAR
+    public function getInfo($tableName)
     {
-        $sql = "SELECT * FROM `REGISTRAR`";
+        // Sanitize table name to prevent SQL injection
+        $allowedTables = ['REGISTRAR', 'PRINCIPAL'];
+        if (!in_array($tableName, $allowedTables)) {
+            throw new Exception("Invalid table name");
+        }
+
+        $sql = "SELECT * FROM `$tableName`";
         $stored = ($this->con->query($sql))->fetch_assoc();
         return $stored;
     }
+
+
     //GET STUDENT INFORMATION BY INDIVIDUAL
 
     public function getStudentInfo($studentID)
@@ -367,81 +364,127 @@ class myDataBase
         return $result;
     }
 
-
-    public function updateAdminInfo($data)
+    //UPDATE REGISTRAR AND PRINCIPAL INFORMATION
+    public function updateUserInfo($table, $data)
     {
+        // Ensure the table name is safe (e.g., against SQL injection)
+        $table = mysqli_real_escape_string($this->con, $table);
+
+        // Prepare the SET clause
         $setClause = [];
         foreach ($data as $column => $value) {
             $escapedValue = mysqli_real_escape_string($this->con, $value);
             $setClause[] = "`$column` = '$escapedValue'";
         }
 
+        // Join the SET clauses
         $setString = implode(", ", $setClause);
-        $sql = "UPDATE `REGISTRAR` SET $setString"; // You might want to add a WHERE clause to specify which record to update
+
+        // Construct the SQL query
+        $sql = "UPDATE `$table` SET $setString"; // You might want to add a WHERE clause for specific records
+
+        // Execute the query
         $result = $this->con->query($sql);
+
+        // Return the result of the query
         return $result;
     }
 
+    //UPDATE STUDENT AND TEACHER INFORMATION
+    public function updateTeacherAndStudentInfo($table, $data, $idColumn, $id)
+    {
+        // Validate and sanitize input data
+        $setClause = [];
+        foreach ($data as $column => $value) {
+            $escapedValue = mysqli_real_escape_string($this->con, $value);
+            $setClause[] = "`$column` = '$escapedValue'";
+        }
+
+        $setString = implode(", ", $setClause);
+
+        // Construct the SQL query using the table and column names dynamically
+        $sql = "UPDATE `$table` SET $setString WHERE `$idColumn` = ?";
+
+        $stmt = $this->con->prepare($sql);
+        if (!$stmt) {
+            throw new Exception("Query preparation failed: " . $this->con->error);
+        }
+
+        // Bind the ID parameter dynamically (could be student ID, teacher ID, etc.)
+        $stmt->bind_param("s", $id);  // Assuming the ID is a string. If it's an integer, change to "i"
+        $stmt->execute();
+
+        // Check if any records were updated
+        if ($stmt->affected_rows === 0) {
+            throw new Exception("No records updated. Check if the ID is valid.");
+        }
+
+        $stmt->close();
+        return true;
+    }
+
+
+
     // UPDATE ACCOUNT STUDENT PROFILE 
 
-    public function updateStudentInfo($data, $studentID)
-    {
-        $setClause = [];
-        foreach ($data as $column => $value) {
-            $escapedValue = mysqli_real_escape_string($this->con, $value);
-            $setClause[] = "`$column` = '$escapedValue'";
-        }
+    // public function updateStudentInfo($data, $studentID)
+    // {
+    //     $setClause = [];
+    //     foreach ($data as $column => $value) {
+    //         $escapedValue = mysqli_real_escape_string($this->con, $value);
+    //         $setClause[] = "`$column` = '$escapedValue'";
+    //     }
 
-        $setString = implode(", ", $setClause);
+    //     $setString = implode(", ", $setClause);
 
-        // Ensure the WHERE clause uses the correct student identifier
-        $sql = "UPDATE `student` SET $setString WHERE `stu_lrn` = ?";
+    //     // Ensure the WHERE clause uses the correct student identifier
+    //     $sql = "UPDATE `student` SET $setString WHERE `stu_lrn` = ?";
 
-        $stmt = $this->con->prepare($sql);
-        if (!$stmt) {
-            throw new Exception("Query preparation failed: " . $this->con->error);
-        }
+    //     $stmt = $this->con->prepare($sql);
+    //     if (!$stmt) {
+    //         throw new Exception("Query preparation failed: " . $this->con->error);
+    //     }
 
-        $stmt->bind_param("s", $studentID);  // Assuming stu_lrn is an integer
-        $stmt->execute();
+    //     $stmt->bind_param("s", $studentID);  // Assuming stu_lrn is an integer
+    //     $stmt->execute();
 
-        if ($stmt->affected_rows === 0) {
-            throw new Exception("No records updated. Check if the student ID is valid.");
-        }
+    //     if ($stmt->affected_rows === 0) {
+    //         throw new Exception("No records updated. Check if the student ID is valid.");
+    //     }
 
-        $stmt->close();
-        return true;
-    }
+    //     $stmt->close();
+    //     return true;
+    // }
 
     // UPDATE ACCOUNT TEACHER PROFILE 
-    public function updateTeacherInfo($data, $teacherID)
-    {
-        $setClause = [];
-        foreach ($data as $column => $value) {
-            $escapedValue = mysqli_real_escape_string($this->con, $value);
-            $setClause[] = "`$column` = '$escapedValue'";
-        }
+    // public function updateTeacherInfo($data, $teacherID)
+    // {
+    //     $setClause = [];
+    //     foreach ($data as $column => $value) {
+    //         $escapedValue = mysqli_real_escape_string($this->con, $value);
+    //         $setClause[] = "`$column` = '$escapedValue'";
+    //     }
 
-        $setString = implode(", ", $setClause);
+    //     $setString = implode(", ", $setClause);
 
-        // Ensure the WHERE clause uses the correct teacher identifier
-        $sql = "UPDATE `teacher` SET $setString WHERE `teacher_id` = ?";
+    //     // Ensure the WHERE clause uses the correct teacher identifier
+    //     $sql = "UPDATE `teacher` SET $setString WHERE `teacher_id` = ?";
 
-        $stmt = $this->con->prepare($sql);
-        if (!$stmt) {
-            throw new Exception("Query preparation failed: " . $this->con->error);
-        }
+    //     $stmt = $this->con->prepare($sql);
+    //     if (!$stmt) {
+    //         throw new Exception("Query preparation failed: " . $this->con->error);
+    //     }
 
-        $stmt->bind_param("s", $teacherID);  // Assuming stu_lrn is an integer
-        $stmt->execute();
+    //     $stmt->bind_param("s", $teacherID);  // Assuming stu_lrn is an integer
+    //     $stmt->execute();
 
-        if ($stmt->affected_rows === 0) {
-            throw new Exception("No records updated. Check if the teacher ID is valid.");
-        }
+    //     if ($stmt->affected_rows === 0) {
+    //         throw new Exception("No records updated. Check if the teacher ID is valid.");
+    //     }
 
-        $stmt->close();
-        return true;
-    }
+    //     $stmt->close();
+    //     return true;
+    // }
 
 
     //CHECK USER LOGIN 
@@ -914,17 +957,48 @@ class myDataBase
     //  GET TEACHER LIST 
     public function getUsers($row = null, $value = null, $limit = 15, $offset = 0)
     {
-        // Parameterized query to prevent SQL injection
         if ($row != null && $value != null) {
-            $stmt = $this->con->prepare("SELECT * FROM `users` WHERE `$row` = ?");
+            // Single record fetch with filtering
+            $stmt = $this->con->prepare("
+                SELECT 
+                    u.id AS user_id,
+                    u.username,
+                    u.role,
+                    u.date_added,
+                    CASE 
+                        WHEN u.role = 'teacher' THEN CONCAT(t.teacher_fname, ' ', t.teacher_mname, ' ', t.teacher_lname)
+                        WHEN u.role = 'student' THEN CONCAT(s.stu_fname, ' ', s.stu_mname, ' ', s.stu_lname)
+                        ELSE 'Unknown Role'
+                    END AS full_name
+                FROM users u
+                LEFT JOIN teacher t ON u.id = t.id
+                LEFT JOIN student s ON u.id = s.id
+                WHERE `$row` = ?
+            ");
             $stmt->bind_param('s', $value); // 's' denotes the type (string)
             $stmt->execute();
             $stored = $stmt->get_result()->fetch_assoc();
             $stmt->close();
             return $stored;
         } else {
-            // Adjust the limit and offset to ensure at least 8 records are fetched
-            $stmt = $this->con->prepare("SELECT * FROM `users` ORDER BY `id` LIMIT ? OFFSET ?");
+            // Fetch multiple records with pagination
+            $stmt = $this->con->prepare("
+                SELECT 
+                    u.id AS user_id,
+                    u.username,
+                    u.role,
+                    u.date_added,
+                    CASE 
+                        WHEN u.role = 'teacher' THEN CONCAT(t.teacher_fname, ' ', t.teacher_mname, ' ', t.teacher_lname)
+                        WHEN u.role = 'student' THEN CONCAT(s.stu_fname, ' ', s.stu_mname, ' ', s.stu_lname)
+                        ELSE 'Unknown Role'
+                    END AS full_name
+                FROM users u
+                LEFT JOIN teacher t ON u.id = t.id
+                LEFT JOIN student s ON u.id = s.id
+                ORDER BY u.id
+                LIMIT ? OFFSET ?
+            ");
             $stmt->bind_param('ii', $limit, $offset); // 'ii' denotes the types (integer, integer)
             $stmt->execute();
             $stored = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -932,6 +1006,7 @@ class myDataBase
             return $stored;
         }
     }
+
 
 
 

@@ -71,23 +71,14 @@ include "./includes/alert-modal.php";
 
 
             /**
-                 ROUTE FOR SETTINGS ADMIN
+                ROUTE FOR PRINCIPAL
              */
-        case "settings":
-            require_once 'settings.php';
-            break;
-        case "schoolyear":
-            require_once 'schoolyear.php';
-            break;
-        case "semester":
-            require_once 'semester.php';
-            break;
-        case "account":
-            require_once 'account.php';
+        case "principal":
+            require_once 'principal.php';
             break;
 
             /**
-                 ROUTE FOR STRAND SUBJECT
+                ROUTE FOR STRAND SUBJECT
              */
         case "stem_subjects":
             require_once 'stem_subjects.php';
@@ -106,6 +97,22 @@ include "./includes/alert-modal.php";
             break;
         case "cp_subjects":
             require_once 'cp_subjects.php';
+            break;
+
+            /**
+                 ROUTE FOR SETTINGS ADMIN
+             */
+        case "settings":
+            require_once 'settings.php';
+            break;
+        case "schoolyear":
+            require_once 'schoolyear.php';
+            break;
+        case "semester":
+            require_once 'semester.php';
+            break;
+        case "account":
+            require_once 'account.php';
             break;
 
 
