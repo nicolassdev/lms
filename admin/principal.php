@@ -150,9 +150,9 @@ include "../admin/includes/Forms/principalform.php";
                         <div class="col-md-4 d-flex flex-column align-items-center text-center">
                             <!-- Profile Image -->
                             <?php if ($showResult['gender'] === "MALE") { ?>
-                                <img src="../assets/Upload/maleadmin.png" alt="Profile Image" class="profile-img-circle mb-2" style="width: 150px; height: 150px; object-fit: cover;">
+                                <img src="../assets/Upload/maleadmin.png" alt="Profile Image" class="profile-img-circle mb-2" draggable="false" s style="width: 150px; height: 150px; object-fit: cover;">
                             <?php } else { ?>
-                                <img src="../assets/Upload/femaleadmin.png" alt="Profile Image" class="profile-img-circle mb-2" style="width: 150px; height: 150px; object-fit: cover;">
+                                <img src="../assets/Upload/femaleadmin.png" alt="Profile Image" class="profile-img-circle mb-2" draggable="false" style="width: 150px; height: 150px; object-fit: cover;">
                             <?php } ?>
 
                             <!-- Principal's Name and School -->
@@ -190,12 +190,6 @@ include "../admin/includes/Forms/principalform.php";
                                     </div>
                                 </div>
 
-                                <div class="mb-3 row">
-                                    <label for="joined" class="col-sm-3 col-form-label">Joined:</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="joined" value="<?php echo htmlspecialchars($_SESSION["admin_added"]); ?>" readonly>
-                                    </div>
-                                </div>
 
                                 <!-- Address and Gender Row -->
                                 <div class="mb-3 row">
@@ -209,6 +203,12 @@ include "../admin/includes/Forms/principalform.php";
                                     <label for="gender" class="col-sm-3 col-form-label">Gender:</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="gender" value="<?php echo ucwords(strtolower($showResult['gender'])); ?>" readonly>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="joined" class="col-sm-3 col-form-label">Joined:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="joined" value="<?php echo htmlspecialchars($_SESSION["admin_added"]); ?>" readonly>
                                     </div>
                                 </div>
                             </form>

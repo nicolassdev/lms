@@ -972,8 +972,8 @@ class myDataBase
 
 
 
-    //  GET TEACHER LIST 
-    public function getUsers($row = null, $value = null, $limit = 15, $offset = 0)
+    //  GET ALL USERS PRINCIPAL | FACULTIES | STUDENTS
+    public function getUsers($row = null, $value = null, $limit = 16, $offset = 0)
     {
         if ($row != null && $value != null) {
             // Single record fetch with filtering
@@ -1034,31 +1034,52 @@ class myDataBase
 
 
 
-
-
     // SEARCH USERS IN TABLE
     public function searchUser($value)
     {
         // Sanitize the input value
         $value = mysqli_real_escape_string($this->con, $value);
 
-        // Corrected SQL query
-        $sql = "SELECT * FROM `users` 
-                    WHERE `username` LIKE '$value%' 
-                    OR `role` LIKE '$value%' 
-                    OR `date_added` LIKE '$value%'
-                    ORDER BY `username`, `role`, `date_added`";
+        // Query with INNER JOIN to get data from users, teacher, student, and principal
+        $sql = "
+        SELECT 
+            u.id AS user_id,
+            u.username,
+            u.role,
+            u.date_added,
+            CASE 
+                WHEN u.role = 'teacher' THEN CONCAT(t.teacher_fname, ' ', t.teacher_mname, ' ', t.teacher_lname)
+                WHEN u.role = 'student' THEN CONCAT(s.stu_fname, ' ', s.stu_mname, ' ', s.stu_lname)
+                WHEN u.role = 'principal' THEN CONCAT(p.firstname, ' ', p.middlename, ' ', p.lastname)
+                ELSE 'Unknown Role'
+            END AS full_name
+        FROM users u
+        LEFT JOIN teacher t ON u.id = t.id
+        LEFT JOIN student s ON u.id = s.id
+        LEFT JOIN principal p ON u.id = p.id
+        WHERE u.username LIKE '$value%' 
+           OR u.role LIKE '$value%'
+           OR u.date_added LIKE '$value%'
+           OR t.teacher_fname LIKE '$value%' 
+           OR t.teacher_lname LIKE '$value%'
+           OR s.stu_fname LIKE '$value%'
+           OR s.stu_lname LIKE '$value%'
+           OR p.firstname LIKE '$value%'
+           OR p.lastname LIKE '$value%'
+        ORDER BY u.username, u.role, u.date_added";
 
         // Execute the query
         $result = $this->con->query($sql);
 
         // Check if any rows were returned
-        if (mysqli_num_rows($result) > 0) {
+        if ($result && mysqli_num_rows($result) > 0) {
             return $result->fetch_all(MYSQLI_ASSOC);
         } else {
             return false;
         }
     }
+
+
 
     //GET SCHOOL YEAR
     public function getSchoolyear($row = null, $value = null)

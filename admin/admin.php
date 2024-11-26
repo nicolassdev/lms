@@ -108,20 +108,20 @@ include "../admin/includes/Forms/adminform.php";
             <div class="col-md-12">
                 <div class="profile-card">
                     <div class="d-flex flex-wrap justify-content-end">
-                        <button class="btn btn-secondary btn-sm me-2 mb-2"
+                        <!-- <button class="btn btn-secondary btn-sm me-2 mb-2"
                             onclick="location.href='index.php?page=index'">
                             <i class="bi bi-arrow-left-circle me-1"></i> Back
-                        </button>
+                        </button> -->
 
                         <button type="button" class="btn btn-primary btn-sm mb-2"
                             title="Edit" data-bs-toggle="modal" data-bs-target="#updateadmininfo">
-                            <i class="bi bi-pencil-square"></i>
+                            <i class="bi bi-pencil-square me-2"></i>Edit Information
                         </button>
                         <!-- this is adding another admin button i will leave it comment , if needed just uncomment this button down-->
-                        <button type="button" class="btn btn-success btn-sm me-2 mb-2"
+                        <!-- <button type="button" class="btn btn-success btn-sm me-2 mb-2"
                             title="Add Admin" data-bs-toggle="modal" data-bs-target="#admin">
                             <i class="bi bi-person-add"></i>
-                        </button>
+                        </button> -->
                     </div>
 
                     <div class="profile-header text-center mb-3">

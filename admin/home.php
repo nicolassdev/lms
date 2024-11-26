@@ -62,7 +62,10 @@ $mySQLFunction->disconnect();
                                 echo '<div class="alert alert-warning" style="font-size: small;">No active school year and semester found.</div>';
                             }
                             ?>
+                            <!-- Static Data -->
+                            <p>Logged in as : Registrar <i class="bi bi-patch-check-fill text-success ms-1"></i></p>
                         </div>
+
                     </div>
                 </div>
             </div>

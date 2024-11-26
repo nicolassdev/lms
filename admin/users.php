@@ -88,7 +88,7 @@ include "../includes/dbh-inc.php";
                                     <div class="modal-content shadow">
                                         <div class="modal-header border-bottom-0">
                                             <h1 class="modal-title fs-5 text-primary" id="modalHeader' . $row['user_id'] . '">
-                                                ' . ($row['role'] == 'TEACHER' ? 'Teacher Account' : ($row['role'] == 'ADMIN' ? 'Admin Account' : 'Student Account')) . '
+                                                ' . ($row['role'] == 'TEACHER' ? 'Teacher Account' : ($row['role'] == 'PRINCIPAL' ? 'Principal Account' : 'Student Account')) . '
                                             </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
