@@ -28,11 +28,11 @@ $mySQLFunction->disconnect();
                 <i class="bi bi-person-vcard-fill me-2"></i><span>Account</span>
             </a>
             <!-- Semester button -->
-            <a href="index.php?page=semester" class="btn btn-primary btn-sm btn-animate">
+            <a href="index.php?page=semester" class="btn btn-dark btn-sm btn-animate">
                 <span>📅 Semester</span>
             </a>
 
-            <a href="index.php?page=schoolyear" class="btn btn-primary  btn-sm btn-animate">
+            <a href="index.php?page=schoolyear" class="btn btn-dark  btn-sm btn-animate">
                 <span>🗓 School Year</span>
             </a>
 

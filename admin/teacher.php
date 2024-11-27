@@ -95,11 +95,13 @@ include "../admin/includes/Forms/teacherform.php";
                               <i class="bi bi-pencil-square"></i> 
                           </button>
                       
-                          <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_teacher' . $row['teacher_id'] . '">
-                              <i class="bi bi-trash"></i> 
-                          </button>
-                      </td>
-                        ';
+                          </td>
+                          ';
+
+                        //   THIS IS DELETE BUTTON I WILL LEAVE IT COMMENT IF NEEDED JUST UNCOMMENT I PUT IT BACK IN TOP
+                        //   <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_teacher' . $row['teacher_id'] . '">
+                        //       <i class="bi bi-trash"></i> 
+                        //   </button>
                                         echo '</tr>';
 
                                         $count++;

@@ -35,7 +35,11 @@ $mySQLFunction->disconnect();
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-
+                <img
+                        style="position: absolute; top: 50%; right: 5%; transform: translate(-0%, -45%); 
+               width: 500px; opacity: 0.1; z-index: -1;"
+                        src="./assets/img/csi.webp"
+                        alt="LMS Logo">
                     <div class="container-fluid ">
                         <h4>Welcome back CSIan Student!</h4>
                         <p class="text-muted">Here you can manage your exam, quiz, assignments, and view your grades.</p>
@@ -50,8 +54,9 @@ $mySQLFunction->disconnect();
                             } else {
                                 echo '<div class="alert alert-warning">No school year and semester found.</div>';
                             }
-
                             ?>
+                             <!-- Static Data -->
+                             <p>Logged in as : &nbsp;Student <i class="bi bi-patch-check-fill text-success ms-1"></i></p>
                         </div>
                         <div class="row mt-4">
                             <!-- Courses Card -->

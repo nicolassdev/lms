@@ -41,6 +41,11 @@ $mySQLFunction->disconnect();
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <div class="ms-3">
+            <img
+                        style="position: absolute; top: 50%; right: 5%; transform: translate(-0%, -45%); 
+               width: 500px; opacity: 0.1; z-index: -1;"
+                        src="../assets/img/csi.webp"
+                        alt="LMS Logo">
                 <h4>Welcome Back <?php echo ucwords(strtolower($_SESSION["user_role"])); ?> ! </h4>
                 <div class="container mt-3">
                     <div class="row g-2">
@@ -72,8 +77,60 @@ $mySQLFunction->disconnect();
         </div>
 
         <div class="row g-1">
+
+
+        
+
             <!-- Account Card -->
+        <div class="col-md-3 col-sm-6 col-12">
+                <div class="card shadow-lg h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-person-lines-fill display-5 text-primary mb-3"></i>
+                            <h5 class="card-title">Account</h5>
+                            <p class="card-text">Manage users' accounts here.</p>
+                            <a href="?page=users" class="btn btn-primary">Manage account</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Strand Card -->
             <div class="col-md-3 col-sm-6 col-12">
+                <div class="card shadow-lg h-100">
+                    <div class="card-body text-center">
+                        <i class="bi  bi-mortarboard display-5 text-success mb-3"></i>
+                            <h5 class="card-title">Strand</h5>
+                            <p class="card-text">Manage all strands here.</p>
+                            <a href="?page=strand" class="btn btn-success">Manage strand</a>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <!-- Subject Card -->
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="card shadow-lg h-100">
+                    <div class="card-body text-center">
+                        <i class="bi  bi-journal-bookmark display-5 text-warning mb-3"></i>
+                            <h5 class="card-title">Subject</h5>
+                            <p class="card-text">Manage subjects here.</p>
+                            <a href="?page=subject" class="btn btn-warning">Manage subject</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Card -->
+            <div class="col-md-3 col-sm-6 col-12">
+                <div class="card shadow-lg h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-building-fill display-5 text-danger mb-3"></i>
+                            <h5 class="card-title">Section</h5>
+                            <p class="card-text">Manage section here.</p>
+                            <a href="?page=section" class="btn btn-danger">Manage section</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- <div class="col-md-3 col-sm-6 col-12">
                 <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width:100%;">
                     <div class="card-body">
                         <h5 class="card-title">Account</h5>
@@ -84,10 +141,9 @@ $mySQLFunction->disconnect();
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Strand Card -->
-            <div class="col-md-3 col-sm-6 col-12">
+            <!-- <div class="col-md-3 col-sm-6 col-12">
                 <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Strand</h5>
@@ -98,9 +154,14 @@ $mySQLFunction->disconnect();
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Subject Card -->
+
+
+
+
+<!-- 
+
             <div class="col-md-3 col-sm-6 col-12">
                 <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
                     <div class="card-body">
@@ -112,10 +173,9 @@ $mySQLFunction->disconnect();
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Section Card -->
-            <div class="col-md-3 col-sm-6 col-12">
+            <!-- <div class="col-md-3 col-sm-6 col-12">
                 <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Section</h5>
@@ -126,7 +186,7 @@ $mySQLFunction->disconnect();
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Teachers Card with count -->
             <div class="col-lg-6 col-sm-12">

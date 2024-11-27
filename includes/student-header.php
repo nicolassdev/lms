@@ -4,7 +4,7 @@
 $host = 'localhost';
 $dbname = 'lms_db';
 $username = 'root';
-$password = 'Nicolas051002';
+$password = '';
 
 // Establish the database connection
 try {
