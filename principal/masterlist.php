@@ -43,32 +43,7 @@ include "../includes/dbh-inc.php";
                             </button> -->
                         </div>
                     </div>
-                    <!-- NOTIFICATION -->
-                    <?php
-                    if (isset($_SESSION['deleted'])) {
-                        echo '<div class="alert alert-danger alert-dismissible fade show p-2" role="alert" style="font-size: 14px; line-height: 1.2;  max-width:1000px;">';
-                        echo '<i class="bi bi-exclamation-triangle-fill fs-5 me-2"></i> ' . $_SESSION['deleted'];
 
-                        echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
-
-                        // Reduced font size for the timestamp
-                        echo '<small class="d-block mt-1 text-muted">Just now</small>';
-
-                        echo '</div>';
-                        unset($_SESSION['deleted']);
-                    } elseif (isset($_SESSION['check_id'])) {
-                        echo '<div class="alert alert-danger alert-dismissible fade show p-2" role="alert" style="font-size: 14px; line-height: 1.2;  max-width:1000px;">';
-                        echo '<i class="bi bi-exclamation-triangle-fill fs-5 me-2"></i> ' . $_SESSION['check_id'];
-
-                        echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
-
-                        // Reduced font size for the timestamp
-                        echo '<small class="d-block mt-1 text-muted ms-4">Just now.</small>';
-
-                        echo '</div>';
-                        unset($_SESSION['check_id']);
-                    }
-                    ?>
 
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
@@ -146,12 +121,18 @@ include "../includes/dbh-inc.php";
                                                 <div class="modal-content b-grey">
                                                     <div class="modal-body">
                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-4 text-success">Student Information</h1>
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="me-2 text-success fw-bold">LRN: ' . htmlspecialchars($row['stu_lrn']) . '</div>
-                                                                <i class="bi bi-person-vcard-fill fs-1 text-success"></i>
-                                                            </div>
-                                                        </div>
+                                                            <div class="d-flex align-items-center justify-content-between w-100">
+                                                                <div class="text-start">
+                                                                    <h1 class="modal-title fs-4 text-success">Student Information</h1>
+                                                                                
+                                                                            </div>
+
+                                                                            <div class="text-end">
+                                                                            <i class="bi bi-person-vcard-fill fs-1 text-success"></i>
+                                                                                <div class="me-2 text-success fw-bold">LRN: ' . htmlspecialchars($row['stu_lrn']) . '</div>
+                                                                            </div>
+                                                                    </div>
+                                                                </div>
 
                                                            
                                                         <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editTeacherForm' . htmlspecialchars($row['stu_lrn']) . '">
@@ -258,181 +239,178 @@ include "../includes/dbh-inc.php";
 
 
                                         // todo Modal for updating student
-                                        echo '
-                                        <div class="modal fade" id="edit_student' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="editStudentModal" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header bg-primary text-white">
-                                                        <h5 class="modal-title">Edit Student Information</h5>
-                                                        <i class="bi bi-pencil-square fs-3 ms-2"></i>
-                                                    </div>
-                                                    <div class="modal-body p-4">
-                                                        <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-3 needs-validation" novalidate id="editTeacherForm' . htmlspecialchars($row['stu_lrn']) . '">
-                                                            <!-- Use hidden input -->
-                                                            <div class="row">
-                                                            <input type="hidden" name="lrnID" value="' . htmlspecialchars($row['stu_lrn']) . '">
-                                    
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="firstName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">First name</label>
-                                                                <input type="text" class="form-control" name="firstname" value="' . htmlspecialchars($row['stu_fname']) . '" required>
-                                                                <div class="invalid-feedback">
-                                                                    Please enter a valid first name.
-                                                                </div>
-                                                            </div>
-                                    
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="middleName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Middle name</label>
-                                                                <input type="text" class="form-control" name="middlename" value="' . htmlspecialchars($row['stu_mname']) . '">
-                                                            </div>
-                                    
-                                                            <div class="col-md-4 mb-3">
-                                                                <label for="lastName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Last name</label>
-                                                                <input type="text" class="form-control" name="lastname" value="' . htmlspecialchars($row['stu_lname']) . '" required>
-                                                                <div class="invalid-feedback">
-                                                                    Please enter a valid last name.
-                                                                </div>
-                                                            </div>
-                                    
-                                                            <div class="col-12 mb-3">
-                                                                <label class="form-label fw-bold">Address</label>
-                                                                <input type="text" class="form-control" name="address" value="' . htmlspecialchars($row['stu_address']) . '" required>
-                                                                <div class="invalid-feedback">
-                                                                    Please enter a valid address.
-                                                                </div>
-                                                            </div>
-                                    
-                                                            
-                                                            <div class="col-md-6 mb-3">
-                                                                <label for="contactNumber' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Contact</label>
-                                                                <small style="color:red">( Please enter a valid 10-digit number starting with 9. )</small>
-                                                                <div class="input-group has-validation">
-                                                                    <span class="input-group-text bg-primary" style="color:white" id="inputGroupPrepend">+63</span>
-                                                                    <input type="text" class="form-control" name="contact" value="' . htmlspecialchars($row['stu_contact']) . '" aria-describedby="inputGroupPrepend" pattern="9\\d{9}" maxlength="10" required>
-                                                                    <div class="invalid-feedback">
-                                                                        Please enter a valid 10-digit number starting with 9.
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                    
-                                                           
-                                                            <div class="col-md-6 mb-3">
-                                                                <label for="gender' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Gender</label>
-                                                                <select class="form-select" name="gender" id="gender' . htmlspecialchars($row['stu_lrn']) . '" required>
-                                                                    <option disabled value="">Choose...</option>
-                                                                    <option value="male"' . ($row['stu_gender'] == 'MALE' ? ' selected' : '') . '>MALE</option>
-                                                                    <option value="female"' . ($row['stu_gender'] == 'FEMALE' ? ' selected' : '') . '>FEMALE</option>
-                                                                </select>
-                                                                <div class="invalid-feedback">
-                                                                    Please select a gender.
-                                                                </div>
-                                                            </div>
-                                    
-                                                            <div class="col-12 mb-3">
-                                                                <label for="email' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Email</label>
-                                                                <input type="text" name="email" class="form-control" value="' . htmlspecialchars($row['stu_email']) . '" placeholder="Enter your email address" pattern=".*@(gmail|yahoo)\.com$" required>
-                                                                <div class="invalid-feedback">
-                                                                    Your email must contain an "@" symbol or gmail address ending with ".com".
-                                                                </div>
-                                                            </div>
-                                    
-                                                             <div class="col-md-6 mb-3">
-                                                                <label for="dob' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Date of Birth</label>
-                                                                <input type="date" class="form-control" name="dob" id="dob' . htmlspecialchars($row['stu_dob']) . '" value="' . htmlspecialchars($row['stu_dob']) . '" required>
-                                                                <div class="invalid-feedback">
-                                                                    Please enter a valid date of birth.
-                                                                </div>
-                                                            </div>
-                                    
-                                                             <div class="col-md-6 mb-3">
-                                                                <label for="pob' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Place of Birth</label>
-                                                                <input type="text" class="form-control" name="pob" value="' . htmlspecialchars($row['stu_pob']) . '" required>
-                                                                <div class="invalid-feedback">
-                                                                    Please enter a valid address.
-                                                                </div>
-                                                            </div>
-                                    
-                                                            <div class="modal-header mb-2">
-                                                                <h4 class="modal-title text-primary">Guardian Details</h4> 
-                                                            </div>
-                                    
-                                                            <div class="col-12 mb-3">
-                                                                <label class="form-label fw-bold">Father name</label>
-                                                                <input type="text" class="form-control" name="fathername" value="' . htmlspecialchars($row['father_name']) . '" required>
-                                                                <div class="invalid-feedback">
-                                                                    Please enter a valid name.
-                                                                </div>
-                                                            </div>
-                                    
-                                                            <div class="col-12 mb-3">
-                                                                <label class="form-label fw-bold">Mother name</label>
-                                                                <input type="text" class="form-control" name="mothername" value="' . htmlspecialchars($row['mother_name']) . '" required>
-                                                                <div class="invalid-feedback">
-                                                                    Please enter a valid name.
-                                                                </div>
-                                                            </div>
-                                    
-                                                            <div class="col-12 mb-3">
-                                                                <label for="pcontact' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Guardian Contact</label>
-                                                                <small style="color:red">( Please enter a valid 10-digit number starting with 9. )</small>
-                                                                <div class="input-group has-validation">
-                                                                    <span class="input-group-text bg-primary" style="color:white" id="inputGroupPrepend">+63</span>
-                                                                    <input type="text" class="form-control" name="pcontact" value="' . htmlspecialchars($row['parent_contact']) . '" aria-describedby="inputGroupPrepend" pattern="9\\d{9}" maxlength="10" required>
-                                                                    <div class="invalid-feedback">
-                                                                        Please enter a valid 10-digit number starting with 9.
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                    
-                                                            <div class="d-flex justify-content-between mt-4 gap-2">
-                                                                <button name="submit" class="btn btn-primary w-100" type="submit">Save</button>
-                                                                <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm(\'' . htmlspecialchars($row['stu_lrn']) . '\')">Cancel</button>
-                                                            </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                         
-                                    
+                                        //     echo '
+                                        //     <div class="modal fade" id="edit_student' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="editStudentModal" aria-hidden="true">
+                                        //         <div class="modal-dialog modal-lg">
+                                        //             <div class="modal-content">
+                                        //                 <div class="modal-header bg-primary text-white">
+                                        //                     <h5 class="modal-title">Edit Student Information</h5>
+                                        //                     <i class="bi bi-pencil-square fs-3 ms-2"></i>
+                                        //                 </div>
+                                        //                 <div class="modal-body p-4">
+                                        //                     <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-3 needs-validation" novalidate id="editTeacherForm' . htmlspecialchars($row['stu_lrn']) . '">
+                                        //                         <!-- Use hidden input -->
+                                        //                         <div class="row">
+                                        //                         <input type="hidden" name="lrnID" value="' . htmlspecialchars($row['stu_lrn']) . '">
 
-                                        <script>
-                                            function resetForm(id) {
-                                                var form = document.getElementById("editTeacherForm" + id);
-                                                if (form) {
-                                                    form.reset(); // Clears the form fields
-                                                    form.classList.remove("was-validated"); // Removes the validation styling
-                                                }
-                                            }
-                                        </script>
-                                    ';
+                                        //                         <div class="col-md-4 mb-3">
+                                        //                             <label for="firstName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">First name</label>
+                                        //                             <input type="text" class="form-control" name="firstname" value="' . htmlspecialchars($row['stu_fname']) . '" required>
+                                        //                             <div class="invalid-feedback">
+                                        //                                 Please enter a valid first name.
+                                        //                             </div>
+                                        //                         </div>
+
+                                        //                         <div class="col-md-4 mb-3">
+                                        //                             <label for="middleName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Middle name</label>
+                                        //                             <input type="text" class="form-control" name="middlename" value="' . htmlspecialchars($row['stu_mname']) . '">
+                                        //                         </div>
+
+                                        //                         <div class="col-md-4 mb-3">
+                                        //                             <label for="lastName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Last name</label>
+                                        //                             <input type="text" class="form-control" name="lastname" value="' . htmlspecialchars($row['stu_lname']) . '" required>
+                                        //                             <div class="invalid-feedback">
+                                        //                                 Please enter a valid last name.
+                                        //                             </div>
+                                        //                         </div>
+
+                                        //                         <div class="col-12 mb-3">
+                                        //                             <label class="form-label fw-bold">Address</label>
+                                        //                             <input type="text" class="form-control" name="address" value="' . htmlspecialchars($row['stu_address']) . '" required>
+                                        //                             <div class="invalid-feedback">
+                                        //                                 Please enter a valid address.
+                                        //                             </div>
+                                        //                         </div>
+
+
+                                        //                         <div class="col-md-6 mb-3">
+                                        //                             <label for="contactNumber' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Contact</label>
+                                        //                             <small style="color:red">( Please enter a valid 10-digit number starting with 9. )</small>
+                                        //                             <div class="input-group has-validation">
+                                        //                                 <span class="input-group-text bg-primary" style="color:white" id="inputGroupPrepend">+63</span>
+                                        //                                 <input type="text" class="form-control" name="contact" value="' . htmlspecialchars($row['stu_contact']) . '" aria-describedby="inputGroupPrepend" pattern="9\\d{9}" maxlength="10" required>
+                                        //                                 <div class="invalid-feedback">
+                                        //                                     Please enter a valid 10-digit number starting with 9.
+                                        //                                 </div>
+                                        //                             </div>
+                                        //                         </div>
+
+
+                                        //                         <div class="col-md-6 mb-3">
+                                        //                             <label for="gender' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Gender</label>
+                                        //                             <select class="form-select" name="gender" id="gender' . htmlspecialchars($row['stu_lrn']) . '" required>
+                                        //                                 <option disabled value="">Choose...</option>
+                                        //                                 <option value="male"' . ($row['stu_gender'] == 'MALE' ? ' selected' : '') . '>MALE</option>
+                                        //                                 <option value="female"' . ($row['stu_gender'] == 'FEMALE' ? ' selected' : '') . '>FEMALE</option>
+                                        //                             </select>
+                                        //                             <div class="invalid-feedback">
+                                        //                                 Please select a gender.
+                                        //                             </div>
+                                        //                         </div>
+
+                                        //                         <div class="col-12 mb-3">
+                                        //                             <label for="email' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Email</label>
+                                        //                             <input type="text" name="email" class="form-control" value="' . htmlspecialchars($row['stu_email']) . '" placeholder="Enter your email address" pattern=".*@(gmail|yahoo)\.com$" required>
+                                        //                             <div class="invalid-feedback">
+                                        //                                 Your email must contain an "@" symbol or gmail address ending with ".com".
+                                        //                             </div>
+                                        //                         </div>
+
+                                        //                          <div class="col-md-6 mb-3">
+                                        //                             <label for="dob' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Date of Birth</label>
+                                        //                             <input type="date" class="form-control" name="dob" id="dob' . htmlspecialchars($row['stu_dob']) . '" value="' . htmlspecialchars($row['stu_dob']) . '" required>
+                                        //                             <div class="invalid-feedback">
+                                        //                                 Please enter a valid date of birth.
+                                        //                             </div>
+                                        //                         </div>
+
+                                        //                          <div class="col-md-6 mb-3">
+                                        //                             <label for="pob' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Place of Birth</label>
+                                        //                             <input type="text" class="form-control" name="pob" value="' . htmlspecialchars($row['stu_pob']) . '" required>
+                                        //                             <div class="invalid-feedback">
+                                        //                                 Please enter a valid address.
+                                        //                             </div>
+                                        //                         </div>
+
+                                        //                         <div class="modal-header mb-2">
+                                        //                             <h4 class="modal-title text-primary">Guardian Details</h4> 
+                                        //                         </div>
+
+                                        //                         <div class="col-12 mb-3">
+                                        //                             <label class="form-label fw-bold">Father name</label>
+                                        //                             <input type="text" class="form-control" name="fathername" value="' . htmlspecialchars($row['father_name']) . '" required>
+                                        //                             <div class="invalid-feedback">
+                                        //                                 Please enter a valid name.
+                                        //                             </div>
+                                        //                         </div>
+
+                                        //                         <div class="col-12 mb-3">
+                                        //                             <label class="form-label fw-bold">Mother name</label>
+                                        //                             <input type="text" class="form-control" name="mothername" value="' . htmlspecialchars($row['mother_name']) . '" required>
+                                        //                             <div class="invalid-feedback">
+                                        //                                 Please enter a valid name.
+                                        //                             </div>
+                                        //                         </div>
+
+                                        //                         <div class="col-12 mb-3">
+                                        //                             <label for="pcontact' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Guardian Contact</label>
+                                        //                             <small style="color:red">( Please enter a valid 10-digit number starting with 9. )</small>
+                                        //                             <div class="input-group has-validation">
+                                        //                                 <span class="input-group-text bg-primary" style="color:white" id="inputGroupPrepend">+63</span>
+                                        //                                 <input type="text" class="form-control" name="pcontact" value="' . htmlspecialchars($row['parent_contact']) . '" aria-describedby="inputGroupPrepend" pattern="9\\d{9}" maxlength="10" required>
+                                        //                                 <div class="invalid-feedback">
+                                        //                                     Please enter a valid 10-digit number starting with 9.
+                                        //                                 </div>
+                                        //                             </div>
+                                        //                         </div>
+
+                                        //                         <div class="d-flex justify-content-between mt-4 gap-2">
+                                        //                             <button name="submit" class="btn btn-primary w-100" type="submit">Save</button>
+                                        //                             <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm(\'' . htmlspecialchars($row['stu_lrn']) . '\')">Cancel</button>
+                                        //                         </div>
+                                        //                         </div>
+                                        //                     </form>
+                                        //                 </div>
+                                        //             </div>
+                                        //         </div>
+                                        //     </div>
 
 
 
-
+                                        //     <script>
+                                        //         function resetForm(id) {
+                                        //             var form = document.getElementById("editTeacherForm" + id);
+                                        //             if (form) {
+                                        //                 form.reset(); // Clears the form fields
+                                        //                 form.classList.remove("was-validated"); // Removes the validation styling
+                                        //             }
+                                        //         }
+                                        //     </script>
+                                        // ';
 
                                         // todo Modal for deleting student
-                                        echo '
-                                        <div class="modal fade" id="del_student' . $row['stu_lrn'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered modal-md">
-                                                <div class="modal-content shadow-lg">
-                                                    <div class="modal-header border-0">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body text-center">
-                                                        <div class="text-danger">
-                                                            <i class="bi bi-trash fs-1 fade-in"></i>
-                                                        </div>
-                                                        <h5 class="mt-4 mb-4 text-dark fw-bold">Are you sure you want to remove LRN "<span class="text-danger">' . $row['stu_lrn'] . '</span>" ?</h5>
-                                                        <p class="text-muted">This action cannot be undone. Please confirm your decision below.</p>
-                                                    </div>
-                                                    <div class="modal-footer justify-content-center border-0 mt-3 mb-4">
-                                                        <a href="includes/Operation/deleteStudent.php?id=' . $row['id'] . '" class="btn btn-danger px-4 py-2 me-3" style="width: 120px;">Remove</a>
-                                                        <button class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>';
+                                        // echo '
+                                        // <div class="modal fade" id="del_student' . $row['stu_lrn'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                                        //     <div class="modal-dialog modal-dialog-centered modal-md">
+                                        //         <div class="modal-content shadow-lg">
+                                        //             <div class="modal-header border-0">
+                                        //                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        //             </div>
+                                        //             <div class="modal-body text-center">
+                                        //                 <div class="text-danger">
+                                        //                     <i class="bi bi-trash fs-1 fade-in"></i>
+                                        //                 </div>
+                                        //                 <h5 class="mt-4 mb-4 text-dark fw-bold">Are you sure you want to remove LRN "<span class="text-danger">' . $row['stu_lrn'] . '</span>" ?</h5>
+                                        //                 <p class="text-muted">This action cannot be undone. Please confirm your decision below.</p>
+                                        //             </div>
+                                        //             <div class="modal-footer justify-content-center border-0 mt-3 mb-4">
+                                        //                 <a href="includes/Operation/deleteStudent.php?id=' . $row['id'] . '" class="btn btn-danger px-4 py-2 me-3" style="width: 120px;">Remove</a>
+                                        //                 <button class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                                        //             </div>
+                                        //         </div>
+                                        //     </div>
+                                        // </div>';
+
                                     }
                                 } else {
                                     echo '<tr>

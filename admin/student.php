@@ -145,12 +145,18 @@ include "../admin/includes/Forms/studentform.php";
                                                 <div class="modal-content b-grey">
                                                     <div class="modal-body">
                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-4 text-success">Student Information</h1>
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="me-2 text-success fw-bold">LRN: ' . htmlspecialchars($row['stu_lrn']) . '</div>
-                                                                <i class="bi bi-person-vcard-fill fs-1 text-success"></i>
-                                                            </div>
-                                                        </div>
+                                                            <div class="d-flex align-items-center justify-content-between w-100">
+                                                                <div class="text-start">
+                                                                    <h1 class="modal-title fs-4 text-success">Student Information</h1>
+                                                                                
+                                                                            </div>
+
+                                                                            <div class="text-end">
+                                                                            <i class="bi bi-person-vcard-fill fs-1 text-success"></i>
+                                                                                <div class="me-2 text-success fw-bold">LRN: ' . htmlspecialchars($row['stu_lrn']) . '</div>
+                                                                            </div>
+                                                                    </div>
+                                                                </div>
 
                                                            
                                                         <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editTeacherForm' . htmlspecialchars($row['stu_lrn']) . '">

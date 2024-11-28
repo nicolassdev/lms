@@ -51,7 +51,7 @@ foreach ($users as $user) {
     <!-- <link href="../css/bootstrap-icons.css" rel="stylesheet"> -->
     <link rel="icon" type="webp" href="../assets/img/csi.webp"> <!-- WEBSITE ICON-->
 
-    <!-- <link href="./css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/principal.css?v=<?php echo time(); ?>" />
 
