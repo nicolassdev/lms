@@ -4,7 +4,7 @@
          <div class="modal-content">
 
              <div class="modal-header">
-                 <h1 class="modal-title fs-4 text-primary">New Section</h1>
+                 <h1 class="modal-title fs-5 text-primary">Create new section</h1>
                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetFormSection()"></button>
              </div>
 
@@ -115,7 +115,7 @@
                      </div>
 
                      <div class="col-md-12">
-                         <button name="submit" class="btn btn-primary w-100 mt-3 mb-2" type="submit">Create</button>
+                         <button name="submit" class="btn btn-primary w-100 mt-3 mb-2" type="submit">Save</button>
                      </div>
                  </form>
              </div>

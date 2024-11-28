@@ -79,14 +79,15 @@ include "../admin/includes/Forms/sectionform.php";
                                         echo '
                                         <td class="d-flex justify-content-center">
                                             <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#edit_section' . $row['section_code'] . '">
-                                                <i class="bi bi-pencil-square"></i>Edit
+                                                <i class="bi bi-pencil-square me-1"></i>Edit
                                             </button>
                                         
-                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_section' . $row['section_code'] . '">
-                                                <i class="bi bi-trash"></i>Delete
-                                            </button>
-                                        </td>
+                                            </td>
                                             ';
+                                        // THIS IS THE DELETE BUTTON I WILL LEAVE IT COMMENT , IF NEEDED JUST UNCOMMENT 
+                                        // <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_section' . $row['section_code'] . '">
+                                        //     <i class="bi bi-trash"></i>Delete
+                                        // </button>
                                         echo '</tr>';
 
                                         $count++;
@@ -103,32 +104,40 @@ include "../admin/includes/Forms/sectionform.php";
                                                     <div class="modal-body p-4">
                                                         <form action="./includes/Operation/updateSection.php" method="POST" class="row g-3 needs-validation" novalidate id="editSectionForm' . htmlspecialchars($row['section_code']) . '">
                                                             <!-- Use hidden input -->
-                                                            <input type="hidden" name="sectionID" value="' . htmlspecialchars($row['section_code']) . '">
-                                    
-                                                           
-                                <div class="col-md-12 mb-3">
-                                    <label class="form-label fw-bold">Strand Name</label>
-                                    <select name="strand_code" class="form-select" id="strandSelect' . htmlspecialchars($row['section_code']) . '" disabled>';
+                                                            <input type="hidden" name="sectionID" value="' . htmlspecialchars($row['section_code']) . '">';
 
-                                        // Fetch and populate strand options
-                                        $mySQLFunction->connection();
-                                        $strands = $mySQLFunction->getStrand();
-                                        foreach ($strands as $strand) {
-                                            // Check if the strand matches the current row
-                                            $selected = $strand["strand_name"] == $row['strand_name'] ? ' selected' : '';
-                                            echo '<option value="' . htmlspecialchars($strand["strand_name"]) . '"' . $selected . '>' . htmlspecialchars($strand["strand_desc"]) . '</option>';
-                                        }
-                                        $mySQLFunction->disconnect();
 
+                                        //<div class="col-md-12 mb-3">
+                                        // <label class="form-label fw-bold">Strand Name</label>
+                                        // <select name="strand_code" class="form-select" id="strand_code' . htmlspecialchars($row['section_code']) . '" >
+
+                                        //     // Fetch and populate strand options
+                                        //     $mySQLFunction->connection();
+                                        //     $strands = $mySQLFunction->getStrand();
+                                        //     foreach ($strands as $strand) {
+                                        //         // Check if the strand matches the current row
+                                        //         $selected = $strand["strand_name"] == $row['strand_name'] ? ' selected' : '';
+                                        //         echo '<option value="' . htmlspecialchars($strand["strand_name"]) . '"' . $selected . '>' . htmlspecialchars($strand["strand_desc"]) . '</option>';
+                                        //     }
+                                        //     $mySQLFunction->disconnect();
+
+
+                                        //             </select>
+                                        //             <div class="invalid-feedback">
+                                        //                 Please input a strand name.
+                                        //             </div>
+                                        //         </div>
                                         echo '
-                                                </select>
-                                                <div class="invalid-feedback">
-                                                    Please input a strand name.
-                                                </div>
-                                            </div>
-                                        
                                     
-                                    
+                                                                        
+                                                            <!-- Section Name -->
+                                                            <div class="col-md-12 mb-3">
+                                                                <label class="form-label fw-bold">Section</label>
+                                                                <input type="text" class="form-control" name="section" value="' . htmlspecialchars($row['section_name']) . '" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please select a section name.
+                                                                </div>
+                                                            </div>      
                                                             <!-- Grade Level -->
                                                             <div class="col-md-12 mb-3">
                                                                 <label class="form-label fw-bold">Grade Level</label>
@@ -140,27 +149,23 @@ include "../admin/includes/Forms/sectionform.php";
                                                                     Please select a grade level.
                                                                 </div>
                                                             </div>
-                                    
-                                                            <!-- Section Name -->
-                                                            <div class="col-md-12 mb-3">
-                                                                <label class="form-label fw-bold">Section</label>
-                                                                <input type="text" class="form-control" name="section" value="' . htmlspecialchars($row['section_name']) . '" required>
-                                                                <div class="invalid-feedback">
-                                                                    Please select a section name.
-                                                                </div>
-                                                            </div>      
 
 
+                                                         <div class="col-md-12 mb-3">
+                                                            <label class="form-label fw-bold">Strand</label>
+                                                            <input text="text" class="form-control" name="strand_code" value="' . htmlspecialchars($row['strand_desc']) . '"  disabled>                                                                                             
+                                                            <div class="invalid-feedback">
+                                                                Please select an adviser.
+                                                        </div>
 
-                                                    <div class="col-md-12 mb-3">
+
+                                                         <div class="col-md-12 mt-3">
                                                             <label class="form-label fw-bold">Adviser</label>
                                                             <input text="text" class="form-control" name="teacher_id" value="' . htmlspecialchars($row['adviser']) . '"  disabled>                                                                                             
                                                             <div class="invalid-feedback">
                                                                 Please select an adviser.
                                                         </div>
                                                     </div>';
-
-
 
 
                                         echo '

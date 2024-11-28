@@ -87,15 +87,16 @@
                       echo '<td>' . $row["strand"] . ' </td>';
                       echo '<td>' . $row["sub_gradelvl"] . '</td>';
                       echo '<td>' . ucwords(strtolower($row["teacher"])) . '</td>';
+                      // THIS IS THE DELETE BUTTON I WILL LEAVE IT COMMENT IF NEEDED JUST UNCOMMENT THIS 
+                      // <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_section' . $row['sub_code'] . '">
+                      //     <i class="bi bi-trash"></i>
+                      // </button>
                       echo '
                                         <td class="d-flex justify-content-center">
                                             <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#edit_subject' . $row['sub_code'] . '">
-                                                <i class="bi bi-pencil-square"></i>
+                                                <i class="bi bi-pencil-square me-1"></i>Edit
                                             </button>
                                         
-                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_section' . $row['sub_code'] . '">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
                                         </td>
                                             ';
                       echo '</tr>';
@@ -119,7 +120,7 @@
                 
                                         <!-- Subject Name -->
                                         <div class="col-12 mb-3">
-                                            <label class="form-label fw-bold">Subject Name</label>
+                                            <label class="form-label fw-bold">Subject</label>
                                             <input type="text" class="form-control" name="subject" value="' . htmlspecialchars($row['sub_title']) . '" required>
                                             <div class="invalid-feedback">
                                                 Please enter a subject name.
@@ -138,6 +139,19 @@
                                                 Please select a category.
                                             </div>
                                         </div>
+
+                                        <!-- Subject semester -->
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label fw-bold">Semester</label>
+                                            <select class="form-select" name="semester" required>
+                                                <option value="1st Semester"' . ($row['sub_semester'] == '1st Semester' ? ' selected' : '') . '>1st Semester</option>
+                                                <option value="2nd Semester"' . ($row['sub_semester'] == '2nd Semester' ? ' selected' : '') . '>2nd Semester</option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Please select a semester.
+                                            </div>
+                                        </div>
+
                 
                                         <!-- Time -->
                                         <div class="col-12 mb-3">
@@ -147,6 +161,11 @@
                                                 Please enter a valid time.
                                             </div>
                                         </div>
+
+                                        <div class="col-md-12 mt-3">
+                                        <label class="form-label fw-bold">Teacher</label>
+                                          <input text="text" class="form-control" name="teacher_id" value="' . htmlspecialchars($row['teacher']) . '"  disabled>                                                                                             
+                                        </div>                                       
                 
                                         <!-- Buttons -->
                                         <div class="d-flex justify-content-between mt-4 gap-1">
@@ -187,7 +206,7 @@
                                     <h5 class="mt-4 mb-4 text-dark fw-bold">Are you sure you want to remove "<span class="text-danger">' . ucwords(strtolower($row['sub_title'])) . '</span>" ?</h5>
                                     <p class="text-muted">This action cannot be undone. Please confirm your decision below.</p>
                                 </div>
-                        <div class="modal-footer justify-content-center border-0 mt-3 mb-4">
+                                <div class="modal-footer justify-content-center border-0 mt-3 mb-4">
                                     <a href="includes/Operation/deleteSubject.php?id=' . $row['sub_code'] . '" class="btn btn-danger px-4 py-2 me-3" style="width: 120px;">Remove</a>
                                     <button class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
                                 </div>

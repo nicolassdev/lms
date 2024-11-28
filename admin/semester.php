@@ -132,14 +132,14 @@ include "../admin/includes/Forms/semesterform.php";
                                 </button>
                             </td>';
                         }
-
-                        echo '
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_sem' . urlencode($row['semester_name']) . '">
-                                    <i class="bi bi-trash"></i> Delete
-                                </button>
-                            </td>
-                        ';
+                        // THIS IS THE DELETE BUTTON I WILL LEAVE IT COMMENT JUST UNCOMMENT IF NEEDED 
+                        // echo '
+                        //     <td class="text-center">
+                        //         <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_sem' . urlencode($row['semester_name']) . '">
+                        //             <i class="bi bi-trash"></i> Delete
+                        //         </button>
+                        //     </td>
+                        // ';
 
                         echo '</tr>';
 

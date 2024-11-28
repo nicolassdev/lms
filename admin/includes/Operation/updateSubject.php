@@ -17,6 +17,7 @@ if (!isset($_SESSION["registrar_id"])) {
             $sname = strtoupper(trim($_POST["subject"]));
             $stype = strtoupper(trim($_POST["type"]));
             $stime = strtoupper(trim($_POST["time"]));
+            $semester = ucwords(strtolower(trim($_POST["semester"])));
 
             // Check if the subject already exists excluding the current subject
             if ($mySQLFunction->checkRowCountSubject("subject", "sub_title", $sname, $sub_id) == 1) {
@@ -31,6 +32,7 @@ if (!isset($_SESSION["registrar_id"])) {
                 $mySQLFunction->updateSubject("sub_title", $sname, $sub_id);
                 $mySQLFunction->updateSubject("sub_type", $stype, $sub_id);
                 $mySQLFunction->updateSubject("sub_time", $stime, $sub_id);
+                $mySQLFunction->updateSubject("sub_semester", $semester, $sub_id);
 
                 // Disconnect after updating
                 $mySQLFunction->disconnect();

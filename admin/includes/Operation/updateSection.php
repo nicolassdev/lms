@@ -14,7 +14,7 @@ if (!isset($_SESSION["registrar_id"])) {
         if (isset($_POST["submit"])) {
             // Sanitize and prepare input
             $sec_id = $_POST["sectionID"];
-            $strand = strtoupper(trim($_POST["strand_code"]));
+            $strand = strtoupper(trim($_POST["strand_desc"]));
             $gradelvl = strtoupper(trim($_POST["gradelvl"]));
             $section = strtoupper(trim($_POST["section"]));
 

@@ -3,7 +3,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5 text-primary">Add Subject</h1>
+        <h1 class="modal-title fs-5 text-primary">Add new subject</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetFormSubject()"></button>
       </div>
 
@@ -36,15 +36,9 @@
           <div class="col-md-12">
             <label class="form-label">Semester</label>
             <select class="form-select" name="semester" required>
-              <option selected disabled value="">Select...</option>
-              <?php
-              $mySQLFunction->connection();
-              $result = $mySQLFunction->getSemester();
-              foreach ($result as $row) {
-                echo '<option value="' . $row["semester_name"] . '">' . htmlspecialchars($row["semester_name"]) . '</option>';
-              }
-              $mySQLFunction->disconnect();
-              ?>
+              <option selected disabled value="">Select a semester...</option>
+              <option value="1st Semester">1st Semester</option>
+              <option value="2nd Semester">2nd Semester</option>
             </select>
             <div class="invalid-feedback">Please select a semester.</div>
           </div>
@@ -94,7 +88,7 @@
                 echo '<option disabled>No teaecher found in the database.</option>';
               } else {
                 foreach ($result as $row) {
-                  if (($mySQLFunction->checkRowCount("subject", "teacher_id", $row["teacher_id"])) == 2) {
+                  if (($mySQLFunction->checkRowCount("subject", "teacher_id", $row["teacher_id"])) == 2) { //check if the teacher id was exist 2x then skip to continue
                     continue;
                   } else {
                     echo '<option value="' . $row["teacher_id"] . '">' . $row["teacher_fname"] . ' ' . $row["teacher_mname"] . ' ' . $row["teacher_lname"] . '</option>';

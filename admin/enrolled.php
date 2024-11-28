@@ -147,7 +147,7 @@ include "../admin/includes/Forms/enrollmentform.php";
                                                                 
                                                                 <!-- Student Name -->
                                                                 <div class="col-md-12 mb-3">
-                                                                    <label class="form-label fw-bold">Student Name</label>
+                                                                    <label class="form-label fw-bold ">Student Name</label>
                                                                     <input type="text" class="form-control" name="student" value="' . htmlspecialchars($row['student']) . '" disabled>
                                                                     <div class="invalid-feedback">
                                                                         Please enter a student name.

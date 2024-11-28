@@ -1203,7 +1203,7 @@ class myDataBase
     public function getSection($row = null, $value = null)
     {
         if ($row != null && $value != null) {
-            $sql = "SELECT `section_code`, `strand_name` ,`section.strand_code` , `grade_lvl` ,
+            $sql = "SELECT `section_code`, `strand_name` ,`strand_desc` , `section.strand_code` , `grade_lvl` ,
             `section_name`, `teacher_fname` , `teacher_lname` , `section.teacher_id` , 
             CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS adviser FROM `section`
             INNER JOIN `strand`
@@ -1216,7 +1216,7 @@ class myDataBase
 
             return $stored;
         } else {
-            $sql = "SELECT `section_code`, `strand_name` , `grade_lvl` , `section_name`, `teacher_fname` , `teacher_lname` ,
+            $sql = "SELECT `section_code`, `strand_name` ,`strand_desc` , `grade_lvl` , `section_name`, `teacher_fname` , `teacher_lname` ,
             CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS adviser FROM  `section`
             INNER JOIN `strand`
             ON section.strand_code = strand.strand_code
@@ -1645,31 +1645,34 @@ class myDataBase
 
 
     //UPDATE SECTION
+    // UPDATE SECTION
     public function updateSection($row, $value, $where)
     {
-        // Sanitize input
-        $value = mysqli_real_escape_string($this->con, $value);
-        if (is_string($value)) {
-            $value = "'" . $value . "'";
-        }
-
-        // Check if strand_code exists in strand table
+        // Use prepared statements
         if ($row === 'strand_code') {
-            $checkQuery = "SELECT COUNT(*) FROM strand WHERE strand_code = $value";
-            $checkResult = $this->con->query($checkQuery);
+            // Check if strand_code exists in the strand table
+            $checkQuery = $this->con->prepare("SELECT COUNT(*) FROM strand WHERE strand_code = ?");
+            $checkQuery->bind_param("s", $value);
+            $checkQuery->execute();
+            $checkResult = $checkQuery->get_result();
             $count = $checkResult->fetch_row()[0];
+            $checkQuery->close();
 
             if ($count == 0) {
-                return false; // or handle the error as needed
+                return false; // Strand code doesn't exist
             }
         }
 
-        // Proceed with the update
-        $sql = "UPDATE `section` SET `$row` =  $value WHERE `section_code` = '$where'";
-        $result = $this->con->query($sql);
+        // Proceed with the update query
+        $updateQuery = $this->con->prepare("UPDATE section SET $row = ? WHERE section_code = ?");
+        $updateQuery->bind_param("ss", $value, $where);
 
-        return $result ? true : false;
+        $result = $updateQuery->execute();
+        $updateQuery->close();
+
+        return $result;
     }
+
 
 
 

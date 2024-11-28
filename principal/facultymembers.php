@@ -1,13 +1,12 @@
 <!-- VALIDATION CAN'T ACCESS THE URL -->
 <?php
-if (!isset($_SESSION['registrar_id'])) {
+if (!isset($_SESSION['principal_id'])) {
     header("location:../login.php?error=accessdenied");
 }
 ?>
 <!-- FORM MODAL ADD TEACHER  -->
 <?php
 include "../includes/dbh-inc.php";
-include "../admin/includes/Forms/teacherform.php";
 ?>
 
 <style>
@@ -31,10 +30,10 @@ include "../admin/includes/Forms/teacherform.php";
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h5 class="text-black">List of Faculty</h5>
-                        <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#teacher">
+                        <h5 class="text-black">Faculty Members</h5>
+                        <!-- <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#teacher">
                             <i class="bi bi-person-plus-fill me-1"></i>Add Faculty
-                        </button>
+                        </button> -->
                     </div>
 
                     <!-- NOTIFICATION -->
@@ -65,7 +64,8 @@ include "../admin/includes/Forms/teacherform.php";
                                     <th scope="col">Gender</th>
                                     <th scope="col">Birthday</th>
                                     <th scope="col">Address</th>
-                                    <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
+                                    <!-- <th scope="col" class="text-center">Action</th> 
+                                    colspan should be 2 -->
 
                                 </tr>
                             </thead>
@@ -89,14 +89,14 @@ include "../admin/includes/Forms/teacherform.php";
                                         echo '<td>' .  ucwords(strtolower($row["teacher_gender"])) . '</td>';
                                         echo '<td>' . $formattedBdate  . '</td>';
                                         echo '<td>' .  ucwords(strtolower($row["teacher_address"])) . '</td>';
-                                        echo '
-                      <td class="d-flex justify-content-center">
-                          <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#edit_teacher' . $row['teacher_id'] . '">
-                              <i class="bi bi-pencil-square"></i> 
-                          </button>
-                          
-                          </td>
-                          ';
+                                        //                     echo '
+                                        //   <td class="d-flex justify-content-center">
+                                        //       <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#edit_teacher' . $row['teacher_id'] . '">
+                                        //           <i class="bi bi-pencil-square"></i> 
+                                        //       </button>
+
+                                        //       </td>
+                                        //       ';
 
                                         //   THIS IS DELETE BUTTON I WILL LEAVE IT COMMENT IF NEEDED JUST UNCOMMENT I PUT IT BACK IN TOP
                                         //   <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_teacher' . $row['teacher_id'] . '">

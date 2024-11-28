@@ -70,7 +70,7 @@
                     </div> -->
 
                     <div class="col-6">
-                        <button name="submit" class="btn btn-primary w-100 mt-3 mb-2" type="submit"><i class="bi bi-pencil-fill me-2"></i>Create</button>
+                        <button name="submit" class="btn btn-primary w-100 mt-3 mb-2" type="submit"><i class="bi bi-pencil-fill me-2"></i>Save</button>
                     </div>
                     <div class="col-6">
                         <button type="button" class="btn btn-outline-secondary w-100 mt-3 mb-2" data-bs-dismiss="modal" aria-label="Close" onclick="resetFormTeacher()">Cancel</button>

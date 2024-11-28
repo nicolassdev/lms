@@ -3,7 +3,7 @@
 $host = 'localhost';
 $dbname = 'lms_db';
 $username = 'root';
-$password = '';
+$password = 'Nicolas051002';
 
 
 // Establish the database connection
@@ -51,17 +51,15 @@ foreach ($users as $user) {
     <!-- <link href="../css/bootstrap-icons.css" rel="stylesheet"> -->
     <link rel="icon" type="webp" href="../assets/img/csi.webp">
 
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="./css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/admin.css?v=<?php echo time(); ?>" />
 
     <!-- this is material icon  -->
     <!-- <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"> -->
 
-    <!-- SET THE ICON  -->
 
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"> <!-- SET THE ICON  -->
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 

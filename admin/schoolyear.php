@@ -102,7 +102,7 @@ include "../admin/includes/Forms/syform.php";
                 <tr>
                     <th scope="col">School year</th>
                     <th scope="col">Status</th>
-                    <th scope="col" class="text-center" colspan="3">Action</th> <!-- colspan should be 2 -->
+                    <th scope="col" class="text-center" colspan="3">Action</th> <!-- colspan should be 2 column now  -->
                 </tr>
             </thead>
             <tbody>
@@ -134,14 +134,15 @@ include "../admin/includes/Forms/syform.php";
                 </td>';
                         }
 
-                        echo '
-            
-                       <td class="text-center">
-                          <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_sy' . $row['school_year'] . '">
-                              <i class="bi bi-trash me-1"></i>Delete
-                          </button>
-                      </td>
-                    ';
+                        // THIS IS THE DELETE BUTTON I WILL LEAVE IT COMMENT JUST UNCOMMENT IF NEEDED 
+                        //     echo '
+
+                        //    <td class="text-center">
+                        //       <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_sy' . $row['school_year'] . '">
+                        //           <i class="bi bi-trash me-1"></i>Delete
+                        //       </button>
+                        //   </td>
+                        // ';
                         echo '</tr>';
 
                         // Modal for deleting strand
