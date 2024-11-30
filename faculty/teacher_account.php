@@ -20,7 +20,7 @@ $showSchool = $mySQLFunction->getSchool();
 
 // Getters
 
-$account = $mySQLFunction->getAccountTeacher($_SESSION['id']);
+$account = $mySQLFunction->getAccountUser($_SESSION['id']);
 
 $teacherInfo = $mySQLFunction->getTeacherInfo($_SESSION['teacher_id']);
 
@@ -61,7 +61,7 @@ $mySQLFunction->disconnect();
                         <!-- CSI Logo as Background -->
                         <img
                             style="position: absolute; top: 50%; left: 50%; transform: translate(-20%, -50%); 
-               width: 500px; opacity: 0.1; z-index: -1;"
+                            width: 500px; opacity: 0.1; z-index: -1;"
                             src="../assets/img/csi.webp"
                             alt="LMS Logo">
 
@@ -95,7 +95,7 @@ $mySQLFunction->disconnect();
                                         <strong class="fs-5">Your Account</strong>
                                         <p style="font-size: 13px;">Change username and password</p>
                                     </div>
-                                    <!-- Hide ID of student -->
+                                    <!-- Hide ID of teacher -->
                                     <input type="hidden" class="form-control" name="teacherid" value="<?php echo $account['id']; ?>" required>
 
                                     <!-- Username Field -->

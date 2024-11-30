@@ -142,7 +142,7 @@ include "../admin/includes/Forms/principalform.php";
                 <div class="container py-4">
                     <img
                         style="position: absolute; top: 50%; right: 10%; transform: translate(-10%, -45%); 
-               width: 450px; opacity: 0.1; z-index: -1;"
+                        width: 450px; opacity: 0.1; z-index: -1;"
                         src="../assets/img/csi.webp"
                         alt="LMS Logo">
                     <div class="row">
@@ -150,9 +150,9 @@ include "../admin/includes/Forms/principalform.php";
                         <div class="col-md-4 d-flex flex-column align-items-center text-center">
                             <!-- Profile Image -->
                             <?php if ($showResult['gender'] === "MALE") { ?>
-                                <img src="../assets/Upload/maleadmin.png" alt="Profile Image" class="profile-img-circle mb-2" draggable="false" s style="width: 150px; height: 150px; object-fit: cover;">
+                                <img src="../assets/Upload/maleadmin.png" alt="Profile Image" class="mb-2" draggable="false" s style="width: 150px; height: 150px; object-fit: cover;">
                             <?php } else { ?>
-                                <img src="../assets/Upload/femaleadmin.png" alt="Profile Image" class="profile-img-circle mb-2" draggable="false" style="width: 150px; height: 150px; object-fit: cover;">
+                                <img src="../assets/Upload/femaleadmin.png" alt="Profile Image" class="mb-2" draggable="false" style="width: 150px; height: 150px; object-fit: cover;">
                             <?php } ?>
 
                             <!-- Principal's Name and School -->

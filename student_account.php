@@ -20,7 +20,7 @@ $showSchool = $mySQLFunction->getSchool();
 
 // Getters
 
-$account = $mySQLFunction->getAccountStudent($_SESSION['id']);
+$account = $mySQLFunction->getAccountUser($_SESSION['id']);
 
 $studentInfo  = $mySQLFunction->getStudentInfo($_SESSION['stu_lrn']); //handled by student 
 
@@ -67,7 +67,7 @@ $mySQLFunction->disconnect();
                     <div class="container position-relative">
                         <img
                             style="position: absolute; top: 50%; left: 50%; transform: translate(-20%, -50%); 
-               width: 500px; opacity: 0.10; z-index: -1;"
+                            width: 500px; opacity: 0.10; z-index: -1;"
                             src="./assets/img/csi.webp"
                             alt="LMS Logo">
                         <div class="row justify-content-between">

@@ -19,7 +19,7 @@ $mySQLFunction->connection();
 
 // Getters
 
-$account = $mySQLFunction->getAccountAdmin($_SESSION['id']);
+$account = $mySQLFunction->getAccountUser($_SESSION['id']);
 
 // $registrarlInfo = $mySQLFunction->getAdminInfo($_SESSION['registrar_id']);
 

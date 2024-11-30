@@ -91,7 +91,7 @@ if (!isset($_POST["submit"])) {
             $formattedDate = $addedDate->format('F j, Y');
 
             // Store the formatted date in the session
-            $_SESSION["admin_added"] = $formattedDate;
+            $_SESSION["principal_added"] = $formattedDate;
 
 
             header("location: ../loading.php?redirect=" . urlencode("./principal/index.php"));

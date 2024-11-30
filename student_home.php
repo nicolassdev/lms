@@ -35,7 +35,7 @@ $mySQLFunction->disconnect();
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                <img
+                    <img
                         style="position: absolute; top: 50%; right: 5%; transform: translate(-0%, -45%); 
                width: 500px; opacity: 0.1; z-index: -1;"
                         src="./assets/img/csi.webp"
@@ -55,8 +55,8 @@ $mySQLFunction->disconnect();
                                 echo '<div class="alert alert-warning">No school year and semester found.</div>';
                             }
                             ?>
-                             <!-- Static Data -->
-                             <p>Logged in as : &nbsp;Student <i class="bi bi-patch-check-fill text-success ms-1"></i></p>
+                            <!-- Static Data -->
+                            <!-- <p>Logged in as : &nbsp;Student <i class="bi bi-patch-check-fill text-success ms-1"></i></p> -->
                         </div>
                         <div class="row mt-4">
                             <!-- Courses Card -->

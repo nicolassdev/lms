@@ -165,17 +165,6 @@ $mySQLFunction->disconnect();
                     </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
                     <div class="container">
                         <img
                             style="position: absolute; top: 50%; left: 50%; transform: translate(-0%, -50%); 

@@ -9,14 +9,14 @@ if (!isset($_SESSION["registrar_id"])) {
 
     try {
         // Get the student ID and old password input from the POST data
-        $adminid = $_POST["adminid"];
+        $admin_id = $_POST["adminid"];
         $oldPasswordInput = trim($_POST["oldpass"]);
 
         // Establish the database connection
         $mySQLFunction->connection();
 
         // Fetch the current user details using getAccountStudent
-        $userRow = $mySQLFunction->getAccountAdmin($adminid);
+        $userRow = $mySQLFunction->getAccountUser($admin_id);
 
         if (!$userRow) {
             throw new Exception("User not found.");
@@ -47,7 +47,7 @@ if (!isset($_SESSION["registrar_id"])) {
 
             // Check for duplicate username
             $existingUser = $mySQLFunction->getUsers("username", $username);
-            if ($existingUser && $existingUser['id'] != $adminid) {
+            if ($existingUser && $existingUser['id'] != $admin_id) {
                 $_SESSION['user_taken'] = true;
                 $_SESSION["username"] = $username;
                 header("location:../../index.php?page=account");
@@ -56,13 +56,13 @@ if (!isset($_SESSION["registrar_id"])) {
 
             // Update username if changed
             if ($username !== $userRow['username']) {
-                $mySQLFunction->updateUser("username", $username, $adminid);
+                $mySQLFunction->updateUser("username", $username, $admin_id);
             }
 
             // Update the password if provided
             if ($newPassword) {
                 $newPasswordEncrypted = $mySQLFunction->encrypt($newPassword);
-                $mySQLFunction->updateUser("password", $newPasswordEncrypted, $adminid);
+                $mySQLFunction->updateUser("password", $newPasswordEncrypted, $admin_id);
             }
 
             // Disconnect and finalize the update

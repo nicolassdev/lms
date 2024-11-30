@@ -82,7 +82,7 @@ include "../includes/dbh-inc.php";
                                         // echo '<td>' . $count . '</td>';
                                         echo '<td class="text-center text-primary"> <a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">'
                                             . $row["stu_lrn"] . '</a></td>';
-                                        echo '<td class="small text-center"> ' . $row["stu_lname"] . '  ' .  ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"] . '')) . '</td>';
+                                        echo '<td class="small text-center"> ' . ucwords(strtolower($row["stu_lname"] . ',  ' .  $row["stu_fname"] . ' ' . $row["stu_mname"] . '')) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
                                         echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
@@ -116,109 +116,116 @@ include "../includes/dbh-inc.php";
 
                                         //todo Mddal for view student information
                                         echo '
-                                        <div class="modal fade" id="view_student' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="teachModal" aria-hidden="true">
+                                        <div class="modal fade" id="view_student' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="studentModal" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content b-grey">
-                                                    <div class="modal-body">
+                                                    <div class="modal-body"> 
+                                                 
+                                                    <div style="position: relative; ">
+                                                        <img
+                                                            style="position: absolute; top: 10%; left: 60%; transform: translate(-30%, -0%); 
+                                                            width: 400px; opacity: 0.1; z-index: 1;"
+                                                            src="../assets/img/csi.webp"
+                                                            alt="LMS Logo">
+                                                    </div>
+                                             
+         
                                                        <div class="modal-header">
                                                             <div class="d-flex align-items-center justify-content-between w-100">
                                                                 <div class="text-start">
-                                                                    <h1 class="modal-title fs-4 text-success">Student Information</h1>
-                                                                                
-                                                                            </div>
+                                                                    <h1 class="modal-title fs-5 text-success">Student Information</h1>
+                                                                </div>
 
                                                                             <div class="text-end">
                                                                             <i class="bi bi-person-vcard-fill fs-1 text-success"></i>
-                                                                                <div class="me-2 text-success fw-bold">LRN: ' . htmlspecialchars($row['stu_lrn']) . '</div>
+                                                                                <div class="text-success fw-bold">LRN: ' . htmlspecialchars($row['stu_lrn']) . '</div>
                                                                             </div>
                                                                     </div>
-                                                                </div>
+                                                                </div> 
 
-                                                           
+
+
+ 
                                                         <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editTeacherForm' . htmlspecialchars($row['stu_lrn']) . '">
                                                             <!-- Use hidden input -->
                                                             <input type="hidden" name="lrnID" value="' . htmlspecialchars($row['stu_lrn']) . '">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <label for="firstName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">First Name</label>
+                                                                        <input type="text" class="form-control" name="firstname" value="' . htmlspecialchars($row['stu_fname']) . '" readonly disabled>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label for="middleName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Middle Name</label>
+                                                                        <input type="text" class="form-control" name="middlename" value="' . htmlspecialchars($row['stu_mname']) . '" disabled>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label for="lastName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Last name</label>
+                                                                        <input type="text" class="form-control" name="lastname" value="' . htmlspecialchars($row['stu_lname']) . '" readonly disabled>
+                                                                    </div>
+                                                                    <div class="col-md-5 mt-2">
+                                                                        <label class="form-label">Address</label>
+                                                                        <input type="text" class="form-control" name="address" value="' . htmlspecialchars($row['stu_address']) . '" readonly disabled>
+                                                                    </div>
 
-                                                            <div class="col-md-12">
-                                                                <label  ' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">First name</label>
-                                                                <input type="text" class="form-control" name="firstname" value="' . htmlspecialchars($row['stu_fname']) . '" readonly disabled>
-                                                               
-                                                            </div>
+                                                                    <div class="col-md-4 mt-2">
+                                                                        <label for="contactNumber' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Contact</label>
+                                                                        <div class="input-group has-validation">
+                                                                            <span class="input-group-text bg-success" style="color:white" id="inputGroupPrepend">+63</span>
+                                                                            <input type="text" class="form-control" name="contact" value="' . htmlspecialchars($row['stu_contact']) . '" aria-describedby="inputGroupPrepend" pattern="9\\d{9}" maxlength="10" readonly disabled>
+                                                                        </div>
+                                                                    </div>
 
-                                                            <div class="col-md-12 mt-2">
-                                                                <label for="middleName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Middle name</label>
-                                                                <input type="text" class="form-control" name="middlename" value="' . htmlspecialchars($row['stu_mname']) . '" disabled>
-                                                            </div>
-
-                                                            <div class="col-md-12 mt-2">
-                                                                <label for="lastName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Last name</label>
-                                                                <input type="text" class="form-control" name="lastname" value="' . htmlspecialchars($row['stu_lname']) . '" readonly disabled>
-                                                                <div class="invalid-feedback">
-                                                                    Please enter a valid last name.
+                                                                    
+                                                                    <div class="col-md-3 mt-2">
+                                                                        <label for="gender' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Gender</label>
+                                                                        <input type="text" class="form-control" name="gender" id="gender' . htmlspecialchars($row['stu_lrn']) . '" value="' . htmlspecialchars($row['stu_gender']) . '" readonly disabled>
+                                                                    </div>
+                                                                    
+                                                                <div class="col-md-5 mt-2">
+                                                                        <label for="email' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Email</label>
+                                                                        <input type="text" name="email" class="form-control" value="' . htmlspecialchars($row['stu_email']) . '"  placeholder="Enter your email address" pattern=".*@(gmail|yahoo)\.com$" readonly disabled>
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    <div class="col-md-4 mt-2">
+                                                                        <label class="form-label">Place of Birth</label>
+                                                                        <input type="text" class="form-control" name="pob" value="' . htmlspecialchars($row['stu_pob']) . '" readonly disabled>
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-md-3 mt-2">
+                                                                    <label for="dob' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Date of Birth</label>
+                                                                        <input type="date" class="form-control" name="dob" id="dob' . htmlspecialchars($row['stu_dob']) . '" value="' . htmlspecialchars($row['stu_dob']) . '" readonly disabled>
+                                                                    </div>
+                                                                    
                                                                 </div>
+
+  
+
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5 text-success">Guardian Information   </h1> 
                                                             </div>
-
-                                                            <div class="col-md-12 mt-2">
-                                                                <label class="form-label">Address</label>
-                                                                <input type="text" class="form-control" name="address" value="' . htmlspecialchars($row['stu_address']) . '" readonly disabled>
-                                                             </div>
-
-                                                            <div class="col-md-12 mt-2">
-                                                                <label for="contactNumber' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Contact</label>
-                                                                <div class="input-group has-validation">
-                                                                    <span class="input-group-text bg-success" style="color:white" id="inputGroupPrepend">+63</span>
-                                                                    <input type="text" class="form-control" name="contact" value="' . htmlspecialchars($row['stu_contact']) . '" aria-describedby="inputGroupPrepend" pattern="9\\d{9}" maxlength="10" readonly disabled>
-                                                                 </div>
-                                                            </div>
-
-                                                            <div class="col-md-12 mt-2">
-                                                                <label for="gender' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Gender</label>
-                                                                <input type="text" class="form-control" name="gender" id="gender' . htmlspecialchars($row['stu_lrn']) . '" value="' . htmlspecialchars($row['stu_gender']) . '" readonly disabled>
-                                                            </div>
-
-                                                            <div class="col-md-12 mt-2">
-                                                                <label for="email' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Email</label>
-                                                                <input type="text" name="email" class="form-control" value="' . htmlspecialchars($row['stu_email']) . '"  placeholder="Enter your email address" pattern=".*@(gmail|yahoo)\.com$" readonly disabled>
-                                                             </div>
-
-
-
-                                                            <div class="col-md-12 mt-2">
-                                                                <label for="dob' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Date of Birth</label>
-                                                                <input type="date" class="form-control" name="dob" id="dob' . htmlspecialchars($row['stu_dob']) . '" value="' . htmlspecialchars($row['stu_dob']) . '" readonly disabled>
-                                                             </div>
-                                               
-
-                                                            <div class="col-md-12 mt-2">
-                                                                <label class="form-label">Address</label>
-                                                                <input type="text" class="form-control" name="pob" value="' . htmlspecialchars($row['stu_pob']) . '" readonly disabled>
-                                                             </div>
-
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title text-success">Guardian Information   </h4> 
-                                                        </div>
-
-                                                        <div class="col-md-12 mt-2">
-                                                                <label class="form-label">Father name</label>
-                                                                <input type="text" class="form-control" name="fathername" value="' . htmlspecialchars($row['father_name']) . '" readonly disabled>
-                                                         </div>
-
-                                                            
-
-                                                            <div class="col-md-12 mt-2">
-                                                                <label class="form-label">Mother name</label>
-                                                                <input type="text" class="form-control" name="mothername" value="' . htmlspecialchars($row['mother_name']) . '" readonly disabled>
-                                                            </div>
-
-
-                                                            <div class="col-md-12 mt-2">
-                                                                <label for="contactNumber' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Contact</label>
-                                                                <div class="input-group has-validation">
-                                                                    <span class="input-group-text bg-success" style="color:white" id="inputGroupPrepend">+63</span>
-                                                                    <input type="text" class="form-control" name="pcontact" value="' . htmlspecialchars($row['parent_contact']) . '" readonly disabled>
+                                                            <div class="row"> 
+                                                                <div class="col-md-6 mt-2">
+                                                                        <label class="form-label">Father\'s name</label>
+                                                                        <input type="text" class="form-control" name="fathername" value="' . htmlspecialchars($row['father_name']) . '" readonly disabled>
                                                                 </div>
-                                                            </div>
 
+                                                                    
+
+                                                                    <div class="col-md-6 mt-2">
+                                                                        <label class="form-label">Mother\'s name</label>
+                                                                        <input type="text" class="form-control" name="mothername" value="' . htmlspecialchars($row['mother_name']) . '" readonly disabled>
+                                                                    </div>
+
+
+                                                                    <div class="col-md-12 mt-2">
+                                                                        <label for="contactNumber' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Contact</label>
+                                                                        <div class="input-group has-validation">
+                                                                            <span class="input-group-text bg-success" style="color:white" id="inputGroupPrepend">+63</span>
+                                                                            <input type="text" class="form-control" name="pcontact" value="' . htmlspecialchars($row['parent_contact']) . '" readonly disabled>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
 
                                                             <div class=" justify-center ">
                                                                 <div class="col-12">
@@ -231,8 +238,8 @@ include "../includes/dbh-inc.php";
                                                 </div>
                                             </div>
                                         </div>
-
                                         ';
+
 
 
 

@@ -248,27 +248,8 @@ class myDataBase
         return $result;
     }
 
-    public function getAccountStudent($id)
-    {
-        $sql = "SELECT * FROM `users` WHERE id = ?";
-        $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("s", $id);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_assoc();
-        return $result;
-    }
-
-    public function getAccountTeacher($id)
-    {
-        $sql = "SELECT * FROM `users` WHERE id = ?";
-        $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("s", $id);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_assoc();
-        return $result;
-    }
-
-    public function getAccountAdmin($id)
+    // Account getters
+    public function getAccountUser($id)
     {
         $sql = "SELECT * FROM `users` WHERE id = ?";
         $stmt = $this->con->prepare($sql);

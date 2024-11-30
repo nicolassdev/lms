@@ -41,8 +41,17 @@ include "./includes/alert-modal.php";
             require_once 'section.php';
             break;
 
+            /**
+             Route of principal account and profile page
+             */
 
+        case "principal_prof":
+            require_once 'principal_prof.php';
+            break;
 
+        case "principal_account":
+            require_once 'principal_account.php';
+            break;
 
         default:
             require_once 'dashboard.php'; // Default page is 'home'

@@ -43,8 +43,8 @@ $mySQLFunction->disconnect();
             <div class="ms-3">
                 <img
                     style="position: absolute; top: 50%; right: 5%; transform: translate(-0%, -45%); 
-               width: 500px; opacity: 0.1; z-index: -1;"
-                    src="../assets/img/csi.webp"
+               width: 800px; opacity: 0.2; z-index: -1;"
+                    src="../assets/img/bg-home.webp"
                     alt="LMS Logo">
                 <h4>Welcome Back <?php echo ucwords(strtolower($_SESSION["user_role"])); ?> ! </h4>
                 <div class="container mt-3">
@@ -68,7 +68,7 @@ $mySQLFunction->disconnect();
                             }
                             ?>
                             <!-- Static Data -->
-                            <p>Logged in as : Principal <i class="bi bi-patch-check-fill text-success ms-1"></i></p>
+                            <!-- <p>Logged in as : Principal <i class="bi bi-patch-check-fill text-success ms-1"></i></p> -->
                         </div>
 
                     </div>
@@ -123,7 +123,7 @@ $mySQLFunction->disconnect();
                         </div>
                         <!-- View account button -->
                         <div class="text-start mt-3 ms-3">
-                            <a href="?page=faculty" class="btn btn-success w-70">View faculty members</a>
+                            <a href="?page=facultymembers" class="btn btn-success w-70">View faculty members</a>
                         </div>
                     </div>
                 </div>
@@ -148,18 +148,19 @@ $mySQLFunction->disconnect();
                         </div>
                         <!-- Manage account button -->
                         <div class="text-start mt-3 ms-3">
-                            <a href="?page=faculty" class="btn btn-danger w-50">View section</a>
+                            <a href="?page=section" class="btn btn-danger w-50">View section</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-
-
         </div>
-        <?php
-        include "../includes/footer.php";
-        ?>
+        <div class="mt-5">
+            <?php
+            include "../includes/footer.php";
+            ?>
+        </div>
+
     </main>
 
     <!-- Time and Date Script -->

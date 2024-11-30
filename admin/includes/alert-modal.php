@@ -718,7 +718,7 @@ if (isset($_SESSION['update_user']) && $_SESSION['update_user']) {
     unset($_SESSION['update_user']);
 }
 
-//UPDATE ADMIN
+//UPDATE REGISTRAR INFORMATION
 if (isset($_SESSION['update_admin']) && $_SESSION['update_admin']) {
     echo '
         <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
@@ -728,7 +728,7 @@ if (isset($_SESSION['update_admin']) && $_SESSION['update_admin']) {
                         <div class="text-success">
                             <i class="bi bi-check-circle fs-1 "></i><br><br>
                         </div>
-                        <p class="mb-4">Admin Information has been updated successfully.</p>
+                        <p class="mb-4">Registrar Information has been updated successfully.</p>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5 ">
                         <button class="btn btn-success me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
@@ -744,6 +744,9 @@ if (isset($_SESSION['update_admin']) && $_SESSION['update_admin']) {
     // Unset session variable to prevent modal from showing again on page refresh
     unset($_SESSION['update_admin']);
 }
+
+
+
 //UPDATE PRINCIPAL
 if (isset($_SESSION['update_principal']) && $_SESSION['update_principal']) {
     echo '
@@ -772,7 +775,7 @@ if (isset($_SESSION['update_principal']) && $_SESSION['update_principal']) {
 }
 
 
-// ERROR INSERT FACULTY
+// ERROR USERNAME ALREADY TAKEN
 if (isset($_SESSION['user_taken']) && $_SESSION['user_taken'] == true) {
     echo '
         <div class="modal fade" id="errorupdateModal" tabindex="-1" aria-hidden="true">
@@ -925,7 +928,6 @@ if (isset($_SESSION['subject_error'])) {
 }
 
 //PASSWORD DOESN'T MATCH 
-
 if (isset($_SESSION['password_error'])) {
     echo '
         <div class="modal fade" id="errorupdateModal" tabindex="-1" aria-hidden="true">

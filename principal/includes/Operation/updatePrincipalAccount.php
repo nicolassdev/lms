@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["teacher_id"])) {
+if (!isset($_SESSION["principal_id"])) {
     header("location:../../../login.php?error=accessdenied");
     exit();
 } else {
@@ -9,14 +9,14 @@ if (!isset($_SESSION["teacher_id"])) {
 
     try {
         // Get the student ID and old password input from the POST data
-        $teacher_id = $_POST["teacherid"];
+        $principal_id = $_POST["principalid"];
         $oldPasswordInput = trim($_POST["oldpass"]);
 
         // Establish the database connection
         $mySQLFunction->connection();
 
         // Fetch the current user details using getAccountStudent
-        $userRow = $mySQLFunction->getAccountUser($teacher_id);
+        $userRow = $mySQLFunction->getAccountUser($principal_id);
 
         if (!$userRow) {
             throw new Exception("User not found.");
@@ -28,7 +28,7 @@ if (!isset($_SESSION["teacher_id"])) {
         // Verify the old password
         if ($oldPasswordEncrypted !== $userRow['password']) {
             $_SESSION['password_error'] = "Incorrect old password. Please try again.";
-            header("location:../../index.php?page=teacher_account");
+            header("location:../../index.php?page=principal_account");
             exit();
         }
 
@@ -41,34 +41,34 @@ if (!isset($_SESSION["teacher_id"])) {
             // Confirm password validation
             if ($newPassword !== $confirmPassword) {
                 $_SESSION['password_error'] = "Passwords do not match. Please try again.";
-                header("location:../../index.php?page=teacher_account");
+                header("location:../../index.php?page=principal_account");
                 exit();
             }
 
             // Check for duplicate username
             $existingUser = $mySQLFunction->getUsers("username", $username);
-            if ($existingUser && $existingUser['id'] != $teacher_id) {
+            if ($existingUser && $existingUser['id'] != $principal_id) {
                 $_SESSION['user_taken'] = true;
                 $_SESSION["username"] = $username;
-                header("location:../../index.php?page=teacher_account");
+                header("location:../../index.php?page=principal_account");
                 exit();
             }
 
             // Update username if changed
             if ($username !== $userRow['username']) {
-                $mySQLFunction->updateUser("username", $username, $teacher_id);
+                $mySQLFunction->updateUser("username", $username, $principal_id);
             }
 
             // Update the password if provided
             if ($newPassword) {
                 $newPasswordEncrypted = $mySQLFunction->encrypt($newPassword);
-                $mySQLFunction->updateUser("password", $newPasswordEncrypted, $teacher_id);
+                $mySQLFunction->updateUser("password", $newPasswordEncrypted, $principal_id);
             }
 
             // Disconnect and finalize the update
             $mySQLFunction->disconnect();
             $_SESSION['update_user'] = true;
-            header("location:../../index.php?page=teacher_account");
+            header("location:../../index.php?page=principal_account");
             exit();
         }
     } catch (Exception $e) {

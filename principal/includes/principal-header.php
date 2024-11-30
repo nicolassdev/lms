@@ -121,6 +121,7 @@ foreach ($users as $user) {
                         <?php
                         echo ucwords(strtolower($principalfullName));
                         ?>
+                        <small>(<?php echo ucwords(strtolower($_SESSION["user_role"])); ?>)</small>
                     </span>
                     <i class="bi bi-person-fill-gear text-white" style="font-size: 1.5rem;"></i>
                 </a>
@@ -131,8 +132,8 @@ foreach ($users as $user) {
                         <?php echo ucwords(strtolower($_SESSION["user_role"])) ?>
                     </li>
                     <hr class="mx-3 my-1">
-                    <li><a class="dropdown-item" href="?page=admin">My Profile</a></li>
-                    <li><a class="dropdown-item" href="?page=settings">Settings</a></li>
+                    <li><a class="dropdown-item" href="?page=principal_prof">My Profile</a></li>
+                    <li><a class="dropdown-item" href="?page=principal_account">Account</a></li>
                     <li>
                         <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
                     </li>
@@ -172,13 +173,13 @@ foreach ($users as $user) {
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=masterlist ">
+                                <a class="nav-link active" href="index.php?page=masterlist">
                                     <i class="bi bi-person-lines-fill me-2"></i>Student Masterlist
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=facultymembers ">
+                                <a class="nav-link active" href="index.php?page=facultymembers">
                                     <i class="bi bi-people me-2"></i>Faculty Members
                                 </a>
                             </li>

@@ -64,8 +64,8 @@ include "../includes/dbh-inc.php";
                                     <th scope="col">Gender</th>
                                     <th scope="col">Birthday</th>
                                     <th scope="col">Address</th>
-                                    <!-- <th scope="col" class="text-center">Action</th> 
-                                    colspan should be 2 -->
+                                    <th scope="col" class="text-center">Action</th>
+                                    <!-- colspan should be 2 -->
 
                                 </tr>
                             </thead>
@@ -89,155 +89,113 @@ include "../includes/dbh-inc.php";
                                         echo '<td>' .  ucwords(strtolower($row["teacher_gender"])) . '</td>';
                                         echo '<td>' . $formattedBdate  . '</td>';
                                         echo '<td>' .  ucwords(strtolower($row["teacher_address"])) . '</td>';
-                                        //                     echo '
-                                        //   <td class="d-flex justify-content-center">
-                                        //       <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#edit_teacher' . $row['teacher_id'] . '">
-                                        //           <i class="bi bi-pencil-square"></i> 
-                                        //       </button>
+                                        echo '
+                                          <td class="d-flex justify-content-center">
+                                              <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#edit_teacher' . $row['teacher_id'] . '">
+                                                  <i class="bi bi-eye me-1"></i>View
+                                              </button>
 
-                                        //       </td>
-                                        //       ';
+                                              </td>
+                                              ';
 
-                                        //   THIS IS DELETE BUTTON I WILL LEAVE IT COMMENT IF NEEDED JUST UNCOMMENT I PUT IT BACK IN TOP
-                                        //   <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_teacher' . $row['teacher_id'] . '">
-                                        //       <i class="bi bi-trash"></i> 
-                                        //   </button>
                                         echo '</tr>';
 
                                         $count++;
 
 
-
-                                        // Modal for updating teacher
+                                        //todo Mddal for view faculty information
                                         echo '
                                         <div class="modal fade" id="edit_teacher' . htmlspecialchars($row['teacher_id']) . '" tabindex="-1" aria-labelledby="teachModal" aria-hidden="true">
-                                            <div class="modal-dialog modal-md">
-                                                <div class="modal-content">
-                                                    <div class="modal-header bg-primary text-white">
-                                                        <h5 class="modal-title">Edit Teacher Details</h5>
-                                                        <i class="bi bi-pencil-square fs-3 ms-2"></i>
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content b-grey">
+                                                    <div class="modal-body"> 
+                                                 
+                                                    <div style="position: relative; ">
+                                                        <img
+                                                            style="position: absolute; top: 10%; left: 60%; transform: translate(-30%, -0%); 
+                                                            width: 400px; opacity: 0.1; z-index: 1;"
+                                                            src="../assets/img/csi.webp"
+                                                            alt="LMS Logo">
                                                     </div>
-                                                    <div class="modal-body p-4">
-                                                        <form action="./includes/Operation/updateTeacher.php" method="POST" class="row g-3 needs-validation" novalidate id="editTeacherForm' . htmlspecialchars($row['teacher_id']) . '">
-                                                            <!-- Use hidden input -->
-                                                            <input type="hidden" name="teacherID" value="' . htmlspecialchars($row['teacher_id']) . '">
-                                        
-                                                            <!-- First Name -->
-                                                            <div class="col-12 mb-3">
-                                                                <label for="firstName' . htmlspecialchars($row['teacher_id']) . '" class="form-label fw-bold">First Name</label>
-                                                                <input type="text" class="form-control" name="firstname" value="' . htmlspecialchars($row['teacher_fname']) . '" required>
-                                                                <div class="invalid-feedback">Please enter a valid first name.</div>
-                                                            </div>
-                                        
-                                                            <!-- Middle Name -->
-                                                            <div class="col-12 mb-3">
-                                                                <label for="middleName' . htmlspecialchars($row['teacher_id']) . '" class="form-label fw-bold">Middle Name</label>
-                                                                <input type="text" class="form-control" name="middlename" value="' . htmlspecialchars($row['teacher_mname']) . '">
-                                                            </div>
-                                        
-                                                            <!-- Last Name -->
-                                                            <div class="col-12 mb-3">
-                                                                <label for="lastName' . htmlspecialchars($row['teacher_id']) . '" class="form-label fw-bold">Last Name</label>
-                                                                <input type="text" class="form-control" name="lastname" value="' . htmlspecialchars($row['teacher_lname']) . '" required>
-                                                                <div class="invalid-feedback">Please enter a valid last name.</div>
-                                                            </div>
-                                        
-                                                            <!-- Contact Number -->
-                                                            <div class="col-12 mb-3">
-                                                                <label for="contactNumber' . htmlspecialchars($row['teacher_id']) . '" class="form-label fw-bold">Contact</label>
-                                                                <small style="color:red">( Please enter a valid 10-digit number starting with 9. )</small>
-                                                                <div class="input-group has-validation">
-                                                                    <span class="input-group-text bg-primary text-white" id="inputGroupPrepend">+63</span>
-                                                                    <input type="text" class="form-control" name="contact" value="' . htmlspecialchars($row['teacher_contact']) . '" aria-describedby="inputGroupPrepend" pattern="9\\d{9}" maxlength="10" required>
-                                                                    <div class="invalid-feedback">Please enter a valid 10-digit number starting with 9.</div>
+                                             
+         
+                                                       <div class="modal-header">
+                                                            <div class="d-flex align-items-center justify-content-between w-100">
+                                                                <div class="text-start">
+                                                                    <h1 class="modal-title fs-5 text-success">Faculty Information</h1>
                                                                 </div>
-                                                            </div>
-                                        
-                                                            <!-- Gender -->
-                                                            <div class="col-12 mb-3">
-                                                                <label for="gender' . htmlspecialchars($row['teacher_id']) . '" class="form-label fw-bold">Gender</label>
-                                                                <select class="form-select" name="gender" id="gender' . htmlspecialchars($row['teacher_id']) . '" required>
-                                                                    <option disabled value="">Choose...</option>
-                                                                    <option value="male"' . ($row['teacher_gender'] == 'MALE' ? ' selected' : '') . '>MALE</option>
-                                                                    <option value="female"' . ($row['teacher_gender'] == 'FEMALE' ? ' selected' : '') . '>FEMALE</option>
-                                                                </select>
-                                                                <div class="invalid-feedback">Please select a gender.</div>
-                                                            </div>
-                                        
-                                                            <!-- Date of Birth -->
-                                                            <div class="col-12 mb-3">
-                                                                <label for="dob' . htmlspecialchars($row['teacher_id']) . '" class="form-label fw-bold">Date of Birth</label>
-                                                                <input type="date" class="form-control" name="dob" id="dob' . htmlspecialchars($row['teacher_id']) . '" value="' . htmlspecialchars($row['teacher_dob']) . '" required>
-                                                                <div class="invalid-feedback">Please enter a valid date of birth.</div>
-                                                            </div>
-                                        
-                                                            <!-- Employment Status -->
-                                                            <div class="col-12 mb-3">
-                                                                <label for="employmentStatus' . htmlspecialchars($row['teacher_id']) . '" class="form-label fw-bold">Employment Status</label>
-                                                                <select class="form-select" name="status" id="employmentStatus' . htmlspecialchars($row['teacher_id']) . '" required>
-                                                                    <option disabled value="">Choose...</option>
-                                                                    <option value="full time"' . ($row['status'] == 'FULL TIME' ? ' selected' : '') . '>Full-time job</option>
-                                                                    <option value="part time"' . ($row['status'] == 'PART TIME' ? ' selected' : '') . '>Part-time job</option>
-                                                                </select>
-                                                                <div class="invalid-feedback">Please select an employment status.</div>
-                                                            </div>
-                                        
-                                                            <!-- Address -->
-                                                            <div class="col-12 mb-3">
-                                                                <label class="form-label fw-bold">Address</label>
-                                                                <input type="text" class="form-control" name="address" value="' . htmlspecialchars($row['teacher_address']) . '" required>
-                                                                <div class="invalid-feedback">Please enter a valid address.</div>
-                                                            </div>
-                                        
-                                                            <!-- Buttons -->
-                                                            <div class="d-flex justify-content-between mt-4 gap-3">
-                                                                <button name="submit" class="btn btn-primary w-100" type="submit">Save</button>
-                                                                <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm(\'' . htmlspecialchars($row['teacher_id']) . '\')">Cancel</button>
+
+                                                                            <div class="text-end">
+                                                                            <i class="bi bi-person-fill-check fs-1 text-success"></i>
+                                                                                <div class="text-success fw-bolder">ID: ' . htmlspecialchars($row['teacher_id']) . '</div>
+                                                                            </div>
+                                                                    </div>
+                                                                </div> 
+
+
+
+ 
+                                                        <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editTeacherForm' . htmlspecialchars($row['teacher_id']) . '">
+                                                            <!-- Use hidden input -->
+                                                            <input type="hidden" name="lrnID" value="' . htmlspecialchars($row['teacher_id']) . '">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <label for="firstName' . htmlspecialchars($row['teacher_id']) . '" class="form-label">First Name</label>
+                                                                        <input type="text" class="form-control" name="firstname" value="' . htmlspecialchars($row['teacher_fname']) . '" readonly disabled>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label for="middleName' . htmlspecialchars($row['teacher_id']) . '" class="form-label">Middle Name</label>
+                                                                        <input type="text" class="form-control" name="middlename" value="' . htmlspecialchars($row['teacher_mname']) . '" disabled>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label for="lastName' . htmlspecialchars($row['teacher_id']) . '" class="form-label">Last name</label>
+                                                                        <input type="text" class="form-control" name="lastname" value="' . htmlspecialchars($row['teacher_lname']) . '" readonly disabled>
+                                                                    </div>
+                                                                    <div class="col-md-12 mt-2">
+                                                                        <label class="form-label">Address</label>
+                                                                        <input type="text" class="form-control" name="address" value="' . htmlspecialchars($row['teacher_address']) . '" readonly disabled>
+                                                                    </div>
+
+                                                                    <div class="col-md-6 mt-2">
+                                                                        <label for="contactNumber' . htmlspecialchars($row['teacher_id']) . '" class="form-label">Contact</label>
+                                                                        <div class="input-group has-validation">
+                                                                            <span class="input-group-text bg-success" style="color:white" id="inputGroupPrepend">+63</span>
+                                                                            <input type="text" class="form-control" name="contact" value="' . htmlspecialchars($row['teacher_contact']) . '" aria-describedby="inputGroupPrepend" pattern="9\\d{9}" maxlength="10" readonly disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    
+                                                                    <div class="col-md-6 mt-2">
+                                                                        <label for="gender' . htmlspecialchars($row['teacher_id']) . '" class="form-label">Gender</label>
+                                                                        <input type="text" class="form-control" name="gender" id="gender' . htmlspecialchars($row['teacher_id']) . '" value="' . htmlspecialchars($row['teacher_gender']) . '" readonly disabled>
+                                                                    </div>
+                                                                    
+ 
+                                                                    <div class="col-md-6 mt-2">
+                                                                    <label for="dob' . htmlspecialchars($row['teacher_id']) . '" class="form-label">Date of Birth</label>
+                                                                        <input type="date" class="form-control" name="dob" id="dob' . htmlspecialchars($row['teacher_dob']) . '" value="' . htmlspecialchars($row['teacher_dob']) . '" readonly disabled>
+                                                                    </div>
+
+                                                                    <div class="col-md-6 mt-2">
+                                                                        <label for="status' . htmlspecialchars($row['teacher_id']) . '" class="form-label">Employment Status</label>
+                                                                        <input type="text" class="form-control" name="status" id="status' . htmlspecialchars($row['status']) . '" value="' . htmlspecialchars($row['status']) . '" readonly disabled>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                
+ 
+                                                            <div class="justify-center mt-3">
+                                                                <div class="col-12">
+                                                                    <button type="button"  class="btn btn-success w-100 mt-3 mb-2"  data-bs-dismiss="modal">Okay</button>
+                                                                </div>
+                                                              
                                                             </div>
                                                         </form>
                                                     </div>
-                                                </div>
+                                                
                                             </div>
                                         </div>
-                                        <script src="../assets/js/validationform.js"></script>
-                                        
-                                        <script>
-                                            function resetForm(id) {
-                                                var form = document.getElementById("editTeacherForm" + id);
-                                                if (form) {
-                                                    form.reset(); // Clears the form fields
-                                                    form.classList.remove("was-validated"); // Removes the validation styling
-                                                }
-                                            }
-                                        </script>
                                         ';
-
-
-
-
-
-                                        // Modal for deleting teacher
-                                        echo '
-                                        <div class="modal fade" id="del_teacher' . $row['teacher_id'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered modal-md">
-                                                <div class="modal-content shadow-lg">
-                                                    <div class="modal-header border-0">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body text-center">
-                                                        <div class="text-danger">
-                                                            <i class="bi bi-trash fs-1 fade-in"></i>
-                                                        </div>
-                                                        <h5 class="mt-4 mb-4 text-dark fw-bold">Are you sure you want to delete "<span class="text-danger">' . ucwords(strtolower($row['teacher_fname'])) . ' ' . ucwords(strtolower($row['teacher_lname'])) . '</span>"?</h5>
-                                                        <p class="text-muted">This action cannot be undone. Please confirm your decision below.</p>
-                                                    </div>
-                                                    <div class="modal-footer justify-content-center border-0 mt-2 mb-4">
-                                                        <a href="includes/Operation/deleteTeacher.php?id=' . $row['id'] . '" class="btn btn-danger px-4 py-2 me-3" style="width: 120px;">Delete</a>
-                                                        <button class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>';
                                     }
                                 } else {
                                     echo '<tr>
