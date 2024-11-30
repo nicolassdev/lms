@@ -39,24 +39,39 @@ try {
     $mySQLFunction->con->begin_transaction();
 
     // Use a single query to check both username and teacher's name
-    $checkSql = "
-        SELECT 
-            (SELECT COUNT(*) FROM `users` WHERE `username` = ?) AS username_exists,
-            (SELECT COUNT(*) FROM `teacher` WHERE `teacher_fname` = ? AND `teacher_lname` = ?) AS teacher_exists
-    ";
-    $stmt = $mySQLFunction->con->prepare($checkSql);
-    $stmt->bind_param("sss", $username, $fname, $lname);
-    $stmt->execute();
-    $stmt->bind_result($username_exists, $teacher_exists);
-    $stmt->fetch();
-    $stmt->close();
+    // $checkSql = "
+    //     SELECT 
+    //         (SELECT COUNT(*) FROM `users` WHERE `username` = ?) AS username_exists,
+    //         (SELECT COUNT(*) FROM `teacher` WHERE `teacher_fname` = ? AND `teacher_lname` = ?) AS teacher_exists
+    // ";
+    // $stmt = $mySQLFunction->con->prepare($checkSql);
+    // $stmt->bind_param("sss", $username, $fname, $lname);
+    // $stmt->execute();
+    // $stmt->bind_result($username_exists, $teacher_exists);
+    // $stmt->fetch();
+    // $stmt->close();
 
-    if ($username_exists > 0) {
-        throw new Exception("Username already taken. No data will be inserted.");
+    // if ($username_exists > 0) {
+    //     throw new Exception("Username already taken. No data will be inserted.");
+    // }
+    // if ($teacher_exists > 0) {
+    //     throw new Exception("Teacher with this first name and last name already exists. No data will be inserted.");
+    // }
+
+
+
+
+    // Check if the  firstname and lastname already exist from inserting teacher info
+    $existingTeacher = $mySQLFunction->checkEntityExist('teacher', 'teacher_fname', 'teacher_lname', 'teacher_id', $fname, $lname, $teacherID);
+    if ($existingTeacher) {
+        // If the same firstname and lastname exist and the ID does not match, prevent update
+        $_SESSION['teacherupdate_error'] = "Teacher Information with the same first and last name already exists.";
+        header("location:../../index.php?page=teacher");
+        exit();
     }
-    if ($teacher_exists > 0) {
-        throw new Exception("Teacher with this first name and last name already exists. No data will be inserted.");
-    }
+
+
+
 
     // Encrypt password if provided
     $encryptedPassword = $userpwd ? $mySQLFunction->encrypt($userpwd) : null;

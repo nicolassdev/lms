@@ -174,7 +174,7 @@ $mySQLFunction->disconnect();
 
     <div class="container">
 
-        <div class="row mt-3">
+        <div class="row">
             <img
                 style="position: absolute; top: 50%; left: 50%; transform: translate(-10%, -20%); 
                    width:600px; opacity: 0.1; z-index: -1;"
@@ -183,14 +183,14 @@ $mySQLFunction->disconnect();
             <div class="col-md-12">
                 <div class="profile-card">
                     <div class="d-flex flex-wrap justify-content-end mb-3">
-                        <button class="btn btn-secondary btn-sm me-2 mb-2"
+                        <!-- <button class="btn btn-secondary btn-sm me-2 mb-2"
                             onclick="location.href='index.php?page=index'">
                             <i class="bi bi-arrow-left-circle me-1"></i> Back
-                        </button>
+                        </button> -->
 
-                        <button type="button" class="btn btn-primary btn-sm mb-2"
+                        <button type="button" class="btn btn-primary btn-sm mt-4"
                             title="Edit" data-bs-toggle="modal" data-bs-target="#updatestudentinfo">
-                            <i class="bi bi-pencil-square"></i>
+                            <i class="bi bi-pencil-square me-1"></i>Edit information
                         </button>
                     </div>
 

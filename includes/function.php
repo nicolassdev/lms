@@ -767,21 +767,42 @@ class myDataBase
 
 
 
-    public function checkFacultyExist($firstname, $lastname, $excludeID)
+    // public function checkFacultyExist($firstname, $lastname, $excludeID)
+    // {
+    //     $sql = "SELECT * FROM teacher WHERE teacher_fname = ? AND teacher_lname = ? AND teacher_id != ?";
+    //     $stmt = $this->con->prepare($sql);
+    //     $stmt->bind_param("ssi", $firstname, $lastname, $excludeID);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     return $result->fetch_assoc(); // Return the first row if exists
+    // }
+
+    // public function checkStudentExist($firstname, $lastname, $excludeID)
+    // {
+    //     $sql = "SELECT * FROM student WHERE stu_fname = ? AND stu_lname = ? AND stu_lrn != ?";
+    //     $stmt = $this->con->prepare($sql);
+    //     $stmt->bind_param("ssi", $firstname, $lastname, $excludeID);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     return $result->fetch_assoc(); // Return the first row if exists
+    // }
+
+    public function checkUserExist($username)
     {
-        $sql = "SELECT * FROM teacher WHERE teacher_fname = ? AND teacher_lname = ? AND teacher_id != ?";
+        $sql = "SELECT * FROM users WHERE  username = ?";
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("ssi", $firstname, $lastname, $excludeID);
+        $stmt->bind_param("s",  $username);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_assoc(); // Return the first row if exists
     }
 
-    public function checkStudentExist($firstname, $lastname, $excludeID)
+    // CHECK IF THE STUDENT AND FACULTY FIRST NAME AND LAST NAME IF ALREADY EXIST 
+    public function checkEntityExist($table, $firstnameColumn, $lastnameColumn, $idColumn, $firstname, $lastname, $excludeID)
     {
-        $sql = "SELECT * FROM student WHERE stu_fname = ? AND stu_lname = ? AND stu_lrn != ?";
+        $sql = "SELECT * FROM $table WHERE $firstnameColumn = ? AND $lastnameColumn = ? AND $idColumn != ?";
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("ssi", $firstname, $lastname, $excludeID);
+        $stmt->bind_param("sss", $firstname, $lastname, $excludeID);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_assoc(); // Return the first row if exists
@@ -812,7 +833,6 @@ class myDataBase
 
         return $result->fetch_assoc(); // Return the first row if exists
     }
-
 
 
 

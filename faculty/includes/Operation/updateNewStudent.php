@@ -34,15 +34,15 @@ if (!isset($_SESSION["teacher_id"])) {
 
 
 
-            // Check if the new firstname and lastname already exist for another teacher
-            $existingStudent = $mySQLFunction->checkStudentExist($fname, $lname, $id);
-
-            if ($existingStudent) {
+            // Check if the  firstname and lastname already exist from updating student info
+            $studentExists = $mySQLFunction->checkEntityExist('student', 'stu_fname', 'stu_lname', 'stu_lrn', $fname, $lname, $id);
+            if ($studentExists) {
                 // If the same firstname and lastname exist and the ID does not match, prevent update
-                $_SESSION['teacherupdate_error'] = "Student Information with the same first and last name already exists. Please choose different information.";
-                header("location:../../index.php?page=new_student");
+                $_SESSION['teacherupdate_error'] = "Student Information with the same first name and last name already exists in database.";
+                header("location:../../index.php?page=student");
                 exit();
             }
+
 
             // Reconnect to the database for updating the information
             $mySQLFunction->connection();

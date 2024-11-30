@@ -34,7 +34,7 @@ if (!isset($_POST["submit"])) {
     $pcontact = isset($_POST["p_contact"]) ? trim($_POST["p_contact"]) : null;
 
     // Generate unique IDs
-    $uid = trim($mySQLFunction->generateUserID());
+    $uid = trim($mySQLFunction->generateID("USER-"));
     //GENERATE unique passsword for students
     $userpwd = trim($mySQLFunction->generatePassword($dob));
 
@@ -52,27 +52,27 @@ if (!isset($_POST["submit"])) {
         }
 
 
-        // Check if username already exists
-        $checkUsernameSql = "SELECT * FROM `users` WHERE `username` = ?";
-        $stmt = $mySQLFunction->con->prepare($checkUsernameSql);
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $checkUsernameResult = $stmt->get_result();
+        // Check if student lrn was already exist from inserting student lrn 
+        $lrnExists = $mySQLFunction->checkUserExist($username);
 
-        if ($checkUsernameResult->num_rows > 0) {
-            throw new Exception("LRN already taken. No data will be inserted.");
+        if ($lrnExists) {
+            // If the same firstname and lastname exist and the ID does not match, prevent update
+            $_SESSION['teacherupdate_error'] = "Student LRN was already exist in database.";
+            header("location:../index.php?page=student");
+            exit();
         }
 
-        // Check if teacher with the same name already exists
-        $checkTeacherSql = "SELECT * FROM `student` WHERE `stu_fname` = ? AND `stu_lname` = ?";
-        $stmt = $mySQLFunction->con->prepare($checkTeacherSql);
-        $stmt->bind_param("ss", $fname, $lname);
-        $stmt->execute();
-        $checkTeacherResult = $stmt->get_result();
 
-        if ($checkTeacherResult->num_rows > 0) {
-            throw new Exception("Student with this LRN and first name also last name already exists. No data will be inserted.");
+        // Check if the  firstname and lastname already exist from inserting student info
+        $studentExists = $mySQLFunction->checkEntityExist('student', 'stu_fname', 'stu_lname', 'stu_lrn', $fname, $lname, $lrnID);
+
+        if ($studentExists) {
+            // If the same firstname and lastname exist and the ID does not match, prevent update
+            $_SESSION['teacherupdate_error'] = "Student Information with the same first and last name already exists.";
+            header("location:../index.php?page=student");
+            exit();
         }
+
 
         // Encrypt password if provided
         $encryptedPassword = $userpwd ? $mySQLFunction->encrypt($userpwd) : null;

@@ -108,7 +108,7 @@ include "../admin/includes/Forms/teacherform.php";
 
 
 
-                                        // Modal for updating teacher
+                                        //todo Modal for updating teacher
                                         echo '
                                         <div class="modal fade" id="edit_teacher' . htmlspecialchars($row['teacher_id']) . '" tabindex="-1" aria-labelledby="teachModal" aria-hidden="true">
                                             <div class="modal-dialog modal-md">

@@ -60,8 +60,8 @@ $mySQLFunction->disconnect();
                             <label for="gender" class="form-label">Gender</label>
                             <select id="gender" name="gender" class="form-select" required>
                                 <option value="" disabled selected>Select gender</option>
-                                <option value="male" <?php echo ($showResult['gender'] === 'male') ? 'selected' : ''; ?>>Male</option>
-                                <option value="female" <?php echo ($showResult['gender'] === 'female') ? 'selected' : ''; ?>>Female</option>
+                                <option value="MALE" <?php echo ($showResult['gender'] === 'MALE') ? 'selected' : ''; ?>>Male</option>
+                                <option value="FEMALE" <?php echo ($showResult['gender'] === 'FEMALE') ? 'selected' : ''; ?>>Female</option>
                             </select>
                             <div class="invalid-feedback">Please select your gender.</div>
                         </div>

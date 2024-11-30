@@ -45,17 +45,17 @@ if (!isset($_SESSION["principal_id"])) {
                 exit();
             }
 
-            // Check for duplicate username
-            $existingUser = $mySQLFunction->getUsers("username", $username);
-            if ($existingUser && $existingUser['id'] != $principal_id) {
-                $_SESSION['user_taken'] = true;
-                $_SESSION["username"] = $username;
-                header("location:../../index.php?page=principal_account");
-                exit();
-            }
-
-            // Update username if changed
+            // Check if the username has changed
             if ($username !== $userRow['username']) {
+                // If a user with the same username exists and it's not the current username, prevent the update
+                $existingUser = $mySQLFunction->getUsers("username", $username);
+                if ($existingUser && $existingUser['id'] != $principal_id) {
+                    $_SESSION['user_taken'] = true;
+                    $_SESSION["username"] = $username;
+                    header("location:../../index.php?page=principal_account");
+                    exit();
+                }
+                // Update the username in the database for the current user
                 $mySQLFunction->updateUser("username", $username, $principal_id);
             }
 
@@ -74,7 +74,7 @@ if (!isset($_SESSION["principal_id"])) {
     } catch (Exception $e) {
         error_log("Error updating user details: " . $e->getMessage());
         $_SESSION['update_error'] = "An error occurred while updating the user's details: " . $e->getMessage();
-        header("location:../../404.php");
+        header("location:../../../404.php");
         exit();
     }
 }

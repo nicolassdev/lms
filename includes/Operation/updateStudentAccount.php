@@ -16,7 +16,7 @@ if (!isset($_SESSION["stu_lrn"])) {
         $mySQLFunction->connection();
 
         // Fetch the current user details using getAccountStudent
-        $userRow = $mySQLFunction->getAccountStudent($studentid);
+        $userRow = $mySQLFunction->getAccountUser($studentid);
 
         if (!$userRow) {
             throw new Exception("User not found.");
@@ -45,14 +45,21 @@ if (!isset($_SESSION["stu_lrn"])) {
                 exit();
             }
 
-            // Check for duplicate username
-            $existingUser = $mySQLFunction->getUsers("username", $username);
-            if ($existingUser && $existingUser['id'] != $studentid) {
-                $_SESSION['user_taken'] = true;
-                $_SESSION["username"] = $username;
-                header("location:/lms/index.php?page=student_account");
-                exit();
+
+            // Check if the username has changed
+            if ($username !== $userRow['username']) {
+                // If a user with the same username exists and it's not the current username, prevent the update
+                $existingUser = $mySQLFunction->getUsers("username", $username);
+                if ($existingUser && $existingUser['id'] != $studentid) {
+                    $_SESSION['user_taken'] = true;
+                    $_SESSION["username"] = $username;
+                    header("location:../../index.php?page=student_account");
+                    exit();
+                }
+                // Update the username in the database for the current user
+                $mySQLFunction->updateUser("username", $username, $studentid);
             }
+
 
             // Update username if changed
             if ($username !== $userRow['username']) {

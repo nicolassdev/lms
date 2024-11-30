@@ -28,12 +28,12 @@ if (!isset($_SESSION["registrar_id"])) {
             $status = strtoupper(trim($_POST["status"]));
             $address = strtoupper(trim($_POST["address"]));
 
-            // Check if the new firstname and lastname already exist for another teacher
-            $existingTeacher = $mySQLFunction->checkFacultyExist($fname, $lname, $id);
 
+            // Check if the  firstname and lastname already exist from updating faculty info
+            $existingTeacher = $mySQLFunction->checkEntityExist('teacher', 'teacher_fname', 'teacher_lname', 'teacher_id', $fname, $lname, $id);
             if ($existingTeacher) {
                 // If the same firstname and lastname exist and the ID does not match, prevent update
-                $_SESSION['teacherupdate_error'] = "Teacher Information with the same first and last name already exists. Please choose different information.";
+                $_SESSION['teacherupdate_error'] = "Teacher Information with the same first and last name already exists in database.";
                 header("location:../../index.php?page=teacher");
                 exit();
             }
