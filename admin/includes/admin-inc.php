@@ -30,10 +30,33 @@ if (!isset($_POST["submit"])) {
     // Generate registrar ID
     $reg_id = trim($mySQLFunction->generateID("REG-"));
 
+
+    // Directory for uploads
+    $uploadDir = "../../assets/Upload/";
+    $imagePath = null; // Initialize variable for the image path
+
     // Establish database connection
     $mySQLFunction->connection();
 
     try {
+        // Handle file upload
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $imageTmpName = $_FILES['image']['tmp_name'];
+            $imageName = uniqid('IMG-', true) . '-' . basename($_FILES['image']['name']); // Unique file name
+            $imagePath = $uploadDir . $imageName;
+
+            // Move the uploaded file to the target directory
+            if (!move_uploaded_file($imageTmpName, $imagePath)) {
+                throw new Exception("Failed to upload image.");
+            }
+
+            // Save only the relative path
+            $imagePath = str_replace('../../assets/', '', $imagePath);
+        } else {
+            throw new Exception("No image uploaded or upload error.");
+        }
+
+
         // Check if username already exists
         $checkUsernameSql = "SELECT * FROM `users` WHERE `username` = ?";
         $stmt = $mySQLFunction->con->prepare($checkUsernameSql);
@@ -54,8 +77,8 @@ if (!isset($_POST["submit"])) {
         $mySQLFunction->insert("USERS", $credentialColumns, $credentialValues);
 
         // Insert data into registrar table
-        $registrarColumns = ['registrar_id', 'firstname', 'middlename', 'lastname', 'contact', 'gender', 'email', 'address', 'id'];
-        $registrarValues = [$reg_id, $fname, isset($_POST["middlename"]) ? strtoupper(trim($_POST["middlename"])) : null, $lname, $contact, $gender, $email, $address,  $uid];
+        $registrarColumns = ['registrar_id', 'firstname', 'middlename', 'lastname', 'contact', 'gender', 'email', 'address', 'image', 'id'];
+        $registrarValues = [$reg_id, $fname, isset($_POST["middlename"]) ? strtoupper(trim($_POST["middlename"])) : null, $lname, $contact, $gender, $email, $address, $imagePath, $uid];
         $mySQLFunction->insert("REGISTRAR", $registrarColumns, $registrarValues);
 
         // Set success session variable and redirect

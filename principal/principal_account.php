@@ -72,13 +72,19 @@ $mySQLFunction->disconnect();
                         <!-- Left side: Profile -->
                         <div class="col-md-6 col-12 text-center">
                             <div class="profile-header" style="margin-top: 60px;">
-                                <!-- SWITCHING IMAGE IF USER IS MALE OR FEMALE -->
-                                <?php if ($principalInfo['gender'] === "MALE") { ?>
-                                    <img src="../assets/Upload/maleadmin.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                                <!-- Display the uploaded profile image -->
+                                <?php if (!empty($principalInfo['image'])) { ?>
+                                    <img src="../assets/Upload/<?php echo htmlspecialchars($principalInfo['image']); ?>" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
                                 <?php } else { ?>
-                                    <img src="../assets/Upload/femaleadmin.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
-                                <?php } ?>
+                                    <!-- Nested loop condition -->
+                                    <!-- Check if the gender if male or female the show the default image  by gender -->
+                                    <?php if ($principalInfo['gender'] === "MALE") { ?>
+                                        <img src="../assets/Upload/default-male.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                                    <?php } else { ?>
+                                        <img src="../assets/Upload/default-female.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                                    <?php } ?>
 
+                                <?php } ?>
                                 <h4><?php echo ucwords(strtolower($principalFullName)); ?>
                                     <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
                                 </h4>

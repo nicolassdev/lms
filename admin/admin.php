@@ -12,7 +12,6 @@ $showSchool = $mySQLFunction->getSchool();
 $showResult = $mySQLFunction->getInfo('REGISTRAR');
 if ($showResult) { // Check if data was returned
     $fullName = $showResult['firstname'] . ' ' . $showResult['middlename'] . ' ' . $showResult['lastname'];
-    // echo "Full Name: $fullName";
 } else {
     echo "No data found for the specified table.";
 }
@@ -61,8 +60,8 @@ include "../admin/includes/Forms/adminform.php";
                             <label for="gender" class="form-label">Gender</label>
                             <select id="gender" name="gender" class="form-select" required>
                                 <option value="" disabled selected>Select gender</option>
-                                <option value="male" <?php echo ($showResult['gender'] === 'male') ? 'selected' : ''; ?>>Male</option>
-                                <option value="female" <?php echo ($showResult['gender'] === 'female') ? 'selected' : ''; ?>>Female</option>
+                                <option value="MALE" <?php echo ($showResult['gender'] === 'MALE') ? 'selected' : ''; ?>>Male</option>
+                                <option value="FEMALE" <?php echo ($showResult['gender'] === 'FEMALE') ? 'selected' : ''; ?>>Female</option>
                             </select>
                             <div class="invalid-feedback">Please select your gender.</div>
                         </div>
@@ -78,12 +77,13 @@ include "../admin/includes/Forms/adminform.php";
                             <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($showResult['address']); ?>" class="form-control" required>
                             <div class="invalid-feedback">Please enter your address.</div>
                         </div>
-                        <!-- 
+
+                        <!-- Profile Image -->
                         <div class="mb-3">
-                            <label for="profileImage" class="form-label">Profile Image</label>
-                            <input type="file" class="form-control" id="profileImage" name="image" accept="image/*" onchange="previewImage(event)" required>
+                            <label class="form-label">Profile Image</label>
+                            <input type="file" class="form-control" name="profile_image" accept="image/*" onchange="previewImage(event)">
                             <div class="invalid-feedback">Please upload an image.</div>
-                        </div> -->
+                        </div>
 
                         <div class="mb-3 text-center">
                             <img id="imagePreview" class="profile-img" src="#" alt="Image Preview" style="display:none;">
@@ -104,79 +104,93 @@ include "../admin/includes/Forms/adminform.php";
 <!-- TABLE -->
 <main class="col-md-12 ms-sm-auto col-lg-10">
     <div class="container">
+        <img
+            style="position: absolute; top: 50%; right: 10%; transform: translate(-10%, -45%); 
+                        width: 500px; opacity: 0.1; z-index: -1;"
+            src="../assets/img/csi.webp"
+            alt="LMS Logo">
         <div class="row">
             <div class="col-md-12">
-                <div class="profile-card">
-                    <div class="d-flex flex-wrap justify-content-end">
-                        <!-- <button class="btn btn-secondary btn-sm me-2 mb-2"
+
+                <div class="d-flex flex-wrap justify-content-end">
+                    <!-- <button class="btn btn-secondary btn-sm me-2 mb-2"
                             onclick="location.href='index.php?page=index'">
                             <i class="bi bi-arrow-left-circle me-1"></i> Back
                         </button> -->
 
-                        <button type="button" class="btn btn-primary btn-sm mb-2"
-                            title="Edit" data-bs-toggle="modal" data-bs-target="#updateadmininfo">
-                            <i class="bi bi-pencil-square me-2"></i>Edit Information
-                        </button>
-                        <!-- this is adding another admin button i will leave it comment , if needed just uncomment this button down-->
-                        <!-- <button type="button" class="btn btn-success btn-sm me-2 mb-2"
+                    <button type="button" class="btn btn-primary btn-sm mb-2"
+                        title="Edit" data-bs-toggle="modal" data-bs-target="#updateadmininfo">
+                        <i class="bi bi-pencil-square me-2"></i>Edit Information
+                    </button>
+                    <!-- this is adding another admin button i will leave it comment , if needed just uncomment this button down-->
+                    <!-- <button type="button" class="btn btn-success btn-sm me-2 mb-2"
                             title="Add Admin" data-bs-toggle="modal" data-bs-target="#admin">
                             <i class="bi bi-person-add"></i>
                         </button> -->
-                    </div>
-
-                    <div class="profile-header text-center mb-3">
-                        <?php if ($showResult['gender'] === "MALE") { ?>
-                            <img src="../assets/Upload/maleadmin.png" alt="Profile Image" class="profile-img-circle mb-2">
-                        <?php } else { ?>
-                            <img src="../assets/Upload/femaleadmin.png" alt="Profile Image" class="profile-img-circle mb-2">
-                        <?php } ?>
-                        <h4>
-                            <?php echo ucwords(strtolower($fullName)); ?>
-                            <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
-                        </h4>
-
-                        <p class="text-muted"><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
-                    </div>
-
-                    <div class="profile-details">
-                        <div class="row mb-1">
-                            <div class="col-md-6">
-                                <strong>Email:</strong>
-                                <p><?php echo $showResult['email']; ?></p>
-                            </div>
-                            <div class="col-md-6">
-                                <strong>Phone:</strong>
-                                <p>+63<?php echo $showResult['contact']; ?></p>
-                            </div>
-                        </div>
-
-                        <div class="row mb-1">
-                            <div class="col-md-6">
-                                <strong>Role:</strong>
-                                <p><?php echo ucwords(strtolower($_SESSION["user_role"])); ?></p>
-                            </div>
-                            <div class="col-md-6">
-                                <strong>Joined:</strong>
-                                <p><?php echo htmlspecialchars($_SESSION["admin_added"]); ?></p>
-                            </div>
-                        </div>
-
-                        <div class="row mb-1">
-                            <div class="col-md-6">
-                                <strong>Address:</strong>
-                                <p><?php echo ucwords(strtolower($showResult['address'])); ?></p>
-                            </div>
-                            <div class="col-md-6">
-                                <strong>Gender:</strong>
-                                <p><?php echo ucwords(strtolower($showResult['gender'])); ?></p>
-                            </div>
-
-
-                        </div>
-
-
-                    </div>
                 </div>
+
+                <div class="profile-header text-center mb-3">
+                    <!-- Display the uploaded profile image -->
+                    <?php if (!empty($showResult['image'])) { ?>
+                        <img src="../assets/Upload/<?php echo htmlspecialchars($showResult['image']); ?>" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                    <?php } else { ?>
+                        <!-- Nested loop condition -->
+                        <!-- Check if the gender if male or female the show the default image  by gender -->
+                        <?php if ($showResult['gender'] === "MALE") { ?>
+                            <img src="../assets/Upload/default-male.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                        <?php } else { ?>
+                            <img src="../assets/Upload/default-female.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                        <?php } ?>
+
+                    <?php } ?>
+
+                    <h5>
+                        <?php echo ucwords(strtolower($fullName)); ?>
+                        <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
+                    </h5>
+
+                    <p class="text-muted"><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
+                </div>
+
+                <div class="profile-details">
+                    <div class="row mb-1">
+                        <div class="col-md-6">
+                            <strong>Email:</strong>
+                            <p><?php echo $showResult['email']; ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Phone:</strong>
+                            <p>+63<?php echo $showResult['contact']; ?></p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-1">
+                        <div class="col-md-6">
+                            <strong>Role:</strong>
+                            <p><?php echo ucwords(strtolower($_SESSION["user_role"])); ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Joined:</strong>
+                            <p><?php echo htmlspecialchars($_SESSION["admin_added"]); ?></p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-1">
+                        <div class="col-md-6">
+                            <strong>Address:</strong>
+                            <p><?php echo ucwords(strtolower($showResult['address'])); ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Gender:</strong>
+                            <p><?php echo ucwords(strtolower($showResult['gender'])); ?></p>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
             </div>
         </div>
     </div>

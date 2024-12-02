@@ -123,6 +123,7 @@ foreach ($users as $user) {
                         <?php
                         echo ucwords(strtolower($fullName));
                         ?>
+                        <small>(Registrar)</small>
                     </span>
                     <i class="bi bi-person-fill-gear text-white" style="font-size: 1.5rem;"></i>
                 </a>

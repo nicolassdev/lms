@@ -62,8 +62,6 @@ $mySQLFunction->disconnect();
 
 
                     <!-- STUDENT UPDATE FORM -->
-
-
                     <div class="container position-relative">
                         <img
                             style="position: absolute; top: 50%; left: 50%; transform: translate(-20%, -50%); 
@@ -74,11 +72,19 @@ $mySQLFunction->disconnect();
                             <!-- Left side: Profile -->
                             <div class="col-md-6 col-12 text-center">
                                 <div class="profile-header" style="margin-top: 60px;">
-                                    <!-- SWITCHING IMAGE IF USER IS MALE OR FEMALE -->
-                                    <?php if ($studentInfo['stu_gender'] === "MALE") { ?>
-                                        <img src="./assets/Upload/malestudent.webp" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+
+                                    <!-- Display the uploaded profile image -->
+                                    <?php if (!empty($studentInfo['image'])) { ?>
+                                        <img src="./assets/Upload/<?php echo htmlspecialchars($studentInfo['image']); ?>" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
                                     <?php } else { ?>
-                                        <img src="./assets/Upload/femalestudent.webp" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                                        <!-- Nested loop condition -->
+                                        <!-- Check if the gender if male or female the show the default image  by gender -->
+                                        <?php if ($studentInfo['stu_gender'] === "MALE") { ?>
+                                            <img src="./assets/Upload/default-male.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                                        <?php } else { ?>
+                                            <img src="./assets/Upload/default-female.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                                        <?php } ?>
+
                                     <?php } ?>
 
                                     <h4><?php echo ucwords(strtolower($studentFullName)); ?>

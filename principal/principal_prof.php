@@ -77,12 +77,13 @@ $mySQLFunction->disconnect();
                             <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($showResult['address']); ?>" class="form-control" required>
                             <div class="invalid-feedback">Please enter your address.</div>
                         </div>
-                        <!-- 
+
+                        <!-- Profile Image -->
                         <div class="mb-3">
-                            <label for="profileImage" class="form-label">Profile Image</label>
-                            <input type="file" class="form-control" id="profileImage" name="image" accept="image/*" onchange="previewImage(event)" required>
+                            <label class="form-label">Profile Image</label>
+                            <input type="file" class="form-control" name="profile_image" accept="image/*" onchange="previewImage(event)">
                             <div class="invalid-feedback">Please upload an image.</div>
-                        </div> -->
+                        </div>
 
                         <div class="mb-3 text-center">
                             <img id="imagePreview" class="profile-img" src="#" alt="Image Preview" style="display:none;">
@@ -128,11 +129,18 @@ $mySQLFunction->disconnect();
                 </div>
 
                 <div class="profile-header text-center mb-3">
-                    <!-- Profile Image -->
-                    <?php if ($showResult['gender'] === "MALE") { ?>
-                        <img src="../assets/Upload/maleadmin.png" alt="Profile Image" class="profile-img-circle mb-2" draggable="false">
+                    <!-- Display the uploaded profile image -->
+                    <?php if (!empty($showResult['image'])) { ?>
+                        <img src="../assets/Upload/<?php echo htmlspecialchars($showResult['image']); ?>" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
                     <?php } else { ?>
-                        <img src="../assets/Upload/femaleadmin.png" alt="Profile Image" class="profile-img-circle mb-2" draggable="false">
+                        <!-- Nested loop condition -->
+                        <!-- Check if the gender if male or female the show the default image  by gender -->
+                        <?php if ($showResult['gender'] === "MALE") { ?>
+                            <img src="../assets/Upload/default-male.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                        <?php } else { ?>
+                            <img src="../assets/Upload/default-female.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                        <?php } ?>
+
                     <?php } ?>
                     <h4>
                         <?php echo ucwords(strtolower($fullName)); ?>

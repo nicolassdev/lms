@@ -114,13 +114,12 @@ $mySQLFunction->disconnect();
                             <div class="invalid-feedback">Please enter the first name.</div>
                         </div>
 
-
-                        <!-- 
+                        <!-- Profile Image -->
                         <div class="mb-3">
-                            <label for="profileImage" class="form-label">Profile Image</label>
-                            <input type="file" class="form-control" id="profileImage" name="image" accept="image/*" onchange="previewImage(event)" required>
+                            <label class="form-label">Upload photo</label>
+                            <input type="file" class="form-control" name="profile_image" accept="image/*" onchange="previewImage(event)">
                             <div class="invalid-feedback">Please upload an image.</div>
-                        </div> -->
+                        </div>
 
 
                         <div class="mb-3 text-center">
@@ -195,17 +194,19 @@ $mySQLFunction->disconnect();
                     </div>
 
                     <div class="profile-header text-center mb-3">
-                        <!-- <img src="./assets/Upload/admin.jpg" alt="Profile Image" class="profile-img-circle mb-2"> -->
-
-                        <!-- SWITCHING IMAGE IF USER IS MALE OR FEMALE  -->
-                        <?php if ($studentInfo['stu_gender'] === "MALE") { ?>
-                            <img src="./assets/Upload/malestudent.webp" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                        <!-- Display the uploaded profile image -->
+                        <?php if (!empty($studentInfo['image'])) { ?>
+                            <img src="./assets/Upload/<?php echo htmlspecialchars($studentInfo['image']); ?>" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
                         <?php } else { ?>
-                            <img src="./assets/Upload/femalestudent.webp" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                            <!-- Nested loop condition -->
+                            <!-- Check if the gender if male or female the show the default image  by gender -->
+                            <?php if ($studentInfo['stu_gender'] === "MALE") { ?>
+                                <img src="./assets/Upload/default-male.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                            <?php } else { ?>
+                                <img src="./assets/Upload/default-female.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                            <?php } ?>
+
                         <?php } ?>
-
-
-
 
                         <h4><?php echo ucwords(strtolower($studentFullName)); ?>
                             <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>

@@ -27,6 +27,46 @@ if (!isset($_SESSION["registrar_id"])) {
                 'address' => $address,
             ];
 
+
+
+            // Check if an image file was uploaded
+            if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === UPLOAD_ERR_OK) {
+                $imageName = $_FILES['profile_image']['name'];
+                $imageTmpName = $_FILES['profile_image']['tmp_name'];
+                $imageSize = $_FILES['profile_image']['size'];
+                $imageError = $_FILES['profile_image']['error'];
+                $imageType = $_FILES['profile_image']['type'];
+
+                // Validate file type and size (e.g., allow only PNG/JPG and max size 2MB)
+                $allowedExtensions = ['jpg', 'jpeg', 'webp', 'png'];
+                $fileExtension = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+
+                if (in_array($fileExtension, $allowedExtensions) && $imageSize <= 2 * 1024 * 1024) {
+                    // Set a new unique name for the image
+                    $newImageName = uniqid("principal_", true) . '.' . $fileExtension;
+
+                    // Define upload directory
+                    $uploadDir = "../../../assets/Upload/";
+                    $uploadPath = $uploadDir . $newImageName;
+
+                    // Move the uploaded file to the desired directory
+                    if (move_uploaded_file($imageTmpName, $uploadPath)) {
+                        // Update the store array to include the new image path
+                        $store['image'] =  $newImageName;
+                    } else {
+                        $_SESSION['teacherupdate_error'] = "Failed to upload image.";
+                        header("location:../../index.php?page=principal");
+                        exit();
+                    }
+                } else {
+                    // throw new Exception("Invalid file type or size.");
+                    $_SESSION['teacherupdate_error'] = "Invalid file type or size.";
+                    header("location:../../index.php?page=principal");
+                    exit();
+                }
+            }
+
+
             $mySQLFunction->connection();
             $mySQLFunction->updateUserInfo('PRINCIPAL', $store); // Pass the array directly
 

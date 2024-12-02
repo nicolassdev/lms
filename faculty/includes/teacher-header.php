@@ -113,8 +113,8 @@ if (isset($_SESSION['teacher_id'])) {
                             <?php
                             echo ucwords(strtolower($_SESSION["teacher_fname"] . ' ' . $_SESSION["teacher_lname"]));
                             ?>
+                            <small>(<?php echo ucwords(strtolower($_SESSION["user_role"])); ?>)</small>
                             <i class="bi bi-person-circle ms-1 small-icon" style="font-size: 1.3rem;"></i>
-
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">

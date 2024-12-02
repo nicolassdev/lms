@@ -76,8 +76,8 @@ include "../admin/includes/Forms/principalform.php";
                             <label for="gender" class="form-label">Gender</label>
                             <select id="gender" name="gender" class="form-select" required>
                                 <option value="" disabled selected>Select gender</option>
-                                <option value="male" <?php echo ($showResult['gender'] === 'male') ? 'selected' : ''; ?>>Male</option>
-                                <option value="female" <?php echo ($showResult['gender'] === 'female') ? 'selected' : ''; ?>>Female</option>
+                                <option value="MALE" <?php echo ($showResult['gender'] === 'MALE') ? 'selected' : ''; ?>>Male</option>
+                                <option value="FEMALE" <?php echo ($showResult['gender'] === 'FEMALE') ? 'selected' : ''; ?>>Female</option>
                             </select>
                             <div class="invalid-feedback">Please select your gender.</div>
                         </div>
@@ -93,12 +93,13 @@ include "../admin/includes/Forms/principalform.php";
                             <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($showResult['address']); ?>" class="form-control" required>
                             <div class="invalid-feedback">Please enter your address.</div>
                         </div>
-                        <!-- 
+
+                        <!-- Profile Image -->
                         <div class="mb-3">
-                            <label for="profileImage" class="form-label">Profile Image</label>
-                            <input type="file" class="form-control" id="profileImage" name="image" accept="image/*" onchange="previewImage(event)" required>
+                            <label class="form-label">Profile Image</label>
+                            <input type="file" class="form-control" name="profile_image" accept="image/*" onchange="previewImage(event)">
                             <div class="invalid-feedback">Please upload an image.</div>
-                        </div> -->
+                        </div>
 
                         <div class="mb-3 text-center">
                             <img id="imagePreview" class="profile-img" src="#" alt="Image Preview" style="display:none;">
@@ -128,7 +129,7 @@ include "../admin/includes/Forms/principalform.php";
                         <i class="bi bi-arrow-left-circle me-1"></i> Back
                     </button> -->
 
-                    <button type="button" class="btn btn-primary btn-sm mb-2"
+                    <button type="button" class="btn btn-primary btn-sm mb-2 me-2"
                         title="Edit" data-bs-toggle="modal" data-bs-target="#updateprincipalinfo">
                         <i class="bi bi-pencil-square me-2"></i>Edit information
                     </button>
@@ -148,11 +149,18 @@ include "../admin/includes/Forms/principalform.php";
                     <div class="row">
                         <!-- Left side: Image and Name -->
                         <div class="col-md-4 d-flex flex-column align-items-center text-center">
-                            <!-- Profile Image -->
-                            <?php if ($showResult['gender'] === "MALE") { ?>
-                                <img src="../assets/Upload/maleadmin.png" alt="Profile Image" class="mb-2" draggable="false" s style="width: 150px; height: 150px; object-fit: cover;">
+                            <!-- Display the uploaded profile image -->
+                            <?php if (!empty($showResult['image'])) { ?>
+                                <img src="../assets/Upload/<?php echo htmlspecialchars($showResult['image']); ?>" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
                             <?php } else { ?>
-                                <img src="../assets/Upload/femaleadmin.png" alt="Profile Image" class="mb-2" draggable="false" style="width: 150px; height: 150px; object-fit: cover;">
+                                <!-- Nested loop condition -->
+                                <!-- Check if the gender if male or female the show the default image  by gender -->
+                                <?php if ($showResult['gender'] === "MALE") { ?>
+                                    <img src="../assets/Upload/default-male.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                                <?php } else { ?>
+                                    <img src="../assets/Upload/default-female.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                                <?php } ?>
+
                             <?php } ?>
 
                             <!-- Principal's Name and School -->

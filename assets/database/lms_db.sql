@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2024 at 07:39 PM
+-- Generation Time: Dec 02, 2024 at 04:07 PM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.12
 
@@ -46,11 +46,7 @@ CREATE TABLE `enroll` (
 --
 
 INSERT INTO `enroll` (`stu_lrn`, `section_code`, `semester`, `school_year`, `date_enroll`, `enroll_status`, `current_school`, `school_id`, `school_address`, `school_type`, `requirements_submit`) VALUES
-('114403203289', 'SECTION-1847', '1st Semester', '2024-2025', '2024-11-03', 'ENROLLED', 'LEGAZPI CITY', NULL, 'LEGAZPI', 'PUBLIC', 'SF9, SF10, PSA Birth Certificate'),
-('114455667788', 'SECTION-3747', '1st Semester', '2024-2025', '2024-11-24', 'ENROLLED', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN', 'PUBLIC', 'SF9'),
-('114483293271', 'SECTION-3371', '1st Semester', '2024-2025', '2024-11-03', 'ENROLLED', 'LEGAZPI HIGH SCHOOL', NULL, 'LEGAZPI', 'PUBLIC', 'SF9, SF10'),
-('114497326715', 'SECTION-3371', '1st Semester', '2024-2025', '2024-11-03', 'ENROLLED', 'QWEQW', NULL, 'QWEWQ', 'PUBLIC', 'SF9, SF10'),
-('114498343414', 'SECTION-1847', '1st Semester', '2024-2025', '2024-11-03', 'ENROLLED', 'DASDAS', NULL, 'ASDAS', 'PUBLIC', 'SF9');
+('114482392392', 'SECTION-6796', '1st Semester', '2024-2025', '2024-11-28', 'ENROLLED', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10');
 
 -- --------------------------------------------------------
 
@@ -67,6 +63,7 @@ CREATE TABLE `principal` (
   `gender` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `address` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -74,8 +71,8 @@ CREATE TABLE `principal` (
 -- Dumping data for table `principal`
 --
 
-INSERT INTO `principal` (`principal_id`, `firstname`, `middlename`, `lastname`, `contact`, `gender`, `email`, `address`, `id`) VALUES
-('PR-7572', 'SALVADOR', '', 'YAJO', '9392392932', 'MALE', 'salvador@gmail.com', 'LEGAZPI CITY', 'USER-4861');
+INSERT INTO `principal` (`principal_id`, `firstname`, `middlename`, `lastname`, `contact`, `gender`, `email`, `address`, `image`, `id`) VALUES
+('PR-7572', 'DANTE', '', 'ARINGO', '9392392932', 'MALE', 'aringo@gmail.com', 'BITANO LEGAZPI CITY', 'principal_674dcd0303e1d8.01513575.jpg', 'USER-4861');
 
 -- --------------------------------------------------------
 
@@ -92,6 +89,7 @@ CREATE TABLE `registrar` (
   `gender` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `address` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'User ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -99,8 +97,8 @@ CREATE TABLE `registrar` (
 -- Dumping data for table `registrar`
 --
 
-INSERT INTO `registrar` (`registrar_id`, `firstname`, `middlename`, `lastname`, `contact`, `gender`, `email`, `address`, `id`) VALUES
-('REG-9744', 'FLOREN', 'BALDES', 'GUADOL', '9234123412', 'FEMALE', 'Floren@gmail.com', 'LEGAZPI CITY', 'USER-4436');
+INSERT INTO `registrar` (`registrar_id`, `firstname`, `middlename`, `lastname`, `contact`, `gender`, `email`, `address`, `image`, `id`) VALUES
+('REG-9744', 'MARICAR', 'CARREON', 'AYDALLA', '9329392932', 'FEMALE', 'maricar@gmail.com', 'MATANAG LEGAZPI CITY', '', 'USER-4436');
 
 -- --------------------------------------------------------
 
@@ -141,20 +139,13 @@ CREATE TABLE `section` (
 --
 
 INSERT INTO `section` (`section_code`, `strand_code`, `grade_lvl`, `section_name`, `teacher_id`, `date_created`) VALUES
-('SECTION-1847', 'STRAND-2745', 'GRADE-11', 'ST.PAUL', NULL, '2024-11-03'),
-('SECTION-2971', 'STRAND-2745', 'GRADE-12', 'FIREFOX', NULL, '2024-11-03'),
-('SECTION-3371', 'STRAND-2745', 'GRADE-12', 'OPERA', NULL, '2024-11-03'),
-('SECTION-3747', 'STRAND-2745', 'GRADE-12', 'EDGE', NULL, '2024-11-03'),
-('SECTION-4873', 'STRAND-3453', 'GRADE-12', 'ENERGY', NULL, '2024-11-03'),
-('SECTION-5833', 'STRAND-3453', 'GRADE-11', 'ST.PADRE PIO', NULL, '2024-11-03'),
-('SECTION-6133', 'STRAND-2745', 'GRADE-11', 'ST.JOHN', NULL, '2024-11-03'),
-('SECTION-6295', 'STRAND-9457', 'GRADE-11', 'ST.JUDE', NULL, '2024-11-03'),
-('SECTION-6537', 'STRAND-2745', 'GRADE-12', 'ST.BENEDICT', NULL, '2024-11-03'),
-('SECTION-6737', 'STRAND-2745', 'GRADE-11', 'ST.GREGORY', NULL, '2024-11-03'),
-('SECTION-6965', 'STRAND-2745', 'GRADE-11', 'ST.PHILIP', NULL, '2024-11-03'),
-('SECTION-8583', 'STRAND-6675', 'GRADE-11', 'ST.THERESE', NULL, '2024-11-03'),
-('SECTION-9127', 'STRAND-2745', 'GRADE-12', 'GENESIS', NULL, '2024-11-03'),
-('SECTION-9227', 'STRAND-2745', 'GRADE-12', 'CHROME', NULL, '2024-11-03');
+('SECTION-3286', 'STRAND-5688', 'GRADE-11', 'ST. MICHAEL', '24-299710-4779', '2024-11-28'),
+('SECTION-4741', 'STRAND-3453', 'GRADE-11', 'ST. PADRE PIO', '24-209505-8181', '2024-11-28'),
+('SECTION-6796', 'STRAND-2745', 'GRADE-11', 'ST. GREGORY', '24-049906-5894', '2024-11-28'),
+('SECTION-6943', 'STRAND-9457', 'GRADE-11', 'ST. JUDE', '24-059310-4617', '2024-11-28'),
+('SECTION-7289', 'STRAND-2745', 'GRADE-11', 'ST. PHILIP', '24-299909-9301', '2024-11-28'),
+('SECTION-7314', 'STRAND-2745', 'GRADE-11', 'ST. JOHN', '24-229809-8556', '2024-11-28'),
+('SECTION-7998', 'STRAND-6675', 'GRADE-11', 'ST. THEERESE', '24-029810-1540', '2024-11-28');
 
 -- --------------------------------------------------------
 
@@ -219,6 +210,7 @@ CREATE TABLE `student` (
   `father_name` varchar(250) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Parent name',
   `mother_name` varchar(250) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Parent Name',
   `parent_contact` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `id` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'User ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -226,19 +218,19 @@ CREATE TABLE `student` (
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`stu_lrn`, `stu_fname`, `stu_mname`, `stu_lname`, `stu_address`, `stu_contact`, `stu_gender`, `stu_email`, `stu_dob`, `stu_pob`, `father_name`, `mother_name`, `parent_contact`, `id`) VALUES
-('114403203289', 'ALIKON', 'JACK', 'SABDAO', 'DARAGA', '9329392932', 'FEMALE', 'alikon@gmail.com', '2000-11-28', 'LEGAZPI', 'TEST', 'TESTS', '9329392932', 'USER-8636'),
-('114422222222', 'JINKY', 'BALBE', 'JAQUIE', 'BURAUGIS', '9239293929', 'FEMALE', 'JINKY25@GMAIL.COM', '2024-10-24', 'LEGAZPI', 'MALIKONS JAQUIE', 'JACKKIEEE JAQUIE', '9392392932', 'USER-2931'),
-('114423232323', 'DANIEL', 'DADO', 'DAEN', 'BURAGUIS LEGAZPI CITY', '9329392392', 'MALE', 'daniel@gmail.com', '2004-11-24', 'BURAGUIS', 'SIMEON DAEN', 'CRISTINA DAEN', '9329392392', 'USER-6462'),
-('114423993283', 'RODRIGO', '', 'BALDEZ', 'BURAGUIS', '9392392932', 'MALE', 'RODRIGO@gmail.com', '2024-11-07', 'LEGAZPI ALBAY', 'SALBADOR BALDEZ', 'MARIZA BALDEZ', '9494848455', 'USER-6143'),
-('114432325251', 'JAMES', 'BALDO', 'BALDES', 'LEGAZPI', '9329391239', 'MALE', 'jonhray@gmail.com', '2015-09-02', 'Sample', 'ASDASDAS', 'ASDAS', '9329392932', 'USER-1316'),
-('114455667788', 'DARIUS', 'VALDEZ', 'GAMOZA', 'LEGAZPI CITY', '9239239293', 'MALE', 'darius@gmail.com', '2024-11-03', 'LEGAZPI CITY', 'GAMOZA SALVE', 'GAMOZA CRISTAL', '9329329392', 'USER-3616'),
-('114482392392', 'CALOY', 'HALBE', 'SMITH', 'LEGAZPI CITY', '9392392939', 'FEMALE', 'caloysmith24@gmail.com', '2024-12-02', 'BURAGUIS', 'JUAN BALDO SMITH', 'GLINDA SMITH', '9392932939', 'USER-9991'),
-('114483293271', 'JOHN', 'BELBIS', 'UYALS', 'PAWA', '9329392932', 'MALE', 'leon@gmail.com', '2002-10-03', 'BITANO', 'SAMPLE', 'SAMNPLE', '9392932939', 'USER-9986'),
-('114497326715', 'GEORGE', 'JAKIB', 'HALBES', 'BITANO LEGAZPI CITY', '9239239293', 'MALE', 'GEORGEHALBES@GMAIL.COM', '2001-10-05', 'BRTTH LEGAZPI', 'JONNY HALBES', 'KRISTINE HALBES', '9329392932', 'USER-1322'),
-('114497427472', 'LESTER', '', 'SAPULA', 'BITANO', '9329392932', 'MALE', 'lester@gmail.com', '2002-07-04', 'BITANO', 'ASDAS', 'DASDSA', '9329329932', 'USER-9261'),
-('114498343414', 'DWAYNE', 'HILBE', 'TUWEZA', 'BURAGUIS LEGAZPI CITY', '9123421321', 'MALE', 'dwaynetuweza@gmail.com', '2024-10-16', 'Buraguis Legazpi City', 'JOHN BALDES TUIZA', 'CRISTINE BALDES TUIZA', '9123123123', 'USER-3431'),
-('114499887766', 'MARVIN', '', 'TAUZON', 'BURAGUIS', '9329392392', 'MALE', 'marvin@gmail.com', '2024-11-10', 'Legazpi City', 'PAPA TAUZON', 'MAMA TAUZON', '9412949194', 'USER-6346');
+INSERT INTO `student` (`stu_lrn`, `stu_fname`, `stu_mname`, `stu_lname`, `stu_address`, `stu_contact`, `stu_gender`, `stu_email`, `stu_dob`, `stu_pob`, `father_name`, `mother_name`, `parent_contact`, `image`, `id`) VALUES
+('114403203289', 'ALIKON', 'JACK', 'SABDAO', 'DARAGA', '9329392932', 'FEMALE', 'alikon@gmail.com', '2000-11-28', 'Legazpi', 'TEST', 'TESTS', '9329392932', '', 'USER-8636'),
+('114422222222', 'JINKY', 'BALBE', 'JAQUIE', 'BURAUGIS', '9239293929', 'FEMALE', 'JINKY25@GMAIL.COM', '2024-10-24', 'LEGAZPI', 'MALIKONS JAQUIE', 'JACKKIEEE JAQUIE', '9392392932', '', 'USER-2931'),
+('114423232323', 'DANIEL', 'DADO', 'DAEN', 'BURAGUIS LEGAZPI CITY', '9329392392', 'MALE', 'daniel@gmail.com', '2004-11-24', 'BURAGUIS', 'SIMEON DAEN', 'CRISTINA DAEN', '9329392392', '', 'USER-6462'),
+('114423993283', 'RODRIGO', '', 'BALDEZ', 'BURAGUIS', '9392392932', 'MALE', 'RODRIGO@gmail.com', '2024-11-07', 'LEGAZPI ALBAY', 'SALBADOR BALDEZ', 'MARIZA BALDEZ', '9494848455', '', 'USER-6143'),
+('114432325251', 'JAMES', 'BALDO', 'BALDES', 'LEGAZPI', '9329391239', 'MALE', 'jonhray@gmail.com', '2015-09-02', 'Sample', 'ASDASDAS', 'ASDAS', '9329392932', '', 'USER-1316'),
+('114455667788', 'DARIUS', 'VALDEZ', 'GAMOZA', 'LEGAZPI CITY', '9239239293', 'MALE', 'darius@gmail.com', '2024-11-03', 'LEGAZPI CITY', 'GAMOZA SALVE', 'GAMOZA CRISTAL', '9329329392', '', 'USER-3616'),
+('114482392392', 'CALOY', 'HALBE', 'SMITH', 'LEGAZPI CITY', '9392392939', 'FEMALE', 'caloysmith24@gmail.com', '2024-12-02', 'BURAGUIS', 'JUAN BALDO SMITH', 'GLINDA SMITH', '9392932939', '', 'USER-9991'),
+('114483293271', 'JOHN', 'BELBIS', 'UYALS', 'PAWA', '9329392932', 'MALE', 'leon@gmail.com', '2002-10-03', 'BITANO', 'SAMPLE', 'SAMNPLE', '9392932939', '', 'USER-9986'),
+('114497326715', 'GEORGE', 'JAKIB', 'HALBES', 'BITANO LEGAZPI CITY', '9239239293', 'MALE', 'GEORGEHALBES@GMAIL.COM', '2001-10-05', 'BRTTH LEGAZPI', 'JONNY HALBES', 'KRISTINE HALBES', '9329392932', '', 'USER-1322'),
+('114497427472', 'LESTER', '', 'SAPULA', 'BITANO', '9329392932', 'MALE', 'lester@gmail.com', '2002-07-04', 'BITANO', 'ASDAS', 'DASDSA', '9329329932', '', 'USER-9261'),
+('114498343414', 'DWAYNE', 'HILBE', 'TUWEZA', 'BURAGUIS LEGAZPI CITY', '9123421321', 'MALE', 'dwaynetuweza@gmail.com', '2024-10-16', 'Buraguis Legazpi City', 'JOHN BALDES TUIZA', 'CRISTINE BALDES TUIZA', '9123123123', '', 'USER-3431'),
+('114499887766', 'MARVIN', '', 'TAUZON', 'BURAGUIS', '9329392392', 'MALE', 'marvin@gmail.com', '2024-11-10', 'Legazpi City', 'PAPA TAUZON', 'MAMA TAUZON', '9412949194', '', 'USER-6346');
 
 -- --------------------------------------------------------
 
@@ -262,7 +254,9 @@ CREATE TABLE `subject` (
 --
 
 INSERT INTO `subject` (`sub_code`, `sub_title`, `sub_type`, `sub_time`, `sub_semester`, `strand_code`, `sub_gradelvl`, `teacher_id`) VALUES
-('SUB-4633', 'PRE-CALCULUS', 'SPECIALIZED SUBJECT', '--:-- --', '1st Semester', 'STRAND-3453', 'GRADE-11', '24-029805-2543');
+('SUB-4633', 'PRE-CALCULUS', 'SPECIALIZED SUBJECT', '--:-- --', '1st Semester', 'STRAND-3453', 'GRADE-11', '24-029805-2543'),
+('SUB-8237', 'BIOLOGY', 'SPECIALIZED SUBJECT', '--:-- --', '2nd Semester', 'STRAND-3453', 'GRADE-12', '24-209505-8181'),
+('SUB-8837', 'GENERAL MATHEMATICS', 'SPECIALIZED SUBJECT', '--:-- --', '2nd Semester', 'STRAND-2745', 'GRADE-11', '24-209505-8181');
 
 -- --------------------------------------------------------
 
@@ -299,6 +293,7 @@ CREATE TABLE `teacher` (
   `teacher_dob` date NOT NULL,
   `status` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `teacher_address` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `id` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'User ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -306,12 +301,19 @@ CREATE TABLE `teacher` (
 -- Dumping data for table `teacher`
 --
 
-INSERT INTO `teacher` (`teacher_id`, `teacher_fname`, `teacher_mname`, `teacher_lname`, `teacher_contact`, `teacher_gender`, `teacher_dob`, `status`, `teacher_address`, `id`) VALUES
-('24-029805-2543', 'MARY ANN', '', 'AJERO', '9329392939', 'FEMALE', '1998-05-02', 'FULL TIME', 'DARAGA', 'USER-6162'),
-('24-029810-1540', 'KYRIE', 'IRVING', 'SMITH', '9294929429', 'MALE', '1998-10-02', 'FULL TIME', 'BURAGUIS', 'USER-8224'),
-('24-059310-4617', 'NORBERTO', '', 'LLANUSO', '9392392939', 'MALE', '1993-10-05', 'FULL TIME', 'DARAGA', 'USER-6486'),
-('24-199603-2911', 'DANTE', 'BALDES', 'ARINGO', '9329392955', 'MALE', '1996-03-19', 'FULL TIME', 'BITANO LEGAZPI', 'USER-2686'),
-('24-299211-8709', 'MERLANDY', 'SALVE', 'LATUNA', '9329392932', 'MALE', '1992-11-29', 'FULL TIME', 'CABANGAN LEGAZPI CITY', 'USER-6429');
+INSERT INTO `teacher` (`teacher_id`, `teacher_fname`, `teacher_mname`, `teacher_lname`, `teacher_contact`, `teacher_gender`, `teacher_dob`, `status`, `teacher_address`, `image`, `id`) VALUES
+('24-029805-2543', 'MARY ANN', '', 'AJERO', '9329392939', 'FEMALE', '1998-05-02', 'FULL TIME', 'DARAGA', '', 'USER-6162'),
+('24-029810-1540', 'ARIEL', '', 'ABALETA', '9294929429', 'MALE', '1998-10-02', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-8224'),
+('24-049906-5894', 'DESIREE', '', 'DIAZ', '9294929429', 'FEMALE', '1999-06-04', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-6036'),
+('24-059310-4617', 'NORBERTO', 'ATUN', 'LLAMOSO', '9392392939', 'MALE', '1993-10-05', 'FULL TIME', 'DARAGA', '', 'USER-6486'),
+('24-059711-7139', 'MERCY', '', 'MACASINAG', '9329392939', 'FEMALE', '1997-11-05', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-3454'),
+('24-199603-2911', 'DANTE', '', 'ARINGO', '9329392955', 'MALE', '1996-03-19', 'FULL TIME', 'BITANO LEGAZPI', '', 'USER-2686'),
+('24-209505-8181', 'JEROME', '', 'DELFINO', '9392392939', 'MALE', '1995-05-20', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-0607'),
+('24-229809-8556', 'HANILY', '', 'ASAYTUNO', '9329392939', 'FEMALE', '1998-09-22', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-5858'),
+('24-290211-4331', 'SAMPLE', 'SAMPLE', 'SAMPLE', '9329392939', 'MALE', '2002-11-29', 'FULL TIME', 'ASDASD', '', 'USER-8363'),
+('24-299211-8709', 'MERLANDY', 'MENDENILLA', 'LATUNA', '9329392932', 'MALE', '1992-11-29', 'FULL TIME', 'CABANGAN LEGAZPI CITY', '', 'USER-6429'),
+('24-299710-4779', 'MYRA', '', 'MADARA', '9392932939', 'FEMALE', '1997-10-29', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-3041'),
+('24-299909-9301', 'JESELLE ANN', '', 'NAVAMO', '9329392939', 'FEMALE', '1999-09-29', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-9953');
 
 -- --------------------------------------------------------
 
@@ -333,14 +335,19 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_added`) VALUES
+(94, 'USER-0607', 'LMS-209505-5945', '304e302e96596f53eb6f86d9516a092849253b5d', 'TEACHER', '2024-11-28 20:11:17'),
 (69, 'USER-1316', '114432325251', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-04 06:56:15'),
 (41, 'USER-1322', '114497326715', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-27 21:56:03'),
 (80, 'USER-2686', 'LMS-199603-6563', 'c25b7bba3ff6a54c12b48278a9a690637e5ba403', 'TEACHER', '2024-11-24 19:36:52'),
 (37, 'USER-2931', '114422222222', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-24 04:41:21'),
+(95, 'USER-3041', 'LMS-299710-7677', '7fe0267f37f9992846d1e377c72eaaac2f15a76a', 'TEACHER', '2024-11-28 20:12:06'),
 (39, 'USER-3431', '114498343414', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-26 21:36:50'),
+(93, 'USER-3454', 'LMS-059711-1061', 'ac8134b0f4bccf09fd0d7ffa57e3962f5c498947', 'TEACHER', '2024-11-28 20:10:24'),
 (72, 'USER-3616', '114455667788', '51330c0985ecdbf0eb4af46ac0d39c589bec37af', 'STUDENT', '2024-11-06 04:55:03'),
 (89, 'USER-4436', 'registrar', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'ADMIN', '2024-11-27 01:27:19'),
 (84, 'USER-4861', 'principal', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'PRINCIPAL', '2024-11-26 23:42:32'),
+(91, 'USER-5858', 'LMS-229809-5341', '8d73b567714515162d51584a9e127dfefd2e8321', 'TEACHER', '2024-11-28 20:07:33'),
+(90, 'USER-6036', 'LMS-049906-2097', 'f414a45e016d0fa329dc38a8c4520589994e4e8f', 'TEACHER', '2024-11-28 20:06:57'),
 (74, 'USER-6143', '114423993283', '37116f963deeb847884b81dec21972a7ae95dd14', 'STUDENT', '2024-11-24 17:21:22'),
 (81, 'USER-6162', 'LMS-029805-1471', 'e8300544e297a2cc16f8ce5700d9e959d409238c', 'TEACHER', '2024-11-24 19:38:13'),
 (73, 'USER-6346', '114499887766', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-06 15:50:17'),
@@ -348,8 +355,10 @@ INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_add
 (77, 'USER-6462', '114423232323', '39bd71ceb3a7ee0febd8fce816505355acc46eb8', 'STUDENT', '2024-11-24 18:48:44'),
 (82, 'USER-6486', 'LMS-059310-1695', '6c5bc6fb30aa22e9b6b70bf482a0f470e810d98d', 'TEACHER', '2024-11-24 22:21:53'),
 (88, 'USER-8224', 'LMS-029810-7901', '79f3e68c5909b763831a7e0b71ed38070f14e044', 'TEACHER', '2024-11-27 00:29:18'),
+(98, 'USER-8363', 'LMS-290211-8547', 'd35519a066831dc5506c8711aec94132b93bec6b', 'TEACHER', '2024-11-30 16:42:32'),
 (46, 'USER-8636', '114403203289', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-29 02:18:33'),
 (68, 'USER-9261', '114497427472', 'csi-24-040207', 'STUDENT', '2024-11-04 06:41:01'),
+(92, 'USER-9953', 'LMS-299909-8187', 'ea4022e90d8448881f63e0615316ca29770b28cb', 'TEACHER', '2024-11-28 20:08:38'),
 (45, 'USER-9986', '114483293271', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-29 02:16:11'),
 (38, 'USER-9991', '114482392392', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-24 04:47:41');
 
@@ -441,7 +450,7 @@ ALTER TABLE `school`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_num` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `user_num` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- Constraints for dumped tables

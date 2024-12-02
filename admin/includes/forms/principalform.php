@@ -12,7 +12,7 @@ if (!isset($_SESSION["registrar_id"])) {
     <div class="modal-dialog modal-lg">
         <div class="modal-content b-grey">
             <div class="modal-body">
-                <form id="principalForm" action="./includes/principal-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation " novalidate>
+                <form id="principalForm" action="./includes/principal-inc.php" method="POST" enctype="multipart/form-data" autocomplete="off" class="row g-2 needs-validation " novalidate>
                     <div class="modal-header">
                         <h5 class="modal-title text-primary">Create Account</h5>
 
@@ -85,14 +85,13 @@ if (!isset($_SESSION["registrar_id"])) {
                         <input type="text" class="form-control" name="address" required>
                     </div>
 
-
-                    <!-- <div class="col-md-12">
-                        <label for="teacherImage" class="form-label">Upload Image</label>
-                        <input type="file" class="form-control" name="teacherImage" accept="image/*" required>
+                    <div class="col-md-12">
+                        <label class="form-label">Upload Image</label>
+                        <input type="file" class="form-control" name="image" accept="image/*" required>
                         <div class="invalid-feedback">
                             Please upload a valid image file.
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="col-6">
                         <button name="submit" class="btn btn-primary w-100 mt-3 mb-2" type="submit">Save</button>
