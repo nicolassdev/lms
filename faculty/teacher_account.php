@@ -69,19 +69,30 @@ $mySQLFunction->disconnect();
                             <!-- Left side: Profile -->
                             <div class="col-md-6 col-12 text-center">
                                 <div class="profile-header" style="margin-top: 60px;">
-                                    <!-- Display the uploaded profile image -->
-                                    <?php if (!empty($teacherInfo['image'])) { ?>
-                                        <img src="../assets/Upload/<?php echo htmlspecialchars($teacherInfo['image']); ?>" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
-                                    <?php } else { ?>
-                                        <!-- Nested loop condition -->
-                                        <!-- Check if the gender if male or female the show the default image  by gender -->
-                                        <?php if ($teacherInfo['teacher_gender'] === "MALE") { ?>
-                                            <img src="../assets/Upload/default-male.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
-                                        <?php } else { ?>
-                                            <img src="../assets/Upload/default-female.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
-                                        <?php } ?>
 
-                                    <?php } ?>
+
+                                    <?php
+                                    // Define the path to the uploaded images directory
+                                    $uploadDir = "../assets/Upload/";
+
+                                    // Check if the image path exists and the file is accessible
+                                    if (!empty($teacherInfo['image']) && file_exists($uploadDir . $teacherInfo['image'])) {
+                                    ?>
+                                        <img src="<?php echo htmlspecialchars($uploadDir . $teacherInfo['image']); ?>" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                                        <?php
+                                    } else {
+                                        // Fallback to the default image based on gender
+                                        if ($teacherInfo['teacher_gender'] === "MALE") {
+                                        ?>
+                                            <img src="../assets/Upload/default-male.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <img src="../assets/Upload/default-female.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                                    <?php
+                                        }
+                                    }
+                                    ?>
 
 
                                     <h4><?php echo ucwords(strtolower($teacherFullName)); ?>

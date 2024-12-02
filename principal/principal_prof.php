@@ -129,19 +129,32 @@ $mySQLFunction->disconnect();
                 </div>
 
                 <div class="profile-header text-center mb-3">
-                    <!-- Display the uploaded profile image -->
-                    <?php if (!empty($showResult['image'])) { ?>
-                        <img src="../assets/Upload/<?php echo htmlspecialchars($showResult['image']); ?>" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
-                    <?php } else { ?>
-                        <!-- Nested loop condition -->
-                        <!-- Check if the gender if male or female the show the default image  by gender -->
-                        <?php if ($showResult['gender'] === "MALE") { ?>
-                            <img src="../assets/Upload/default-male.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
-                        <?php } else { ?>
-                            <img src="../assets/Upload/default-female.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
-                        <?php } ?>
 
-                    <?php } ?>
+                    <?php
+                    // Define the path to the uploaded images directory
+                    $uploadDir = "../assets/Upload/";
+
+                    // Check if the image path exists and the file is accessible
+                    if (!empty($showResult['image']) && file_exists($uploadDir . $showResult['image'])) {
+                    ?>
+                        <img src="<?php echo htmlspecialchars($uploadDir . $showResult['image']); ?>" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                        <?php
+                    } else {
+                        // Fallback to the default image based on gender
+                        if ($showResult['gender'] === "MALE") {
+                        ?>
+                            <img src="../assets/Upload/default-male.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                        <?php
+                        } else {
+                        ?>
+                            <img src="../assets/Upload/default-female.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                    <?php
+                        }
+                    }
+                    ?>
+
+
+
                     <h4>
                         <?php echo ucwords(strtolower($fullName)); ?>
                         <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
