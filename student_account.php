@@ -87,11 +87,11 @@ $mySQLFunction->disconnect();
                                         // Fallback to the default image based on gender
                                         if ($studentInfo['stu_gender'] === "MALE") {
                                         ?>
-                                            <img src="./assets/Upload/default-male.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                                            <img src="./assets/Upload/resources/default-male.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
                                         <?php
                                         } else {
                                         ?>
-                                            <img src="./assets/Upload/default-female.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
+                                            <img src="./assets/Upload/resources/default-female.png" alt="Profile Image" draggable="false" class="profile-img-circle mb-2">
                                     <?php
                                         }
                                     }

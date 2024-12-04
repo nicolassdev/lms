@@ -50,7 +50,7 @@ $mySQLFunction->disconnect();
                                     <th scope="col">#</th>
                                     <th scope="col">Full name</th>
                                     <th scope="col">Username</th>
-                                    <th scope="col">Generated Password</th>
+                                    <th scope="col">Password</th>
                                     <!-- <th scope="col">Role</th> -->
                                     <th scope="col">Date Added</th>
                                     <!-- colspan should be 2 -->

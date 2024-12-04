@@ -93,12 +93,25 @@ include "../includes/dbh-inc.php";
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
+
+                                                    <div style="position: relative; ">
+                                                        <img
+                                                            style="position: absolute; top: 50%; left: 55%; transform: translate(-30%, -15%); 
+                                                            width: 300px; opacity: 0.1; z-index: 1;"
+                                                            src="../assets/img/csi.webp"
+                                                            alt="LMS Logo">
+                                                    </div>
                                             <form action="./includes/Operation/updateUser.php" method="POST" class="needs-validation" novalidate onsubmit="return validatePasswords()">
                                                 <input type="hidden" name="userID" value="' . $row['user_id'] . '">
-                                                
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Full name</label>
+                                                    <input type="text" class="form-control" value="' . $row['full_name'] . '" disabled>
+                                                </div>
+
                                                 <div class="mb-3">
                                                     <label for="username" class="form-label">Username</label>
-                                                    <input type="text" class="form-control" name="username" id="username" value="' . $row['username'] . '" required>
+                                                    <input type="text" class="form-control" name="username" id="username" value="' . $row['username'] . '" disabled>
                                                     <div class="invalid-feedback">Please enter a username.</div>
                                                 </div>
                             

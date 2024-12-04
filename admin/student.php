@@ -482,8 +482,8 @@ include "../admin/includes/Forms/studentform.php";
                     text: "CSV",
                     exportOptions: {
                         columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 13)
-                            return index !== 13;
+                            // Exclude the "Action" column (assuming index 7)
+                            return index !== 7;
                         },
                     },
                 },
@@ -492,8 +492,8 @@ include "../admin/includes/Forms/studentform.php";
                     text: "Excel",
                     exportOptions: {
                         columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 13)
-                            return index !== 13;
+                            // Exclude the "Action" column (assuming index 7)
+                            return index !== 7;
                         },
                     },
                 },
@@ -502,8 +502,8 @@ include "../admin/includes/Forms/studentform.php";
                     text: "PDF",
                     exportOptions: {
                         columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 13)
-                            return index !== 13;
+                            // Exclude the "Action" column (assuming index 7)
+                            return index !== 7;
                         },
                     },
                 },
@@ -546,8 +546,8 @@ include "../admin/includes/Forms/studentform.php";
                     },
                     exportOptions: {
                         columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 13)
-                            return index !== 13;
+                            // Exclude the "Action" column (assuming index 7)
+                            return index !== 7;
                         },
                     },
                 },

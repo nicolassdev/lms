@@ -1,79 +1,77 @@
 <?php
 session_start(); // Ensure session is started
 
+// Redirect to login if registrar is not logged in
 if (!isset($_SESSION["registrar_id"])) {
-
-    header("location:../../../login.php?error=accessdenied");   //Redirect to URL login When trying to go this file
+    header("location:../../../login.php?error=accessdenied");
     exit();
-} else {
-    include "../../../includes/dbh-inc.php";
+}
 
-    try {
-        $userID = $_GET["id"];
-        // Establish the database connection
-        $mySQLFunction->connection();
+include "../../../includes/dbh-inc.php";
 
-        // Fetch the current user details
-        $userRow = $mySQLFunction->getUsers("id", $userID);
+try {
+    $userID = $_GET["id"];
 
-        // Check if the user exists
-        if (!$userRow) {
-            throw new Exception("User not found.");
+    // Establish the database connection
+    $mySQLFunction->connection();
+
+    // Fetch the current user details
+    $userRow = $mySQLFunction->getUsers("id", $userID);
+
+    // Check if the user exists
+    if (!$userRow) {
+        throw new Exception("User not found.");
+    }
+
+    if (isset($_POST["submit"])) {
+        // Sanitize and prepare input
+        $id = $_POST["userID"];
+        $username = trim($_POST["username"]);
+        $password = isset($_POST["password"]) ? trim($_POST["password"]) : null;
+        $confirmPassword = isset($_POST["confirm_password"]) ? trim($_POST["confirm_password"]) : null;
+
+        // Password validation
+        if ($password !== $confirmPassword) {
+            $_SESSION['password_error'] = "Password does not match.";
+            header("location:../../index.php?page=users");
+            exit();
         }
 
-        if (isset($_POST["submit"])) {
-            // Sanitize and prepare input
-            $id = $_POST["userID"];
-            $username = trim($_POST["username"]);
-            $password = isset($_POST["password"]) ? trim($_POST["password"]) : null;
-            $confirmPassword = isset($_POST["confirm_password"]) ? trim($_POST["confirm_password"]) : null;
-
-            // Password validation
-            if ($password !== $confirmPassword) {
-                $_SESSION['password_error'] = "Password does not match.";
-                header("location:../../index.php?page=users");
-                exit();
-            }
-
-            // Check if the new username already exists and is not the current user's username
+        // Validate and update username if it has changed and is not empty
+        if (!empty($username) && $username !== $userRow['username']) {
+            // Check for an existing user with the same username
             $existingUser = $mySQLFunction->getUsers("username", $username);
 
-            if ($existingUser && $existingUser['id'] != $id) {
-                // Username is taken and is not the current user's username
+            if ($existingUser && strval($existingUser['id']) !== strval($id)) {
+                // Username is already taken by another user
                 $_SESSION['user_taken'] = true;
                 $_SESSION["username"] = $username;
                 header("location:../../index.php?page=users");
                 exit();
-            }
-
-            // Reconnect to the database for updating the information
-            $mySQLFunction->connection();
-
-            // Update the user details
-            if ($username !== $userRow['username']) {
+            } else {
+                // Update the username
                 $mySQLFunction->updateUser("username", $username, $id);
-                // Update session username for admin
-                if ($userRow['role'] === 'ADMIN') {
-                    $_SESSION["username"] = $username; // Update admin session username
-                }
             }
-            if ($password) {
-                $mySQLFunction->updateUser("password", $mySQLFunction->encrypt($password), $id); // Encrypt and update password
-            }
-
-            // Disconnect after updating
-            $mySQLFunction->disconnect();
-
-            // Set session variable to indicate successful update
-            $_SESSION['update_user'] = true;
-            header("location:../../index.php?page=users");
-            exit();
         }
-    } catch (Exception $e) {
-        // Handle exceptions and errors
-        error_log("Error updating user details: " . $e->getMessage());
-        $_SESSION['update_error'] = "An error occurred while updating the user's details.";
-        header("location:../../error.php");
+
+        // Update the password if provided
+        if (!empty($password)) {
+            $encryptedPassword = $mySQLFunction->encrypt($password);
+            $mySQLFunction->updateUser("password", $encryptedPassword, $id);
+        }
+
+        // Disconnect from the database
+        $mySQLFunction->disconnect();
+
+        // Indicate successful update
+        $_SESSION['update_user'] = true;
+        header("location:../../index.php?page=users");
         exit();
     }
+} catch (Exception $e) {
+    // Handle exceptions and log errors
+    error_log("Error updating user details: " . $e->getMessage());
+    $_SESSION['update_error'] = "An error occurred while updating the user's details.";
+    header("location:../../error.php");
+    exit();
 }
