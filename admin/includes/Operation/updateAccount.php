@@ -45,24 +45,27 @@ if (!isset($_SESSION["registrar_id"])) {
                 exit();
             }
 
-            // Check for duplicate username
-            $existingUser = $mySQLFunction->getUsers("username", $username);
-            if ($existingUser && $existingUser['id'] != $admin_id) {
-                $_SESSION['user_taken'] = true;
-                $_SESSION["username"] = $username;
-                header("location:../../index.php?page=account");
-                exit();
+            // Check if the username has changed
+            if ($username !== $userRow['username']) {
+                // If a user with the same username exists and it's not the current username, prevent the update
+                $existingUser = $mySQLFunction->getUsers("username", $username);
+                if ($existingUser && $existingUser['id'] != $admin_id) {
+                    $_SESSION['user_taken'] = true;
+                    $_SESSION["username"] = $username;
+                    header("location:../../index.php?page=account");
+                    exit();
+                }
+                // Update the username in the database for the current user
+                $mySQLFunction->updateRecord("users", "username", $username, "id", $admin_id);
             }
 
-            // Update username if changed
-            if ($username !== $userRow['username']) {
-                $mySQLFunction->updateUser("username", $username, $admin_id);
-            }
 
             // Update the password if provided
             if ($newPassword) {
                 $newPasswordEncrypted = $mySQLFunction->encrypt($newPassword);
-                $mySQLFunction->updateUser("password", $newPasswordEncrypted, $admin_id);
+                $mySQLFunction->updateRecord("users", "password", $newPasswordEncrypted, "id", $admin_id);
+
+                // $mySQLFunction->updateUser("password", $newPasswordEncrypted, $admin_id);
             }
 
             // Disconnect and finalize the update

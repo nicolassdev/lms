@@ -48,18 +48,20 @@ if (!isset($_SESSION["teacher_id"])) {
             $mySQLFunction->connection();
 
             // Update the student details
-            $mySQLFunction->updateStudent("stu_fname", $fname, $id);
-            $mySQLFunction->updateStudent("stu_mname", $mname, $id);
-            $mySQLFunction->updateStudent("stu_lname", $lname, $id);
-            $mySQLFunction->updateStudent("stu_address", $address, $id);
-            $mySQLFunction->updateStudent("stu_contact", $contact, $id);
-            $mySQLFunction->updateStudent("stu_gender", $gender, $id);
-            $mySQLFunction->updateStudent("stu_email", $email, $id);
-            $mySQLFunction->updateStudent("stu_dob", $dob, $id);
-            $mySQLFunction->updateStudent("stu_pob", $pob, $id);
-            $mySQLFunction->updateStudent("father_name", $father, $id);
-            $mySQLFunction->updateStudent("mother_name", $mother, $id);
-            $mySQLFunction->updateStudent("parent_contact", $pcontact, $id);
+            $mySQLFunction->updateRecord("student", "stu_fname", $fname, "stu_lrn", $id);
+            $mySQLFunction->updateRecord("student", "stu_mname", $mname, "stu_lrn", $id);
+            $mySQLFunction->updateRecord("student", "stu_lname", $lname, "stu_lrn", $id);
+            $mySQLFunction->updateRecord("student", "stu_address", $address, "stu_lrn", $id);
+            $mySQLFunction->updateRecord("student", "stu_contact", $contact, "stu_lrn", $id);
+            $mySQLFunction->updateRecord("student", "stu_gender", $gender, "stu_lrn", $id);
+            $mySQLFunction->updateRecord("student", "stu_email", $email, "stu_lrn", $id);
+            $mySQLFunction->updateRecord("student", "stu_dob", $dob, "stu_lrn", $id);
+            $mySQLFunction->updateRecord("student", "stu_pob", $pob, "stu_lrn", $id);
+            $mySQLFunction->updateRecord("student", "father_name", $father, "stu_lrn", $id);
+            $mySQLFunction->updateRecord("student", "mother_name", $mother, "stu_lrn", $id);
+            $mySQLFunction->updateRecord("student", "parent_contact", $pcontact, "stu_lrn", $id);
+
+
 
 
             // Disconnect after updating

@@ -56,13 +56,13 @@ if (!isset($_SESSION["principal_id"])) {
                     exit();
                 }
                 // Update the username in the database for the current user
-                $mySQLFunction->updateUser("username", $username, $principal_id);
+                $mySQLFunction->updateRecord("users", "username", $username, "id", $principal_id);
             }
 
             // Update the password if provided
             if ($newPassword) {
                 $newPasswordEncrypted = $mySQLFunction->encrypt($newPassword);
-                $mySQLFunction->updateUser("password", $newPasswordEncrypted, $principal_id);
+                $mySQLFunction->updateRecord("users", "password", $newPasswordEncrypted, "id", $principal_id);
             }
 
             // Disconnect and finalize the update

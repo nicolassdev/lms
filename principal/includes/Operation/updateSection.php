@@ -32,6 +32,7 @@ if (!isset($_SESSION["principal_id"])) {
                 exit();
             } else {
                 // Proceed with updating the section details
+
                 $mySQLFunction->updateSection("strand_code", $strand, $sec_id);
                 $mySQLFunction->updateSection("grade_lvl", $gradelvl, $sec_id);
                 $mySQLFunction->updateSection("section_name", $section, $sec_id);

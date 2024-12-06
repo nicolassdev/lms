@@ -163,7 +163,7 @@ if (isset($_SESSION['teacher_id'])) {
                             </li>
 
                             <!-- THIS IS DROP DOWN SELECT IN SIDE BAR  -->
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link  text-white" href="#studentMenu" data-bs-toggle="collapse" aria-expanded="false" id="studentDropdown">
                                     <i class="bi bi-person me-1"></i> Student <i class="bi bi-chevron-down" style="margin-left: 68px;" id="studentIcon"></i>
                                 </a>
@@ -194,7 +194,7 @@ if (isset($_SESSION['teacher_id'])) {
                                     </li>
 
                                 </ul>
-                            </li>
+                            </li> -->
 
 
                             <li class="nav-item">

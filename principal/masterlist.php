@@ -146,13 +146,12 @@ include "../includes/dbh-inc.php";
                                                                 <div class="text-start">
                                                                     <h1 class="modal-title fs-5 text-success">Student Information</h1>
                                                                 </div>
-
-                                                                            <div class="text-end">
-                                                                            <i class="bi bi-person-vcard-fill fs-1 text-success"></i>
-                                                                                <div class="text-success fw-bold">LRN: ' . htmlspecialchars($row['stu_lrn']) . '</div>
-                                                                            </div>
+                                                                <div class="text-end">
+                                                                    <i class="bi bi-person-vcard-fill fs-1 text-success"></i>
+                                                                    <div class="text-success fw-bold">LRN: ' . htmlspecialchars($row['stu_lrn']) . '</div>
                                                                     </div>
-                                                                </div> 
+                                                                </div>
+                                                            </div>
 
 
 

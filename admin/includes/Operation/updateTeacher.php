@@ -42,14 +42,25 @@ if (!isset($_SESSION["registrar_id"])) {
             $mySQLFunction->connection();
 
             // Update the teacher details
-            $mySQLFunction->updateFaculty("teacher_fname", $fname, $id);
-            $mySQLFunction->updateFaculty("teacher_mname", $mname, $id);
-            $mySQLFunction->updateFaculty("teacher_lname", $lname, $id);
-            $mySQLFunction->updateFaculty("teacher_contact", $contact, $id);
-            $mySQLFunction->updateFaculty("teacher_gender", $gender, $id);
-            $mySQLFunction->updateFaculty("teacher_dob", $dob, $id);
-            $mySQLFunction->updateFaculty("status", $status, $id);
-            $mySQLFunction->updateFaculty("teacher_address", $address, $id);
+
+            $mySQLFunction->updateRecord("teacher", "teacher_fname", $fname, "teacher_id", $id);
+            $mySQLFunction->updateRecord("teacher", "teacher_mname", $mname, "teacher_id", $id);
+            $mySQLFunction->updateRecord("teacher", "teacher_lname", $lname, "teacher_id", $id);
+            $mySQLFunction->updateRecord("teacher", "teacher_contact", $contact, "teacher_id", $id);
+            $mySQLFunction->updateRecord("teacher", "teacher_gender", $gender, "teacher_id", $id);
+            $mySQLFunction->updateRecord("teacher", "teacher_dob", $dob, "teacher_id", $id);
+            $mySQLFunction->updateRecord("teacher", "status", $status, "teacher_id", $id);
+            $mySQLFunction->updateRecord("teacher", "teacher_address", $address, "teacher_id", $id);
+
+
+            // $mySQLFunction->updateFaculty("teacher_fname", $fname, $id);
+            // $mySQLFunction->updateFaculty("teacher_mname", $mname, $id);
+            // $mySQLFunction->updateFaculty("teacher_lname", $lname, $id);
+            // $mySQLFunction->updateFaculty("teacher_contact", $contact, $id);
+            // $mySQLFunction->updateFaculty("teacher_gender", $gender, $id);
+            // $mySQLFunction->updateFaculty("teacher_dob", $dob, $id);
+            // $mySQLFunction->updateFaculty("status", $status, $id);
+            // $mySQLFunction->updateFaculty("teacher_address", $address, $id);
 
             // Disconnect after updating
             $mySQLFunction->disconnect();

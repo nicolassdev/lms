@@ -44,8 +44,8 @@ include "../admin/includes/Forms/strandform.php";
       <thead class="table-dark">
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Strand name</th>
-          <th scope="col">Description</th>
+          <th scope="col">Strand ACRO</th>
+          <th scope="col">Strand name </th>
           <th scope="col" class="text-center" colspan="2">Action</th> <!-- colspan should be 2 -->
         </tr>
       </thead>
@@ -67,19 +67,88 @@ include "../admin/includes/Forms/strandform.php";
             echo '<td>' . $count . '</td>';
             // echo '<td>' . $row["strand_code"] . '</td>';
             echo '<td>' . $row["strand_name"] . '</td>';
-            echo '<td>' . $row["strand_desc"] . '</td>';
+            echo '<td>' . ucwords(strtolower($row["strand_desc"])) . '</td>';
+
+            // This is the delete button i will uncomment this , if needed just uncomment this 
+            // <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_strand' . $row['strand_code'] . '">
+            //     <i class="bi bi-trash"></i>Delete
+            // </button>
             echo '
  
                       <td class="text-center">
-                          <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_strand' . $row['strand_code'] . '">
-                              <i class="bi bi-trash"></i>Delete
-                          </button>
+                        <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#edit_strand' . $row['strand_code'] . '">
+                          <i class="bi bi-pencil-square me-1"></i>Edit
+                        </button>
                       </td>
                     ';
             echo '</tr>';
 
-            // Modal for deleting strand
 
+            // todo Modal for editing strand
+            echo '
+            <div class="modal fade" id="edit_strand' . htmlspecialchars($row['strand_code']) . '" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+
+                        <div class="modal-header bg-success text-white">
+                            <div class="d-flex align-items-center justify-content-between w-100">
+                              <div class="text-start">
+                                <h1 class="modal-title fs-5 text-white">Edit Strand details</h1>
+                              </div>
+                            </div>
+                            <div class="text-end">
+                               <i class="bi bi-pencil-square fs-3 ms-2"></i>
+                            </div>                           
+                        </div>
+
+
+                        <div class="modal-body p-4">
+                            <form action="./includes/Operation/updateStrand.php" method="POST" class="row g-3 needs-validation" novalidate id="editStrand' . htmlspecialchars($row['strand_code']) . '">
+                                <!-- Use hidden input -->
+                                <input type="hidden" name="strandID" value="' . htmlspecialchars($row['strand_code']) . '">
+
+ 
+                                <!-- Section Name -->
+                                <div class="col-md-12 mb-3">
+                                    <label class="form-label fw-bold">Strand ACRO</label>
+                                    <input type="text" class="form-control" name="strand_acro" value="' . htmlspecialchars($row['strand_name']) . '" required>
+                                    <div class="invalid-feedback">
+                                        Please select a section name.
+                                    </div>
+                                </div>      
+
+                             <div class="col-md-12 mb-3">
+                                <label class="form-label fw-bold">Strand name</label>
+                                <input text="text" class="form-control" name="strand_name" value="' . htmlspecialchars($row['strand_desc']) . '"  required>                                                                                             
+                                <div class="invalid-feedback">
+                                    Please select an adviser.
+                            </div>
+
+                                <!-- Buttons -->
+                                <div class="d-flex justify-content-between gap-2 mt-3">
+                                    <button name="submit" class="btn btn-success w-100 mt-3" type="submit">Update</button>
+                                    <button type="button" class="btn btn-outline-secondary w-100 mt-3" data-bs-dismiss="modal" aria-label="Close" onclick="resetStrand(\'' . htmlspecialchars($row['strand_code']) . '\')">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <script>
+                function resetStrand(id) {
+                    var form = document.getElementById("editStrand" + id);
+                    if (form) {
+                        form.reset(); // Clears the form fields
+                        form.classList.remove("was-validated"); // Removes the validation styling
+                    }
+                }
+            </script>
+            ';
+
+
+
+            // todo Modal for deleting strand
             echo '
             <div class="modal fade" id="del_strand' . $row['strand_code'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-md">

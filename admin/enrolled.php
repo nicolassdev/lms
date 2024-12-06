@@ -103,6 +103,15 @@ include "../admin/includes/Forms/enrollmentform.php";
                                 if (!empty($result)) {
                                     $count = 0;
                                     foreach ($result as $row) {
+                                        // Check if 'requirements_submit' exists and is not empty
+                                        $submittedRequirements = isset($row['requirements_submit']) && !empty($row['requirements_submit'])
+                                            ? explode(', ', $row['requirements_submit'])
+                                            : [];
+                                        // Determine the background color based on enrollment status
+                                        $statusStyle = $row["enroll_status"] !== "Enrolled"
+                                            ? 'background-color: red; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;'
+                                            : 'background-color: green; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;';
+
                                         echo '<tr>';
                                         echo '<td>' . ucwords(strtolower($row["student"])) . '</td>';
                                         echo '<td>' . $row["strand_name"] . '</td>';
@@ -111,7 +120,7 @@ include "../admin/includes/Forms/enrollmentform.php";
                                         echo '<td>' . $row["enroll_semester"] . '</td>';
                                         echo '<td>' . $row["sy"] . '</td>';
                                         echo '<td>' . $row["date_enroll"] . '</td>';
-                                        echo '<td>' . ucwords(strtolower($row["enroll_status"])) . '</td>';
+                                        echo '<td><span style="' . $statusStyle . '">' . ucwords(strtolower($row["enroll_status"])) . '</span></td>';
                                         // THIS IS THE DELETE BUTTON I WILL LEAVE IT AS COMMENT IF NEEDED JUST UNCOMMENT 
 
                                         //     <button class="btn btn-sm btn-outline-danger mt-2" data-bs-toggle="modal" data-bs-target="#del_enrolled' . urlencode($row['stu_lrn']) . '">
@@ -147,7 +156,7 @@ include "../admin/includes/Forms/enrollmentform.php";
                                                                 
                                                                 <!-- Student Name -->
                                                                 <div class="col-md-12 mb-3">
-                                                                    <label class="form-label fw-bold ">Student Name</label>
+                                                                    <label class="form-label fw-semibold fs-6">Student Name</label>
                                                                     <input type="text" class="form-control" name="student" value="' . htmlspecialchars($row['student']) . '" disabled>
                                                                     <div class="invalid-feedback">
                                                                         Please enter a student name.
@@ -156,17 +165,45 @@ include "../admin/includes/Forms/enrollmentform.php";
 
                                                                 <!-- Status -->
                                                                 <div class="col-md-12 mb-3">
-                                                                    <label class="form-label fw-bold">Status</label>
-                                                                    <select class="form-select" name="status" required>  
-                                                                        <option value="Enrolled"' . ($row['enroll_status'] == 'Enrolled' ? ' selected' : '') . '>Enrolled</option>
-                                                                        <option value="Not Enrolled"' . ($row['enroll_status'] == 'Not Enrolled' ? ' selected' : '') . '>Not Enrolled</option>
-                                                                        <option value="Pending"' . ($row['enroll_status'] == 'Pending' ? ' selected' : '') . '>Pending</option>
-                                                                        <option value="Dropped"' . ($row['enroll_status'] == 'Dropped' ? ' selected' : '') . '>Dropped</option>
-                                                                    </select>
+                                                                    <label class="form-label fw-semibold fs-6">Status</label>
+                                                                     <input type="text" class="form-control" name="status" value="' . htmlspecialchars($row['enroll_status']) . '" disabled>
                                                                     <div class="invalid-feedback">
                                                                         Please select a status.
                                                                     </div>
                                                                 </div>
+
+
+                                                                <!-- Requirement submitted -->
+                                                                <div class="col-md-12 mb-3">
+                                                                    <label class="form-label fw-semibold fs-6">Requirement Submitted</label>
+                                                                    <div class="invalid-feedback" id="checkbox-feedback">
+                                                                        Please select at least one requirement.
+                                                                    </div>
+                                                                    <div class="d-flex flex-wrap gap-3 p-3 border rounded bg-light fs-6">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="requirement[]" value="SF9" ' . (in_array("SF9", $submittedRequirements) ? "checked" : "") . '>
+                                                                            <label class="form-check-label">SF9</label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="requirement[]" value="SF10" ' . (in_array("SF10", $submittedRequirements) ? "checked" : "") . '>
+                                                                            <label class="form-check-label">SF10</label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="requirement[]" value="PSA" ' . (in_array("PSA", $submittedRequirements) ? "checked" : "") . '>
+                                                                            <label class="form-check-label">PSA Birth Certificate</label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="requirement[]" value="LCR" ' . (in_array("LCR", $submittedRequirements) ? "checked" : "") . '>
+                                                                            <label class="form-check-label">LCR Birth Certificate</label>
+                                                                        </div>
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="checkbox" name="requirement[]" value="GMCC" ' . (in_array("GMCC", $submittedRequirements) ? "checked" : "") . '>
+                                                                            <label class="form-check-label">GMCC</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
 
                                                                 <!-- Buttons -->
                                                                 <div class="d-flex justify-content-between mt-4 gap-2">

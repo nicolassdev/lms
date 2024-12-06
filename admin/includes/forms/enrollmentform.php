@@ -183,8 +183,8 @@ $mySQLFunction->disconnect();
                     <div class="col-md-12 mb-3">
                         <input class="ms-3" type="checkbox" name="requirement[]" value="SF9"> SF9
                         <input class="ms-3" type="checkbox" name="requirement[]" value="SF10"> SF10
-                        <input class="ms-3" type="checkbox" name="requirement[]" value="PSA Birth Certificate"> PSA Birth Certificate
-                        <input class="ms-3" type="checkbox" name="requirement[]" value="LCR Birth Certificate"> LCR Birth Certificate
+                        <input class="ms-3" type="checkbox" name="requirement[]" value="PSA"> PSA Birth Certificate
+                        <input class="ms-3" type="checkbox" name="requirement[]" value="LCR"> LCR Birth Certificate
                         <input class="ms-3" type="checkbox" name="requirement[]" value="GMCC"> GMCC
                     </div>
                     <div class="invalid-feedback" id="checkbox-feedback">

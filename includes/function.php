@@ -715,6 +715,7 @@ class myDataBase
     //Check active STATUS in school year
     public function checkSyStatus($table)
     {
+        $activeSchoolYear = [];
         // Prepare the SQL query to get the active status and the school_year from the sy table
         $sql = "SELECT `school_year` 
                 FROM `$table`
@@ -765,6 +766,19 @@ class myDataBase
         }
     }
 
+    public function getActiveSemester()
+    {
+        // Query to get the active semester
+        $sql = "SELECT semester_name FROM semester WHERE status = 'Active' LIMIT 1";
+        $result = $this->con->query($sql);
+
+        if ($result && $row = $result->fetch_assoc()) {
+            return $row['semester_name'];  // Return the semester name if found
+        }
+
+        // Return null if no active semester is found
+        return null;
+    }
 
 
     // public function checkFacultyExist($firstname, $lastname, $excludeID)
@@ -1360,7 +1374,8 @@ class myDataBase
                 `enroll`.`current_school`,
                 `enroll`.`school_id`,
                 `enroll`.`school_address`,
-                `enroll`.`school_type`
+                `enroll`.`school_type`,
+                `enroll`.`requirements_submit`
             FROM `enroll`
             INNER JOIN `student` ON `enroll`.`stu_lrn` = `student`.`stu_lrn`
             INNER JOIN `section` ON `enroll`.`section_code` = `section`.`section_code`
@@ -1387,7 +1402,8 @@ class myDataBase
                 `enroll`.`current_school`,
                 `enroll`.`school_id`,
                 `enroll`.`school_address`,
-                `enroll`.`school_type`
+                `enroll`.`school_type`,
+                `enroll`.`requirements_submit`
             FROM `enroll`
             INNER JOIN `student` ON `enroll`.`stu_lrn` = `student`.`stu_lrn`
             INNER JOIN `section` ON `enroll`.`section_code` = `section`.`section_code`
@@ -1611,13 +1627,47 @@ class myDataBase
 
 
     // UPDATE TEACHER
-    public function updateFaculty($row, $value, $where)
+    // public function updateFaculty($row, $value, $where)
+    // {
+    //     $value = mysqli_real_escape_string($this->con, $value);
+    //     if (is_string($value)) {
+    //         $value = "'" . $value . "'";
+    //     }
+    //     $sql = "UPDATE `teacher` SET `$row` =  $value WHERE `teacher_id` = '$where'";
+    //     $result = $this->con->query($sql);
+
+    //     if ($result) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+    // // UPDATE STUDENT
+    // public function updateStudent($row, $value, $where)
+    // {
+    //     $value = mysqli_real_escape_string($this->con, $value);
+    //     if (is_string($value)) {
+    //         $value = "'" . $value . "'";
+    //     }
+    //     $sql = "UPDATE `student` SET `$row` =  $value WHERE `stu_lrn` = '$where'";
+    //     $result = $this->con->query($sql);
+
+    //     if ($result) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+    //UPDATE SUBJECT
+    public function updateSubject($row, $value, $where)
     {
         $value = mysqli_real_escape_string($this->con, $value);
         if (is_string($value)) {
             $value = "'" . $value . "'";
         }
-        $sql = "UPDATE `teacher` SET `$row` =  $value WHERE `teacher_id` = '$where'";
+        $sql = "UPDATE `subject` SET `$row` =  $value WHERE `sub_code` = '$where'";
         $result = $this->con->query($sql);
 
         if ($result) {
@@ -1627,14 +1677,14 @@ class myDataBase
         }
     }
 
-    // UPDATE STUDENT
-    public function updateStudent($row, $value, $where)
+    //UPDATE ENROLLMENT
+    public function updateEnrolled($row, $value, $where)
     {
         $value = mysqli_real_escape_string($this->con, $value);
         if (is_string($value)) {
             $value = "'" . $value . "'";
         }
-        $sql = "UPDATE `student` SET `$row` =  $value WHERE `stu_lrn` = '$where'";
+        $sql = "UPDATE `enroll` SET `$row` =  $value WHERE `stu_lrn` = '$where'";
         $result = $this->con->query($sql);
 
         if ($result) {
@@ -1645,7 +1695,44 @@ class myDataBase
     }
 
 
-    //UPDATE SECTION
+
+    // Generic Update Function USERS | ENROLLMENT | STUDENT | TEACHER | SUBJECT
+    public function updateRecord($table, $row, $value, $whereColumn, $whereValue = null)
+    {
+        // Sanitize the value
+        $value = mysqli_real_escape_string($this->con, $value);
+
+        // Add quotes for string values
+        if (is_string($value)) {
+            $value = "'" . $value . "'";
+        }
+
+        // If multiple conditions are passed as an array
+        if (is_array($whereColumn)) {
+            $whereClause = [];
+            foreach ($whereColumn as $column => $columnValue) {
+                // Sanitize each column value
+                $columnValue = mysqli_real_escape_string($this->con, $columnValue);
+                $whereClause[] = "`$column` = '$columnValue'";
+            }
+            $whereClauseString = implode(' AND ', $whereClause);
+        } else {
+            // Single condition case
+            $whereColumn = mysqli_real_escape_string($this->con, $whereColumn);
+            $whereValue = mysqli_real_escape_string($this->con, $whereValue);
+            $whereClauseString = "`$whereColumn` = '$whereValue'";
+        }
+
+        // Construct the query dynamically
+        $sql = "UPDATE `$table` SET `$row` = $value WHERE $whereClauseString";
+        $result = $this->con->query($sql);
+
+        // Return true on success, false on failure
+        return $result ? true : false;
+    }
+
+
+
     // UPDATE SECTION
     public function updateSection($row, $value, $where)
     {
@@ -1673,48 +1760,6 @@ class myDataBase
 
         return $result;
     }
-
-
-
-
-
-
-
-    //UPDATE SUBJECT
-    public function updateSubject($row, $value, $where)
-    {
-        $value = mysqli_real_escape_string($this->con, $value);
-        if (is_string($value)) {
-            $value = "'" . $value . "'";
-        }
-        $sql = "UPDATE `subject` SET `$row` =  $value WHERE `sub_code` = '$where'";
-        $result = $this->con->query($sql);
-
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    //UPDATE ENROLLMENT
-    public function updateEnrolled($row, $value, $where)
-    {
-        $value = mysqli_real_escape_string($this->con, $value);
-        if (is_string($value)) {
-            $value = "'" . $value . "'";
-        }
-        $sql = "UPDATE `enroll` SET `$row` =  $value WHERE `stu_lrn` = '$where'";
-        $result = $this->con->query($sql);
-
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 
 
 

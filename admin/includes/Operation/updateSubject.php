@@ -29,10 +29,17 @@ if (!isset($_SESSION["registrar_id"])) {
                 $mySQLFunction->connection();
 
                 // Update the subject details
-                $mySQLFunction->updateSubject("sub_title", $sname, $sub_id);
-                $mySQLFunction->updateSubject("sub_type", $stype, $sub_id);
-                $mySQLFunction->updateSubject("sub_time", $stime, $sub_id);
-                $mySQLFunction->updateSubject("sub_semester", $semester, $sub_id);
+                $mySQLFunction->updateRecord("subject", "sub_title", $sname, "sub_code", $sub_id);
+                $mySQLFunction->updateRecord("subject", "sub_type", $stype, "sub_code", $sub_id);
+                $mySQLFunction->updateRecord("subject", "sub_time", $stime, "sub_code", $sub_id);
+                $mySQLFunction->updateRecord("subject", "sub_semester", $semester, "sub_code", $sub_id);
+
+
+
+                // $mySQLFunction->updateSubject("sub_title", $sname, $sub_id);
+                // $mySQLFunction->updateSubject("sub_type", $stype, $sub_id);
+                // $mySQLFunction->updateSubject("sub_time", $stime, $sub_id);
+                // $mySQLFunction->updateSubject("sub_semester", $semester, $sub_id);
 
                 // Disconnect after updating
                 $mySQLFunction->disconnect();
