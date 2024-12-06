@@ -57,19 +57,14 @@ if (!isset($_SESSION["stu_lrn"])) {
                     exit();
                 }
                 // Update the username in the database for the current user
-                $mySQLFunction->updateUser("username", $username, $studentid);
+                $mySQLFunction->updateRecord("users", "username", $username, "id", $studentid);
             }
 
-
-            // Update username if changed
-            if ($username !== $userRow['username']) {
-                $mySQLFunction->updateUser("username", $username, $studentid);
-            }
 
             // Update the password if provided
             if ($newPassword) {
                 $newPasswordEncrypted = $mySQLFunction->encrypt($newPassword);
-                $mySQLFunction->updateUser("password", $newPasswordEncrypted, $studentid);
+                $mySQLFunction->updateRecord("users", "password", $newPasswordEncrypted, "id", $studentid);
             }
 
             // Disconnect and finalize the update

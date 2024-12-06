@@ -66,7 +66,7 @@ try {
     if ($existingTeacher) {
         // If the same firstname and lastname exist and the ID does not match, prevent update
         $_SESSION['teacherupdate_error'] = "Teacher Information with the same first and last name already exists.";
-        header("location:../../index.php?page=teacher");
+        header("location:../index.php?page=teacher");
         exit();
     }
 
@@ -85,12 +85,14 @@ try {
 
     // Insert data into TEACHER table
     $insertTeacherSql = "
-        INSERT INTO TEACHER (teacher_id, teacher_fname, teacher_mname, teacher_lname, teacher_contact, teacher_gender, teacher_dob, status, teacher_address, id)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO TEACHER (teacher_id, teacher_fname, teacher_mname, teacher_lname, teacher_contact, teacher_gender, teacher_dob, status, teacher_address, image, id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ";
     $stmt = $mySQLFunction->con->prepare($insertTeacherSql);
+    $imageValue = null;
+
     $stmt->bind_param(
-        "ssssssssss",
+        "sssssssssss",
         $teacherID,
         $fname,
         strtoupper(trim($_POST["middlename"] ?? null)),
@@ -100,6 +102,7 @@ try {
         $dob,
         $status,
         $address,
+        $imageValue,
         $uid
     );
     $stmt->execute();

@@ -86,7 +86,11 @@ if (empty($_SESSION['stu_lrn'])) {
             $mySQLFunction->connection();
 
             // Update student information in the database
-            $mySQLFunction->updateTeacherAndStudentInfo('STUDENT', $store, 'stu_lrn', $studentID);
+            foreach ($store as $column => $value) {
+                if ($value !== null) { // Only update non-null values
+                    $mySQLFunction->updateRecord("student", $column, $value, "stu_lrn", $studentID);
+                }
+            }
 
             // Set session variable for successful update
             $_SESSION['update_student'] = true;

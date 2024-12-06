@@ -83,8 +83,10 @@ if (!isset($_POST["submit"])) {
         $mySQLFunction->insert("USERS", $credentialColumns, $credentialValues);
 
         // Insert data into TEACHER table
-        $studentColumns = ['stu_lrn', 'stu_fname', 'stu_mname', 'stu_lname', 'stu_address', 'stu_contact', 'stu_gender', 'stu_email', 'stu_dob', 'stu_pob', 'father_name', 'mother_name', 'parent_contact', 'id'];
-        $studentValues = [$lrnID, $fname, isset($_POST["mname"]) ? strtoupper(trim($_POST["mname"])) : null, $lname, $address, $scontact, $gender, $email, $dob, $pob, $father, $mother, $pcontact, $uid];
+        $studentColumns = ['stu_lrn', 'stu_fname', 'stu_mname', 'stu_lname', 'stu_address', 'stu_contact', 'stu_gender', 'stu_email', 'stu_dob', 'stu_pob', 'father_name', 'mother_name', 'parent_contact', 'image', 'id'];
+
+        $studentValues = [$lrnID, $fname, isset($_POST["mname"]) ? strtoupper(trim($_POST["mname"])) : null, $lname, $address, $scontact, $gender, $email, $dob, $pob, $father, $mother, $pcontact, null, $uid];
+
         $mySQLFunction->insert("STUDENT", $studentColumns, $studentValues);
 
         // Set success session variable and redirect

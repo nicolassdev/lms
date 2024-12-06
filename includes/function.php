@@ -384,37 +384,37 @@ class myDataBase
     }
 
     //UPDATE STUDENT AND TEACHER INFORMATION
-    public function updateTeacherAndStudentInfo($table, $data, $idColumn, $id)
-    {
-        // Validate and sanitize input data
-        $setClause = [];
-        foreach ($data as $column => $value) {
-            $escapedValue = mysqli_real_escape_string($this->con, $value);
-            $setClause[] = "`$column` = '$escapedValue'";
-        }
+    // public function updateTeacherAndStudentInfo($table, $data, $idColumn, $id)
+    // {
+    //     // Validate and sanitize input data
+    //     $setClause = [];
+    //     foreach ($data as $column => $value) {
+    //         $escapedValue = mysqli_real_escape_string($this->con, $value);
+    //         $setClause[] = "`$column` = '$escapedValue'";
+    //     }
 
-        $setString = implode(", ", $setClause);
+    //     $setString = implode(", ", $setClause);
 
-        // Construct the SQL query using the table and column names dynamically
-        $sql = "UPDATE `$table` SET $setString WHERE `$idColumn` = ?";
+    //     // Construct the SQL query using the table and column names dynamically
+    //     $sql = "UPDATE `$table` SET $setString WHERE `$idColumn` = ?";
 
-        $stmt = $this->con->prepare($sql);
-        if (!$stmt) {
-            throw new Exception("Query preparation failed: " . $this->con->error);
-        }
+    //     $stmt = $this->con->prepare($sql);
+    //     if (!$stmt) {
+    //         throw new Exception("Query preparation failed: " . $this->con->error);
+    //     }
 
-        // Bind the ID parameter dynamically (could be student ID, teacher ID, etc.)
-        $stmt->bind_param("s", $id);  // Assuming the ID is a string. If it's an integer, change to "i"
-        $stmt->execute();
+    //     // Bind the ID parameter dynamically (could be student ID, teacher ID, etc.)
+    //     $stmt->bind_param("s", $id);  // Assuming the ID is a string. If it's an integer, change to "i"
+    //     $stmt->execute();
 
-        // Check if any records were updated
-        if ($stmt->affected_rows === 0) {
-            throw new Exception("No records updated. Check if the ID is valid.");
-        }
+    //     // Check if any records were updated
+    //     if ($stmt->affected_rows === 0) {
+    //         throw new Exception("No records updated. Check if the ID is valid.");
+    //     }
 
-        $stmt->close();
-        return true;
-    }
+    //     $stmt->close();
+    //     return true;
+    // }
 
 
 
@@ -536,7 +536,7 @@ class myDataBase
         FROM `users` u
         JOIN `student` s ON u.username = s.stu_lrn
         WHERE u.role = ? 
-        ORDER BY u.id
+        ORDER BY s.stu_lrn DESC
     ");
         $stmt->bind_param('s', $role); // 's' denotes the type (string)
         $stmt->execute();
@@ -556,7 +556,7 @@ class myDataBase
         FROM `users` u
         JOIN `teacher` t ON u.id = t.id
         WHERE u.role = ?
-        ORDER BY u.id
+        ORDER BY t.teacher_id DESC
         ");
         $stmt->bind_param('s', $role); // 's' denotes the type (string)
         $stmt->execute();
@@ -1247,43 +1247,7 @@ class myDataBase
 
 
 
-
-
     //GET LIST OF SUBJECT
-    // public function getSubject($row = null, $value = null)
-    // {
-    //     if ($row != null && $value != null) {
-    //         $sql = "SELECT `sub_code`,
-    //         `sub_title`, `sub_type`, `sub_time`,
-    //         `sub_semester`, `strand_name`, `subject.strand_code`,
-    //         `subject.teacher_id`, 
-    //         CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS teacher 
-    //         FROM `subject`
-    //         LEFT JOIN `strand`
-    //         ON subject.strand_code = strand.strand_code
-    //         LEFT JOIN `teacher`
-    //         ON subject.teacher_id = teacher.teacher_id
-    //         WHERE subject.$row = '$value'";
-
-    //         $stored = ($this->con->query($sql))->fetch_assoc();
-
-    //         return $stored;
-    //     } else {
-    //         $sql = "SELECT `sub_code`, 
-    //         `sub_title` , `sub_type` , `sub_time`,
-    //         `sub_semester` , `strand_name` as strand,
-    //         CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS teacher
-    //         FROM  `subject`
-    //         LEFT JOIN `strand`
-    //         ON subject.strand_code = strand.strand_code
-    //         LEFT JOIN `teacher`
-    //         ON subject.teacher_id = teacher.teacher_id
-    //         ORDER BY subject.sub_title";
-    //         $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
-
-    //         return $stored;
-    //     }
-    // }
     public function getSubject($row = null, $value = null)
     {
         if ($row != null && $value != null) {
@@ -1448,7 +1412,7 @@ class myDataBase
             return $stored;
         } else {
 
-            $sql = "SELECT * FROM `student` ORDER BY `stu_fname`";
+            $sql = "SELECT * FROM `student` ORDER BY `stu_lname` ASC";
 
             $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
 
@@ -1626,39 +1590,7 @@ class myDataBase
     }
 
 
-    // UPDATE TEACHER
-    // public function updateFaculty($row, $value, $where)
-    // {
-    //     $value = mysqli_real_escape_string($this->con, $value);
-    //     if (is_string($value)) {
-    //         $value = "'" . $value . "'";
-    //     }
-    //     $sql = "UPDATE `teacher` SET `$row` =  $value WHERE `teacher_id` = '$where'";
-    //     $result = $this->con->query($sql);
 
-    //     if ($result) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
-    // // UPDATE STUDENT
-    // public function updateStudent($row, $value, $where)
-    // {
-    //     $value = mysqli_real_escape_string($this->con, $value);
-    //     if (is_string($value)) {
-    //         $value = "'" . $value . "'";
-    //     }
-    //     $sql = "UPDATE `student` SET `$row` =  $value WHERE `stu_lrn` = '$where'";
-    //     $result = $this->con->query($sql);
-
-    //     if ($result) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
 
     //UPDATE SUBJECT
     public function updateSubject($row, $value, $where)

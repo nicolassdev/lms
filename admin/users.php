@@ -105,7 +105,7 @@ include "../includes/dbh-inc.php";
                                                 <input type="hidden" name="userID" value="' . $row['user_id'] . '">
 
                                                 <div class="mb-3">
-                                                    <label class="form-label">Full name</label>
+                                                    <label class="form-label"> ' . ($row['role'] == 'TEACHER' ? 'Teacher' : ($row['role'] == 'PRINCIPAL' ? 'Principal' : 'Student')) . ' Full name</label>
                                                     <input type="text" class="form-control" value="' . $row['full_name'] . '" disabled>
                                                 </div>
 

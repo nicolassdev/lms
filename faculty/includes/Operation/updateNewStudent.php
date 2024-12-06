@@ -68,7 +68,7 @@ if (!isset($_SESSION["teacher_id"])) {
             $mySQLFunction->disconnect();
 
             // Set session variable to indicate successful update
-            $_SESSION['update_student'] = true;
+            $_SESSION['success'] = "Student has been updated successfully.";
             header("location:../../index.php?page=new_student");
             exit();
         }

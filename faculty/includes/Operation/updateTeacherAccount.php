@@ -27,7 +27,7 @@ if (!isset($_SESSION["teacher_id"])) {
 
         // Verify the old password
         if ($oldPasswordEncrypted !== $userRow['password']) {
-            $_SESSION['password_error'] = "Incorrect old password. Please try again.";
+            $_SESSION['error'] = "Incorrect old password. Please try again.";
             header("location:../../index.php?page=teacher_account");
             exit();
         }
@@ -40,7 +40,7 @@ if (!isset($_SESSION["teacher_id"])) {
 
             // Confirm password validation
             if ($newPassword !== $confirmPassword) {
-                $_SESSION['password_error'] = "Passwords do not match. Please try again.";
+                $_SESSION['error'] = "Passwords do not match. Please try again.";
                 header("location:../../index.php?page=teacher_account");
                 exit();
             }
@@ -51,31 +51,25 @@ if (!isset($_SESSION["teacher_id"])) {
                 // If a user with the same username exists and it's not the current username, prevent the update
                 $existingUser = $mySQLFunction->getUsers("username", $username);
                 if ($existingUser && $existingUser['id'] != $teacher_id) {
-                    $_SESSION['user_taken'] = true;
+                    $_SESSION['error'] = "Username is already taken. Please input another one.";
                     $_SESSION["username"] = $username;
                     header("location:../../index.php?page=teacher_account");
                     exit();
                 }
                 // Update the username in the database for the current username
-                $mySQLFunction->updateUser("username", $username, $teacher_id);
+                $mySQLFunction->updateRecord("users", "username", $username, "id", $teacher_id);
             }
 
-
-
-            // Update username if changed
-            if ($username !== $userRow['username']) {
-                $mySQLFunction->updateUser("username", $username, $teacher_id);
-            }
 
             // Update the password if provided
             if ($newPassword) {
                 $newPasswordEncrypted = $mySQLFunction->encrypt($newPassword);
-                $mySQLFunction->updateUser("password", $newPasswordEncrypted, $teacher_id);
+                $mySQLFunction->updateRecord("users", "password", $newPasswordEncrypted, "id", $teacher_id);
             }
 
             // Disconnect and finalize the update
             $mySQLFunction->disconnect();
-            $_SESSION['update_user'] = true;
+            $_SESSION['success'] = "Account has been updated successfully.";
             header("location:../../index.php?page=teacher_account");
             exit();
         }

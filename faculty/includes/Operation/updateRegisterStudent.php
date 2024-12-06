@@ -30,7 +30,7 @@ if (!isset($_SESSION["teacher_id"])) {
             $mySQLFunction->disconnect();
 
             // Set session variable to indicate successful update
-            $_SESSION['update_enroll'] = true;
+            $_SESSION['success'] = "Enrollment has been updated successfully.";
             header("location:../../index.php?page=register_student");
             exit();
         }

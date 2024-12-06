@@ -297,7 +297,7 @@ if (isset($_SESSION['error_student']) && $_SESSION['error_student'] == true) {
                         <div class="text-danger">
                             <i class="bbi bi-exclamation-circle fs-1"></i><br><br>
                         </div>
-                        <p class="mb-4"> Username or Student Details have been already taken.</p>
+                        <p class="mb-4">Oops! Something went wrong. Please try again later.</p>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5 ">
                         <button class="btn btn-danger me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>

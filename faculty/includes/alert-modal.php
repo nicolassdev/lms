@@ -1,31 +1,5 @@
 <?php
 
-//UPDATE faculty MODAL
-if (isset($_SESSION['update_faculty']) && $_SESSION['update_faculty']) {
-    echo '
-        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-sm">
-                <div class="modal-content">
-                    <div class="modal-body text-center mt-5">
-                        <div class="text-success">
-                            <i class="bi bi-check-circle fs-1 "></i><br><br>
-                        </div>
-                        <p class="mb-4">Teacher Information has been updated successfully.</p>
-                    </div>
-                    <div class="d-flex justify-content-center mt-3 mb-5 ">
-                        <button class="btn btn-success me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            var successModal = new bootstrap.Modal(document.getElementById("successModal"));
-            successModal.show();
-        </script>';
-    // Unset session variable to prevent modal from showing again on page refresh
-    unset($_SESSION['update_faculty']);
-}
 
 
 
@@ -56,34 +30,6 @@ if (isset($_SESSION['isnot_update']) && $_SESSION['isnot_update']) {
 }
 
 
-//INSERT STUDENT MODAL
-if (isset($_SESSION['insert_student']) && $_SESSION['insert_student'] == true) {
-    echo ' 
-            <div class="modal fade" id="insertModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-sm">
-                    <div class="modal-content">
-                    <div class="modal-body text-center mt-5">
-                        <div class="text-success">
-                        <i class="bi bi-check-circle fs-1 "></i><br><br>
-                        </div>
-                        <p class="mb-4"> Student has been added successfully.</p>
-                    </div>
-                    <div class="d-flex justify-content-center mt-3 mb-5 ">
-                        <button class="btn btn-success me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
-                    </div>
-                </div>
-            </div>
-            </div>
-            <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var insertModal = new bootstrap.Modal(document.getElementById("insertModal"));
-                insertModal.show();
-            });
-          </script>";
-    ';
-    unset($_SESSION['insert_student']); // Unset the session variable
-}
-
 //INSERT ERROR STUDENT MODAL
 if (isset($_SESSION['error_student']) && $_SESSION['error_student'] == true) {
     echo '
@@ -111,32 +57,6 @@ if (isset($_SESSION['error_student']) && $_SESSION['error_student'] == true) {
             });
         </script>';
     unset($_SESSION['error_student']); // Unset the session variable
-}
-//UPDATE STUDENT MODAL
-if (isset($_SESSION['update_student']) && $_SESSION['update_student'] == true) {
-    echo '
-        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-sm">
-                <div class="modal-content">
-                    <div class="modal-body text-center mt-5">
-                        <div class="text-success">
-                            <i class="bi bi-check-circle fs-1 "></i><br><br>
-                        </div>
-                        <p class="mb-4">Student has been updated successfully.</p>
-                    </div>
-                    <div class="d-flex justify-content-center mt-3 mb-5 ">
-                        <button class="btn btn-success me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            var successModal = new bootstrap.Modal(document.getElementById("successModal"));
-            successModal.show();
-        </script>';
-    // Unset session variable to prevent modal from showing again on page refresh
-    unset($_SESSION['update_student']);
 }
 
 //INSERT ENROLLED MODAL
@@ -197,37 +117,10 @@ if (isset($_SESSION['error_enrolled']) && $_SESSION['error_enrolled'] == true) {
     unset($_SESSION['error_enrolled']); // Unset the session variable
 }
 
-//UPDATE ENROLL
-if (isset($_SESSION['update_enroll']) && $_SESSION['update_enroll'] == true) {
-    echo '
-        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-sm">
-                <div class="modal-content">
-                    <div class="modal-body text-center mt-5">
-                        <div class="text-success">
-                            <i class="bi bi-check-circle fs-1 "></i><br><br>
-                        </div>
-                        <p class="mb-4">Enrollment has been updated successfully.</p>
-                    </div>
-                    <div class="d-flex justify-content-center mt-3 mb-5 ">
-                        <button class="btn btn-success me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            var successModal = new bootstrap.Modal(document.getElementById("successModal"));
-            successModal.show();
-        </script>';
-    // Unset session variable to prevent modal from showing again on page refresh
-    unset($_SESSION['update_enroll']);
-}
 
 
-// CcHILDRESS PASSWORD DOESN'T MATCH 
-
-if (isset($_SESSION['password_error'])) {
+//ERROR MODAL 
+if (isset($_SESSION['error'])) {
     echo '
         <div class="modal fade" id="errorupdateModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -236,7 +129,7 @@ if (isset($_SESSION['password_error'])) {
                         <div class="text-danger">
                             <i class="bi bi-exclamation-circle fs-1"></i><br><br>
                         </div>
-                        <p class="mb-4">' . $_SESSION['password_error'] . '</p>
+                        <p class="mb-4">' . $_SESSION['error'] . '</p>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5">
                         <button class="btn btn-danger me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
@@ -252,12 +145,14 @@ if (isset($_SESSION['password_error'])) {
             });
         </script>
     ';
-    unset($_SESSION['password_error']); // Unset the session variable after displaying
+    unset($_SESSION['error']); // Unset the session variable after displaying
 }
 
 
-// UPDATE STUDENT ACCOUNT MODAL
-if (isset($_SESSION['update_user']) && $_SESSION['update_user']) {
+
+
+// SUCCESS MODAL
+if (isset($_SESSION['success'])) {
     echo '
         <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -266,7 +161,7 @@ if (isset($_SESSION['update_user']) && $_SESSION['update_user']) {
                         <div class="text-success">
                             <i class="bi bi-check-circle fs-1 "></i><br><br>
                         </div>
-                        <p class="mb-4">Account has been updated successfully.</p>
+                        <p class="mb-4">' . $_SESSION['success'] . '</p>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5 ">
                         <button class="btn btn-success me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
@@ -279,6 +174,5 @@ if (isset($_SESSION['update_user']) && $_SESSION['update_user']) {
             var successModal = new bootstrap.Modal(document.getElementById("successModal"));
             successModal.show();
         </script>';
-    // Unset session variable to prevent modal from showing again on page refresh
-    unset($_SESSION['update_user']);
+    unset($_SESSION['success']); // Unset the session variable after displaying
 }

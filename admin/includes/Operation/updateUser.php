@@ -25,7 +25,7 @@ try {
 
     if (isset($_POST["submit"])) {
         // Sanitize and prepare input
-        $id = $_POST["userID"];
+        $userID = $_POST["userID"];
         $username = trim($_POST["username"]);
         $password = isset($_POST["password"]) ? trim($_POST["password"]) : null;
         $confirmPassword = isset($_POST["confirm_password"]) ? trim($_POST["confirm_password"]) : null;
@@ -42,7 +42,7 @@ try {
             // Check for an existing user with the same username
             $existingUser = $mySQLFunction->getUsers("username", $username);
 
-            if ($existingUser && strval($existingUser['id']) !== strval($id)) {
+            if ($existingUser && strval($existingUser['id']) !== strval($userID)) {
                 // Username is already taken by another user
                 $_SESSION['user_taken'] = true;
                 $_SESSION["username"] = $username;
@@ -50,14 +50,14 @@ try {
                 exit();
             } else {
                 // Update the username
-                $mySQLFunction->updateUser("username", $username, $id);
+                $mySQLFunction->updateRecord("users", "username", $username, "id", $userID);
             }
         }
 
         // Update the password if provided
         if (!empty($password)) {
             $encryptedPassword = $mySQLFunction->encrypt($password);
-            $mySQLFunction->updateUser("password", $encryptedPassword, $id);
+            $mySQLFunction->updateRecord("users", "password", $encryptedPassword, "id", $userID);
         }
 
         // Disconnect from the database
