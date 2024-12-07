@@ -48,6 +48,7 @@ include "../admin/includes/Forms/principalform.php";
             <div class="modal-body">
                 <form action="./includes/Operation/updatePrincipal.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate id="editAdminInfo">
                     <div class="row">
+                        <input type="hidden" name="prinID" value="<?php echo htmlspecialchars($showResult['principal_id']); ?>">
                         <div class="col-md-4 mb-3">
                             <label for="firstname" class="form-label">First Name</label>
                             <input type="text" id="firstname" name="firstname" value="<?php echo htmlspecialchars($showResult['firstname']); ?>" class="form-control" required>

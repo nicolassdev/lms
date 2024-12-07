@@ -43,23 +43,30 @@ if (!isset($_SESSION["registrar_id"])) {
                 exit();
             }
 
+            $store = [
+                'stu_fname' => $fname,
+                'stu_mname' => $mname,
+                'stu_lname' => $lname,
+                'stu_address' => $address,
+                'stu_contact' => $contact,
+                'stu_gender' => $gender,
+                'stu_email' => $email,
+                'stu_dob' => $dob,
+                'stu_pob' => $pob,
+                'father_name' => $father,
+                'mother_name' => $mother,
+                'parent_contact' => $pcontact,
+            ];
+
             // Reconnect to the database for updating the information
             $mySQLFunction->connection();
 
             // Update the student details
-            $mySQLFunction->updateRecord("student", "stu_fname", $fname, "stu_lrn", $id);
-            $mySQLFunction->updateRecord("student", "stu_mname", $mname, "stu_lrn", $id);
-            $mySQLFunction->updateRecord("student", "stu_lname", $lname, "stu_lrn", $id);
-            $mySQLFunction->updateRecord("student", "stu_address", $address, "stu_lrn", $id);
-            $mySQLFunction->updateRecord("student", "stu_contact", $contact, "stu_lrn", $id);
-            $mySQLFunction->updateRecord("student", "stu_gender", $gender, "stu_lrn", $id);
-            $mySQLFunction->updateRecord("student", "stu_email", $email, "stu_lrn", $id);
-            $mySQLFunction->updateRecord("student", "stu_dob", $dob, "stu_lrn", $id);
-            $mySQLFunction->updateRecord("student", "stu_pob", $pob, "stu_lrn", $id);
-            $mySQLFunction->updateRecord("student", "father_name", $father, "stu_lrn", $id);
-            $mySQLFunction->updateRecord("student", "mother_name", $mother, "stu_lrn", $id);
-            $mySQLFunction->updateRecord("student", "parent_contact", $pcontact, "stu_lrn", $id);
-
+            foreach ($store as $column => $value) {
+                if ($value !== null) { // Only update non-null values
+                    $mySQLFunction->updateRecord("student", $column, $value, "stu_lrn", $id);
+                }
+            }
 
             // Disconnect after updating
             $mySQLFunction->disconnect();

@@ -93,7 +93,7 @@
                       // </button>
                       echo '
                                         <td class="d-flex justify-content-center">
-                                            <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#edit_subject' . $row['sub_code'] . '">
+                                            <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#edit_subject' . $row['sub_code'] . '">
                                                 <i class="bi bi-pencil-square me-1"></i>Edit
                                             </button>
                                         
@@ -109,17 +109,23 @@
                     <div class="modal fade" id="edit_subject' . htmlspecialchars($row['sub_code']) . '"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
                         <div class="modal-dialog modal-md">
                             <div class="modal-content">
-                                <div class="modal-header bg-primary text-white">
-                                    <h5 class="modal-title">Edit Subject Details</h5>
-                                    <i class="bi bi-pencil-square fs-3 ms-2"></i>
-                                </div>
+                                  <div class="modal-header bg-success text-white">
+                                    <div class="d-flex align-items-center justify-content-between w-100">
+                                      <div class="text-start">
+                                        <h1 class="modal-title fs-5 text-white">Edit Subject details</h1>
+                                      </div>
+                                    </div>
+                                        <div class="text-end">
+                                        <i class="bi bi-pencil-square fs-3 ms-2"></i>
+                                    </div>                           
+                                  </div>
                                 <div class="modal-body p-4">
                                     <form action="./includes/Operation/updateSubject.php" method="POST" class="row g-3 needs-validation" novalidate id="editSubjectForm' . htmlspecialchars($row['sub_code']) . '">
                                         <!-- Use hidden input -->
                                         <input type="hidden" name="subID" value="' . htmlspecialchars($row['sub_code']) . '">
                 
                                         <!-- Subject Name -->
-                                        <div class="col-12 mb-3">
+                                        <div class="col-12 mb-3 mt-3">
                                             <label class="form-label fw-bold">Subject</label>
                                             <input type="text" class="form-control" name="subject" value="' . htmlspecialchars($row['sub_title']) . '" required>
                                             <div class="invalid-feedback">
@@ -169,7 +175,7 @@
                 
                                         <!-- Buttons -->
                                         <div class="d-flex justify-content-between mt-4 gap-1">
-                                            <button name="submit" class="btn btn-primary w-100" type="submit">Save</button>
+                                            <button name="submit" class="btn btn-success w-100" type="submit">Update</button>
                                             <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetSubject(\'' . htmlspecialchars($row['sub_code']) . '\')">Cancel</button>
                                         </div>
                                     </form>

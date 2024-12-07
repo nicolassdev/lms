@@ -383,101 +383,6 @@ class myDataBase
         return $result;
     }
 
-    //UPDATE STUDENT AND TEACHER INFORMATION
-    // public function updateTeacherAndStudentInfo($table, $data, $idColumn, $id)
-    // {
-    //     // Validate and sanitize input data
-    //     $setClause = [];
-    //     foreach ($data as $column => $value) {
-    //         $escapedValue = mysqli_real_escape_string($this->con, $value);
-    //         $setClause[] = "`$column` = '$escapedValue'";
-    //     }
-
-    //     $setString = implode(", ", $setClause);
-
-    //     // Construct the SQL query using the table and column names dynamically
-    //     $sql = "UPDATE `$table` SET $setString WHERE `$idColumn` = ?";
-
-    //     $stmt = $this->con->prepare($sql);
-    //     if (!$stmt) {
-    //         throw new Exception("Query preparation failed: " . $this->con->error);
-    //     }
-
-    //     // Bind the ID parameter dynamically (could be student ID, teacher ID, etc.)
-    //     $stmt->bind_param("s", $id);  // Assuming the ID is a string. If it's an integer, change to "i"
-    //     $stmt->execute();
-
-    //     // Check if any records were updated
-    //     if ($stmt->affected_rows === 0) {
-    //         throw new Exception("No records updated. Check if the ID is valid.");
-    //     }
-
-    //     $stmt->close();
-    //     return true;
-    // }
-
-
-
-    // UPDATE ACCOUNT STUDENT PROFILE 
-
-    // public function updateStudentInfo($data, $studentID)
-    // {
-    //     $setClause = [];
-    //     foreach ($data as $column => $value) {
-    //         $escapedValue = mysqli_real_escape_string($this->con, $value);
-    //         $setClause[] = "`$column` = '$escapedValue'";
-    //     }
-
-    //     $setString = implode(", ", $setClause);
-
-    //     // Ensure the WHERE clause uses the correct student identifier
-    //     $sql = "UPDATE `student` SET $setString WHERE `stu_lrn` = ?";
-
-    //     $stmt = $this->con->prepare($sql);
-    //     if (!$stmt) {
-    //         throw new Exception("Query preparation failed: " . $this->con->error);
-    //     }
-
-    //     $stmt->bind_param("s", $studentID);  // Assuming stu_lrn is an integer
-    //     $stmt->execute();
-
-    //     if ($stmt->affected_rows === 0) {
-    //         throw new Exception("No records updated. Check if the student ID is valid.");
-    //     }
-
-    //     $stmt->close();
-    //     return true;
-    // }
-
-    // UPDATE ACCOUNT TEACHER PROFILE 
-    // public function updateTeacherInfo($data, $teacherID)
-    // {
-    //     $setClause = [];
-    //     foreach ($data as $column => $value) {
-    //         $escapedValue = mysqli_real_escape_string($this->con, $value);
-    //         $setClause[] = "`$column` = '$escapedValue'";
-    //     }
-
-    //     $setString = implode(", ", $setClause);
-
-    //     // Ensure the WHERE clause uses the correct teacher identifier
-    //     $sql = "UPDATE `teacher` SET $setString WHERE `teacher_id` = ?";
-
-    //     $stmt = $this->con->prepare($sql);
-    //     if (!$stmt) {
-    //         throw new Exception("Query preparation failed: " . $this->con->error);
-    //     }
-
-    //     $stmt->bind_param("s", $teacherID);  // Assuming stu_lrn is an integer
-    //     $stmt->execute();
-
-    //     if ($stmt->affected_rows === 0) {
-    //         throw new Exception("No records updated. Check if the teacher ID is valid.");
-    //     }
-
-    //     $stmt->close();
-    //     return true;
-    // }
 
 
     //CHECK USER LOGIN 
@@ -497,8 +402,6 @@ class myDataBase
             return false;
         }
     }
-
-
 
 
 
@@ -1591,24 +1494,6 @@ class myDataBase
 
 
 
-
-    //UPDATE SUBJECT
-    public function updateSubject($row, $value, $where)
-    {
-        $value = mysqli_real_escape_string($this->con, $value);
-        if (is_string($value)) {
-            $value = "'" . $value . "'";
-        }
-        $sql = "UPDATE `subject` SET `$row` =  $value WHERE `sub_code` = '$where'";
-        $result = $this->con->query($sql);
-
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     //UPDATE ENROLLMENT
     public function updateEnrolled($row, $value, $where)
     {
@@ -1628,7 +1513,8 @@ class myDataBase
 
 
 
-    // Generic Update Function USERS | ENROLLMENT | STUDENT | TEACHER | SUBJECT
+    // Generic Update Function 
+    // USERS | ENROLLMENT | STUDENT | TEACHER | SUBJECT | REGISTRAR| PRINCIPAL
     public function updateRecord($table, $row, $value, $whereColumn, $whereValue = null)
     {
         // Sanitize the value

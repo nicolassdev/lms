@@ -129,8 +129,8 @@ include "../admin/includes/Forms/enrollmentform.php";
                                         echo '
                                         
                                         <td class="d-flex justify-content-center pt-2 pb-3 ">
-                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit_enrolled' . urlencode($row['stu_lrn']) . '">
-                                                <i class="bi bi-pencil-square "></i>
+                                            <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#edit_enrolled' . urlencode($row['stu_lrn']) . '">
+                                                <i class="bi bi-pencil-square me-1"></i>Edit
                                             </button>
                                         
                                         </td>
@@ -146,9 +146,15 @@ include "../admin/includes/Forms/enrollmentform.php";
                                             <div class="modal fade" id="edit_enrolled' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
                                                 <div class="modal-dialog modal-md">
                                                     <div class="modal-content">
-                                                        <div class="modal-header bg-primary text-white">
-                                                            <h5 class="modal-title">Edit Student Enrolled</h5>
+                                                        <div class="modal-header bg-success text-white">
+                                                            <div class="d-flex align-items-center justify-content-between w-100">
+                                                            <div class="text-start">
+                                                                <h1 class="modal-title fs-5 text-white">Edit Student Enrolled</h1>
+                                                            </div>
+                                                            </div>
+                                                            <div class="text-end">
                                                             <i class="bi bi-pencil-square fs-3 ms-2"></i>
+                                                            </div>                           
                                                         </div>
                                                         <div class="modal-body p-4">
                                                             <form action="./includes/Operation/updateEnroll.php" method="POST" class="row g-3 needs-validation" novalidate id="editEnrollForm' . htmlspecialchars($row['stu_lrn']) . '"> 
@@ -207,7 +213,7 @@ include "../admin/includes/Forms/enrollmentform.php";
 
                                                                 <!-- Buttons -->
                                                                 <div class="d-flex justify-content-between mt-4 gap-2">
-                                                                    <button name="submit" class="btn btn-primary w-100" type="submit">Save</button>
+                                                                    <button name="submit" class="btn btn-success w-100" type="submit">Update</button>
                                                                     <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetSection(\'' . htmlspecialchars($row['stu_lrn']) . '\')">Cancel</button>
                                                                 </div>
                                                             </form>

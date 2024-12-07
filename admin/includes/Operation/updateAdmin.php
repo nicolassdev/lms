@@ -9,6 +9,9 @@ if (!isset($_SESSION["registrar_id"])) {
     include "../../../includes/dbh-inc.php";
     try {
         if (isset($_POST["submit"])) {
+
+            // Clean and transform input data
+            $regid = $_POST["regID"];
             $name = isset($_POST["firstname"]) ? strtoupper(trim($_POST["firstname"])) : null;
             $mname = isset($_POST["middlename"]) ? strtoupper(trim($_POST["middlename"])) : null;
             $lname = isset($_POST["lastname"]) ? strtoupper(trim($_POST["lastname"])) : null;
@@ -68,7 +71,14 @@ if (!isset($_SESSION["registrar_id"])) {
 
 
             $mySQLFunction->connection();
-            $mySQLFunction->updateUserInfo('REGISTRAR', $store); // Pass the array directly
+
+            // Update Registrar information in the database
+            foreach ($store as $column => $value) {
+                if ($value !== null) { // Only update non-null values
+                    $mySQLFunction->updateRecord("registrar", $column, $value, "registrar_id", $regid);
+                }
+            }
+
 
             $_SESSION['update_admin'] = true;
             header("location:../../index.php?page=admin");

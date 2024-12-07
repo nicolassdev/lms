@@ -26,7 +26,7 @@ include "../admin/includes/Forms/syform.php";
         <!-- Button container for proper alignment -->
         <div class="d-flex gap-2">
             <!-- Semester button -->
-            <button type="button" class="btn btn-success btn-sm btn-animate" title="Semester" data-bs-toggle="modal" data-bs-target="#school_year" data-bs-whatever="@fat">
+            <button type="button" class="btn btn-primary btn-sm btn-animate" title="Semester" data-bs-toggle="modal" data-bs-target="#school_year" data-bs-whatever="@fat">
                 <i class="bi bi-plus me-1"></i>School Year
             </button>
             <button class="btn btn-secondary btn-sm me-3 btn-animate"><a class="nav-link " href="index.php?page=settings"><i class="bi bi-arrow-left-circle me-1"></i>Back</a>

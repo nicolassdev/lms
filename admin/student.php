@@ -128,8 +128,8 @@ include "../admin/includes/Forms/studentform.php";
                                         echo '
                                             <td class="d-flex justify-content-center">
                                            
-                                                <button title="Edit" class="btn btn-sm btn-outline-primary  me-2" data-bs-toggle="modal" data-bs-target="#edit_student' . $row['stu_lrn'] . '">
-                                                    <i class="bi bi-pencil-square"></i> 
+                                                <button title="Edit" class="btn btn-sm btn-outline-success  me-2" data-bs-toggle="modal" data-bs-target="#edit_student' . $row['stu_lrn'] . '">
+                                                    <i class="bi bi-pencil-square me-1"></i>Edit 
                                                 </button>
                                          
                                             </td>
@@ -273,14 +273,20 @@ include "../admin/includes/Forms/studentform.php";
                                         <div class="modal fade" id="edit_student' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="editStudentModal" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
-                                                    <div class="modal-header bg-primary text-white">
-                                                        <h5 class="modal-title">Edit Student Information</h5>
-                                                        <i class="bi bi-pencil-square fs-3 ms-2"></i>
-                                                    </div>
+                                                        <div class="modal-header bg-success text-white">
+                                                            <div class="d-flex align-items-center justify-content-between w-100">
+                                                            <div class="text-start">
+                                                                <h1 class="modal-title fs-5 text-white">Edit Student details</h1>
+                                                            </div>
+                                                            </div>
+                                                            <div class="text-end">
+                                                            <i class="bi bi-pencil-square fs-3 ms-2"></i>
+                                                            </div>                           
+                                                        </div>
                                                     <div class="modal-body p-4">
                                                         <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-3 needs-validation" novalidate id="editTeacherForm' . htmlspecialchars($row['stu_lrn']) . '">
-                                                            <!-- Use hidden input -->
-                                                            <div class="row">
+                                                        <div class="row">
+                                                        <!-- Use hidden input -->
                                                             <input type="hidden" name="lrnID" value="' . htmlspecialchars($row['stu_lrn']) . '">
                                     
                                                             <div class="col-md-4 mb-3">
@@ -317,7 +323,7 @@ include "../admin/includes/Forms/studentform.php";
                                                                 <label for="contactNumber' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Contact</label>
                                                                 <small style="color:red">( Please enter a valid 10-digit number starting with 9. )</small>
                                                                 <div class="input-group has-validation">
-                                                                    <span class="input-group-text bg-primary" style="color:white" id="inputGroupPrepend">+63</span>
+                                                                    <span class="input-group-text bg-success" style="color:white" id="inputGroupPrepend">+63</span>
                                                                     <input type="text" class="form-control" name="contact" value="' . htmlspecialchars($row['stu_contact']) . '" aria-describedby="inputGroupPrepend" pattern="9\\d{9}" maxlength="10" required>
                                                                     <div class="invalid-feedback">
                                                                         Please enter a valid 10-digit number starting with 9.
@@ -363,7 +369,7 @@ include "../admin/includes/Forms/studentform.php";
                                                             </div>
                                     
                                                             <div class="modal-header mb-2">
-                                                                <h4 class="modal-title text-primary">Guardian Details</h4> 
+                                                                <h4 class="modal-title text-success">Guardian Details</h4> 
                                                             </div>
                                     
                                                             <div class="col-12 mb-3">
@@ -386,7 +392,7 @@ include "../admin/includes/Forms/studentform.php";
                                                                 <label for="pcontact' . htmlspecialchars($row['stu_lrn']) . '" class="form-label fw-bold">Guardian Contact</label>
                                                                 <small style="color:red">( Please enter a valid 10-digit number starting with 9. )</small>
                                                                 <div class="input-group has-validation">
-                                                                    <span class="input-group-text bg-primary" style="color:white" id="inputGroupPrepend">+63</span>
+                                                                    <span class="input-group-text bg-success" style="color:white" id="inputGroupPrepend">+63</span>
                                                                     <input type="text" class="form-control" name="pcontact" value="' . htmlspecialchars($row['parent_contact']) . '" aria-describedby="inputGroupPrepend" pattern="9\\d{9}" maxlength="10" required>
                                                                     <div class="invalid-feedback">
                                                                         Please enter a valid 10-digit number starting with 9.
@@ -395,7 +401,7 @@ include "../admin/includes/Forms/studentform.php";
                                                             </div>
                                     
                                                             <div class="d-flex justify-content-between mt-4 gap-2">
-                                                                <button name="submit" class="btn btn-primary w-100" type="submit">Save</button>
+                                                                <button name="submit" class="btn btn-success w-100" type="submit">Update</button>
                                                                 <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm(\'' . htmlspecialchars($row['stu_lrn']) . '\')">Cancel</button>
                                                             </div>
                                                             </div>

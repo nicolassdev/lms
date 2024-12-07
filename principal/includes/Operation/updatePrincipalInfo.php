@@ -9,6 +9,8 @@ if (!isset($_SESSION["principal_id"])) {
     include "../../../includes/dbh-inc.php";
     try {
         if (isset($_POST["submit"])) {
+            // Clean and transform input data
+            $prinid = $_POST["prinID"];
             $name = isset($_POST["firstname"]) ? strtoupper(trim($_POST["firstname"])) : null;
             $mname = isset($_POST["middlename"]) ? strtoupper(trim($_POST["middlename"])) : null;
             $lname = isset($_POST["lastname"]) ? strtoupper(trim($_POST["lastname"])) : null;
@@ -50,7 +52,7 @@ if (!isset($_SESSION["principal_id"])) {
 
                     // Move the uploaded file to the desired directory
                     if (move_uploaded_file($imageTmpName, $uploadPath)) {
-                        // Update the store array to include the new image path
+                        // Update the storePrincipalInfo array to include the new image path
                         $store['image'] = $newImageName;
                     } else {
                         $_SESSION['error_handler'] = "Failed to upload image.";
@@ -67,7 +69,12 @@ if (!isset($_SESSION["principal_id"])) {
 
 
             $mySQLFunction->connection();
-            $mySQLFunction->updateUserInfo('PRINCIPAL', $store); // Pass the array directly
+            // Update Principal information in the database
+            foreach ($store as $column => $value) {
+                if ($value !== null) { // Only update non-null values
+                    $mySQLFunction->updateRecord("principal", $column, $value, "principal_id", $prinid);
+                }
+            }
 
             $_SESSION['update_principal'] = true;
             header("location:../../index.php?page=principal_prof");

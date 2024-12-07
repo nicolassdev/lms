@@ -10,8 +10,8 @@
  <div class="modal fade" id="setting" tabindex="-1" aria-hidden="true">
      <div class="modal-dialog">
          <div class="modal-content bg-gray">
-             <div class="modal-header">
-                 <h5 class="modal-title " id="updateModalLabel">Edit School Information</h5>
+             <div class="modal-header bg-success">
+                 <h5 class="modal-title text-white" id="updateModalLabel">Edit School Information</h5>
                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
 
