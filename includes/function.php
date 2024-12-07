@@ -1494,25 +1494,6 @@ class myDataBase
 
 
 
-    //UPDATE ENROLLMENT
-    public function updateEnrolled($row, $value, $where)
-    {
-        $value = mysqli_real_escape_string($this->con, $value);
-        if (is_string($value)) {
-            $value = "'" . $value . "'";
-        }
-        $sql = "UPDATE `enroll` SET `$row` =  $value WHERE `stu_lrn` = '$where'";
-        $result = $this->con->query($sql);
-
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-
     // Generic Update Function 
     // USERS | ENROLLMENT | STUDENT | TEACHER | SUBJECT | REGISTRAR| PRINCIPAL
     public function updateRecord($table, $row, $value, $whereColumn, $whereValue = null)

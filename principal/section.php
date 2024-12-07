@@ -78,7 +78,7 @@ include "../admin/includes/Forms/sectionform.php";
 
                                         echo '
                                         <td class="d-flex justify-content-center">
-                                            <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#edit_section' . $row['section_code'] . '">
+                                            <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#edit_section' . $row['section_code'] . '">
                                                 <i class="bi bi-pencil-square me-1"></i>Edit
                                             </button>
                                         
@@ -97,10 +97,16 @@ include "../admin/includes/Forms/sectionform.php";
                                         <div class="modal fade" id="edit_section' . htmlspecialchars($row['section_code']) . '" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
                                             <div class="modal-dialog modal-md">
                                                 <div class="modal-content">
-                                                    <div class="modal-header bg-primary text-white">
-                                                        <h5 class="modal-title">Edit Section Details</h5>
-                                                        <i class="bi bi-pencil-square fs-3 ms-2"></i>
-                                                    </div>
+                                                        <div class="modal-header bg-success text-white">
+                                                            <div class="d-flex align-items-center justify-content-between w-100">
+                                                            <div class="text-start">
+                                                                <h1 class="modal-title fs-5 text-white">Edit Section details</h1>
+                                                            </div>
+                                                            </div>
+                                                            <div class="text-end">
+                                                            <i class="bi bi-pencil-square fs-3 ms-2"></i>
+                                                            </div>                           
+                                                        </div>
                                                     <div class="modal-body p-4">
                                                         <form action="./includes/Operation/updateSection.php" method="POST" class="row g-3 needs-validation" novalidate id="editSectionForm' . htmlspecialchars($row['section_code']) . '">
                                                             <!-- Use hidden input -->
@@ -172,8 +178,8 @@ include "../admin/includes/Forms/sectionform.php";
 
 
                                                             <!-- Buttons -->
-                                                            <div class="d-flex justify-content-between gap-2">
-                                                                <button name="submit" class="btn btn-primary w-100 mt-3" type="submit">Save</button>
+                                                            <div class="d-flex justify-content-between gap-2 mt-3">
+                                                                <button name="submit" class="btn btn-success w-100 mt-3" type="submit">Update</button>
                                                                 <button type="button" class="btn btn-outline-secondary w-100 mt-3" data-bs-dismiss="modal" aria-label="Close" onclick="resetSection(\'' . htmlspecialchars($row['section_code']) . '\')">Cancel</button>
                                                             </div>
                                                         </form>

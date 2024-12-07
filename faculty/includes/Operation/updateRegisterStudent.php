@@ -13,7 +13,7 @@ if (!isset($_SESSION["teacher_id"])) {
         $enrollID = $_GET["id"];
         // Establish the database connection
         $mySQLFunction->connection();
-        $activeSem = $mySQLFunction->checkSemStatus('semester');
+        $activeSem = $mySQLFunction->getActiveSemester();
         // Fetch the current teacher details
         // todo $enrollRow = $mySQLFunction->getEnroll("stu_lrn", $enrollID);
 
@@ -22,9 +22,14 @@ if (!isset($_SESSION["teacher_id"])) {
             $id = $_POST["enrollID"];
             $status = strtoupper(trim($_POST["status"]));
 
-            // Update the teacher details
-            // $mySQLFunction->updateEnrollment("section_code	", $section, $id);
-            $mySQLFunction->updateEnrolled("enroll_status", $status, $id, $activeSem);
+            // Define the conditions for the WHERE clause
+            $whereConditions = [
+                "stu_lrn" => $id,           // Student learner's number
+                "semester" => $activeSem    // Active semester
+            ];
+            // Update the status field in enroll table
+            $mySQLFunction->updateRecord("enroll", "enroll_status", $status, $whereConditions);
+
 
             // Disconnect after updating
             $mySQLFunction->disconnect();
