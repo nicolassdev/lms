@@ -59,48 +59,48 @@
     ?>
 
 
- <body>
-     <div class="container">
-         <?php
-            include("includes/alert-notify.php");
-            ?>
-         <div class="row text-center">
-             <div class="col-md ml-xl">
-                 <img src="./assets/img/student-login-logo.svg" alt="Login Logo" draggable="false">
-             </div>
-             <div class="col-md mr-xl">
-                 <!-- login form -->
-                 <form action="./includes/login-inc.php" method="POST" onsubmit="showLoading()">
-                     <h2>Login</h2>
-                     <div class="input-box">
-                         <span class="icon">
-                             <img src="assets/img/icons8-user-24.webp" alt="user icon" /></span>
-                         <input type="text" placeholder="Username" name="username" required autocomplete="off" autofocus />
-                     </div>
-                     <div class="input-box">
-                         <span class="icon">
-                             <img src="assets/img/icons8-lock-24.webp" alt="lock icon" /></span>
-                         <input type="password" placeholder="Password" name="password" required autocomplete="off" autofocus />
-                     </div>
-                     <button type="submit" name="submit">Login</button>
-                 </form>
-
-             </div>
-         </div>
-     </div>
- </body>
-
- </html>
-
- <script>
-     function showLoading() {
-         // Redirect to the loading page
-         window.location.href = "loading.php";
-     }
- </script>
- <?php
-    require_once('includes/footer.php');
-    ?>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>Computer System Institute</h1>
+        <h2>Learning Management System</h2>
 
 
- <!-- Footer included directly on the page -->
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="login-box">
+            <img src="./assets/img/csi.webp" alt="Login Logo" draggable="false" class="login-logo">
+            <h2>Login</h2><br>
+            <?php include("includes/alert-notify.php"); ?>
+            <form action="./includes/login-inc.php" method="POST" onsubmit="showLoading()">
+                <div class="input-box">
+                    <span class="icon">
+                        <img src="assets/img/icons8-user-24.webp" alt="User Icon">
+                    </span>
+                    <input type="text" placeholder="Username" name="username" required autocomplete="off" autofocus>
+                </div>
+                <div class="input-box">
+                    <span class="icon">
+                        <img src="assets/img/icons8-lock-24.webp" alt="Lock Icon">
+                    </span>
+                    <input type="password" placeholder="Password" name="password" required autocomplete="off">
+                </div>
+                <button type="submit" name="submit">Login</button>
+            </form>
+            <div class="text-caption">
+                <?php require_once('includes/footer.php'); ?>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Animation -->
+    <script>
+        function showLoading() {
+            document.getElementById('loading').style.display = 'flex';
+        }
+    </script>
+</body>
+
+</html>
