@@ -55,14 +55,14 @@ body {
 
 /* Enhanced Glassmorphism Login Box */
 .login-box {
-  backdrop-filter: blur(20px) saturate(180%); /* Increased blur and saturation */
+  backdrop-filter: blur(10px) saturate(180%); /* Increased blur and saturation */
   background: rgba(255, 255, 255, 0.15); /* More transparent background */
   border: 1px solid rgba(255, 255, 255, 0.6); /* Enhanced border color */
   border-radius: 20px;
   padding: 40px 30px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); /* Softer shadow */
   text-align: center;
-  color: #1a237e;
+  color: #ffffff;
   animation: fadeIn 1.5s ease-in-out both;
 }
 
@@ -92,11 +92,15 @@ body {
   box-shadow: 0 4px 15px rgba(26, 35, 126, 0.1);
   transition: 0.4s ease;
 }
-
+.input-box input::placeholder {
+  color: rgb(50, 49, 49);
+  font-weight: 500;
+}
 .input-box input:hover,
 .input-box input:focus {
   background: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 0 15px rgba(85, 145, 255, 0.6), inset 0 0 5px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 15px rgba(85, 145, 255, 0.6),
+    inset 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 /* Icon Positioning */
@@ -108,7 +112,7 @@ body {
   width: 24px;
   height: 24px;
   opacity: 0.8;
-  color: #3b4c7c;
+  color: #000000;
 }
 
 /* Futuristic Button with Light Blue Shine */
@@ -117,13 +121,18 @@ button {
   padding: 15px;
   font-size: 18px;
   font-weight: bold;
-  color: #ffffff;
-  background: linear-gradient(135deg, #5c6bc0, #7986cb);
+  color: #020202;
+  background: linear-gradient(
+    135deg,
+    #4a90e2,
+    #70b8ff
+  ); /* Soothing blue gradient */
   border: none;
   border-radius: 30px;
   cursor: pointer;
   transition: all 0.4s ease;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2),
+    /* Reduced shadow intensity */ inset 0 0 10px rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
 }
@@ -135,7 +144,7 @@ button::before {
   left: -100%;
   width: 200%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.1);
+  /* background: rgba(255, 255, 255, 0.2); Softer shine effect */
   transform: skewX(-45deg);
   transition: all 0.6s ease;
 }
@@ -146,8 +155,12 @@ button:hover::before {
 
 button:hover {
   transform: translateY(-5px);
-  background: linear-gradient(135deg, #64b5f6, #90caf9);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(
+    135deg,
+    #6bb5f5,
+    #8dcdfc
+  ); /* Lighter hover gradient */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Slightly softer hover shadow */
 }
 
 /* Caption Text */
@@ -158,7 +171,6 @@ button:hover {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   color: #ffffff;
 }
-
 
 /* Smooth Fade-In Animation */
 @keyframes fadeIn {
@@ -175,11 +187,10 @@ button:hover {
 /* Screen width for 1366x768 */
 @media (max-width: 1366px) {
   .container {
-    width: 80%;
+    width: 100%;
     max-width: 400px;
-    padding: 15px;
-    padding-top: 50px;
-  
+    padding: 10px;
+    padding-top: 60px;
   }
 
   .login-box {
@@ -190,14 +201,22 @@ button:hover {
     width: 100px;
   }
 
-  .header h1 {
-    font-size: 32px;
-    color: #ffffff;
+  .header {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a237e;
+    text-shadow: 0 4px 6px rgba(26, 35, 126, 0.2);
+    animation: fadeIn 1.5s ease-in-out both;
+    /* padding-top: 55px; */
+    letter-spacing: 5px;
   }
 
-  .header h2 {
-    font-size: 18px;
+  h2 {
+    font-size: 20px;
     color: #ffffff;
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 23px;
+    font-weight: 500;
   }
 
   button {
@@ -209,7 +228,42 @@ button:hover {
     font-size: 14px;
     padding: 12px 45px;
   }
-  .text-caption{
+  .text-caption {
     color: #ffffff;
   }
+  .input-box input::placeholder {
+    color: rgb(50, 49, 49);
+    font-weight: 600;
+  }
+}
+
+/* Screen width for mobie */
+/* Screen width for mobile devices */
+@media screen and (max-width: 480px) {
+  .header {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a237e;
+    text-shadow: 0 4px 6px rgba(26, 35, 126, 0.2);
+    animation: fadeIn 1.5s ease-in-out both;
+    padding-top: 55px;
+    letter-spacing: 5px;
+  }
+  .input-box input::placeholder {
+    color: rgb(50, 49, 49);
+    font-weight: 500;
+  }
+}
+
+/* Additional styles for even smaller screens (e.g., 380px and below) */
+@media screen and (max-width: 380px) {
+  .header {
+    font-size: 18px; /* Reduce the font size for extra small screens */
+    padding-top: 50px; /* Adjust spacing if needed */
+    letter-spacing: 3px; /* Optional: Adjust letter spacing for readability */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* General mobile-specific styles */
 }

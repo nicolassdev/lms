@@ -155,8 +155,8 @@ $mySQLFunction->disconnect();
 
     <div class="container">
         <img
-            style="position: absolute; top: 55%; left: 50%; transform: translate(-0%, -50%); 
-                            width: 480px; opacity: 0.1; z-index: -1;"
+            style="position: absolute; top: 50%; right: 10%; transform: translate(-10%, -45%); 
+                        width: 500px; opacity: 0.1; z-index: -1;"
             src="../assets/img/csi.webp"
             alt="LMS Logo">
         <div class="row">

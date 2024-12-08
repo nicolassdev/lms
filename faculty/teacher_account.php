@@ -60,15 +60,15 @@ $mySQLFunction->disconnect();
                     <div class="container position-relative">
                         <!-- CSI Logo as Background -->
                         <img
-                            style="position: absolute; top: 50%; left: 50%; transform: translate(-20%, -50%); 
-                            width: 500px; opacity: 0.1; z-index: -1;"
+                            style="position: absolute; top: 50%; right: 10%; transform: translate(-10%, -45%); 
+                             width: 500px; opacity: 0.1; z-index: -1;"
                             src="../assets/img/csi.webp"
                             alt="LMS Logo">
 
                         <div class="row justify-content-between">
                             <!-- Left side: Profile -->
                             <div class="col-md-6 col-12 text-center">
-                                <div class="profile-header" style="margin-top: 60px;">
+                                <div class="profile-header" style="margin-top: 50px;">
 
 
                                     <?php

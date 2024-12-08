@@ -285,13 +285,57 @@ class myDataBase
     //GET TEACHER SECTION HANDLED by id
     public function getTeacherSectionHandled($teacher_id)
     {
-        $sql = "SELECT * FROM `section` WHERE teacher_id = ?";
+        $sql = "
+            SELECT 
+                s.grade_lvl, 
+                s.section_name, 
+                st.strand_name, 
+                st.strand_desc
+            FROM 
+                `section` s
+            LEFT JOIN 
+                `strand` st 
+            ON 
+                s.strand_code = st.strand_code
+            WHERE 
+                s.teacher_id = ?";
+
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("s", $teacher_id);
         $stmt->execute();
-        $result = $stmt->get_result()->fetch_assoc();
+        $result = $stmt->get_result();
+
+        // Check if any rows are returned
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc(); // Return the first row
+        } else {
+            return null; // No rows found
+        }
+    }
+
+
+    public function checkEnrolledCountByTeacher($teacher_id)
+    {
+        $sql = "
+            SELECT 
+                s.section_name, 
+                s.grade_lvl, 
+                COUNT(e.stu_lrn) AS enrolled_count
+            FROM enroll e
+            INNER JOIN section s ON e.section_code = s.section_code
+            WHERE s.teacher_id = ?
+            GROUP BY s.section_code
+        ";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $teacher_id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
         return $result;
     }
+
+
     //GET TEACHER  SUBJECT HANDLED by id
     public function getTeacherSubjectHandled($teacher_id)
     {

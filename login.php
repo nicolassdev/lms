@@ -7,6 +7,8 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
      <link rel="website icon" type="webp" href="assets/img/csi.webp">
      <link rel="stylesheet" href="assets/css/login.css?v=<?php echo time(); ?>" />
+     <link rel="stylesheet" href="/assets/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+
      <title>Login</title>
 
  </head>
@@ -59,48 +61,48 @@
     ?>
 
 
-<body>
-    <!-- Header -->
-    <header class="header">
-        <h1>Computer System Institute</h1>
-        <h2>Learning Management System</h2>
+ <body>
+     <!-- Header -->
+     <div class="header">
+         <div>Computer Systems Institute</div>
+         <!-- <h2>Learning Management System</h2> -->
+     </div>
+     <!-- Main Container -->
+     <div class="container">
+         <div class="login-box">
+             <img src="./assets/img/csi.webp" alt="Login Logo" draggable="false" class="login-logo">
+             <h2>Learning Management Systems</h2>
 
+             <?php include("includes/alert-notify.php"); ?>
+             <form action="./includes/login-inc.php" method="POST" onsubmit="showLoading()">
+                 <div class="input-box">
+                     <span class="icon">
+                         <img src="assets/img/icons8-user-24.webp" alt="User Icon">
+                     </span>
+                     <input type="text" placeholder="Username" name="username" required autocomplete="off" autofocus>
+                 </div>
+                 <div class="input-box">
+                     <span class="icon">
+                         <img src="assets/img/icons8-lock-24.webp" alt="Lock Icon">
+                     </span>
+                     <input type="password" placeholder="Password" name="password" required autocomplete="off">
+                 </div>
+                 <button type="submit" name="submit">Login</button>
+             </form>
+             <div class="text-caption">
+                 <?php require_once('includes/footer.php'); ?>
+             </div>
+         </div>
+     </div>
 
-    </header>
+ </body>
 
-    <!-- Main Container -->
-    <div class="container">
-        <div class="login-box">
-            <img src="./assets/img/csi.webp" alt="Login Logo" draggable="false" class="login-logo">
-            <h2>Login</h2><br>
-            <?php include("includes/alert-notify.php"); ?>
-            <form action="./includes/login-inc.php" method="POST" onsubmit="showLoading()">
-                <div class="input-box">
-                    <span class="icon">
-                        <img src="assets/img/icons8-user-24.webp" alt="User Icon">
-                    </span>
-                    <input type="text" placeholder="Username" name="username" required autocomplete="off" autofocus>
-                </div>
-                <div class="input-box">
-                    <span class="icon">
-                        <img src="assets/img/icons8-lock-24.webp" alt="Lock Icon">
-                    </span>
-                    <input type="password" placeholder="Password" name="password" required autocomplete="off">
-                </div>
-                <button type="submit" name="submit">Login</button>
-            </form>
-            <div class="text-caption">
-                <?php require_once('includes/footer.php'); ?>
-            </div>
-        </div>
-    </div>
+ </html>
 
-    <!-- Loading Animation -->
-    <script>
-        function showLoading() {
-            document.getElementById('loading').style.display = 'flex';
-        }
-    </script>
-</body>
-
-</html>
+ <script>
+     function showLoading() {
+         // Redirect to the loading page
+         window.location.href = "loading.php";
+         //  document.getElementById('loading').style.display = 'flex';
+     }
+ </script>

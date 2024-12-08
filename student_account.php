@@ -146,7 +146,7 @@ $mySQLFunction->disconnect();
                                     <!-- Confirm Password Field -->
                                     <div class="mb-3">
                                         <small>Confirm Password <span class="text-danger">*</span></small>
-                                        <input type="password" name="confirmpass" placeholder="Confirm your password" style="font-style:italic;" class="form-control" required>
+                                        <input type="password" name="confirmpass" placeholder="Confirm your password" style="font-style:italic; " class="form-control" required>
                                         <div class="invalid-feedback">Please confirm your password.</div>
                                         <small class="error-message text-danger" style="display: none;">Passwords do not match!</small>
                                     </div>
