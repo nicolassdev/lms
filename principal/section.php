@@ -48,8 +48,8 @@ include "../admin/includes/Forms/sectionform.php";
                         <table id="example" class="table table-bordered table-striped table-sm align-middle">
                             <thead class="table-dark ">
                                 <tr>
-                                    <!-- <th scope="col">#</th> -->
-                                    <th scope="col" class="small text-center">Section Code</th>
+                                    <th scope="col">#</th>
+                                    <!-- <th scope="col" class="small text-center">Section Code</th> -->
                                     <th scope="col" class="small text-center">Section</th>
                                     <th scope="col" class="small text-center">Strand</th>
                                     <th scope="col" class="small text-center">Year level</th>
@@ -66,11 +66,11 @@ include "../admin/includes/Forms/sectionform.php";
 
 
                                 if (!empty($result)) {
-                                    $count = 0;
+                                    $count = 1;
                                     foreach ($result as $row) {
                                         echo '<tr>';
-
-                                        echo '<td class="small text-center">' . $row["section_code"] . '</td>';
+                                        echo '<td>' . $count . '</td>'; // Display the count
+                                        // echo '<td class="small text-center">' . $row["section_code"] . '</td>';
                                         echo '<td class="small text-center">' . $row["section_name"] . '</td>';
                                         echo '<td class="small text-center">' . $row["strand_name"] . '</td>';
                                         echo '<td class="small text-center">' . $row["grade_lvl"] . '</td>';

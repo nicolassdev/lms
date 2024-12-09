@@ -10,7 +10,7 @@ include "../includes/dbh-inc.php";
 $mySQLFunction->connection();
 $numberOfTeacher = $mySQLFunction->checkRowCount("TEACHER");
 
-$numberOfAdviser = $mySQLFunction->checkRowCount("SECTION");
+$numberOfSection = $mySQLFunction->checkRowCount("SECTION");
 
 $numberOfStudent = $mySQLFunction->checkRowCount("STUDENT");
 
@@ -20,6 +20,11 @@ $numberOfEnrolled = $mySQLFunction->checkRowCount("ENROLL");
 
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
+
+
+$numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']); //section handled by teacher
+
+
 $mySQLFunction->disconnect();
 ?>
 
@@ -41,17 +46,22 @@ $mySQLFunction->disconnect();
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <div class="ms-3">
-                <h5>Welcome Back <?php echo ucwords(strtolower($_SESSION["user_role"])); ?> ! </h5>
-                <div class="container mt-2">
-                    <div class="row g-1">
+                <img
+                    style="position: absolute; top: 50%; right: 5%; transform: translate(-0%, -45%); 
+               width: 800px; opacity: 0.2; z-index: -1;"
+                    src="../assets/img/bg-home.webp"
+                    alt="LMS Logo">
+                <h4>Welcome Back <?php echo ucwords(strtolower($_SESSION["user_role"])); ?> ! </h4>
+                <div class="container mt-3">
+                    <div class="row">
                         <!-- Date and Time Display -->
-                        <div class="col-lg-6">
+                        <div class="col-md-12">
                             <div id="date" class="date-display"></div>
                             <div id="time" class="date-display"></div>
                         </div>
 
                         <!-- School Year and Semester Display -->
-                        <div class="col-lg-6 date-display justify-content-end">
+                        <div class="col-md-6 date-display">
                             <?php
                             if (!empty($activeSchoolYears) && !empty($activeSem)) {
                                 foreach ($activeSchoolYears as $index => $schoolYear) {
@@ -59,10 +69,13 @@ $mySQLFunction->disconnect();
                                     echo '<div>School Year: ' . htmlspecialchars($schoolYear) . '<i class="bi bi-check-circle-fill text-success ms-2"></i></div>';
                                 }
                             } else {
-                                echo '<div class="alert alert-warning">No school year and semester found.</div>';
+                                echo '<div class="alert alert-warning" style="font-size: small;">No active school year and semester found.</div>';
                             }
                             ?>
+                            <!-- Static Data -->
+                            <!-- <p>Logged in as : Principal <i class="bi bi-patch-check-fill text-success ms-1"></i></p> -->
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -70,29 +83,86 @@ $mySQLFunction->disconnect();
 
         <div class="row g-1">
 
-            <!-- Teachers Card with count -->
-            <div class="col-lg-6 col-sm-12">
-                <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
+
+
+
+            <!-- Account Card -->
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="card shadow-lg h-100">
                     <div class="card-body">
-                        <h5 class="card-title">Teacher</h5>
-                        <small class="card-text date-display">Number of teachers registered.</small>
-                        <!-- Morris.js chart for teachers and students -->
-                        <div id="teacherChart" style="height: 250px; max-width:100%;"></div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <!-- Icon and title -->
+                            <div class="" style="margin-left:20px">
+                                <i class="bi  bi-journal-bookmark-fill display-5 text-primary mb-2"></i>
+                                <h5 class="card-title">Subject</h5>
+                                <p class="card-text">Total number of subject handled</p>
+                            </div>
+                            <!-- Number of students -->
+                            <div class="text-end">
+                                <h1 class="text-primary fw-bold display-5"><?php echo $numberOfEnrolled; ?></h1>
+                            </div>
+                        </div>
+                        <!-- View account button -->
+                        <div class="text-start mt-3 ms-3">
+                            <a href="?page=masterlist" class="btn btn-primary w-50">View subject</a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Students Card with count -->
-            <div class="col-lg-6 col-sm-12">
-                <div class="card mb-2 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
+
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="card shadow-lg h-100">
                     <div class="card-body">
-                        <h5 class="card-title">Student</h5>
-                        <small class="card-text date-display">Number of senior high school students registered.</small>
-                        <!-- Morris.js chart for teachers and students -->
-                        <div id="studentChart" style="height: 250px; max-width:100%;"></div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <!-- Icon and title -->
+                            <div class="" style="margin-left:20px">
+                                <i class="bi bi-people-fill display-5 text-success mb-2"></i>
+                                <h5 class="card-title">Faculty</h5>
+                                <p class="card-text">Total number of faculty members</p>
+                            </div>
+                            <!-- Number of Faculty -->
+                            <div class="text-end">
+                                <h1 class="text-success fw-bold display-5"><?php echo $numberOfTeacher; ?></h1>
+                            </div>
+                        </div>
+                        <!-- View account button -->
+                        <div class="text-start mt-3 ms-3">
+                            <a href="?page=facultymembers" class="btn btn-success w-70">View faculty members</a>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
+
+            <div class="col-md-4 col-sm-6 col-12">
+                <?php foreach ($numberOfEnrolledInSection as $section): ?>
+                    <div class="card shadow-lg h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <!-- Icon and title -->
+                                <div class="" style="margin-left:20px">
+                                    <i class="bi bi-building-fill display-5 text-danger mb-2"></i>
+                                    <h5 class="card-title">Section</h5>
+                                    <p class="card-text">Total number of students in section</p>
+                                </div>
+                                <!-- Number of students -->
+                                <div class="text-end">
+                                    <h1 class="text-danger fw-bold display-5"> <?php echo $section['enrolled_count']  ?? '0'; ?></h1>
+                                </div>
+                            </div>
+                            <!-- Manage account button -->
+                            <div class="text-start mt-3 ms-3">
+                                <a href="?page=section_handled" class="btn btn-danger w-50">View students</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+        </div>
+        <div class="mt-5">
             <?php
             include "../includes/footer.php";
             ?>
@@ -121,50 +191,4 @@ $mySQLFunction->disconnect();
 
         setInterval(updateTime, 1000); // Update time every second
         updateTime(); // Initial call
-    </script>
-
-    <!-- Morris.js Chart Script -->
-    <script>
-        $(document).ready(function() {
-            new Morris.Donut({
-                element: 'teacherChart',
-                data: [{
-                        label: 'Teacher',
-                        value: <?php echo $numberOfTeacher; ?>
-                    },
-                    {
-                        label: 'Adviser',
-                        value: <?php echo $numberOfAdviser; ?>
-                    },
-                    {
-                        label: 'Subject',
-                        value: <?php echo $numberOfSubject; ?>
-                    }
-                ],
-                colors: ['#D91656', '#640D5F', '#180161'],
-                resize: true
-            });
-        });
-
-        $(document).ready(function() {
-            new Morris.Donut({
-                element: 'studentChart',
-                data: [{
-
-                        label: 'Student',
-                        value: <?php echo $numberOfStudent; ?>
-                    },
-                    {
-                        label: 'Section',
-                        value: <?php echo $numberOfAdviser; ?>
-                    },
-                    {
-                        label: 'Registered students',
-                        value: <?php echo $numberOfEnrolled; ?>
-                    }
-                ],
-                colors: ['#F3C623', '#EB8317', '#00FF9C'],
-                resize: true
-            });
-        });
     </script>

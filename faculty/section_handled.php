@@ -52,7 +52,7 @@ $mySQLFunction->disconnect();
             <div class="ms-3">
                 <img
                     style="position: absolute; top: 50%; right: 5%; transform: translate(-0%, -45%); 
-               width: 800px; opacity: 0.2; z-index: -1;"
+                    width: 700px; opacity: 0.2; z-index: -1;"
                     src="../assets/img/bg-home.webp"
                     alt="LMS Logo">
                 <h5>Section </h5>
@@ -85,50 +85,46 @@ $mySQLFunction->disconnect();
 
 
 
-        <div class="row g-1">
-            <!-- Section Card -->
-            <div class="col-md-4 col-sm-6 col-12">
-                <div class="card shadow-lg h-100 border-0">
-                    <div class="card-body">
-                        <!-- Card Header -->
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <!-- Icon and Title -->
-                            <div>
-                                <i class="bi bi-people-fill display-6 text-primary"></i>
-                                <h5 class="card-title mt-2 mb-1 fw-bold text-secondary">
-                                    <?php
-                                    if (isset($teacherSectionHandled["grade_lvl"]) && isset($teacherSectionHandled["section_name"])) {
-                                        echo ucwords(strtolower($teacherSectionHandled["grade_lvl"])) . ' ' . ucwords(strtolower($teacherSectionHandled["section_name"]));
-                                    } else {
-                                        echo '<span class="text-danger">Section not available</span>';
-                                    }
-                                    ?>
-                                </h5>
-                                <small class="card-subtitle text-muted">
-                                    <?php
-                                    if (isset($teacherSectionHandled["strand_name"])) {
-                                        echo $teacherSectionHandled["strand_name"];
-                                    }
-                                    ?>
-                                </small>
+        <div class="row g-4">
+            <?php foreach ($numberOfEnrolledInSection as $section): ?>
+                <!-- Section Card -->
+                <div class="col-md-4 col-sm-6 col-12">
+                    <div class="card shadow-lg h-100 border-0 ">
+                        <div class="card-body">
+                            <!-- Card Header -->
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <!-- Icon and Title -->
+                                <div>
+                                    <i class="bi bi-people-fill display-6 text-danger"></i>
+                                    <h5 class="card-title mt-2 mb-1 fw-bold text-secondary">
+                                        <?php
+                                        echo ucwords(strtolower($section["grade_lvl"])) . ' ' . ucwords(strtolower($section["section_name"]));
+                                        ?>
+                                    </h5>
+                                    <small class="card-subtitle text-muted">
+                                        <!-- Placeholder for strand_name if available -->
+                                        <?php echo $teacherSectionHandled["strand_name"] ?? ''; ?>
+                                    </small>
+                                </div>
+                                <!-- Number of Students -->
+                                <div class="text-end">
+                                    <h1 class="text-danger fw-bold display-6 mb-0">
+                                        <?php echo $section['enrolled_count']  ?? '0'; ?>
+                                    </h1>
+                                    <small class="text-muted">Students</small>
+                                </div>
                             </div>
-                            <!-- Number of Students -->
-                            <div class="text-end">
-                                <h1 class="text-primary fw-bold display-6 mb-0"><?php echo $section['enrolled_count'] ?? '0'; ?></h1>
-                                <small class="text-muted">Students</small>
+                            <!-- Divider -->
+                            <hr class="text-muted" />
+                            <!-- Card Footer -->
+                            <div class="text-start">
+                                <a href="?page=student_list" class="btn btn-danger w-100 py-2">View</a>
                             </div>
-                        </div>
-                        <!-- Divider -->
-                        <hr class="text-muted" />
-                        <!-- Card Footer -->
-                        <div class="text-start">
-                            <a href="?page=masterlist" class="btn btn-outline-primary w-100">View</a>
                         </div>
                     </div>
                 </div>
-            </div>
+            <?php endforeach; ?>
         </div>
-
 
 
 

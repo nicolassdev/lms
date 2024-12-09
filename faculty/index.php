@@ -31,7 +31,7 @@ switch ($page) {
 
     case "student_accounts":
         require_once 'student_accounts.php';
-        break;       
+        break;
 
     case "new_student":
         require_once 'new_student.php';
@@ -44,7 +44,7 @@ switch ($page) {
         /** 
          teacher route */
 
-     case "teacher_prof":
+    case "teacher_prof":
         require_once 'teacher_prof.php';
         break;
 
@@ -55,10 +55,19 @@ switch ($page) {
     case "teacher_prof":
         require_once 'teacher_prof.php';
         break;
-    
+
+        /** 
+         Section route */
+
     case "section_handled":
         require_once 'section_handled.php';
         break;
+
+    case "student_list":
+        require_once 'student_list.php';
+        break;
+
+
 
     case "teacher_quiz":
         require_once 'teacher_quiz.php';
@@ -73,7 +82,7 @@ switch ($page) {
         break;
 
 
-    
+
 
     default:
         require_once 'dashboard.php'; // Default page is 'home'

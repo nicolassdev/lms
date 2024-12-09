@@ -578,7 +578,7 @@ class myDataBase
         return $result;
     }
 
-
+    // Check if section name already exist 
     public function checkSectionName($table, $row = null, $value = null, $id = null)
     {
         if ($row != null && $value != null) {
@@ -596,8 +596,7 @@ class myDataBase
         return $result;
     }
 
-
-
+    // Check if the strand , grade level and strand are already exist 
     public function checkRowCountSection($table, $section_name, $grade_lvl, $section_id = null)
     {
         // Prepare the SQL query to check for the section name and grade level
@@ -1269,6 +1268,15 @@ class myDataBase
         if ($row != null && $value != null) {
             $sql = "SELECT
                 `enroll`.`stu_lrn`,
+                stu_address,
+                stu_contact,
+                stu_gender,
+                stu_dob,
+                stu_pob,
+                stu_email,
+                father_name,
+                mother_name,
+                parent_contact,
                 CONCAT(`student`.`stu_fname`, ' ', `student`.`stu_lname`) AS student,
                 `enroll`.`section_code`,
                 `section`.`section_code`,
@@ -1299,7 +1307,16 @@ class myDataBase
         } else {
             $sql = "SELECT
                 `enroll`.`stu_lrn`,
-                CONCAT(`student`.`stu_fname`, ' ', `student`.`stu_lname`) AS student,
+                stu_address,
+                stu_contact,
+                stu_gender,
+                stu_dob,
+                stu_pob,
+                stu_email,
+                father_name,
+                mother_name,
+                parent_contact,
+                CONCAT(`student`.`stu_fname`, ' ',`stu_mname`, ' ', `student`.`stu_lname`) AS student,
                 `section`.`strand_code`,
                 `strand`.`strand_name`,  -- Fetching the strand_name from the strand table
                 `section`.`section_name`,
@@ -1414,7 +1431,7 @@ class myDataBase
         }
     }
 
-
+    // Generic Insert Function
     //insert user and teacher/student with validation
     public function insert($table, $columns, $values)
     {

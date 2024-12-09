@@ -94,7 +94,7 @@ $mySQLFunction->disconnect();
                             </div>
                             <!-- Number of students -->
                             <div class="text-end">
-                                <h1 class="text-primary fw-bold display-5"><?php echo $numberOfStudent; ?></h1>
+                                <h1 class="text-primary fw-bold display-5"><?php echo $numberOfEnrolled; ?></h1>
                             </div>
                         </div>
                         <!-- View account button -->

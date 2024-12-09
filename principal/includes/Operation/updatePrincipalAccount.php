@@ -27,7 +27,7 @@ if (!isset($_SESSION["principal_id"])) {
 
         // Verify the old password
         if ($oldPasswordEncrypted !== $userRow['password']) {
-            $_SESSION['password_error'] = "Incorrect old password. Please try again.";
+            $_SESSION['error_notify'] = "Incorrect old password. Please try again.";
             header("location:../../index.php?page=principal_account");
             exit();
         }
@@ -40,7 +40,7 @@ if (!isset($_SESSION["principal_id"])) {
 
             // Confirm password validation
             if ($newPassword !== $confirmPassword) {
-                $_SESSION['password_error'] = "Passwords do not match. Please try again.";
+                $_SESSION['error_notify'] = "Passwords do not match. Please try again.";
                 header("location:../../index.php?page=principal_account");
                 exit();
             }
@@ -50,7 +50,7 @@ if (!isset($_SESSION["principal_id"])) {
                 // If a user with the same username exists and it's not the current username, prevent the update
                 $existingUser = $mySQLFunction->getUsers("username", $username);
                 if ($existingUser && $existingUser['id'] != $principal_id) {
-                    $_SESSION['user_taken'] = true;
+                    $_SESSION['error_notify'] = "Username is already taken. Please input another one.";
                     $_SESSION["username"] = $username;
                     header("location:../../index.php?page=principal_account");
                     exit();
@@ -67,7 +67,7 @@ if (!isset($_SESSION["principal_id"])) {
 
             // Disconnect and finalize the update
             $mySQLFunction->disconnect();
-            $_SESSION['update_user'] = true;
+            $_SESSION['success_notify'] = "Account has been updated successfully.";
             header("location:../../index.php?page=principal_account");
             exit();
         }

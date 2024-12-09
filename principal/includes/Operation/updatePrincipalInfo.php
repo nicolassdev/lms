@@ -55,13 +55,13 @@ if (!isset($_SESSION["principal_id"])) {
                         // Update the storePrincipalInfo array to include the new image path
                         $store['image'] = $newImageName;
                     } else {
-                        $_SESSION['error_handler'] = "Failed to upload image.";
+                        $_SESSION['error_notify'] = "Failed to upload image.";
                         header("location:../../index.php?page=principal_prof");
                         exit();
                     }
                 } else {
                     // throw new Exception("Invalid file type or size.");
-                    $_SESSION['error_handler'] = "Invalid file type or size.";
+                    $_SESSION['error_notify'] = "Invalid file type or size.";
                     header("location:../../index.php?page=principal_prof");
                     exit();
                 }
@@ -76,7 +76,7 @@ if (!isset($_SESSION["principal_id"])) {
                 }
             }
 
-            $_SESSION['update_principal'] = true;
+            $_SESSION['success_notify'] = "Principal Information has been updated successfully.";
             header("location:../../index.php?page=principal_prof");
             exit();
             $mySQLFunction->disconnect();

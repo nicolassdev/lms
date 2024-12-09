@@ -14,10 +14,10 @@ if (!isset($_POST["submit"])) {
     $section = strtoupper(trim($_POST["section"] ?? null));
     $advisor = trim($_POST["teacher_id"] ?? null);
     $date_created = date("Ymd");
-    $mySQLFunction->connection(); // Establish database connection
 
     try {
         // Start transaction
+        $mySQLFunction->connection(); // Establish database connection
         $mySQLFunction->con->begin_transaction();
 
 

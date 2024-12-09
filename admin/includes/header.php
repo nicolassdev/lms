@@ -215,7 +215,7 @@ foreach ($users as $user) {
                                 </ul>
                             </li>
 
-                            <!-- THIS IS FACULTY DROP DOWN SELECT IN SIDE BAR  -->
+                            <!-- THIS IS FACULTY MANAGEMENT DROP DOWN SELECT IN SIDE BAR  -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#facultyMenu" data-bs-toggle="collapse" aria-expanded="false" id="studentDropdown">
                                     <i class="bi bi-person-video3 me-1"></i>Faculty Management <i class="bi bi-chevron-down" style="margin-left: 5px;" id="facultyIcon"></i>
@@ -232,11 +232,11 @@ foreach ($users as $user) {
                                             <i class="bi bi-database-fill me-2"></i>Faculty Accounts
                                         </a>
                                     </li>
-                                    <li class="nav-item mt-2">
+                                    <!-- <li class="nav-item mt-2">
                                         <a class="nav-link active" href="index.php?page=section">
                                             <i class="bi bi-building-fill-add me-2"></i>Section
                                         </a>
-                                    </li>
+                                    </li> -->
                                     <li class="nav-item mt-2">
                                         <a class="nav-link active" href="index.php?page=subject">
                                             <i class="bi bi-journal-bookmark me-2"></i>Subject
