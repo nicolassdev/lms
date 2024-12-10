@@ -318,13 +318,18 @@ class myDataBase
     {
         $sql = "
             SELECT 
+                b.*, 
                 s.section_name, 
                 s.grade_lvl, 
-                COUNT(e.stu_lrn) AS enrolled_count
-            FROM enroll e
-            INNER JOIN section s ON e.section_code = s.section_code
-            WHERE s.teacher_id = ?
-            GROUP BY s.section_code
+                COUNT(e.stu_lrn) OVER (PARTITION BY s.section_code) AS enrolled_count
+            FROM 
+                enroll e
+            INNER JOIN 
+                section s ON e.section_code = s.section_code
+            INNER JOIN 
+                student b ON e.stu_lrn = b.stu_lrn
+            WHERE 
+                s.teacher_id = ?
         ";
 
         $stmt = $this->con->prepare($sql);
@@ -334,6 +339,7 @@ class myDataBase
 
         return $result;
     }
+
 
 
     //GET TEACHER  SUBJECT HANDLED by id

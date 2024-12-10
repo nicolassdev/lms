@@ -28,6 +28,12 @@ $teacherSectionHandled = $mySQLFunction->getTeacherSectionHandled($_SESSION['tea
 //GET THE NUMBER OF ENRLLED IN THAT SECTION
 $numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']); //section handled by teacher
 
+$totalStudentinSection = '0';
+foreach ($numberOfEnrolledInSection as $section) {
+    $totalStudentinSection = $section['enrolled_count'] ?: '0';
+}
+
+
 
 $mySQLFunction->disconnect();
 ?>
@@ -84,12 +90,12 @@ $mySQLFunction->disconnect();
 
 
 
-
         <div class="row g-4">
-            <?php foreach ($numberOfEnrolledInSection as $section): ?>
+            <?php if (!empty($teacherSectionHandled)): ?>
+
                 <!-- Section Card -->
                 <div class="col-md-4 col-sm-6 col-12">
-                    <div class="card shadow-lg h-100 border-0 ">
+                    <div class="card shadow-lg h-100 border-0">
                         <div class="card-body">
                             <!-- Card Header -->
                             <div class="d-flex align-items-center justify-content-between mb-3">
@@ -98,7 +104,7 @@ $mySQLFunction->disconnect();
                                     <i class="bi bi-people-fill display-6 text-danger"></i>
                                     <h5 class="card-title mt-2 mb-1 fw-bold text-secondary">
                                         <?php
-                                        echo ucwords(strtolower($section["grade_lvl"])) . ' ' . ucwords(strtolower($section["section_name"]));
+                                        echo ucwords(strtolower($teacherSectionHandled["grade_lvl"])) . ' ' . ucwords(strtolower($teacherSectionHandled["section_name"]));
                                         ?>
                                     </h5>
                                     <small class="card-subtitle text-muted">
@@ -109,7 +115,7 @@ $mySQLFunction->disconnect();
                                 <!-- Number of Students -->
                                 <div class="text-end">
                                     <h1 class="text-danger fw-bold display-6 mb-0">
-                                        <?php echo $section['enrolled_count']  ?? '0'; ?>
+                                        <?php echo $totalStudentinSection; ?>
                                     </h1>
                                     <small class="text-muted">Students</small>
                                 </div>
@@ -123,7 +129,21 @@ $mySQLFunction->disconnect();
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
+
+            <?php else: ?>
+                <!-- Error Message Card -->
+                <div class="col-12">
+                    <div class="col-md-4 col-sm-6 col-12">
+                        <div class="card shadow-lg h-100 border-0">
+                            <div class="card-body text-center">
+                                <i class="bi bi-exclamation-circle display-4 text-warning"></i>
+                                <h5 class="card-title mt-3 fw-bold text-secondary">No Section Available</h5>
+                                <p class="card-text text-muted">There are currently no sections assigned to you.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
 
 

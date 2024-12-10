@@ -24,6 +24,12 @@ $activeSem = $mySQLFunction->checkSemStatus('semester');
 
 $numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']); //section handled by teacher
 
+$totalStudentinSection = '0';
+foreach ($numberOfEnrolledInSection as $section) {
+    $totalStudentinSection = $section['enrolled_count'] ?: '0';
+}
+
+
 
 $mySQLFunction->disconnect();
 ?>
@@ -137,28 +143,27 @@ $mySQLFunction->disconnect();
 
 
             <div class="col-md-4 col-sm-6 col-12">
-                <?php foreach ($numberOfEnrolledInSection as $section): ?>
-                    <div class="card shadow-lg h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <!-- Icon and title -->
-                                <div class="" style="margin-left:20px">
-                                    <i class="bi bi-building-fill display-5 text-danger mb-2"></i>
-                                    <h5 class="card-title">Section</h5>
-                                    <p class="card-text">Total number of students in section</p>
-                                </div>
-                                <!-- Number of students -->
-                                <div class="text-end">
-                                    <h1 class="text-danger fw-bold display-5"> <?php echo $section['enrolled_count']  ?? '0'; ?></h1>
-                                </div>
+                <div class="card shadow-lg h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <!-- Icon and title -->
+                            <div class="" style="margin-left:20px">
+                                <i class="bi bi-building-fill display-5 text-danger mb-2"></i>
+                                <h5 class="card-title">Section</h5>
+                                <p class="card-text">Total number of students in section</p>
                             </div>
-                            <!-- Manage account button -->
-                            <div class="text-start mt-3 ms-3">
-                                <a href="?page=section_handled" class="btn btn-danger w-50">View students</a>
+                            <!-- Number of students -->
+                            <div class="text-end">
+                                <h1 class="text-danger fw-bold display-5"> <?php echo $totalStudentinSection; ?></h1>
+
                             </div>
                         </div>
+                        <!-- Manage account button -->
+                        <div class="text-start mt-3 ms-3">
+                            <a href="?page=section_handled" class="btn btn-danger w-50">View students</a>
+                        </div>
                     </div>
-                <?php endforeach; ?>
+                </div>
             </div>
 
         </div>
