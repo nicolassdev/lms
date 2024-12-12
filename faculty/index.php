@@ -4,11 +4,11 @@ if (isset($_SESSION['user_role'])) {
 
     $user_role = strtolower($_SESSION['user_role']);
     if ($user_role !== 'teacher') {
-        header("location:../login.php?error=accessdenied");
+        header("Location: /lms/login.php"); // redirect access denied if user role is not admin
         exit();
     }
 } else {
-    header("location:../login.php");
+    header("location:/lms/login.php"); // Redirect to login page if user role is not exist 
     exit();
 }
 ?>
@@ -81,6 +81,12 @@ switch ($page) {
         require_once 'teacher_report.php';
         break;
 
+        /** 
+         Subject route */
+
+    case "teacher_subject":
+        require_once 'teacher_subject.php';
+        break;
 
 
 

@@ -46,13 +46,20 @@ $mySQLFunction->disconnect();
                width: 800px; opacity: 0.2; z-index: -1;"
                     src="../assets/img/bg-home.webp"
                     alt="LMS Logo">
-                <h4>Welcome Back <?php echo ucwords(strtolower($_SESSION["user_role"])); ?> ! </h4>
-                <div class="container mt-3">
+
+                <div class="container">
                     <div class="row">
                         <!-- Date and Time Display -->
-                        <div class="col-md-12">
+                        <!-- <div class="col-md-12">
                             <div id="date" class="date-display"></div>
                             <div id="time" class="date-display"></div>
+                        </div> -->
+                        <div class="date-display">
+                            <?php
+                            date_default_timezone_set("Asia/Manila");
+                            echo "Today is : " . date("l, M d, Y") . "<br>";
+                            echo "Time : "  .  date("h:i A");
+                            ?>
                         </div>
 
                         <!-- School Year and Semester Display -->
@@ -67,8 +74,12 @@ $mySQLFunction->disconnect();
                                 echo '<div class="alert alert-warning" style="font-size: small;">No active school year and semester found.</div>';
                             }
                             ?>
-                            <!-- Static Data -->
-                            <!-- <p>Logged in as : Principal <i class="bi bi-patch-check-fill text-success ms-1"></i></p> -->
+                            <!-- Info name -->
+                            <p>Logged in as :
+                                <?php
+                                echo ucwords(strtolower($_SESSION['firstname'] . ' ' . $_SESSION['lastname']));
+                                ?>
+                            </p>
                         </div>
 
                     </div>
@@ -77,8 +88,6 @@ $mySQLFunction->disconnect();
         </div>
 
         <div class="row g-1">
-
-
 
 
             <!-- Account Card -->
@@ -90,7 +99,7 @@ $mySQLFunction->disconnect();
                             <div class="" style="margin-left:20px">
                                 <i class="bi bi-person-lines-fill display-5 text-primary mb-2"></i>
                                 <h5 class="card-title">Student</h5>
-                                <p class="card-text">Total number of students</p>
+                                <p class="card-text">Total number of students enrolled</p>
                             </div>
                             <!-- Number of students -->
                             <div class="text-end">

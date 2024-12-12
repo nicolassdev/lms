@@ -109,12 +109,11 @@ if (isset($_SESSION['teacher_id'])) {
             <div class="me-2">
                 <div class="dropdown d-none d-lg-block ms-auto text-success nav-shadow">
                     <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="text-black me-2" style="font-weight: 400;">
-                            <?php
-                            echo ucwords(strtolower($_SESSION["teacher_fname"] . ' ' . $_SESSION["teacher_lname"]));
-                            ?>
-                            <small>(<?php echo ucwords(strtolower($_SESSION["user_role"])); ?>)</small>
-                            <i class="bi bi-person-circle ms-1 small-icon" style="font-size: 1.3rem;"></i>
+                        <div class="text-black fs-6">
+
+                            <small class="text-primary">Welcome, <?php echo ucwords(strtolower($_SESSION["user_role"])); ?></small>
+
+                            <i class="bi bi-person-circle ms-1" style="font-size: 1.3rem;"></i>
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
@@ -196,10 +195,14 @@ if (isset($_SESSION['teacher_id'])) {
                                 </ul>
                             </li> -->
 
-
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=section_handled">
                                     <i class="bi bi-buildings me-1"></i>Section Handled
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index.php?page=teacher_subject">
+                                    <i class="bi bi-journal-bookmark-fill me-1"></i>Subject
                                 </a>
                             </li>
                             <li class="nav-item">

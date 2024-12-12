@@ -41,8 +41,8 @@ $mySQLFunction->disconnect();
                         src="./assets/img/csi.webp"
                         alt="LMS Logo">
                     <div class="container-fluid ">
-                        <h4>Welcome back CSIan Student!</h4>
-                        <p class="text-muted">Here you can manage your exam, quiz, assignments, and view your grades.</p>
+
+                        <!-- <h5 class="text-muted">Here you can manage your exam, quiz, assignments, and view your grades.</h5> -->
                         <!-- School Year and Semester Display -->
                         <div class="col-md-12 text-muted">
                             <?php
@@ -55,8 +55,13 @@ $mySQLFunction->disconnect();
                                 echo '<div class="alert alert-warning">No school year and semester found.</div>';
                             }
                             ?>
-                            <!-- Static Data -->
-                            <!-- <p>Logged in as : &nbsp;Student <i class="bi bi-patch-check-fill text-success ms-1"></i></p> -->
+
+                            <!-- Info name -->
+                            <p>Logged in as :
+                                <?php
+                                echo ucwords(strtolower($_SESSION['stu_fname'] . ' ' . $_SESSION['stu_lname']));
+                                ?>
+                            </p>
                         </div>
                         <div class="row mt-4">
                             <!-- Courses Card -->

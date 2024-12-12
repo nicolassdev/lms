@@ -126,9 +126,9 @@ include "../admin/includes/Forms/adminform.php";
                     </button>
                     <!-- this is adding another admin button i will leave it comment , if needed just uncomment this button down-->
                     <!-- <button type="button" class="btn btn-success btn-sm me-2 mb-2"
-                            title="Add Admin" data-bs-toggle="modal" data-bs-target="#admin">
-                            <i class="bi bi-person-add"></i>
-                        </button> -->
+                        title="Add Admin" data-bs-toggle="modal" data-bs-target="#admin">
+                        <i class="bi bi-person-add"></i>
+                    </button> -->
                 </div>
 
                 <div class="profile-header text-center mb-3">

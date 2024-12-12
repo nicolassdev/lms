@@ -30,15 +30,13 @@ if (!isset($_POST["submit"])) {
     // Generate registrar ID
     $reg_id = trim($mySQLFunction->generateID("REG-"));
 
-
-    // Directory for uploads
-    $uploadDir = "../../assets/Upload/";
-    $imagePath = null; // Initialize variable for the image path
-
     // Establish database connection
     $mySQLFunction->connection();
-
     try {
+        // Directory for uploads
+        $uploadDir = "../../assets/Upload/";
+        $imagePath = null; // Default to null if no file is uploaded
+
         // Handle file upload
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             $imageTmpName = $_FILES['image']['tmp_name'];
@@ -50,22 +48,21 @@ if (!isset($_POST["submit"])) {
                 throw new Exception("Failed to upload image.");
             }
 
-            // Save only the relative path
+            // Save only the relative path to store in the database
             $imagePath = str_replace('../../assets/', '', $imagePath);
-        } else {
-            throw new Exception("No image uploaded or upload error.");
+        } elseif (isset($_FILES['image']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+            // Handle other upload errors
+            $_SESSION['teacherupdate_error'] = "Image upload error. Error code: " . $_FILES['image']['error'];
+            header("location:../index.php?page=admin");
+            exit();
         }
 
-
-        // Check if username already exists
-        $checkUsernameSql = "SELECT * FROM `users` WHERE `username` = ?";
-        $stmt = $mySQLFunction->con->prepare($checkUsernameSql);
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $checkUsernameResult = $stmt->get_result();
-
-        if ($checkUsernameResult->num_rows > 0) {
-            throw new Exception("user already taken. No data will be inserted.");
+        // Proceed with checking username
+        $usernameExists = $mySQLFunction->checkUserExist($username);
+        if ($usernameExists) {
+            $_SESSION['teacherupdate_error'] = "Username has been already taken.";
+            header("location:../index.php?page=admin");
+            exit();
         }
 
         // Encrypt password if provided
@@ -85,8 +82,9 @@ if (!isset($_POST["submit"])) {
         $_SESSION['insert_admin'] = true;
         header("Location: ../index.php?page=admin");
     } catch (Exception $e) {
-        // Set error session variable and redirect
-        $_SESSION['error_principal'] = $e->getMessage();
+        // Debugging purposes
+        var_dump($e);
+        $_SESSION['error_message'] = $e->getMessage();
         header("Location: ../index.php?page=admin");
     } finally {
         // Close the database connection

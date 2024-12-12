@@ -5,8 +5,8 @@ if (!isset($_SESSION['username'])) {
 } elseif (isset($_SESSION['user_role'])) {
 
     $user_role = strtolower($_SESSION['user_role']);
-    if ($user_role !== 'admin') {
-        header("location:../login.php?error=accessdenied"); // redirect access denied if user role is not admin
+    if ($user_role !== 'registrar') {
+        header("location:../login.php?error=accessdenied"); // redirect access denied if user role is not registrar
         exit();
     }
 } else {

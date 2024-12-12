@@ -44,9 +44,9 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                             $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
                             ?>
 
-                            <button type="button" class="btn btn-primary btn-sm ms-2 btn-animate" data-bs-toggle="modal" data-bs-target="#upload_module" data-bs-whatever="@fat"
+                            <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#upload_module" data-bs-whatever="@fat"
                                 <?php echo empty($result) ? 'disabled' : ''; ?>>
-                                <i class="bi bi-cloud-arrow-up me-1"></i>Upload file module
+                                <i class="bi bi-cloud-arrow-up me-1"></i>Upload module
                             </button>
                         </div>
                     </div>
@@ -65,7 +65,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                     <th scope="col" style="width: 150px;">Address</th>
                                     <th scope="col" style="width: 100px;">Contact</th>
                                     <th scope="col" style="width: 100px;">Email</th>
-                                    <!-- <th scope="col" style="width: 100px;">Birthday</th> -->
+                                    <th scope="col" style="width: 100px;">Section</th>
                                     <!-- <th scope="col" style="width: 150px;">Place of birth</th>
                                     <th scope="col" style="width: 100px;">Father</th>
                                     <th scope="col" style="width: 100px;">Mother</th>
@@ -95,6 +95,8 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
                                         echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
                                         echo '<td class="small text-center">' . strtolower($row["stu_email"]) . '</td>';
+                                        echo '<td class="small text-center">' .  $row["section_name"] . '</td>';
+
                                         // echo '<td class="small text-center">' . $formattedBdate . '</td>';
                                         // echo '<td class="small text-center">' . $row["stu_pob"] . '</td>';
                                         // echo '<td class="small text-center">' . $row["father_name"] . '</td>';

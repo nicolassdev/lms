@@ -54,20 +54,25 @@ $mySQLFunction->disconnect();
             <div class="ms-3">
                 <img
                     style="position: absolute; top: 50%; right: 5%; transform: translate(-0%, -45%); 
-               width: 800px; opacity: 0.2; z-index: -1;"
+                    width: 800px; opacity: 0.2; z-index: -1;"
                     src="../assets/img/bg-home.webp"
                     alt="LMS Logo">
-                <h4>Welcome Back <?php echo ucwords(strtolower($_SESSION["user_role"])); ?> ! </h4>
-                <div class="container mt-3">
+                <div class="container">
                     <div class="row">
                         <!-- Date and Time Display -->
-                        <div class="col-md-12">
+                        <!-- <div class="col-md-12">
                             <div id="date" class="date-display"></div>
                             <div id="time" class="date-display"></div>
+                        </div> -->
+                        <div class="date-display">
+                            <?php
+                            date_default_timezone_set("Asia/Manila");
+                            echo "Today is : " . date("l, M d, Y") . "<br>";
+                            echo "Time : "  .  date("h:i A");
+                            ?>
                         </div>
-
                         <!-- School Year and Semester Display -->
-                        <div class="col-md-6 date-display">
+                        <div class="col-md-12 text-muted">
                             <?php
                             if (!empty($activeSchoolYears) && !empty($activeSem)) {
                                 foreach ($activeSchoolYears as $index => $schoolYear) {
@@ -78,8 +83,12 @@ $mySQLFunction->disconnect();
                                 echo '<div class="alert alert-warning" style="font-size: small;">No active school year and semester found.</div>';
                             }
                             ?>
-                            <!-- Static Data -->
-                            <!-- <p>Logged in as : Principal <i class="bi bi-patch-check-fill text-success ms-1"></i></p> -->
+                            <!-- Info name -->
+                            <p>Logged in as :
+                                <?php
+                                echo ucwords(strtolower($_SESSION['teacher_fname'] . ' ' . $_SESSION['teacher_lname']));
+                                ?>
+                            </p>
                         </div>
 
                     </div>
@@ -87,19 +96,19 @@ $mySQLFunction->disconnect();
             </div>
         </div>
 
-        <div class="row g-1">
+        <div class="row g-1 ">
 
 
 
 
-            <!-- Account Card -->
+            <!-- S ubject Card -->
             <div class="col-md-4 col-sm-6 col-12">
                 <div class="card shadow-lg h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between">
                             <!-- Icon and title -->
                             <div class="" style="margin-left:20px">
-                                <i class="bi  bi-journal-bookmark-fill display-5 text-primary mb-2"></i>
+                                <i class="bi bi-journal-bookmark-fill display-5 text-primary mb-2"></i>
                                 <h5 class="card-title">Subject</h5>
                                 <p class="card-text">Total number of subject handled</p>
                             </div>
@@ -141,7 +150,7 @@ $mySQLFunction->disconnect();
             </div>
 
 
-
+            <!-- Section Card -->
             <div class="col-md-4 col-sm-6 col-12">
                 <div class="card shadow-lg h-100">
                     <div class="card-body">

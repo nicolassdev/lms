@@ -40,23 +40,28 @@ $mySQLFunction->disconnect();
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <div class="ms-3">
+            <div class="ms-1">
                 <img
                     style="position: absolute; top: 50%; right: 5%; transform: translate(-0%, -45%); 
                     width: 500px; opacity: 0.1; z-index: -1;"
                     src="../assets/img/csi.webp"
                     alt="LMS Logo">
-                <h4>Welcome Back <?php echo ucwords(strtolower($_SESSION["user_role"])); ?> ! </h4>
-                <div class="container mt-3">
-                    <div class="row g-2">
+                <div class="container">
+                    <div class="row">
                         <!-- Date and Time Display -->
-                        <div class="col-md-12">
-                            <div id="date" class="date-display"></div>
-                            <div id="time" class="date-display"></div>
+                        <!-- 
+                        <div id="date" class="date-display"></div>
+                        <div id="time" class="date-display"></div> -->
+                        <div class="date-display">
+                            <?php
+                            date_default_timezone_set("Asia/Manila");
+                            echo "Today is : " . date("l, M d, Y") . "<br>";
+                            echo "Time : "  .  date("h:i A");
+                            ?>
                         </div>
 
                         <!-- School Year and Semester Display -->
-                        <div class="col-md-6 date-display">
+                        <div class="col-md-12 date-display">
                             <?php
                             if (!empty($activeSchoolYears) && !empty($activeSem)) {
                                 foreach ($activeSchoolYears as $index => $schoolYear) {
@@ -67,8 +72,12 @@ $mySQLFunction->disconnect();
                                 echo '<div class="alert alert-warning" style="font-size: small;">No active school year and semester found.</div>';
                             }
                             ?>
-                            <!-- Static Data -->
-                            <p>Logged in as : Registrar <i class="bi bi-patch-check-fill text-success ms-1"></i></p>
+                            <!-- Info name -->
+                            <p>Logged in as :
+                                <?php
+                                echo ucwords(strtolower($_SESSION['firstname'] . ' ' . $_SESSION['lastname']));
+                                ?>
+                            </p>
                         </div>
 
                     </div>

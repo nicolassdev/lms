@@ -1,44 +1,3 @@
-<?php
-// Database credentials
-$host = 'localhost';
-$dbname = 'lms_db';
-$username = 'root';
-$password = 'Nicolas051002';
-
-
-// Establish the database connection
-try {
-    $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
-    exit();
-}
-
-// Function to get user information from the database
-function getAdminInfo($conn)
-{
-    $sql = "SELECT * FROM registrar";  // SQL query to get all users
-    $stmt = $conn->query($sql);  // Execute the query
-    return $stmt ? $stmt->fetchAll() : [];  // Return fetched data or an empty array
-}
-
-// Fetch user information
-$users = getAdminInfo($conn);
-
-// Display the users' full names
-foreach ($users as $user) {
-    $fullName = ucwords(strtolower($user['firstname'] . ' ' . $user['lastname']));
-    // echo "<p>$fullName</p>";
-}
-
-
-
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -119,12 +78,9 @@ foreach ($users as $user) {
             <div class="dropdown d-none d-lg-block ms-auto">
                 <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <!-- Username and Icon Inline -->
-                    <span class="text-white me-1 mt-2" style="font-weight: 400;">
-                        <?php
-                        echo ucwords(strtolower($fullName));
-                        ?>
-                        <small>(Registrar)</small>
-                    </span>
+                    <div class="text-white me-1 mt-1">
+                        <small>Welcome, <?php echo ucwords(strtolower($_SESSION["user_role"])); ?></small>
+                    </div>
                     <i class="bi bi-person-fill-gear text-white" style="font-size: 1.5rem;"></i>
                 </a>
 
@@ -155,9 +111,9 @@ foreach ($users as $user) {
                 <nav id="sidebar" class="col-md-3 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 230px;">
                     <div class="position-sticky text-white ">
 
-                        <div class="text-white ms-4 d-lg-none">
+                        <div class="text-white ms-2 d-lg-none mt-2">
                             <?php
-                            echo ucwords(strtolower($fullName));
+                            echo ucwords(strtolower($_SESSION['firstname'] . ' ' . $_SESSION['lastname']));
                             echo '<i class="bi bi-person-circle ms-3 fs-2"></i>';
                             ?>
                         </div>
@@ -258,6 +214,13 @@ foreach ($users as $user) {
                                     <i class="bi bi-mortarboard me-1"></i>Strand
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index.php?page=schedule">
+                                    <i class="bi bi-clock me-1"></i>Subject Schedule
+                                </a>
+                            </li>
+
 
 
                             <!-- Dropdown for STRAND Subject -->

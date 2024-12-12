@@ -4,12 +4,12 @@ session_start();
 if (isset($_SESSION['user_role'])) {  //check if the user role variables is exist
 
     $user_role = strtolower($_SESSION['user_role']);
-    if ($user_role !== 'admin') {
-        header("location:../login.php?error=accessdenied"); // redirect access denied if user role is not admin
+    if ($user_role !== 'registrar') {
+        header("Location: /lms/login.php"); // redirect access denied if user role is not admin
         exit();
     }
 } else {
-    header("location:../login.php"); // Redirect to login page if user role is not exist 
+    header("location:/lms/login.php"); // Redirect to login page if user role is not exist 
     exit();
 }
 ?>
@@ -80,6 +80,10 @@ include "./includes/alert-modal.php";
             /**
                 ROUTE FOR STRAND SUBJECT
              */
+
+        case "schedule":
+            require_once 'schedule.php';
+            break;
         case "stem_subjects":
             require_once 'stem_subjects.php';
             break;

@@ -341,8 +341,8 @@ include "../includes/dbh-inc.php";
                     titleAttr: "Export as CSV",
                     exportOptions: {
                         columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 8)
-                            return index !== 8;
+                            // Exclude the "Action" column (assuming index 9)
+                            return index !== 9;
                         },
                     },
                 },
@@ -353,7 +353,7 @@ include "../includes/dbh-inc.php";
                     titleAttr: "Export as Excel",
                     exportOptions: {
                         columns: function(index, data, node) {
-                            return index !== 8;
+                            return index !== 9;
                         },
                     },
                 },
@@ -364,7 +364,7 @@ include "../includes/dbh-inc.php";
                     titleAttr: "Export as PDF",
                     exportOptions: {
                         columns: function(index, data, node) {
-                            return index !== 8;
+                            return index !== 9;
                         },
                     },
                 },
@@ -410,7 +410,7 @@ include "../includes/dbh-inc.php";
                     },
                     exportOptions: {
                         columns: function(index, data, node) {
-                            return index !== 8;
+                            return index !== 9;
                         },
                     },
                 },

@@ -56,8 +56,8 @@ include "../includes/dbh-inc.php";
                 if (!empty($result)) {
                     $count = 1;
                     foreach ($result as $row) {
-                        // Skip users with the 'ADMIN' role
-                        if (strtoupper($row["role"]) == 'ADMIN') {
+                        // Skip users with the 'REGISTRAR' role
+                        if (strtoupper($row["role"]) == 'REGISTRAR') {
                             continue;  // Skip this iteration and move to the next user
                         }
 
@@ -173,16 +173,16 @@ include "../includes/dbh-inc.php";
                                 </div>
                             </div>';
 
-
                         $count++;
                     }
+
+                    echo '</table>';
                 } else {
-                    echo '<tr>
-                                        <td colspan="10" class="text-center">User not found.</td>              
-                                  </tr>';
+                    echo '<table><tr><td colspan="10" class="text-center text-danger">User not found.</td></tr></table>';
                 }
-                echo '</table>';
-                echo '<a href="" class="btn btn-primary btn-sm" title="Refresh"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</a>';
+
+                echo '<a href="" class="btn btn-primary btn-sm mb-2" title="Refresh"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</a>';
+
 
                 $mySQLFunction->disconnect();
                 ?>

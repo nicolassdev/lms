@@ -5,11 +5,11 @@ if (isset($_SESSION['user_role'])) {  //check if the user role variables is exis
 
     $user_role = strtolower($_SESSION['user_role']);
     if ($user_role !== 'principal') {
-        header("location:../login.php?error=accessdenied"); // redirect access denied if user role is not admin
+        header("Location: /lms/login.php"); // redirect access denied if user role is not admin
         exit();
     }
 } else {
-    header("location:../login.php"); // Redirect to login page if user role is not exist 
+    header("location:/lms/login.php"); // Redirect to login page if user role is not exist 
     exit();
 }
 ?>

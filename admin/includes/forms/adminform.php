@@ -19,7 +19,7 @@ if (!isset($_SESSION["registrar_id"])) {
                     </div>
 
                     <!-- hide the role of value which is ADMIN  -->
-                    <input type="text" class="form-control d-none" name="role" value="ADMIN" required>
+                    <input type="text" class="form-control d-none" name="role" value="REGISTRAR" required>
 
 
                     <div class="col-md-12">
@@ -88,7 +88,7 @@ if (!isset($_SESSION["registrar_id"])) {
 
                     <div class="col-md-12">
                         <label class="form-label">Upload Image</label>
-                        <input type="file" class="form-control" name="image" accept="image/*" required>
+                        <input type="file" class="form-control" name="image" accept="image/*">
                         <div class="invalid-feedback">
                             Please upload a valid image file.
                         </div>

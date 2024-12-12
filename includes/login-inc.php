@@ -96,7 +96,7 @@ if (!isset($_POST["submit"])) {
 
             header("location: ../loading.php?redirect=" . urlencode("./principal/index.php"));
             exit();
-        } elseif ($userRole === "ADMIN") {                                            // REGISTRAR SET AS ADMIN
+        } elseif ($userRole === "REGISTRAR") {                                            // REGISTRAR SET AS ADMIN
             session_start();
 
             $user = $mySQLFunction->getCredential("username", $username);

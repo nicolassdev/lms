@@ -117,12 +117,9 @@ foreach ($users as $user) {
             <div class="dropdown d-none d-lg-block ms-auto">
                 <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <!-- Username and Icon Inline -->
-                    <span class="text-white me-1 mt-2" style="font-weight: 400;">
-                        <?php
-                        echo ucwords(strtolower($principalfullName));
-                        ?>
-                        <small>(<?php echo ucwords(strtolower($_SESSION["user_role"])); ?>)</small>
-                    </span>
+                    <div class="text-white me-1 mt-1">
+                        <small>Welcome, <?php echo ucwords(strtolower($_SESSION["user_role"])); ?></small>
+                    </div>
                     <i class="bi bi-person-fill-gear text-white" style="font-size: 1.5rem;"></i>
                 </a>
 
@@ -155,7 +152,7 @@ foreach ($users as $user) {
 
                         <div class="text-white ms-4 d-lg-none">
                             <?php
-                            echo ucwords(strtolower($principalfullName));
+                            echo ucwords(strtolower($_SESSION['firstname'] . ' ' . $_SESSION['lastname']));
                             echo '<i class="bi bi-person-circle ms-3 fs-2"></i>';
                             ?>
                         </div>

@@ -89,13 +89,9 @@ if (isset($_SESSION['stu_lrn'])) {
             <div class="me-2">
                 <div class="dropdown d-none d-lg-block ms-auto text-success">
                     <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="text-black" style="font-weight: 400;">
-                            <?php
-                            echo ucwords(strtolower($_SESSION['stu_fname'] . ' ' . $_SESSION['stu_lname']));
-                            ?>
-
-                            <small>(<?php echo ucwords(strtolower($_SESSION["user_role"])); ?>)</small>
-
+                        <div class="text-black fs-6">
+                            <!-- show user role -->
+                            <small class="text-primary">Welcome, <?php echo ucwords(strtolower($_SESSION["user_role"])); ?></small>
                             <i class="bi bi-person-circle ms-1" style="font-size: 1.3rem;"></i>
                         </div>
                     </a>
@@ -126,7 +122,7 @@ if (isset($_SESSION['stu_lrn'])) {
                 <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
                     <div class="position-sticky">
                         <!-- <h3 class="mb-4">Dashboard</h3> -->
-                        <div class="text-white ms-4 d-lg-none mt-2">
+                        <div class="text-white ms-2 d-lg-none mt-2">
                             <?php
                             echo ucwords(strtolower($_SESSION['stu_fname'] . ' ' . $_SESSION['stu_lname']));
                             echo '<i class="bi bi-person-circle ms-3 fs-2"></i>';
