@@ -16,8 +16,8 @@ $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $section_id = trim($_POST["sectionID"] ?? null);
 $subject_id = trim($_POST["subjectID"] ?? null);
 $day = trim($_POST["day"] ?? null);
-$from = trim($_POST["time_from"] ?? null);
-$to = trim($_POST["time_to"] ?? null);
+$from =  strtoupper(trim($_POST["time_from"]) ?? null);
+$to =  strtoupper(trim($_POST["time_to"]) ?? null);
 
 
 // Generate unique IDs

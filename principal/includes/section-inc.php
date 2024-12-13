@@ -12,7 +12,7 @@ if (!isset($_POST["submit"])) {
     $strandcode = trim($_POST["strand_code"] ?? null);
     $gradelvl = strtoupper(trim($_POST["gradelvl"] ?? null));
     $section = strtoupper(str_replace(' ', '', trim($_POST["section"] ?? null)));
-    // $advisor = trim($_POST["teacher_id"] ?? null);
+    $advisor = trim($_POST["teacher_id"] ?? null);
     $date_created = date("Ymd");
 
     $mySQLFunction->connection(); // Establish database connection
@@ -34,8 +34,8 @@ if (!isset($_POST["submit"])) {
         }
 
         // Insert Section
-        $sectionColumns = ['section_code', 'strand_code', 'grade_lvl', 'section_name', 'date_created'];
-        $sectionValues = [$code, $strandcode, $gradelvl, $section,  $date_created];
+        $sectionColumns = ['section_code', 'strand_code', 'grade_lvl', 'section_name', 'teacher_id', 'date_created'];
+        $sectionValues = [$code, $strandcode, $gradelvl, $section, $advisor, $date_created];
         $mySQLFunction->insert("section", $sectionColumns, $sectionValues);
 
 

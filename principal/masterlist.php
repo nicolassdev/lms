@@ -149,7 +149,7 @@ include "../includes/dbh-inc.php";
                                                                                                         <div class="row">
                                                                                                             <div class="col-md-6 mt-2 fw-semibold fs-6">
                                                                                                                 <label for="firstName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Full name</label>
-                                                                                                                <input type="text" class="form-control" value="' . htmlspecialchars($row['student']) . '" readonly disabled>
+                                                                                                                <input type="text" class="form-control" value="' . htmlspecialchars(ucwords(strtolower($row['student']))) . '" readonly disabled>
                                                                                                             </div>
                                                                                                  
                                                                                                             <div class="col-md-6 mt-2 fw-semibold fs-6">
@@ -197,14 +197,14 @@ include "../includes/dbh-inc.php";
                                                                                                         <div class="row">
                                                                                                             <div class="col-md-6 mt-2">
                                                                                                                     <label class="form-label fw-semibold fs-6">Father\'s name</label>
-                                                                                                                    <input type="text" class="form-control" value="' . htmlspecialchars($row['father_name']) . '" readonly disabled>
+                                                                                                                    <input type="text" class="form-control" value="' .  ucwords(strtolower($row['father_name'])) . '" readonly disabled>
                                                                                                             </div>
                                         
                                                                                                             
                                         
                                                                                                             <div class="col-md-6 mt-2">
                                                                                                                 <label class="form-label fw-semibold fs-6">Mother\'s name</label>
-                                                                                                                <input type="text" class="form-control"   value="' . htmlspecialchars($row['mother_name']) . '" readonly disabled>
+                                                                                                                <input type="text" class="form-control"   value="' .  ucwords(strtolower($row['mother_name'])) . '" readonly disabled>
                                                                                                             </div>
                                         
                                         
@@ -237,14 +237,14 @@ include "../includes/dbh-inc.php";
                                                                                                             </div>
                                                                                                                                                                                                                         <div class="col-md-6 mt-2">
                                                                                                                     <label class="form-label fw-semibold fs-6">Strand</label>
-                                                                                                                    <input type="text" class="form-control" value="' . htmlspecialchars($row['strand_name']) . '" readonly disabled>
+                                                                                                                    <input type="text" class="form-control" value="' .  ucwords(strtolower($row['strand_desc'])) . '" readonly disabled>
                                                                                                             </div>
                                         
                                                                                                             
                                         
                                                                                                             <div class="col-md-6 mt-2">
                                                                                                                 <label class="form-label fw-semibold fs-6">Adviser</label>
-                                                                                                                <input type="text" class="form-control"   value=" " readonly disabled>
+                                                                                                                <input type="text" class="form-control"   value=" ' .  ucwords(strtolower($row['adviser'])) . '" readonly disabled>
                                                                                                             </div>
 
 

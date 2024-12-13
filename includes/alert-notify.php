@@ -15,7 +15,7 @@ if (isset($_GET["success"]) && $_GET["success"] == "logout") {
         <span class='alert-icon-1'>&#10004;</span>
         <strong>You have successfully logged out!</strong>
     </div>";
-    header("refresh:2; url=login.php");
+    header("refresh:1; url=login.php");
 }
 
 if (isset($_GET["error"]) && $_GET["error"] == "accessdenied") {

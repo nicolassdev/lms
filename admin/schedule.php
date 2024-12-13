@@ -84,14 +84,16 @@ include "../admin/includes/Forms/scheduleform.php";
 
                             <thead class="table-dark text-light">
                                 <tr>
-                                    <th scope="col" class="small text-center">Student name</th>
+                                    <th scope="col" class="small text-center">Teacher name</th>
                                     <th scope="col" class="small text-center">Strand</th>
                                     <th scope="col" class="small text-center">Year level</th>
                                     <th scope="col" class="small text-center">Section</th>
                                     <th scope="col" class="small text-center">Semester</th>
-                                    <th scope="col" class="small text-center">School year</th>
-                                    <th scope="col" class="small text-center">Date Enrolled</th>
-                                    <th scope="col" class="small text-center">Status</th>
+                                    <th scope="col" class="small text-center">Subject</th>
+                                    <th scope="col" class="small text-center">Category</th>
+                                    <th scope="col" class="small text-center">Day</th>
+                                    <th scope="col" class="small text-center">From</th>
+                                    <th scope="col" class="small text-center">To</th>
                                     <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -99,37 +101,32 @@ include "../admin/includes/Forms/scheduleform.php";
                                 <?php
                                 $mySQLFunction->connection();
 
-                                $result = $mySQLFunction->getEnroll();
+                                $result = $mySQLFunction->getSchedule();
                                 if (!empty($result)) {
                                     $count = 0;
                                     foreach ($result as $row) {
-                                        // Check if 'requirements_submit' exists and is not empty
-                                        $submittedRequirements = isset($row['requirements_submit']) && !empty($row['requirements_submit'])
-                                            ? explode(', ', $row['requirements_submit'])
-                                            : [];
-                                        // Determine the background color based on enrollment status
-                                        $statusStyle = $row["enroll_status"] !== "Enrolled"
-                                            ? 'background-color: red; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;'
-                                            : 'background-color: green; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;';
 
                                         echo '<tr>';
-                                        echo '<td>' . ucwords(strtolower($row["student"])) . '</td>';
+                                        echo '<td>' . ucwords(strtolower($row["teacher"])) . '</td>';
                                         echo '<td>' . $row["strand_name"] . '</td>';
                                         echo '<td>' . $row["grade_lvl"] . '</td>';
                                         echo '<td>' . $row["section_name"] . '</td>';
-                                        echo '<td>' . $row["enroll_semester"] . '</td>';
-                                        echo '<td>' . $row["sy"] . '</td>';
-                                        echo '<td>' . $row["date_enroll"] . '</td>';
-                                        echo '<td><span style="' . $statusStyle . '">' . ucwords(strtolower($row["enroll_status"])) . '</span></td>';
+                                        echo '<td>' . $row["semester"] . '</td>';
+                                        echo '<td>' . $row["sub_title"] . '</td>';
+                                        echo '<td>' . $row["sub_type"] . '</td>';
+                                        echo '<td>' . $row["sched_day"] . '</td>';
+                                        echo '<td>' . $row["sched_from"] . '</td>';
+                                        echo '<td>' . $row["sched_to"] . '</td>';
+
                                         // THIS IS THE DELETE BUTTON I WILL LEAVE IT AS COMMENT IF NEEDED JUST UNCOMMENT 
 
-                                        //     <button class="btn btn-sm btn-outline-danger mt-2" data-bs-toggle="modal" data-bs-target="#del_enrolled' . urlencode($row['stu_lrn']) . '">
+                                        //     <button class="btn btn-sm btn-outline-danger mt-2" data-bs-toggle="modal" data-bs-target="#del_enrolled' . urlencode($row['sched_id']) . '">
                                         //     <i class="bi bi-trash"></i>
                                         // </button>
                                         echo '
                                         
                                         <td class="d-flex justify-content-center pt-2 pb-3 ">
-                                            <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#edit_enrolled' . urlencode($row['stu_lrn']) . '">
+                                            <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#edit_enrolled' . urlencode($row['sched_id']) . '">
                                                 <i class="bi bi-pencil-square me-1"></i>Edit
                                             </button>
                                         
@@ -140,16 +137,16 @@ include "../admin/includes/Forms/scheduleform.php";
                                         $count++;
 
 
-                                        // Modal for updating enrolled
+                                        //todo Modal for updating subject schedule
                                         echo '
                                                                                     
-                                            <div class="modal fade" id="edit_enrolled' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
+                                            <div class="modal fade" id="edit_enrolled' . htmlspecialchars($row['sched_id']) . '" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
                                                 <div class="modal-dialog modal-md">
                                                     <div class="modal-content">
                                                         <div class="modal-header bg-success text-white">
                                                             <div class="d-flex align-items-center justify-content-between w-100">
                                                             <div class="text-start">
-                                                                <h1 class="modal-title fs-5 text-white">Edit Student Enrolled</h1>
+                                                                <h1 class="modal-title fs-5 text-white">Edit Schedule</h1>
                                                             </div>
                                                             </div>
                                                             <div class="text-end">
@@ -157,64 +154,65 @@ include "../admin/includes/Forms/scheduleform.php";
                                                             </div>                           
                                                         </div>
                                                         <div class="modal-body p-4">
-                                                            <form action="./includes/Operation/updateEnroll.php" method="POST" class="row g-3 needs-validation" novalidate id="editEnrollForm' . htmlspecialchars($row['stu_lrn']) . '"> 
-                                                                <input type="hidden" name="enrollID" value="' . htmlspecialchars($row['stu_lrn']) . '">
+                                                            <form action="./includes/Operation/updateSchedule.php" method="POST" class="row g-3 needs-validation" novalidate id="editEnrollForm' . htmlspecialchars($row['sched_id']) . '"> 
+                                                                <input type="hidden" name="schedID" value="' . htmlspecialchars($row['sched_id']) . '">
                                                                 
                                                                 <!-- Student Name -->
                                                                 <div class="col-md-12 mb-3">
-                                                                    <label class="form-label fw-semibold fs-6">Student Name</label>
-                                                                    <input type="text" class="form-control" name="student" value="' . htmlspecialchars($row['student']) . '" disabled>
+                                                                    <label class="form-label fw-semibold fs-6">Subject teacher</label>
+                                                                    <input type="text" class="form-control" name="student" value="' . htmlspecialchars($row['teacher']) . '" disabled>
+                                                                    <div class="invalid-feedback">
+                                                                        Please enter a student name.
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 mb-3">
+                                                                    <label class="form-label fw-semibold fs-6">Subject</label>
+                                                                    <input type="text" class="form-control" name="student" value="' . htmlspecialchars($row['sub_title']) . '" disabled>
                                                                     <div class="invalid-feedback">
                                                                         Please enter a student name.
                                                                     </div>
                                                                 </div>
 
-                                                                <!-- Status -->
+                                                    
                                                                 <div class="col-md-12 mb-3">
-                                                                    <label class="form-label fw-semibold fs-6">Status</label>
-                                                                     <input type="text" class="form-control" name="status" value="' . htmlspecialchars($row['enroll_status']) . '" disabled>
+                                                                    <label class="form-label fw-semibold fs-6">Day Schedule</label>
+                                                                    <select class="form-select" name="day" required>
+                                                                        <option value="" disabled' . ($row['sched_day'] == '' ? ' selected' : '') . '>Select a day ..</option>
+                                                                        <option value="Mon"' . ($row['sched_day'] == 'Mon' ? ' selected' : '') . '>Monday</option>
+                                                                        <option value="Tue"' . ($row['sched_day'] == 'Tue' ? ' selected' : '') . '>Tuesday</option>
+                                                                        <option value="Wed"' . ($row['sched_day'] == 'Wed' ? ' selected' : '') . '>Wednesday</option>
+                                                                        <option value="Thu"' . ($row['sched_day'] == 'Thu' ? ' selected' : '') . '>Thursday</option>
+                                                                        <option value="Fri"' . ($row['sched_day'] == 'Fri' ? ' selected' : '') . '>Friday</option>
+                                                                        <option value="Sat"' . ($row['sched_day'] == 'Sat' ? ' selected' : '') . '>Saturday</option>
+                                                                    </select>
                                                                     <div class="invalid-feedback">
-                                                                        Please select a status.
+                                                                        Please select the day of the subject.
                                                                     </div>
                                                                 </div>
 
-
-                                                                <!-- Requirement submitted -->
-                                                                <div class="col-md-12 mb-3">
-                                                                    <label class="form-label fw-semibold fs-6">Requirement Submitted</label>
-                                                                    <div class="invalid-feedback" id="checkbox-feedback">
-                                                                        Please select at least one requirement.
-                                                                    </div>
-                                                                    <div class="d-flex flex-wrap gap-3 p-3 border rounded bg-light fs-6">
-                                                                        <div class="form-check">
-                                                                            <input class="form-check-input" type="checkbox" name="requirement[]" value="SF9" ' . (in_array("SF9", $submittedRequirements) ? "checked" : "") . '>
-                                                                            <label class="form-check-label">SF9</label>
-                                                                        </div>
-                                                                        <div class="form-check">
-                                                                            <input class="form-check-input" type="checkbox" name="requirement[]" value="SF10" ' . (in_array("SF10", $submittedRequirements) ? "checked" : "") . '>
-                                                                            <label class="form-check-label">SF10</label>
-                                                                        </div>
-                                                                        <div class="form-check">
-                                                                            <input class="form-check-input" type="checkbox" name="requirement[]" value="PSA" ' . (in_array("PSA", $submittedRequirements) ? "checked" : "") . '>
-                                                                            <label class="form-check-label">PSA Birth Certificate</label>
-                                                                        </div>
-                                                                        <div class="form-check">
-                                                                            <input class="form-check-input" type="checkbox" name="requirement[]" value="LCR" ' . (in_array("LCR", $submittedRequirements) ? "checked" : "") . '>
-                                                                            <label class="form-check-label">LCR Birth Certificate</label>
-                                                                        </div>
-                                                                        <div class="form-check">
-                                                                            <input class="form-check-input" type="checkbox" name="requirement[]" value="GMCC" ' . (in_array("GMCC", $submittedRequirements) ? "checked" : "") . '>
-                                                                            <label class="form-check-label">GMCC</label>
-                                                                        </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-3">
+                                                                    <label class="form-label fw-semibold fs-6">From</label>
+                                                                    <input type="text" class="form-control" name="time_from" value="' . htmlspecialchars($row['sched_from']) . '" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please enter a student name.
                                                                     </div>
                                                                 </div>
-
-
+                                                                
+                                                                
+                                                                <div class="col-md-6 mb-3">
+                                                                    <label class="form-label fw-semibold fs-6">To</label>
+                                                                    <input type="text" class="form-control" name="time_to" value="' . htmlspecialchars($row['sched_to']) . '" required>
+                                                                    <div class="invalid-feedback">
+                                                                        Please enter a student name.
+                                                                    </div>
+                                                                </div>                                                                
+</div>
 
                                                                 <!-- Buttons -->
                                                                 <div class="d-flex justify-content-between mt-4 gap-2">
                                                                     <button name="submit" class="btn btn-success w-100" type="submit">Update</button>
-                                                                    <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetSection(\'' . htmlspecialchars($row['stu_lrn']) . '\')">Cancel</button>
+                                                                    <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetSchedule(\'' . htmlspecialchars($row['sched_id']) . '\')">Cancel</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -223,7 +221,7 @@ include "../admin/includes/Forms/scheduleform.php";
                                             </div>
 
                                             <script>
-                                                function resetSection(id) {
+                                                function resetSchedule(id) {
                                                     var form = document.getElementById("editEnrollForm" + id);
                                                     if (form) {
                                                         form.reset(); // Clears the form fields
@@ -237,7 +235,7 @@ include "../admin/includes/Forms/scheduleform.php";
 
                                         // Modal for deleting enrolled student
                                         echo '
-                                        <div class="modal fade" id="del_enrolled' . urlencode($row['stu_lrn']) . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                                        <div class="modal fade" id="del_enrolled' . urlencode($row['sched_id']) . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-md">
                                                 <div class="modal-content shadow-lg">
                                                     <div class="modal-header border-0">
@@ -247,11 +245,11 @@ include "../admin/includes/Forms/scheduleform.php";
                                                         <div class="text-danger">
                                                             <i class="bi bi-trash fs-1 fade-in"></i>
                                                         </div>
-                                                        <h5 class="mt-4 mb-4 text-dark fw-bold">Are you sure you want to delete "<span class="text-danger">' . ucwords(strtolower($row['student'])) . '</span>"?</h5>
+                                                        <h5 class="mt-4 mb-4 text-dark fw-bold">Are you sure you want to delete "<span class="text-danger">' . ucwords(strtolower($row['teacher'])) . '</span>"?</h5>
                                                         <p class="text-muted">This action cannot be undone. Please confirm your decision below.</p>
                                                     </div>
                                                     <div class="modal-footer justify-content-center border-0 mt-3 mb-4">
-                                                        <a href="includes/Operation/deleteEnrolled.php?id=' . urlencode($row['stu_lrn']) . '" class="btn btn-danger px-4 py-2 me-3" style="width: 120px;">Remove</a>
+                                                        <a href="includes/Operation/deleteEnrolled.php?id=' . urlencode($row['sched_id']) . '" class="btn btn-danger px-4 py-2 me-3" style="width: 120px;">Remove</a>
                                                         <button class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
                                                     </div>
                                                 </div>
@@ -260,7 +258,7 @@ include "../admin/includes/Forms/scheduleform.php";
                                     }
                                 } else {
                                     echo '<tr>
-                                <td colspan="10" class="text-center ">Enrolled students not found.<br>
+                                <td colspan="10" class="text-center ">Schedule not found.<br>
                                 </td>
                               </tr>';
                                 }
@@ -314,8 +312,8 @@ include "../admin/includes/Forms/scheduleform.php";
                     titleAttr: "Export as CSV",
                     exportOptions: {
                         columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 8)
-                            return index !== 8;
+                            // Exclude the "Action" column (assuming index 10)
+                            return index !== 10;
                         },
                     },
                 },
@@ -326,7 +324,7 @@ include "../admin/includes/Forms/scheduleform.php";
                     titleAttr: "Export as Excel",
                     exportOptions: {
                         columns: function(index, data, node) {
-                            return index !== 8;
+                            return index !== 10;
                         },
                     },
                 },
@@ -337,7 +335,7 @@ include "../admin/includes/Forms/scheduleform.php";
                     titleAttr: "Export as PDF",
                     exportOptions: {
                         columns: function(index, data, node) {
-                            return index !== 8;
+                            return index !== 10;
                         },
                     },
                 },
@@ -386,7 +384,7 @@ include "../admin/includes/Forms/scheduleform.php";
                     },
                     exportOptions: {
                         columns: function(index, data, node) {
-                            return index !== 8;
+                            return index !== 10;
                         },
                     },
                 },

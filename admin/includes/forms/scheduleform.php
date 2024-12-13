@@ -86,33 +86,43 @@ $mySQLFunction->disconnect();
                             <?php
                             $mySQLFunction->connection();
                             $result = $mySQLFunction->getSubject();
+                            $activeSemester = $mySQLFunction->getActiveSemester(); // Get the active semester from your logic
                             $hasAvailableSubject = false;
 
                             if (empty($result)) {
                                 echo '<option disabled>No subject found in the database.</option>';
                             } else {
                                 foreach ($result as $row) {
-                                    // skip the subject code in schedule if subject code was already exist in schedule
-                                    // if (($mySQLFunction->checkRowCount("schedule", "sub_code", $row["sub_code"])) == 2) { //check if the subject id was exist 1x then skip to continue
-                                    //     continue;
-                                    // } else {
-                                    echo '<option value="' . $row["sub_code"] . '" 
-                                        data-subject="' . htmlspecialchars($row["sub_title"]) . '" 
-                                        data-subtype="' .  ucwords(strtolower($row["sub_type"])) . '" 
-                                        data-teacher="' .  ucwords(strtolower($row["teacher"])) . '"
-                                        data-semester="' .  ucwords(strtolower($row["sub_semester"])) . '">'
+                                    // Check if the subject's semester matches the active semester
+                                    if ($row["sub_semester"] !== $activeSemester) {
+                                        continue; // Skip this subject if it's not for the active semester
+                                    }
+
+                                    // Skip the subject if it is already scheduled the maximum number of times (e.g., 6 times)
+                                    if ($mySQLFunction->checkRowCount("schedule", "sub_code", $row["sub_code"]) >= 6) {
+                                        continue;
+                                    }
+
+                                    // Output available subjects as <option>
+                                    echo '<option value="' . htmlspecialchars($row["sub_code"]) . '" 
+                                            data-subject="' . htmlspecialchars($row["sub_title"]) . '" 
+                                            data-subtype="' . ucwords(strtolower($row["sub_type"])) . '" 
+                                            data-teacher="' . ucwords(strtolower($row["teacher"])) . '"
+                                            data-semester="' . ucwords(strtolower($row["sub_semester"])) . '">'
                                         . htmlspecialchars($row["sub_title"]) . '</option>';
 
                                     $hasAvailableSubject = true;
                                 }
                             }
-                            // }
-                            if (!$hasAvailableSubject) {
-                                echo '<option disabled>No subject available for schedule.</option>';
-                            }
-                            $mySQLFunction->disconnect();
 
+                            // Show a message if no subjects are available
+                            if (!$hasAvailableSubject) {
+                                echo '<option disabled>No subject available for scheduling in the active semester.</option>';
+                            }
+
+                            $mySQLFunction->disconnect();
                             ?>
+
                         </select>
                         <div class="invalid-feedback">
                             Please select a subject.

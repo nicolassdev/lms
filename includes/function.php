@@ -314,31 +314,31 @@ class myDataBase
     }
 
 
-    // public function checkEnrolledCountByTeacher($teacher_id)
-    // {
-    //     $sql = "
-    //         SELECT 
-    //             b.*, 
-    //             s.section_name, 
-    //             s.grade_lvl, 
-    //             COUNT(e.stu_lrn) OVER (PARTITION BY s.section_code) AS enrolled_count
-    //         FROM 
-    //             enroll e
-    //         INNER JOIN 
-    //             section s ON e.section_code = s.section_code
-    //         INNER JOIN 
-    //             student b ON e.stu_lrn = b.stu_lrn
-    //         WHERE 
-    //             s.teacher_id = ?
-    //     ";
+    public function checkEnrolledCountByTeacher($teacher_id)
+    {
+        $sql = "
+            SELECT 
+                b.*, 
+                s.section_name, 
+                s.grade_lvl, 
+                COUNT(e.stu_lrn) OVER (PARTITION BY s.section_code) AS enrolled_count
+            FROM 
+                enroll e
+            INNER JOIN 
+                section s ON e.section_code = s.section_code
+            INNER JOIN 
+                student b ON e.stu_lrn = b.stu_lrn
+            WHERE 
+                s.teacher_id = ?
+        ";
 
-    //     $stmt = $this->con->prepare($sql);
-    //     $stmt->bind_param("s", $teacher_id);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $teacher_id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-    //     return $result;
-    // }
+        return $result;
+    }
 
 
 
@@ -1190,18 +1190,24 @@ class myDataBase
     {
         if ($row != null && $value != null) {
             $sql = "SELECT `section_code`, `strand_name` ,`strand_desc` , `section.strand_code` , `grade_lvl` ,
-            `section_name` FROM `section`
+            `section_name`, `teacher_fname` , `teacher_lname` , `section.teacher_id` , 
+            CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS adviser FROM `section`
             INNER JOIN `strand`
             ON section.strand_code = strand.strand_code
+            INNER JOIN `teacher`
+            ON section.teacher_id = teacher.teacher_id
             WHERE section.$row = '$value'";
 
             $stored = ($this->con->query($sql))->fetch_assoc();
 
             return $stored;
         } else {
-            $sql = "SELECT `section_code`, `strand_name` ,`strand_desc` , `grade_lvl` , `section_name` FROM  `section`
+            $sql = "SELECT `section_code`, `strand_name` ,`strand_desc` , `grade_lvl` , `section_name`, `teacher_fname` , `teacher_lname` ,
+            CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS adviser FROM  `section`
             INNER JOIN `strand`
             ON section.strand_code = strand.strand_code
+            LEFT JOIN `teacher`
+            ON section.teacher_id = teacher.teacher_id
             ORDER BY section.section_name";
 
             $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
@@ -1286,77 +1292,165 @@ class myDataBase
 
         if ($row != null && $value != null) {
             $sql = "SELECT
-                `enroll`.`stu_lrn`,
-                stu_address,
-                stu_contact,
-                stu_gender,
-                stu_dob,
-                stu_pob,
-                stu_email,
-                father_name,
-                mother_name,
-                parent_contact,
-                CONCAT(`student`.`stu_fname`, ' ', `student`.`stu_lname`) AS student,
-                `enroll`.`section_code`,
-                `section`.`section_code`,
-                `section`.`strand_code`,
-                `strand`.`strand_name`,  -- Fetching the strand_name from the strand table
-                `section`.`section_name`,
-                `section`.`grade_lvl`,
-                `enroll`.`semester` AS enroll_semester,
-                `enroll`.`school_year` AS sy,
-                `enroll`.`date_enroll`,
-                `enroll`.`enroll_status`,
-                `enroll`.`current_school`,
-                `enroll`.`school_id`,
-                `enroll`.`school_address`,
-                `enroll`.`school_type`,
-                `enroll`.`requirements_submit`
-            FROM `enroll`
-            INNER JOIN `student` ON `enroll`.`stu_lrn` = `student`.`stu_lrn`
-            INNER JOIN `section` ON `enroll`.`section_code` = `section`.`section_code`
-            INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
-            WHERE `enroll`.`$row` = '$value' AND $activeSemesterCondition"; // Add semester condition
+             `enroll`.`stu_lrn`,
+             `student`.`stu_address`,
+             `student`.`stu_contact`,
+             `student`.`stu_gender`,
+             `student`.`stu_email`,
+             `student`.`stu_pob`, 
+             `student`.`stu_dob`,    
+             `student`.`father_name`,  
+             `student`.`mother_name`,   
+             `student`.`parent_contact`,   
+             CONCAT(`student`.`stu_fname`, ' ', `student`.`stu_lname`) AS student,
+             `enroll`.`section_code`,
+             `section`.`section_code`,
+             `section`.`strand_code`,
+             `strand`.`strand_name`,
+             `strand`.`strand_desc`,   -- Fetching the strand_name from the strand table
+             `section`.`section_name`,
+             `section`.`grade_lvl`,
+             `section`.`teacher_id`,
+             CONCAT(`teacher`.`teacher_fname`, ' ', `teacher`.`teacher_lname`) AS adviser,
+             `enroll`.`semester` AS enroll_semester,
+             `enroll`.`school_year` AS sy,
+             `enroll`.`date_enroll`,
+             `enroll`.`enroll_status`,
+             `enroll`.`current_school`,
+             `enroll`.`school_id`,
+             `enroll`.`school_address`,
+             `enroll`.`school_type`,
+             `enroll`.`requirements_submit`
+         FROM `enroll`
+         INNER JOIN `student` ON `enroll`.`stu_lrn` = `student`.`stu_lrn`
+         INNER JOIN `section` ON `enroll`.`section_code` = `section`.`section_code`
+         INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
+         INNER JOIN `teacher` ON `section`.`teacher_id` = `teacher`.`teacher_id` -- Joining the teacher table
+         WHERE `enroll`.`$row` = '$value' AND $activeSemesterCondition"; // Add semester condition
 
             $stored = ($this->con->query($sql))->fetch_assoc();
             return $stored;
         } else {
             $sql = "SELECT
-                `enroll`.`stu_lrn`,
-                stu_address,
-                stu_contact,
-                stu_gender,
-                stu_dob,
-                stu_pob,
-                stu_email,
-                father_name,
-                mother_name,
-                parent_contact,
-                CONCAT(`student`.`stu_fname`, ' ',`stu_mname`, ' ', `student`.`stu_lname`) AS student,
-                `section`.`strand_code`,
-                `strand`.`strand_name`,  -- Fetching the strand_name from the strand table
-                `section`.`section_name`,
-                `section`.`grade_lvl`,
-                `enroll`.`semester` AS enroll_semester,
-                `enroll`.`school_year` AS sy,
-                `enroll`.`date_enroll`,
-                `enroll`.`enroll_status`,
-                `enroll`.`current_school`,
-                `enroll`.`school_id`,
-                `enroll`.`school_address`,
-                `enroll`.`school_type`,
-                `enroll`.`requirements_submit`
-            FROM `enroll`
-            INNER JOIN `student` ON `enroll`.`stu_lrn` = `student`.`stu_lrn`
-            INNER JOIN `section` ON `enroll`.`section_code` = `section`.`section_code`
-            INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
-            WHERE $activeSemesterCondition -- Add semester condition
-            ORDER BY `student`.`stu_fname`";
+             `enroll`.`stu_lrn`,
+             `student`.`stu_address`,
+             `student`.`stu_contact`,
+             `student`.`stu_gender`,
+             `student`.`stu_email`,
+             `student`.`stu_pob`, 
+             `student`.`stu_dob`,    
+             `student`.`father_name`,  
+             `student`.`mother_name`,   
+             `student`.`parent_contact`, 
+             CONCAT(`student`.`stu_fname`, ' ', `student`.`stu_lname`) AS student,
+             `section`.`strand_code`,
+             `strand`.`strand_name`,
+             `strand`.`strand_desc`,  -- Fetching the strand_name from the strand table
+             `section`.`section_name`,
+             `section`.`grade_lvl`,
+             `section`.`teacher_id`,
+             CONCAT(`teacher`.`teacher_fname`, ' ', `teacher`.`teacher_lname`) AS adviser,
+             `enroll`.`semester` AS enroll_semester,
+             `enroll`.`school_year` AS sy,
+             `enroll`.`date_enroll`,
+             `enroll`.`enroll_status`,
+             `enroll`.`current_school`,
+             `enroll`.`school_id`,
+             `enroll`.`school_address`,
+             `enroll`.`school_type`,
+             `enroll`.`requirements_submit`
+         FROM `enroll`
+         INNER JOIN `student` ON `enroll`.`stu_lrn` = `student`.`stu_lrn`
+         INNER JOIN `section` ON `enroll`.`section_code` = `section`.`section_code`
+         INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
+         INNER JOIN `teacher` ON `section`.`teacher_id` = `teacher`.`teacher_id` -- Joining the teacher table
+         WHERE $activeSemesterCondition -- Add semester condition
+         ORDER BY `student`.`stu_fname`";
 
             $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
             return $stored;
         }
     }
+
+
+
+    //GET LIST OF SCHEDULE
+    public function getSchedule($row = null, $value = null)
+    {
+        // Get the active semester
+        $activeSemesters = $this->checkSemStatus('semester');
+
+        // Check if there are any active semesters
+        if (empty($activeSemesters)) {
+            return []; // Return an empty array if no active semester
+        }
+
+        // Prepare the active semester condition
+        $activeSemesterCondition = "subject.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
+
+        if ($row != null && $value != null) {
+            $sql = "SELECT
+                `schedule`.`sched_id`,
+                `schedule`.section_code,
+                `section`.grade_lvl,
+                `section`.section_name,
+                `section`.`strand_code`,
+                `strand`.`strand_name`,
+                `strand`.`strand_desc`,
+                `schedule`.sub_code,
+                `subject`.sub_title,
+                `subject`.sub_type,
+                `subject`.sub_time,   
+                `subject`.sub_semester AS semester,  
+                `subject`.teacher_id,                                                                  
+                 CONCAT(`teacher`.`teacher_fname`, ' ', `teacher`.`teacher_lname`) AS teacher,
+                `schedule`.`sched_day`,
+                `schedule`.`sched_from`,
+                `schedule`.`sched_to`                                                           
+            FROM `schedule`
+            INNER JOIN `section` ON `schedule`.`section_code` = `section`.`section_code`
+            INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
+            INNER JOIN `subject` ON `schedule`.`sub_code` = `subject`.`sub_code`
+            INNER JOIN `teacher` ON `subject`.`teacher_id` = `teacher`.`teacher_id`
+            WHERE `schedule`.`$row` = '$value' AND $activeSemesterCondition"; // Add semester condition
+
+            $stored = ($this->con->query($sql))->fetch_assoc();
+            return $stored;
+        } else {
+            $sql = "SELECT
+                `schedule`.`sched_id`,
+                `schedule`.section_code,
+                `section`.grade_lvl,
+                `section`.section_name,
+                `section`.`strand_code`,
+                `strand`.`strand_name`,
+                `strand`.`strand_desc`,
+                `schedule`.sub_code,
+                `subject`.sub_title,
+                `subject`.sub_type,
+                `subject`.sub_time,   
+                `subject`.sub_semester AS semester,  
+                `subject`.teacher_id,                                                                  
+                 CONCAT(`teacher`.`teacher_fname`, ' ', `teacher`.`teacher_lname`) AS teacher,
+                `schedule`.`sched_day`,
+                `schedule`.`sched_from`,
+                `schedule`.`sched_to`                                                           
+            FROM `schedule`
+            INNER JOIN `section` ON `schedule`.`section_code` = `section`.`section_code`
+            INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
+            INNER JOIN `subject` ON `schedule`.`sub_code` = `subject`.`sub_code`
+            INNER JOIN `teacher` ON `subject`.`teacher_id` = `teacher`.`teacher_id` -- Joining the strand table
+            WHERE $activeSemesterCondition -- Add semester condition
+            ORDER BY `subject`.sub_title";
+
+            $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
+            return $stored;
+        }
+    }
+
+
+
+
 
 
 

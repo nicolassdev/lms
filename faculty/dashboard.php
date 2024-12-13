@@ -22,7 +22,7 @@ $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
 
 //section handled by teacher
-// $numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
+$numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
 
 $totalStudentinSection = '0';
 foreach ($numberOfEnrolledInSection as $section) {
