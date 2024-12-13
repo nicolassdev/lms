@@ -88,7 +88,6 @@ include "../admin/includes/Forms/enrollmentform.php";
                                     <th scope="col" class="small text-center">Strand</th>
                                     <th scope="col" class="small text-center">Year level</th>
                                     <th scope="col" class="small text-center">Section</th>
-                                    <th scope="col" class="small text-center">Adviser</th>
                                     <th scope="col" class="small text-center">Semester</th>
                                     <th scope="col" class="small text-center">School year</th>
                                     <th scope="col" class="small text-center">Date Enrolled</th>
@@ -118,7 +117,6 @@ include "../admin/includes/Forms/enrollmentform.php";
                                         echo '<td>' . $row["strand_name"] . '</td>';
                                         echo '<td>' . $row["grade_lvl"] . '</td>';
                                         echo '<td>' . $row["section_name"] . '</td>';
-                                        echo '<td>' . ucwords(strtolower($row["adviser"])) . '</td>';
                                         echo '<td>' . $row["enroll_semester"] . '</td>';
                                         echo '<td>' . $row["sy"] . '</td>';
                                         echo '<td>' . $row["date_enroll"] . '</td>';

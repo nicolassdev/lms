@@ -10,7 +10,7 @@ include "../includes/dbh-inc.php";
 ?>
 <!-- FORM MODAL ADD TEACHER  -->
 <?php
-include "../admin/includes/Forms/sectionform.php";
+include "../principal/includes/Forms/sectionform.php";
 ?>
 
 
@@ -53,7 +53,7 @@ include "../admin/includes/Forms/sectionform.php";
                                     <th scope="col" class="small text-center">Section</th>
                                     <th scope="col" class="small text-center">Strand</th>
                                     <th scope="col" class="small text-center">Year level</th>
-                                    <th scope="col" class="small text-center">Adviser</th>
+                                    <!-- <th scope="col" class="small text-center">Adviser</th> -->
                                     <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
 
                                 </tr>
@@ -74,7 +74,7 @@ include "../admin/includes/Forms/sectionform.php";
                                         echo '<td class="small text-center">' . $row["section_name"] . '</td>';
                                         echo '<td class="small text-center">' . $row["strand_name"] . '</td>';
                                         echo '<td class="small text-center">' . $row["grade_lvl"] . '</td>';
-                                        echo '<td class="small text-center">' . ucwords(strtolower($row["adviser"])) . '</td>';
+                                        // echo '<td class="small text-center">' . ucwords(strtolower($row["adviser"])) . '</td>';
 
                                         echo '
                                         <td class="d-flex justify-content-center">
@@ -161,16 +161,9 @@ include "../admin/includes/Forms/sectionform.php";
                                                             <label class="form-label fw-bold">Strand</label>
                                                             <input text="text" class="form-control" name="strand_code" value="' . htmlspecialchars($row['strand_desc']) . '"  disabled>                                                                                             
                                                             <div class="invalid-feedback">
-                                                                Please select an adviser.
+                                                                Please select an strand.
                                                         </div>
 
-
-                                                         <div class="col-md-12 mt-3">
-                                                            <label class="form-label fw-bold">Adviser</label>
-                                                            <input text="text" class="form-control" name="teacher_id" value="' . htmlspecialchars($row['adviser']) . '"  disabled>                                                                                             
-                                                            <div class="invalid-feedback">
-                                                                Please select an adviser.
-                                                        </div>
                                                     </div>';
 
 

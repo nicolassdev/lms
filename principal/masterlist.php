@@ -244,7 +244,7 @@ include "../includes/dbh-inc.php";
                                         
                                                                                                             <div class="col-md-6 mt-2">
                                                                                                                 <label class="form-label fw-semibold fs-6">Adviser</label>
-                                                                                                                <input type="text" class="form-control"   value="' . htmlspecialchars($row['adviser']) . '" readonly disabled>
+                                                                                                                <input type="text" class="form-control"   value=" " readonly disabled>
                                                                                                             </div>
 
 

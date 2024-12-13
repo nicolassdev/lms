@@ -314,31 +314,31 @@ class myDataBase
     }
 
 
-    public function checkEnrolledCountByTeacher($teacher_id)
-    {
-        $sql = "
-            SELECT 
-                b.*, 
-                s.section_name, 
-                s.grade_lvl, 
-                COUNT(e.stu_lrn) OVER (PARTITION BY s.section_code) AS enrolled_count
-            FROM 
-                enroll e
-            INNER JOIN 
-                section s ON e.section_code = s.section_code
-            INNER JOIN 
-                student b ON e.stu_lrn = b.stu_lrn
-            WHERE 
-                s.teacher_id = ?
-        ";
+    // public function checkEnrolledCountByTeacher($teacher_id)
+    // {
+    //     $sql = "
+    //         SELECT 
+    //             b.*, 
+    //             s.section_name, 
+    //             s.grade_lvl, 
+    //             COUNT(e.stu_lrn) OVER (PARTITION BY s.section_code) AS enrolled_count
+    //         FROM 
+    //             enroll e
+    //         INNER JOIN 
+    //             section s ON e.section_code = s.section_code
+    //         INNER JOIN 
+    //             student b ON e.stu_lrn = b.stu_lrn
+    //         WHERE 
+    //             s.teacher_id = ?
+    //     ";
 
-        $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("s", $teacher_id);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    //     $stmt = $this->con->prepare($sql);
+    //     $stmt->bind_param("s", $teacher_id);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-        return $result;
-    }
+    //     return $result;
+    // }
 
 
 
@@ -774,6 +774,25 @@ class myDataBase
         return $result->fetch_assoc(); // Return the first row if exists
     }
 
+    // Check if the id's in row in table schedule was duplicate 
+    public function checkDuplicateID($table, $firstColumn, $secondColumn, $idColumn, $section_code, $sub_code, $excludeID)
+    {
+        // Prepare the SQL query
+        $sql = "SELECT * FROM $table WHERE $firstColumn = ? AND $secondColumn = ? AND $idColumn != ?";
+        $stmt = $this->con->prepare($sql);
+
+        // Bind the parameters
+        $stmt->bind_param("sss", $section_code, $sub_code, $excludeID);
+
+        // Execute the query
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Fetch the result
+        return $result->num_rows > 0; // Return true if a duplicate exists
+    }
+
+
 
 
     public function checkSectionExist($strand, $section, $adviser)
@@ -1171,24 +1190,18 @@ class myDataBase
     {
         if ($row != null && $value != null) {
             $sql = "SELECT `section_code`, `strand_name` ,`strand_desc` , `section.strand_code` , `grade_lvl` ,
-            `section_name`, `teacher_fname` , `teacher_lname` , `section.teacher_id` , 
-            CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS adviser FROM `section`
+            `section_name` FROM `section`
             INNER JOIN `strand`
             ON section.strand_code = strand.strand_code
-            INNER JOIN `teacher`
-            ON section.teacher_id = teacher.teacher_id
             WHERE section.$row = '$value'";
 
             $stored = ($this->con->query($sql))->fetch_assoc();
 
             return $stored;
         } else {
-            $sql = "SELECT `section_code`, `strand_name` ,`strand_desc` , `grade_lvl` , `section_name`, `teacher_fname` , `teacher_lname` ,
-            CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS adviser FROM  `section`
+            $sql = "SELECT `section_code`, `strand_name` ,`strand_desc` , `grade_lvl` , `section_name` FROM  `section`
             INNER JOIN `strand`
             ON section.strand_code = strand.strand_code
-            LEFT JOIN `teacher`
-            ON section.teacher_id = teacher.teacher_id
             ORDER BY section.section_name";
 
             $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
@@ -1210,8 +1223,8 @@ class myDataBase
                 `subject.teacher_id`, 
                 CONCAT(`teacher_fname`, ' ', `teacher_mname`, ' ', `teacher_lname`) AS teacher 
                 FROM `subject`
-                LEFT JOIN `strand` ON subject.strand_code = strand.strand_code
-                LEFT JOIN `teacher` ON subject.teacher_id = teacher.teacher_id
+                INNER JOIN `strand` ON subject.strand_code = strand.strand_code
+                INNER JOIN `teacher` ON subject.teacher_id = teacher.teacher_id
                 WHERE subject.$row = ?");
 
             // Bind the value to the prepared statement
@@ -1237,8 +1250,8 @@ class myDataBase
                 `sub_semester`, `strand_name` AS strand, `sub_gradelvl`,
                 CONCAT(`teacher_fname`, ' ', `teacher_mname`, ' ', `teacher_lname`) AS teacher
                 FROM `subject`
-                LEFT JOIN `strand` ON subject.strand_code = strand.strand_code
-                LEFT JOIN `teacher` ON subject.teacher_id = teacher.teacher_id
+                INNER JOIN `strand` ON subject.strand_code = strand.strand_code
+                INNER JOIN `teacher` ON subject.teacher_id = teacher.teacher_id
                 ORDER BY subject.sub_title";
 
             $result = $this->con->query($sql);
@@ -1290,8 +1303,6 @@ class myDataBase
                 `strand`.`strand_name`,  -- Fetching the strand_name from the strand table
                 `section`.`section_name`,
                 `section`.`grade_lvl`,
-                `section`.`teacher_id`,
-                CONCAT(`teacher`.`teacher_fname`, ' ', `teacher`.`teacher_lname`) AS adviser,
                 `enroll`.`semester` AS enroll_semester,
                 `enroll`.`school_year` AS sy,
                 `enroll`.`date_enroll`,
@@ -1305,7 +1316,6 @@ class myDataBase
             INNER JOIN `student` ON `enroll`.`stu_lrn` = `student`.`stu_lrn`
             INNER JOIN `section` ON `enroll`.`section_code` = `section`.`section_code`
             INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
-            INNER JOIN `teacher` ON `section`.`teacher_id` = `teacher`.`teacher_id` -- Joining the teacher table
             WHERE `enroll`.`$row` = '$value' AND $activeSemesterCondition"; // Add semester condition
 
             $stored = ($this->con->query($sql))->fetch_assoc();
@@ -1327,8 +1337,6 @@ class myDataBase
                 `strand`.`strand_name`,  -- Fetching the strand_name from the strand table
                 `section`.`section_name`,
                 `section`.`grade_lvl`,
-                `section`.`teacher_id`,
-                CONCAT(`teacher`.`teacher_fname`, ' ', `teacher`.`teacher_lname`) AS adviser,
                 `enroll`.`semester` AS enroll_semester,
                 `enroll`.`school_year` AS sy,
                 `enroll`.`date_enroll`,
@@ -1342,7 +1350,6 @@ class myDataBase
             INNER JOIN `student` ON `enroll`.`stu_lrn` = `student`.`stu_lrn`
             INNER JOIN `section` ON `enroll`.`section_code` = `section`.`section_code`
             INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
-            INNER JOIN `teacher` ON `section`.`teacher_id` = `teacher`.`teacher_id` -- Joining the teacher table
             WHERE $activeSemesterCondition -- Add semester condition
             ORDER BY `student`.`stu_fname`";
 

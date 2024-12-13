@@ -13,7 +13,7 @@
 
                      <!-- SECTION SELECTION -->
                      <div class="col-md-12">
-                         <label class="form-label">Section Name</label>
+                         <label class="form-label">Section name</label>
                          <input type="text" class="form-control" name="section" required>
 
                          <div class="invalid-feedback">
@@ -25,7 +25,7 @@
 
                      <!-- STRAND NAME  -->
                      <div class="col-md-12">
-                         <label class="form-label">Strand Name</label>
+                         <label class="form-label">Strand </label>
                          <select class="form-select" id="strandSelect" name="strand_code" required>
                              <option value="" selected disabled>Select a strand...</option>
                              <!-- limit the strand display accourding to section  -->
@@ -76,43 +76,6 @@
                          </div>
                      </div>
 
-
-                     <!-- ADVISOR SELECTION -->
-                     <div class="col-md-12">
-                         <label class="form-label">Adviser</label>
-                         <select class="form-select" name="teacher_id" required>
-                             <option value="" selected disabled>Choose an adviser...</option>
-                             <?php
-                                $mySQLFunction->connection();
-                                $result = $mySQLFunction->getTeacher();
-                                $hasAvailableAdviser = false;
-
-                                // CHECK IF ADVISER IS AVAILABLE
-                                if (empty($result)) {
-                                    echo '<option disabled>No adviser found in the database.</option>';
-                                } else {
-                                    foreach ($result as $row) {
-                                        // Check if the teacher has any sections assigned
-                                        if (($mySQLFunction->checkRowCount("section", "teacher_id", $row["teacher_id"])) == 1) {
-                                            continue; // Skip if the adviser is already assigned to a section
-                                        } else {
-                                            echo '<option value="' . $row["teacher_id"] . '">' . $row["teacher_fname"] . ' ' . $row["teacher_mname"] . ' ' . $row["teacher_lname"] . '</option>';
-                                            $hasAvailableAdviser = true; // Mark that there is at least one available adviser
-                                        }
-                                    }
-                                }
-                                // Check if no available adviser was found after the loop
-                                if (!$hasAvailableAdviser) {
-                                    echo '<option disabled>No adviser available for section.</option>';
-                                }
-                                $mySQLFunction->disconnect();
-                                ?>
-
-                         </select>
-                         <div class="invalid-feedback">
-                             Please select an advisor.
-                         </div>
-                     </div>
 
                      <div class="col-md-12">
                          <button name="submit" class="btn btn-primary w-100 mt-3 mb-2" type="submit">Save</button>

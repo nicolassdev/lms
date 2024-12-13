@@ -112,8 +112,7 @@ $mySQLFunction->disconnect();
                                 foreach ($result as $row) {
                                     echo '<option value="' . $row["section_code"] . '" 
                                                 data-strand="' . htmlspecialchars($row["strand_name"]) . '" 
-                                                data-gradelvl="' . htmlspecialchars($row["grade_lvl"]) . '" 
-                                                data-adviser="' . htmlspecialchars($row["adviser"]) . '">'
+                                                data-gradelvl="' . htmlspecialchars($row["grade_lvl"]) . '">'
                                         . htmlspecialchars($row["section_name"]) . '</option>';
                                 }
                             }
@@ -132,10 +131,6 @@ $mySQLFunction->disconnect();
                     <div class="col-md-6">
                         <label class="form-label">Grade level</label>
                         <input type="text" class="form-control" id="gradelvlInput" readonly>
-                    </div>
-                    <div class="col-md-12">
-                        <label class="form-label">Adviser</label>
-                        <input type="text" class="form-control" id="adviserInput" readonly>
                     </div>
 
 
@@ -232,7 +227,6 @@ $mySQLFunction->disconnect();
         const sectionSelect = document.getElementById('sectionSelect');
         const strandInput = document.getElementById('strandInput');
         const gradelvlInput = document.getElementById('gradelvlInput');
-        const adviserInput = document.getElementById('adviserInput');
 
         sectionSelect.addEventListener('change', function() {
             const selectedOption = this.options[this.selectedIndex];
@@ -240,12 +234,10 @@ $mySQLFunction->disconnect();
             // Get strand and adviser from data attributes
             const strand = selectedOption.getAttribute('data-strand') || '';
             const gradelvl = selectedOption.getAttribute('data-gradelvl') || '';
-            const adviser = selectedOption.getAttribute('data-adviser') || '';
 
             // Set the values to the input fields
             strandInput.value = strand;
             gradelvlInput.value = gradelvl;
-            adviserInput.value = adviser;
         });
     });
 

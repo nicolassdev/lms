@@ -57,7 +57,7 @@
                <thead class="table-dark ">
                  <tr>
                    <!-- <th scope="col">#</th> -->
-                   <th scope="col" class="small text-center">Subject Code</th>
+                   <!-- <th scope="col" class="small text-center">Subject Code</th> -->
                    <th scope="col" class="small text-center">Subject</th>
                    <th scope="col" class="small text-center">Category</th>
                    <th scope="col" class="small text-center">Time</th>
@@ -79,7 +79,7 @@
                     foreach ($result as $row) {
                       echo '<tr>';
 
-                      echo '<td>' . $row["sub_code"] . '</td>';
+                      // echo '<td>' . $row["sub_code"] . '</td>';
                       echo '<td>' . $row["sub_title"] . '</td>';
                       echo '<td>' . ucwords(strtolower($row["sub_type"])) . '</td>';
                       echo '<td>' . $row["sub_time"] . '</td>';
