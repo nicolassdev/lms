@@ -1099,6 +1099,41 @@ class myDataBase
         }
     }
 
+    function hasSubjectTimeConflict($section_code, $sub_code, $day, $from, $to)
+    {
+        // Prepare query to check for conflicts considering the sub_code, section_code, and specific time ranges
+        $query = "SELECT * FROM schedule 
+                  WHERE section_code = ? 
+                  AND sub_code = ? 
+                  AND sched_day = ? 
+                  AND (
+                        (? BETWEEN sched_from AND sched_to) OR
+                        (? BETWEEN sched_from AND sched_to) OR
+                        (sched_from BETWEEN ? AND ?)
+                      )";
+
+        // Use prepared statement for security
+        $stmt = $this->con->prepare($query);
+        $stmt->bind_param("sssssss", $section_code, $sub_code, $day, $from, $to, $from, $to);
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        // If there are conflicts, return the first conflict details (e.g., subject code, time, and section)
+        if ($result && $result->num_rows > 0) {
+            // Fetch the conflicting schedule
+            return $result->fetch_assoc();
+        }
+
+        // No conflicts found
+        return false;
+    }
+
+
+
+
+
 
     //GET STRAND NAME
     // public function getStrand($row = null, $value = null, $limit = 8, $offset = 0)
@@ -1449,6 +1484,57 @@ class myDataBase
     }
 
 
+    function getSectionTitle($section_id)
+    {
+        // Prepare the SQL query to fetch the section title based on the section_id
+        $query = "SELECT section_name FROM section WHERE section_code = ?";
+
+        // Use a prepared statement to prevent SQL injection
+        $stmt = $this->con->prepare($query);
+        $stmt->bind_param("s", $section_id);  // Bind the section_id parameter to the query
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        // Check if any rows were returned
+        if ($result->num_rows > 0) {
+            // Fetch the section title from the result
+            $row = $result->fetch_assoc();
+
+            // Return the section title
+            return $row['section_name'];
+        } else {
+            // If no section is found, return null or an appropriate message
+            return null;
+        }
+    }
+
+    function getSubjectTitle($subject_id)
+    {
+        // Prepare the SQL query to fetch the section title based on the section_id
+        $query = "SELECT sub_title FROM subject WHERE sub_code = ?";
+
+        // Use a prepared statement to prevent SQL injection
+        $stmt = $this->con->prepare($query);
+        $stmt->bind_param("s", $subject_id);  // Bind the section_id parameter to the query
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        // Check if any rows were returned
+        if ($result->num_rows > 0) {
+            // Fetch the section title from the result
+            $row = $result->fetch_assoc();
+
+            // Return the section title
+            return $row['sub_title'];
+        } else {
+            // If no section is found, return null or an appropriate message
+            return null;
+        }
+    }
 
 
 

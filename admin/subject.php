@@ -12,6 +12,23 @@
  <!-- THIS THE SUBJECT TABLE -->
 
 
+ <style>
+   .text-sm {
+     font-size: 0.7em;
+   }
+
+   .data-table {
+     font-size: 0.7em;
+     /* Reduce font size */
+   }
+
+   .table th,
+   .table td {
+     padding: 0.1rem;
+     /* Adjust padding */
+   }
+ </style>
+
  <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
    <div class="container">
      <div class="row">
@@ -19,7 +36,7 @@
          <div class="data-table">
 
            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-             <h4 class="text-black">List of Subject</h4>
+             <h5 class="text-black">List of Subject</h5>
              <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#subject" data-bs-whatever="@fat">
                <i class="bi bi-plus-circle-fill me-2"></i>Add Subject
              </button>

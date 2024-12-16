@@ -105,6 +105,10 @@ include "../admin/includes/Forms/scheduleform.php";
                                 if (!empty($result)) {
                                     $count = 0;
                                     foreach ($result as $row) {
+                                        $formattedTimefrom = date("H:i", strtotime($row["sched_from"]));
+                                        $formattedTimeTo = date("H:i", strtotime($row["sched_to"]));
+
+
 
                                         echo '<tr>';
                                         echo '<td>' . ucwords(strtolower($row["teacher"])) . '</td>';
@@ -113,7 +117,7 @@ include "../admin/includes/Forms/scheduleform.php";
                                         echo '<td>' . $row["section_name"] . '</td>';
                                         echo '<td>' . $row["semester"] . '</td>';
                                         echo '<td>' . $row["sub_title"] . '</td>';
-                                        echo '<td>' . $row["sub_type"] . '</td>';
+                                        echo '<td>' . ucwords(strtolower($row["sub_type"])) . '</td>';
                                         echo '<td>' . $row["sched_day"] . '</td>';
                                         echo '<td>' . $row["sched_from"] . '</td>';
                                         echo '<td>' . $row["sched_to"] . '</td>';
@@ -160,14 +164,14 @@ include "../admin/includes/Forms/scheduleform.php";
                                                                 <!-- Student Name -->
                                                                 <div class="col-md-12 mb-3">
                                                                     <label class="form-label fw-semibold fs-6">Subject teacher</label>
-                                                                    <input type="text" class="form-control" name="student" value="' . htmlspecialchars($row['teacher']) . '" disabled>
+                                                                    <input type="text" class="form-control" value="' . htmlspecialchars($row['teacher']) . '" readonly>
                                                                     <div class="invalid-feedback">
                                                                         Please enter a student name.
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12 mb-3">
                                                                     <label class="form-label fw-semibold fs-6">Subject</label>
-                                                                    <input type="text" class="form-control" name="student" value="' . htmlspecialchars($row['sub_title']) . '" disabled>
+                                                                    <input type="text" class="form-control" name="subject" value="' . htmlspecialchars($row['sub_title']) . '" readonly>
                                                                     <div class="invalid-feedback">
                                                                         Please enter a student name.
                                                                     </div>
@@ -178,12 +182,12 @@ include "../admin/includes/Forms/scheduleform.php";
                                                                     <label class="form-label fw-semibold fs-6">Day Schedule</label>
                                                                     <select class="form-select" name="day" required>
                                                                         <option value="" disabled' . ($row['sched_day'] == '' ? ' selected' : '') . '>Select a day ..</option>
-                                                                        <option value="Mon"' . ($row['sched_day'] == 'Mon' ? ' selected' : '') . '>Monday</option>
-                                                                        <option value="Tue"' . ($row['sched_day'] == 'Tue' ? ' selected' : '') . '>Tuesday</option>
-                                                                        <option value="Wed"' . ($row['sched_day'] == 'Wed' ? ' selected' : '') . '>Wednesday</option>
-                                                                        <option value="Thu"' . ($row['sched_day'] == 'Thu' ? ' selected' : '') . '>Thursday</option>
-                                                                        <option value="Fri"' . ($row['sched_day'] == 'Fri' ? ' selected' : '') . '>Friday</option>
-                                                                        <option value="Sat"' . ($row['sched_day'] == 'Sat' ? ' selected' : '') . '>Saturday</option>
+                                                                        <option value="Monday"' . ($row['sched_day'] == 'Monday' ? ' selected' : '') . '>Monday</option>
+                                                                        <option value="Tuesday"' . ($row['sched_day'] == 'Tuesday' ? ' selected' : '') . '>Tuesday</option>
+                                                                        <option value="Wednesday"' . ($row['sched_day'] == 'Wednesday' ? ' selected' : '') . '>Wednesday</option>
+                                                                        <option value="Thursday"' . ($row['sched_day'] == 'Thursday' ? ' selected' : '') . '>Thursday</option>
+                                                                        <option value="Friday"' . ($row['sched_day'] == 'Friday' ? ' selected' : '') . '>Friday</option>
+                                                                        <option value="Saturday"' . ($row['sched_day'] == 'Saturday' ? ' selected' : '') . '>Saturday</option>
                                                                     </select>
                                                                     <div class="invalid-feedback">
                                                                         Please select the day of the subject.
@@ -193,7 +197,7 @@ include "../admin/includes/Forms/scheduleform.php";
                                                             <div class="row">
                                                                 <div class="col-md-6 mb-3">
                                                                     <label class="form-label fw-semibold fs-6">From</label>
-                                                                    <input type="text" class="form-control" name="time_from" value="' . htmlspecialchars($row['sched_from']) . '" required>
+                                                                    <input type="time" class="form-control" name="time_from" value="' . $formattedTimefrom . '" required>
                                                                     <div class="invalid-feedback">
                                                                         Please enter a student name.
                                                                     </div>
@@ -202,7 +206,7 @@ include "../admin/includes/Forms/scheduleform.php";
                                                                 
                                                                 <div class="col-md-6 mb-3">
                                                                     <label class="form-label fw-semibold fs-6">To</label>
-                                                                    <input type="text" class="form-control" name="time_to" value="' . htmlspecialchars($row['sched_to']) . '" required>
+                                                                    <input type="time" class="form-control" name="time_to" value="' . $formattedTimeTo . '" required>
                                                                     <div class="invalid-feedback">
                                                                         Please enter a student name.
                                                                     </div>

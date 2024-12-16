@@ -146,7 +146,7 @@
                                     <li class="nav-item mt-2">
                                         <a class="nav-link active" href="index.php?page=student">
 
-                                            <i class="bi bi-plus-circle me-2"></i>New Student
+                                            <i class="bi bi-plus-circle me-2"></i>Student
                                         </a>
                                     </li>
                                     <li class="nav-item mt-2">
@@ -161,13 +161,6 @@
 
                                         </a>
                                     </li>
-                                    <li class="nav-item mt-2">
-                                        <a class="nav-link active" href="index.php?page=register_student">
-                                            <i class="bi bi-journal-check me-2"></i>Subject Registration
-
-                                        </a>
-                                    </li>
-
                                 </ul>
                             </li>
 
@@ -180,7 +173,7 @@
                                     <li class="nav-item mt-2">
                                         <a class="nav-link active" href="index.php?page=teacher">
 
-                                            <i class="bi bi-plus-circle me-2"></i>New Faculty
+                                            <i class="bi bi-plus-circle me-2"></i>Faculty
                                         </a>
                                     </li>
                                     <li class="nav-item mt-2">
@@ -188,37 +181,27 @@
                                             <i class="bi bi-database-fill me-2"></i>Faculty Accounts
                                         </a>
                                     </li>
-                                    <!-- <li class="nav-item mt-2">
-                                        <a class="nav-link active" href="index.php?page=section">
-                                            <i class="bi bi-building-fill-add me-2"></i>Section
-                                        </a>
-                                    </li> -->
-                                    <li class="nav-item mt-2">
-                                        <a class="nav-link active" href="index.php?page=subject">
-                                            <i class="bi bi-journal-bookmark me-2"></i>Subject
-                                        </a>
-                                    </li>
-
                                 </ul>
                             </li>
 
-
+                            <!-- THIS IS SUBJECT MANAGEMENT DROP DOWN SELECT IN SIDE BAR  -->
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=principal">
-                                    <i class="bi bi-person me-1"></i>Principal
+                                <a class="nav-link  text-white" href="#subjectMenu" data-bs-toggle="collapse" aria-expanded="false" id="studentDropdown">
+                                    <i class="bi bi-journal-bookmark me-1"></i>Subject Management <i class="bi bi-chevron-down" style="margin-left: 5px;" id="subjectIcon"></i>
                                 </a>
-                            </li>
+                                <ul class="collapse list-unstyled ps-1" id="subjectMenu">
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=subject">
 
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=strand">
-                                    <i class="bi bi-mortarboard me-1"></i>Strand
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=schedule">
-                                    <i class="bi bi-clock me-1"></i>Subject Schedule
-                                </a>
+                                            <i class="bi bi-plus-circle me-2"></i>Subject
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=schedule">
+                                            <i class="bi bi-clock  me-2"></i>Subject schedule
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
 
 
@@ -253,6 +236,19 @@
 
                             </li>
 
+
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index.php?page=principal">
+                                    <i class="bi bi-person me-1"></i>Principal
+                                </a>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index.php?page=strand">
+                                    <i class="bi bi-mortarboard me-1"></i>Strand
+                                </a>
+                            </li>
 
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=settings">
@@ -305,35 +301,27 @@
     <!-- JavaScript to toggle icons using Bootstrap collapse events -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const studentMenu = document.getElementById('studentMenu');
-            const studentIcon = document.getElementById('studentIcon');
 
-            studentMenu.addEventListener('show.bs.collapse', function() {
-                studentIcon.classList.remove('bi-chevron-down'); // Original icon
-                studentIcon.classList.add('bi-chevron-up'); // Change to up icon
-            });
+            // Reusable function for handling the icon toggle based on the collapse behavior
+            function toggleCollapseIcon(menuId, iconId) {
+                const menu = document.getElementById(menuId);
+                const icon = document.getElementById(iconId);
 
-            studentMenu.addEventListener('hide.bs.collapse', function() {
-                studentIcon.classList.remove('bi-chevron-up'); // Remove up icon
-                studentIcon.classList.add('bi-chevron-down'); // Change back to original icon
-            });
-        });
+                menu.addEventListener('show.bs.collapse', function() {
+                    icon.classList.remove('bi-chevron-down'); // Original icon
+                    icon.classList.add('bi-chevron-up'); // Change to up icon
+                });
 
+                menu.addEventListener('hide.bs.collapse', function() {
+                    icon.classList.remove('bi-chevron-up'); // Remove up icon
+                    icon.classList.add('bi-chevron-down'); // Change back to original icon
+                });
+            }
 
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const facultyMenu = document.getElementById('facultyMenu');
-            const facultyIcon = document.getElementById('facultyIcon');
-
-            facultyMenu.addEventListener('show.bs.collapse', function() {
-                facultyIcon.classList.remove('bi-chevron-down'); // Original icon
-                facultyIcon.classList.add('bi-chevron-up'); // Change to up icon
-            });
-
-            facultyMenu.addEventListener('hide.bs.collapse', function() {
-                facultyIcon.classList.remove('bi-chevron-up'); // Remove up icon
-                facultyIcon.classList.add('bi-chevron-down'); // Change back to original icon
-            });
+            // Apply the function to different menus and icons
+            toggleCollapseIcon('studentMenu', 'studentIcon');
+            toggleCollapseIcon('facultyMenu', 'facultyIcon');
+            toggleCollapseIcon('subjectMenu', 'subjectIcon');
         });
 
 

@@ -101,7 +101,7 @@ $mySQLFunction->disconnect();
 
 
 
-            <!-- S ubject Card -->
+            <!-- Subject Card -->
             <div class="col-md-4 col-sm-6 col-12">
                 <div class="card shadow-lg h-100">
                     <div class="card-body">
@@ -119,13 +119,13 @@ $mySQLFunction->disconnect();
                         </div>
                         <!-- View account button -->
                         <div class="text-start mt-3 ms-3">
-                            <a href="?page=masterlist" class="btn btn-primary w-50">View subject</a>
+                            <a href="?page=teacher_subject" class="btn btn-primary w-50">View subject</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-
+            <!-- Teacher Card -->
             <div class="col-md-4 col-sm-6 col-12">
                 <div class="card shadow-lg h-100">
                     <div class="card-body">

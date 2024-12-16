@@ -26,14 +26,26 @@ if (!isset($_SESSION["registrar_id"])) {
         if (isset($_POST["submit"])) {
             // Sanitize and prepare input
             $id = $_POST["schedID"];  // This should be correctly set in your form, make sure the name attribute is 'schedID'
+            $subject_id =  strtoupper(trim($_POST["subject"]));
             $day = trim($_POST["day"] ?? null);
-            $from =  strtoupper(trim($_POST["time_from"]) ?? null);
-            $to =  strtoupper(trim($_POST["time_to"]) ?? null);
+            $from = isset($_POST["time_from"]) ? date("h:i A", strtotime(trim($_POST["time_from"]))) : null;
+            $to = isset($_POST["time_to"]) ? date("h:i A", strtotime(trim($_POST["time_to"]))) : null;
 
+            // Convert the "From" and "To" times to timestamps
+            $fromTime = strtotime($from); // Get the Unix timestamp of the start time
+            $toTime = strtotime($to); // Get the Unix timestamp of the end time
+
+            // VALIDATION 1: Start time must be earlier than end time
+            if ($fromTime >= $toTime) {
+                $_SESSION['error'] = "Start time must be earlier than end time.";
+                header("location:../../index.php?page=schedule");
+                exit();
+            }
 
 
 
             // Update the 'requirements_submit' field with the submitted documents
+            // $mySQLFunction->updateRecord("schedule", "sub_code", $sub_name, "sched_id", $id);
             $mySQLFunction->updateRecord("schedule", "sched_day", $day, "sched_id", $id);
             $mySQLFunction->updateRecord("schedule", "sched_from", $from, "sched_id", $id);
             $mySQLFunction->updateRecord("schedule", "sched_to", $to, "sched_id", $id);
@@ -49,9 +61,9 @@ if (!isset($_SESSION["registrar_id"])) {
     } catch (Exception $e) {
         // Handle exceptions and errors
         error_log("Error updating enrollment: " . $e->getMessage());
-        var_dump($e);
-        // $_SESSION['sectionupdate_error'] = "An error occurred while updating the schedule.";
-        // header("location:../../error.php");
-        // exit();
+        // var_dump($e);
+        $_SESSION['sectionupdate_error'] = "An error occurred while updating the schedule.";
+        header("location:../../error.php");
+        exit();
     }
 }

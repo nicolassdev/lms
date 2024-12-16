@@ -329,26 +329,8 @@ include "../includes/dbh-inc.php";
         $("#example").DataTable({
             dom: "Bfrtip", // Include buttons in the dom
             buttons: [{
-                    extend: "copy",
-                    text: '<i class="fas fa-copy"></i> Copy',
-                    className: "btn btn-sm btn-primary",
-                    titleAttr: "Copy to clipboard",
-                },
-                {
-                    extend: "csvHtml5",
-                    text: '<i class="fas fa-file-csv"></i> CSV',
-                    className: "btn btn-sm btn-success",
-                    titleAttr: "Export as CSV",
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 9)
-                            return index !== 9;
-                        },
-                    },
-                },
-                {
                     extend: "excelHtml5",
-                    text: '<i class="fas fa-file-excel"></i> Excel',
+                    text: '<i class="fas fa-file-excel"></i>Download Excel',
                     className: "btn btn-sm btn-success",
                     titleAttr: "Export as Excel",
                     exportOptions: {
@@ -359,7 +341,7 @@ include "../includes/dbh-inc.php";
                 },
                 {
                     extend: "pdfHtml5",
-                    text: '<i class="fas fa-file-pdf"></i> PDF',
+                    text: '<i class="fas fa-file-pdf"></i>Download PDF',
                     className: "btn btn-sm btn-danger",
                     titleAttr: "Export as PDF",
                     exportOptions: {

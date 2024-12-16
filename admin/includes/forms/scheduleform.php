@@ -148,12 +148,12 @@ $mySQLFunction->disconnect();
                         <label class="fs-6 mb-1">Day <span style="color: red;">*</span></label>
                         <select class="form-select" name="day" required>
                             <option value="" disabled selected>Select a day ..</option>
-                            <option value="Mon">Monday</option>
-                            <option value="Tue">Tuesday</option>
-                            <option value="Wed">Wednesday</option>
-                            <option value="Thu">Thursday</option>
-                            <option value="Fri">Friday</option>
-                            <option value="Sat">Saturday</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
                         </select>
                         <div class="invalid-feedback">
                             Please select the day of the subject.
@@ -164,7 +164,7 @@ $mySQLFunction->disconnect();
                     <label class="fs-6">Time <span style="color: red;">*</span></label>
                     <div class="col-md-6">
                         <label class="form-label small">From</label>
-                        <input type="text" class="form-control" name="time_from" placeholder="e.g., 7:30 AM" required>
+                        <input type="time" class="form-control" name="time_from" placeholder="e.g., 7:30 AM" required>
                         <div class="invalid-feedback">
                             Please input the time of the subject.
                         </div>
@@ -172,7 +172,7 @@ $mySQLFunction->disconnect();
 
                     <div class="col-md-6">
                         <label class="form-label small">To</label>
-                        <input type="text" class="form-control" name="time_to" placeholder="e.g., 9:30 AM" required>
+                        <input type="time" class="form-control" name="time_to" placeholder="e.g., 9:30 AM" required>
                         <div class="invalid-feedback">
                             Please input the time of the subject.
                         </div>

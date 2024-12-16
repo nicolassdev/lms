@@ -224,4 +224,79 @@ include "../includes/dbh-inc.php";
 
 
 <!-- PDF ,EXCEL, PRINT ,CVS -->
-<script src="../assets/js/faculty.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#example").DataTable({
+            dom: "Bfrtip", // Include buttons in the dom
+            buttons: [{
+                    extend: "excelHtml5",
+                    text: '<i class="fas fa-file-excel"></i>Download Excel',
+                    className: "btn btn-sm btn-success",
+                    titleAttr: "Export as Excel",
+                    exportOptions: {
+                        columns: function(index, data, node) {
+                            return index !== 8;
+                        },
+                    },
+                },
+                {
+                    extend: "pdfHtml5",
+                    text: '<i class="fas fa-file-pdf"></i>Download PDF',
+                    className: "btn btn-sm btn-danger",
+                    titleAttr: "Export as PDF",
+                    exportOptions: {
+                        columns: function(index, data, node) {
+                            return index !== 8;
+                        },
+                    },
+                },
+                {
+                    extend: "print",
+                    text: '<i class="fas fa-print"></i> Print',
+                    className: "btn btn-sm btn-info",
+                    titleAttr: "Print Table",
+                    autoPrint: true,
+                    customize: function(win) {
+                        // Hide the LMS heading during print
+                        $(win.document.body)
+                            .find('h1:contains("Learning Management System")') // Adjust the selector if needed
+                            .css("display", "none");
+
+                        $(win.document.body)
+                            .css("font-size", "10pt")
+                            .prepend(
+                                // This is the container that holds both left and right aligned text
+                                '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+                                // Left-aligned: List of Enrolled Students
+                                '<div style="text-align:left; flex: 1;">' +
+                                "<h5 style='font-size: 14px; margin-left: 15px;'>Faculty members</h5>" +
+                                "</div>" +
+                                // Right-aligned: Computer Systems Institute
+                                '<div style="text-align:right; flex: 1;">' +
+                                "<h6>Computer Systems Institute</h6>" +
+                                "<small>F. Imperial st., Brgy. 36 - Capantawan, Legazpi City</small><br>" +
+                                "</div>" +
+                                "</div>"
+                            );
+
+                        $(win.document.body)
+                            .find("table thead th")
+                            .css("background-color", "#007bff") // Header color
+                            .css("color", "#ffffff")
+                            .css("padding", "10px");
+
+                        $(win.document.body)
+                            .find("table")
+                            .addClass("compact")
+                            .css("font-size", "inherit");
+                    },
+                    exportOptions: {
+                        columns: function(index, data, node) {
+                            return index !== 8;
+                        },
+                    },
+                },
+            ],
+        });
+    });
+</script>

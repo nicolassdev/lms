@@ -104,12 +104,12 @@ $mySQLFunction->disconnect();
                                     <i class="bi bi-people-fill display-6 text-danger"></i>
                                     <h5 class="card-title mt-2 mb-1 fw-bold text-secondary">
                                         <?php
-                                        echo ucwords(strtolower($teacherSectionHandled["grade_lvl"])) . ' ' . ucwords(strtolower($teacherSectionHandled["section_name"]));
+                                        echo  ucwords(strtolower($teacherSectionHandled["section_name"]));
                                         ?>
                                     </h5>
                                     <small class="card-subtitle text-muted">
                                         <!-- Placeholder for strand_name if available -->
-                                        <?php echo $teacherSectionHandled["strand_name"] ?? ''; ?>
+                                        <?php echo ucwords(strtolower($teacherSectionHandled["grade_lvl"])) . ' |    ' . ucwords(strtolower($teacherSectionHandled["strand_desc"])) ?? ''; ?>
                                     </small>
                                 </div>
                                 <!-- Number of Students -->
