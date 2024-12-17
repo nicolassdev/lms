@@ -282,6 +282,67 @@ class myDataBase
         $result = $stmt->get_result()->fetch_assoc();
         return $result;
     }
+
+    // GET TEACHER'S SUBJECT SCHEDULE HANDLED BY ID
+    public function getTeacherSubSchedule($teacher_id)
+    {
+        // Query to fetch subject schedule, section, and strand details based on teacher_id
+        $sql = "
+        SELECT 
+            sch.sched_id,
+            sch.sched_day,
+            sch.sched_from,
+            sch.sched_to,
+            sec.grade_lvl,
+            sec.section_name,
+            sub.sub_title,
+            st.strand_name,
+            st.strand_desc
+        FROM 
+            `schedule` sch
+        INNER JOIN 
+            `section` sec 
+        ON 
+            sch.section_code = sec.section_code
+        INNER JOIN 
+            `subject` sub 
+        ON 
+            sch.sub_code = sub.sub_code
+        LEFT JOIN 
+            `strand` st 
+        ON 
+            sec.strand_code = st.strand_code
+        WHERE 
+            sub.teacher_id = ?";
+
+        // Prepare the SQL statement
+        $stmt = $this->con->prepare($sql);
+
+        // Bind the teacher ID parameter
+        $stmt->bind_param("s", $teacher_id);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        // Check if any rows are returned
+        if ($result->num_rows > 0) {
+            // Fetch all matching rows
+            $data = [];
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            return $data; // Return all rows as an array
+        } else {
+            return null; // No rows found
+        }
+    }
+
+
+
+
     //GET TEACHER SECTION HANDLED by id
     public function getTeacherSectionHandled($teacher_id)
     {
@@ -313,7 +374,7 @@ class myDataBase
         }
     }
 
-
+    //check how man enrolled in section 
     public function checkEnrolledCountByTeacher($teacher_id)
     {
         $sql = "
@@ -340,22 +401,41 @@ class myDataBase
         return $result;
     }
 
-
-
-    //GET TEACHER  SUBJECT HANDLED by id
+    // GET TEACHER SUBJECT HANDLED by id with COUNT
     public function getTeacherSubjectHandled($teacher_id)
     {
-        $sql = "SELECT subject.sub_title, subject.strand_code, strand.strand_name , subject.sub_gradelvl
-                FROM subject 
-                JOIN strand ON subject.strand_code = strand.strand_code 
-                WHERE subject.teacher_id = ?";
+        // Query to get the list of subjects handled by the teacher
+        $sql = "SELECT subject.sub_title, subject.strand_code, strand.strand_name, subject.sub_gradelvl
+            FROM subject 
+            JOIN strand ON subject.strand_code = strand.strand_code 
+            WHERE subject.teacher_id = ?";
 
+        // Prepare and execute the query for subject list
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("s", $teacher_id);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC); // Fetch all rows as an associative array
-        return $result;
+
+        // Query to count how many subjects the teacher is handling
+        $count_sql = "SELECT COUNT(*) as subject_count 
+                  FROM subject 
+                  WHERE teacher_id = ?";
+
+        // Prepare and execute the query for the subject count
+        $count_stmt = $this->con->prepare($count_sql);
+        $count_stmt->bind_param("s", $teacher_id);
+        $count_stmt->execute();
+        $count_result = $count_stmt->get_result()->fetch_assoc(); // Fetch the count result
+
+        // Combine both results
+        $data = [
+            'subject_count' => $count_result['subject_count'],
+            'subjects' => $result
+        ];
+
+        return $data;
     }
+
 
     //GET STUDENT SECTION HANDLED by id
     public function getStudentSection($student_id)

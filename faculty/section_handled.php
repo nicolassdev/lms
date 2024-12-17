@@ -89,57 +89,57 @@ $mySQLFunction->disconnect();
 
 
 
-
         <div class="row g-4">
             <?php if (!empty($teacherSectionHandled)): ?>
-
                 <!-- Section Card -->
-                <div class="col-md-4 col-sm-6 col-12">
-                    <div class="card shadow-lg h-100 border-0">
-                        <div class="card-body">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="card h-100 border-0 shadow-lg rounded-4">
+                        <!-- Card Body -->
+                        <div class="card-body d-flex flex-column justify-content-between">
                             <!-- Card Header -->
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <!-- Icon and Title -->
-                                <div>
-                                    <i class="bi bi-people-fill display-6 text-danger"></i>
-                                    <h5 class="card-title mt-2 mb-1 fw-bold text-secondary">
-                                        <?php
-                                        echo  ucwords(strtolower($teacherSectionHandled["section_name"]));
-                                        ?>
-                                    </h5>
-                                    <small class="card-subtitle text-muted">
-                                        <!-- Placeholder for strand_name if available -->
-                                        <?php echo ucwords(strtolower($teacherSectionHandled["grade_lvl"])) . ' |    ' . ucwords(strtolower($teacherSectionHandled["strand_desc"])) ?? ''; ?>
-                                    </small>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-people-fill display-4 text-danger me-2"></i>
+                                    <div>
+                                        <h5 class="fw-bold text-secondary mb-1">
+                                            <?php echo htmlspecialchars($teacherSectionHandled["section_name"]); ?>
+                                        </h5>
+                                        <small class="text-muted">
+                                            <?php echo ucwords(strtolower($teacherSectionHandled["grade_lvl"])) . ' | ' .
+                                                htmlspecialchars($teacherSectionHandled["strand_desc"] ?? ''); ?>
+                                        </small>
+                                    </div>
                                 </div>
                                 <!-- Number of Students -->
                                 <div class="text-end">
-                                    <h1 class="text-danger fw-bold display-6 mb-0">
+                                    <h2 class="text-danger fw-bold mb-0">
                                         <?php echo $totalStudentinSection; ?>
-                                    </h1>
+                                    </h2>
                                     <small class="text-muted">Students</small>
                                 </div>
                             </div>
+
                             <!-- Divider -->
                             <hr class="text-muted" />
+
                             <!-- Card Footer -->
-                            <div class="text-start">
-                                <a href="?page=student_list" class="btn btn-danger w-100 py-2">View</a>
+                            <div class="text-center mt-auto">
+                                <a href="?page=student_list" class="btn btn-outline-danger fw-semibold w-100 py-2 rounded-pill">
+                                    <i class="bi bi-eye me-2"></i>View Students
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-
             <?php else: ?>
-                <!-- Error Message Card -->
-                <div class="col-12">
-                    <div class="col-md-4 col-sm-6 col-12">
-                        <div class="card shadow-lg h-100 border-0">
-                            <div class="card-body text-center">
-                                <i class="bi bi-exclamation-circle display-4 text-warning"></i>
-                                <h5 class="card-title mt-3 fw-bold text-secondary">No Section Available</h5>
-                                <p class="card-text text-muted">There are currently no sections assigned to you.</p>
-                            </div>
+                <!-- No Data Found Card -->
+                <div class="col-md-12 text-center">
+                    <div class="card border-0 shadow-sm rounded-4 py-5">
+                        <div class="card-body">
+                            <i class="bi bi-exclamation-circle text-danger display-4 mb-3"></i>
+                            <h5 class="text-secondary fw-bold">No Section Available</h5>
+                            <p class="text-muted mb-0">There are currently no sections assigned to you.</p>
                         </div>
                     </div>
                 </div>
@@ -149,7 +149,7 @@ $mySQLFunction->disconnect();
 
 
 
-        <div class="mt-5">
+        <div class="position-fixed bottom-0 start-50 mb-3">
             <?php
             include "../includes/footer.php";
             ?>

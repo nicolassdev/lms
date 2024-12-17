@@ -22,8 +22,16 @@ $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
 
 // GET ASSIGNED SECTION 
-$teacherSectionHandled = $mySQLFunction->getTeacherSectionHandled($_SESSION['teacher_id']);
+$teacherSubjectHandled = $mySQLFunction->getTeacherSubSchedule($_SESSION['teacher_id']);
 
+// // Debug $schedule
+// if ($teacherSubjectHandled) {
+//     echo "<pre>";
+//     print_r($teacherSubjectHandled);
+//     echo "</pre>";
+// } else {
+//     echo "No schedule found!";
+// }
 
 //GET THE NUMBER OF ENRLLED IN THAT SECTION
 $numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']); //section handled by teacher
@@ -87,68 +95,65 @@ $mySQLFunction->disconnect();
         </div>
 
 
-
-
-
         <div class="row g-4">
-            <?php if (!empty($teacherSectionHandled)): ?>
-
-                <!-- Section Card -->
-                <div class="col-md-4 col-sm-6 col-12">
-                    <div class="card shadow-lg h-100 border-0">
-                        <div class="card-body">
-                            <!-- Card Header -->
-                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                <!-- Icon and Title -->
-                                <div>
-                                    <i class="bi bi-journal-bookmark-fill display-5 text-primary mb-2"></i>
-                                    <h5 class="card-title mt-2 mb-1 fw-bold text-secondary">
-                                        Practical Research
-                                    </h5>
-                                    <small class="card-subtitle text-muted">
-                                        <?php
-                                        echo ucwords(strtolower($teacherSectionHandled["grade_lvl"])) . ' ' . $teacherSectionHandled["section_name"];
-                                        ?>
-                                    </small>
-                                    <br>
-                                    <small class="card-subtitle text-muted">
-                                        <!-- Placeholder for strand_name if available -->
-                                        <?php echo  ucwords(strtolower($teacherSectionHandled["strand_desc"])) ?? ''; ?>
+            <?php if (!empty($teacherSubjectHandled)): ?>
+                <?php foreach ($teacherSubjectHandled as $schedule): ?>
+                    <!-- Subject Card -->
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card h-100 border-0 shadow-sm rounded-4">
+                            <!-- Card Header Icon -->
+                            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0 fw-bold">
+                                    <i class="bi bi-book-half me-2"></i>
+                                    <?php echo htmlspecialchars($schedule['sub_title'] ?? 'No subject title'); ?>
+                                </h6>
+                                <span class="badge bg-light text-primary">
+                                    <i class="bi bi-award me-1"></i>
+                                    <?php echo ucwords(strtolower($schedule["grade_lvl"])) . ' ' . htmlspecialchars($schedule["section_name"]); ?>
+                                </span>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body p-4">
+                                <!-- Subject Details -->
+                                <div class="mb-3 text-secondary">
+                                    <i class="bi bi-diagram-2 me-1"></i>
+                                    <small>
+                                        <?php echo ucwords(strtolower($schedule["strand_desc"] ?? 'No description')); ?>
                                     </small>
                                 </div>
-                                <!-- Number of Students -->
-                                <div class="text-end">
-                                    <h1 class="text-primary fw-bold display-6 mb-0">
-                                        <?php echo $totalStudentinSection; ?>
-                                    </h1>
-                                    <small class="text-muted">Students</small>
+                                <!-- Icon Indicator -->
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center text-muted">
+                                        <i class="bi bi-clock-history me-2 text-warning fs-5"></i>
+                                        <span class="fw-semibold">Active Schedule</span>
+                                    </div>
+                                    <!-- Placeholder for Schedule Badge -->
+                                    <span class="badge bg-success px-3 py-2">On-going</span>
                                 </div>
                             </div>
-                            <!-- Divider -->
-                            <hr class="text-muted" />
                             <!-- Card Footer -->
-                            <div class="text-start">
-                                <a href="?page=student_list" class="btn btn-primary w-100 py-2">View</a>
+                            <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
+                                <a href="?page=student_list" class="btn btn-outline-primary w-100 fw-bold">
+                                    <i class="bi bi-person-lines-fill me-2"></i>View Students
+                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
-
+                <?php endforeach; ?>
             <?php else: ?>
-                <!-- Error Message Card -->
-                <div class="col-12">
-                    <div class="col-md-4 col-sm-6 col-12">
-                        <div class="card shadow-lg h-100 border-0">
-                            <div class="card-body text-center">
-                                <i class="bi bi-exclamation-circle display-4 text-warning"></i>
-                                <h5 class="card-title mt-3 fw-bold text-secondary">No Subject Available</h5>
-                                <p class="card-text text-muted">There are currently no subject assigned to you.</p>
-                            </div>
+                <!-- No Data Found Card -->
+                <div class="col-12 text-center">
+                    <div class="card border-0 shadow-sm rounded-4 py-5">
+                        <div class="card-body">
+                            <i class="bi bi-exclamation-circle text-danger display-4 mb-3"></i>
+                            <h5 class="text-secondary fw-bold">No Subject Available</h5>
+                            <p class="text-muted mb-0">There are currently no subjects assigned to you.</p>
                         </div>
                     </div>
                 </div>
             <?php endif; ?>
         </div>
+
 
 
 

@@ -44,7 +44,6 @@
 
 <body>
 
-
     <!-- Top Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-dark nav-shadow">
         <div class="container-fluid">

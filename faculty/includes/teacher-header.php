@@ -46,17 +46,22 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <div class="image d-flex align-items-center">
+                <a href="?page=home">
+                    <span class="d-none d-lg-inline">
+                        <img src="../assets/img/csi.webp" alt="LMS Logo">
+                    </span>
+                </a>
 
+                <!-- Desktop LMS Title (Left-aligned on large screens) -->
+                <div class="navbar-brand text-black d-none d-lg-block">
+                    Learning Management System
+                </div>
 
-
-            <!-- Desktop LMS Title (Left-aligned on large screens) -->
-            <div class="navbar-brand text-black d-none d-lg-block">
-                Learning Management System
-            </div>
-
-            <!-- Mobile LMS Title (Centered on mobile screens, hidden on larger screens) -->
-            <div class="navbar-brand text-black mx-auto text-center d-block d-lg-none fs-6">
-                Learning Management System
+                <!-- Mobile LMS Title (Centered on mobile screens, hidden on larger screens) -->
+                <div class="navbar-brand text-black mx-auto text-center d-block d-lg-none fs-6">
+                    Learning Management System
+                </div>
             </div>
 
 

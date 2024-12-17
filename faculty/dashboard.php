@@ -21,6 +21,13 @@ $numberOfEnrolled = $mySQLFunction->checkRowCount("ENROLL");
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
 
+
+$teacherSubjectHandled = $mySQLFunction->getTeacherSubjectHandled($_SESSION['teacher_id']); //get subject array in database
+// Check if the teacher have subject if not then value is 0
+$subjectCount = isset($teacherSubjectHandled['subject_count']) ? $teacherSubjectHandled['subject_count'] : 0;
+
+
+
 //section handled by teacher
 $numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
 
@@ -114,12 +121,13 @@ $mySQLFunction->disconnect();
                             </div>
                             <!-- Number of students -->
                             <div class="text-end">
-                                <h1 class="text-primary fw-bold display-5"><?php echo $numberOfEnrolled; ?></h1>
+                                <h1 class="text-primary fw-bold display-5"><?php echo $subjectCount; ?></h1>
                             </div>
                         </div>
+                        <hr class="text-muted" />
                         <!-- View account button -->
                         <div class="text-start mt-3 ms-3">
-                            <a href="?page=teacher_subject" class="btn btn-primary w-50">View subject</a>
+                            <a href="?page=teacher_subject" class="btn btn-primary w-50">View subjects</a>
                         </div>
                     </div>
                 </div>
@@ -141,6 +149,7 @@ $mySQLFunction->disconnect();
                                 <h1 class="text-success fw-bold display-5"><?php echo $numberOfTeacher; ?></h1>
                             </div>
                         </div>
+                        <hr class="text-muted" />
                         <!-- View account button -->
                         <div class="text-start mt-3 ms-3">
                             <a href="?page=facultymembers" class="btn btn-success w-70">View faculty members</a>
@@ -157,8 +166,8 @@ $mySQLFunction->disconnect();
                         <div class="d-flex align-items-center justify-content-between">
                             <!-- Icon and title -->
                             <div class="" style="margin-left:20px">
-                                <i class="bi bi-building-fill display-5 text-danger mb-2"></i>
-                                <h5 class="card-title">Section</h5>
+                                <i class="bi bi-people-fill display-5 text-danger mb-2"></i>
+                                <h5 class="card-title">Student</h5>
                                 <p class="card-text">Total number of students in section</p>
                             </div>
                             <!-- Number of students -->
@@ -167,6 +176,7 @@ $mySQLFunction->disconnect();
 
                             </div>
                         </div>
+                        <hr class="text-muted" />
                         <!-- Manage account button -->
                         <div class="text-start mt-3 ms-3">
                             <a href="?page=section_handled" class="btn btn-danger w-50">View students</a>
@@ -176,7 +186,8 @@ $mySQLFunction->disconnect();
             </div>
 
         </div>
-        <div class="mt-5">
+
+        <div class="position-fixed bottom-0 start-50 mb-3">
             <?php
             include "../includes/footer.php";
             ?>

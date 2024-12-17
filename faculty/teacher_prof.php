@@ -26,15 +26,14 @@ if (!isset($_SESSION['teacher_id'])) {
     exit();
 }
 
-$teacherInfo = $mySQLFunction->getTeacherInfo($_SESSION['teacher_id']);
 
 $teacherSectionHandled = $mySQLFunction->getTeacherSectionHandled($_SESSION['teacher_id']);  //section handled by teacher
 
 $teacherSubjectHandled = $mySQLFunction->getTeacherSubjectHandled($_SESSION['teacher_id']); //get subject array in database
 
+$teacherInfo = $mySQLFunction->getTeacherInfo($_SESSION['teacher_id']);
+
 $teacherName = $teacherInfo['teacher_fname'] . ' ' . $teacherInfo['teacher_mname'] . ' ' . $teacherInfo['teacher_lname'];
-
-
 
 // Birthday formatted
 $birthDate = new DateTime($teacherInfo['teacher_dob']);
@@ -276,13 +275,19 @@ $mySQLFunction->disconnect();
                                     <strong>Subjects Handled:</strong>
                                     <p>
                                         <?php
-                                        if (!empty($teacherSubjectHandled)) {
-                                            foreach ($teacherSubjectHandled as $subject) {
-                                                echo ucwords(strtolower($subject["sub_title"])) . ' | ' . htmlspecialchars($subject["strand_name"]) . ' | ' . ucwords(strtolower($subject["sub_gradelvl"])) . '<br>';
+                                        if (!empty($teacherSubjectHandled['subjects'])) {
+                                            // Display Subjects List
+                                            echo "<p>";
+                                            foreach ($teacherSubjectHandled['subjects'] as $subject) {
+                                                echo ucwords(strtolower($subject["sub_title"])) . ' | '
+                                                    . htmlspecialchars($subject["strand_name"]) . ' | '
+                                                    . ucwords(strtolower($subject["sub_gradelvl"])) . '<br>';
                                             }
+                                            echo "</p>";
                                         } else {
-                                            echo '<div class="text-danger">No subject handled available.</div>';
+                                            echo '<div class="text-danger">No subjects handled available.</div>';
                                         }
+
                                         ?>
                                     </p>
                                 </div>
