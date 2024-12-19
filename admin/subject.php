@@ -12,24 +12,7 @@
  <!-- THIS THE SUBJECT TABLE -->
 
 
- <style>
-   .text-sm {
-     font-size: 0.7em;
-   }
-
-   .data-table {
-     font-size: 0.7em;
-     /* Reduce font size */
-   }
-
-   .table th,
-   .table td {
-     padding: 0.1rem;
-     /* Adjust padding */
-   }
- </style>
-
- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+ <main class="col-md-9 ms-sm-auto col-lg-10 px-md-3">
    <div class="container">
      <div class="row">
        <div class="col-12">
@@ -154,9 +137,9 @@
                                         <div class="col-12 mb-3">
                                             <label class="form-label fw-bold">Category</label>
                                             <select class="form-select" name="type" required>
-                                                <option value="SPECIALIZED SUBJECT"' . ($row['sub_type'] == 'SPECIALIZED SUBJECT' ? ' selected' : '') . '>SPECIALIZED SUBJECT</option>
-                                                <option value="APPLIED SUBJECT"' . ($row['sub_type'] == 'APPLIED SUBJECT' ? ' selected' : '') . '>APPLIED SUBJECT</option>
-                                                <option value="CORE SUBJECT"' . ($row['sub_type'] == 'CORE SUBJECT' ? ' selected' : '') . '>CORE SUBJECT</option>
+                                                <option value="Specialized"' . ($row['sub_type'] == 'Specialized' ? ' selected' : '') . '>SPECIALIZED SUBJECT</option>
+                                                <option value="Applied"' . ($row['sub_type'] == 'Applied' ? ' selected' : '') . '>APPLIED SUBJECT</option>
+                                                <option value="Core"' . ($row['sub_type'] == 'Core' ? ' selected' : '') . '>CORE SUBJECT</option>
                                             </select>
                                             <div class="invalid-feedback">
                                                 Please select a category.

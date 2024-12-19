@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2024 at 04:07 PM
+-- Generation Time: Dec 19, 2024 at 04:09 PM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.12
 
@@ -28,17 +28,17 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `enroll` (
-  `stu_lrn` varchar(12) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'STUDENT LRN',
-  `section_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'SECTION NAME',
-  `semester` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'set semester',
-  `school_year` varchar(30) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'set school year',
+  `stu_lrn` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'STUDENT LRN',
+  `section_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'SECTION NAME',
+  `semester` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'set semester',
+  `school_year` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'set school year',
   `date_enroll` date DEFAULT NULL,
-  `enroll_status` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `current_school` varchar(70) COLLATE utf8mb4_general_ci NOT NULL,
+  `enroll_status` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `current_school` varchar(70) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `school_id` mediumint UNSIGNED DEFAULT NULL,
-  `school_address` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `school_type` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `requirements_submit` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `school_address` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `school_type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `requirements_submit` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -46,7 +46,8 @@ CREATE TABLE `enroll` (
 --
 
 INSERT INTO `enroll` (`stu_lrn`, `section_code`, `semester`, `school_year`, `date_enroll`, `enroll_status`, `current_school`, `school_id`, `school_address`, `school_type`, `requirements_submit`) VALUES
-('114482392392', 'SECTION-6796', '1st Semester', '2024-2025', '2024-11-28', 'ENROLLED', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10');
+('114432325251', 'SECTION-2287', '1st Semester', '2024-2025', '2024-12-13', 'Enrolled', 'PAGASA NATIONAL HIGH SCHOOL', NULL, 'RAWIS LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
+('114485140095', 'SECTION-5333', '1st Semester', '2024-2025', '2024-12-13', 'Pending', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN', 'PUBLIC', 'SF9, SF10');
 
 -- --------------------------------------------------------
 
@@ -55,16 +56,16 @@ INSERT INTO `enroll` (`stu_lrn`, `section_code`, `semester`, `school_year`, `dat
 --
 
 CREATE TABLE `principal` (
-  `principal_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `firstname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `middlename` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `lastname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `contact` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
-  `gender` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `address` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+  `principal_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `firstname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `middlename` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `lastname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `contact` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `gender` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `address` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -72,7 +73,7 @@ CREATE TABLE `principal` (
 --
 
 INSERT INTO `principal` (`principal_id`, `firstname`, `middlename`, `lastname`, `contact`, `gender`, `email`, `address`, `image`, `id`) VALUES
-('PR-7572', 'DANTE', '', 'ARINGO', '9392392932', 'MALE', 'aringo@gmail.com', 'BITANO LEGAZPI CITY', 'principal_674dcd0303e1d8.01513575.jpg', 'USER-4861');
+('PR-7572', 'DANTE', '', 'ARINGO', '9392392932', 'MALE', 'aringo@gmail.com', 'BITANO LEGAZPI CITY', 'principal_6759b4aa238385.38662311.jpg', 'USER-4861');
 
 -- --------------------------------------------------------
 
@@ -82,15 +83,15 @@ INSERT INTO `principal` (`principal_id`, `firstname`, `middlename`, `lastname`, 
 
 CREATE TABLE `registrar` (
   `registrar_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `firstname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `middlename` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `lastname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `firstname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `middlename` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `lastname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `contact` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `gender` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `address` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'User ID'
+  `gender` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `address` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'User ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -98,7 +99,33 @@ CREATE TABLE `registrar` (
 --
 
 INSERT INTO `registrar` (`registrar_id`, `firstname`, `middlename`, `lastname`, `contact`, `gender`, `email`, `address`, `image`, `id`) VALUES
-('REG-9744', 'MARICAR', 'CARREON', 'AYDALLA', '9329392932', 'FEMALE', 'maricar@gmail.com', 'MATANAG LEGAZPI CITY', '', 'USER-4436');
+('REG-1891', 'MARICAR', 'CARREON', 'AYDALLA', '9329392392', 'FEMALE', 'registrar@gmail.com', 'MATANAG LEGAZPI CITY', '', 'USER-1875');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `schedule`
+--
+
+CREATE TABLE `schedule` (
+  `sched_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `section_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `sub_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `sched_day` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `sched_from` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `sched_to` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `schedule`
+--
+
+INSERT INTO `schedule` (`sched_id`, `section_code`, `sub_code`, `sched_day`, `sched_from`, `sched_to`, `created_at`) VALUES
+('SCHED-1045', 'SECTION-9151', 'SUB-1783', 'Tuesday', '07:30 AM', '09:30 AM', '2024-12-16 17:43:38'),
+('SCHED-1046', 'SECTION-3943', 'SUB-1783', 'Wednesday', '07:20 AM', '09:20 AM', '2024-12-16 18:12:03'),
+('SCHED-4991', 'SECTION-5333', 'SUB-1783', 'Friday', '07:35 AM', '08:10 AM', '2024-12-16 18:10:32'),
+('SCHED-5777', 'SECTION-1859', 'SUB-6634', 'Tuesday', '08:30 AM', '10:30 AM', '2024-12-16 22:49:35');
 
 -- --------------------------------------------------------
 
@@ -108,8 +135,8 @@ INSERT INTO `registrar` (`registrar_id`, `firstname`, `middlename`, `lastname`, 
 
 CREATE TABLE `school` (
   `ID` int NOT NULL,
-  `SCHOOL_NAME` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
-  `SCHOOL_ADDRESS` varchar(150) COLLATE utf8mb4_general_ci NOT NULL
+  `SCHOOL_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `SCHOOL_ADDRESS` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -126,11 +153,11 @@ INSERT INTO `school` (`ID`, `SCHOOL_NAME`, `SCHOOL_ADDRESS`) VALUES
 --
 
 CREATE TABLE `section` (
-  `section_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `strand_code` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `grade_lvl` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `section_name` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `teacher_id` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `section_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `strand_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `grade_lvl` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `section_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `teacher_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `date_created` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -139,13 +166,12 @@ CREATE TABLE `section` (
 --
 
 INSERT INTO `section` (`section_code`, `strand_code`, `grade_lvl`, `section_name`, `teacher_id`, `date_created`) VALUES
-('SECTION-3286', 'STRAND-5688', 'GRADE-11', 'ST. MICHAEL', '24-299710-4779', '2024-11-28'),
-('SECTION-4741', 'STRAND-3453', 'GRADE-11', 'ST. PADRE PIO', '24-209505-8181', '2024-11-28'),
-('SECTION-6796', 'STRAND-2745', 'GRADE-11', 'ST. GREGORY', '24-049906-5894', '2024-11-28'),
-('SECTION-6943', 'STRAND-9457', 'GRADE-11', 'ST. JUDE', '24-059310-4617', '2024-11-28'),
-('SECTION-7289', 'STRAND-2745', 'GRADE-11', 'ST. PHILIP', '24-299909-9301', '2024-11-28'),
-('SECTION-7314', 'STRAND-2745', 'GRADE-11', 'ST. JOHN', '24-229809-8556', '2024-11-28'),
-('SECTION-7998', 'STRAND-6675', 'GRADE-11', 'ST. THEERESE', '24-029810-1540', '2024-11-28');
+('SECTION-1859', 'STRAND-9457', 'GRADE-11', 'ST.PHILIP', '24-049906-5894', '2024-12-13'),
+('SECTION-2287', 'STRAND-5688', 'GRADE-11', 'ST.ANTHONY', '24-229809-8556', '2024-12-13'),
+('SECTION-3891', 'STRAND-3453', 'GRADE-11', 'ST.PADREPIO', '24-029805-2543', '2024-12-13'),
+('SECTION-3943', 'STRAND-7781', 'GRADE-11', 'ST.CLAIRE', '24-199603-2911', '2024-12-13'),
+('SECTION-5333', 'STRAND-6675', 'GRADE-12', 'ST.THERESE', '24-299710-4779', '2024-12-13'),
+('SECTION-9151', 'STRAND-2745', 'GRADE-11', 'ST.PAUL', '24-269711-1668', '2024-12-13');
 
 -- --------------------------------------------------------
 
@@ -154,8 +180,8 @@ INSERT INTO `section` (`section_code`, `strand_code`, `grade_lvl`, `section_name
 --
 
 CREATE TABLE `semester` (
-  `semester_name` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `semester_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -173,9 +199,9 @@ INSERT INTO `semester` (`semester_name`, `status`) VALUES
 --
 
 CREATE TABLE `strand` (
-  `strand_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `strand_name` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `strand_desc` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `strand_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `strand_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `strand_desc` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -183,12 +209,12 @@ CREATE TABLE `strand` (
 --
 
 INSERT INTO `strand` (`strand_code`, `strand_name`, `strand_desc`) VALUES
-('STRAND-2745', 'GAS', 'General Academic Strand'),
-('STRAND-3453', 'STEM', 'Science, Technology, Engineering, and Mathematics'),
-('STRAND-5688', 'ABM', 'Accountancy, Business, and Management'),
-('STRAND-6675', 'CP', 'Computer Programming'),
-('STRAND-7781', 'HUMSS', 'Humanities and Social Sciences'),
-('STRAND-9457', 'CSS', 'Computer System Servicing');
+('STRAND-2745', 'GAS', 'GENERAL ACADEMIC STRAND'),
+('STRAND-3453', 'STEM', 'SCIENCE, TECHNOLOGY, ENGINEERING, AND MATHEMATICS'),
+('STRAND-5688', 'ABM', 'ACCOUNTANCY, BUSINESS, AND MANAGEMENT'),
+('STRAND-6675', 'CP', 'COMPUTER PROGRAMMING'),
+('STRAND-7781', 'HUMSS', 'HUMANITIES AND SOCIAL SCIENCES'),
+('STRAND-9457', 'CSS', 'COMPUTER SYSTEM SERVICING');
 
 -- --------------------------------------------------------
 
@@ -197,21 +223,21 @@ INSERT INTO `strand` (`strand_code`, `strand_name`, `strand_desc`) VALUES
 --
 
 CREATE TABLE `student` (
-  `stu_lrn` varchar(12) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'STUDENT LRN',
-  `stu_fname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `stu_mname` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `stu_lname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `stu_address` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `stu_contact` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
-  `stu_gender` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `stu_email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_lrn` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'STUDENT LRN',
+  `stu_fname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_mname` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `stu_lname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_address` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_contact` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_gender` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `stu_dob` date NOT NULL,
-  `stu_pob` varchar(70) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Place of birth',
-  `father_name` varchar(250) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Parent name',
-  `mother_name` varchar(250) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Parent Name',
-  `parent_contact` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `id` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'User ID'
+  `stu_pob` varchar(70) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Place of birth',
+  `father_name` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Parent name',
+  `mother_name` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Parent Name',
+  `parent_contact` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'User ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -219,18 +245,23 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`stu_lrn`, `stu_fname`, `stu_mname`, `stu_lname`, `stu_address`, `stu_contact`, `stu_gender`, `stu_email`, `stu_dob`, `stu_pob`, `father_name`, `mother_name`, `parent_contact`, `image`, `id`) VALUES
-('114403203289', 'ALIKON', 'JACK', 'SABDAO', 'DARAGA', '9329392932', 'FEMALE', 'alikon@gmail.com', '2000-11-28', 'Legazpi', 'TEST', 'TESTS', '9329392932', '', 'USER-8636'),
+('113312312541', 'SHY', 'BARRIOS', 'BALBIN', 'CABANGAN', '9392932939', 'FEMALE', 'shy@gmail.com', '2004-02-11', 'CABANGAN LEGAZPI CITY', 'BALBIN, SAMUEL', 'BALBIN, ERICA', '9429492942', '', 'USER-6186'),
+('114403203289', 'ALIKON', 'JACK', 'SABDAO', 'DARAGA', '9329392931', 'FEMALE', 'alikon@gmail.com', '2000-11-28', 'LEGAZPI', 'TEST', 'TESTS', '9329392932', '', 'USER-8636'),
 ('114422222222', 'JINKY', 'BALBE', 'JAQUIE', 'BURAUGIS', '9239293929', 'FEMALE', 'JINKY25@GMAIL.COM', '2024-10-24', 'LEGAZPI', 'MALIKONS JAQUIE', 'JACKKIEEE JAQUIE', '9392392932', '', 'USER-2931'),
 ('114423232323', 'DANIEL', 'DADO', 'DAEN', 'BURAGUIS LEGAZPI CITY', '9329392392', 'MALE', 'daniel@gmail.com', '2004-11-24', 'BURAGUIS', 'SIMEON DAEN', 'CRISTINA DAEN', '9329392392', '', 'USER-6462'),
 ('114423993283', 'RODRIGO', '', 'BALDEZ', 'BURAGUIS', '9392392932', 'MALE', 'RODRIGO@gmail.com', '2024-11-07', 'LEGAZPI ALBAY', 'SALBADOR BALDEZ', 'MARIZA BALDEZ', '9494848455', '', 'USER-6143'),
-('114432325251', 'JAMES', 'BALDO', 'BALDES', 'LEGAZPI', '9329391239', 'MALE', 'jonhray@gmail.com', '2015-09-02', 'Sample', 'ASDASDAS', 'ASDAS', '9329392932', '', 'USER-1316'),
+('114432325251', 'JAMES', 'BALDO', 'BALDES', 'LEGAZPI', '9329391239', 'MALE', 'jonhray@gmail.com', '2015-09-02', 'SAMPLE', 'BALDES RODRIGO', 'BALDES MARIA', '9329392932', '', 'USER-1316'),
+('114455013001', 'POLO', 'BO', 'ASEJO', 'LEGAZPI CITY', '9329392939', 'MALE', 'polo@gmail.com', '2004-11-27', 'LEGAPZI', 'ASEJO, DARUIS', 'ASEJO , JULIANA', '9392932939', '', 'USER-1829'),
 ('114455667788', 'DARIUS', 'VALDEZ', 'GAMOZA', 'LEGAZPI CITY', '9239239293', 'MALE', 'darius@gmail.com', '2024-11-03', 'LEGAZPI CITY', 'GAMOZA SALVE', 'GAMOZA CRISTAL', '9329329392', '', 'USER-3616'),
+('114475130060', 'GIAN MARK', 'TAULE', 'SALLAN', 'GOGON LEGAZPI CITY', '9323912391', 'MALE', 'gian@gmail.com', '2004-06-16', 'LEGAZPI CITY', 'SALLAN, BERNARD', 'SALLAN, SARAH', '9392392932', '', 'USER-8254'),
 ('114482392392', 'CALOY', 'HALBE', 'SMITH', 'LEGAZPI CITY', '9392392939', 'FEMALE', 'caloysmith24@gmail.com', '2024-12-02', 'BURAGUIS', 'JUAN BALDO SMITH', 'GLINDA SMITH', '9392932939', '', 'USER-9991'),
 ('114483293271', 'JOHN', 'BELBIS', 'UYALS', 'PAWA', '9329392932', 'MALE', 'leon@gmail.com', '2002-10-03', 'BITANO', 'SAMPLE', 'SAMNPLE', '9392932939', '', 'USER-9986'),
-('114497326715', 'GEORGE', 'JAKIB', 'HALBES', 'BITANO LEGAZPI CITY', '9239239293', 'MALE', 'GEORGEHALBES@GMAIL.COM', '2001-10-05', 'BRTTH LEGAZPI', 'JONNY HALBES', 'KRISTINE HALBES', '9329392932', '', 'USER-1322'),
+('114485140095', 'MAECHELLE', 'GAVERIA', 'ACOSTA', 'DARAGA', '9329392932', 'FEMALE', 'maechelle@gmail.com', '2003-11-29', 'Legazpi City', 'ACOSTA, HUELDOR', 'ACOSTA, MAE', '9329392939', '', 'USER-8853'),
+('114486120037', 'SHYRIEN', 'NUNEZ', 'VIBAL', 'LEGAZPI CITY', '9329392392', 'FEMALE', 'shyrien@gmail.com', '2002-11-29', 'LEGAZPI CITY', 'VIBAL, MELCHOR', 'VIBAL. ESABELLA', '9329392932', '', 'USER-6627'),
 ('114497427472', 'LESTER', '', 'SAPULA', 'BITANO', '9329392932', 'MALE', 'lester@gmail.com', '2002-07-04', 'BITANO', 'ASDAS', 'DASDSA', '9329329932', '', 'USER-9261'),
 ('114498343414', 'DWAYNE', 'HILBE', 'TUWEZA', 'BURAGUIS LEGAZPI CITY', '9123421321', 'MALE', 'dwaynetuweza@gmail.com', '2024-10-16', 'Buraguis Legazpi City', 'JOHN BALDES TUIZA', 'CRISTINE BALDES TUIZA', '9123123123', '', 'USER-3431'),
-('114499887766', 'MARVIN', '', 'TAUZON', 'BURAGUIS', '9329392392', 'MALE', 'marvin@gmail.com', '2024-11-10', 'Legazpi City', 'PAPA TAUZON', 'MAMA TAUZON', '9412949194', '', 'USER-6346');
+('114499887766', 'MARVIN', '', 'TAUZON', 'BURAGUIS', '9329392392', 'MALE', 'marvin@gmail.com', '2024-11-10', 'Legazpi City', 'PAPA TAUZON', 'MAMA TAUZON', '9412949194', '', 'USER-6346'),
+('124167743724', 'ANTHONY NICOLE', 'DADO', 'DAEN', 'BURAGUIS LEGAZPI CITY', '9329392392', 'MALE', 'anthonydaen25@gmail.com', '2002-05-10', 'Legazpi City', 'DAEN, SIMEON LUNAS', 'DAEN, CRISTINA DADO', '9329329392', 'student_67545f4c50dfa9.77726496.jpg', 'USER-7881');
 
 -- --------------------------------------------------------
 
@@ -239,14 +270,14 @@ INSERT INTO `student` (`stu_lrn`, `stu_fname`, `stu_mname`, `stu_lname`, `stu_ad
 --
 
 CREATE TABLE `subject` (
-  `sub_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'PRIMARY KEY',
-  `sub_title` varchar(200) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'SUBJECT NAME',
-  `sub_type` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `sub_time` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sub_semester` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `strand_code` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sub_gradelvl` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `teacher_id` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `sub_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'PRIMARY KEY',
+  `sub_title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'SUBJECT NAME',
+  `sub_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `sub_time` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `sub_semester` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `strand_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `sub_gradelvl` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `teacher_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -254,9 +285,32 @@ CREATE TABLE `subject` (
 --
 
 INSERT INTO `subject` (`sub_code`, `sub_title`, `sub_type`, `sub_time`, `sub_semester`, `strand_code`, `sub_gradelvl`, `teacher_id`) VALUES
-('SUB-4633', 'PRE-CALCULUS', 'SPECIALIZED SUBJECT', '--:-- --', '1st Semester', 'STRAND-3453', 'GRADE-11', '24-029805-2543'),
-('SUB-8237', 'BIOLOGY', 'SPECIALIZED SUBJECT', '--:-- --', '2nd Semester', 'STRAND-3453', 'GRADE-12', '24-209505-8181'),
-('SUB-8837', 'GENERAL MATHEMATICS', 'SPECIALIZED SUBJECT', '--:-- --', '2nd Semester', 'STRAND-2745', 'GRADE-11', '24-209505-8181');
+('SUB-1339', 'PRACTICAL RESEARCH 2', 'APPLIED', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-12', '24-059310-4617'),
+('SUB-1374', 'KUMUNIKASYON AT PANANALIKSIK', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-199603-2911'),
+('SUB-1647', 'UNDERSTANDING CULTURE, SOCIETY&POLITICS', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-12', '24-299211-8709'),
+('SUB-1668', 'TECH VOC 5 - DIAGNOSE COMPUTER SYSTEMS', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-9457', 'GRADE-12', '24-299710-4779'),
+('SUB-1783', 'PRACTICAL  RESEARCH 1', 'SPECIALIZED', '--:-- --', '2nd Semester', 'STRAND-7781', 'GRADE-11', '24-229809-8556'),
+('SUB-1849', 'EMPOWERMENT TECHNOLOGIES', 'APPLIED', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-12', '24-199603-2911'),
+('SUB-1921', 'CREATIVE NON-FICTION', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-12', '24-049906-5894'),
+('SUB-1975', 'FUNDAMENTALS OF ABM 1', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-5688', 'GRADE-11', '24-229809-8556'),
+('SUB-2512', 'ENGLISH FOR ACADEMIC', 'APPLIED', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-029810-1540'),
+('SUB-2689', 'BIOLOGY 2', 'SPECIALIZED', '--:-- --', '2nd Semester', 'STRAND-3453', 'GRADE-11', '24-209505-8181'),
+('SUB-2764', 'ORAL COMMUNICATION IN TEXT', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-029810-1540'),
+('SUB-2971', 'GENERAL CHEMISTRY', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-3453', 'GRADE-12', '24-299211-8709'),
+('SUB-3164', 'TECH VOC 1- PC OPERATIONS', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-6675', 'GRADE-11', '24-199612-2660'),
+('SUB-4117', 'BIOLOGY 1', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-3453', 'GRADE-11', '24-209505-8181'),
+('SUB-4542', 'HUMANITIES 1 - CREATIVE WRITING', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-029805-2543'),
+('SUB-5185', 'TECH VOC 6-APPLY OOP LANGUAGE SKILLS', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-6675', 'GRADE-12', '24-199612-2660'),
+('SUB-6568', 'INTRODUCTION TO THE PHIL', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-12', '24-059711-7139'),
+('SUB-6634', 'GENERAL MATHEMATICS', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-299710-4779'),
+('SUB-6716', 'HUMANITIES 2- TRENDS, NETWORKING', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-029805-2543'),
+('SUB-7547', 'ORAL COMMUNICATION IN TEXT', 'CORE', '--:-- --', '1st Semester', 'STRAND-3453', 'GRADE-11', '24-299909-9301'),
+('SUB-7568', '21 CENTURY LITERATURE', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-12', '24-059310-4617'),
+('SUB-8589', 'ORAL COMMUNICATION IN TEXT', 'CORE', '--:-- --', '1st Semester', 'STRAND-2745', 'GRADE-11', '24-049906-5894'),
+('SUB-8742', 'PERSONAL DEVELOPMENT', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-269711-1668'),
+('SUB-9527', 'TECH VOC 1-INSTALL COMPUTER SYSTEMS', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-9457', 'GRADE-11', '24-299909-9301'),
+('SUB-9691', 'READING AND WRITING SKILLS', 'CORE', '--:-- --', '2nd Semester', 'STRAND-7781', 'GRADE-11', '24-269711-1668'),
+('SUB-9839', 'HOPE-2', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-059711-7139');
 
 -- --------------------------------------------------------
 
@@ -265,8 +319,8 @@ INSERT INTO `subject` (`sub_code`, `sub_title`, `sub_type`, `sub_time`, `sub_sem
 --
 
 CREATE TABLE `sy` (
-  `school_year` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `school_year` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -284,17 +338,17 @@ INSERT INTO `sy` (`school_year`, `status`) VALUES
 --
 
 CREATE TABLE `teacher` (
-  `teacher_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Primary key',
+  `teacher_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Primary key',
   `teacher_fname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `teacher_mname` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `teacher_mname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `teacher_lname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `teacher_contact` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
-  `teacher_gender` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `teacher_contact` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `teacher_gender` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `teacher_dob` date NOT NULL,
-  `status` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `teacher_address` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `id` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'User ID'
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'User ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -303,14 +357,16 @@ CREATE TABLE `teacher` (
 
 INSERT INTO `teacher` (`teacher_id`, `teacher_fname`, `teacher_mname`, `teacher_lname`, `teacher_contact`, `teacher_gender`, `teacher_dob`, `status`, `teacher_address`, `image`, `id`) VALUES
 ('24-029805-2543', 'MARY ANN', '', 'AJERO', '9329392939', 'FEMALE', '1998-05-02', 'FULL TIME', 'DARAGA', '', 'USER-6162'),
-('24-029810-1540', 'ARIEL', '', 'ABALETA', '9294929429', 'MALE', '1998-10-02', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-8224'),
+('24-029810-1540', 'ARIEL', '', 'ABALETA', '9294929429', 'MALE', '1998-10-03', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-8224'),
+('24-049512-1359', 'PERLA', 'RELLETA', 'ALA', '9825328113', 'FEMALE', '1995-12-04', 'FULL TIME', 'BURAGUIS LEGAZPI CITY', NULL, 'USER-8185'),
 ('24-049906-5894', 'DESIREE', '', 'DIAZ', '9294929429', 'FEMALE', '1999-06-04', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-6036'),
 ('24-059310-4617', 'NORBERTO', 'ATUN', 'LLAMOSO', '9392392939', 'MALE', '1993-10-05', 'FULL TIME', 'DARAGA', '', 'USER-6486'),
 ('24-059711-7139', 'MERCY', '', 'MACASINAG', '9329392939', 'FEMALE', '1997-11-05', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-3454'),
 ('24-199603-2911', 'DANTE', '', 'ARINGO', '9329392955', 'MALE', '1996-03-19', 'FULL TIME', 'BITANO LEGAZPI', '', 'USER-2686'),
-('24-209505-8181', 'JEROME', '', 'DELFINO', '9392392939', 'MALE', '1995-05-20', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-0607'),
+('24-199612-2660', 'REGIE', '', 'AJERO', '9999221231', 'MALE', '1996-12-19', 'FULL TIME', 'DARAGA', NULL, 'USER-8393'),
+('24-209505-8181', 'JEROME', '', 'DELFINO', '9392392939', 'MALE', '1995-05-20', 'FULL TIME', 'LEGAZPI CITY', 'teacher_67532b6c2f0eb5.64333751.jpg', 'USER-0607'),
 ('24-229809-8556', 'HANILY', '', 'ASAYTUNO', '9329392939', 'FEMALE', '1998-09-22', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-5858'),
-('24-290211-4331', 'SAMPLE', 'SAMPLE', 'SAMPLE', '9329392939', 'MALE', '2002-11-29', 'FULL TIME', 'ASDASD', '', 'USER-8363'),
+('24-269711-1668', 'JONRO', '', 'BANGUSO', '9329392939', 'MALE', '1997-11-26', 'FULL TIME', 'LEGAZPI CITY', NULL, 'USER-2866'),
 ('24-299211-8709', 'MERLANDY', 'MENDENILLA', 'LATUNA', '9329392932', 'MALE', '1992-11-29', 'FULL TIME', 'CABANGAN LEGAZPI CITY', '', 'USER-6429'),
 ('24-299710-4779', 'MYRA', '', 'MADARA', '9392932939', 'FEMALE', '1997-10-29', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-3041'),
 ('24-299909-9301', 'JESELLE ANN', '', 'NAVAMO', '9329392939', 'FEMALE', '1999-09-29', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-9953');
@@ -323,10 +379,10 @@ INSERT INTO `teacher` (`teacher_id`, `teacher_fname`, `teacher_mname`, `teacher_
 
 CREATE TABLE `users` (
   `user_num` int NOT NULL,
-  `id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `username` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `password` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `role` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `role` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date_added` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -336,29 +392,37 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_added`) VALUES
 (94, 'USER-0607', 'LMS-209505-5945', '304e302e96596f53eb6f86d9516a092849253b5d', 'TEACHER', '2024-11-28 20:11:17'),
-(69, 'USER-1316', '114432325251', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-04 06:56:15'),
-(41, 'USER-1322', '114497326715', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-27 21:56:03'),
+(69, 'USER-1316', '114432325253', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-04 06:56:15'),
+(110, 'USER-1829', '114455013001', 'cf8015decb58c2dcaeeb0df28953fcb628c917d4', 'STUDENT', '2024-12-07 01:57:56'),
+(114, 'USER-1875', 'registrar', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'REGISTRAR', '2024-12-11 21:22:43'),
 (80, 'USER-2686', 'LMS-199603-6563', 'c25b7bba3ff6a54c12b48278a9a690637e5ba403', 'TEACHER', '2024-11-24 19:36:52'),
-(37, 'USER-2931', '114422222222', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-24 04:41:21'),
-(95, 'USER-3041', 'LMS-299710-7677', '7fe0267f37f9992846d1e377c72eaaac2f15a76a', 'TEACHER', '2024-11-28 20:12:06'),
+(112, 'USER-2866', 'LMS-269711-4463', '4976364fbd685104e2afe280f1578b770097402d', 'TEACHER', '2024-12-07 02:10:09'),
+(37, 'USER-2931', '114412345672', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-24 04:41:21'),
+(95, 'USER-3041', 'teacher1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-28 20:12:06'),
 (39, 'USER-3431', '114498343414', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-26 21:36:50'),
 (93, 'USER-3454', 'LMS-059711-1061', 'ac8134b0f4bccf09fd0d7ffa57e3962f5c498947', 'TEACHER', '2024-11-28 20:10:24'),
 (72, 'USER-3616', '114455667788', '51330c0985ecdbf0eb4af46ac0d39c589bec37af', 'STUDENT', '2024-11-06 04:55:03'),
-(89, 'USER-4436', 'registrar', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'ADMIN', '2024-11-27 01:27:19'),
 (84, 'USER-4861', 'principal', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'PRINCIPAL', '2024-11-26 23:42:32'),
 (91, 'USER-5858', 'LMS-229809-5341', '8d73b567714515162d51584a9e127dfefd2e8321', 'TEACHER', '2024-11-28 20:07:33'),
 (90, 'USER-6036', 'LMS-049906-2097', 'f414a45e016d0fa329dc38a8c4520589994e4e8f', 'TEACHER', '2024-11-28 20:06:57'),
 (74, 'USER-6143', '114423993283', '37116f963deeb847884b81dec21972a7ae95dd14', 'STUDENT', '2024-11-24 17:21:22'),
 (81, 'USER-6162', 'LMS-029805-1471', 'e8300544e297a2cc16f8ce5700d9e959d409238c', 'TEACHER', '2024-11-24 19:38:13'),
+(116, 'USER-6186', '113312312541', '337f01184a3f26ab378b5a8b29c080198c7a7543', 'STUDENT', '2024-12-16 23:23:22'),
 (73, 'USER-6346', '114499887766', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-06 15:50:17'),
 (83, 'USER-6429', 'LMS-299211-3180', 'b74689565cd91566a7b3d8dde4c2b0ffe3ce486a', 'TEACHER', '2024-11-24 22:23:16'),
 (77, 'USER-6462', '114423232323', '39bd71ceb3a7ee0febd8fce816505355acc46eb8', 'STUDENT', '2024-11-24 18:48:44'),
 (82, 'USER-6486', 'LMS-059310-1695', '6c5bc6fb30aa22e9b6b70bf482a0f470e810d98d', 'TEACHER', '2024-11-24 22:21:53'),
+(113, 'USER-6627', '114486120037', 'd35519a066831dc5506c8711aec94132b93bec6b', 'STUDENT', '2024-12-07 02:14:22'),
+(107, 'USER-7881', 'nicolas', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-12-07 01:02:17'),
+(118, 'USER-8185', 'LMS-049512-6260', 'ef356d2e40a597a0fe4f81e2b6a1734af9a5702f', 'TEACHER', '2024-12-19 21:48:44'),
 (88, 'USER-8224', 'LMS-029810-7901', '79f3e68c5909b763831a7e0b71ed38070f14e044', 'TEACHER', '2024-11-27 00:29:18'),
+(115, 'USER-8254', '114475130060', '7a9f1c45dbade65d0590f3e33afef2711c253f6c', 'STUDENT', '2024-12-16 23:14:52'),
 (98, 'USER-8363', 'LMS-290211-8547', 'd35519a066831dc5506c8711aec94132b93bec6b', 'TEACHER', '2024-11-30 16:42:32'),
+(117, 'USER-8393', 'LMS-199612-8910', 'b6a0412c5545f9e71de0d185853c781d02f74f15', 'TEACHER', '2024-12-19 21:47:04'),
 (46, 'USER-8636', '114403203289', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-29 02:18:33'),
+(111, 'USER-8853', '114485140095', '400a660369b3fce52c68b9f61c0766361f9ce629', 'STUDENT', '2024-12-07 02:03:00'),
 (68, 'USER-9261', '114497427472', 'csi-24-040207', 'STUDENT', '2024-11-04 06:41:01'),
-(92, 'USER-9953', 'LMS-299909-8187', 'ea4022e90d8448881f63e0615316ca29770b28cb', 'TEACHER', '2024-11-28 20:08:38'),
+(92, 'USER-9953', 'teacher', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-28 20:08:38'),
 (45, 'USER-9986', '114483293271', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-29 02:16:11'),
 (38, 'USER-9991', '114482392392', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-24 04:47:41');
 
@@ -388,6 +452,14 @@ ALTER TABLE `registrar`
   ADD KEY `id` (`id`);
 
 --
+-- Indexes for table `schedule`
+--
+ALTER TABLE `schedule`
+  ADD PRIMARY KEY (`sched_id`),
+  ADD KEY `fk_section` (`section_code`),
+  ADD KEY `fk_subject` (`sub_code`);
+
+--
 -- Indexes for table `school`
 --
 ALTER TABLE `school`
@@ -399,7 +471,7 @@ ALTER TABLE `school`
 ALTER TABLE `section`
   ADD PRIMARY KEY (`section_code`),
   ADD KEY `strand_code` (`strand_code`),
-  ADD KEY `teacher_id` (`teacher_id`);
+  ADD KEY `fk_teacher_section` (`teacher_id`);
 
 --
 -- Indexes for table `strand`
@@ -450,7 +522,7 @@ ALTER TABLE `school`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_num` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `user_num` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- Constraints for dumped tables
@@ -460,8 +532,8 @@ ALTER TABLE `users`
 -- Constraints for table `enroll`
 --
 ALTER TABLE `enroll`
-  ADD CONSTRAINT `enroll_ibfk_1` FOREIGN KEY (`stu_lrn`) REFERENCES `student` (`stu_lrn`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `enroll_ibfk_2` FOREIGN KEY (`section_code`) REFERENCES `section` (`section_code`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_enroll_section` FOREIGN KEY (`section_code`) REFERENCES `section` (`section_code`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_enroll_student` FOREIGN KEY (`stu_lrn`) REFERENCES `student` (`stu_lrn`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `principal`
@@ -476,30 +548,37 @@ ALTER TABLE `registrar`
   ADD CONSTRAINT `registrar_ibfk_1` FOREIGN KEY (`id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `schedule`
+--
+ALTER TABLE `schedule`
+  ADD CONSTRAINT `fk_schedule_section` FOREIGN KEY (`section_code`) REFERENCES `section` (`section_code`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_schedule_subject` FOREIGN KEY (`sub_code`) REFERENCES `subject` (`sub_code`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `section`
 --
 ALTER TABLE `section`
-  ADD CONSTRAINT `section_ibfk_1` FOREIGN KEY (`strand_code`) REFERENCES `strand` (`strand_code`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `section_ibfk_2` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_teacher_section` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `section_ibfk_1` FOREIGN KEY (`strand_code`) REFERENCES `strand` (`strand_code`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student`
 --
 ALTER TABLE `student`
-  ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_student_users` FOREIGN KEY (`id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `subject`
 --
 ALTER TABLE `subject`
-  ADD CONSTRAINT `subject_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `subject_ibfk_2` FOREIGN KEY (`strand_code`) REFERENCES `strand` (`strand_code`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_subject_strand` FOREIGN KEY (`strand_code`) REFERENCES `strand` (`strand_code`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_subject_teacher` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `teacher`
 --
 ALTER TABLE `teacher`
-  ADD CONSTRAINT `teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_teacher_users` FOREIGN KEY (`id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

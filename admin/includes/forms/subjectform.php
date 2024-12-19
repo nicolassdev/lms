@@ -19,9 +19,9 @@
             <label for="category" class="form-label">Category</label>
             <select class="form-select" name="type" required>
               <option selected disabled value="">Choose...</option>
-              <option value="SPECIALIZED SUBJECT">Specialized Subject</option>
-              <option value="APPLIED SUBJECT">Applied Subject</option>
-              <option value="CORE SUBJECT">Core Subject</option>
+              <option value="Specialized">Specialized Subject</option>
+              <option value="Applied">Applied Subject</option>
+              <option value="Core">Core Subject</option>
             </select>
             <div class="invalid-feedback">Please select a category.</div>
           </div>
@@ -51,7 +51,7 @@
               $mySQLFunction->connection();
               $result = $mySQLFunction->getStrand();
               foreach ($result as $row) {
-                echo '<option value="' . htmlspecialchars($row["strand_code"]) . '">' . htmlspecialchars($row["strand_desc"]) . '</option>';
+                echo '<option value="' . htmlspecialchars($row["strand_code"]) . '">' . ucwords(strtolower($row["strand_desc"])) . '</option>';
               }
               $mySQLFunction->disconnect();
               ?>

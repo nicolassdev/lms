@@ -20,63 +20,17 @@ if (!isset($_POST["submit"])) {
     $mySQLFunction->connection(); // Establish database connection
 
     try {
-        // Start transaction
-        $mySQLFunction->con->begin_transaction();
 
-        // Prepare a statement for checking if the subject , subject type, and strand subject already exists
-        $checkSubjectSql = "
-            SELECT 1 FROM `subject` 
-            WHERE `sub_title` = ? AND `sub_type` = ? AND `strand_code` = ? 
-            LIMIT 1";
-        $stmt = $mySQLFunction->con->prepare($checkSubjectSql);
-        $stmt->bind_param("sss", $subtitle, $subtype, $strand);
-        $stmt->execute();
-        $stmt->store_result();
+        // Check if the  firstname and lastname already exist from inserting student info
+        $sectionExistInSameStrandGradelvl = $mySQLFunction->checkEntityExist('subject', 'sub_title', 'strand_code', 'sub_code', $subtitle, $strand, $code);
 
-        // Check if a record exists
-        if ($stmt->num_rows > 0) {
-            throw new Exception("A subject with this title already exists for the selected strand.");
+        if ($sectionExistInSameStrandGradelvl) {
+            // If the same firstname and lastname exist and the ID does not match, prevent update
+            $_SESSION['teacherupdate_error'] = "Subject was already exist in database...";
+            header("location:../index.php?page=subject");
+            exit();
         }
 
-        // Close the prepared statement
-        $stmt->close();
-
-
-
-        // Prepare a statement for checking if the subject and type of subject already exists in database
-        $checkDuplicateSubandType = "
-             SELECT 1 FROM `subject` 
-             WHERE `sub_title` = ? AND `sub_type` = ? LIMIT 1";
-        $stmt = $mySQLFunction->con->prepare($checkDuplicateSubandType);
-        $stmt->bind_param("ss", $subtitle, $subtype);
-        $stmt->execute();
-        $stmt->store_result();
-
-        // Check if a record exists
-        if ($stmt->num_rows > 0) {
-            throw new Exception("A subject with this title already exists for the selected strand.");
-        }
-
-        // Close the prepared statement
-        $stmt->close();
-
-
-        // Prepare a statement for checking if the subject already exists in database
-        $checkDuplicateSubject = "
-            SELECT 1 FROM `subject` 
-            WHERE `sub_title` = ? LIMIT 1";
-        $stmt = $mySQLFunction->con->prepare($checkDuplicateSubject);
-        $stmt->bind_param("s", $subtitle);
-        $stmt->execute();
-        $stmt->store_result();
-
-        // Check if a record exists
-        if ($stmt->num_rows > 0) {
-            throw new Exception("A subject with this title already exists for the selected strand.");
-        }
-
-        // Close the prepared statement
-        $stmt->close();
 
         // Insert subject data into `subject` table using prepared statements
         $insertSubject = "

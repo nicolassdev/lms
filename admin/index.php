@@ -78,30 +78,114 @@ include "./includes/alert-modal.php";
             break;
 
             /**
-                ROUTE FOR STRAND SUBJECT
+                ROUTE FOR STRAND SUBJECTS 
              */
 
         case "schedule":
             require_once 'schedule.php';
             break;
+
+            /**
+                ROUTE FOR STEM SUBJECT
+             */
+
         case "stem_subjects":
             require_once 'stem_subjects.php';
             break;
+
+        case "stem_subject_g11":
+            require_once 'stem_subject_g11.php';
+            break;
+
+        case "stem_subject_g12":
+            require_once 'stem_subject_g12.php';
+            break;
+
+            /**
+                ROUTE FOR ABM SUBJECT
+             */
+
         case "abm_subjects":
             require_once 'abm_subjects.php';
             break;
+        case "abm_subject_g11":
+            require_once 'abm_subject_g11.php';
+            break;
+
+        case "abm_subject_g12":
+            require_once 'abm_subject_g12.php';
+            break;
+
+
+            /**
+                ROUTE FOR HUMSS SUBJECT
+             */
+
         case "humss_subjects":
             require_once 'humss_subjects.php';
             break;
+
+        case "humss_subject_g11":
+            require_once 'humss_subject_g11.php';
+            break;
+
+        case "humss_subject_g12":
+            require_once 'humss_subject_g12.php';
+            break;
+
+
+
+            /**
+                ROUTE FOR GAS SUBJECT
+             */
+
         case "gas_subjects":
             require_once 'gas_subjects.php';
             break;
+
+        case "gas_subject_g11":
+            require_once 'gas_subject_g11.php';
+            break;
+
+        case "gas_subject_g12":
+            require_once 'gas_subject_g12.php';
+            break;
+
+
+            /**
+                ROUTE FOR CSS SUBJECT
+             */
+
         case "css_subjects":
             require_once 'css_subjects.php';
             break;
+
+        case "css_subject_g11":
+            require_once 'css_subject_g11.php';
+            break;
+
+        case "css_subject_g12":
+            require_once 'css_subject_g12.php';
+            break;
+
+
+
+            /**
+                ROUTE FOR CP SUBJECT
+             */
+
         case "cp_subjects":
             require_once 'cp_subjects.php';
             break;
+
+        case "cp_subject_g11":
+            require_once 'cp_subject_g11.php';
+            break;
+
+        case "cp_subject_g12":
+            require_once 'cp_subject_g12.php';
+            break;
+
 
             /**
                  ROUTE FOR SETTINGS ADMIN

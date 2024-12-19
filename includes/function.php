@@ -401,6 +401,45 @@ class myDataBase
         return $result;
     }
 
+    public function getAllStudentDetailsByTeacherId($teacher_id)
+    {
+        $sql = "
+        SELECT 
+            b.*, 
+            s.section_name, 
+            s.grade_lvl, 
+            s.strand_code, 
+            sub.sub_code, 
+            sub.sub_title, 
+            sched.sched_day, 
+            sched.sched_from, 
+            sched.sched_to
+        FROM 
+            enroll e
+        INNER JOIN 
+            student b ON e.stu_lrn = b.stu_lrn
+        INNER JOIN 
+            section s ON e.section_code = s.section_code
+        INNER JOIN 
+            schedule sched ON sched.section_code = s.section_code 
+        INNER JOIN 
+            subject sub ON sched.sub_code = sub.sub_code
+        WHERE 
+            s.teacher_id = ? 
+            AND sub.teacher_id = s.teacher_id
+        ";
+
+        // Prepare and execute the query
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $teacher_id);  // Teacher ID is passed as a parameter
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        return $result;
+    }
+
+
+
     // GET TEACHER SUBJECT HANDLED by id with COUNT
     public function getTeacherSubjectHandled($teacher_id)
     {
@@ -1389,6 +1428,79 @@ class myDataBase
         }
     }
 
+
+
+
+
+    //GET LIST OF SUBJECT BY SEMESTER AND  STRAND
+    public function getSubjectbyStrands($row = null, $value = null)
+    {
+
+        // Get the active semester
+        $activeSemesters = $this->checkSemStatus('semester');
+
+        // Check if there are any active semesters
+        if (empty($activeSemesters)) {
+            return []; // Return an empty array if no active semester
+        }
+
+        // Prepare the active semester condition
+        $activeSemesterSubject = "subject.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
+
+
+        if ($row != null && $value != null) {
+            // Use prepared statements to avoid SQL injection
+            $stmt = $this->con->prepare("SELECT `sub_code`,
+                `sub_title`, `sub_type`, `sub_time`,
+                `sub_semester`, `strand_name` , `strand_desc`, `subject.strand_code`, `sub_gradelvl`,
+                `subject.teacher_id`, 
+                CONCAT(`teacher_fname`, ' ', `teacher_mname`, ' ', `teacher_lname`) AS teacher 
+                FROM `subject`
+                INNER JOIN `strand` ON subject.strand_code = strand.strand_code
+                INNER JOIN `teacher` ON subject.teacher_id = teacher.teacher_id
+                WHERE subject.$row = ? AND  $activeSemesterSubject");
+
+            // Bind the value to the prepared statement
+            $stmt->bind_param("s", $value);
+
+            // Execute the query
+            if ($stmt->execute()) {
+                // Fetch and return the result
+                $result = $stmt->get_result();
+                $stored = $result->fetch_assoc();
+                $stmt->close();
+
+                return $stored;
+            } else {
+                // Handle query error
+                echo "Error executing query: " . $this->con->error;
+                return null;
+            }
+        } else {
+            // Fetch all subjects when no specific row or value is provided
+            $sql = "SELECT `sub_code`, 
+                `sub_title`, `sub_type`, `sub_time`,
+                `sub_semester`, `strand_name` AS strand , `strand_desc`, `sub_gradelvl`,
+                CONCAT(`teacher_fname`, ' ', `teacher_mname`, ' ', `teacher_lname`) AS teacher
+                FROM `subject`
+                INNER JOIN `strand` ON subject.strand_code = strand.strand_code
+                INNER JOIN `teacher` ON subject.teacher_id = teacher.teacher_id
+                WHERE  $activeSemesterSubject
+                ORDER BY subject.sub_title";
+
+            $result = $this->con->query($sql);
+
+            if ($result) {
+                // Fetch all results as an associative array
+                $stored = $result->fetch_all(MYSQLI_ASSOC);
+                return $stored;
+            } else {
+                // Handle query error
+                echo "Error executing query: " . $this->con->error;
+                return [];
+            }
+        }
+    }
 
 
     //GET LIST OF ENROLLED

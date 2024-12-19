@@ -42,7 +42,7 @@
 </head>
 
 
-<body>
+<body class="lms-scroll-bar">
 
     <!-- Top Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-dark nav-shadow">
@@ -107,7 +107,7 @@
         <div class="container-fluid">
             <div class="row mt-4">
                 <!-- Sidebar -->
-                <nav id="sidebar" class="col-md-3 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 230px;">
+                <nav id="sidebar" class="col-md-3 bg-dark sidebar offcanvas-md offcanvas-start lms-scroll-bar" style="max-width: 230px;">
                     <div class="position-sticky text-white ">
 
                         <div class="text-white ms-2 d-lg-none mt-2">
@@ -120,12 +120,12 @@
 
 
                         <ul class="nav flex-column ">
-                            <div class="nav-link fw-bold dasboard d-none d-lg-inline mb-3">
-                                DASHBOARD
+                            <div class="nav-link fs-5 fw-bold dasboard d-none d-lg-inline mb-3 ">
+                                MENU
                             </div>
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=home ">
-                                    <i class="bi bi-house me-1"></i>Home
+                                    <i class="bi bi-graph-up-arrow me-1"></i>Dashboard
                                 </a>
                             </li>
 
@@ -186,7 +186,7 @@
                             <!-- THIS IS SUBJECT MANAGEMENT DROP DOWN SELECT IN SIDE BAR  -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#subjectMenu" data-bs-toggle="collapse" aria-expanded="false" id="studentDropdown">
-                                    <i class="bi bi-journal-bookmark me-1"></i>Subject Management <i class="bi bi-chevron-down" style="margin-left: 5px;" id="subjectIcon"></i>
+                                    <i class="bi bi-journal-bookmark me-1"></i>Subject Management <i class="bi bi-chevron-down" style="margin-left: 3px;" id="subjectIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="subjectMenu">
                                     <li class="nav-item mt-2">
@@ -210,7 +210,7 @@
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-white" href="#strandSubjectMenu" data-bs-toggle="collapse" aria-expanded="false" id="strandDropdown">
                                     <i class="bi bi-journals me-1"></i> Strand Subject
-                                    <i class="bi bi-chevron-down" style="margin-left: 10px;" id="strandIcon"></i>
+                                    <i class="bi bi-chevron-down" style="margin-left: 35px;" id="strandIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-3" id="strandSubjectMenu">
                                     <li class="nav-item">

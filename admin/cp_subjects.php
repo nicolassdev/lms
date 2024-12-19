@@ -18,7 +18,6 @@ include "../includes/dbh-inc.php";
         /* Light gray for a clean UI */
     }
 
-
     .navbar-brand {
         color: #ffffff;
         font-weight: bold;
@@ -98,9 +97,9 @@ include "../includes/dbh-inc.php";
 
 
     <!-- Navbar -->
-    <nav class="  navbar-expand-lg mb-3">
+    <nav class="navbar-expand-lg mb-3">
         <div class="container">
-            <div class="navbar-brand text-dark">Science, Technology, Engineering, and Mathematics</div>
+            <div class="navbar-brand text-dark">Computer Programming NC III</div>
         </div>
     </nav>
 
@@ -116,12 +115,12 @@ include "../includes/dbh-inc.php";
                 <div class="card shadow-lg border-0 h-100 rounded-4">
                     <div class="card-body text-center d-flex flex-column p-4">
                         <span class="bi bi-journals text-danger display-5 mb-3"></span>
-                        <h5 class="fw-bold text-dark">GRADE-11 | STEM</h5>
-                        <p class="text-muted small mb-3">View subjects of grade 11 stem.</p>
+                        <h5 class="fw-bold text-dark">GRADE-11 | CP</h5>
+                        <p class="text-muted small mb-3">View subjects of grade 11 cp.</p>
                         <p class="fs-4 text-danger fw-bold mb-4">
 
                         </p>
-                        <a href="?page=stem_subject_g11" class="btn btn-outline-danger mt-auto rounded-pill fw-semibold">
+                        <a href="?page=cp_subject_g11" class="btn btn-outline-danger mt-auto rounded-pill fw-semibold">
                             <i class="bi bi-person-rolodex me-1"></i>Subjects
                         </a>
                     </div>
@@ -133,12 +132,12 @@ include "../includes/dbh-inc.php";
                 <div class="card shadow-lg border-0 h-100 rounded-4">
                     <div class="card-body text-center d-flex flex-column p-4">
                         <span class="bi bi-journals text-danger display-5 mb-3"></span>
-                        <h5 class="fw-bold text-dark">GRADE-12 | STEM</h5>
-                        <p class="text-muted small mb-3">View subjects of grade 12 stem.</p>
+                        <h5 class="fw-bold text-dark">GRADE-12 | CP</h5>
+                        <p class="text-muted small mb-3">View subjects of grade 12 cp.</p>
                         <p class="fs-4 text-danger fw-bold mb-4">
 
                         </p>
-                        <a href="?page=stem_subject_g12" class="btn btn-outline-danger mt-auto rounded-pill fw-semibold">
+                        <a href="?page=cp_subject_g12" class="btn btn-outline-danger mt-auto rounded-pill fw-semibold">
                             <i class="bi bi-person-rolodex me-1"></i>Subjects
                         </a>
                     </div>

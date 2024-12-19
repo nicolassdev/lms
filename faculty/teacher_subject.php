@@ -33,6 +33,24 @@ $teacherSubjectHandled = $mySQLFunction->getTeacherSubSchedule($_SESSION['teache
 //     echo "No schedule found!";
 // }
 
+
+
+// Example teacher ID from session
+$result = $mySQLFunction->getAllStudentDetailsByTeacherId($_SESSION['teacher_id']);
+
+if (!empty($result)) {
+    foreach ($result as $row) {
+        echo "<pre>";
+        print_r($row);  // This will output student details, including section and subject
+        echo "</pre>";
+    }
+} else {
+    echo "No data found.";
+}
+
+
+
+
 //GET THE NUMBER OF ENRLLED IN THAT SECTION
 $numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']); //section handled by teacher
 
@@ -118,7 +136,7 @@ $mySQLFunction->disconnect();
                                 <div class="mb-3 text-secondary">
                                     <i class="bi bi-diagram-2 me-1"></i>
                                     <small>
-                                        <?php echo ucwords(strtolower($schedule["strand_desc"] ?? 'No description')); ?>
+                                        <b> <?php echo ucwords(strtolower($schedule["strand_desc"] ?? 'No description')); ?></b>
                                     </small>
                                 </div>
                                 <!-- Icon Indicator -->

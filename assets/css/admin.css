@@ -33,7 +33,6 @@ body {
   height: 40px;
   /* Adjust the logo height */
 }
-
 .sidebar {
   color: #fff;
   padding: 20px;
@@ -41,8 +40,9 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  /* width: 200px; */
+  width: 200px;
   overflow-y: auto;
+  background-color: #333; /* Ensure background color matches your theme */
 }
 
 .sidebar-header {
@@ -311,6 +311,20 @@ body {
   padding: 5px;
   /* Padding inside the input for better appearance */
 }
+.text-sm {
+  font-size: 0.7em;
+}
+
+.data-table {
+  font-size: 0.7em;
+  /* Reduce font size */
+}
+
+.table th,
+.table td {
+  padding: 0.1rem;
+  /* Adjust padding */
+}
 /* =================================== FOOTER ====================================== */
 .footer {
   text-align: center;
@@ -323,3 +337,29 @@ body {
 .footer p {
   margin: 0;
 }
+
+/* Custom Scrollbar Styles */
+.lms-scroll-bar::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.lms-scroll-bar::-webkit-scrollbar-track {
+  background: #444; /* Track color */
+  border-radius: 2px; /* Rounded track edges */
+}
+
+.lms-scroll-bar::-webkit-scrollbar-thumb {
+  background: #888; /* Scrollbar thumb color */
+  border-radius: 2px; /* Rounded thumb edges */
+  transition: background 0.3s; /* Smooth color transition */
+}
+
+.lms-scroll-bar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Thumb color on hover */
+}
+
+/* For Firefox */
+/* .lms-scroll-bar {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #444;
+} */
