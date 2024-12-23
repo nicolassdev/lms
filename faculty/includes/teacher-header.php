@@ -96,7 +96,7 @@
     <!-- Sidebar -->
     <div class="side">
         <div class="container-fluid">
-            <div class="row mt-3">
+            <div class="row">
                 <nav id="sidebar" class="col-md-5 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
                     <div class="position-sticky">
                         <div class="text-white ms-4 d-lg-none mt-2">
@@ -219,7 +219,7 @@
     <!-- Bootstrap JS and Dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- THIS IS SIDE BAR SCRIPT TO SHOW TOOGGLE UP AND DOWN  -->
-    <script>
+    <!-- <script>
         // Add event listener to toggle the icon when dropdown is shown/hidden
         document.addEventListener('DOMContentLoaded', function() {
             const studentMenu = document.getElementById('studentMenu');
@@ -235,4 +235,4 @@
                 studentIcon.classList.add('bi-chevron-down'); // Change back to original icon
             });
         });
-    </script>
+    </script> -->

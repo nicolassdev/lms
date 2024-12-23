@@ -1,16 +1,16 @@
 <?php
 session_start();
 if (isset($_SESSION['user_role'])) {
-
     $user_role = strtolower($_SESSION['user_role']);
     if ($user_role !== 'teacher') {
-        header("Location: /lms/login.php"); // redirect access denied if user role is not admin
-        exit();
+        echo "User role: " . htmlspecialchars($user_role);
+        exit(); // Debug and ensure it doesn't redirect incorrectly
     }
 } else {
-    header("location:/lms/login.php"); // Redirect to login page if user role is not exist 
-    exit();
+    echo "Session role not set.";
+    exit(); // Debug and confirm if the session is not established
 }
+
 ?>
  
  <?php
@@ -67,7 +67,9 @@ switch ($page) {
         require_once 'student_list.php';
         break;
 
-
+    case "student_subject_list":
+        require_once 'student_subject_list.php';
+        break;
 
     case "teacher_quiz":
         require_once 'teacher_quiz.php';
@@ -94,5 +96,7 @@ switch ($page) {
         require_once 'dashboard.php'; // Default page is 'home'
         break;
 }
+
+
 ?>
   

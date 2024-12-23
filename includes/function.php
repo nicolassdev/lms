@@ -293,8 +293,10 @@ class myDataBase
             sch.sched_day,
             sch.sched_from,
             sch.sched_to,
+            sec.section_code,
             sec.grade_lvl,
             sec.section_name,
+            sub.sub_code,
             sub.sub_title,
             st.strand_name,
             st.strand_desc
@@ -374,7 +376,7 @@ class myDataBase
         }
     }
 
-    //check how man enrolled in section 
+    //Check how man enrolled in section 
     public function checkEnrolledCountByTeacher($teacher_id)
     {
         $sql = "
@@ -401,7 +403,7 @@ class myDataBase
         return $result;
     }
 
-    public function getAllStudentDetailsByTeacherId($teacher_id)
+    public function getAllStudentDetailsBySectionOfTeacher($teacher_id)
     {
         $sql = "
         SELECT 
@@ -437,6 +439,100 @@ class myDataBase
 
         return $result;
     }
+
+    // GET ALL STUDENT BY TEACHER HANDLED SUBJECT IN EVERY SECTION
+    function getAllStudentBySectionAndSubject($teacherId, $subjectId, $sectionCode)
+    {
+        try {
+            $sql = "
+                SELECT 
+                    s.*,   
+                    sec.*
+                FROM 
+                    STUDENT s
+                INNER JOIN  
+                    ENROLL e ON s.stu_lrn = e.stu_lrn
+                INNER JOIN  
+                    SECTION sec ON e.section_code = sec.section_code
+                INNER JOIN  
+                    SCHEDULE sched ON sec.section_code = sched.section_code
+                INNER JOIN  
+                    SUBJECT sub ON sched.sub_code = sub.sub_code
+                WHERE 
+                    sched.sub_code = ? 
+                    AND sched.section_code = ?
+                    AND sub.teacher_id = ?
+            ";
+
+            // Prepare the query
+            $stmt = $this->con->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
+            }
+
+            // Bind parameters (use 's' for string, 'i' for integer)
+            $stmt->bind_param("sss", $subjectId, $sectionCode, $teacherId); // 'ssi' for string, string, integer
+
+            // Execute the statement
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            // Fetch all matching rows
+            $students = $result->fetch_all(MYSQLI_ASSOC);
+
+            // Free resources
+            $stmt->close();
+
+            return $students;
+        } catch (Exception $e) {
+            // Log the error message
+            error_log("Error fetching students: " . $e->getMessage());
+            return [];
+        }
+    }
+
+
+
+
+    public function getAllStudentBySectionAndSubjectOfTeacher($teacher_id)
+    {
+        $sql = "
+        SELECT 
+            b. * ,
+            s.section_name, 
+            s.grade_lvl, 
+            s.strand_code, 
+            sub.sub_code, 
+            sub.sub_title, 
+            sched.sched_day, 
+            sched.sched_from, 
+            sched.sched_to
+        FROM 
+            enroll e
+        INNER JOIN 
+            student b ON e.stu_lrn = b.stu_lrn
+        INNER JOIN 
+            section s ON e.section_code = s.section_code
+        INNER JOIN 
+            schedule sched ON sched.section_code = s.section_code
+        INNER JOIN 
+            subject sub ON sched.sub_code = sub.sub_code
+        WHERE 
+            sub.teacher_id = ?
+            AND 
+            section_name = 'ST.PHILIP'
+        ";
+
+        // Prepare and execute the query
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $teacher_id);  // Bind the teacher_id parameter
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        return $result;
+    }
+
+
 
 
 

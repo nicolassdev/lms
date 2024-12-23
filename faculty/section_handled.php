@@ -48,6 +48,12 @@ $mySQLFunction->disconnect();
     .card:hover {
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     }
+
+    h5 {
+        color: #495057;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
 </style>
 </head>
 
@@ -58,11 +64,11 @@ $mySQLFunction->disconnect();
             <div class="ms-3">
                 <img
                     style="position: absolute; top: 50%; right: 5%; transform: translate(-0%, -45%); 
-                    width: 700px; opacity: 0.2; z-index: -1;"
+                    width: 700px; opacity: 0.1; z-index: -1;"
                     src="../assets/img/bg-home.webp"
                     alt="LMS Logo">
-                <h5>Section </h5>
-                <div class="container mt-3">
+                <div class="container mt-4">
+                    <h5>Section </h5>
                     <div class="">
 
                         <!-- School Year and Semester Display -->
@@ -93,7 +99,7 @@ $mySQLFunction->disconnect();
             <?php if (!empty($teacherSectionHandled)): ?>
                 <!-- Section Card -->
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="card h-100 border-0 shadow-lg rounded-4">
+                    <div class="card h-100 border-0 shadow-lg rounded-4 py-3">
                         <!-- Card Body -->
                         <div class="card-body d-flex flex-column justify-content-between">
                             <!-- Card Header -->
@@ -135,7 +141,7 @@ $mySQLFunction->disconnect();
             <?php else: ?>
                 <!-- No Data Found Card -->
                 <div class="col-md-12 text-center">
-                    <div class="card border-0 shadow-sm rounded-4 py-5">
+                    <div class="rounded-4 py-5">
                         <div class="card-body">
                             <i class="bi bi-exclamation-circle text-danger display-4 mb-3"></i>
                             <h5 class="text-secondary fw-bold">No Section Available</h5>
@@ -149,7 +155,7 @@ $mySQLFunction->disconnect();
 
 
 
-        <div class="position-fixed bottom-0 start-50 mb-3">
+        <div class=" mt-5">
             <?php
             include "../includes/footer.php";
             ?>

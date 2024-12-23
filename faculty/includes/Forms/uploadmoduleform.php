@@ -6,20 +6,23 @@
 
 
                 <!-- Form upload -->
+                <!-- Modal Title & Icon -->
+                <div class="text-center mb-4">
+                    <h1 class="text-primary"><i class="bi bi-cloud-arrow-up" style="font-size: 140px;"></i></h1>
+                    <h2 class="h4 font-weight-bold text-dark">Upload Module</h2>
+                </div>
 
-                <h1 class="mb-4 text-center"><i class="bi bi-cloud-arrow-up display-1"></i></h1>
                 <form id="studentForm" action="./includes/upload-inc.php" method="POST" enctype="multipart/form-data" autocomplete="off" class="row g-2 needs-validation" novalidate>
 
 
-                    <div class="mb-3">
-                        <label for="fileInput" class="form-label">Select a file</label>
-                        <input type="file" class="form-control" id="fileInput" name="file" required>
-                        <small class="text-success">Allowed file types: PDF, Word, Excel, PowerPoint, and Images (JPEG, PNG, GIF, WEBP)</small>
+                    <div class="mb-4">
+                        <label for="fileInput" class="form-label text-secondary">Select a file to upload</label>
+                        <input type="file" class="form-control form-control-lg border-primary" id="fileInput" name="file" required>
+                        <small class="form-text text-danger" style="font-size: 12px;">Allowed file types: PDF, Word, Excel, PowerPoint, and Images (JPEG, PNG, GIF, WEBP)</small>
                         <div class="invalid-feedback">
                             Please upload a file module.
                         </div>
                     </div>
-
 
 
                     <div class="col-md-6">

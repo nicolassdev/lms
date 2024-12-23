@@ -16,6 +16,7 @@
  <?php
   // Start the session
   session_start();
+
   // Check if the user role is set
   if (isset($_SESSION['user_role'])) {
     // Check user role and redirect accordingly
@@ -40,23 +41,6 @@
     }
   }
 
-  // USING SWITCH CASE TO IDENTIFY THE USER TYPE 
-  // if (isset($_SESSION['user_role'])) {
-  //     switch (strtolower($_SESSION['user_role'])) {
-  //         case 'admin':
-  //             header('Location: /lms/admin/index.php');
-  //             break;
-  //         case 'teacher':
-  //             header('Location: /lms/faculty/index.php');
-  //             break;
-  //         case 'student':
-  //             header('Location: /lms/student/index.php');
-  //             break;
-  //         default:
-  //             header('Location: /lms/login.php?error=invalidcredentials');
-  //     }
-  //     exit();
-  // }
 
   ?>
 

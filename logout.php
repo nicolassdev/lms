@@ -4,6 +4,7 @@ session_start();
 // Destroy all session data and log out the user
 session_unset(); // Clears all session variables
 session_destroy(); // Destroys the session
+
 ?>
 
 

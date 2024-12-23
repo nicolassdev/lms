@@ -71,7 +71,7 @@ $mySQLFunction->disconnect();
                             <div id="date" class="date-display"></div>
                             <div id="time" class="date-display"></div>
                         </div> -->
-                        <div class="date-display">
+                        <div class="date-display mt-3">
                             <?php
                             date_default_timezone_set("Asia/Manila");
                             echo "Today is : " . date("l, M d, Y") . "<br>";
