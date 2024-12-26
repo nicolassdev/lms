@@ -447,7 +447,10 @@ class myDataBase
             $sql = "
                 SELECT 
                     s.*,   
-                    sec.*
+                    sec.section_code, 
+                    sec.section_name,
+                    sec.grade_lvl, 
+                    COUNT(e.stu_lrn) OVER (PARTITION BY sec.section_code) AS enrolled_count
                 FROM 
                     STUDENT s
                 INNER JOIN  

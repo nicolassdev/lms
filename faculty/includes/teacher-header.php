@@ -207,7 +207,7 @@
                     <h5 class="mb-5">Are you sure you want to logout?</h5>
 
                     <!-- Buttons -->
-                    <div class="d-flex justify-content-center mt-5 mb-3">
+                    <div class="d-flex justify-content-center mt-5 mb-3 rounded-bottom-4">
                         <button class="btn btn-outline-secondary px-4 py-2 me-3" style="width: 120px; margin-top: 20px;" data-bs-dismiss="modal">Cancel</button>
                         <a href="../logout.php" class="btn btn-danger px-4 py-2" style="width: 120px; margin-top: 20px;">Logout</a>
                     </div>

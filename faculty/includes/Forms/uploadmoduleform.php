@@ -8,8 +8,8 @@
                 <!-- Form upload -->
                 <!-- Modal Title & Icon -->
                 <div class="text-center mb-4">
-                    <h1 class="text-primary"><i class="bi bi-cloud-arrow-up" style="font-size: 140px;"></i></h1>
-                    <h2 class="h4 font-weight-bold text-dark">Upload Module</h2>
+                    <h1 class="text-primary"><i class="bi bi-cloud-arrow-up" style="font-size: 120px;"></i></h1>
+                    <h5 class="font-weight-bold text-dark">Upload Module</h5>
                 </div>
 
                 <form id="studentForm" action="./includes/upload-inc.php" method="POST" enctype="multipart/form-data" autocomplete="off" class="row g-2 needs-validation" novalidate>

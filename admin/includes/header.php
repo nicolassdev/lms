@@ -155,9 +155,9 @@
                                     </li>
                                     <li class="nav-item mt-2">
                                         <a class="nav-link active" href="index.php?page=enrolled">
-                                            <i class="bi bi-list-columns-reverse me-2"></i>Section Registration
+                                            <i class="bi bi-list-columns-reverse me-2"></i>Enroll Student
 
-
+                                            <!-- Section Registration -->
                                         </a>
                                     </li>
                                 </ul>

@@ -8,7 +8,19 @@ if (!isset($_SESSION['teacher_id'])) {
 }
 
 include "../faculty/includes/Forms/uploadmoduleform.php";
+$mySQLFunction->connection();
 
+if (!empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
+    $sub_code = $_GET['sub_code'];
+    $section_code = $_GET['section_code'];
+
+    // Fetch students by subject handled of teacher 
+    $students = $mySQLFunction->getAllStudentBySectionAndSubject($_SESSION['teacher_id'], $sub_code, $section_code);
+} else {
+    // Redirect back if required parameters are missing
+    header("Location: /lms/faculty/index.php");
+    exit;
+}
 
 ?>
 
@@ -19,7 +31,19 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h5 class="text-black">Students</h5>
+                        <h5 class="text-black">Students </h5>
+                        <div class="fw-bold fs-5">
+                            <?php if (!empty($students)) {
+                                foreach ($students as $student) {
+                                    echo htmlspecialchars($student["grade_lvl"]) . ' / ';
+                                    echo htmlspecialchars($student["section_name"]);
+                                    break; // Exit loop after processing the first student
+                                }
+                            }
+                            ?>
+                        </div>
+
+
                         <div class="d-flex">
                             <?php
                             $mySQLFunction->connection();
@@ -53,19 +77,6 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                             </thead>
                             <tbody>
                                 <?php
-                                $mySQLFunction->connection();
-
-                                if (!empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
-                                    $sub_code = $_GET['sub_code'];
-                                    $section_code = $_GET['section_code'];
-
-                                    // Fetch students by subject handled of teacher 
-                                    $students = $mySQLFunction->getAllStudentBySectionAndSubject($_SESSION['teacher_id'], $sub_code, $section_code);
-                                } else {
-                                    // Redirect back if required parameters are missing
-                                    header("Location: /lms/faculty/index.php");
-                                    exit;
-                                }
                                 if (!empty($students)) {
                                     $count = 1;
                                     foreach ($students as $student) {

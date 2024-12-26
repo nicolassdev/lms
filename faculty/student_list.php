@@ -10,6 +10,9 @@ if (!isset($_SESSION['teacher_id'])) {
 include "../includes/dbh-inc.php";
 
 include "../faculty/includes/Forms/uploadmoduleform.php";
+$mySQLFunction->connection();
+
+$result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
 
 
 ?>
@@ -38,7 +41,17 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h5 class="text-black">Students</h5>
+                        <h5 class="text-black">Students </h5>
+                        <div class="fw-bold fs-5">
+                            <?php if (!empty($result)) {
+                                foreach ($result as $student) {
+                                    echo htmlspecialchars($student["grade_lvl"]) . ' / ';
+                                    echo htmlspecialchars($student["section_name"]);
+                                    break; // Exit loop after processing the first student
+                                }
+                            }
+                            ?>
+                        </div>
                         <div class="d-flex">
                             <?php
                             $mySQLFunction->connection();
@@ -77,10 +90,6 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                             </thead>
                             <tbody>
                                 <?php
-                                $mySQLFunction->connection();
-
-                                $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
-
                                 if (!empty($result)) {
                                     $count = 1;
                                     foreach ($result as $row) {

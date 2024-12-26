@@ -55,7 +55,7 @@ $mySQLFunction->disconnect();
         letter-spacing: 1px;
     }
 </style>
-</head>
+
 
 <body>
 
@@ -140,8 +140,8 @@ $mySQLFunction->disconnect();
                 </div>
             <?php else: ?>
                 <!-- No Data Found Card -->
-                <div class="col-md-12 text-center">
-                    <div class="rounded-4 py-5">
+                <div class="col-12 text-center">
+                    <div class="py-5 mt-5">
                         <div class="card-body">
                             <i class="bi bi-exclamation-circle text-danger display-4 mb-3"></i>
                             <h5 class="text-secondary fw-bold">No Section Available</h5>
@@ -155,7 +155,7 @@ $mySQLFunction->disconnect();
 
 
 
-        <div class=" mt-5">
+        <div class="mt-5">
             <?php
             include "../includes/footer.php";
             ?>

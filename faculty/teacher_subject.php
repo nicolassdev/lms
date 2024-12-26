@@ -8,7 +8,8 @@ if (!isset($_SESSION['teacher_id'])) {
 include "../includes/dbh-inc.php";
 
 $mySQLFunction->connection();
-
+$activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
+$activeSem = $mySQLFunction->checkSemStatus('semester');
 // Get teacher's assigned subjects
 $teacherSubjectHandled = $mySQLFunction->getTeacherSubSchedule($_SESSION['teacher_id']);
 
@@ -21,11 +22,7 @@ $mySQLFunction->disconnect();
     h5 {
         color: #495057;
         font-weight: bold;
-        /* margin-bottom: 20px; */
-        padding-top: 30px;
-        padding-bottom: 20px;
         letter-spacing: 1px;
-        padding-left: 10px;
     }
 
     .card {
@@ -64,18 +61,16 @@ $mySQLFunction->disconnect();
         font-size: 14px;
     }
 
-    .btn {
-        border-radius: 30px;
-    }
+
 
     .text-secondary {
-        ''
+
         font-size: 12px;
         color: #6c757d;
     }
 
     .badge {
-        font-size: 14px;
+        font-size: 12px;
         padding: 5px 10px;
     }
 
@@ -84,37 +79,121 @@ $mySQLFunction->disconnect();
         font-size: 18px;
         font-weight: bold;
     }
+
+    .dropdown-menu {
+        transition: transform 0.4s ease, opacity 0.4s ease;
+        transform: translateY(-10px);
+        /* opacity: 0; */
+    }
+
+    .dropdown.show .dropdown-menu {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .dropdown-menu a {
+        font-size: 13px;
+    }
 </style>
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 ">
-    <h5>Subjects</h5>
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <div class="ms-3">
+            <img
+                style="position: absolute; top: 50%; right: 5%; transform: translate(-0%, -45%); 
+                    width: 700px; opacity: 0.1; z-index: -1;"
+                src="../assets/img/bg-home.webp"
+                alt="LMS Logo">
+            <div class="container mt-4">
+                <h5>Subjects </h5>
+                <div class="">
+
+                    <!-- School Year and Semester Display -->
+                    <div class="col-md-12 date-display row">
+                        <?php
+                        if (!empty($activeSchoolYears) && !empty($activeSem)) {
+                            foreach ($activeSchoolYears as $index => $schoolYear) {
+                                echo '<div>Semester: ' . htmlspecialchars($activeSem[$index]) . '<i class="bi bi-check-circle-fill text-success ms-2"></i> </div>';
+                                echo '<div>School Year: ' . htmlspecialchars($schoolYear) . '<i class="bi bi-check-circle-fill text-success ms-2"></i></div>';
+                            }
+                        } else {
+                            echo '<div class="alert alert-warning" style="font-size: small;">No active school year and semester found.</div>';
+                        }
+                        ?>
+                        <!-- Static Data -->
+                        <!-- <p>Logged in as : Principal <i class="bi bi-patch-check-fill text-success ms-1"></i></p> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="row g-4">
         <?php if (!empty($teacherSubjectHandled)): ?>
             <?php foreach ($teacherSubjectHandled as $schedule): ?>
-                <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="col-lg-4 col-md-6 col-sm-12 bg-light">
                     <div class="card h-100 border-0 shadow-sm rounded-4">
                         <!-- Card Header -->
-                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                            <h6 class="mb-0 fw-bold">
+                        <div class="card-header bg-gradient-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
+                            <h6 class="mb-0 fw-bold text-truncate">
                                 <i class="bi bi-book-half me-2"></i>
-                                <?php echo htmlspecialchars($schedule['sub_title'] ?? 'No Title'); ?>
+                                <?php echo htmlspecialchars(ucwords(strtolower($schedule['sub_title'] ?? 'No Title'))); ?>
                             </h6>
-                            <span class="badge bg-light text-primary">
-                                <i class="bi bi-award"></i>
-                                <?php echo ucwords(strtolower($schedule["grade_lvl"])) . ' ' . htmlspecialchars($schedule["section_name"]); ?>
-                            </span>
+                            <!-- Kebab Menu   -->
+                            <div class="dropdown">
+                                <i class="bi bi-three-dots-vertical" id="kebabMenu" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="cursor: pointer;"></i>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="kebabMenu">
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="#" onclick="confirmDelete()">Delete</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-secondary" href="#" onclick="cancelAction()">Cancel</a>
+                                    </li>
+                                </ul>
+                            </div>
+
                         </div>
 
                         <!-- Card Body -->
                         <div class="card-body">
-                            <div class="mb-3 text-secondary">
-                                <i class="bi bi-diagram-2 me-1"></i>
-                                <small>
-                                    <b><?php echo ucwords(strtolower($schedule["strand_desc"] ?? 'No Strand')); ?></b>
+                            <!-- Display Strand Description -->
+                            <div class="mb-2 text-secondary d-flex align-items-center">
+                                <i class="bi bi-diagram-2 text-danger fs-6 me-1"></i>
+                                <small class="fw-bold">
+                                    <?php echo ucwords(strtolower($schedule["strand_desc"] ?? 'No Strand')); ?>
                                 </small>
-                            </div>Every
-                            <?php echo ucwords(strtolower($schedule["sched_day"] ?? 'No schedule day')); ?>
-                            <div>
+                            </div>
+
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-award text-danger me-1"></i>
+                                <?php echo ucwords(strtolower($schedule["grade_lvl"])) . ' ' . htmlspecialchars($schedule["section_name"]); ?>
+                            </div>
+                            <!-- Display Total Students -->
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-people-fill text-primary  me-1"></i>
+                                <?php
+                                // Get total count every student in subject handled by teacher 
+                                $mySQLFunction->connection();
+                                $students = $mySQLFunction->getAllStudentBySectionAndSubject($_SESSION['teacher_id'], $schedule['sub_code'], $schedule['section_code']);
+                                $totalStudentinSection = '0';
+                                foreach ($students as $student) {
+                                    $totalStudentinSection = $student['enrolled_count'] ?: '0';
+                                }
+                                $mySQLFunction->disconnect();
+                                ?>
+                                Total Students: <?php echo $totalStudentinSection; ?> <!--  total section -->
+                            </div>
+
+                            <!-- Display schedule of subject -->
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-calendar3 text-success  fs-6 me-1"></i>
+                                Every <?php echo ucwords(strtolower($schedule["sched_day"] ?? 'No schedule day')); ?>
+                            </div>
+                            <!-- Display Schedule Time -->
+                            <div class=" d-flex align-items-center">
                                 <i class="bi bi-clock-history text-warning fs-6 me-1"></i>
                                 <?php
                                 echo
@@ -122,15 +201,15 @@ $mySQLFunction->disconnect();
                                     ? $schedule["sched_from"] . ' - ' . $schedule["sched_to"]
                                     : 'No set time for this subject';
                                 ?>
-
                             </div>
                         </div>
 
                         <!-- Card Footer -->
                         <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
                             <a href="index.php?page=student_subject_list&sub_code=<?php echo urlencode($schedule['sub_code']); ?>&section_code=<?php echo urlencode($schedule['section_code']); ?>"
-                                class="btn btn-outline-primary w-100 fw-bold">
-                                <i class="bi bi-person-lines-fill me-2"></i>View Students
+                                class="btn btn-outline-primary w-100 fw-bold d-flex align-items-center justify-content-center">
+                                <i class="bi bi-person-lines-fill me-2"></i>
+                                View Students
                             </a>
                         </div>
                     </div>
@@ -138,14 +217,27 @@ $mySQLFunction->disconnect();
             <?php endforeach; ?>
         <?php else: ?>
             <div class="col-12 text-center">
-                <div class="py-5 mt-5">
-                    <div class="card-body">
-                        <i class="bi bi-exclamation-circle text-danger display-4 mb-3"></i>
-                        <h5 class="text-secondary fw-bold no-subject">No Subject Available</h5>
-                        <p class="text-muted mb-0">There are currently no subjects assigned to you.</p>
+                <div class="py-5">
+                    <div class="card border-0 shadow-lg rounded-4">
+                        <div class="card-body">
+                            <i class="bi bi-exclamation-circle text-danger display-4 mb-3"></i>
+                            <h5 class="text-secondary fw-bold no-subject">No Subject Available</h5>
+                            <p class="text-muted mb-0">There are currently no subjects assigned to you.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         <?php endif; ?>
     </div>
+
+
+
 </main>
+<!-- This is post method -->
+<!-- <form action="index.php?page=student_subject_list" method="POST" class="d-inline">
+    <input type="hidden" name="sub_code" value=" ">
+    <input type="hidden" name="section_code" value=" ">
+    <button type="submit" class="btn btn-outline-primary w-100 fw-bold">
+        <i class="bi bi-person-lines-fill me-2"></i>View Students
+    </button>
+</form> -->
