@@ -107,8 +107,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link active" href="index.php?page=student_subject">
+                                    <i class="bi bi-journal-bookmark-fill me-2"></i>Subject
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=student_section">
-                                    <i class="bi bi-building  me-2"></i> Section
+                                    <i class="bi bi-building-fill  me-2"></i> Section
                                 </a>
                             </li>
                             <li class="nav-item">

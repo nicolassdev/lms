@@ -1,0 +1,372 @@
+<!-- VALIDATION CAN'T ACCESS THE URL -->
+<?php
+if (!isset($_SESSION['stu_lrn'])) {
+    header("location:../login.php?error=accessdenied");
+}
+?>
+
+<!-- FORM MODAL ADD STUDENT  -->
+<?php
+include "./includes/dbh-inc.php";
+
+include "./faculty/includes/Forms/uploadmoduleform.php";
+$mySQLFunction->connection();
+
+$result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['stu_lrn']);
+
+
+?>
+
+
+<style>
+    .data-table {
+        font-size: 0.8em;
+        /* Reduce font size */
+    }
+
+    .table th,
+    .table td {
+        padding: 0.1rem;
+        /* Adjust padding */
+    }
+</style>
+
+
+<!-- TABLE -->
+
+
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="data-table">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
+                        <h5 class="text-black">Students </h5>
+                        <div class="fw-bold fs-5">
+                            <?php if (!empty($result)) {
+                                foreach ($result as $student) {
+                                    echo htmlspecialchars($student["grade_lvl"]) . ' / ';
+                                    echo htmlspecialchars($student["section_name"]);
+                                    break; // Exit loop after processing the first student
+                                }
+                            }
+                            ?>
+                        </div>
+                        <div class="d-flex">
+                            <?php
+                            $mySQLFunction->connection();
+                            $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['stu_lrn']);
+                            ?>
+
+                            <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#upload_module" data-bs-whatever="@fat"
+                                <?php echo empty($result) ? 'disabled' : ''; ?>>
+                                <i class="bi bi-cloud-arrow-up me-1"></i>Upload module
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <!-- STUDENT DETAILS -->
+                    <div class="table-responsive small ms-3 me-1">
+                        <table id="example" class="table table-bordered table-striped table-sm align-middle">
+                            <thead class="table-dark">
+                                <tr>
+
+                                    <th scope="col" style="width: 50px;">#</th>
+                                    <th scope="col" style="width: 50px;">LRN</th>
+                                    <th scope="col" style="width: 100px;">Full name</th>
+                                    <th scope="col" style="width: 50px;">Gender</th>
+                                    <th scope="col" style="width: 150px;">Address</th>
+                                    <th scope="col" style="width: 100px;">Contact</th>
+                                    <th scope="col" style="width: 100px;">Email</th>
+                                    <th scope="col" style="width: 100px;">Section</th>
+                                    <!-- <th scope="col" style="width: 150px;">Place of birth</th>
+                                    <th scope="col" style="width: 100px;">Father</th>
+                                    <th scope="col" style="width: 100px;">Mother</th>
+                                    <th scope="col" style="width: 100px;">CP. No</th> -->
+                                    <th scope="col" class="text-center" style="width: 100px;">Action</th><!-- colspan should be 2 -->
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if (!empty($result)) {
+                                    $count = 1;
+                                    foreach ($result as $row) {
+                                        // Create a DateTime object and format the added_date
+                                        $addedDate = new DateTime($row['stu_dob']);
+                                        $formattedBdate = $addedDate->format('F j, Y');
+
+                                        echo '<td>' . $count . '</td>';
+                                        echo '<td class="text-center text-primary"> <a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">'
+                                            . $row["stu_lrn"] . '</a></td>';
+                                        echo '<td class="small text-center"> ' . $row["stu_lname"] . ',  ' .  ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"] . '')) . '</td>';
+                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
+                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
+                                        echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
+                                        echo '<td class="small text-center">' . strtolower($row["stu_email"]) . '</td>';
+                                        echo '<td class="small text-center">' .  $row["section_name"] . '</td>';
+
+                                        // echo '<td class="small text-center">' . $formattedBdate . '</td>';
+                                        // echo '<td class="small text-center">' . $row["stu_pob"] . '</td>';
+                                        // echo '<td class="small text-center">' . $row["father_name"] . '</td>';
+                                        // echo '<td class="small text-center">' . $row["mother_name"] . '</td>';
+                                        // echo '<td class="small text-center">' . $row["parent_contact"] . '</td>';
+
+                                        // button
+                                        //   <button title="Student Information" class="btn btn-sm btn-outline-success me-2 " data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">
+                                        //     <i class="bi bi-person-vcard"></i>
+                                        // </button>
+                                        // THIS IS THE DELETE BUTTON I WILL UNCOMMENT THIS IF NEED TO DELETE PLEASE UNCOMMENT THE LINE
+                                        // <button title="Delete" class="btn btn-sm btn-outline-danger " data-bs-toggle="modal" data-bs-target="#del_student' . $row['stu_lrn'] . '">
+                                        //     <i class="bi bi-trash"></i> 
+                                        // </button>
+                                        echo '
+                                            <td class="d-flex justify-content-center">
+                                           
+                                                <button title="Edit" class="btn btn-sm btn-outline-success  me-2" data-bs-toggle="modal" data-bs-target="#edit_student' . $row['stu_lrn'] . '">
+                                                    <i class="bi bi-pencil-square me-1"></i>Edit 
+                                                </button>
+                                         
+                                            </td>
+                                                ';
+                                        echo '</tr>';
+
+                                        $count++;
+
+                                        //todo Mddal for view student information
+                                        echo '
+                                        <div class="modal fade" id="view_student' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="teachModal" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content b-grey">
+                                                    <div class="modal-body"> 
+                                                 
+                                                    <div style="position: relative; ">
+                                                        <img
+                                                            style="position: absolute; top: 10%; left: 60%; transform: translate(-30%, -0%); 
+                                                            width: 400px; opacity: 0.1; z-index: 1;"
+                                                            src="../assets/img/csi.webp"
+                                                            alt="LMS Logo">
+                                                    </div>
+                                             
+         
+                                                       <div class="modal-header">
+                                                            <div class="d-flex align-items-center justify-content-between w-100">
+                                                                <div class="text-start">
+                                                                    <h1 class="modal-title fs-5 text-success">Student Information</h1>
+                                                                </div>
+
+                                                                            <div class="text-end">
+                                                                            <i class="bi bi-person-vcard-fill fs-1 text-success"></i>
+                                                                                <div class="text-success fw-bold">LRN: ' . htmlspecialchars($row['stu_lrn']) . '</div>
+                                                                            </div>
+                                                                    </div>
+                                                                </div> 
+
+
+
+ 
+                                                        <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editTeacherForm' . htmlspecialchars($row['stu_lrn']) . '">
+                                                            <!-- Use hidden input -->
+                                                            <input type="hidden" name="lrnID" value="' . htmlspecialchars($row['stu_lrn']) . '">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <label for="firstName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">First Name</label>
+                                                                        <input type="text" class="form-control" name="firstname" value="' . htmlspecialchars($row['stu_fname']) . '" readonly disabled>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label for="middleName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Middle Name</label>
+                                                                        <input type="text" class="form-control" name="middlename" value="' . htmlspecialchars($row['stu_mname']) . '" disabled>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label for="lastName' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Last name</label>
+                                                                        <input type="text" class="form-control" name="lastname" value="' . htmlspecialchars($row['stu_lname']) . '" readonly disabled>
+                                                                    </div>
+                                                                    <div class="col-md-5 mt-2">
+                                                                        <label class="form-label">Address</label>
+                                                                        <input type="text" class="form-control" name="address" value="' . htmlspecialchars($row['stu_address']) . '" readonly disabled>
+                                                                    </div>
+
+                                                                    <div class="col-md-4 mt-2">
+                                                                        <label for="contactNumber' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Contact</label>
+                                                                        <div class="input-group has-validation">
+                                                                            <span class="input-group-text bg-success" style="color:white" id="inputGroupPrepend">+63</span>
+                                                                            <input type="text" class="form-control" name="contact" value="' . htmlspecialchars($row['stu_contact']) . '" aria-describedby="inputGroupPrepend" pattern="9\\d{9}" maxlength="10" readonly disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    
+                                                                    <div class="col-md-3 mt-2">
+                                                                        <label for="gender' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Gender</label>
+                                                                        <input type="text" class="form-control" name="gender" id="gender' . htmlspecialchars($row['stu_lrn']) . '" value="' . htmlspecialchars($row['stu_gender']) . '" readonly disabled>
+                                                                    </div>
+                                                                    
+                                                                <div class="col-md-5 mt-2">
+                                                                        <label for="email' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Email</label>
+                                                                        <input type="text" name="email" class="form-control" value="' . htmlspecialchars($row['stu_email']) . '"  placeholder="Enter your email address" pattern=".*@(gmail|yahoo)\.com$" readonly disabled>
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                    <div class="col-md-4 mt-2">
+                                                                        <label class="form-label">Place of Birth</label>
+                                                                        <input type="text" class="form-control" name="pob" value="' . htmlspecialchars($row['stu_pob']) . '" readonly disabled>
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-md-3 mt-2">
+                                                                    <label for="dob' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Date of Birth</label>
+                                                                        <input type="date" class="form-control" name="dob" id="dob' . htmlspecialchars($row['stu_dob']) . '" value="' . htmlspecialchars($row['stu_dob']) . '" readonly disabled>
+                                                                    </div>
+                                                                    
+                                                                </div>
+
+  
+
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5 text-success">Guardian Information   </h1> 
+                                                            </div>
+                                                            <div class="row"> 
+                                                                <div class="col-md-6 mt-2">
+                                                                        <label class="form-label">Father\'s name</label>
+                                                                        <input type="text" class="form-control" name="fathername" value="' . htmlspecialchars($row['father_name']) . '" readonly disabled>
+                                                                </div>
+
+                                                                    
+
+                                                                    <div class="col-md-6 mt-2">
+                                                                        <label class="form-label">Mother\'s name</label>
+                                                                        <input type="text" class="form-control" name="mothername" value="' . htmlspecialchars($row['mother_name']) . '" readonly disabled>
+                                                                    </div>
+
+
+                                                                    <div class="col-md-12 mt-2">
+                                                                        <label for="contactNumber' . htmlspecialchars($row['stu_lrn']) . '" class="form-label">Contact</label>
+                                                                        <div class="input-group has-validation">
+                                                                            <span class="input-group-text bg-success" style="color:white" id="inputGroupPrepend">+63</span>
+                                                                            <input type="text" class="form-control" name="pcontact" value="' . htmlspecialchars($row['parent_contact']) . '" readonly disabled>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+
+                                                            <div class=" justify-center ">
+                                                                <div class="col-12">
+                                                                    <button type="button"  class="btn btn-success w-100 mt-3 mb-2"  data-bs-dismiss="modal">Okay</button>
+                                                                </div>
+                                                              
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ';
+                                    }
+                                } else {
+                                    echo '<tr>
+                                <td colspan="10" class="text-center mt-2 text-danger"><strong>Student not found.</strong>
+                                </td>
+                              </tr>';
+                                }
+
+                                echo '</tbody>';
+                                echo '</table>';
+                                $mySQLFunction->disconnect();
+                                ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+    include("./admin/includes/extension.php");
+    ?>
+
+
+</main>
+
+
+<!-- PDF ,EXCEL, PRINT ,CVS -->
+<script>
+    $(document).ready(function() {
+        $("#example").DataTable({
+            dom: "Bfrtip", // Include buttons in the dom
+            buttons: [
+                "copy",
+                {
+                    extend: "csvHtml5",
+                    text: "CSV",
+                    exportOptions: {
+                        columns: function(index, data, node) {
+                            // Exclude the "Action" column (assuming index 7)
+                            return index !== 7;
+                        },
+                    },
+                },
+                {
+                    extend: "excelHtml5",
+                    text: "Excel",
+                    exportOptions: {
+                        columns: function(index, data, node) {
+                            // Exclude the "Action" column (assuming index 7)
+                            return index !== 7;
+                        },
+                    },
+                },
+                {
+                    extend: "pdfHtml5",
+                    text: "PDF",
+                    exportOptions: {
+                        columns: function(index, data, node) {
+                            // Exclude the "Action" column (assuming index 7)
+                            return index !== 7;
+                        },
+                    },
+                },
+                {
+                    extend: "print",
+                    text: "Print",
+                    autoPrint: true, // This will print in the same tab (no new window)
+                    customize: function(win) {
+                        // Custom styling or adjustments for print can go here
+                        $(win.document.body)
+                            .find('h1:contains("LMS")') // Adjust the selector if needed
+                            .css("display", "none");
+
+                        $(win.document.body)
+                            .css("font-size", "10pt")
+                            .prepend(
+                                // This is the container that holds both left and right aligned text
+                                '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+                                // Left-aligned: List of Enrolled Students
+                                '<div style="text-align:left; flex: 1;">' +
+                                "<h5 style='font-size: 14px;'>Enrolled Students</h5>" +
+                                "</div>" +
+                                // Right-aligned: Computer Systems Institute
+                                '<div style="text-align:right; flex: 1;">' +
+                                "<h6>Computer Systems Institute</h6>" +
+                                "<small>F. Imperial st., Brgy. 36 - Capantawan, Legazpi City</small><br>" +
+                                "</div>" +
+                                "</div>"
+                            );
+
+                        $(win.document.body)
+                            .find("table thead th")
+                            .css("background-color", "#007bff") // Header color
+                            .css("color", "#ffffff")
+                            .css("padding", "10px");
+                        $(win.document.body)
+                            .find("table")
+                            .addClass("compact") // Optional: Compact styling for the table in print view
+                            .css("font-size", "inherit");
+                    },
+                    exportOptions: {
+                        columns: function(index, data, node) {
+                            // Exclude the "Action" column (assuming index 7)
+                            return index !== 7;
+                        },
+                    },
+                },
+            ],
+        });
+    });
+</script>

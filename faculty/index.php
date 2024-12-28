@@ -4,21 +4,23 @@ if (isset($_SESSION['user_role'])) {
     $user_role = strtolower($_SESSION['user_role']);
     if ($user_role !== 'teacher') {
         echo "User role: " . htmlspecialchars($user_role);
+        header("location:/lms/login.php"); // Redirect to login page if user role is not exist 
         exit(); // Debug and ensure it doesn't redirect incorrectly
     }
 } else {
     echo "Session role not set.";
+    header("location:/lms/login.php"); // Redirect to login page if user role is not exist 
     exit(); // Debug and confirm if the session is not established
 }
 
 ?>
- 
- <?php
-    include("./includes/teacher-header.php");
 
-    require_once("./includes/alert-modal.php");
+<?php
+include("./includes/teacher-header.php");
 
-    ?>
+require_once("./includes/alert-modal.php");
+
+?>
 <?php
 // Determine the page from the URL parameter, default to 'home' if not set
 $page = isset($_GET["page"]) ? $_GET["page"] : "dashboard";
@@ -99,4 +101,4 @@ switch ($page) {
 
 
 ?>
-  
+ 

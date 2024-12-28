@@ -192,7 +192,6 @@ body {
 .profile-details {
   text-align: center;
 }
-
 .profile-img-circle {
   border-radius: 50%;
   width: 180px;
@@ -201,6 +200,13 @@ body {
   border: 3px solid #198754;
 }
 
+.profile-img-teacher {
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  /* border: 3px solid #198754; */
+}
 .modal-content {
   width: 100%;
   max-width: 1000px;
@@ -214,4 +220,85 @@ body {
     font-size: 0.875rem;
     /* Smaller font size */
   }
+}
+
+.container-form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  z-index: 1500;
+
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.523);
+}
+.data-table {
+  background: #fff;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 1px 3px 15px #aaa;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Custom scrollbar for table */
+.table-responsive::-webkit-scrollbar {
+  width: 8px; /* Scrollbar width */
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Scrollbar track color */
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background-color: #888; /* Scrollbar thumb color */
+  border-radius: 10px; /* Rounded scrollbar thumb */
+  border: 1px solid transparent; /* Add padding to make it appear shorter */
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker thumb on hover */
+}
+
+/* Set a fixed height for the scrollbar container */
+.table-responsive {
+  max-height: 410px; /* You can adjust the height based on your requirement */
+  overflow-y: auto; /* Enable vertical scroll */
+}
+
+@media print {
+  .lms-heading {
+    display: none;
+  }
+}
+
+.data-table {
+  font-size: 0.9em;
+  /* Reduce font size */
+}
+
+.table th,
+.table td {
+  padding: 0.1rem;
+  /* Adjust padding */
+}
+
+/* ================================ PAGINATION AND SEARCH ======================== */
+
+.text-sm {
+  font-size: 0.7em;
+}
+
+.dataTables_filter {
+  margin-bottom: 5px;
+  /* Space below the search bar */
+}
+
+.dataTables_filter input {
+  margin-left: 5px;
+  /* Space between the label and input */
+  padding: 5px;
+  /* Padding inside the input for better appearance */
 }

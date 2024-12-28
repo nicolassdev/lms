@@ -88,7 +88,7 @@
                 echo '<option disabled>No teaecher found in the database.</option>';
               } else {
                 foreach ($result as $row) {
-                  if (($mySQLFunction->checkRowCount("subject", "teacher_id", $row["teacher_id"])) == 2) { //check if the teacher id was exist 2x then skip to continue
+                  if (($mySQLFunction->checkRowCount("subject", "teacher_id", $row["teacher_id"])) == 3) { //check if the teacher id was exist 2x then skip to continue
                     continue;
                   } else {
                     echo '<option value="' . $row["teacher_id"] . '">' . $row["teacher_fname"] . ' ' . $row["teacher_mname"] . ' ' . $row["teacher_lname"] . '</option>';

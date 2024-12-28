@@ -7,7 +7,6 @@
     <title>Teacher</title>
 
     <link rel="icon" type="webp" href="../assets/img/csi.webp">
-
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/teacher.css?v=<?php echo time(); ?>" />
     <!-- Bootstrap CSS -->
@@ -38,7 +37,7 @@
 
 </head>
 
-<body>
+<body class="lms-scroll-bar">
     <!-- Top Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">

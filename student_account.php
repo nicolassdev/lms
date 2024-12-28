@@ -24,13 +24,7 @@ $account = $mySQLFunction->getAccountUser($_SESSION['id']);
 
 $studentInfo  = $mySQLFunction->getStudentInfo($_SESSION['stu_lrn']); //handled by student 
 
-$studentSection = $mySQLFunction->getStudentSection($_SESSION['stu_lrn']); //get student section array in database
-
-$studentStrandName = $mySQLFunction->getStudentStrandName($_SESSION['stu_lrn']); // Get strand name
-
-
 $studentFullName = $studentInfo['stu_fname'] . ' ' . $studentInfo['stu_mname'] . ' ' . $studentInfo['stu_lname'];
-
 
 
 // Birthday formatted

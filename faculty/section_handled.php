@@ -154,11 +154,4 @@ $mySQLFunction->disconnect();
 
 
 
-
-        <div class="mt-5">
-            <?php
-            include "../includes/footer.php";
-            ?>
-        </div>
-
     </main>

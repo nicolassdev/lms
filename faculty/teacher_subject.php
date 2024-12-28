@@ -130,77 +130,67 @@ $mySQLFunction->disconnect();
     </div>
 
 
-
     <div class="row g-4">
         <?php if (!empty($teacherSubjectHandled)): ?>
             <?php foreach ($teacherSubjectHandled as $schedule): ?>
-                <div class="col-lg-4 col-md-6 col-sm-12 bg-light">
-                    <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="card h-100 border-0 shadow-lg rounded-4">
                         <!-- Card Header -->
-                        <div class="card-header bg-gradient-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
+                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
                             <h6 class="mb-0 fw-bold text-truncate">
                                 <i class="bi bi-book-half me-2"></i>
                                 <?php echo htmlspecialchars(ucwords(strtolower($schedule['sub_title'] ?? 'No Title'))); ?>
                             </h6>
-                            <!-- Kebab Menu   -->
+                            <!-- Kebab Menu -->
                             <div class="dropdown">
-                                <i class="bi bi-three-dots-vertical" id="kebabMenu" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="cursor: pointer;"></i>
+                                <i class="bi bi-three-dots-vertical text-white" id="kebabMenu" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="cursor: pointer;"></i>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="kebabMenu">
                                     <li>
-                                        <a class="dropdown-item text-danger" href="#" onclick="confirmDelete()">Delete</a>
+                                        <a class="dropdown-item text-black" href="#" onclick="confirmDelete()">Move</a>
                                     </li>
+                                    <hr class="me-2 ms-2">
                                     <li>
-                                        <a class="dropdown-item text-secondary" href="#" onclick="cancelAction()">Cancel</a>
+                                        <a class="dropdown-item text-black" href="#" onclick="cancelAction()">Cancel</a>
                                     </li>
                                 </ul>
                             </div>
-
                         </div>
 
                         <!-- Card Body -->
                         <div class="card-body">
-                            <!-- Display Strand Description -->
-                            <div class="mb-2 text-secondary d-flex align-items-center">
-                                <i class="bi bi-diagram-2 text-danger fs-6 me-1"></i>
-                                <small class="fw-bold">
-                                    <?php echo ucwords(strtolower($schedule["strand_desc"] ?? 'No Strand')); ?>
-                                </small>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-award text-danger fs-2 me-2"></i>
+                                <span class="fw-bold fs-5"><?php echo ucwords(strtolower($schedule["grade_lvl"])) . ' ' . htmlspecialchars($schedule["section_name"]); ?></span>
                             </div>
+                            <div class="text-secondary mb-3 d-flex align-items-center">
+                                <!-- <i class="bi bi-diagram-2 text-info fs-6 me-3"></i> -->
+                                <small class="fw-semibold"><?php echo  $schedule["strand_desc"] ?? 'No Strand'; ?></small>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-people-fill text-primary fs-6 me-2"></i>
+                                <span class="fw-semibold">Total Students: <?php
+                                                                            // Get total count for each student in subject handled by teacher
+                                                                            $mySQLFunction->connection();
+                                                                            $students = $mySQLFunction->getAllStudentBySectionAndSubject($_SESSION['teacher_id'], $schedule['sub_code'], $schedule['section_code']);
+                                                                            $totalStudentinSection = '0';
+                                                                            foreach ($students as $student) {
+                                                                                $totalStudentinSection = $student['enrolled_count'] ?: '0';
+                                                                            }
+                                                                            $mySQLFunction->disconnect();
+                                                                            echo $totalStudentinSection;
+                                                                            ?></span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-calendar3 text-success fs-6 me-2"></i>
+                                <span>
+                                    <?php
+                                    echo ucwords(strtolower($schedule["sched_day"])) . ' ' .
+                                        ($schedule["sched_from"] && $schedule["sched_to"]
+                                            ? $schedule["sched_from"] . ' - ' . $schedule["sched_to"]
+                                            : 'No schedule time');
+                                    ?>
+                                </span>
 
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="bi bi-award text-danger me-1"></i>
-                                <?php echo ucwords(strtolower($schedule["grade_lvl"])) . ' ' . htmlspecialchars($schedule["section_name"]); ?>
-                            </div>
-                            <!-- Display Total Students -->
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="bi bi-people-fill text-primary  me-1"></i>
-                                <?php
-                                // Get total count every student in subject handled by teacher 
-                                $mySQLFunction->connection();
-                                $students = $mySQLFunction->getAllStudentBySectionAndSubject($_SESSION['teacher_id'], $schedule['sub_code'], $schedule['section_code']);
-                                $totalStudentinSection = '0';
-                                foreach ($students as $student) {
-                                    $totalStudentinSection = $student['enrolled_count'] ?: '0';
-                                }
-                                $mySQLFunction->disconnect();
-                                ?>
-                                Total Students: <?php echo $totalStudentinSection; ?> <!--  total section -->
-                            </div>
-
-                            <!-- Display schedule of subject -->
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="bi bi-calendar3 text-success  fs-6 me-1"></i>
-                                Every <?php echo ucwords(strtolower($schedule["sched_day"] ?? 'No schedule day')); ?>
-                            </div>
-                            <!-- Display Schedule Time -->
-                            <div class=" d-flex align-items-center">
-                                <i class="bi bi-clock-history text-warning fs-6 me-1"></i>
-                                <?php
-                                echo
-                                $schedule["sched_from"] && $schedule["sched_to"]
-                                    ? $schedule["sched_from"] . ' - ' . $schedule["sched_to"]
-                                    : 'No set time for this subject';
-                                ?>
                             </div>
                         </div>
 
@@ -208,8 +198,7 @@ $mySQLFunction->disconnect();
                         <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
                             <a href="index.php?page=student_subject_list&sub_code=<?php echo urlencode($schedule['sub_code']); ?>&section_code=<?php echo urlencode($schedule['section_code']); ?>"
                                 class="btn btn-outline-primary w-100 fw-bold d-flex align-items-center justify-content-center">
-                                <i class="bi bi-person-lines-fill me-2"></i>
-                                View Students
+                                <i class="bi bi-person-lines-fill me-2"></i> View Students
                             </a>
                         </div>
                     </div>
@@ -218,12 +207,10 @@ $mySQLFunction->disconnect();
         <?php else: ?>
             <div class="col-12 text-center">
                 <div class="py-5">
-                    <div class="card border-0 shadow-lg rounded-4">
-                        <div class="card-body">
-                            <i class="bi bi-exclamation-circle text-danger display-4 mb-3"></i>
-                            <h5 class="text-secondary fw-bold no-subject">No Subject Available</h5>
-                            <p class="text-muted mb-0">There are currently no subjects assigned to you.</p>
-                        </div>
+                    <div class="card-body">
+                        <i class="bi bi-exclamation-circle text-danger display-4 mb-3"></i>
+                        <h5 class="text-secondary fw-bold no-subject">No Subject Available</h5>
+                        <p class="text-muted mb-0">There are currently no subjects assigned to you.</p>
                     </div>
                 </div>
             </div>

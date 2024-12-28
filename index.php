@@ -35,6 +35,11 @@ switch ($page) {
         require_once 'student_section.php';
         break;
 
+    case "student_subject":
+        require_once 'student_subject.php';
+        break;
+
+
     case "student_prof":
         require_once 'student_prof.php';
         break;
