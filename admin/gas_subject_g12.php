@@ -174,20 +174,10 @@
          $("#example").DataTable({
              dom: "Bfrtip", // Include buttons in the dom
              buttons: [
-                 "copy",
-                 {
-                     extend: "csvHtml5",
-                     text: "CSV",
-                     exportOptions: {
-                         columns: function(index, data, node) {
-                             // Exclude the "Action" column (assuming index 7)
-                             return index !== 7;
-                         },
-                     },
-                 },
+                 
                  {
                      extend: "excelHtml5",
-                     text: "Excel",
+                     text: "Download Excel",
                      exportOptions: {
                          columns: function(index, data, node) {
                              // Exclude the "Action" column (assuming index 7)
@@ -197,7 +187,7 @@
                  },
                  {
                      extend: "pdfHtml5",
-                     text: "PDF",
+                     text: "Download PDF",
                      exportOptions: {
                          columns: function(index, data, node) {
 

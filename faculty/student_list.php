@@ -469,34 +469,24 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
         $("#example").DataTable({
             dom: "Bfrtip", // Include buttons in the dom
             buttons: [
-                "copy",
-                {
-                    extend: "csvHtml5",
-                    text: "CSV",
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 7)
-                            return index !== 7;
-                        },
-                    },
-                },
+               
                 {
                     extend: "excelHtml5",
-                    text: "Excel",
+                    text: "Download Excel",
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 7;
+                            return index !== 8;
                         },
                     },
                 },
                 {
                     extend: "pdfHtml5",
-                    text: "PDF",
+                    text: "Dowload PDF",
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 7;
+                            return index !== 8;
                         },
                     },
                 },
@@ -540,7 +530,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 7;
+                            return index !== 8;
                         },
                     },
                 },
