@@ -174,13 +174,13 @@ $mySQLFunction->disconnect();
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="card shadow-lg border-0 h-100 rounded-4">
                         <div class="card-body text-center d-flex flex-column p-4">
-                            <i class="bi bi-journal-bookmark text-warning display-3 mb-3"></i>
+                            <i class="bi bi-journal-bookmark text-danger display-3 mb-3"></i>
                             <h5 class="fw-bold text-dark">Subjects</h5>
                             <p class="text-muted small mb-3">Manage subjects effortlessly.</p>
-                            <p class="fs-4 text-warning fw-bold mb-4">
+                            <p class="fs-4 text-danger fw-bold mb-4">
                                 <?php echo htmlspecialchars($numberOfSubject); ?>
                             </p>
-                            <a href="?page=subject" class="btn btn-outline-warning mt-auto rounded-pill fw-semibold">
+                            <a href="?page=subject" class="btn btn-outline-danger mt-auto rounded-pill fw-semibold">
                                 <i class="bi bi-book-half me-1"></i> Manage Subjects
                             </a>
                         </div>
@@ -191,13 +191,13 @@ $mySQLFunction->disconnect();
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="card shadow-lg border-0 h-100 rounded-4">
                         <div class="card-body text-center d-flex flex-column p-4">
-                            <i class="bi bi-building-fill text-danger display-3 mb-3"></i>
+                            <i class="bi bi-building-fill text-warning display-3 mb-3"></i>
                             <h5 class="fw-bold text-dark">Sections</h5>
                             <p class="text-muted small mb-3">Handle sections easily.</p>
-                            <p class="fs-4 text-danger fw-bold mb-4">
+                            <p class="fs-4 text-warning fw-bold mb-4">
                                 <?php echo htmlspecialchars($numberOfAdviser); ?>
                             </p>
-                            <a href="?page=section" class="btn btn-outline-danger mt-auto rounded-pill fw-semibold">
+                            <a href="?page=section" class="btn btn-outline-warning mt-auto rounded-pill fw-semibold">
                                 <i class="bi bi-columns me-1"></i> Manage Sections
                             </a>
                         </div>

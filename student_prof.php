@@ -23,9 +23,7 @@ $showSchool = $mySQLFunction->getSchool();
 
 $studentInfo  = $mySQLFunction->getStudentInfo($_SESSION['stu_lrn']); //handled by student 
 
-$studentSection = $mySQLFunction->getStudentSection($_SESSION['stu_lrn']); //get student section array in database
-
-$studentStrandName = $mySQLFunction->getStudentStrandName($_SESSION['stu_lrn']); // Get strand name
+$studentStrandAndSection = $mySQLFunction->getStudentStrandAndSection($_SESSION['stu_lrn']); //get student section array in database
 
 
 $studentFullName = $studentInfo['stu_fname'] . ' ' . $studentInfo['stu_mname'] . ' ' . $studentInfo['stu_lname'];
@@ -276,8 +274,8 @@ $mySQLFunction->disconnect();
                                 <strong>Strand:</strong>
                                 <p>
                                     <?php
-                                    if (!empty($studentStrandName)) {
-                                        foreach ($studentStrandName as $strand) {
+                                    if (!empty($studentStrandAndSection)) {
+                                        foreach ($studentStrandAndSection as $strand) {
                                             echo htmlspecialchars($strand["strand_name"]);
                                         }
                                     } else {
@@ -290,9 +288,10 @@ $mySQLFunction->disconnect();
                                 <strong>Section and Grade level:</strong>
                                 <p>
                                     <?php
-                                    if (!empty($studentSection)) {
-                                        foreach ($studentSection as $section) {
+                                    if (!empty($studentStrandAndSection)) {
+                                        foreach ($studentStrandAndSection as $section) {
                                             echo ucwords(strtolower($section["grade_lvl"])) . ' - ' . htmlspecialchars($section["section_name"]) . ' <br>'; // Display each subject with strand code
+
                                         }
                                     } else {
                                         echo '<div class="text-danger">No section assigned to this student.</div>';
@@ -344,6 +343,23 @@ $mySQLFunction->disconnect();
                             <div class="col-md-6">
                                 <strong>Joined:</strong>
                                 <p><?php echo htmlspecialchars($_SESSION["student_added"]); ?></p>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="row mb-1">
+
+                            <div class="col-md-12">
+                                <strong>Adviser:</strong>
+                                <p><?php if (!empty($studentStrandAndSection)) {
+                                        foreach ($studentStrandAndSection as $adviser) {
+                                            echo htmlspecialchars(ucwords(strtolower($adviser["teacher_fname"] . ' ' . $adviser["teacher_lname"])));
+                                        }
+                                    } else {
+                                        echo '<div class="text-danger">No adviser assigned.</div>';
+                                    } ?></p>
                             </div>
 
                         </div>

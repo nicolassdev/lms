@@ -293,8 +293,10 @@ class myDataBase
             sch.sched_day,
             sch.sched_from,
             sch.sched_to,
+            sec.section_code,
             sec.grade_lvl,
             sec.section_name,
+            sub.sub_code,
             sub.sub_title,
             st.strand_name,
             st.strand_desc
@@ -339,8 +341,81 @@ class myDataBase
             return null; // No rows found
         }
     }
+    // GET STUDENT'S SUBJECT BY STRAND AND  GRADE LVL  HANDLED BY ID
+    public function getStudentSubject($stu_lrn)
+    {
+        // Get the active semester
+        $activeSemesters = $this->checkSemStatus('semester');
 
+        // Check if there are any active semesters
+        if (empty($activeSemesters)) {
+            return []; // Return an empty array if no active semester
+        }
 
+        // Prepare the active semester condition
+        $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
+
+        // Query to fetch subject details, section, and teacher based on student enrollment
+        $sql = "
+            SELECT 
+                sub.sub_code,
+                sub.sub_title,
+                sub.sub_type,
+                sub.sub_time,
+                sub.sub_semester,
+                sec.section_code,
+                sec.grade_lvl,
+                sec.section_name,
+                st.strand_name,
+                st.strand_desc,
+                t.teacher_fname,
+                t.teacher_lname,
+                t.teacher_gender,
+                t.teacher_id,
+                t.image
+            FROM 
+                `enroll` e
+            INNER JOIN 
+                `section` sec 
+                ON e.section_code = sec.section_code
+            INNER JOIN 
+                `subject` sub 
+                ON sec.strand_code = sub.strand_code AND sec.grade_lvl = sub.sub_gradelvl
+            LEFT JOIN 
+                `strand` st 
+                ON sec.strand_code = st.strand_code
+            LEFT JOIN 
+                `teacher` t 
+                ON sub.teacher_id = t.teacher_id
+            WHERE 
+                e.stu_lrn = ? AND e.enroll_status = 'Enrolled' AND $activeSemesterCondition
+            ORDER BY 
+                sec.grade_lvl, sub.sub_title";  // Order the results by grade level and subject
+
+        // Prepare the SQL statement
+        $stmt = $this->con->prepare($sql);
+
+        // Bind the student LRN parameter
+        $stmt->bind_param("s", $stu_lrn);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        // Check if any rows are returned
+        if ($result->num_rows > 0) {
+            // Fetch all matching rows
+            $data = [];
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            return $data; // Return all rows as an array
+        } else {
+            return null; // No rows found
+        }
+    }
 
 
     //GET TEACHER SECTION HANDLED by id
@@ -374,7 +449,7 @@ class myDataBase
         }
     }
 
-    //check how man enrolled in section 
+    //Check how man enrolled in section 
     public function checkEnrolledCountByTeacher($teacher_id)
     {
         $sql = "
@@ -401,7 +476,7 @@ class myDataBase
         return $result;
     }
 
-    public function getAllStudentDetailsByTeacherId($teacher_id)
+    public function getAllStudentDetailsBySectionOfTeacher($teacher_id)
     {
         $sql = "
         SELECT 
@@ -437,6 +512,103 @@ class myDataBase
 
         return $result;
     }
+
+    // GET ALL STUDENT BY TEACHER HANDLED SUBJECT IN EVERY SECTION
+    function getAllStudentBySectionAndSubject($teacherId, $subjectId, $sectionCode)
+    {
+        try {
+            $sql = "
+                SELECT 
+                    s.*,   
+                    sec.section_code, 
+                    sec.section_name,
+                    sec.grade_lvl, 
+                    COUNT(e.stu_lrn) OVER (PARTITION BY sec.section_code) AS enrolled_count
+                FROM 
+                    STUDENT s
+                INNER JOIN  
+                    ENROLL e ON s.stu_lrn = e.stu_lrn
+                INNER JOIN  
+                    SECTION sec ON e.section_code = sec.section_code
+                INNER JOIN  
+                    SCHEDULE sched ON sec.section_code = sched.section_code
+                INNER JOIN  
+                    SUBJECT sub ON sched.sub_code = sub.sub_code
+                WHERE 
+                    sched.sub_code = ? 
+                    AND sched.section_code = ?
+                    AND sub.teacher_id = ?
+            ";
+
+            // Prepare the query
+            $stmt = $this->con->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
+            }
+
+            // Bind parameters (use 's' for string, 'i' for integer)
+            $stmt->bind_param("sss", $subjectId, $sectionCode, $teacherId); // 'ssi' for string, string, integer
+
+            // Execute the statement
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            // Fetch all matching rows
+            $students = $result->fetch_all(MYSQLI_ASSOC);
+
+            // Free resources
+            $stmt->close();
+
+            return $students;
+        } catch (Exception $e) {
+            // Log the error message
+            error_log("Error fetching students: " . $e->getMessage());
+            return [];
+        }
+    }
+
+
+
+
+    public function getAllStudentBySectionAndSubjectOfTeacher($teacher_id)
+    {
+        $sql = "
+        SELECT 
+            b. * ,
+            s.section_name, 
+            s.grade_lvl, 
+            s.strand_code, 
+            sub.sub_code, 
+            sub.sub_title, 
+            sched.sched_day, 
+            sched.sched_from, 
+            sched.sched_to
+        FROM 
+            enroll e
+        INNER JOIN 
+            student b ON e.stu_lrn = b.stu_lrn
+        INNER JOIN 
+            section s ON e.section_code = s.section_code
+        INNER JOIN 
+            schedule sched ON sched.section_code = s.section_code
+        INNER JOIN 
+            subject sub ON sched.sub_code = sub.sub_code
+        WHERE 
+            sub.teacher_id = ?
+            AND 
+            section_name = 'ST.PHILIP'
+        ";
+
+        // Prepare and execute the query
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $teacher_id);  // Bind the teacher_id parameter
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        return $result;
+    }
+
+
 
 
 
@@ -477,12 +649,27 @@ class myDataBase
 
 
     //GET STUDENT SECTION HANDLED by id
-    public function getStudentSection($student_id)
+    public function getStudentStrandAndSection($student_id)
     {
-        $sql = "SELECT enroll.semester, enroll.school_year, enroll.section_code, section.section_name, section.grade_lvl
-                FROM enroll 
-                JOIN section ON enroll.section_code = section.section_code
-                WHERE enroll.stu_lrn = ?";
+        $sql = "SELECT 
+                e.semester,
+                e.school_year, 
+                e.section_code, 
+                s.section_name, 
+                s.grade_lvl,
+                st.strand_code,
+                st.strand_name,
+                t.teacher_id,
+                t.teacher_fname,
+                t.teacher_lname
+            FROM enroll e
+            INNER JOIN 
+                section s ON e.section_code = s.section_code
+            INNER JOIN
+                strand st ON s.strand_code = st.strand_code
+            INNER JOIN
+                teacher t ON s.teacher_id = t.teacher_id
+            WHERE e.stu_lrn = ?";
 
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("s", $student_id);
@@ -490,23 +677,6 @@ class myDataBase
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC); // Fetch all rows as an associative array
         return $result;
     }
-    //GET STUDENT STRAND NAME by id
-    public function getStudentStrandName($student_id)
-    {
-        $sql = "SELECT section.strand_code, strand.strand_name
-            FROM enroll
-            JOIN section ON enroll.section_code = section.section_code
-            JOIN strand ON section.strand_code = strand.strand_code
-            WHERE enroll.stu_lrn = ?";
-
-        $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("s", $student_id);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        return $result;
-    }
-
-
 
 
     //GET SEMESTER AND SY

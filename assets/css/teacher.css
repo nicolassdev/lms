@@ -3,6 +3,28 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f1f4f9;
 }
+.lms-scroll-bar {
+  background-color: #f1f4f9;
+}
+/* Custom Scrollbar Styles */
+.lms-scroll-bar::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.lms-scroll-bar::-webkit-scrollbar-track {
+  background: #444; /* Track color */
+  border-radius: 2px; /* Rounded track edges */
+}
+
+.lms-scroll-bar::-webkit-scrollbar-thumb {
+  background: #888; /* Scrollbar thumb color */
+  border-radius: 2px; /* Rounded thumb edges */
+  transition: background 0.3s; /* Smooth color transition */
+}
+
+.lms-scroll-bar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Thumb color on hover */
+}
 .navbar {
   position: fixed;
   top: 0;

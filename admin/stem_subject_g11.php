@@ -13,26 +13,10 @@
 
 
     $result = $mySQLFunction->getSubjectbyStrands();
-
-    if (!empty($result)) {
-        foreach ($result as $row) {
-            $strandsToSkip = ['ABM', 'STEM', 'GAS', 'CS', 'CSS'];
-
-            // Skip rows with specified strands
-            if (in_array(strtoupper($row["strand"]), $strandsToSkip)) {
-                continue;  // Skip this iteration
-            }
-        }
-    }
-    // $mySQLFunction->disconnect();
     ?>
 
  <!-- THIS THE SUBJECT TABLE -->
 
-
- <style>
-
- </style>
 
  <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
      <div class="container">
@@ -41,41 +25,39 @@
                  <div class="data-table">
 
                      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                         <h6 class="text-muted"><?php
-                                                $mySQLFunction->connection();  // Ensure the connection is properly established
-                                                $result = $mySQLFunction->getSubjectbyStrands();  // Get the results
-
-                                                if (!empty($result)) {
-                                                    // List of strands to skip
-                                                    $strandsToSkip = array_map('strtoupper', [
-                                                        'GENERAL ACADEMIC STRAND',
-                                                        'ACCOUNTANCY, BUSINESS, AND MANAGEMENT',
-                                                        'COMPUTER PROGRAMMING',
-                                                        'HUMANITIES AND SOCIAL SCIENCES',
-                                                        'COMPUTER SYSTEM SERVICING'
-                                                    ]);
+                         <h6 class="text-muted fw-bold">
+                             <?php
+                                if (!empty($result)) {
+                                    // List of strands to skip
+                                    $strandsToSkip = array_map('strtoupper', [
+                                        'GENERAL ACADEMIC STRAND',
+                                        'ACCOUNTANCY, BUSINESS, AND MANAGEMENT',
+                                        'COMPUTER PROGRAMMING',
+                                        'HUMANITIES AND SOCIAL SCIENCES',
+                                        'COMPUTER SYSTEM SERVICING'
+                                    ]);
 
 
-                                                    // Iterate through each row in the result
-                                                    foreach ($result as $row) {
-                                                        // Ensure 'strand_desc' exists in the row
-                                                        if (!isset($row["strand_desc"])) {
-                                                            continue;  // Skip the iteration if 'strand_desc' is missing
-                                                        }
+                                    // Iterate through each row in the result
+                                    foreach ($result as $row) {
+                                        // Ensure 'strand_desc' exists in the row
+                                        if (!isset($row["strand_desc"])) {
+                                            continue;  // Skip the iteration if 'strand_desc' is missing
+                                        }
 
-                                                        // Check if the strand is in the skip list
-                                                        if (in_array(strtoupper($row["strand_desc"]), $strandsToSkip)) {
-                                                            continue;  // Skip this row
-                                                        }
+                                        // Check if the strand is in the skip list
+                                        if (in_array(strtoupper($row["strand_desc"]), $strandsToSkip)) {
+                                            continue;  // Skip this row
+                                        }
 
-                                                        // Output the strand description
-                                                        echo ucwords(strtolower($row["strand_desc"]));
-                                                        break;
-                                                    }
-                                                } else {
-                                                    echo "No results found.";  // Provide a message if the result is empty
-                                                }
-                                                ?>
+                                        // Output the strand description
+                                        echo ucwords(strtolower($row["strand_desc"]));
+                                        break;
+                                    }
+                                } else {
+                                    echo "No results found.";  // Provide a message if the result is empty
+                                }
+                                ?>
                              <div class="mt-2">
                                  <?php
                                     if (!empty($activeSchoolYears && !empty($activeSem))) {
@@ -90,14 +72,8 @@
                              </div>
 
                          </h6>
-                         <h6 class="text-success">
+                         <h6 class="text-success fw-bold">
                              <?php
-                                // Ensure the connection is established
-                                $mySQLFunction->connection();
-
-                                // Fetch subjects by strands
-                                $result = $mySQLFunction->getSubjectbyStrands();
-
                                 // Initialize a flag to check if 'GRADE-11' has been displayed
                                 $gradeDisplayed = false;
 
@@ -116,10 +92,6 @@
                                 }
                                 ?>
                          </h6>
-
-
-
-
                      </div>
 
 
@@ -176,6 +148,9 @@
              </div>
          </div>
      </div>
+     <?php
+        include("../admin/includes/extension.php");
+        ?>
  </main>
 
  <!-- PDF ,EXCEL, PRINT ,CVS -->

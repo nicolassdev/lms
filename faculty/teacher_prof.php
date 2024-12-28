@@ -161,7 +161,7 @@ $mySQLFunction->disconnect();
         <div class="row">
             <div class="col-md-12">
 
-                <div class="d-flex flex-wrap justify-content-end mb-4">
+                <div class="d-flex flex-wrap justify-content-end mt-3">
                     <!-- <button class="btn btn-secondary btn-sm me-2 mb-2"
                             onclick="location.href='index.php?page=index'">
                             <i class="bi bi-arrow-left-circle me-1"></i> Back
@@ -217,7 +217,7 @@ $mySQLFunction->disconnect();
                             </small>
                         </div>
                         <!-- Left Column: Profile Details -->
-                        <div class="col-md-8 profile-details">
+                        <div class="col-md-8 profile-details mt-4">
                             <div class="row mb-1">
                                 <div class="col-md-6">
                                     <strong>Role:</strong>

@@ -31,6 +31,14 @@ switch ($page) {
     case "student_module":
         require_once 'student_module.php';
         break;
+    case "student_section":
+        require_once 'student_section.php';
+        break;
+
+    case "student_subject":
+        require_once 'student_subject.php';
+        break;
+
 
     case "student_prof":
         require_once 'student_prof.php';
@@ -50,6 +58,7 @@ switch ($page) {
     case "student_account":
         require_once 'student_account.php';
         break;
+
     default:
         require_once 'student_home.php'; // Default page is 'home'
         break;

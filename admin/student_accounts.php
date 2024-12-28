@@ -77,7 +77,7 @@ $mySQLFunction->disconnect();
                                         echo '<tr>';
                                         // echo '<td>' . $row["id"] . '</td>'; // Clickable ID
                                         echo '<td>' . $count . '</td>';
-                                        echo '<td>' .  ucwords(strtolower($row["stu_lname"] . ' ' . $row["stu_fname"] . ' ' . $row["stu_mname"])) . '</td>';
+                                        echo '<td>' .  ucwords(strtolower($row["stu_lname"] . ', ' . $row["stu_fname"] . ' ' . $row["stu_mname"])) . '</td>';
                                         echo '<td style="color: #6610f2; font-weight:500;">' . $row["username"] . '</td>';
                                         echo '<td style="color: #6610f2; font-weight:500;">' . $formattedPassword . '</td>';
                                         // echo '<td>' . ucwords(strtolower($row["role"])) . '</td>';

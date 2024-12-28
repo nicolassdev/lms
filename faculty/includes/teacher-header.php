@@ -7,7 +7,6 @@
     <title>Teacher</title>
 
     <link rel="icon" type="webp" href="../assets/img/csi.webp">
-
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/teacher.css?v=<?php echo time(); ?>" />
     <!-- Bootstrap CSS -->
@@ -38,7 +37,7 @@
 
 </head>
 
-<body>
+<body class="lms-scroll-bar">
     <!-- Top Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -96,7 +95,7 @@
     <!-- Sidebar -->
     <div class="side">
         <div class="container-fluid">
-            <div class="row mt-3">
+            <div class="row">
                 <nav id="sidebar" class="col-md-5 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
                     <div class="position-sticky">
                         <div class="text-white ms-4 d-lg-none mt-2">
@@ -207,7 +206,7 @@
                     <h5 class="mb-5">Are you sure you want to logout?</h5>
 
                     <!-- Buttons -->
-                    <div class="d-flex justify-content-center mt-5 mb-3">
+                    <div class="d-flex justify-content-center mt-5 mb-3 rounded-bottom-4">
                         <button class="btn btn-outline-secondary px-4 py-2 me-3" style="width: 120px; margin-top: 20px;" data-bs-dismiss="modal">Cancel</button>
                         <a href="../logout.php" class="btn btn-danger px-4 py-2" style="width: 120px; margin-top: 20px;">Logout</a>
                     </div>
@@ -219,7 +218,7 @@
     <!-- Bootstrap JS and Dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- THIS IS SIDE BAR SCRIPT TO SHOW TOOGGLE UP AND DOWN  -->
-    <script>
+    <!-- <script>
         // Add event listener to toggle the icon when dropdown is shown/hidden
         document.addEventListener('DOMContentLoaded', function() {
             const studentMenu = document.getElementById('studentMenu');
@@ -235,4 +234,4 @@
                 studentIcon.classList.add('bi-chevron-down'); // Change back to original icon
             });
         });
-    </script>
+    </script> -->

@@ -18,7 +18,7 @@
 
 </head>
 
-<body>
+<body class="lms-scroll-bar">
     <!-- Top Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -104,6 +104,16 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=student_prof">
                                     <i class="bi bi-person-lines-fill me-2"></i>Profile
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index.php?page=student_subject">
+                                    <i class="bi bi-journal-bookmark-fill me-2"></i>Subject
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index.php?page=student_section">
+                                    <i class="bi bi-building-fill  me-2"></i> Section
                                 </a>
                             </li>
                             <li class="nav-item">

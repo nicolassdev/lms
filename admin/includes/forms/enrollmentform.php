@@ -179,13 +179,16 @@ $mySQLFunction->disconnect();
                         </select>
                     </div>
 
-                    <label class="form-label">Requirements Submitted</label>
+                    <label class="form-label">
+                        Requirements Submitted
+                        <i id="requirementsIcon" class="bi bi-folder-check display-6 text-danger ms-2"></i>
+                    </label>
                     <div class="col-md-12 mb-3">
-                        <input class="ms-3" type="checkbox" name="requirement[]" value="SF9"> SF9
-                        <input class="ms-3" type="checkbox" name="requirement[]" value="SF10"> SF10
-                        <input class="ms-3" type="checkbox" name="requirement[]" value="PSA"> PSA Birth Certificate
-                        <input class="ms-3" type="checkbox" name="requirement[]" value="LCR"> LCR Birth Certificate
-                        <input class="ms-3" type="checkbox" name="requirement[]" value="GMCC"> GMCC
+                        <input class="ms-3 requirement-checkbox" type="checkbox" name="requirement[]" value="SF9"> SF9
+                        <input class="ms-3 requirement-checkbox" type="checkbox" name="requirement[]" value="SF10"> SF10
+                        <input class="ms-3 requirement-checkbox" type="checkbox" name="requirement[]" value="PSA"> PSA Birth Certificate
+                        <input class="ms-3 requirement-checkbox" type="checkbox" name="requirement[]" value="LCR"> LCR Birth Certificate
+                        <input class="ms-3 requirement-checkbox" type="checkbox" name="requirement[]" value="GMCC"> GMCC
                     </div>
                     <div class="invalid-feedback" id="checkbox-feedback">
                         Please select at least one requirement.
@@ -285,5 +288,31 @@ $mySQLFunction->disconnect();
         } else {
             checkboxFeedback.style.display = 'none';
         }
+    });
+
+
+
+
+
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const checkboxes = document.querySelectorAll('.requirement-checkbox');
+        const icon = document.getElementById('requirementsIcon');
+
+        // Function to update the icon color
+        const updateIconColor = () => {
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            icon.classList.toggle('text-success', allChecked); // Add text-success if all are checked
+            icon.classList.toggle('text-danger', !allChecked); // Add text-danger if not all are checked
+        };
+
+        // Add change event listeners to checkboxes
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateIconColor);
+        });
+
+        // Initial check
+        updateIconColor();
     });
 </script>
