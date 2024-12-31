@@ -11,7 +11,7 @@ $mySQLFunction->connection();
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
 // Get teacher's assigned subjects
-$studentSubjects = $mySQLFunction->getStudentSubject($_SESSION['stu_lrn']);
+$studentSubjects = $mySQLFunction->getStudentSubjects($_SESSION['stu_lrn']);
 
 // Disconnect DB
 $mySQLFunction->disconnect();
@@ -93,12 +93,11 @@ $mySQLFunction->disconnect();
 
                             <div class="d-flex align-items-center text-muted">
                                 <i class="bi bi-award text-danger fs-4 me-2"></i>
-                                <span class="fw-bold fs-6"><?php echo ucwords(strtolower($subject["grade_lvl"])) . ' ' . htmlspecialchars($subject["section_name"]); ?></span>
+                                <span class="fw-bold fs-6"><?php echo ucwords(strtolower($subject["grade_lvl"])) . ' ' . htmlspecialchars($subject["strand_name"]); ?></span>
                             </div>
 
                             <div class="text-secondary ms-4">
                                 <small class="fw-semibold">
-                                    <?php echo ucwords(strtolower($subject["strand_desc"] ?? 'No Strand')); ?>
                                     <?php
                                     if (!empty($activeSchoolYears) && !empty($activeSem)) {
                                         foreach ($activeSchoolYears as $index => $schoolYear) {
@@ -114,12 +113,13 @@ $mySQLFunction->disconnect();
                             <div class="d-flex align-items-center mt-2">
                                 <i class="bi bi-calendar3 text-success fs-6 me-2"></i>
                                 <span class="text-secondary">
-                                    <?php echo $subject["sub_time"] ?: 'No subject time'; ?>
+                                    <?php echo $subject["sched_day"] ?: 'No subject time'; ?>
+                                    <?php echo $subject["sched_from"] . ' - ' . ($subject["sched_to"] ?? 'No subject set time'); ?>
                                 </span>
                             </div>
                         </div>
                         <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
-                            <a href="index.php?page=student_subject_list&sub_code=<?php echo urlencode($subject['sub_code']); ?>&section_code=<?php echo urlencode($subject['section_code']); ?>" class="btn btn-outline-success w-100 fw-bold d-flex align-items-center justify-content-center">
+                            <a href="index.php?page=subject_list&sub_code= <?php echo urlencode($subject['sub_code']); ?> &strand_code=<?php echo urlencode($subject['strand_code']); ?> &year_level=<?php echo urlencode($subject['grade_lvl']); ?>" class="btn btn-outline-success w-100 fw-bold d-flex align-items-center justify-content-center">
                                 <i class="bi bi-person-lines-fill me-2"></i> View
                             </a>
                         </div>

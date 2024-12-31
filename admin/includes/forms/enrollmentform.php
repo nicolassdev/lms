@@ -149,13 +149,7 @@ $mySQLFunction->disconnect();
                         <label class="form-label">School name</label>
                         <input type="text" class="form-control" name="currentchool" required>
                     </div>
-                    <!-- <div class="col-md-12">
-                        <label class="form-label">School ID <small class="text-danger">(Optional)</small></label>
-                        <input type="number" class="form-control" name="schoolid" id="schoolId" oninput="this.value = this.value.slice(0, 6);">
-                        <div class=" invalid-feedback">
-                            School ID must be exactly 6 digits.
-                        </div>
-                    </div> -->
+
                     <div class="col-md-12">
                         <label class="form-label">School ID <small class="text-danger">(Optional)</small></label>
                         <input type="number" class="form-control" name="schoolid" id="schoolId"
@@ -253,18 +247,6 @@ $mySQLFunction->disconnect();
     });
 
 
-    // Custom form validation for School ID to ensure it's exactly 6 digits
-    document.getElementById('schoolId').addEventListener('input', function() {
-        const inputField = this;
-        const value = inputField.value;
-
-        // Check if the input length is exactly 6 digits
-        if (value.length === 6) {
-            inputField.setCustomValidity(''); // Clear invalid state
-        } else {
-            inputField.setCustomValidity('School ID must be exactly 6 digits.'); // Set invalid state
-        }
-    });
 
 
 

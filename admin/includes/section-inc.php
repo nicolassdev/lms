@@ -8,7 +8,7 @@ if (!isset($_POST["submit"])) {
     include "../../includes/dbh-inc.php";
 
     // Initialize variables with POST data
-    $code = trim($mySQLFunction->generateSectionCode());
+    $code = trim($mySQLFunction->generateID("SECTION-"));
     $strandcode = trim($_POST["strand_code"] ?? null);
     $gradelvl = strtoupper(trim($_POST["gradelvl"] ?? null));
     $section = strtoupper(trim($_POST["section"] ?? null));

@@ -7,21 +7,19 @@ if (!isset($_SESSION['teacher_id'])) {
     exit;
 }
 
-include "../faculty/includes/Forms/uploadmoduleform.php";
-$mySQLFunction->connection();
 
-if (!empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
+$mySQLFunction->connection();
+if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
+    $sched_id = $_GET['sched_id'];
     $sub_code = $_GET['sub_code'];
     $section_code = $_GET['section_code'];
 
     // Fetch students by subject handled of teacher 
     $students = $mySQLFunction->getAllStudentBySectionAndSubject($_SESSION['teacher_id'], $sub_code, $section_code);
-} else {
-    // Redirect back if required parameters are missing
-    header("Location: /lms/faculty/index.php");
-    exit;
 }
 
+
+include "../faculty/includes/Forms/uploadmoduleform.php";
 ?>
 
 
@@ -46,14 +44,15 @@ if (!empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
 
                         <div class="d-flex">
                             <?php
-                            $mySQLFunction->connection();
-                            $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
+                            $btnClass = empty($students) ? 'btn-danger' : 'btn-primary';
+                            $disabled = empty($students) ? 'disabled' : '';
                             ?>
-
-                            <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#upload_module" data-bs-whatever="@fat"
-                                <?php echo empty($result) ? 'disabled' : ''; ?>>
+                            <button type="button" class="btn <?php echo $btnClass; ?> btn-sm btn-animate"
+                                data-bs-toggle="modal" data-bs-target="#upload_module"
+                                data-bs-whatever="@fat" <?php echo $disabled; ?>>
                                 <i class="bi bi-cloud-arrow-up me-1"></i>Upload module
                             </button>
+
                         </div>
                     </div>
 

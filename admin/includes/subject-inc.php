@@ -8,23 +8,19 @@ if (!isset($_POST["submit"])) {
     include "../../includes/dbh-inc.php";
 
     // Initialize variables with POST data
-    $code = trim($mySQLFunction->generateSubjectCode());
+    $code = trim($mySQLFunction->generateID("SUB-"));
     $subtitle = strtoupper(trim($_POST["title"] ?? '')); // Ensure default is empty string
     $subtype = strtoupper(trim($_POST["type"] ?? '')); // Ensure default is empty string
     $subtime = trim($_POST["time"] ?? ''); // Handle AM/PM
     $sem = trim($_POST["semester"] ?? ''); // Ensure default is empty string
-    $strand = trim($_POST["strand_code"] ?? ''); // Ensure default is empty string
-    $gradelvl = strtoupper(trim($_POST["gradelvl"] ?? ''));
-    $teacher = trim($_POST["teacher_id"] ?? ''); // Ensure default is empty string
 
     $mySQLFunction->connection(); // Establish database connection
-
     try {
 
         // Check if the  firstname and lastname already exist from inserting student info
-        $sectionExistInSameStrandGradelvl = $mySQLFunction->checkEntityExist('subject', 'sub_title', 'strand_code', 'sub_code', $subtitle, $strand, $code);
+        $duplicateSubject = $mySQLFunction->checkEntityExist('subject', 'sub_title', 'sub_type', 'sub_code', $subtitle, $subtype, $code);
 
-        if ($sectionExistInSameStrandGradelvl) {
+        if ($duplicateSubject) {
             // If the same firstname and lastname exist and the ID does not match, prevent update
             $_SESSION['teacherupdate_error'] = "Subject was already exist in database...";
             header("location:../index.php?page=subject");
@@ -32,12 +28,29 @@ if (!isset($_POST["submit"])) {
         }
 
 
+        // Check if the subject already exists excluding the current subject
+        if ($mySQLFunction->checkRowCountSubject("subject", "sub_title", $subtitle, $code) == 1) {
+            $_SESSION['subject_error'] = "<small>Subject title was already exists. Please input different subject.</small>";
+            header("location:../index.php?page=subject");
+            exit();
+        }
+
         // Insert subject data into `subject` table using prepared statements
+        // $subjectColumns = ['sub_code', 'sub_title', 'sub_type', 'sub_time', 'sub_semester'];
+
+        // $studentValues = [$code, $subtitle,  $subtype, $subtime, $sem];
+
+        // $mySQLFunction->insert("SUBJECT", $subjectColumns, $studentValues);
+
+
+
+
+
         $insertSubject = "
-            INSERT INTO `subject` (`sub_code`, `sub_title`, `sub_type`, `sub_time`, `sub_semester`, `strand_code`, `sub_gradelvl`, `teacher_id`) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            INSERT INTO `subject` (`sub_code`, `sub_title`, `sub_type`, `sub_time`, `sub_semester`) 
+            VALUES (?, ?, ?, ?, ?)";
         $stmt = $mySQLFunction->con->prepare($insertSubject);
-        $stmt->bind_param("ssssssss", $code, $subtitle, $subtype, $subtime, $sem, $strand,  $gradelvl, $teacher); // Use $teacher
+        $stmt->bind_param("sssss", $code, $subtitle, $subtype, $subtime, $sem); // Use $teacher
         $stmt->execute();
 
         // Commit the transaction

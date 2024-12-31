@@ -8,7 +8,7 @@ if (!isset($_POST["submit"])) {
     include "../../includes/dbh-inc.php";
 
     // If all checks pass, proceed with the insertion
-    $uid = trim($mySQLFunction->generateStrandCode());
+    $uid = trim($mySQLFunction->generateID("STRAND-"));
     $strand = isset($_POST["strand"]) ? strtoupper(trim($_POST["strand"])) : null;
     $desc = isset($_POST["desc"]) ?  (trim($_POST["desc"])) : null;
 
@@ -26,7 +26,7 @@ if (!isset($_POST["submit"])) {
         }
 
 
-        $uid = trim($mySQLFunction->generateStrandCode());
+        $uid = trim($mySQLFunction->generateID("STRAND-"));
         $strand = isset($_POST["strand"]) ? strtoupper(trim($_POST["strand"])) : null;
         $desc = isset($_POST["desc"]) ?  (trim($_POST["desc"])) : null;
 

@@ -13,6 +13,7 @@ $activeSem = $mySQLFunction->checkSemStatus('semester');
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 
 // Initialize variables with POST data
+$teacher_id = trim($_POST["teacherID"] ?? null);
 $section_id = trim($_POST["sectionID"] ?? null);
 $subject_id = trim($_POST["subjectID"] ?? null);
 $day = trim($_POST["day"] ?? null);
@@ -71,8 +72,8 @@ try {
     }
 
 
-    $schedColumns = ['sched_id', 'section_code', 'sub_code', 'sched_day', 'sched_from', 'sched_to'];
-    $schedValues = [$uid, $section_id, $subject_id, $day, $from, $to];
+    $schedColumns = ['sched_id', 'teacher_id', 'section_code', 'sub_code', 'sched_day', 'sched_from', 'sched_to'];
+    $schedValues = [$uid, $teacher_id, $section_id, $subject_id, $day, $from, $to];
 
     $mySQLFunction->insert("SCHEDULE", $schedColumns, $schedValues);
 

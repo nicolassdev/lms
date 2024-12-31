@@ -62,7 +62,7 @@ class myDataBase
     }
 
 
-    //RANDOM PRIMARY ID FOR TABLE USERS | PRINCIPAL | REGISTRAR
+    //GENERIC RANDOM PRIMARY ID FOR TABLES
     public function generateID($prefix)
     {
         $num = "1325476980";
@@ -101,7 +101,7 @@ class myDataBase
         return $teacherID;
     }
 
-    /*GEENERATE PASSWORD  */
+    /*GEENERATE FACULTY USERNAME  */
     public function generateFacultyUsername($dob)
     {
         // Ensure the input is a valid date
@@ -144,57 +144,6 @@ class myDataBase
         return $studPassword;
     }
 
-
-
-
-
-
-    //RANDOM STRAND CODE
-    public function generateStrandCode()
-    {
-        $num = "123456789";
-        $rand = "";
-
-        for ($i = 0; $i < 4; $i++) {
-            if ($i == 0) {
-                $rand = "STRAND-";
-            }
-            $rand = $rand . $num[rand(0, strlen($num) - 1)];
-        }
-        return $rand;
-    }
-
-    //RANDOM SECTION CODE
-    public function generateSectionCode()
-    {
-        $num = "987654321";
-        $rand = "";
-
-        for ($i = 0; $i < 4; $i++) {
-            if ($i == 0) {
-                $rand = "SECTION-";
-            }
-            $rand = $rand . $num[rand(0, strlen($num) - 1)];
-        }
-        return $rand;
-    }
-
-    public function generateSubjectCode()
-    {
-        $num = "987654321";
-        $rand = "";
-
-        for ($i = 0; $i < 4; $i++) {
-            if ($i == 0) {
-                $rand = "SUB-";
-            }
-            $rand = $rand . $num[rand(0, strlen($num) - 1)];
-        }
-        return $rand;
-    }
-
-
-
     //GET SCHOOL INFORMATIONM
     public function getSchool()
     {
@@ -203,7 +152,7 @@ class myDataBase
         return $stored;
     }
 
-    //GET ADMIN INFORMATIONM
+    // // GET ADMIN INFORMATIONM
     // public function getAdminInfo()
     // {
     //     $sql = "SELECT * FROM `REGISTRAR`";
@@ -315,7 +264,7 @@ class myDataBase
         ON 
             sec.strand_code = st.strand_code
         WHERE 
-            sub.teacher_id = ?";
+            sch.teacher_id = ?";
 
         // Prepare the SQL statement
         $stmt = $this->con->prepare($sql);
@@ -341,8 +290,8 @@ class myDataBase
             return null; // No rows found
         }
     }
-    // GET STUDENT'S SUBJECT BY STRAND AND  GRADE LVL  HANDLED BY ID
-    public function getStudentSubject($stu_lrn)
+    // GET STUDENT'S SUBJECTS BY GRADE LEVEL, STRAND, AND SCHEDULE
+    public function getStudentSubjects($stu_lrn)
     {
         // Get the active semester
         $activeSemesters = $this->checkSemStatus('semester');
@@ -355,48 +304,75 @@ class myDataBase
         // Prepare the active semester condition
         $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
 
-        // Query to fetch subject details, section, and teacher based on student enrollment
+        // First, get the grade level, strand, and strand name of the student
+        $studentQuery = "
+            SELECT 
+                sec.grade_lvl,
+                sec.strand_code,
+                st.strand_name
+            FROM 
+                enroll e
+            INNER JOIN 
+                section sec ON e.section_code = sec.section_code
+            LEFT JOIN 
+                strand st ON sec.strand_code = st.strand_code
+            WHERE 
+                e.stu_lrn = ?
+                AND e.enroll_status = 'Enrolled'
+            LIMIT 1";
+
+        // Prepare and execute the student grade level/strand query
+        $stmtStudent = $this->con->prepare($studentQuery);
+        $stmtStudent->bind_param("s", $stu_lrn);
+        $stmtStudent->execute();
+        $resultStudent = $stmtStudent->get_result();
+
+        // Check if we found grade level and strand for the student
+        if ($resultStudent->num_rows === 0) {
+            return []; // Return an empty array if no data found for the student
+        }
+
+        // Fetch the student's grade level, strand code, and strand name
+        $studentData = $resultStudent->fetch_assoc();
+        $gradeLevel = $studentData['grade_lvl'];
+        $strandCode = $studentData['strand_code'];
+        $strandName = $studentData['strand_name']; // Store strand name
+
+        // Now fetch the subjects based on grade level and strand
         $sql = "
             SELECT 
                 sub.sub_code,
                 sub.sub_title,
                 sub.sub_type,
-                sub.sub_time,
                 sub.sub_semester,
-                sec.section_code,
-                sec.grade_lvl,
-                sec.section_name,
-                st.strand_name,
-                st.strand_desc,
+                sched.sched_day,
+                sched.sched_from,
+                sched.sched_to,
                 t.teacher_fname,
                 t.teacher_lname,
                 t.teacher_gender,
                 t.teacher_id,
                 t.image
             FROM 
-                `enroll` e
+                schedule sched
             INNER JOIN 
-                `section` sec 
-                ON e.section_code = sec.section_code
+                section sec ON sched.section_code = sec.section_code
             INNER JOIN 
-                `subject` sub 
-                ON sec.strand_code = sub.strand_code AND sec.grade_lvl = sub.sub_gradelvl
-            LEFT JOIN 
-                `strand` st 
-                ON sec.strand_code = st.strand_code
-            LEFT JOIN 
-                `teacher` t 
-                ON sub.teacher_id = t.teacher_id
+                subject sub ON sched.sub_code = sub.sub_code
+            INNER JOIN 
+                teacher t ON sched.teacher_id = t.teacher_id
             WHERE 
-                e.stu_lrn = ? AND e.enroll_status = 'Enrolled' AND $activeSemesterCondition
+                sec.grade_lvl = ?
+                AND sec.strand_code = ?
+                AND $activeSemesterCondition
             ORDER BY 
-                sec.grade_lvl, sub.sub_title";  // Order the results by grade level and subject
+                sched.sched_day, sched.sched_from";
 
-        // Prepare the SQL statement
+        // Prepare the main SQL statement
         $stmt = $this->con->prepare($sql);
 
-        // Bind the student LRN parameter
-        $stmt->bind_param("s", $stu_lrn);
+        // Bind the grade level and strand parameters
+        $stmt->bind_param("ss", $gradeLevel, $strandCode);
 
         // Execute the query
         $stmt->execute();
@@ -411,11 +387,22 @@ class myDataBase
             while ($row = $result->fetch_assoc()) {
                 $data[] = $row;
             }
+
+            // Add the strand name to the data before returning
+            foreach ($data as &$subject) {
+                $subject['strand_code'] = $strandCode;
+                $subject['strand_name'] = $strandName;
+                $subject['strand_desc'] = $strandName;
+                $subject['grade_lvl'] = $gradeLevel;
+            }
+
             return $data; // Return all rows as an array
         } else {
-            return null; // No rows found
+            return []; // No rows found
         }
     }
+
+
 
 
     //GET TEACHER SECTION HANDLED by id
@@ -520,6 +507,7 @@ class myDataBase
             $sql = "
                 SELECT 
                     s.*,   
+                    sched.sched_id,
                     sec.section_code, 
                     sec.section_name,
                     sec.grade_lvl, 
@@ -537,7 +525,7 @@ class myDataBase
                 WHERE 
                     sched.sub_code = ? 
                     AND sched.section_code = ?
-                    AND sub.teacher_id = ?
+                    AND sched.teacher_id = ?
             ";
 
             // Prepare the query
@@ -616,10 +604,11 @@ class myDataBase
     public function getTeacherSubjectHandled($teacher_id)
     {
         // Query to get the list of subjects handled by the teacher
-        $sql = "SELECT subject.sub_title, subject.strand_code, strand.strand_name, subject.sub_gradelvl
-            FROM subject 
-            JOIN strand ON subject.strand_code = strand.strand_code 
-            WHERE subject.teacher_id = ?";
+        $sql = "SELECT 
+                subject.sub_title
+            FROM schedule
+            JOIN subject ON schedule.sub_code = subject.sub_code
+            WHERE schedule.teacher_id = ?";
 
         // Prepare and execute the query for subject list
         $stmt = $this->con->prepare($sql);
@@ -628,9 +617,9 @@ class myDataBase
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC); // Fetch all rows as an associative array
 
         // Query to count how many subjects the teacher is handling
-        $count_sql = "SELECT COUNT(*) as subject_count 
-                  FROM subject 
-                  WHERE teacher_id = ?";
+        $count_sql = "SELECT COUNT(DISTINCT schedule.sub_code) as subject_count 
+                  FROM schedule
+                  WHERE schedule.teacher_id = ?";
 
         // Prepare and execute the query for the subject count
         $count_stmt = $this->con->prepare($count_sql);
@@ -646,6 +635,7 @@ class myDataBase
 
         return $data;
     }
+
 
 
     //GET STUDENT SECTION HANDLED by id
@@ -1547,14 +1537,13 @@ class myDataBase
     {
         if ($row != null && $value != null) {
             // Use prepared statements to avoid SQL injection
-            $stmt = $this->con->prepare("SELECT `sub_code`,
-                `sub_title`, `sub_type`, `sub_time`,
-                `sub_semester`, `strand_name`, `subject.strand_code`, `sub_gradelvl`,
-                `subject.teacher_id`, 
-                CONCAT(`teacher_fname`, ' ', `teacher_mname`, ' ', `teacher_lname`) AS teacher 
+            $stmt = $this->con->prepare("SELECT 
+                `sub_code`,
+                `sub_title`, 
+                `sub_type`, 
+                `sub_time`,
+                `sub_semester`
                 FROM `subject`
-                INNER JOIN `strand` ON subject.strand_code = strand.strand_code
-                INNER JOIN `teacher` ON subject.teacher_id = teacher.teacher_id
                 WHERE subject.$row = ?");
 
             // Bind the value to the prepared statement
@@ -1575,13 +1564,13 @@ class myDataBase
             }
         } else {
             // Fetch all subjects when no specific row or value is provided
-            $sql = "SELECT `sub_code`, 
-                `sub_title`, `sub_type`, `sub_time`,
-                `sub_semester`, `strand_name` AS strand, `sub_gradelvl`,
-                CONCAT(`teacher_fname`, ' ', `teacher_mname`, ' ', `teacher_lname`) AS teacher
+            $sql = "SELECT 
+                `sub_code`, 
+                `sub_title`, 
+                `sub_type`, 
+                `sub_time`,
+                `sub_semester`
                 FROM `subject`
-                INNER JOIN `strand` ON subject.strand_code = strand.strand_code
-                INNER JOIN `teacher` ON subject.teacher_id = teacher.teacher_id
                 ORDER BY subject.sub_title";
 
             $result = $this->con->query($sql);
@@ -1602,10 +1591,9 @@ class myDataBase
 
 
 
-    //GET LIST OF SUBJECT BY SEMESTER AND  STRAND
-    public function getSubjectbyStrands($row = null, $value = null)
+    //GET LIST OF SUBJECT BY SEMESTER AND STRAND
+    public function getSubjectByStrands($row = null, $value = null)
     {
-
         // Get the active semester
         $activeSemesters = $this->checkSemStatus('semester');
 
@@ -1617,18 +1605,29 @@ class myDataBase
         // Prepare the active semester condition
         $activeSemesterSubject = "subject.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
 
-
         if ($row != null && $value != null) {
             // Use prepared statements to avoid SQL injection
-            $stmt = $this->con->prepare("SELECT `sub_code`,
-                `sub_title`, `sub_type`, `sub_time`,
-                `sub_semester`, `strand_name` , `strand_desc`, `subject.strand_code`, `sub_gradelvl`,
-                `subject.teacher_id`, 
-                CONCAT(`teacher_fname`, ' ', `teacher_mname`, ' ', `teacher_lname`) AS teacher 
-                FROM `subject`
-                INNER JOIN `strand` ON subject.strand_code = strand.strand_code
-                INNER JOIN `teacher` ON subject.teacher_id = teacher.teacher_id
-                WHERE subject.$row = ? AND  $activeSemesterSubject");
+            $stmt = $this->con->prepare("
+            SELECT 
+                schedule.sub_code,
+                subject.sub_title,
+                subject.sub_type,
+                subject.sub_semester,
+                schedule.sched_day,
+                schedule.sched_from,
+                schedule.sched_to,
+                strand.strand_name,
+                strand.strand_desc,
+                subject.strand_code,
+                section.grade_lvl,
+                CONCAT(teacher.teacher_fname, ' ', teacher.teacher_mname, ' ', teacher.teacher_lname) AS teacher
+            FROM schedule
+            INNER JOIN subject ON schedule.sub_code = subject.sub_code
+            INNER JOIN teacher ON schedule.teacher_id = teacher.teacher_id
+            INNER JOIN section on schedule.section_code = section.section_code
+            LEFT JOIN strand ON section.strand_code = strand.strand_code
+            WHERE schedule.$row = ? AND $activeSemesterSubject
+        ");
 
             // Bind the value to the prepared statement
             $stmt->bind_param("s", $value);
@@ -1637,26 +1636,39 @@ class myDataBase
             if ($stmt->execute()) {
                 // Fetch and return the result
                 $result = $stmt->get_result();
-                $stored = $result->fetch_assoc();
+                $stored = $result->fetch_all(MYSQLI_ASSOC);
                 $stmt->close();
 
                 return $stored;
             } else {
                 // Handle query error
                 echo "Error executing query: " . $this->con->error;
-                return null;
+                return [];
             }
         } else {
             // Fetch all subjects when no specific row or value is provided
-            $sql = "SELECT `sub_code`, 
-                `sub_title`, `sub_type`, `sub_time`,
-                `sub_semester`, `strand_name` AS strand , `strand_desc`, `sub_gradelvl`,
-                CONCAT(`teacher_fname`, ' ', `teacher_mname`, ' ', `teacher_lname`) AS teacher
-                FROM `subject`
-                INNER JOIN `strand` ON subject.strand_code = strand.strand_code
-                INNER JOIN `teacher` ON subject.teacher_id = teacher.teacher_id
-                WHERE  $activeSemesterSubject
-                ORDER BY subject.sub_title";
+            $sql = "
+            SELECT 
+                schedule.sub_code,
+                subject.sub_title,
+                subject.sub_type,
+                subject.sub_semester,
+                schedule.sched_day,
+                schedule.sched_from,
+                schedule.sched_to,
+                strand.strand_name,
+                strand.strand_desc,
+                section.strand_code,
+                section.grade_lvl,
+                CONCAT(teacher.teacher_fname, ' ', teacher.teacher_mname, ' ', teacher.teacher_lname) AS teacher
+            FROM schedule
+            INNER JOIN subject ON schedule.sub_code = subject.sub_code
+            INNER JOIN teacher ON schedule.teacher_id = teacher.teacher_id
+            INNER JOIN section on schedule.section_code = section.section_code
+            LEFT JOIN strand ON section.strand_code = strand.strand_code
+            WHERE $activeSemesterSubject
+            ORDER BY subject.sub_title
+        ";
 
             $result = $this->con->query($sql);
 
@@ -1671,7 +1683,6 @@ class myDataBase
             }
         }
     }
-
 
     //GET LIST OF ENROLLED
     public function getEnroll($row = null, $value = null)
@@ -1799,7 +1810,7 @@ class myDataBase
                 `subject`.sub_type,
                 `subject`.sub_time,   
                 `subject`.sub_semester AS semester,  
-                `subject`.teacher_id,                                                                  
+                `teacher`.teacher_id,                                                                  
                  CONCAT(`teacher`.`teacher_fname`, ' ', `teacher`.`teacher_lname`) AS teacher,
                 `schedule`.`sched_day`,
                 `schedule`.`sched_from`,
@@ -1808,7 +1819,7 @@ class myDataBase
             INNER JOIN `section` ON `schedule`.`section_code` = `section`.`section_code`
             INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
             INNER JOIN `subject` ON `schedule`.`sub_code` = `subject`.`sub_code`
-            INNER JOIN `teacher` ON `subject`.`teacher_id` = `teacher`.`teacher_id`
+            INNER JOIN `teacher` ON `schedule`.`teacher_id` = `teacher`.`teacher_id`
             WHERE `schedule`.`$row` = '$value' AND $activeSemesterCondition"; // Add semester condition
 
             $stored = ($this->con->query($sql))->fetch_assoc();
@@ -1827,7 +1838,7 @@ class myDataBase
                 `subject`.sub_type,
                 `subject`.sub_time,   
                 `subject`.sub_semester AS semester,  
-                `subject`.teacher_id,                                                                  
+                `teacher`.teacher_id,                                                                  
                  CONCAT(`teacher`.`teacher_fname`, ' ', `teacher`.`teacher_lname`) AS teacher,
                 `schedule`.`sched_day`,
                 `schedule`.`sched_from`,
@@ -1836,7 +1847,7 @@ class myDataBase
             INNER JOIN `section` ON `schedule`.`section_code` = `section`.`section_code`
             INNER JOIN `strand` ON `section`.`strand_code` = `strand`.`strand_code`  -- Joining the strand table
             INNER JOIN `subject` ON `schedule`.`sub_code` = `subject`.`sub_code`
-            INNER JOIN `teacher` ON `subject`.`teacher_id` = `teacher`.`teacher_id` -- Joining the strand table
+            INNER JOIN `teacher` ON `schedule`.`teacher_id` = `teacher`.`teacher_id` -- Joining the strand table
             WHERE $activeSemesterCondition -- Add semester condition
             ORDER BY `subject`.sub_title";
 
@@ -2194,5 +2205,26 @@ class myDataBase
         } else {
             return false;
         }
+    }
+
+
+
+    // =========================================== UPLOAD MODULE  ====================================================
+    // Helper function to format file size
+    public function formatFileSize($bytes)
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+        $bytes = max($bytes, 0);
+        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+        $bytes /= pow(1024, $pow);
+
+        return round($bytes, 2) . ' ' . $units[$pow];
+    }
+
+    // Function to validate file extension
+    public function getFileExtension($filename)
+    {
+        return strtolower(pathinfo($filename, PATHINFO_EXTENSION));
     }
 }

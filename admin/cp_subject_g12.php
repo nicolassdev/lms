@@ -82,11 +82,11 @@
                                 // Iterate through the result set
                                 foreach ($result as $row) {
                                     // Check if 'sub_gradelvl' is set and not empty
-                                    if (!empty($row['sub_gradelvl'])) {
-                                        // Check if 'sub_gradelvl' is 'GRADE-11' and hasn't been displayed yet
-                                        if (strtoupper($row['sub_gradelvl']) == 'GRADE-12' && !$gradelevelDisplayed) {
+                                    if (!empty($row['grade_lvl'])) {
+                                        // Check if 'grade_lvl' is 'GRADE-11' and hasn't been displayed yet
+                                        if (strtoupper($row['grade_lvl']) == 'GRADE-12' && !$gradelevelDisplayed) {
                                             // Format and display the grade level
-                                            echo ucwords(strtolower($row['sub_gradelvl']));
+                                            echo ucwords(strtolower($row['grade_lvl']));
                                             // Set the flag to true to prevent further display
                                             $gradelevelDisplayed = true;
                                         }
@@ -127,7 +127,7 @@
                                     if (!empty($result)) {
                                         $count = 0;
                                         foreach ($result as $row) {
-                                            if (strtoupper($row["sub_gradelvl"]) == 'GRADE-12' && strtoupper($row["strand"]) == 'CP') {
+                                            if (strtoupper($row["grade_lvl"]) == 'GRADE-12' && strtoupper($row["strand"]) == 'CP') {
                                                 echo '<tr>';
                                                 echo '<td>' . htmlspecialchars($row['sub_title']) . '</td>';
                                                 echo '<td>' . htmlspecialchars($row['sub_type']) . '</td>';

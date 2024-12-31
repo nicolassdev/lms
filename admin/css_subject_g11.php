@@ -82,11 +82,11 @@
                                 // Iterate through the result set
                                 foreach ($result as $row) {
                                     // Check if 'sub_gradelvl' is set and not empty
-                                    if (!empty($row['sub_gradelvl'])) {
-                                        // Check if 'sub_gradelvl' is 'GRADE-11' and hasn't been displayed yet
-                                        if (strtoupper($row['sub_gradelvl']) == 'GRADE-11' && !$gradelevelDisplayed) {
+                                    if (!empty($row['grade_lvl'])) {
+                                        // Check if 'grade_lvl' is 'GRADE-11' and hasn't been displayed yet
+                                        if (strtoupper($row['grade_lvl']) == 'GRADE-11' && !$gradelevelDisplayed) {
                                             // Format and display the grade level
-                                            echo ucwords(strtolower($row['sub_gradelvl']));
+                                            echo ucwords(strtolower($row['grade_lvl']));
                                             // Set the flag to true to prevent further display
                                             $gradelevelDisplayed = true;
                                         }
@@ -106,16 +106,11 @@
                          <table id="example" class="table table-bordered table-striped table-sm align-middle ">
                              <thead class="table-dark ">
                                  <tr>
-                                     <!-- <th scope="col">#</th> -->
-                                     <!-- <th scope="col" class="small text-center">Subject Code</th> -->
                                      <th scope="col" class="small text-center">Subject</th>
-                                     <th scope="col" class="small text-center">Category</th>
-                                     <th scope="col" class="small text-center">Time</th>
-                                     <!-- <th scope="col" class="small text-center">Subject semester</th> -->
-                                     <!-- <th scope="col" class="small text-center">Strand</th> -->
-                                     <!-- <th scope="col" class="small text-center">Grade level </th> -->
+                                     <th scope="col">Category</th>
+                                     <th scope="col">Day</th>
+                                     <th scope="col">Time</th>
                                      <th scope="col" class="small text-center ">Teacher</th>
-
                                  </tr>
                              </thead>
                              <tbody>
@@ -127,11 +122,12 @@
                                     if (!empty($result)) {
                                         $count = 0;
                                         foreach ($result as $row) {
-                                            if (strtoupper($row["sub_gradelvl"]) == 'GRADE-11' && strtoupper($row["strand"]) == 'CSS') {
+                                            if (strtoupper($row["grade_lvl"]) == 'GRADE-11' && strtoupper($row["strand_name"]) == 'CSS') {
                                                 echo '<tr>';
                                                 echo '<td>' . htmlspecialchars($row['sub_title']) . '</td>';
                                                 echo '<td>' . htmlspecialchars($row['sub_type']) . '</td>';
-                                                echo '<td>' . htmlspecialchars($row['sub_time']) . '</td>';
+                                                echo '<td>' . htmlspecialchars($row['sched_day']) . '</td>';
+                                                echo '<td>' . htmlspecialchars($row['sched_from'] . ' - ' . $row['sched_to']) . '</td>';
                                                 echo '<td>' . htmlspecialchars($row['teacher']) . '</td>';
                                                 echo '</tr>';
                                             }

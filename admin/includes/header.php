@@ -11,7 +11,7 @@
     <link rel="icon" type="webp" href="../assets/img/csi.webp">
 
     <!-- <link href="./css/bootstrap.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="../../assets/bootstrap-5.3.3-dist/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="../assets/css/admin.css?v=<?php echo time(); ?>" />
 
     <!-- this is material icon  -->

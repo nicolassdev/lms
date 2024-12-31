@@ -12,13 +12,22 @@
                     <h5 class="font-weight-bold text-dark">Upload Module</h5>
                 </div>
 
-                <form id="studentForm" action="./includes/upload-inc.php" method="POST" enctype="multipart/form-data" autocomplete="off" class="row g-2 needs-validation" novalidate>
+                <form id="uploadFileForm" action="./includes/uploadmodule-inc.php" method="POST" enctype="multipart/form-data" autocomplete="off" class="row g-2 needs-validation" novalidate>
+
+                    <input type="text" name="schedID" value="<?php echo htmlspecialchars($_GET['sched_id']); ?>">
+
+                    <input type="text" name="subID" value="<?php echo htmlspecialchars($_GET['sub_code']); ?>">
+
+                    <input type="text" name="secID" value="<?php echo htmlspecialchars($_GET['section_code']); ?>">
 
 
                     <div class="mb-4">
                         <label for="fileInput" class="form-label text-secondary">Select a file to upload</label>
                         <input type="file" class="form-control form-control-lg border-primary" id="fileInput" name="file" required>
-                        <small class="form-text text-danger" style="font-size: 12px;">Allowed file types: PDF, Word, Excel, PowerPoint, and Images (JPEG, PNG, GIF, WEBP)</small>
+                        <div class="mt-2">
+
+                            <small style="font-size: 12px;">Allowed: <i class="fw-bold text-black">10[MB]</i> PDF, Word, Excel, PowerPoint, and Images (JPEG, PNG, GIF, WEBP).</small>
+                        </div>
                         <div class="invalid-feedback">
                             Please upload a file module.
                         </div>
@@ -41,8 +50,8 @@
 <script>
     // Function to clear the form inputs when " Cancel" is clicked
     function resetFormUpload() {
-        document.getElementById('studentForm').reset();
-        studentForm.classList.remove('was-validated');
+        document.getElementById('uploadFileForm').reset();
+        uploadFileForm.classList.remove('was-validated');
 
     }
     // JavaScript for enabling Bootstrap 5.3.0 validation and LRN comparison
