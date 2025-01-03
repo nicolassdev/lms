@@ -19,8 +19,6 @@ if (!isset($_POST["submit"])) {
     $fname = isset($_POST["fname"]) ? strtoupper(trim($_POST["fname"])) : null;
     $lname = isset($_POST["lname"]) ? strtoupper(trim($_POST["lname"])) : null;
 
-    // $userpwd = isset($_POST["password"]) ? trim($_POST["password"]) : null;
-
 
     $role = isset($_POST["role"]) ? strtoupper(trim($_POST["role"])) : null;
     $address = isset($_POST["address"]) ? strtoupper(trim($_POST["address"])) : null;

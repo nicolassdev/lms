@@ -29,7 +29,11 @@ if (!isset($_SESSION['teacher_id'])) {
 
 $teacherSectionHandled = $mySQLFunction->getTeacherSectionHandled($_SESSION['teacher_id']);  //section handled by teacher
 
-$teacherSubjectHandled = $mySQLFunction->getTeacherSubjectHandled($_SESSION['teacher_id']); //get subject array in database
+//get subject array in database
+// $teacherSubjectHandled = $mySQLFunction->getTeacherSubjectHandled($_SESSION['teacher_id']);
+
+$teacherSubjectHandled = $mySQLFunction->getTeacherSubSchedule($_SESSION['teacher_id']);
+
 
 $teacherInfo = $mySQLFunction->getTeacherInfo($_SESSION['teacher_id']);
 
@@ -273,15 +277,15 @@ $mySQLFunction->disconnect();
                                 </div>
                                 <div class="col-md-6">
                                     <strong>Subjects Handled:</strong>
-                                    <p>
+                                    <small>
                                         <?php
-                                        if (!empty($teacherSubjectHandled['subjects'])) {
+                                        if (!empty($teacherSubjectHandled)) {
                                             // Display Subjects List
                                             echo "<p>";
-                                            foreach ($teacherSubjectHandled['subjects'] as $subject) {
+                                            foreach ($teacherSubjectHandled as $subject) {
                                                 echo ucwords(strtolower($subject["sub_title"])) . ' | '
                                                     . htmlspecialchars($subject["strand_name"]) . ' | '
-                                                    . ucwords(strtolower($subject["sub_gradelvl"])) . '<br>';
+                                                    . ucwords(strtolower($subject["grade_lvl"])) . '<br>';
                                             }
                                             echo "</p>";
                                         } else {
@@ -289,7 +293,7 @@ $mySQLFunction->disconnect();
                                         }
 
                                         ?>
-                                    </p>
+                                    </small>
                                 </div>
                                 <div class="col-md-6">
                                     <strong>Joined:</strong>

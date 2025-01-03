@@ -24,31 +24,29 @@ if (!isset($_SESSION["registrar_id"])) {
                 $_SESSION['subject_error'] = "<small>Subject is already exists. Please input different subject.</small>";
                 header("location:../../index.php?page=subject");
                 exit();
-            } else {
-                // Reconnect to the database for updating the information
-                $mySQLFunction->connection();
-
-                // Update the subject details
-                $mySQLFunction->updateRecord("subject", "sub_title", $sname, "sub_code", $sub_id);
-                $mySQLFunction->updateRecord("subject", "sub_type", $stype, "sub_code", $sub_id);
-                $mySQLFunction->updateRecord("subject", "sub_time", $stime, "sub_code", $sub_id);
-                $mySQLFunction->updateRecord("subject", "sub_semester", $semester, "sub_code", $sub_id);
-
-
-
-                // $mySQLFunction->updateSubject("sub_title", $sname, $sub_id);
-                // $mySQLFunction->updateSubject("sub_type", $stype, $sub_id);
-                // $mySQLFunction->updateSubject("sub_time", $stime, $sub_id);
-                // $mySQLFunction->updateSubject("sub_semester", $semester, $sub_id);
-
-                // Disconnect after updating
-                $mySQLFunction->disconnect();
-
-                // Set session variable to indicate successful update
-                $_SESSION['update_subject'] = true;
-                header("location:../../index.php?page=subject");
-                exit();
             }
+
+            $store = [
+                'sub_title' => $fname,
+                'sub_type' => $mname,
+                'sub_time' => $lname,
+                'sub_semester' => $semester,
+            ];
+            // Reconnect to the database for updating the information
+            $mySQLFunction->connection();
+            // Update the student details
+            foreach ($store as $column => $value) {
+                if ($value !== null) { // Only update non-null values
+                    $mySQLFunction->updateRecord("subject", $column, $value, "sub_code", $sub_id);
+                }
+            }
+            // Disconnect after updating
+            $mySQLFunction->disconnect();
+
+            // Set session variable to indicate successful update
+            $_SESSION['update_subject'] = true;
+            header("location:../../index.php?page=subject");
+            exit();
         }
     } catch (Exception $e) {
         // Handle exceptions and errors

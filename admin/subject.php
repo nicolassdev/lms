@@ -61,9 +61,6 @@
                    <th scope="col" class="small text-center">Category</th>
                    <th scope="col" class="small text-center">Time</th>
                    <th scope="col" class="small text-center">Subject semester</th>
-                   <th scope="col" class="small text-center">Strand</th>
-                   <th scope="col" class="small text-center">Grade level </th>
-                   <th scope="col" class="small text-center ">Teacher</th>
                    <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
 
                  </tr>
@@ -83,21 +80,18 @@
                       echo '<td>' . ucwords(strtolower($row["sub_type"])) . '</td>';
                       echo '<td>' . $row["sub_time"] . '</td>';
                       echo '<td>' . $row["sub_semester"] . '</td>';
-                      echo '<td>' . $row["strand"] . ' </td>';
-                      echo '<td>' . $row["sub_gradelvl"] . '</td>';
-                      echo '<td>' . ucwords(strtolower($row["teacher"])) . '</td>';
+                      // echo '<td>' . ucwords(strtolower($row["teacher"])) . '</td>';
                       // THIS IS THE DELETE BUTTON I WILL LEAVE IT COMMENT IF NEEDED JUST UNCOMMENT THIS 
                       // <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_section' . $row['sub_code'] . '">
                       //     <i class="bi bi-trash"></i>
                       // </button>
                       echo '
-                                        <td class="d-flex justify-content-center">
-                                            <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#edit_subject' . $row['sub_code'] . '">
-                                                <i class="bi bi-pencil-square me-1"></i>Edit
-                                            </button>
-                                        
-                                        </td>
-                                            ';
+                        <td class="d-flex justify-content-center">
+                          <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#edit_subject' . $row['sub_code'] . '">
+                            <i class="bi bi-pencil-square me-1"></i>Edit
+                          </button>
+                        </td>
+                        ';
                       echo '</tr>';
 
                       $count++;
@@ -136,9 +130,9 @@
                                         <div class="col-12 mb-3">
                                             <label class="form-label fw-bold">Category</label>
                                             <select class="form-select" name="type" required>
-                                                <option value="Specialized"' . ($row['sub_type'] == 'Specialized' ? ' selected' : '') . '>SPECIALIZED SUBJECT</option>
-                                                <option value="Applied"' . ($row['sub_type'] == 'Applied' ? ' selected' : '') . '>APPLIED SUBJECT</option>
-                                                <option value="Core"' . ($row['sub_type'] == 'Core' ? ' selected' : '') . '>CORE SUBJECT</option>
+                                                <option value="SPECIALIZED"' . ($row['sub_type'] == 'SPECIALIZED' ? ' selected' : '') . '>SPECIALIZED SUBJECT</option>
+                                                <option value="APPLIED"' . ($row['sub_type'] == 'APPLIED' ? ' selected' : '') . '>APPLIED SUBJECT</option>
+                                                <option value="CORE"' . ($row['sub_type'] == 'CORE' ? ' selected' : '') . '>CORE SUBJECT</option>
                                             </select>
                                             <div class="invalid-feedback">
                                                 Please select a category.
@@ -165,11 +159,6 @@
                                             <div class="invalid-feedback">
                                                 Please enter a valid time.
                                             </div>
-                                        </div>
-
-                                        <div class="col-md-12 mt-3">
-                                        <label class="form-label fw-bold">Teacher</label>
-                                          <input text="text" class="form-control" name="teacher_id" value="' . htmlspecialchars($row['teacher']) . '"  disabled>                                                                                             
                                         </div>                                       
                 
                                         <!-- Buttons -->
@@ -248,14 +237,14 @@
      $("#example").DataTable({
        dom: "Bfrtip", // Include buttons in the dom
        buttons: [
-        
+
          {
            extend: "excelHtml5",
            text: "Download Excel",
            exportOptions: {
              columns: function(index, data, node) {
                // Exclude the "Action" column (assuming index 7)
-               return index !== 7;
+               return index !== 6;
              },
            },
          },
@@ -266,7 +255,7 @@
              columns: function(index, data, node) {
 
                // Exclude the "Action" column (assuming index 7)
-               return index !== 7;
+               return index !== 6;
              },
            },
          },
@@ -291,7 +280,7 @@
            exportOptions: {
              columns: function(index, data, node) {
                // Exclude the "Action" column (assuming index 7)
-               return index !== 7;
+               return index !== 6;
              },
            },
          },

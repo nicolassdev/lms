@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2024 at 07:14 PM
+-- Generation Time: Jan 03, 2025 at 08:45 PM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.12
 
@@ -46,12 +46,37 @@ CREATE TABLE `enroll` (
 --
 
 INSERT INTO `enroll` (`stu_lrn`, `section_code`, `semester`, `school_year`, `date_enroll`, `enroll_status`, `current_school`, `school_id`, `school_address`, `school_type`, `requirements_submit`) VALUES
+('114423232323', 'SECTION-2387', '1st Semester', '2024-2025', '2024-12-30', 'Pending', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR'),
 ('114432325251', 'SECTION-2287', '1st Semester', '2024-2025', '2024-12-13', 'Enrolled', 'PAGASA NATIONAL HIGH SCHOOL', NULL, 'RAWIS LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
+('114455013001', 'SECTION-2663', '1st Semester', '2024-2025', '2024-12-29', 'Enrolled', 'ARIMBAY HIGH SCHOLL', NULL, 'ARIMBAY LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('114482392392', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-20', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
-('114485140095', 'SECTION-5333', '1st Semester', '2024-2025', '2024-12-13', 'Pending', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN', 'PUBLIC', 'SF9, SF10'),
 ('114497427472', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-23', 'Pending', 'CABANGAN HIGH SCOLL', NULL, 'CABANGAN LEGAZPI VCITY', 'PUBLIC', 'SF9, SF10, PSA, LCR'),
 ('114498343414', 'SECTION-3943', '1st Semester', '2024-2025', '2024-12-20', 'Enrolled', 'ORO SITE HIGH SCHOOOL', NULL, 'ORO SITE LEGAZPI', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('124167743724', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-26', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `module`
+--
+
+CREATE TABLE `module` (
+  `module_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `file_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `file_size` bigint UNSIGNED DEFAULT NULL,
+  `formatted_size` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `file_type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `sched_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `date_uploaded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `module`
+--
+
+INSERT INTO `module` (`module_id`, `file_name`, `file_size`, `formatted_size`, `file_type`, `sched_id`, `date_uploaded`) VALUES
+('MOD-0656', '../../assets/Module/Busiess Ethics.docx', 17504, '17.09 KB', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'SCHED-3005', '2025-01-04 03:11:58'),
+('MOD-7062', '../../assets/Module/MODULE 1 MATH, SCIENCE AND TECHNOLOGY.pdf', 236987, '231.43 KB', 'application/pdf', 'SCHED-3005', '2025-01-04 03:36:59');
 
 -- --------------------------------------------------------
 
@@ -113,6 +138,7 @@ INSERT INTO `registrar` (`registrar_id`, `firstname`, `middlename`, `lastname`, 
 
 CREATE TABLE `schedule` (
   `sched_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `teacher_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `section_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `sub_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `sched_day` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -125,14 +151,15 @@ CREATE TABLE `schedule` (
 -- Dumping data for table `schedule`
 --
 
-INSERT INTO `schedule` (`sched_id`, `section_code`, `sub_code`, `sched_day`, `sched_from`, `sched_to`, `created_at`) VALUES
-('SCHED-1045', 'SECTION-9151', 'SUB-1783', 'Tuesday', '07:30 AM', '09:30 AM', '2024-12-16 17:43:38'),
-('SCHED-1046', 'SECTION-3943', 'SUB-1783', 'Wednesday', '07:20 AM', '09:20 AM', '2024-12-16 18:12:03'),
-('SCHED-2528', 'SECTION-1859', 'SUB-3699', 'Thursday', '09:20 AM', '11:30 AM', '2024-12-27 12:27:39'),
-('SCHED-4991', 'SECTION-5333', 'SUB-1783', 'Friday', '07:35 AM', '08:10 AM', '2024-12-16 18:10:32'),
-('SCHED-5293', 'SECTION-3891', 'SUB-7568', 'Wednesday', '08:30 AM', '09:30 AM', '2024-12-23 19:06:35'),
-('SCHED-5777', 'SECTION-1859', 'SUB-6634', 'Tuesday', '08:30 AM', '10:30 AM', '2024-12-16 22:49:35'),
-('SCHED-9486', 'SECTION-3943', 'SUB-6634', 'Monday', '08:30 AM', '10:30 AM', '2024-12-19 18:46:56');
+INSERT INTO `schedule` (`sched_id`, `teacher_id`, `section_code`, `sub_code`, `sched_day`, `sched_from`, `sched_to`, `created_at`) VALUES
+('SCHED-0762', '24-209505-8181', 'SECTION-2663', 'SUB-3699', 'Friday', '08:00 AM', '10:00 AM', '2024-12-28 20:02:31'),
+('SCHED-0950', '24-299710-4779', 'SECTION-2387', 'SUB-3375', 'Friday', '08:00 AM', '10:00 AM', '2024-12-30 20:21:44'),
+('SCHED-1274', '24-279707-4937', 'SECTION-2287', 'SUB-7279', 'Monday', '08:30 AM', '10:30 AM', '2024-12-30 12:31:59'),
+('SCHED-1393', '24-059310-4617', 'SECTION-1859', 'SUB-3164', 'Monday', '08:30 AM', '10:30 AM', '2024-12-28 19:31:30'),
+('SCHED-3005', '24-299710-4779', 'SECTION-1859', 'SUB-3563', 'Monday', '03:00 PM', '05:20 PM', '2024-12-28 19:35:09'),
+('SCHED-3238', '24-059310-4617', 'SECTION-1859', 'SUB-9527', 'Tuesday', '08:30 AM', '11:30 AM', '2024-12-28 19:24:12'),
+('SCHED-8714', '24-229809-8556', 'SECTION-3891', 'SUB-2557', 'Thursday', '07:30 AM', '09:30 AM', '2024-12-30 20:29:41'),
+('SCHED-9034', '24-049512-1359', 'SECTION-1859', 'SUB-7279', 'Monday', '07:00 AM', '10:38 PM', '2024-12-30 10:39:03');
 
 -- --------------------------------------------------------
 
@@ -175,9 +202,10 @@ CREATE TABLE `section` (
 INSERT INTO `section` (`section_code`, `strand_code`, `grade_lvl`, `section_name`, `teacher_id`, `date_created`) VALUES
 ('SECTION-1859', 'STRAND-9457', 'GRADE-11', 'ST.PHILIP', '24-049906-5894', '2024-12-13'),
 ('SECTION-2287', 'STRAND-5688', 'GRADE-11', 'ST.ANTHONY', '24-229809-8556', '2024-12-13'),
+('SECTION-2387', 'STRAND-6675', 'GRADE-11', 'ST.THERESE', '24-299710-4779', '2024-12-30'),
+('SECTION-2663', 'STRAND-9457', 'GRADE-11', 'ST.AGNES', '24-049512-1359', '2024-12-28'),
 ('SECTION-3891', 'STRAND-3453', 'GRADE-11', 'ST.PADRE PIO', '24-029805-2543', '2024-12-13'),
 ('SECTION-3943', 'STRAND-7781', 'GRADE-11', 'ST.CLAIRE', '24-199603-2911', '2024-12-13'),
-('SECTION-5333', 'STRAND-6675', 'GRADE-12', 'ST.THERESE', '24-299710-4779', '2024-12-13'),
 ('SECTION-9151', 'STRAND-2745', 'GRADE-11', 'ST.PAUL', '24-269711-1668', '2024-12-13');
 
 -- --------------------------------------------------------
@@ -281,46 +309,40 @@ CREATE TABLE `subject` (
   `sub_title` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'SUBJECT NAME',
   `sub_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `sub_time` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sub_semester` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `strand_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `sub_gradelvl` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `teacher_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+  `sub_semester` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `subject`
 --
 
-INSERT INTO `subject` (`sub_code`, `sub_title`, `sub_type`, `sub_time`, `sub_semester`, `strand_code`, `sub_gradelvl`, `teacher_id`) VALUES
-('SUB-1339', 'PRACTICAL RESEARCH 2', 'APPLIED', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-12', '24-059310-4617'),
-('SUB-1374', 'KUMUNIKASYON AT PANANALIKSIK', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-199603-2911'),
-('SUB-1647', 'UNDERSTANDING CULTURE, SOCIETY&POLITICS', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-12', '24-299211-8709'),
-('SUB-1668', 'TECH VOC 5 - DIAGNOSE COMPUTER SYSTEMS', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-9457', 'GRADE-12', '24-299710-4779'),
-('SUB-1783', 'PRACTICAL  RESEARCH 1', 'SPECIALIZED', '--:-- --', '2nd Semester', 'STRAND-7781', 'GRADE-11', '24-229809-8556'),
-('SUB-1849', 'EMPOWERMENT TECHNOLOGIES', 'APPLIED', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-12', '24-199603-2911'),
-('SUB-1921', 'CREATIVE NON-FICTION', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-12', '24-049906-5894'),
-('SUB-1975', 'FUNDAMENTALS OF ABM 1', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-5688', 'GRADE-11', '24-229809-8556'),
-('SUB-2512', 'ENGLISH FOR ACADEMIC', 'APPLIED', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-029810-1540'),
-('SUB-2689', 'BIOLOGY 2', 'SPECIALIZED', '--:-- --', '2nd Semester', 'STRAND-3453', 'GRADE-11', '24-209505-8181'),
-('SUB-2764', 'ORAL COMMUNICATION IN TEXT', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-029810-1540'),
-('SUB-2971', 'GENERAL CHEMISTRY', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-3453', 'GRADE-12', '24-299211-8709'),
-('SUB-3164', 'TECH VOC 1- PC OPERATIONS', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-6675', 'GRADE-11', '24-199612-2660'),
-('SUB-3563', 'ENGLISH FOR ACADEMIC AND PROFESSIONAL', 'APPLIED', '--:-- --', '1st Semester', 'STRAND-9457', 'GRADE-11', '24-209505-8181'),
-('SUB-3699', 'TECH VOC 2 - INSTALL COMPUTER NETWORKS', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-9457', 'GRADE-11', '24-299710-4779'),
-('SUB-4117', 'BIOLOGY 1', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-3453', 'GRADE-11', '24-209505-8181'),
-('SUB-4542', 'HUMANITIES 1 - CREATIVE WRITING', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-029805-2543'),
-('SUB-5185', 'TECH VOC 6-APPLY OOP LANGUAGE SKILLS', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-6675', 'GRADE-12', '24-199612-2660'),
-('SUB-6568', 'INTRODUCTION TO THE PHIL', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-12', '24-059711-7139'),
-('SUB-6634', 'GENERAL MATHEMATICS', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-299710-4779'),
-('SUB-6716', 'HUMANITIES 2- TRENDS, NETWORKING', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-029805-2543'),
-('SUB-7279', 'ORAL COMMUNICATION IN TEXT', 'CORE', '--:-- --', '1st Semester', 'STRAND-9457', 'GRADE-11', '24-049512-1359'),
-('SUB-7547', 'ORAL COMMUNICATION IN TEXT', 'CORE', '--:-- --', '1st Semester', 'STRAND-3453', 'GRADE-11', '24-299909-9301'),
-('SUB-7568', '21 CENTURY LITERATURE', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-12', '24-059310-4617'),
-('SUB-8589', 'ORAL COMMUNICATION IN TEXT', 'CORE', '--:-- --', '1st Semester', 'STRAND-2745', 'GRADE-11', '24-049906-5894'),
-('SUB-8742', 'PERSONAL DEVELOPMENT', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-269711-1668'),
-('SUB-9527', 'TECH VOC 1- INSTALL COMPUTER SYSTEMS', 'SPECIALIZED', '--:-- --', '1st Semester', 'STRAND-9457', 'GRADE-11', '24-299909-9301'),
-('SUB-9691', 'READING AND WRITING SKILLS', 'CORE', '--:-- --', '2nd Semester', 'STRAND-7781', 'GRADE-11', '24-269711-1668'),
-('SUB-9839', 'HOPE-2', 'CORE', '--:-- --', '1st Semester', 'STRAND-7781', 'GRADE-11', '24-059711-7139');
+INSERT INTO `subject` (`sub_code`, `sub_title`, `sub_type`, `sub_time`, `sub_semester`) VALUES
+('SUB-1339', 'PRACTICAL RESEARCH 2', 'APPLIED', '--:-- --', '1st Semester'),
+('SUB-1374', 'KUMUNIKASYON AT PANANALIKSIK', 'CORE', '--:-- --', '1st Semester'),
+('SUB-1668', 'TECH VOC 5 - DIAGNOSE COMPUTER SYSTEMS', 'SPECIALIZED', '--:-- --', '1st Semester'),
+('SUB-1783', 'PRACTICAL  RESEARCH 1', 'SPECIALIZED', '--:-- --', '2nd Semester'),
+('SUB-1849', 'EMPOWERMENT TECHNOLOGIES', 'APPLIED', '--:-- --', '1st Semester'),
+('SUB-1921', 'CREATIVE NON-FICTION', 'SPECIALIZED', '--:-- --', '1st Semester'),
+('SUB-2471', 'GENERAL MATHEMATICS', 'CORE', '--:-- --', '1st Semester'),
+('SUB-2557', 'PRE-CALCULUS', 'SPECIALIZED', '--:-- --', '1st Semester'),
+('SUB-2689', 'BIOLOGY 2', 'SPECIALIZED', '--:-- --', '2nd Semester'),
+('SUB-2971', 'GENERAL CHEMISTRY', 'SPECIALIZED', '--:-- --', '1st Semester'),
+('SUB-2984', '21 CENTURY LITERATURE', 'APPLIED', '--:-- --', '1st Semester'),
+('SUB-3164', 'TECH VOC 1- PC OPERATIONS', 'SPECIALIZED', '--:-- --', '1st Semester'),
+('SUB-3375', 'EARTH AND LIFE SCIENCE', 'CORE', '--:-- --', '1st Semester'),
+('SUB-3563', 'ENGLISH FOR ACADEMIC AND PROFESSIONAL', 'APPLIED', '--:-- --', '1st Semester'),
+('SUB-3699', 'TECH VOC 2 - INSTALL COMPUTER NETWORKS', 'SPECIALIZED', '--:-- --', '1st Semester'),
+('SUB-4117', 'BIOLOGY 1', 'SPECIALIZED', '--:-- --', '1st Semester'),
+('SUB-4542', 'HUMANITIES 1 - CREATIVE WRITING', 'SPECIALIZED', '--:-- --', '1st Semester'),
+('SUB-5185', 'TECH VOC 6-APPLY OOP LANGUAGE SKILLS', 'SPECIALIZED', '--:-- --', '1st Semester'),
+('SUB-5218', 'BUSINESS ETHICS AND SOCIAL RESPONSIBILITY', 'SPECIALIZED', '--:-- --', '1st Semester'),
+('SUB-6568', 'INTRODUCTION TO THE PHIL', 'CORE', '--:-- --', '1st Semester'),
+('SUB-6716', 'HUMANITIES 2- TRENDS, NETWORKING', 'SPECIALIZED', '--:-- --', '1st Semester'),
+('SUB-7279', 'ORAL COMMUNICATION IN TEXT', 'CORE', '--:-- --', '1st Semester'),
+('SUB-8742', 'PERSONAL DEVELOPMENT', 'CORE', '--:-- --', '1st Semester'),
+('SUB-9527', 'TECH VOC 1- INSTALL COMPUTER SYSTEMS', 'SPECIALIZED', '--:-- --', '1st Semester'),
+('SUB-9691', 'READING AND WRITING SKILLS', 'CORE', '--:-- --', '2nd Semester'),
+('SUB-9839', 'HOPE-2', 'CORE', '--:-- --', '1st Semester');
 
 -- --------------------------------------------------------
 
@@ -405,7 +427,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_added`) VALUES
 (94, 'USER-0607', 'LMS-209505-5945', '304e302e96596f53eb6f86d9516a092849253b5d', 'TEACHER', '2024-11-28 20:11:17'),
 (69, 'USER-1316', '114432325253', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-04 06:56:15'),
-(110, 'USER-1829', '114455013001', 'cf8015decb58c2dcaeeb0df28953fcb628c917d4', 'STUDENT', '2024-12-07 01:57:56'),
+(110, 'USER-1829', '114455013001', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-12-07 01:57:56'),
 (114, 'USER-1875', 'registrar', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'REGISTRAR', '2024-12-11 21:22:43'),
 (80, 'USER-2686', 'LMS-199603-6563', 'c25b7bba3ff6a54c12b48278a9a690637e5ba403', 'TEACHER', '2024-11-24 19:36:52'),
 (112, 'USER-2866', 'LMS-269711-4463', '4976364fbd685104e2afe280f1578b770097402d', 'TEACHER', '2024-12-07 02:10:09'),
@@ -427,7 +449,7 @@ INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_add
 (82, 'USER-6486', 'LMS-059310-1695', '6c5bc6fb30aa22e9b6b70bf482a0f470e810d98d', 'TEACHER', '2024-11-24 22:21:53'),
 (113, 'USER-6627', '114486120037', 'd35519a066831dc5506c8711aec94132b93bec6b', 'STUDENT', '2024-12-07 02:14:22'),
 (107, 'USER-7881', 'nicolas', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-12-07 01:02:17'),
-(118, 'USER-8185', 'LMS-049512-6260', 'ef356d2e40a597a0fe4f81e2b6a1734af9a5702f', 'TEACHER', '2024-12-19 21:48:44'),
+(118, 'USER-8185', 'LMS-049512-6260', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-12-19 21:48:44'),
 (88, 'USER-8224', 'LMS-029810-7901', '79f3e68c5909b763831a7e0b71ed38070f14e044', 'TEACHER', '2024-11-27 00:29:18'),
 (115, 'USER-8254', '114475130060', '7a9f1c45dbade65d0590f3e33afef2711c253f6c', 'STUDENT', '2024-12-16 23:14:52'),
 (98, 'USER-8363', 'LMS-290211-8547', 'd35519a066831dc5506c8711aec94132b93bec6b', 'TEACHER', '2024-11-30 16:42:32'),
@@ -435,7 +457,6 @@ INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_add
 (46, 'USER-8636', '114403203289', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-29 02:18:33'),
 (111, 'USER-8853', '114485140095', '400a660369b3fce52c68b9f61c0766361f9ce629', 'STUDENT', '2024-12-07 02:03:00'),
 (68, 'USER-9261', '114497427472', 'csi-24-040207', 'STUDENT', '2024-11-04 06:41:01'),
-(120, 'USER-9487', 'LMS-209912-1841', '7478d68cb5648a34811e524a3720fa0cc9958db4', 'TEACHER', '2024-12-27 20:20:31'),
 (92, 'USER-9953', 'teacher', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-28 20:08:38'),
 (45, 'USER-9986', '114483293271', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-29 02:16:11'),
 (38, 'USER-9991', '114482392392', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-24 04:47:41');
@@ -450,6 +471,13 @@ INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_add
 ALTER TABLE `enroll`
   ADD PRIMARY KEY (`stu_lrn`,`section_code`),
   ADD KEY `section_code` (`section_code`);
+
+--
+-- Indexes for table `module`
+--
+ALTER TABLE `module`
+  ADD PRIMARY KEY (`module_id`),
+  ADD KEY `fk_module_schedule` (`sched_id`);
 
 --
 -- Indexes for table `principal`
@@ -471,7 +499,8 @@ ALTER TABLE `registrar`
 ALTER TABLE `schedule`
   ADD PRIMARY KEY (`sched_id`),
   ADD KEY `fk_section` (`section_code`),
-  ADD KEY `fk_subject` (`sub_code`);
+  ADD KEY `fk_subject` (`sub_code`),
+  ADD KEY `fk_schedule_teacher` (`teacher_id`);
 
 --
 -- Indexes for table `school`
@@ -504,9 +533,7 @@ ALTER TABLE `student`
 -- Indexes for table `subject`
 --
 ALTER TABLE `subject`
-  ADD PRIMARY KEY (`sub_code`),
-  ADD KEY `teacher_id` (`teacher_id`),
-  ADD KEY `strand_code` (`strand_code`);
+  ADD PRIMARY KEY (`sub_code`);
 
 --
 -- Indexes for table `teacher`
@@ -550,6 +577,12 @@ ALTER TABLE `enroll`
   ADD CONSTRAINT `fk_enroll_student` FOREIGN KEY (`stu_lrn`) REFERENCES `student` (`stu_lrn`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `module`
+--
+ALTER TABLE `module`
+  ADD CONSTRAINT `fk_module_schedule` FOREIGN KEY (`sched_id`) REFERENCES `schedule` (`sched_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `principal`
 --
 ALTER TABLE `principal`
@@ -566,7 +599,8 @@ ALTER TABLE `registrar`
 --
 ALTER TABLE `schedule`
   ADD CONSTRAINT `fk_schedule_section` FOREIGN KEY (`section_code`) REFERENCES `section` (`section_code`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_schedule_subject` FOREIGN KEY (`sub_code`) REFERENCES `subject` (`sub_code`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_schedule_subject` FOREIGN KEY (`sub_code`) REFERENCES `subject` (`sub_code`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_schedule_teacher` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `section`
@@ -580,13 +614,6 @@ ALTER TABLE `section`
 --
 ALTER TABLE `student`
   ADD CONSTRAINT `fk_student_users` FOREIGN KEY (`id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `subject`
---
-ALTER TABLE `subject`
-  ADD CONSTRAINT `fk_subject_strand` FOREIGN KEY (`strand_code`) REFERENCES `strand` (`strand_code`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_subject_teacher` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `teacher`

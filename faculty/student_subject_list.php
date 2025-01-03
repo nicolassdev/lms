@@ -7,23 +7,32 @@ if (!isset($_SESSION['teacher_id'])) {
     exit;
 }
 
-include "../faculty/includes/Forms/uploadmoduleform.php";
 $mySQLFunction->connection();
-
-if (!empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
+if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
+    $sched_id = $_GET['sched_id'];
     $sub_code = $_GET['sub_code'];
     $section_code = $_GET['section_code'];
 
     // Fetch students by subject handled of teacher 
     $students = $mySQLFunction->getAllStudentBySectionAndSubject($_SESSION['teacher_id'], $sub_code, $section_code);
-} else {
-    // Redirect back if required parameters are missing
-    header("Location: /lms/faculty/index.php");
-    exit;
 }
 
+
+include "../faculty/includes/Forms/uploadmoduleform.php";
 ?>
 
+<style>
+    .data-table {
+        font-size: 0.8em;
+        /* Reduce font size */
+    }
+
+    .table th,
+    .table td {
+        padding: 0.1rem;
+        /* Adjust padding */
+    }
+</style>
 
 <main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-3">
     <div class="container">
@@ -31,29 +40,32 @@ if (!empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h5 class="text-black">Students </h5>
-                        <div class="fw-bold fs-5">
-                            <?php if (!empty($students)) {
-                                foreach ($students as $student) {
-                                    echo htmlspecialchars($student["grade_lvl"]) . ' / ';
-                                    echo htmlspecialchars($student["section_name"]);
-                                    break; // Exit loop after processing the first student
+                        <h5 class="fw-bold">
+                            <div class="fs-5">
+                                <?php if (!empty($students)) {
+                                    foreach ($students as $student) {
+                                        echo htmlspecialchars($student["grade_lvl"]) . '  ';
+                                        echo htmlspecialchars($student["section_name"]);
+                                        break; // Exit loop after processing the first student
+                                    }
                                 }
-                            }
-                            ?>
-                        </div>
+                                ?>
+                            </div>
+                            Students
+                        </h5>
 
 
                         <div class="d-flex">
                             <?php
-                            $mySQLFunction->connection();
-                            $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
+                            $btnClass = empty($students) ? 'btn-danger' : 'btn-primary';
+                            $disabled = empty($students) ? 'disabled' : '';
                             ?>
-
-                            <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#upload_module" data-bs-whatever="@fat"
-                                <?php echo empty($result) ? 'disabled' : ''; ?>>
+                            <button type="button" class="btn <?php echo $btnClass; ?> btn-sm btn-animate"
+                                data-bs-toggle="modal" data-bs-target="#upload_module"
+                                data-bs-whatever="@fat" <?php echo $disabled; ?>>
                                 <i class="bi bi-cloud-arrow-up me-1"></i>Upload module
                             </button>
+
                         </div>
                     </div>
 
@@ -72,6 +84,9 @@ if (!empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
                                     <th scope="col" style="width: 100px;">Email</th>
                                     <th scope="col" style="width: 100px;">Year level</th>
                                     <th scope="col" style="width: 100px;">Section</th>
+                                    <th scope="col" style="width: 100px;">Download file</th>
+
+
 
                                 </tr>
                             </thead>
@@ -92,7 +107,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
                                         echo '<td class="small text-center">' . strtolower($student["stu_email"]) . '</td>';
                                         echo '<td class="small text-center">' .  $student["grade_lvl"] . '</td>';
                                         echo '<td class="small text-center">' .  $student["section_name"] . '</td>';
-
+                                        echo '<td class="small text-center">No file uploaded</td>';
                                         echo '</tr>';
 
                                         $count++;
@@ -131,7 +146,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 7;
+                            return index !== 9;
                         },
                     },
                 },
@@ -141,7 +156,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 7;
+                            return index !== 9;
                         },
                     },
                 },
@@ -151,7 +166,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 7;
+                            return index !== 9;
                         },
                     },
                 },
@@ -195,7 +210,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 7;
+                            return index !== 9;
                         },
                     },
                 },

@@ -80,7 +80,7 @@ $mySQLFunction->disconnect();
 
                     <!-- SUBJECT -->
                     <div class="col-md-12">
-                        <label class="fs-6 mb-1">Subject <span style="color: red;">*</span></label>
+                        <label class="form-label">Subject <span style="color: red;">*</span></label>
                         <select class="form-select" name="subjectID" id="subjectSelect" required>
                             <option value="" selected disabled>Select a subject ...</option>
                             <?php
@@ -134,18 +134,50 @@ $mySQLFunction->disconnect();
                         <label class="fs-6 mb-1">Category</label>
                         <input type="text" class="form-control" id="subtypeInput" readonly>
                     </div>
-                    <div class="col-md-7">
-                        <label class="fs-6 mb-1">Teacher</label>
-                        <input type="text" class="form-control" id="teacherInput" readonly>
-                    </div>
 
-                    <div class="col-md-5">
+
+                    <div class="col-md-7">
                         <label class="fs-6 mb-1">Semester</label>
                         <input type="text" class="form-control" id="subsemesterInput" readonly>
                     </div>
 
-                    <div class="col-md-7">
-                        <label class="fs-6 mb-1">Day <span style="color: red;">*</span></label>
+                    <!-- TEACHER SELECTION -->
+                    <div class="col-md-12">
+                        <label class="form-label">Teacher <span style="color: red;">*</span></label>
+                        <select class="form-select" name="teacherID" required>
+                            <option value="" selected disabled>Choose a teacher...</option>
+                            <?php
+                            $mySQLFunction->connection();
+                            $result = $mySQLFunction->getTeacher();
+                            $hasAvailableTeacher = false;
+
+                            if (empty($result)) {
+                                echo '<option disabled>No teaecher found in the database.</option>';
+                            } else {
+                                foreach ($result as $row) {
+                                    if (($mySQLFunction->checkRowCount("schedule", "teacher_id", $row["teacher_id"])) == 2) { //check if the teacher id was exist 2x then skip to continue
+                                        continue;
+                                    } else {
+                                        echo '<option value="' . $row["teacher_id"] . '">' . $row["teacher_fname"] . ' ' . $row["teacher_lname"] . '</option>';
+                                        $hasAvailableTeacher = true;
+                                    }
+                                }
+                            }
+                            if (!$hasAvailableTeacher) {
+                                echo '<option disabled>No teacher available for subject.</option>';
+                            }
+                            $mySQLFunction->disconnect();
+
+                            ?>
+                        </select>
+                        <div class="invalid-feedback">Please select a teacher.</div>
+                    </div>
+
+
+
+
+                    <div class="col-md-12">
+                        <label class="form-label">Day <span style="color: red;">*</span></label>
                         <select class="form-select" name="day" required>
                             <option value="" disabled selected>Select a day ..</option>
                             <option value="Monday">Monday</option>
@@ -161,7 +193,7 @@ $mySQLFunction->disconnect();
                     </div>
 
 
-                    <label class="fs-6">Time <span style="color: red;">*</span></label>
+                    <label class="form-label">Time <span style="color: red;">*</span></label>
                     <div class="col-md-6">
                         <label class="form-label small">From</label>
                         <input type="time" class="form-control" name="time_from" placeholder="e.g., 7:30 AM" required>
@@ -242,7 +274,6 @@ $mySQLFunction->disconnect();
     document.addEventListener('DOMContentLoaded', function() {
         const subjectSelect = document.getElementById('subjectSelect');
         const subtypeInput = document.getElementById('subtypeInput');
-        const teacherInput = document.getElementById('teacherInput');
         const subsemesterInput = document.getElementById('subsemesterInput');
 
         subjectSelect.addEventListener('change', function() {
@@ -250,12 +281,10 @@ $mySQLFunction->disconnect();
 
             // Get strand and adviser from data attributes
             const subtype = selectedOption.getAttribute('data-subtype') || '';
-            const teacher = selectedOption.getAttribute('data-teacher') || '';
             const semester = selectedOption.getAttribute('data-semester') || '';
 
             // Set the values to the input fields
             subtypeInput.value = subtype;
-            teacherInput.value = teacher;
             subsemesterInput.value = semester;
         });
     });

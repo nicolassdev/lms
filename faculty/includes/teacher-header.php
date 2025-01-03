@@ -1,3 +1,11 @@
+<?php
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+error_reporting(E_ALL);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,7 +84,7 @@
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                        <li class="ms-3"><i class="bi bi-patch-check-fill text-success"></i> <?php echo ucwords(strtolower($_SESSION["user_role"])) ?> </li>
+                        <li class="ms-3"><i class="bi bi-patch-check-fill text-success"></i> <?php echo ucwords(strtolower($_SESSION["user_role"])); ?> </li>
                         <hr class="mx-3 my-1">
                         <li><a class="dropdown-item" href="?page=teacher_prof">Profile</a></li>
                         <li><a class="dropdown-item" href="?page=teacher_account">Account</a></li>
@@ -161,7 +169,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=teacher_subject">
-                                    <i class="bi bi-journal-bookmark-fill me-1"></i>Subject
+                                    <i class="bi bi-journal-bookmark-fill me-1"></i>Subjects Handled
                                 </a>
                             </li>
                             <li class="nav-item">

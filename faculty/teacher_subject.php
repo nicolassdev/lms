@@ -196,7 +196,7 @@ $mySQLFunction->disconnect();
 
                         <!-- Card Footer -->
                         <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
-                            <a href="index.php?page=student_subject_list&sub_code=<?php echo urlencode($schedule['sub_code']); ?>&section_code=<?php echo urlencode($schedule['section_code']); ?>"
+                            <a href="index.php?page=student_subject_list&sched_id=<?php echo urlencode($schedule['sched_id']); ?> &sub_code=<?php echo urlencode($schedule['sub_code']); ?> &section_code=<?php echo urlencode($schedule['section_code']); ?>"
                                 class="btn btn-outline-primary w-100 fw-bold d-flex align-items-center justify-content-center">
                                 <i class="bi bi-person-lines-fill me-2"></i> View Students
                             </a>
