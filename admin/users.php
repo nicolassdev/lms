@@ -19,7 +19,7 @@ include "../includes/dbh-inc.php";
         <div class="ms-3 w-100">
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="fw-bold ">List of Users Account</h5>
+                    <h5 class="fw-bold">List of Users Account</h5>
                     <!-- Search Bar -->
                     <div class="col-md-4">
 

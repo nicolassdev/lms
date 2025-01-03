@@ -61,7 +61,7 @@ $mySQLFunction->disconnect();
             <div class="ms-3">
                 <img
                     style="position: absolute; top: 50%; right: 5%; transform: translate(-0%, -45%); 
-                    width: 800px; opacity: 0.2; z-index: -1;"
+                    width: 700px; opacity: 0.2; z-index: -1;"
                     src="../assets/img/bg-home.webp"
                     alt="LMS Logo">
                 <div class="container">

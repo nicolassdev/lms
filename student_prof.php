@@ -271,12 +271,12 @@ $mySQLFunction->disconnect();
 
                         <div class="row mb-1">
                             <div class="col-md-6">
-                                <strong>Strand:</strong>
+                                <strong>Strand and Grade level:</strong>
                                 <p>
                                     <?php
                                     if (!empty($studentStrandAndSection)) {
                                         foreach ($studentStrandAndSection as $strand) {
-                                            echo htmlspecialchars($strand["strand_name"]);
+                                            echo ucwords(strtolower($strand["grade_lvl"])) . ' - ' . htmlspecialchars($strand["strand_name"]) . ' <br>';
                                         }
                                     } else {
                                         echo '<div class="text-danger">No strand assigned.</div>';
@@ -285,13 +285,13 @@ $mySQLFunction->disconnect();
                                 </p>
                             </div>
                             <div class="col-md-6">
-                                <strong>Section and Grade level:</strong>
+                                <strong>Section and Adviser:</strong>
                                 <p>
                                     <?php
                                     if (!empty($studentStrandAndSection)) {
                                         foreach ($studentStrandAndSection as $section) {
-                                            echo ucwords(strtolower($section["grade_lvl"])) . ' - ' . htmlspecialchars($section["section_name"]) . ' <br>'; // Display each subject with strand code
-
+                                            echo htmlspecialchars($section["section_name"]) . ' - ' .
+                                                htmlspecialchars(ucwords(strtolower($section["teacher_fname"] . ' ' . $section["teacher_lname"]))) . '';
                                         }
                                     } else {
                                         echo '<div class="text-danger">No section assigned to this student.</div>';
@@ -333,8 +333,6 @@ $mySQLFunction->disconnect();
                         </div>
 
 
-
-
                         <div class="row mb-1">
                             <div class="col-md-6">
                                 <strong> Status:</strong>
@@ -346,24 +344,6 @@ $mySQLFunction->disconnect();
                             </div>
 
                         </div>
-
-
-
-                        <div class="row mb-1">
-
-                            <div class="col-md-12">
-                                <strong>Adviser:</strong>
-                                <p><?php if (!empty($studentStrandAndSection)) {
-                                        foreach ($studentStrandAndSection as $adviser) {
-                                            echo htmlspecialchars(ucwords(strtolower($adviser["teacher_fname"] . ' ' . $adviser["teacher_lname"])));
-                                        }
-                                    } else {
-                                        echo '<div class="text-danger">No adviser assigned.</div>';
-                                    } ?></p>
-                            </div>
-
-                        </div>
-
 
                     </div>
                 </div>

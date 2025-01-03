@@ -45,23 +45,12 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
                         <div class="fw-bold fs-5">
                             <?php if (!empty($result)) {
                                 foreach ($result as $student) {
-                                    echo htmlspecialchars($student["grade_lvl"]) . ' / ';
+                                    echo htmlspecialchars($student["grade_lvl"]) . '  ';
                                     echo htmlspecialchars($student["section_name"]);
                                     break; // Exit loop after processing the first student
                                 }
                             }
                             ?>
-                        </div>
-                        <div class="d-flex">
-                            <?php
-                            $mySQLFunction->connection();
-                            $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
-                            ?>
-
-                            <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#upload_module" data-bs-whatever="@fat"
-                                <?php echo empty($result) ? 'disabled' : ''; ?>>
-                                <i class="bi bi-cloud-arrow-up me-1"></i>Upload module
-                            </button>
                         </div>
                     </div>
 

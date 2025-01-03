@@ -2189,27 +2189,211 @@ class myDataBase
 
 
 
-    // UPDATE USERS
-    public function updateUser($row, $value, $where, $role = null)
+
+    // Function to execute a query and fetch a single row
+    public function querySingle($sql, $params = [])
     {
-        $value = mysqli_real_escape_string($this->con, $value);
-        if (is_string($value)) {
-            $value = "'" . $value . "'";
+        $stmt = $this->con->prepare($sql);
+        if (!$stmt) {
+            throw new Exception("Failed to prepare statement: " . $this->con->error);
         }
-        $sql = "UPDATE `users` SET `$row` = $value WHERE `id` = '$where'";
-        $result = $this->con->query($sql);
 
-        if ($result) {
+        // Bind parameters if any
+        if (!empty($params)) {
+            $types = str_repeat("s", count($params)); // Assuming all params are strings; adjust type as needed
+            $stmt->bind_param($types, ...$params);
+        }
 
-            return true;
-        } else {
-            return false;
+        // Execute the query
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to execute query: " . $stmt->error);
+        }
+
+        // Fetch a single row
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        $stmt->close();
+        return $row; // Return the row (or null if no rows found)
+    }
+
+
+
+
+
+    // =========================================== UPLOAD MODULE  ====================================================
+
+    // // Fetch modules by subject handled by teacher
+    // function getModuleOfStudentBySectionStrandAndGradelevel($stu_lrn, $sub_code, $strand_code, $grade_lvl)
+    // {
+    //     $activeSemesters = $this->checkSemStatus('semester');
+
+    //     // Check if there are any active semesters
+    //     if (empty($activeSemesters)) {
+    //         return []; // Return an empty array if no active semester
+    //     }
+
+    //     // Prepare the active semester condition
+    //     $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
+
+    //     try {
+    //         // Prepare query to get the schedule, related section information, teacher, and module
+    //         $sql = "
+    //         SELECT 
+    //             m.module_id, 
+    //             m.file_name, 
+    //             m.file_size, 
+    //             m.formatted_size, 
+    //             m.file_type, 
+    //             m.date_uploaded AS uploaded_date,
+    //             m.sched_id,
+    //             sec.section_code, 
+    //             sec.grade_lvl, 
+    //             st.strand_code, 
+    //             st.strand_name, 
+    //             sub.sub_code,
+    //             sub.sub_title,
+    //             sub.sub_semester,
+    //             sched.teacher_id,
+    //             t.teacher_fname, 
+    //             t.teacher_lname
+    //         FROM 
+    //             MODULE m
+    //         INNER JOIN  
+    //             SCHEDULE sched ON sched.sched_id = m.sched_id
+    //         INNER JOIN  
+    //             ENROLL en ON en.section_code = sched.section_code
+    //         INNER JOIN  
+    //             SECTION sec ON sec.section_code = sched.section_code
+    //         INNER JOIN  
+    //             STRAND st ON sec.strand_code = st.strand_code
+    //         INNER JOIN  
+    //             SUBJECT sub ON sub.sub_code = sched.sub_code
+    //         INNER JOIN  
+    //             TEACHER t ON t.teacher_id = sched.teacher_id
+    //         WHERE 
+    //             en.stu_lrn = ?
+    //             AND sec.grade_lvl = ? 
+    //             AND sec.strand_code = ? 
+    //             AND sub.sub_code = ?
+    //             AND $activeSemesterCondition
+    //     ";
+
+    //         // Prepare the query
+    //         $stmt = $this->con->prepare($sql);
+    //         if (!$stmt) {
+    //             throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
+    //         }
+
+    //         // Bind parameters
+    //         $stmt->bind_param("ssss", $stu_lrn, $grade_lvl, $strand_code, $sub_code);
+
+    //         // Execute the statement
+    //         $stmt->execute();
+    //         $result = $stmt->get_result();
+
+    //         // Fetch all the module data
+    //         $modules = [];
+    //         while ($row = $result->fetch_assoc()) {
+    //             $modules[] = $row;
+    //         }
+
+    //         // Free resources
+    //         $stmt->close();
+
+    //         return $modules ?: []; // Return an empty array if no data
+    //     } catch (Exception $e) {
+    //         // Log the error message
+    //         error_log("Error fetching student modules: " . $e->getMessage());
+    //         return []; // Return an empty array on error
+    //     }
+    // }
+
+
+    // Fetch modules by subject handled by teacher
+    function getModuleOfStudentByStrandAndGradelevel($sub_code, $strand_code, $grade_lvl)
+    {
+        $activeSemesters = $this->checkSemStatus('semester');
+
+        // Check if there are any active semesters
+        if (empty($activeSemesters)) {
+            return []; // Return an empty array if no active semester
+        }
+
+        // Prepare the active semester condition
+        $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
+
+        try {
+            // Updated query to relax section condition
+            $sql = "
+            SELECT 
+                m.module_id, 
+                m.file_name, 
+                m.file_size, 
+                m.formatted_size, 
+                m.file_type, 
+                m.date_uploaded AS uploaded_date,
+                sec.section_code, 
+                sec.grade_lvl, 
+                st.strand_code, 
+                st.strand_name, 
+                sub.sub_code,
+                sub.sub_title,
+                sub.sub_semester,
+                sched.teacher_id,
+                t.teacher_fname, 
+                t.teacher_lname
+            FROM 
+                MODULE m
+            INNER JOIN  
+                SCHEDULE sched ON sched.sched_id = m.sched_id
+            INNER JOIN  
+                SECTION sec ON sec.section_code = sched.section_code
+            INNER JOIN  
+                STRAND st ON sec.strand_code = st.strand_code
+            INNER JOIN  
+                SUBJECT sub ON sub.sub_code = sched.sub_code
+            INNER JOIN  
+                TEACHER t ON t.teacher_id = sched.teacher_id
+            WHERE 
+                st.strand_code = ?
+                AND sec.grade_lvl = ?
+                AND sub.sub_code = ?
+                AND $activeSemesterCondition
+            ";
+
+            // Prepare the query
+            $stmt = $this->con->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
+            }
+
+            // Bind parameters
+            $stmt->bind_param("sss", $strand_code, $grade_lvl, $sub_code);
+
+            // Execute the statement
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            // Fetch all the module data
+            $modules = [];
+            while ($row = $result->fetch_assoc()) {
+                $modules[] = $row;
+            }
+
+            // Free resources
+            $stmt->close();
+
+            return $modules ?: []; // Return an empty array if no data
+        } catch (Exception $e) {
+            // Log the error message
+            error_log("Error fetching student modules: " . $e->getMessage());
+            return []; // Return an empty array on error
         }
     }
 
 
 
-    // =========================================== UPLOAD MODULE  ====================================================
     // Helper function to format file size
     public function formatFileSize($bytes)
     {

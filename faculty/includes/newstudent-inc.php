@@ -34,7 +34,7 @@ if (!isset($_POST["submit"])) {
     $pcontact = isset($_POST["p_contact"]) ? trim($_POST["p_contact"]) : null;
 
     // Generate unique IDs
-    $uid = trim($mySQLFunction->generateUserID());
+    $uid = trim($mySQLFunction->generateID("STUD-"));
     //GENERATE unique passsword for students
     $userpwd = trim($mySQLFunction->generatePassword($dob));
 

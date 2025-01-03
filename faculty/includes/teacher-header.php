@@ -3,9 +3,6 @@ ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 error_reporting(E_ALL);
 
-// if (headers_sent($file, $line)) {
-//     die("Headers already sent in $file on line $line");
-// }
 ?>
 
 
@@ -172,7 +169,7 @@ error_reporting(E_ALL);
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=teacher_subject">
-                                    <i class="bi bi-journal-bookmark-fill me-1"></i>Subject
+                                    <i class="bi bi-journal-bookmark-fill me-1"></i>Subjects Handled
                                 </a>
                             </li>
                             <li class="nav-item">

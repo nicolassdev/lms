@@ -7,7 +7,6 @@ if (!isset($_SESSION['teacher_id'])) {
     exit;
 }
 
-
 $mySQLFunction->connection();
 if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['section_code'])) {
     $sched_id = $_GET['sched_id'];
@@ -22,6 +21,18 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
 include "../faculty/includes/Forms/uploadmoduleform.php";
 ?>
 
+<style>
+    .data-table {
+        font-size: 0.8em;
+        /* Reduce font size */
+    }
+
+    .table th,
+    .table td {
+        padding: 0.1rem;
+        /* Adjust padding */
+    }
+</style>
 
 <main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-3">
     <div class="container">
@@ -29,17 +40,19 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h5 class="text-black">Students </h5>
-                        <div class="fw-bold fs-5">
-                            <?php if (!empty($students)) {
-                                foreach ($students as $student) {
-                                    echo htmlspecialchars($student["grade_lvl"]) . ' / ';
-                                    echo htmlspecialchars($student["section_name"]);
-                                    break; // Exit loop after processing the first student
+                        <h5 class="fw-bold">
+                            <div class="fs-5">
+                                <?php if (!empty($students)) {
+                                    foreach ($students as $student) {
+                                        echo htmlspecialchars($student["grade_lvl"]) . '  ';
+                                        echo htmlspecialchars($student["section_name"]);
+                                        break; // Exit loop after processing the first student
+                                    }
                                 }
-                            }
-                            ?>
-                        </div>
+                                ?>
+                            </div>
+                            Students
+                        </h5>
 
 
                         <div class="d-flex">
@@ -71,6 +84,9 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                     <th scope="col" style="width: 100px;">Email</th>
                                     <th scope="col" style="width: 100px;">Year level</th>
                                     <th scope="col" style="width: 100px;">Section</th>
+                                    <th scope="col" style="width: 100px;">Download file</th>
+
+
 
                                 </tr>
                             </thead>
@@ -91,7 +107,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                         echo '<td class="small text-center">' . strtolower($student["stu_email"]) . '</td>';
                                         echo '<td class="small text-center">' .  $student["grade_lvl"] . '</td>';
                                         echo '<td class="small text-center">' .  $student["section_name"] . '</td>';
-
+                                        echo '<td class="small text-center">No file uploaded</td>';
                                         echo '</tr>';
 
                                         $count++;
@@ -130,7 +146,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 7;
+                            return index !== 9;
                         },
                     },
                 },
@@ -140,7 +156,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 7;
+                            return index !== 9;
                         },
                     },
                 },
@@ -150,7 +166,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 7;
+                            return index !== 9;
                         },
                     },
                 },
@@ -194,7 +210,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                     exportOptions: {
                         columns: function(index, data, node) {
                             // Exclude the "Action" column (assuming index 7)
-                            return index !== 7;
+                            return index !== 9;
                         },
                     },
                 },

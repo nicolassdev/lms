@@ -38,6 +38,34 @@ if ($fromTime > $toTime) {
 
 try {
 
+    // Get the strand code and grade level of the current section
+    $query = "SELECT strand_code, grade_lvl FROM section WHERE section_code = ?";
+    $sectionInfo = $mySQLFunction->querySingle($query, [$section_id]);
+    if (!$sectionInfo) {
+        $_SESSION['error'] = "Invalid section selected.";
+        header("Location: ../index.php?page=schedule");
+        exit();
+    }
+
+    $strandCode = $sectionInfo['strand_code'];
+    $gradeLevel = $sectionInfo['grade_lvl'];
+
+    // Check for duplicate subject with the same strand and grade level
+    $duplicateQuery = "
+            SELECT COUNT(*) AS count
+            FROM schedule
+            INNER JOIN section ON schedule.section_code = section.section_code
+            WHERE schedule.sub_code = ? AND section.strand_code = ? AND section.grade_lvl = ? AND schedule.sched_id != ?";
+    $duplicateCount = $mySQLFunction->querySingle($duplicateQuery, [$subject_id, $strandCode, $gradeLevel, $uid]);
+
+    if ($duplicateCount['count'] > 0) {
+        $_SESSION['error'] = "<small><b>Duplicate entry detected. </b><br/>The subject is already assigned to the same strand and grade level.</small>";
+        header("Location: ../index.php?page=schedule");
+        exit();
+    }
+
+
+
     // Check if there are duplicate ID inserted in section code and subject code 
     $duplicateIDExists = $mySQLFunction->checkDuplicateID('schedule', 'section_code', 'sub_code', 'sched_id', $section_id, $subject_id, $uid);
 
@@ -47,6 +75,7 @@ try {
         header("location:../index.php?page=schedule");
         exit();
     }
+
 
 
     // VALIDATION 2: Check for time overlap using the reusable function | Check if the subject with the same day and time  was alredy exist in database 
