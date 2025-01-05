@@ -2217,10 +2217,6 @@ class myDataBase
         return $row; // Return the row (or null if no rows found)
     }
 
-
-
-
-
     // =========================================== UPLOAD MODULE  ====================================================
 
     // // Fetch modules by subject handled by teacher

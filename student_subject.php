@@ -38,7 +38,7 @@ $mySQLFunction->disconnect();
             </div>
         </div>
     </div>
-    </div>
+
 
 
     <!-- Subject Cards -->
@@ -120,7 +120,7 @@ $mySQLFunction->disconnect();
                         </div>
                         <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
                             <a href="index.php?page=subject_list&sub_code=<?php echo urlencode($subject['sub_code']); ?> &strand_code=<?php echo urlencode($subject['strand_code']); ?> &grade_lvl=<?php echo urlencode($subject['grade_lvl']); ?>" class="btn btn-outline-success w-100 fw-bold d-flex align-items-center justify-content-center">
-                                <i class="bi bi-person-lines-fill me-2"></i> View Module
+                                <i class="bi bi-journals me-2"></i> View Module
                             </a>
                         </div>
                     </div>
