@@ -24,7 +24,7 @@ $mySQLFunction->disconnect();
                 <!-- action="./includes/student-inc.php " method="POST" -->
                 <form id="schedForm" action="./includes/schedule-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation" novalidate>
                     <div class="modal-header d-flex justify-content-between align-items-center">
-                        <div class="fs-6"><span class="text-primary form-label">Create Schedule </span><br>
+                        <div class="fs-6"><span class="text-primary form-label fw-bold">Create Schedule </span><br>
                             <?php
                             if (!empty($activeSchoolYears) && !empty($activeSem)) {
                                 foreach ($activeSchoolYears as $index => $schoolYear) {
@@ -40,7 +40,7 @@ $mySQLFunction->disconnect();
 
                     <!-- SECTION  -->
                     <div class="col-md-12">
-                        <label class="fs-6 mb-1">Section name <span style="color: red;">*</span></label>
+                        <label class="form-label">Section name <span style="color: red;">*</span></label>
                         <select class="form-select" name="sectionID" id="sectionSelect" required>
                             <option value="" selected disabled>Select a section...</option>
                             <?php

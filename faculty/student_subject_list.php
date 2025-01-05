@@ -84,7 +84,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                     <th scope="col" style="width: 100px;">Email</th>
                                     <th scope="col" style="width: 100px;">Year level</th>
                                     <th scope="col" style="width: 100px;">Section</th>
-                                    <th scope="col" style="width: 100px;">Download file</th>
+                                    <th scope="col" style="width: 100px;">Download</th>
 
 
 
