@@ -80,7 +80,7 @@ if (!isset($_POST["submit"])) {
                     exit();
                 }
 
-                $uploadFileDir = '../../assets/Module/';
+                $uploadFileDir = '../../faculty/module_uploaded/';
                 if (!is_dir($uploadFileDir)) mkdir($uploadFileDir, 0755, true);
                 $dest_path = $uploadFileDir . $fileName;
 

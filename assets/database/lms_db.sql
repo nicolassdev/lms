@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2025 at 08:45 PM
+-- Generation Time: Jan 05, 2025 at 06:33 PM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.12
 
@@ -75,8 +75,31 @@ CREATE TABLE `module` (
 --
 
 INSERT INTO `module` (`module_id`, `file_name`, `file_size`, `formatted_size`, `file_type`, `sched_id`, `date_uploaded`) VALUES
-('MOD-0656', '../../assets/Module/Busiess Ethics.docx', 17504, '17.09 KB', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'SCHED-3005', '2025-01-04 03:11:58'),
-('MOD-7062', '../../assets/Module/MODULE 1 MATH, SCIENCE AND TECHNOLOGY.pdf', 236987, '231.43 KB', 'application/pdf', 'SCHED-3005', '2025-01-04 03:36:59');
+('MOD-9595', '../../faculty/module_uploaded/student.png', 303729, '296.61 KB', 'image/png', 'SCHED-3005', '2025-01-06 01:07:54');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `module_answer`
+--
+
+CREATE TABLE `module_answer` (
+  `answer_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `module_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_lrn` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
+  `file_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `file_size` bigint UNSIGNED DEFAULT NULL,
+  `formatted_size` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `file_type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `date_uploaded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `module_answer`
+--
+
+INSERT INTO `module_answer` (`answer_id`, `module_id`, `stu_lrn`, `file_name`, `file_size`, `formatted_size`, `file_type`, `date_uploaded`) VALUES
+('ANS-3479', 'MOD-9595', '124167743724', '../../includes/uploaded_files/Busiess-Ethics.docx', 17504, '17.09 KB', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '2025-01-06 01:33:31');
 
 -- --------------------------------------------------------
 
@@ -154,7 +177,7 @@ CREATE TABLE `schedule` (
 INSERT INTO `schedule` (`sched_id`, `teacher_id`, `section_code`, `sub_code`, `sched_day`, `sched_from`, `sched_to`, `created_at`) VALUES
 ('SCHED-0762', '24-209505-8181', 'SECTION-2663', 'SUB-3699', 'Friday', '08:00 AM', '10:00 AM', '2024-12-28 20:02:31'),
 ('SCHED-0950', '24-299710-4779', 'SECTION-2387', 'SUB-3375', 'Friday', '08:00 AM', '10:00 AM', '2024-12-30 20:21:44'),
-('SCHED-1274', '24-279707-4937', 'SECTION-2287', 'SUB-7279', 'Monday', '08:30 AM', '10:30 AM', '2024-12-30 12:31:59'),
+('SCHED-1274', '24-279707-4937', 'SECTION-2287', 'SUB-7279', 'Monday', '07:30 AM', '10:30 AM', '2024-12-30 12:31:59'),
 ('SCHED-1393', '24-059310-4617', 'SECTION-1859', 'SUB-3164', 'Monday', '08:30 AM', '10:30 AM', '2024-12-28 19:31:30'),
 ('SCHED-3005', '24-299710-4779', 'SECTION-1859', 'SUB-3563', 'Monday', '03:00 PM', '05:20 PM', '2024-12-28 19:35:09'),
 ('SCHED-3238', '24-059310-4617', 'SECTION-1859', 'SUB-9527', 'Tuesday', '08:30 AM', '11:30 AM', '2024-12-28 19:24:12'),
@@ -425,7 +448,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_added`) VALUES
-(94, 'USER-0607', 'LMS-209505-5945', '304e302e96596f53eb6f86d9516a092849253b5d', 'TEACHER', '2024-11-28 20:11:17'),
+(94, 'USER-0607', 'LMS-209505-5945', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-28 20:11:17'),
 (69, 'USER-1316', '114432325253', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-04 06:56:15'),
 (110, 'USER-1829', '114455013001', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-12-07 01:57:56'),
 (114, 'USER-1875', 'registrar', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'REGISTRAR', '2024-12-11 21:22:43'),
@@ -478,6 +501,14 @@ ALTER TABLE `enroll`
 ALTER TABLE `module`
   ADD PRIMARY KEY (`module_id`),
   ADD KEY `fk_module_schedule` (`sched_id`);
+
+--
+-- Indexes for table `module_answer`
+--
+ALTER TABLE `module_answer`
+  ADD PRIMARY KEY (`answer_id`),
+  ADD KEY `fk_module` (`module_id`),
+  ADD KEY `fk_student` (`stu_lrn`);
 
 --
 -- Indexes for table `principal`
@@ -581,6 +612,13 @@ ALTER TABLE `enroll`
 --
 ALTER TABLE `module`
   ADD CONSTRAINT `fk_module_schedule` FOREIGN KEY (`sched_id`) REFERENCES `schedule` (`sched_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `module_answer`
+--
+ALTER TABLE `module_answer`
+  ADD CONSTRAINT `fk_module` FOREIGN KEY (`module_id`) REFERENCES `module` (`module_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_student` FOREIGN KEY (`stu_lrn`) REFERENCES `student` (`stu_lrn`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `principal`
