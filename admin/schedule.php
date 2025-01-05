@@ -84,7 +84,7 @@ include "../admin/includes/Forms/scheduleform.php";
 
                             <thead class="table-dark text-light">
                                 <tr>
-                                    <th scope="col" class="small text-center">Teacher name</th>
+                                    <th scope="col" class="small text-center">Subject Teacher</th>
                                     <th scope="col" class="small text-center">Strand</th>
                                     <th scope="col" class="small text-center">Year level</th>
                                     <th scope="col" class="small text-center">Section</th>
