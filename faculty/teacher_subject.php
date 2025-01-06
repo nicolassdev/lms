@@ -171,7 +171,7 @@ $mySQLFunction->disconnect();
                                 <span class="fw-semibold">Total Students: <?php
                                                                             // Get total count for each student in subject handled by teacher
                                                                             $mySQLFunction->connection();
-                                                                            $students = $mySQLFunction->getAllStudentBySectionAndSubject($_SESSION['teacher_id'], $schedule['sub_code'], $schedule['section_code']);
+                                                                            $students = $mySQLFunction->getAllStudentBySectionAndSubjectWithModuleUploads($_SESSION['teacher_id'], $schedule['sub_code'], $schedule['section_code']);
                                                                             $totalStudentinSection = '0';
                                                                             foreach ($students as $student) {
                                                                                 $totalStudentinSection = $student['enrolled_count'] ?: '0';

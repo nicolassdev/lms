@@ -19,7 +19,7 @@ $mySQLFunction->disconnect();
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4">
-        <h4 class="ms-3">School Information</h4>
+        <h5 class="fw-bold ms-3">School Information</h5>
 
         <!-- Button container for proper alignment -->
         <div class="d-flex gap-2 ms-2">

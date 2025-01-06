@@ -98,6 +98,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                     <th class="text-center">Module</th>
                                 </tr>
                             </thead>
+
                             <tbody id="modulesTableBody">
                                 <?php
                                 if (!empty($modules)) {
@@ -189,7 +190,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                                                 <label for="fileInput" class="fs-6 mb-2 text-muted">Select a file to upload</label>
                                                                 <input type="file" class="form-control form-control-lg border-primary" id="fileInput" name="file" required>
                                                                 <div class="mt-2">
-                                                                    <small style="font-size: 12px;">Allowed: <strong class="text-black">10MB</strong> - PDF, Word, Excel, PowerPoint, and Images (JPEG, PNG, GIF, WEBP).</small>
+                                                                    <small style="font-size: 12px;">Allowed: <strong class="text-black">10MB</strong> - PDF, Word, Excel, PowerPoint, and Images (JPEG, PNG, WEBP).</small>
                                                                 </div>
                                                                 <div class="invalid-feedback">
                                                                     Please upload a file module.
@@ -295,6 +296,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                 </tr>
 
                             </tbody>
+
                         </table>
                     </div>
                 </div>

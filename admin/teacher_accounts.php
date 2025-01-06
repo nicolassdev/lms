@@ -36,7 +36,7 @@ $mySQLFunction->disconnect();
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h5 class="text-black">List of Faculty Accounts</h5>
+                        <h5 class="fw-bold">List of Faculty Accounts</h5>
                         <div class="d-flex">
                         </div>
                     </div>

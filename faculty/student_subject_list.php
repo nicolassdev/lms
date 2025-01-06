@@ -13,8 +13,13 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
     $sub_code = $_GET['sub_code'];
     $section_code = $_GET['section_code'];
 
+
+
     // Fetch students by subject handled of teacher 
-    $students = $mySQLFunction->getAllStudentBySectionAndSubject($_SESSION['teacher_id'], $sub_code, $section_code);
+    $students = $mySQLFunction->getAllStudentBySectionAndSubjectWithModuleUploads($_SESSION['teacher_id'], $sub_code, $section_code);
+    // echo "<pre>";
+    // print_r($students);
+    // echo "</pre>";
 }
 
 
@@ -76,7 +81,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
-                                    <th scope="col" style="width: 50px;">LRN</th>
+                                    <!-- <th scope="col" style="width: 50px;">LRN</th> -->
                                     <th scope="col" style="width: 100px;">Full name</th>
                                     <th scope="col" style="width: 50px;">Gender</th>
                                     <th scope="col" style="width: 150px;">Address</th>
@@ -84,7 +89,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                     <th scope="col" style="width: 100px;">Email</th>
                                     <th scope="col" style="width: 100px;">Year level</th>
                                     <th scope="col" style="width: 100px;">Section</th>
-                                    <th scope="col" style="width: 100px;">Download</th>
+                                    <th scope="col" style="width: 100px;">Module Answer</th>
 
 
 
@@ -94,22 +99,36 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                 <?php
                                 if (!empty($students)) {
                                     $count = 1;
-                                    foreach ($students as $student) {
+                                    foreach ($students as $row) {
+                                        // Split the file names into an array
+                                        $fileNames = explode(',', $row['file_names']); // Split the file names by comma
 
-
+                                        // Loop through the file names and generate download links
+                                        echo '<tr>';
                                         echo '<td>' . $count . '</td>';
-                                        echo '<td class="text-center text-primary"> <a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $student['stu_lrn'] . '">'
-                                            . $student["stu_lrn"] . '</a></td>';
-                                        echo '<td class="small text-center"> ' . $student["stu_lname"] . ',  ' .  ucwords(strtolower($student["stu_fname"] . ' ' . $student["stu_mname"] . '')) . '</td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($student["stu_gender"])) . '</td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($student["stu_address"])) . '</td>';
-                                        echo '<td class="small text-center">+63' . $student["stu_contact"] . '</td>';
-                                        echo '<td class="small text-center">' . strtolower($student["stu_email"]) . '</td>';
-                                        echo '<td class="small text-center">' .  $student["grade_lvl"] . '</td>';
-                                        echo '<td class="small text-center">' .  $student["section_name"] . '</td>';
-                                        echo '<td class="small text-center">No file uploaded</td>';
-                                        echo '</tr>';
+                                        // echo '<td class="text-center text-primary"><a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">' . $row["stu_lrn"] . '</a></td>';
+                                        echo '<td class="small text-center"> ' . $row["stu_lname"] . ', ' .  ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"] . '')) . '</td>';
+                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
+                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
+                                        echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
+                                        echo '<td class="small text-center">' . strtolower($row["stu_email"]) . '</td>';
+                                        echo '<td class="small text-center">' .  $row["grade_lvl"] . '</td>';
+                                        echo '<td class="small text-center">' .  $row["section_name"] . '</td>';
 
+                                        // Check if there are no files uploaded
+                                        echo '<td>';
+                                        if (empty($row['file_names']) || count($fileNames) == 0) {
+                                            echo '<span class="text-danger">No file uploaded</span>';
+                                        } else {
+                                            foreach ($fileNames as $fileName) {
+                                                $fileNameForDownload = htmlspecialchars(trim($fileName)); // Clean up file name
+                                                echo '<a href="includes/download.php?file=' . urlencode($fileNameForDownload) . '" class="btn btn-success btn-sm mb-1">';
+                                                echo '<i class="fas fa-download"></i> Download</a><br>';
+                                            }
+                                        }
+                                        echo '</td>';
+
+                                        echo '</tr>';
                                         $count++;
                                     }
                                 } else {
