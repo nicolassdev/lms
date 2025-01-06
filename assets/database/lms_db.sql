@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 05, 2025 at 06:33 PM
+-- Generation Time: Jan 06, 2025 at 05:11 PM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.12
 
@@ -52,7 +52,8 @@ INSERT INTO `enroll` (`stu_lrn`, `section_code`, `semester`, `school_year`, `dat
 ('114482392392', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-20', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('114497427472', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-23', 'Pending', 'CABANGAN HIGH SCOLL', NULL, 'CABANGAN LEGAZPI VCITY', 'PUBLIC', 'SF9, SF10, PSA, LCR'),
 ('114498343414', 'SECTION-3943', '1st Semester', '2024-2025', '2024-12-20', 'Enrolled', 'ORO SITE HIGH SCHOOOL', NULL, 'ORO SITE LEGAZPI', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
-('124167743724', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-26', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC');
+('124167743724', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-26', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
+('718412412421', 'SECTION-1859', '1st Semester', '2024-2025', '2025-01-06', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC');
 
 -- --------------------------------------------------------
 
@@ -70,13 +71,6 @@ CREATE TABLE `module` (
   `date_uploaded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `module`
---
-
-INSERT INTO `module` (`module_id`, `file_name`, `file_size`, `formatted_size`, `file_type`, `sched_id`, `date_uploaded`) VALUES
-('MOD-9595', '../../faculty/module_uploaded/student.png', 303729, '296.61 KB', 'image/png', 'SCHED-3005', '2025-01-06 01:07:54');
-
 -- --------------------------------------------------------
 
 --
@@ -93,13 +87,6 @@ CREATE TABLE `module_answer` (
   `file_type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `date_uploaded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `module_answer`
---
-
-INSERT INTO `module_answer` (`answer_id`, `module_id`, `stu_lrn`, `file_name`, `file_size`, `formatted_size`, `file_type`, `date_uploaded`) VALUES
-('ANS-3479', 'MOD-9595', '124167743724', '../../includes/uploaded_files/Busiess-Ethics.docx', 17504, '17.09 KB', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '2025-01-06 01:33:31');
 
 -- --------------------------------------------------------
 
@@ -319,7 +306,8 @@ INSERT INTO `student` (`stu_lrn`, `stu_fname`, `stu_mname`, `stu_lname`, `stu_ad
 ('114497427472', 'LESTER', '', 'SAPULA', 'BITANO', '9329392932', 'MALE', 'lester@gmail.com', '2002-07-04', 'BITANO', 'ASDAS', 'DASDSA', '9329329932', '', 'USER-9261'),
 ('114498343414', 'DWAYNE', 'HILBE', 'TUWEZA', 'BURAGUIS LEGAZPI CITY', '9123421321', 'MALE', 'dwaynetuweza@gmail.com', '2024-10-16', 'Buraguis Legazpi City', 'JOHN BALDES TUIZA', 'CRISTINE BALDES TUIZA', '9123123123', '', 'USER-3431'),
 ('114499887766', 'MARVIN', '', 'TAUZON', 'BURAGUIS', '9329392392', 'MALE', 'marvin@gmail.com', '2024-11-10', 'Legazpi City', 'PAPA TAUZON', 'MAMA TAUZON', '9412949194', '', 'USER-6346'),
-('124167743724', 'ANTHONY NICOLE', 'DADO', 'DAEN', 'BURAGUIS LEGAZPI CITY', '9329392392', 'MALE', 'anthonydaen25@gmail.com', '2002-05-10', 'Legazpi City', 'DAEN, SIMEON LUNAS', 'DAEN, CRISTINA DADO', '9329329392', 'student_67545f4c50dfa9.77726496.jpg', 'USER-7881');
+('124167743724', 'ANTHONY NICOLE', 'DADO', 'DAEN', 'BURAGUIS LEGAZPI CITY', '9329392392', 'MALE', 'anthonydaen25@gmail.com', '2002-05-10', 'Legazpi City', 'DAEN, SIMEON LUNAS', 'DAEN, CRISTINA DADO', '9329329392', 'student_67545f4c50dfa9.77726496.jpg', 'USER-7881'),
+('718412412421', 'MARCO', 'DADO', 'DAEN', 'BURAGUIS LEGAZPI CITY', '9329392392', 'MALE', 'marco@gmail.com', '2006-03-28', 'LEGAZPI CITY', 'DAEN, SIMEON', 'DAEN, CRISTINA', '9431924912', '', 'USER-0399');
 
 -- --------------------------------------------------------
 
@@ -448,6 +436,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_added`) VALUES
+(122, 'USER-0399', '718412412421', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2025-01-06 20:13:20'),
 (94, 'USER-0607', 'LMS-209505-5945', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-28 20:11:17'),
 (69, 'USER-1316', '114432325253', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-04 06:56:15'),
 (110, 'USER-1829', '114455013001', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-12-07 01:57:56'),
@@ -595,7 +584,7 @@ ALTER TABLE `school`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_num` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `user_num` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
 
 --
 -- Constraints for dumped tables
