@@ -501,31 +501,105 @@ class myDataBase
     }
 
     // GET ALL STUDENT BY TEACHER HANDLED SUBJECT IN EVERY SECTION
-    function getAllStudentBySectionAndSubject($teacherId, $subjectId, $sectionCode)
+    // function getAllStudentBySectionAndSubject($teacherId, $subjectId, $sectionCode)
+    // {
+    //     try {
+    //         $sql = "
+    //             SELECT 
+    //                 s.*,   
+    //                 sched.sched_id,
+    //                 sec.section_code, 
+    //                 sec.section_name,
+    //                 sec.grade_lvl, 
+    //                 COUNT(e.stu_lrn) OVER (PARTITION BY sec.section_code) AS enrolled_count
+    //             FROM 
+    //                 STUDENT s
+    //             INNER JOIN  
+    //                 ENROLL e ON s.stu_lrn = e.stu_lrn
+    //             INNER JOIN  
+    //                 SECTION sec ON e.section_code = sec.section_code
+    //             INNER JOIN  
+    //                 SCHEDULE sched ON sec.section_code = sched.section_code
+    //             INNER JOIN  
+    //                 SUBJECT sub ON sched.sub_code = sub.sub_code
+    //             WHERE 
+    //                 sched.sub_code = ? 
+    //                 AND sched.section_code = ?
+    //                 AND sched.teacher_id = ?
+    //         ";
+
+    //         // Prepare the query
+    //         $stmt = $this->con->prepare($sql);
+    //         if (!$stmt) {
+    //             throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
+    //         }
+
+    //         // Bind parameters (use 's' for string, 'i' for integer)
+    //         $stmt->bind_param("sss", $subjectId, $sectionCode, $teacherId); // 'ssi' for string, string, integer
+
+    //         // Execute the statement
+    //         $stmt->execute();
+    //         $result = $stmt->get_result();
+
+    //         // Fetch all matching rows
+    //         $students = $result->fetch_all(MYSQLI_ASSOC);
+
+    //         // Free resources
+    //         $stmt->close();
+
+    //         return $students;
+    //     } catch (Exception $e) {
+    //         // Log the error message
+    //         error_log("Error fetching students: " . $e->getMessage());
+    //         return [];
+    //     }
+    // }
+
+
+    function getAllStudentBySectionAndSubjectWithModuleUploads($teacherId, $subjectId, $sectionCode)
     {
         try {
             $sql = "
-                SELECT 
-                    s.*,   
-                    sched.sched_id,
-                    sec.section_code, 
-                    sec.section_name,
-                    sec.grade_lvl, 
-                    COUNT(e.stu_lrn) OVER (PARTITION BY sec.section_code) AS enrolled_count
-                FROM 
-                    STUDENT s
-                INNER JOIN  
-                    ENROLL e ON s.stu_lrn = e.stu_lrn
-                INNER JOIN  
-                    SECTION sec ON e.section_code = sec.section_code
-                INNER JOIN  
-                    SCHEDULE sched ON sec.section_code = sched.section_code
-                INNER JOIN  
-                    SUBJECT sub ON sched.sub_code = sub.sub_code
-                WHERE 
-                    sched.sub_code = ? 
-                    AND sched.section_code = ?
-                    AND sched.teacher_id = ?
+SELECT 
+    s.stu_lrn,
+    s.stu_lname,
+    s.stu_fname,
+    s.stu_gender,
+    s.stu_contact,
+    s.stu_address,
+    s.stu_email,
+    sec.section_code, 
+    sec.section_name,
+    sec.grade_lvl,
+    sched.sched_id,
+    sub.sub_title,
+    GROUP_CONCAT(ma.file_name ORDER BY ma.date_uploaded DESC) AS file_names,  -- Concatenate files
+    GROUP_CONCAT(ma.date_uploaded ORDER BY ma.date_uploaded DESC) AS upload_dates,  -- Concatenate dates
+    COUNT(e.stu_lrn) OVER (PARTITION BY sec.section_code) AS enrolled_count
+FROM 
+    student s
+INNER JOIN 
+    enroll e ON s.stu_lrn = e.stu_lrn
+INNER JOIN 
+    section sec ON e.section_code = sec.section_code
+INNER JOIN 
+    schedule sched ON sec.section_code = sched.section_code
+INNER JOIN 
+    subject sub ON sched.sub_code = sub.sub_code
+LEFT JOIN 
+    module m ON sched.sched_id = m.sched_id
+LEFT JOIN 
+    module_answer ma ON ma.module_id = m.module_id AND ma.stu_lrn = s.stu_lrn
+WHERE 
+    sched.teacher_id = ?
+    AND sched.sub_code = ?
+    AND sched.section_code = ?
+GROUP BY 
+    s.stu_lrn, sec.section_code, sched.sched_id
+ORDER BY 
+    s.stu_lname, s.stu_fname;
+
+
             ";
 
             // Prepare the query
@@ -534,23 +608,23 @@ class myDataBase
                 throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
             }
 
-            // Bind parameters (use 's' for string, 'i' for integer)
-            $stmt->bind_param("sss", $subjectId, $sectionCode, $teacherId); // 'ssi' for string, string, integer
+            // Bind parameters
+            $stmt->bind_param("sss", $teacherId, $subjectId, $sectionCode);
 
             // Execute the statement
             $stmt->execute();
             $result = $stmt->get_result();
 
             // Fetch all matching rows
-            $students = $result->fetch_all(MYSQLI_ASSOC);
+            $studentsWithUploads = $result->fetch_all(MYSQLI_ASSOC);
 
             // Free resources
             $stmt->close();
 
-            return $students;
+            return $studentsWithUploads;
         } catch (Exception $e) {
             // Log the error message
-            error_log("Error fetching students: " . $e->getMessage());
+            error_log("Error fetching students with module uploads: " . $e->getMessage());
             return [];
         }
     }
@@ -2406,5 +2480,58 @@ class myDataBase
     public function getFileExtension($filename)
     {
         return strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+    }
+
+    //   GET ALL MODULE UPLOADED BY STUDENTS 
+    public function getModulesUploadedByStudents($teacherId)
+    {
+        $sql = "
+        SELECT 
+            ma.answer_id, 
+            ma.module_id, 
+            ma.stu_lrn, 
+            ma.file_name AS student_file_name, 
+            ma.file_size AS student_file_size, 
+            ma.formatted_size AS student_formatted_size, 
+            ma.file_type AS student_file_type, 
+            ma.date_uploaded AS student_date_uploaded,
+            s.stu_fname, 
+            s.stu_lname,
+            m.file_name AS module_file_name, 
+            sch.sub_code,
+            sub.sub_title
+        FROM module_answer ma
+        INNER JOIN student s ON ma.stu_lrn = s.stu_lrn
+        INNER JOIN module m ON ma.module_id = m.module_id
+        INNER JOIN schedule sch ON m.sched_id = sch.sched_id
+        INNER JOIN subject sub ON sch.sub_code = sub.sub_code
+        WHERE sch.teacher_id = ?
+        ORDER BY ma.date_uploaded DESC";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $teacherId);  // Assuming `teacherId` is a string
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $modules = [];
+        while ($row = $result->fetch_assoc()) {
+            $modules[] = [
+                'answer_id' => $row['answer_id'],
+                'module_id' => $row['module_id'],
+                'stu_lrn' => $row['stu_lrn'],
+                'student_file_name' => $row['student_file_name'],
+                'student_file_size' => $row['student_file_size'],
+                'student_formatted_size' => $row['student_formatted_size'],
+                'student_file_type' => $row['student_file_type'],
+                'student_date_uploaded' => $row['student_date_uploaded'],
+                'stu_fname' => $row['stu_fname'],
+                'stu_lname' => $row['stu_lname'],
+                'module_file_name' => $row['module_file_name'],
+                'sub_code' => $row['sub_code'],
+                'sub_title' => $row['sub_title'],
+            ];
+        }
+
+        return $modules;
     }
 }

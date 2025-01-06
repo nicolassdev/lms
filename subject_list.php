@@ -98,6 +98,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                     <th class="text-center">Module</th>
                                 </tr>
                             </thead>
+
                             <tbody id="modulesTableBody">
                                 <?php
                                 if (!empty($modules)) {
@@ -295,6 +296,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                 </tr>
 
                             </tbody>
+
                         </table>
                     </div>
                 </div>

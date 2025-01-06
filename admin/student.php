@@ -35,7 +35,7 @@ include "../admin/includes/Forms/studentform.php";
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h5 class="text-black">List of Students</h5>
+                        <h5 class="fw-bold">List of Students</h5>
                         <div class="d-flex">
 
                             <button type="button" class="btn btn-primary btn-sm ms-2 btn-animate" data-bs-toggle="modal" data-bs-target="#student" data-bs-whatever="@fat">

@@ -45,7 +45,7 @@ include "../admin/includes/Forms/scheduleform.php";
                 <div class="data-table">
 
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h5 class="text-black">Schedules</h5>
+                        <h5 class="fw-bold">List of Schedules</h5>
 
                         <!-- DISABLED THE BUTTON IN ADMIN ! TAKE NOT TO ENABLE THE BUTTON YOU NEED A PERMISSION IN DEVELOPER  -->
                         <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#schedule" data-bs-whatever="@fat">

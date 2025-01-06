@@ -33,7 +33,7 @@ if (!isset($_POST["submit"])) {
         $stmt->close();
 
         // Check if the limit of 5 uploads is reached
-        if ($uploadCount >= 2) {
+        if ($uploadCount >= 5) {
             $_SESSION['error_handler'] = "You have already uploaded 2 modules answer for this subject.";
             header("Location:/lms/index.php?page=subject_list&sub_code=" . urlencode($sub_code) . "&strand_code=" . urlencode($str_code) . "&grade_lvl=" . urlencode($gradelvl));
             exit();

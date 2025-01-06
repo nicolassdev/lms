@@ -39,22 +39,6 @@ include "../includes/dbh-inc.php";
             </div>
         </div>
     </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
