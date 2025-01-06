@@ -42,7 +42,7 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
                         <h5 class="text-black">Students </h5>
-                        <div class="fw-bold fs-5">
+                        <div class="fw-bold fs-5 text-danger">
                             <?php if (!empty($result)) {
                                 foreach ($result as $student) {
                                     echo htmlspecialchars($student["grade_lvl"]) . '  ';
