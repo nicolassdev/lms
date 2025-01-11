@@ -73,16 +73,13 @@ include "../includes/dbh-inc.php";
                             continue;
                         }
 
-                        // Create a DateTime object and format the added_date
-                        $addedDate = new DateTime($row['date_added']);
-                        $formattedDate = $addedDate->format('F j, Y');
                 ?>
                         <tr>
                             <td><?= $count; ?></td>
                             <td><?= ucwords(strtolower($row["full_name"])); ?></td>
                             <td><?= $row["username"]; ?></td>
                             <td><?= ucwords(strtolower($row["role"])); ?></td>
-                            <td><?= $formattedDate; ?></td>
+                            <td><?= date('F j, Y', strtotime($row["date_added"])) ?></td>
                             <td class="text-center">
                                 <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit_user<?= $row['user_id']; ?>"><i class="bi bi-pencil-square"></i></button>
                             </td>

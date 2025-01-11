@@ -297,32 +297,13 @@ $mySQLFunction->disconnect();
                                 </div>
                                 <div class="col-md-6">
                                     <strong>Joined:</strong>
-                                    <p>
-                                        <?php
-                                        if (isset($_SESSION["teacher_added"])) {
-                                            echo htmlspecialchars($_SESSION["teacher_added"]);
-                                        } else {
-                                            echo 'Join date not available.';
-                                        }
-                                        ?>
-                                    </p>
+                                    <p><?php echo htmlspecialchars($_SESSION["TEACHER_added"]); ?></p>
                                 </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                >
-
-
-
-
-
-
-
-
-
-
 
 
             </div>

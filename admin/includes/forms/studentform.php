@@ -17,9 +17,9 @@
                     <!-- Username (LRN) -->
                     <div class="col-md-12">
                         <label class="form-label small">Username (LRN)</label>
-                        <input type="numeric" class="form-control" name="username" id="username" placeholder="Enter your 12-digit numbers" maxlength="12" inputmode="numeric" oninput="fillStudentLRN()" required>
+                        <input type="numeric" class="form-control" name="username" id="username" placeholder="Enter LRN 12-digit numbers" maxlength="12" inputmode="numeric" oninput="fillStudentLRN()" required>
                         <div class="invalid-feedback">
-                            Please enter a valid 12-digit numbers.
+                            Please input a valid 12-digit numbers.
                         </div>
                     </div>
 
@@ -132,6 +132,9 @@
     function fillStudentLRN() {
         const usernameInput = document.getElementById('username');
         const studentLRNInput = document.getElementById('studentLRN');
+        // Replace non-numeric characters in username input
+        usernameInput.value = usernameInput.value.replace(/[^0-9]/g, '');
+        // Set the studentLRNInput value
         studentLRNInput.value = usernameInput.value;
     }
 

@@ -1,136 +1,81 @@
 <?php
+// Redirect if accessed without submitting the form
 if (!isset($_POST["submit"])) {
     header("location:../login.php?error=accessdismissed");
     exit();
-} else {
-    require_once "dbh-inc.php";
-    $mySQLFunction->connection();
+}
 
-    $username = trim($_POST["username"]);
-    $passwordHash = $mySQLFunction->encrypt(trim($_POST["password"]));
+require_once "dbh-inc.php";
+$mySQLFunction->connection();
 
-    // Check if username and password match
-    if ($mySQLFunction->checkLogin($username, $passwordHash)) {
+// Get user input
+$username = trim($_POST["username"]);
+$passwordHash = $mySQLFunction->encrypt(trim($_POST["password"]));
 
+// Verify login credentials
+if ($mySQLFunction->checkLogin($username, $passwordHash)) {
+    // Fetch the main user credentials
+    $credential = $mySQLFunction->getCredential("users", "username", $username);
+    $userRole = $credential["role"];
 
-        // Get user credentials
-        $credential = $mySQLFunction->getCredential("username", $username);
-        // $userID = $mySQLFunction->getCredential("id", $user_id);
-        $userRole = $credential["role"];
+    // Common session data
+    $commonData = [
+        "username" => $credential["username"],
+        "user_role" => $credential["role"],
+        "id" => $credential["id"]
+    ];
 
-        $redirectUrl = '';
+    // Format the added date
+    $addedDate = new DateTime($credential["date_added"]);
+    $formattedDate = $addedDate->format("F j, Y");
 
-        // Determine the redirect URL based on user role
-        if ($userRole === "STUDENT") {                                          // STUDENT
-            session_start();
-            $user = $mySQLFunction->getCredential("username", $username);
-            $studentCredential = $mySQLFunction->getStudentCredential("id", $user["id"]);
+    // Role-specific configuration STUDENT , TEACHER, PRINCIPA, AND REGISTRAR .
+    $roleConfig = [
+        "STUDENT" => [
+            "table" => "student",
+            "fields" => ["stu_lrn", "stu_fname", "stu_lname"],
+            "redirect" => "./index.php"
+        ],
+        "TEACHER" => [
+            "table" => "teacher",
+            "fields" => ["teacher_id", "teacher_fname", "teacher_lname", "teacher_gender"],
+            "redirect" => "./faculty/index.php"
+        ],
+        "PRINCIPAL" => [
+            "table" => "principal",
+            "fields" => ["principal_id", "firstname", "lastname"],
+            "redirect" => "./principal/index.php"
+        ],
+        "REGISTRAR" => [
+            "table" => "registrar",
+            "fields" => ["registrar_id", "firstname", "lastname"],
+            "redirect" => "./admin/index.php"
+        ]
+    ];
 
-            $_SESSION["id"] = $studentCredential["id"];
-            $_SESSION["stu_lrn"] = $studentCredential["stu_lrn"];
-            $_SESSION["stu_fname"] = $studentCredential["stu_fname"];
-            $_SESSION["stu_lname"] = $studentCredential["stu_lname"];
+    // Check if the user's role exists in the role configuration
+    if (isset($roleConfig[$userRole])) {
+        $roleData = $roleConfig[$userRole];
 
-            $_SESSION["username"] = $user["username"];  // username of student
-            $_SESSION["user_role"] = $user["role"];
+        // Fetch role-specific credentials
+        $roleCredential = $mySQLFunction->getCredential($roleData["table"], "id", $credential["id"]);
 
+        // Merge common and role-specific session data
+        $sessionData = array_merge($commonData, array_intersect_key($roleCredential, array_flip($roleData["fields"])));
+        $sessionData[$userRole . "_added"] = $formattedDate; // Add the formatted date to the session dynamically
 
-            // Assuming $userInfo['date_added'] contains the date added
-            $addedDate = new DateTime($user['date_added']);
-            $formattedDate = $addedDate->format('F j, Y');
+        // Save session data and redirect the user
+        $mySQLFunction->setSessionData($sessionData);
 
-            // Store the formatted date in the session
-            $_SESSION["student_added"] = $formattedDate;
-
-
-            //redirect to url 
-            header("location: ../loading.php?redirect=" . urlencode("./index.php"));
-            exit();
-        } elseif ($userRole === "TEACHER") {                                          // TEACHER
-            session_start();
-            $user = $mySQLFunction->getCredential("username", $username);
-            $teacherCredential = $mySQLFunction->getTeacherCredential("id", $user["id"]);
-            $_SESSION["id"] = $teacherCredential["id"];
-
-            $_SESSION["teacher_id"] = $teacherCredential["teacher_id"];
-            $_SESSION["teacher_fname"] = $teacherCredential["teacher_fname"];
-            $_SESSION["teacher_lname"] = $teacherCredential["teacher_lname"];
-            $_SESSION["teacher_gender"] = $teacherCredential["teacher_gender"];
-
-            $_SESSION["username"] = $user["username"];
-
-            $_SESSION["user_role"] = $user["role"];
-
-
-            // Assuming $userInfo['date_added'] contains the date added
-            $addedDate = new DateTime($user['date_added']);
-            $formattedDate = $addedDate->format('F j, Y');
-
-            // Store the formatted date in the session
-            $_SESSION["teacher_added"] = $formattedDate;
-
-            //redirect to url 
-            header("location: ../loading.php?redirect=" . urlencode("./faculty/index.php"));
-            exit();
-        } elseif ($userRole === "PRINCIPAL") {                                          // PRINCIPAL
-            session_start();
-
-            $user = $mySQLFunction->getCredential("username", $username);
-            $principalCredential = $mySQLFunction->getPrincipalCredential("id", $user["id"]);
-
-            $_SESSION["id"] = $principalCredential["id"];
-            $_SESSION["principal_id"] = $principalCredential["principal_id"];
-            $_SESSION["firstname"] = $principalCredential["firstname"];
-            $_SESSION["lastname"] = $principalCredential["lastname"];
-
-            $_SESSION["username"] = $user["username"];;  // username of admin
-            $_SESSION["user_role"] = $user["role"];
-
-
-            $addedDate = new DateTime($user['date_added']);
-            $formattedDate = $addedDate->format('F j, Y');
-
-            // Store the formatted date in the session
-            $_SESSION["principal_added"] = $formattedDate;
-
-
-            header("location: ../loading.php?redirect=" . urlencode("./principal/index.php"));
-            exit();
-        } elseif ($userRole === "REGISTRAR") {                                            // REGISTRAR SET AS ADMIN
-            session_start();
-
-            $user = $mySQLFunction->getCredential("username", $username);
-            $adminCredential = $mySQLFunction->getAdminCredential("id", $user["id"]);
-
-            $_SESSION["id"] = $adminCredential["id"];
-            $_SESSION["registrar_id"] = $adminCredential["registrar_id"];
-            $_SESSION["firstname"] = $adminCredential["firstname"];
-            $_SESSION["lastname"] = $adminCredential["lastname"];
-
-            $_SESSION["username"] = $user["username"];;  // username of admin
-            $_SESSION["user_role"] = $user["role"];
-
-
-            $addedDate = new DateTime($user['date_added']);
-            $formattedDate = $addedDate->format('F j, Y');
-
-            // Store the formatted date in the session
-            $_SESSION["admin_added"] = $formattedDate;
-
-            //redirect to url 
-            header("location:../loading.php?redirect=" . urlencode("./admin/index.php"));
-            exit();
-        } else {
-            header("location:../login.php?error=invalidrole");
-            exit();
-        }
-
-        // Redirect to loading page
-        header("location: loading.php?redirect=" . urlencode($redirectUrl));
-        exit();
-    } else {
-        // Invalid credentials
-        header("location:../login.php?error=invalidcredentials");
+        header("location: ../loading.php?redirect=" . urlencode($roleData["redirect"]));
         exit();
     }
+
+    // Redirect for an invalid role
+    header("location:../login.php?error=invalidrole");
+    exit();
+} else {
+    // Redirect for invalid credentials
+    header("location:../login.php?error=invalidcredentials");
+    exit();
 }

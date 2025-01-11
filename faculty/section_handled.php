@@ -103,7 +103,7 @@ $mySQLFunction->disconnect();
                         <!-- Card Body -->
                         <div class="card-body d-flex flex-column justify-content-between">
                             <!-- Card Header -->
-                            <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="d-flex align-items-center justify-content-between mb-4 mt-4">
                                 <!-- Icon and Title -->
                                 <div class="d-flex align-items-center">
                                     <i class="bi bi-people-fill display-4 text-danger me-2"></i>

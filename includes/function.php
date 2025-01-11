@@ -62,6 +62,37 @@ class myDataBase
     }
 
 
+
+    //CHECK USER LOGIN 
+    function checkLogin($username, $password)
+    {
+        // Escape the inputs to prevent SQL injection
+        $username = mysqli_real_escape_string($this->con, $username);
+        $password = mysqli_real_escape_string($this->con, $password);
+
+        // Run a case-sensitive query by using the BINARY keyword
+        $query = "SELECT * FROM `users` WHERE BINARY `username` = '$username' AND BINARY `password` = '$password'";
+        $result = $this->con->query($query);
+
+        if (mysqli_num_rows($result) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    // Function to set session data
+    function setSessionData($data)
+    {
+        session_start();
+        foreach ($data as $key => $value) {
+            $_SESSION[$key] = $value;
+        }
+    }
+
+
+
     //GENERIC RANDOM PRIMARY ID FOR TABLES
     public function generateID($prefix)
     {
@@ -463,6 +494,9 @@ class myDataBase
         return $result;
     }
 
+    public function getAdviserAndClassmates() {}
+
+
     public function getAllStudentDetailsBySectionOfTeacher($teacher_id)
     {
         $sql = "
@@ -712,7 +746,7 @@ ORDER BY
 
 
 
-    //GET STUDENT SECTION HANDLED by id
+    //GET STUDENT SECTION HANDLED by id  
     public function getStudentStrandAndSection($student_id)
     {
         $sql = "SELECT 
@@ -741,6 +775,59 @@ ORDER BY
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC); // Fetch all rows as an associative array
         return $result;
     }
+
+
+
+    // Fetch student section, adviser, and classmates
+    public function getStudentStrandAndSectionaAlsoAdviser($student_id)
+    {
+        $sql = "
+        SELECT 
+            mainStudent.stu_lrn AS target_student_lrn,
+            mainStudent.stu_fname AS target_student_fname,
+            mainStudent.stu_lname AS target_student_lname,
+            mainStudent.stu_gender,
+            mainEnroll.section_code AS target_section_code,
+            s.section_name,
+            s.grade_lvl,
+            st.strand_code,
+            st.strand_name,
+            t.teacher_id,
+            t.teacher_fname,
+            t.teacher_lname,
+            t.teacher_gender,
+            t.image,
+            classmate.stu_lrn AS classmate_lrn,
+            classmate.stu_fname AS classmate_fname,
+            classmate.stu_lname AS classmate_lname,
+            classmate.image AS student_image,
+            COUNT(mainEnroll.stu_lrn) OVER (PARTITION BY s.section_code) AS enrolled_count
+        FROM 
+            enroll mainEnroll
+        INNER JOIN 
+            section s ON mainEnroll.section_code = s.section_code
+        INNER JOIN 
+            strand st ON s.strand_code = st.strand_code
+        INNER JOIN 
+            teacher t ON s.teacher_id = t.teacher_id
+        INNER JOIN 
+            student mainStudent ON mainEnroll.stu_lrn = mainStudent.stu_lrn
+        LEFT JOIN 
+            enroll classmateEnroll ON classmateEnroll.section_code = mainEnroll.section_code
+        LEFT JOIN 
+            student classmate ON classmateEnroll.stu_lrn = classmate.stu_lrn
+        WHERE 
+            mainEnroll.stu_lrn = ?
+        ORDER BY classmate.stu_lrn";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $student_id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $result;
+    }
+
+
 
 
     //GET SEMESTER AND SY
@@ -784,45 +871,6 @@ ORDER BY
 
         // Return the result of the query
         return $result;
-    }
-
-
-
-    //CHECK USER LOGIN 
-    function checkLogin($username, $password)
-    {
-        // Escape the inputs to prevent SQL injection
-        $username = mysqli_real_escape_string($this->con, $username);
-        $password = mysqli_real_escape_string($this->con, $password);
-
-        // Run a case-sensitive query by using the BINARY keyword
-        $query = "SELECT * FROM `users` WHERE BINARY `username` = '$username' AND BINARY `password` = '$password'";
-        $result = $this->con->query($query);
-
-        if (mysqli_num_rows($result) > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-
-
-    // GET USER INDIVIDUAL CREDENTIAL 
-    function getCredential($row, $value)
-    {
-        $sql = "SELECT * FROM `users` WHERE `$row` = '$value'";
-        $stored = ($this->con->query($sql))->fetch_assoc();
-        return $stored;
-    }
-
-    // GET STUDENT CREDENTIAL 
-    function getStudentCredential($row, $value)
-    {
-        $sql = "SELECT * FROM `student` WHERE `$row` = '$value'";
-        $stored = ($this->con->query($sql))->fetch_assoc();
-        return $stored;
     }
 
 
@@ -874,31 +922,50 @@ ORDER BY
 
 
 
-    //GET ADMIN CREDENTIAL
-    function getAdminCredential($row, $value)
+    // // GET USER INDIVIDUAL CREDENTIAL 
+    // function getCredential($row, $value)
+    // {
+    //     $sql = "SELECT * FROM `users` WHERE `$row` = '$value'";
+    //     $stored = ($this->con->query($sql))->fetch_assoc();
+    //     return $stored;
+    // }
+    // // GET STUDENT CREDENTIAL 
+    // function getStudentCredential($row, $value)
+    // {
+    //     $sql = "SELECT * FROM `student` WHERE `$row` = '$value'";
+    //     $stored = ($this->con->query($sql))->fetch_assoc();
+    //     return $stored;
+    // }
+    // //GET ADMIN CREDENTIAL
+    // function getAdminCredential($row, $value)
+    // {
+    //     $sql = "SELECT * FROM `registrar` WHERE `$row` = '$value'";
+    //     $stored = ($this->con->query($sql))->fetch_assoc();
+    //     return $stored;
+    // }
+    // //GET ADMIN CREDENTIAL
+    // function getPrincipalCredential($row, $value)
+    // {
+    //     $sql = "SELECT * FROM `principal` WHERE `$row` = '$value'";
+    //     $stored = ($this->con->query($sql))->fetch_assoc();
+    //     return $stored;
+    // }
+    // // GET TEACHER CREDENTIAL 
+    // function getTeacherCredential($row, $value)
+    // {
+    //     $sql = "SELECT * FROM `teacher` WHERE `$row` = '$value'";
+    //     $stored = ($this->con->query($sql))->fetch_assoc();
+    //     return $stored;
+    // }
+
+
+    // General function for getting credentials
+    function getCredential($table, $row, $value)
     {
-        $sql = "SELECT * FROM `registrar` WHERE `$row` = '$value'";
+        $sql = "SELECT * FROM `$table` WHERE `$row` = '$value'";
         $stored = ($this->con->query($sql))->fetch_assoc();
         return $stored;
     }
-    //GET ADMIN CREDENTIAL
-    function getPrincipalCredential($row, $value)
-    {
-        $sql = "SELECT * FROM `principal` WHERE `$row` = '$value'";
-        $stored = ($this->con->query($sql))->fetch_assoc();
-        return $stored;
-    }
-
-
-    // GET TEACHER CREDENTIAL 
-    function getTeacherCredential($row, $value)
-    {
-        $sql = "SELECT * FROM `teacher` WHERE `$row` = '$value'";
-        $stored = ($this->con->query($sql))->fetch_assoc();
-        return $stored;
-    }
-
-
 
 
 
