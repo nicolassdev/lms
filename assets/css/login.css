@@ -19,13 +19,23 @@ body {
   overflow: hidden;
 }
 
-/* Header */
 .header {
   position: absolute;
   top: 5%;
   text-align: center;
-  color: #2e3b55;
+  color: #fff;
+  font-size: 50px;
+  font-weight: bold;
+ 
+  background: linear-gradient(to right, #4e6c7f, #2e3b55);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  letter-spacing: 10px; 
+  text-transform: uppercase; 
 }
+
 
 /* Header Title Styling */
 .header h1 {

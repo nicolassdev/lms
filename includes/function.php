@@ -636,6 +636,39 @@ class myDataBase
         return $data;
     }
 
+    public function getAdviserandClassmates($student_id)
+    {
+        $sql = "
+            SELECT 
+                e.semester,
+                e.school_year, 
+                e.section_code, 
+                s.section_name, 
+                s.grade_lvl,
+                st.strand_code,
+                st.strand_name,
+                t.teacher_id,
+                t.teacher_fname,
+                t.teacher_lname,
+                c.stu_lrn AS classmate_lrn,
+                c.stu_fname AS classmate_fname,
+                c.stu_lname AS classmate_lname
+            FROM enroll e
+            INNER JOIN section s ON e.section_code = s.section_code
+            INNER JOIN strand st ON s.strand_code = st.strand_code
+            INNER JOIN teacher t ON s.teacher_id = t.teacher_id
+            INNER JOIN enroll c ON e.section_code = c.section_code
+            WHERE e.stu_lrn = ? 
+            AND c.stu_lrn != ?  -- Exclude the current student from the classmates list
+        ";
+    
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("ss", $student_id, $student_id);  // Binding student_id twice
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $result;
+    }
+    
 
 
     //GET STUDENT SECTION HANDLED by id
