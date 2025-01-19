@@ -12,11 +12,15 @@ $showSchool = $mySQLFunction->getSchool();
 
 $showResult = $mySQLFunction->getInfo('PRINCIPAL');
 if ($showResult) { // Check if data was returned
+
     $principalfullName = $showResult['firstname'] . ' ' . $showResult['middlename'] . ' ' . $showResult['lastname'];
     // echo "Full Name: $fullName";
 } else {
     echo "No data found for the specified table.";
 }
+
+$credential = $mySQLFunction->getCredential("users", "id", $showResult["id"]);
+
 $mySQLFunction->disconnect();
 include "../admin/includes/Forms/principalform.php";
 ?>
@@ -229,7 +233,7 @@ include "../admin/includes/Forms/principalform.php";
                                 <div class="mb-3 row">
                                     <label for="joined" class="col-sm-3 col-form-label">Joined:</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="joined" value="<?php echo htmlspecialchars($_SESSION["admin_added"]); ?>" readonly>
+                                        <input type="text" class="form-control" id="joined" value="<?php echo  date('F j, Y', strtotime($credential["date_added"])); ?>" readonly>
                                     </div>
                                 </div>
                             </form>

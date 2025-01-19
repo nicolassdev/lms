@@ -67,7 +67,8 @@ if ($mySQLFunction->checkLogin($username, $passwordHash)) {
         // Save session data and redirect the user
         $mySQLFunction->setSessionData($sessionData);
 
-        header("location: ../loading.php?redirect=" . urlencode($roleData["redirect"]));
+        // Redirect to the loading page with role data in query parameters
+        header("location: ../loading.php?redirect=" . urlencode($roleData["redirect"]) . "&status=success");
         exit();
     }
 

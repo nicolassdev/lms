@@ -60,9 +60,10 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                         echo htmlspecialchars($module['sub_title']);
                                         break; // Exit loop after displaying subtitle
                                     }
-                                } else {
-                                    echo "<div class='text-danger'>NO MODULE FOUND!</div>"; // Optional: Display a message when there are no modules
                                 }
+                                // else {
+                                //     echo "<div class='text-danger'>NO MODULE FOUND!</div>"; // Optional: Display a message when there are no modules
+                                // }
                                 ?>
                             </div>
                             <div class="fs-6 text-muted">
@@ -70,7 +71,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                 if (!empty($modules)) {
                                     echo htmlspecialchars($module['grade_lvl']) . ' ' . htmlspecialchars($module['strand_name']) . ' ';
                                 } else {
-                                    echo "<small class='text-danger'>No uploaded modules for now.</small>"; // Optional: Display fallback content
+                                    echo "<small class='text-danger'>No modules uploaded.</small>"; // Optional: Display fallback content
                                 }
                                 ?><br>
                                 Modules
@@ -287,7 +288,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                         ';
                                     }
                                 } else {
-                                    echo '<tr><td colspan="5" class="text-center">No modules found.</td></tr>';
+                                    echo '<tr><td colspan="5" class="text-center text-danger">No modules found.</td></tr>';
                                 }
                                 ?>
 

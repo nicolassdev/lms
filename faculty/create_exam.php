@@ -23,7 +23,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
 }
 
 
-include "../faculty/includes/Forms/uploadmoduleform.php";
+include "../faculty/includes/Forms/createexamform.php";
 ?>
 
 <style>
@@ -92,10 +92,10 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                             <button type="button"
                                 class="btn <?php echo $btnClass; ?> btn-sm fw-bold d-flex align-items-center"
                                 data-bs-toggle="modal"
-                                data-bs-target="#upload_module"
+                                data-bs-target="#create_exam"
                                 data-bs-whatever="@fat"
                                 <?php echo $disabled; ?>>
-                                <i class="bi bi-cloud-arrow-up me-1"></i>Upload Module
+                                <i class="bi-plus-circle me-1"></i>Create Exam
                             </button>
                         </div>
                     </div>
@@ -116,10 +116,8 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                     <th scope="col" style="width: 100px;">Email</th>
                                     <th scope="col" style="width: 100px;">Year level</th>
                                     <th scope="col" style="width: 100px;">Section</th>
-                                    <th scope="col" style="width: 100px;">Module Answer</th>
-
-
-
+                                    <th scope="col" style="width: 100px;">Status</th>
+                                    <th scope="col" style="width: 100px;">Score</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -145,7 +143,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                         // Check if there are no files uploaded
                                         echo '<td>';
                                         if (empty($row['file_names']) || count($fileNames) == 0) {
-                                            echo '<span class="text-danger">No file uploaded</span>';
+                                            echo '<span class="text-danger mr-2">No Exam</span>';
                                         } else {
                                             foreach ($fileNames as $fileName) {
                                                 $fileNameForDownload = htmlspecialchars(trim($fileName)); // Clean up file name
@@ -154,7 +152,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                             }
                                         }
                                         echo '</td>';
-
+                                        echo '<td class="small text-center"> <span class="text-danger mr-2">No Score</span></td>';
                                         echo '</tr>';
                                         $count++;
                                     }
@@ -176,7 +174,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
         </div>
     </div>
     <?php
-    include("../admin/includes/extension.php");
+    include("../faculty/includes/extension.php");
     ?>
 </main>
 <!-- PDF ,EXCEL, PRINT ,CVS -->

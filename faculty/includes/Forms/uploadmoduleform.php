@@ -40,6 +40,8 @@
                         <button type="button" class="btn btn-outline-secondary w-100 mt-3 mb-2" data-bs-dismiss="modal" aria-label="Close" onclick="resetFormUpload()">Cancel</button>
                     </div>
                 </form>
+
+
             </div>
         </div>
     </div>

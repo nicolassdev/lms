@@ -589,49 +589,50 @@ class myDataBase
     //     }
     // }
 
-
+    // GET ALL STUDENT BY TEACHER HANDLED SUBJECT IN EVERY same strand and grade lvl
     function getAllStudentBySectionAndSubjectWithModuleUploads($teacherId, $subjectId, $sectionCode)
     {
         try {
             $sql = "
-SELECT 
-    s.stu_lrn,
-    s.stu_lname,
-    s.stu_fname,
-    s.stu_gender,
-    s.stu_contact,
-    s.stu_address,
-    s.stu_email,
-    sec.section_code, 
-    sec.section_name,
-    sec.grade_lvl,
-    sched.sched_id,
-    sub.sub_title,
-    GROUP_CONCAT(ma.file_name ORDER BY ma.date_uploaded DESC) AS file_names,  -- Concatenate files
-    GROUP_CONCAT(ma.date_uploaded ORDER BY ma.date_uploaded DESC) AS upload_dates,  -- Concatenate dates
-    COUNT(e.stu_lrn) OVER (PARTITION BY sec.section_code) AS enrolled_count
-FROM 
-    student s
-INNER JOIN 
-    enroll e ON s.stu_lrn = e.stu_lrn
-INNER JOIN 
-    section sec ON e.section_code = sec.section_code
-INNER JOIN 
-    schedule sched ON sec.section_code = sched.section_code
-INNER JOIN 
-    subject sub ON sched.sub_code = sub.sub_code
-LEFT JOIN 
-    module m ON sched.sched_id = m.sched_id
-LEFT JOIN 
-    module_answer ma ON ma.module_id = m.module_id AND ma.stu_lrn = s.stu_lrn
-WHERE 
-    sched.teacher_id = ?
-    AND sched.sub_code = ?
-    AND sched.section_code = ?
-GROUP BY 
-    s.stu_lrn, sec.section_code, sched.sched_id
-ORDER BY 
-    s.stu_lname, s.stu_fname;
+                SELECT 
+                    s.stu_lrn,
+                    s.stu_lname,
+                    s.stu_fname,
+                    s.stu_gender,
+                    s.stu_contact,
+                    s.stu_address,
+                    s.stu_email,
+                    e.semester,
+                    sec.section_code, 
+                    sec.section_name,
+                    sec.grade_lvl,
+                    sched.sched_id,
+                    sub.sub_title,
+                    GROUP_CONCAT(ma.file_name ORDER BY ma.date_uploaded DESC) AS file_names,  -- Concatenate files
+                    GROUP_CONCAT(ma.date_uploaded ORDER BY ma.date_uploaded DESC) AS upload_dates,  -- Concatenate dates
+                    COUNT(e.stu_lrn) OVER (PARTITION BY sec.section_code) AS enrolled_count
+                FROM 
+                    student s
+                INNER JOIN 
+                    enroll e ON s.stu_lrn = e.stu_lrn
+                INNER JOIN 
+                    section sec ON e.section_code = sec.section_code
+                INNER JOIN 
+                    schedule sched ON sec.section_code = sched.section_code
+                INNER JOIN 
+                    subject sub ON sched.sub_code = sub.sub_code
+                LEFT JOIN 
+                    module m ON sched.sched_id = m.sched_id
+                LEFT JOIN 
+                    module_answer ma ON ma.module_id = m.module_id AND ma.stu_lrn = s.stu_lrn
+                WHERE 
+                    sched.teacher_id = ?
+                    AND sched.sub_code = ?
+                    AND sched.section_code = ?
+                GROUP BY 
+                    s.stu_lrn, sec.section_code, sched.sched_id
+                ORDER BY 
+                    s.stu_lname, s.stu_fname;
 
 
             ";
@@ -792,6 +793,7 @@ ORDER BY
             s.grade_lvl,
             st.strand_code,
             st.strand_name,
+            st.strand_desc,
             t.teacher_id,
             t.teacher_fname,
             t.teacher_lname,

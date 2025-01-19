@@ -24,7 +24,17 @@ $mySQLFunction->disconnect();
         <div class="ms-3 w-100">
             <div class="container mt-4">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="fw-bold text-secondary">SUBJECTS</h5>
+                    <!-- <h5 class="fw-bold text-secondary">SUBJECTS</h5> -->
+
+                    <?php
+                    if (!empty($studentSubjects)) {
+                        echo "<h5 class='fw-bold text-secondary'>" . count($studentSubjects) . " Subject(s)</h5>";
+                    } else {
+                        echo "<h5 class='fw-bold text-secondary'> " . count($studentSubjects) . "  Subject</h5>";
+                    }
+                    ?>
+
+
                     <!-- Search Bar -->
                     <div class="col-md-4">
                         <div class="input-group input-group-sm">

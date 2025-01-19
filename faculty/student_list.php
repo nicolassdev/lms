@@ -41,7 +41,7 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h5 class="text-black">Students </h5>
+
                         <div class="fw-bold fs-5 text-danger">
                             <?php if (!empty($result)) {
                                 foreach ($result as $student) {
@@ -49,6 +49,15 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
                                     echo htmlspecialchars($student["section_name"]);
                                     break; // Exit loop after processing the first student
                                 }
+                            }
+                            ?>
+                        </div>
+                        <div class="text-black">
+                            <?php
+                            if (!empty($result)) {
+                                echo "<h6 class='text-black'>" . count($result) . " Student(s)</h6>";
+                            } else {
+                                echo "<h6 class='text-black'> " . count($result) . "  Student</h6>";
                             }
                             ?>
                         </div>
@@ -69,12 +78,6 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
                                     <th scope="col" style="width: 100px;">Contact</th>
                                     <th scope="col" style="width: 100px;">Email</th>
                                     <th scope="col" style="width: 100px;">Section</th>
-                                    <!-- <th scope="col" style="width: 150px;">Place of birth</th>
-                                    <th scope="col" style="width: 100px;">Father</th>
-                                    <th scope="col" style="width: 100px;">Mother</th>
-                                    <th scope="col" style="width: 100px;">CP. No</th> -->
-                                    <th scope="col" class="text-center" style="width: 100px;">Action</th><!-- colspan should be 2 -->
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -96,29 +99,7 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
                                         echo '<td class="small text-center">' . strtolower($row["stu_email"]) . '</td>';
                                         echo '<td class="small text-center">' .  $row["section_name"] . '</td>';
 
-                                        // echo '<td class="small text-center">' . $formattedBdate . '</td>';
-                                        // echo '<td class="small text-center">' . $row["stu_pob"] . '</td>';
-                                        // echo '<td class="small text-center">' . $row["father_name"] . '</td>';
-                                        // echo '<td class="small text-center">' . $row["mother_name"] . '</td>';
-                                        // echo '<td class="small text-center">' . $row["parent_contact"] . '</td>';
 
-                                        // button
-                                        //   <button title="Student Information" class="btn btn-sm btn-outline-success me-2 " data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">
-                                        //     <i class="bi bi-person-vcard"></i>
-                                        // </button>
-                                        // THIS IS THE DELETE BUTTON I WILL UNCOMMENT THIS IF NEED TO DELETE PLEASE UNCOMMENT THE LINE
-                                        // <button title="Delete" class="btn btn-sm btn-outline-danger " data-bs-toggle="modal" data-bs-target="#del_student' . $row['stu_lrn'] . '">
-                                        //     <i class="bi bi-trash"></i> 
-                                        // </button>
-                                        echo '
-                                            <td class="d-flex justify-content-center">
-                                           
-                                                <button title="Edit" class="btn btn-sm btn-outline-success  me-2" data-bs-toggle="modal" data-bs-target="#edit_student' . $row['stu_lrn'] . '">
-                                                    <i class="bi bi-pencil-square me-1"></i>Edit 
-                                                </button>
-                                         
-                                            </td>
-                                                ';
                                         echo '</tr>';
 
                                         $count++;
@@ -467,7 +448,7 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
         $("#example").DataTable({
             dom: "Bfrtip", // Include buttons in the dom
             buttons: [
-               
+
                 {
                     extend: "excelHtml5",
                     text: "Download Excel",

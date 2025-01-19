@@ -38,23 +38,6 @@ foreach ($numberOfEnrolledInSection as $section) {
 $mySQLFunction->disconnect();
 ?>
 
-<style>
-    /* Add card hover effects and modern shadow */
-    .card {
-        border: 1px solid #e0e0e0;
-        transition: box-shadow 0.3s ease;
-    }
-
-    .card:hover {
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    h5 {
-        color: #495057;
-        font-weight: bold;
-        letter-spacing: 1px;
-    }
-</style>
 
 
 <body>
@@ -68,7 +51,9 @@ $mySQLFunction->disconnect();
                     src="../assets/img/bg-home.webp"
                     alt="LMS Logo">
                 <div class="container mt-4">
-                    <h5>Section </h5>
+                    <h4 class="fw-bold text-muted mb-3">
+                        Section
+                    </h4>
                     <div class="">
 
                         <!-- School Year and Semester Display -->

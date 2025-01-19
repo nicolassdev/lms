@@ -51,7 +51,7 @@ if (!isset($_SESSION['username'])) {
                                         <i class="bi bi-book display-4 text-info mb-3"></i>
                                         <h5 class="card-title">Exam</h5>
                                         <p class="card-text">Start your exam.</p>
-                                        <a href="#" class="btn btn-info text-black">Take Exam</a>
+                                        <a href="index.php?page=student_take_exam" class="btn btn-info text-black">Take Exam</a>
                                     </div>
                                 </div>
                             </div>
