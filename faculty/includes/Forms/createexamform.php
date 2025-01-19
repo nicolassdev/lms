@@ -32,14 +32,16 @@
                         </div>
                         <div class="col-md-6">
                             <label for="examDuration" class="form-label fw-bold">Duration (minutes)</label>
-                            <input type="number" id="examDuration" name="exam_duration" class="form-control" placeholder="Enter duration" required>
+                            <input type="number" id="examDuration" name="exam_duration" class="form-control" placeholder="Enter duration" min="1" oninput="checkNegativeValue(this)" required>
                         </div>
                     </div>
 
                     <!-- Quarterly Exam Type -->
-                    <div class="mb-4">
+                    <div class=" mb-4">
                         <label for="quarterExam" class="form-label fw-bold">Quarterly Exam</label>
                         <select id="quarterExam" name="exam_quarter" class="form-select" required>
+                            <option value="" selected disabled>Select a quarter...</option>
+                            <option value="1st">1st Quarter</option>
                             <option value="2nd">2nd Quarter</option>
                             <option value="3rd">3rd Quarter</option>
                             <option value="4th">4th Quarter</option>
@@ -203,5 +205,50 @@
             let questionNumber = index + 1;
             question.querySelector('.form-label.fw-bold').innerText = `${questionNumber}. Question`;
         });
+    }
+
+    // Function to clear the form
+    function resetFormUpload() {
+        // Get the form element by ID
+        const form = document.getElementById('createExamForm');
+
+        if (form) {
+            // Reset the form values and validation state
+            form.reset();
+            form.classList.remove('was-validated');
+
+            // Clear dynamically added questions
+            const questionsArea = document.getElementById('questionsArea');
+            if (questionsArea) {
+                questionsArea.innerHTML = ''; // Remove all added question elements
+            }
+
+            // Reset indexes and counters used for dynamically added questions
+            availableIndexes = [];
+            questionCounter = 0;
+
+            // Clear custom validity messages for all inputs, textareas, and selects
+            const inputs = form.querySelectorAll('input, textarea, select');
+            inputs.forEach((input) => {
+                input.setCustomValidity('');
+                input.classList.remove('is-valid', 'is-invalid'); // Reset validation styles
+            });
+
+            // Optionally, provide feedback in the console or UI
+            console.log('Form has been successfully reset.');
+        } else {
+            console.error('Form not found. Please check the form ID.');
+        }
+    }
+
+
+    function checkNegativeValue(input) {
+        if (input.value < 1) {
+            input.classList.add('is-invalid');
+            input.classList.remove('is-valid');
+        } else {
+            input.classList.remove('is-invalid');
+            input.classList.add('is-valid');
+        }
     }
 </script>

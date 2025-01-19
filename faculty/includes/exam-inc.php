@@ -20,9 +20,43 @@ try {
     $examDuration = trim($_POST["exam_duration"] ?? '');
     $examQuarter = trim($_POST["exam_quarter"] ?? '');
     $examDate = trim($_POST["exam_date"] ?? '');
+
+    // to know what type of exam is 
     $examType = is_array($_POST['exam_type']) ? implode(',', $_POST['exam_type']) : '';
 
+    // to count the total number of exam 
+    $examTotal = isset($_POST['exam_type']) && is_array($_POST['exam_type'])
+        ? count($_POST['exam_type'])
+        : 0;
 
+    // if (isset($_POST['exam_type']) && is_array($_POST['exam_type'])) {
+    //     // Initialize $examType to empty
+    //     $examType = '';
+
+    //     // Loop through each selected exam type and assign it correctly
+    //     foreach ($_POST['exam_type'] as $questionIndex => $type) {
+    //         switch ($type) {
+    //             case "1": // Multiple Choice
+    //                 $examType = "1";  // Or any appropriate value for '1'
+    //                 break;
+
+    //             case "2": // Enumeration
+    //                 $examType = "2";  // Or any appropriate value for '2'
+    //                 break;
+
+    //             case "3": // Essay
+    //                 $examType = "3";  // Or any appropriate value for '3'
+    //                 break;
+
+    //             case "4": // True/False
+    //                 $examType = "4";  // Or any appropriate value for '4'
+    //                 break;
+    //             default:
+    //                 $examType = "0";  // If something goes wrong
+    //                 break;
+    //         }
+    //     }
+    // }
 
 
 
@@ -30,9 +64,9 @@ try {
     $mySQLFunction->connection();
 
     // Insert exam details into database
-    $stmt = $mySQLFunction->con->prepare("INSERT INTO exam (exam_id, sched_id, exam_type, exam_quarter, exam_duration, exam_title, exam_desc, exam_date) 
-                                          VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssss", $exam_id, $sched_id, $examType, $examQuarter, $examDuration, $examTitle, $examDescription, $examDate);
+    $stmt = $mySQLFunction->con->prepare("INSERT INTO exam (exam_id, sched_id, exam_type, exam_quarter, exam_duration, exam_title, exam_desc, exam_number, exam_date) 
+                                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssss", $exam_id, $sched_id, $examType, $examQuarter, $examDuration, $examTitle, $examDescription, $examTotal, $examDate);
     $stmt->execute();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
