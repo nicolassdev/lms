@@ -77,7 +77,7 @@
             <div class="dropdown d-none d-lg-block ms-auto">
                 <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <!-- Username and Icon Inline -->
-                    <div class="text-white me-1 mt-1">
+                    <div class="text-white fw-semibold me-1 mt-1">
                         <small>Welcome, <?php echo ucwords(strtolower($_SESSION["user_role"])); ?></small>
                     </div>
                     <i class="bi bi-person-fill-gear text-white" style="font-size: 1.5rem;"></i>

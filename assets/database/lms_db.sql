@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2025 at 08:45 PM
+-- Generation Time: Jan 19, 2025 at 02:29 PM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.12
 
@@ -49,10 +49,113 @@ INSERT INTO `enroll` (`stu_lrn`, `section_code`, `semester`, `school_year`, `dat
 ('114423232323', 'SECTION-2387', '1st Semester', '2024-2025', '2024-12-30', 'Pending', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR'),
 ('114432325251', 'SECTION-2287', '1st Semester', '2024-2025', '2024-12-13', 'Enrolled', 'PAGASA NATIONAL HIGH SCHOOL', NULL, 'RAWIS LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('114455013001', 'SECTION-2663', '1st Semester', '2024-2025', '2024-12-29', 'Enrolled', 'ARIMBAY HIGH SCHOLL', NULL, 'ARIMBAY LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
+('114455667788', 'SECTION-2387', '1st Semester', '2024-2025', '2025-01-11', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('114482392392', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-20', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('114497427472', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-23', 'Pending', 'CABANGAN HIGH SCOLL', NULL, 'CABANGAN LEGAZPI VCITY', 'PUBLIC', 'SF9, SF10, PSA, LCR'),
-('114498343414', 'SECTION-3943', '1st Semester', '2024-2025', '2024-12-20', 'Enrolled', 'ORO SITE HIGH SCHOOOL', NULL, 'ORO SITE LEGAZPI', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
-('124167743724', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-26', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC');
+('114498343414', 'SECTION-1859', '1st Semester', '2024-2025', '2025-01-12', 'Enrolled', 'ORO SITE HIGH SCHOOL', NULL, 'ORO SITE LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
+('124167743724', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-26', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
+('718412412421', 'SECTION-1859', '1st Semester', '2024-2025', '2025-01-06', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exam`
+--
+
+CREATE TABLE `exam` (
+  `exam_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `sched_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `exam_type` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT '1. Multiple choice, 2. Enumeration, 3. Essay, 4. True or False ',
+  `exam_quarter` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `exam_duration` int NOT NULL,
+  `exam_title` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `exam_desc` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `exam_number` tinyint NOT NULL,
+  `exam_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `exam`
+--
+
+INSERT INTO `exam` (`exam_id`, `sched_id`, `exam_type`, `exam_quarter`, `exam_duration`, `exam_title`, `exam_desc`, `exam_number`, `exam_date`) VALUES
+('EXM-2202', 'SCHED-3005', '2,1,3', '1st', 2, 'asdas', 'asdas', 3, '2025-01-19');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exam_enumeration`
+--
+
+CREATE TABLE `exam_enumeration` (
+  `enum_id` int NOT NULL,
+  `exam_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `enum_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `enum_answer` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `exam_enumeration`
+--
+
+INSERT INTO `exam_enumeration` (`enum_id`, `exam_id`, `enum_question`, `enum_answer`) VALUES
+(19, 'EXM-2202', 'samnplke', '232, sdample .sad ');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exam_essay`
+--
+
+CREATE TABLE `exam_essay` (
+  `essay_id` int NOT NULL,
+  `exam_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `essay_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `exam_essay`
+--
+
+INSERT INTO `exam_essay` (`essay_id`, `exam_id`, `essay_question`) VALUES
+(5, 'EXM-2202', 'asdasdsa');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exam_multiple`
+--
+
+CREATE TABLE `exam_multiple` (
+  `mul_id` int NOT NULL,
+  `exam_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `mul_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `choice_a` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `choice_b` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `choice_c` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `choice_d` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `is_correct` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `exam_multiple`
+--
+
+INSERT INTO `exam_multiple` (`mul_id`, `exam_id`, `mul_question`, `choice_a`, `choice_b`, `choice_c`, `choice_d`, `is_correct`) VALUES
+(53, 'EXM-2202', 'whay is may name', 'anthony', 'asdas', 'ssdw', 'cc', 'anthony');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exam_tf`
+--
+
+CREATE TABLE `exam_tf` (
+  `tf_id` int NOT NULL,
+  `exam_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `tf_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tf_answer` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -75,8 +178,24 @@ CREATE TABLE `module` (
 --
 
 INSERT INTO `module` (`module_id`, `file_name`, `file_size`, `formatted_size`, `file_type`, `sched_id`, `date_uploaded`) VALUES
-('MOD-0656', '../../assets/Module/Busiess Ethics.docx', 17504, '17.09 KB', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'SCHED-3005', '2025-01-04 03:11:58'),
-('MOD-7062', '../../assets/Module/MODULE 1 MATH, SCIENCE AND TECHNOLOGY.pdf', 236987, '231.43 KB', 'application/pdf', 'SCHED-3005', '2025-01-04 03:36:59');
+('MOD-7383', '../../faculty/module_uploaded/beluga.jpg', 16379, '16 KB', 'image/jpeg', 'SCHED-3005', '2025-01-14 02:56:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `module_answer`
+--
+
+CREATE TABLE `module_answer` (
+  `answer_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `module_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_lrn` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
+  `file_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `file_size` bigint UNSIGNED DEFAULT NULL,
+  `formatted_size` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `file_type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `date_uploaded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -154,10 +273,11 @@ CREATE TABLE `schedule` (
 INSERT INTO `schedule` (`sched_id`, `teacher_id`, `section_code`, `sub_code`, `sched_day`, `sched_from`, `sched_to`, `created_at`) VALUES
 ('SCHED-0762', '24-209505-8181', 'SECTION-2663', 'SUB-3699', 'Friday', '08:00 AM', '10:00 AM', '2024-12-28 20:02:31'),
 ('SCHED-0950', '24-299710-4779', 'SECTION-2387', 'SUB-3375', 'Friday', '08:00 AM', '10:00 AM', '2024-12-30 20:21:44'),
-('SCHED-1274', '24-279707-4937', 'SECTION-2287', 'SUB-7279', 'Monday', '08:30 AM', '10:30 AM', '2024-12-30 12:31:59'),
+('SCHED-1274', '24-279707-4937', 'SECTION-2287', 'SUB-7279', 'Monday', '07:30 AM', '10:30 AM', '2024-12-30 12:31:59'),
 ('SCHED-1393', '24-059310-4617', 'SECTION-1859', 'SUB-3164', 'Monday', '08:30 AM', '10:30 AM', '2024-12-28 19:31:30'),
 ('SCHED-3005', '24-299710-4779', 'SECTION-1859', 'SUB-3563', 'Monday', '03:00 PM', '05:20 PM', '2024-12-28 19:35:09'),
 ('SCHED-3238', '24-059310-4617', 'SECTION-1859', 'SUB-9527', 'Tuesday', '08:30 AM', '11:30 AM', '2024-12-28 19:24:12'),
+('SCHED-8004', '24-199603-2911', 'SECTION-3943', 'SUB-7279', 'Monday', '07:20 AM', '09:11 AM', '2025-01-13 15:10:48'),
 ('SCHED-8714', '24-229809-8556', 'SECTION-3891', 'SUB-2557', 'Thursday', '07:30 AM', '09:30 AM', '2024-12-30 20:29:41'),
 ('SCHED-9034', '24-049512-1359', 'SECTION-1859', 'SUB-7279', 'Monday', '07:00 AM', '10:38 PM', '2024-12-30 10:39:03');
 
@@ -294,9 +414,10 @@ INSERT INTO `student` (`stu_lrn`, `stu_fname`, `stu_mname`, `stu_lname`, `stu_ad
 ('114485140095', 'MAECHELLE', 'GAVERIA', 'ACOSTA', 'DARAGA', '9329392932', 'FEMALE', 'maechelle@gmail.com', '2003-11-29', 'Legazpi City', 'ACOSTA, HUELDOR', 'ACOSTA, MAE', '9329392939', '', 'USER-8853'),
 ('114486120037', 'SHYRIEN', 'NUNEZ', 'VIBAL', 'LEGAZPI CITY', '9329392392', 'FEMALE', 'shyrien@gmail.com', '2002-11-29', 'LEGAZPI CITY', 'VIBAL, MELCHOR', 'VIBAL. ESABELLA', '9329392932', '', 'USER-6627'),
 ('114497427472', 'LESTER', '', 'SAPULA', 'BITANO', '9329392932', 'MALE', 'lester@gmail.com', '2002-07-04', 'BITANO', 'ASDAS', 'DASDSA', '9329329932', '', 'USER-9261'),
-('114498343414', 'DWAYNE', 'HILBE', 'TUWEZA', 'BURAGUIS LEGAZPI CITY', '9123421321', 'MALE', 'dwaynetuweza@gmail.com', '2024-10-16', 'Buraguis Legazpi City', 'JOHN BALDES TUIZA', 'CRISTINE BALDES TUIZA', '9123123123', '', 'USER-3431'),
+('114498343414', 'DWAYNE ADRIAN', 'OSEñA', 'TUIZA', 'BURAGUIS LEGAZPI CITY', '9123421321', 'MALE', 'dwaynetuweza@gmail.com', '2024-10-16', 'Buraguis Legazpi City', 'JOHN BALDES TUIZA', 'CRISTINE BALDES TUIZA', '9123123123', 'student_6783d561d37be3.65803100.jpg', 'USER-3431'),
 ('114499887766', 'MARVIN', '', 'TAUZON', 'BURAGUIS', '9329392392', 'MALE', 'marvin@gmail.com', '2024-11-10', 'Legazpi City', 'PAPA TAUZON', 'MAMA TAUZON', '9412949194', '', 'USER-6346'),
-('124167743724', 'ANTHONY NICOLE', 'DADO', 'DAEN', 'BURAGUIS LEGAZPI CITY', '9329392392', 'MALE', 'anthonydaen25@gmail.com', '2002-05-10', 'Legazpi City', 'DAEN, SIMEON LUNAS', 'DAEN, CRISTINA DADO', '9329329392', 'student_67545f4c50dfa9.77726496.jpg', 'USER-7881');
+('124167743724', 'ANTHONY NICOLE', 'DADO', 'DAEN', 'BURAGUIS LEGAZPI CITY', '9329392392', 'MALE', 'anthonydaen25@gmail.com', '2002-05-10', 'Legazpi City', 'DAEN, SIMEON LUNAS', 'DAEN, CRISTINA DADO', '9329329392', 'student_67545f4c50dfa9.77726496.jpg', 'USER-7881'),
+('718412412421', 'MARCO', 'DADO', 'DAEN', 'BURAGUIS LEGAZPI CITY', '9329392392', 'MALE', 'marco@gmail.com', '2006-03-28', 'LEGAZPI CITY', 'DAEN, SIMEON', 'DAEN, CRISTINA', '9431924912', '', 'USER-0399');
 
 -- --------------------------------------------------------
 
@@ -392,7 +513,7 @@ INSERT INTO `teacher` (`teacher_id`, `teacher_fname`, `teacher_mname`, `teacher_
 ('24-029810-1540', 'ARIEL', '', 'ABALETA', '9294929429', 'MALE', '1998-10-03', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-8224'),
 ('24-049512-1359', 'PERLA', 'RELLETA', 'ALA', '9825328113', 'FEMALE', '1995-12-04', 'FULL TIME', 'BURAGUIS LEGAZPI CITY', NULL, 'USER-8185'),
 ('24-049906-5894', 'DESIREE', '', 'DIAZ', '9294929429', 'FEMALE', '1999-06-04', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-6036'),
-('24-059310-4617', 'NORBERTO', 'ATUN', 'LLAMOSO', '9392392939', 'MALE', '1993-10-05', 'FULL TIME', 'DARAGA', '', 'USER-6486'),
+('24-059310-4617', 'NORBERTO', 'ATUN', 'LLAMOSO', '9392392939', 'MALE', '1993-10-05', 'FULL TIME', 'DARAGA', 'teacher_677e9f64ab20c5.97298213.jpg', 'USER-6486'),
 ('24-059711-7139', 'MERCY', '', 'MACASINAG', '9329392939', 'FEMALE', '1997-11-05', 'FULL TIME', 'LEGAZPI CITY', '', 'USER-3454'),
 ('24-199603-2911', 'DANTE', '', 'ARINGO', '9329392955', 'MALE', '1996-03-19', 'FULL TIME', 'BITANO LEGAZPI', '', 'USER-2686'),
 ('24-199612-2660', 'REGIE', '', 'AJERO', '9999221231', 'MALE', '1996-12-19', 'FULL TIME', 'DARAGA', NULL, 'USER-8393'),
@@ -425,7 +546,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_added`) VALUES
-(94, 'USER-0607', 'LMS-209505-5945', '304e302e96596f53eb6f86d9516a092849253b5d', 'TEACHER', '2024-11-28 20:11:17'),
+(122, 'USER-0399', '718412412421', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2025-01-06 20:13:20'),
+(94, 'USER-0607', 'LMS-209505-5945', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-28 20:11:17'),
 (69, 'USER-1316', '114432325253', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-04 06:56:15'),
 (110, 'USER-1829', '114455013001', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-12-07 01:57:56'),
 (114, 'USER-1875', 'registrar', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'REGISTRAR', '2024-12-11 21:22:43'),
@@ -456,7 +578,8 @@ INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_add
 (117, 'USER-8393', 'LMS-199612-8910', 'b6a0412c5545f9e71de0d185853c781d02f74f15', 'TEACHER', '2024-12-19 21:47:04'),
 (46, 'USER-8636', '114403203289', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-29 02:18:33'),
 (111, 'USER-8853', '114485140095', '400a660369b3fce52c68b9f61c0766361f9ce629', 'STUDENT', '2024-12-07 02:03:00'),
-(68, 'USER-9261', '114497427472', 'csi-24-040207', 'STUDENT', '2024-11-04 06:41:01'),
+(68, 'USER-9261', '114497427472', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-04 06:41:01'),
+(120, 'USER-9487', 'LMS-209912-1841', '7478d68cb5648a34811e524a3720fa0cc9958db4', 'TEACHER', '2024-12-27 20:20:31'),
 (92, 'USER-9953', 'teacher', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-28 20:08:38'),
 (45, 'USER-9986', '114483293271', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-29 02:16:11'),
 (38, 'USER-9991', '114482392392', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-10-24 04:47:41');
@@ -473,11 +596,54 @@ ALTER TABLE `enroll`
   ADD KEY `section_code` (`section_code`);
 
 --
+-- Indexes for table `exam`
+--
+ALTER TABLE `exam`
+  ADD PRIMARY KEY (`exam_id`),
+  ADD KEY `fk_exam_sched` (`sched_id`);
+
+--
+-- Indexes for table `exam_enumeration`
+--
+ALTER TABLE `exam_enumeration`
+  ADD PRIMARY KEY (`enum_id`),
+  ADD KEY `exam_id` (`exam_id`);
+
+--
+-- Indexes for table `exam_essay`
+--
+ALTER TABLE `exam_essay`
+  ADD PRIMARY KEY (`essay_id`),
+  ADD KEY `exam_id` (`exam_id`);
+
+--
+-- Indexes for table `exam_multiple`
+--
+ALTER TABLE `exam_multiple`
+  ADD PRIMARY KEY (`mul_id`),
+  ADD KEY `exam_id` (`exam_id`);
+
+--
+-- Indexes for table `exam_tf`
+--
+ALTER TABLE `exam_tf`
+  ADD PRIMARY KEY (`tf_id`),
+  ADD KEY `exam_id` (`exam_id`);
+
+--
 -- Indexes for table `module`
 --
 ALTER TABLE `module`
   ADD PRIMARY KEY (`module_id`),
   ADD KEY `fk_module_schedule` (`sched_id`);
+
+--
+-- Indexes for table `module_answer`
+--
+ALTER TABLE `module_answer`
+  ADD PRIMARY KEY (`answer_id`),
+  ADD KEY `fk_module` (`module_id`),
+  ADD KEY `fk_student` (`stu_lrn`);
 
 --
 -- Indexes for table `principal`
@@ -554,6 +720,30 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `exam_enumeration`
+--
+ALTER TABLE `exam_enumeration`
+  MODIFY `enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `exam_essay`
+--
+ALTER TABLE `exam_essay`
+  MODIFY `essay_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `exam_multiple`
+--
+ALTER TABLE `exam_multiple`
+  MODIFY `mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+
+--
+-- AUTO_INCREMENT for table `exam_tf`
+--
+ALTER TABLE `exam_tf`
+  MODIFY `tf_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `school`
 --
 ALTER TABLE `school`
@@ -563,7 +753,7 @@ ALTER TABLE `school`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_num` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `user_num` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- Constraints for dumped tables
@@ -577,10 +767,47 @@ ALTER TABLE `enroll`
   ADD CONSTRAINT `fk_enroll_student` FOREIGN KEY (`stu_lrn`) REFERENCES `student` (`stu_lrn`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `exam`
+--
+ALTER TABLE `exam`
+  ADD CONSTRAINT `fk_exam_sched` FOREIGN KEY (`sched_id`) REFERENCES `schedule` (`sched_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `exam_enumeration`
+--
+ALTER TABLE `exam_enumeration`
+  ADD CONSTRAINT `exam_enumeration_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `exam_essay`
+--
+ALTER TABLE `exam_essay`
+  ADD CONSTRAINT `exam_essay_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `exam_multiple`
+--
+ALTER TABLE `exam_multiple`
+  ADD CONSTRAINT `exam_multiple_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `exam_tf`
+--
+ALTER TABLE `exam_tf`
+  ADD CONSTRAINT `exam_tf_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `module`
 --
 ALTER TABLE `module`
   ADD CONSTRAINT `fk_module_schedule` FOREIGN KEY (`sched_id`) REFERENCES `schedule` (`sched_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `module_answer`
+--
+ALTER TABLE `module_answer`
+  ADD CONSTRAINT `fk_module` FOREIGN KEY (`module_id`) REFERENCES `module` (`module_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_student` FOREIGN KEY (`stu_lrn`) REFERENCES `student` (`stu_lrn`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `principal`

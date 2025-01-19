@@ -81,6 +81,11 @@ switch ($page) {
         require_once 'teacher_exam.php';
         break;
 
+    case "create_exam":
+        require_once 'create_exam.php';
+        break;
+
+
     case "teacher_report":
         require_once 'teacher_report.php';
         break;
@@ -91,6 +96,7 @@ switch ($page) {
     case "teacher_subject":
         require_once 'teacher_subject.php';
         break;
+
 
 
 

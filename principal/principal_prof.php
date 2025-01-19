@@ -183,7 +183,7 @@ $mySQLFunction->disconnect();
                         </div>
                         <div class="col-md-6">
                             <strong>Joined:</strong>
-                            <p><?php echo htmlspecialchars($_SESSION["principal_added"]); ?></p>
+                            <p><?php echo htmlspecialchars($_SESSION["PRINCIPAL_added"]); ?></p>
                         </div>
                     </div>
 

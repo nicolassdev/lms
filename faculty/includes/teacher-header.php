@@ -78,7 +78,7 @@ error_reporting(E_ALL);
                     <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="text-black fs-6">
 
-                            <small class="text-primary">Welcome, <?php echo ucwords(strtolower($_SESSION["user_role"])); ?></small>
+                            <small class="text-primary fw-semibold">Welcome, <?php echo ucwords(strtolower($_SESSION["user_role"])); ?></small>
 
                             <i class="bi bi-person-circle ms-1" style="font-size: 1.3rem;"></i>
                         </div>
@@ -116,11 +116,9 @@ error_reporting(E_ALL);
 
 
                         <ul class="nav flex-column">
-                            <li class="nav-item d-none d-md-block mt-4">
-                                <a class="nav-link active">
-                                    <!-- <i class="bi bi-graph-up-arrow me-2"></i> Blanktext -->
-                                </a>
-                            </li>
+                            <div class="nav-link fs-5 text-white fw-bold dasboard d-none d-lg-inline mb-3 ">
+                                MENU
+                            </div>
 
                             <li class="nav-item mt-2">
                                 <a class="nav-link active" href="index.php?page=dashboard">

@@ -19,12 +19,6 @@ $mySQLFunction->disconnect();
 
 <!-- Style for the cards and layout -->
 <style>
-    h5 {
-        color: #495057;
-        font-weight: bold;
-        letter-spacing: 1px;
-    }
-
     .card {
         border: 1px solid #e0e0e0;
         transition: box-shadow 0.3s ease, transform 0.3s ease;
@@ -57,9 +51,9 @@ $mySQLFunction->disconnect();
         background-color: #f8f9fa;
     }
 
-    small {
+    /* small {
         font-size: 14px;
-    }
+    } */
 
 
 
@@ -105,7 +99,11 @@ $mySQLFunction->disconnect();
                 src="../assets/img/bg-home.webp"
                 alt="LMS Logo">
             <div class="container mt-4">
-                <h5>Subjects </h5>
+
+
+                <h4 class="fw-bold text-muted mb-3">
+                    Subjects
+                </h4>
                 <div class="">
 
                     <!-- School Year and Semester Display -->
@@ -159,7 +157,7 @@ $mySQLFunction->disconnect();
                         <!-- Card Body -->
                         <div class="card-body">
                             <div class="d-flex align-items-center">
-                                <i class="bi bi-award text-danger fs-2 me-2"></i>
+                                <!-- <i class="bi bi-award text-danger fs-2 me-2"></i> -->
                                 <span class="fw-bold fs-5"><?php echo ucwords(strtolower($schedule["grade_lvl"])) . ' ' . htmlspecialchars($schedule["section_name"]); ?></span>
                             </div>
                             <div class="text-secondary mb-3 d-flex align-items-center">
@@ -171,7 +169,7 @@ $mySQLFunction->disconnect();
                                 <span class="fw-semibold">Total Students: <?php
                                                                             // Get total count for each student in subject handled by teacher
                                                                             $mySQLFunction->connection();
-                                                                            $students = $mySQLFunction->getAllStudentBySectionAndSubject($_SESSION['teacher_id'], $schedule['sub_code'], $schedule['section_code']);
+                                                                            $students = $mySQLFunction->getAllStudentBySectionAndSubjectWithModuleUploads($_SESSION['teacher_id'], $schedule['sub_code'], $schedule['section_code']);
                                                                             $totalStudentinSection = '0';
                                                                             foreach ($students as $student) {
                                                                                 $totalStudentinSection = $student['enrolled_count'] ?: '0';
@@ -198,7 +196,7 @@ $mySQLFunction->disconnect();
                         <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
                             <a href="index.php?page=student_subject_list&sched_id=<?php echo urlencode($schedule['sched_id']); ?> &sub_code=<?php echo urlencode($schedule['sub_code']); ?> &section_code=<?php echo urlencode($schedule['section_code']); ?>"
                                 class="btn btn-outline-primary w-100 fw-bold d-flex align-items-center justify-content-center">
-                                <i class="bi bi-person-lines-fill me-2"></i> View Students
+                                <i class="bi bi-journals me-2"></i> Upload Module
                             </a>
                         </div>
                     </div>
@@ -225,6 +223,6 @@ $mySQLFunction->disconnect();
     <input type="hidden" name="sub_code" value=" ">
     <input type="hidden" name="section_code" value=" ">
     <button type="submit" class="btn btn-outline-primary w-100 fw-bold">
-        <i class="bi bi-person-lines-fill me-2"></i>View Students
+        <i class="bi bi-person-lines-fill me-2"></i> Upload Module
     </button>
 </form> -->

@@ -53,23 +53,35 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center ms-3 me-3">
                         <h5 class="fw-bold">
-                            <div class="fs-5">
+                            <div class="fs-6 text-muted">
                                 <?php
                                 if (!empty($modules)) {
                                     foreach ($modules as $module) {
-                                        echo htmlspecialchars($module['grade_lvl']) . ' ' . htmlspecialchars($module['strand_name']);
-                                        break; // Exit loop after displaying grade and strand information
+                                        echo htmlspecialchars($module['sub_title']);
+                                        break; // Exit loop after displaying subtitle
                                     }
                                 }
+                                // else {
+                                //     echo "<div class='text-danger'>NO MODULE FOUND!</div>"; // Optional: Display a message when there are no modules
+                                // }
                                 ?>
                             </div>
-                            Modules
+                            <div class="fs-6 text-muted">
+                                <?php
+                                if (!empty($modules)) {
+                                    echo htmlspecialchars($module['grade_lvl']) . ' ' . htmlspecialchars($module['strand_name']) . ' ';
+                                } else {
+                                    echo "<small class='text-danger'>No modules uploaded.</small>"; // Optional: Display fallback content
+                                }
+                                ?><br>
+                                Modules
+                            </div>
                         </h5>
 
-
-                        <div class="d-flex justify-content-end mb-3">
-                            <input type="text" id="searchInput" class="form-control form-control-sm w-100 me-2" placeholder="Search modules...">
-                            <i class="bi bi-search me-2 ms-1 fs-4"></i>
+                        <!-- Search Module  -->
+                        <div class="d-flex justify-content-end">
+                            <input type="text" id="searchInput" class="form-control form-control-sm w-100 me-1" placeholder="Search modules...">
+                            <i class="bi bi-search ms-1 fs-4"></i>
                         </div>
 
                     </div>
@@ -87,6 +99,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                     <th class="text-center">Module</th>
                                 </tr>
                             </thead>
+
                             <tbody id="modulesTableBody">
                                 <?php
                                 if (!empty($modules)) {
@@ -137,7 +150,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                                     </div>
                                                     <div class="modal-footer justify-content-center border-0 mt-2 mb-4">
 
-                                                        <a href="includes/Forms/download.php?file=' . urlencode($fileNameForDownload) . '" class="btn btn-success px-4 py-2 me-3" style="width: 120px;">Download</a>
+                                                        <a href="includes/Operation/download.php?file=' . urlencode($fileNameForDownload) . '" class="btn btn-success px-4 py-2 me-3" style="width: 120px;">Download</a>
                                                         <button class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
                                                     </div>
                                                 </div>
@@ -149,7 +162,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                         <!-- STUDENT INFORMATION ENTRY MODAL -->
                                         <div class="modal fade" id="upload_answer' . $row['module_id'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                                             <div class="modal-dialog modal-md">
-                                                <div class="modal-content b-grey">
+                                               <div class="modal-content shadow-lg">
                                                     <div class="modal-body">
                                                         <!-- Modal Title & Icon -->
                                                         <div class="text-center mb-4">
@@ -158,12 +171,12 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                                         </div>
 
                                                         <!-- Form Upload -->
-                                                        <form id="uploadFileForm" action="./includes/uploadmoduleanswer-inc.php" method="POST" enctype="multipart/form-data" autocomplete="off" class="row g-2 needs-validation" novalidate>
-                                                            <input type="text" name="schedID" value="' . htmlspecialchars($_GET['sub_code']) . '"> <!-- SCHEDULE ID -->
-                                                            <input type="text" name="subID" value="' . htmlspecialchars($_GET['strand_code']) . '"> <!-- SUBJECT ID -->
-                                                            <input type="text" name="secID" value="' . htmlspecialchars($_GET['grade_lvl']) . '"> <!-- SECTION ID -->
-                                                            <input type="text" name="secID" value="' . $row['module_id']  . '"> <!-- SECTION ID -->
-                                                            <input type="text" name="studID" value="' . $_SESSION['stu_lrn']  . '"> <!-- SECTION ID -->
+                                                        <form id="uploadFileForm" action="includes/Operation/upload.php" method="POST" enctype="multipart/form-data" autocomplete="off" class="row g-2 needs-validation" novalidate>
+                                                            <input type="hidden" name="subID" value="' . htmlspecialchars($_GET['sub_code']) . '"> <!-- SCHEDULE ID -->
+                                                            <input type="hidden" name="strandID" value="' . htmlspecialchars($_GET['strand_code']) . '"> <!-- SUBJECT ID -->
+                                                            <input type="hidden" name="gLevel" value="' . htmlspecialchars($_GET['grade_lvl']) . '"> <!-- SECTION ID -->
+                                                            <input type="hidden" name="modID" value="' . $row['module_id']  . '"> <!-- SECTION ID -->
+                                                            <input type="hidden" name="studID" value="' . $_SESSION['stu_lrn']  . '"> <!-- SECTION ID -->
 
 
 
@@ -174,11 +187,11 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
 
                                                             <!-- File Input -->
                                                             <div class="mb-4">
-                                                            <label class="fs-6 fw-bold text-black">' . ucwords(strtolower($fileNameForDisplay)) . '</label><br/>
-                                                                <label for="fileInput" class="fs-6 fw-bold text-secondary">Select a file to upload</label>
+                                                            <label class="fs-6 fw-bold text-muted">' . ucwords(strtolower($fileNameForDisplay)) . '</label><br/>
+                                                                <label for="fileInput" class="fs-6 mb-2 text-muted">Select a file to upload</label>
                                                                 <input type="file" class="form-control form-control-lg border-primary" id="fileInput" name="file" required>
                                                                 <div class="mt-2">
-                                                                    <small style="font-size: 12px;">Allowed: <strong class="text-black">10MB</strong> - PDF, Word, Excel, PowerPoint, and Images (JPEG, PNG, GIF, WEBP).</small>
+                                                                    <small style="font-size: 12px;">Allowed: <strong class="text-black">10MB</strong> - PDF, Word, Excel, PowerPoint, and Images (JPEG, PNG, WEBP).</small>
                                                                 </div>
                                                                 <div class="invalid-feedback">
                                                                     Please upload a file module.
@@ -275,15 +288,16 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                         ';
                                     }
                                 } else {
-                                    echo '<tr><td colspan="5" class="text-center">No modules found.</td></tr>';
+                                    echo '<tr><td colspan="5" class="text-center text-danger">No modules found.</td></tr>';
                                 }
                                 ?>
 
                                 <tr id="noResultsMessage" style="display: none;">
-                                    <td colspan="5" class="text-center">No results found.</td>
+                                    <td colspan="5" class="text-center">No modules found.</td>
                                 </tr>
 
                             </tbody>
+
                         </table>
                     </div>
                 </div>

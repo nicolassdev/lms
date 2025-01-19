@@ -25,7 +25,7 @@
                         <label for="fileInput" class="form-label text-secondary">Select a file to upload</label>
                         <input type="file" class="form-control form-control-lg border-primary" id="fileInput" name="file" required>
                         <div class="mt-2">
-                            <small style="font-size: 12px;">Allowed: <strong class="text-black">10MB</strong> - PDF, Word, Excel, PowerPoint, and Images (JPEG, PNG, GIF, WEBP).</small>
+                            <small style="font-size: 12px;">Allowed: <strong class="text-black">10MB</strong> - PDF, Word, Excel, PowerPoint, and Images (JPEG, PNG, WEBP).</small>
                         </div>
                         <div class="invalid-feedback">
                             Please upload a file module.
@@ -40,6 +40,8 @@
                         <button type="button" class="btn btn-outline-secondary w-100 mt-3 mb-2" data-bs-dismiss="modal" aria-label="Close" onclick="resetFormUpload()">Cancel</button>
                     </div>
                 </form>
+
+
             </div>
         </div>
     </div>

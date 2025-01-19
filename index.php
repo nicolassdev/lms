@@ -61,6 +61,9 @@ switch ($page) {
     case "student_account":
         require_once 'student_account.php';
         break;
+    case "student_take_exam":
+        require_once 'student_take_exam.php';
+        break;
 
     default:
         require_once 'student_home.php'; // Default page is 'home'

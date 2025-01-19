@@ -35,7 +35,7 @@ include "../admin/includes/Forms/studentform.php";
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h5 class="text-black">List of Students</h5>
+                        <h5 class="fw-bold">List of Students</h5>
                         <div class="d-flex">
 
                             <button type="button" class="btn btn-primary btn-sm ms-2 btn-animate" data-bs-toggle="modal" data-bs-target="#student" data-bs-whatever="@fat">
@@ -99,9 +99,6 @@ include "../admin/includes/Forms/studentform.php";
                                 if (!empty($result)) {
                                     $count = 0;
                                     foreach ($result as $row) {
-                                        // Create a DateTime object and format the added_date
-                                        $addedDate = new DateTime($row['stu_dob']);
-                                        $formattedBdate = $addedDate->format('F j, Y');
 
                                         // echo '<td>' . $count . '</td>';
                                         echo '<td class="text-center text-primary"> <a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">'
@@ -111,7 +108,7 @@ include "../admin/includes/Forms/studentform.php";
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
                                         echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
                                         echo '<td class="small text-center">' . strtolower($row["stu_email"]) . '</td>';
-                                        echo '<td class="small text-center">' . $formattedBdate . '</td>';
+                                        echo '<td class="small text-center">' . date('F j, Y', strtotime($row["stu_dob"])) . '</td>';
                                         // echo '<td class="small text-center">' . $row["stu_pob"] . '</td>';
                                         // echo '<td class="small text-center">' . $row["father_name"] . '</td>';
                                         // echo '<td class="small text-center">' . $row["mother_name"] . '</td>';
@@ -482,7 +479,7 @@ include "../admin/includes/Forms/studentform.php";
         $("#example").DataTable({
             dom: "Bfrtip", // Include buttons in the dom
             buttons: [
-              
+
                 {
                     extend: "excelHtml5",
                     text: "Download Excel",

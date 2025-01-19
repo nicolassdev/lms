@@ -340,7 +340,7 @@ $mySQLFunction->disconnect();
                             </div>
                             <div class="col-md-6">
                                 <strong>Joined:</strong>
-                                <p><?php echo htmlspecialchars($_SESSION["student_added"]); ?></p>
+                                <p><?php echo htmlspecialchars($_SESSION["STUDENT_added"]); ?></p>
                             </div>
 
                         </div>

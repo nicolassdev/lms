@@ -30,9 +30,17 @@ error_reporting(E_ALL);
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <!-- Sidebar Toggle Button -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#sidebar"
+                aria-controls="sidebar"
+                aria-label="Toggle sidebar"
+                title="Toggle sidebar">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <!--  Title -->
             <div class="image d-flex align-items-center">
                 <a href="?page=home">
@@ -58,7 +66,7 @@ error_reporting(E_ALL);
                     <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="text-black fs-6">
                             <!-- show user role -->
-                            <small class="text-primary">Welcome, <?php echo ucwords(strtolower($_SESSION["user_role"])); ?></small>
+                            <small class="text-primary fw-semibold">Welcome, <?php echo ucwords(strtolower($_SESSION["user_role"])); ?></small>
                             <i class="bi bi-person-circle ms-1" style="font-size: 1.3rem;"></i>
                         </div>
                     </a>
@@ -66,16 +74,26 @@ error_reporting(E_ALL);
 
 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                        <li class="ms-3"><i class="bi bi-patch-check-fill text-success"></i> <?php echo ucwords(strtolower($_SESSION["user_role"])) ?> </li>
-                        <hr class="mx-3 my-1">
-                        <li><a class="dropdown-item" href="?page=student_prof">My Profile</a></li>
-                        <li><a class="dropdown-item" href="?page=student_account">Account</a></li>
+                        <li class="ms-3">
+                            <i class="bi bi-patch-check-fill text-success"></i>
+                            <?php echo ucwords(strtolower($_SESSION["user_role"])) ?>
+                        </li>
+                        <li>
+                            <hr class="mx-3 my-1">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="?page=student_prof">My Profile</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="?page=student_account">Account</a>
+                        </li>
                         <li>
                             <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                 Logout
                             </a>
                         </li>
                     </ul>
+
                 </div>
             </div>
 
@@ -97,12 +115,13 @@ error_reporting(E_ALL);
                         </div>
                         <hr class=" d-lg-none">
 
-
                         <ul class="nav flex-column">
-                            <div class=" fw-bold dasboard text-center d-none d-lg-inline">
+                            <li class="fw-bold dasboard text-center d-none d-lg-inline">
                                 DASHBOARD
-                            </div>
-                            <br />
+                            </li>
+                            <li>
+                                <br />
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=student_home">
                                     <i class="bi bi-house-door me-2"></i> Home
@@ -114,13 +133,13 @@ error_reporting(E_ALL);
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=student_subject">
-                                    <i class="bi bi-journal-bookmark-fill me-2"></i>Subject
+                                <a class="nav-link active" href="index.php?page=student_section">
+                                    <i class="bi bi-building-fill me-2"></i> Section
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=student_section">
-                                    <i class="bi bi-building-fill  me-2"></i> Section
+                                <a class="nav-link active" href="index.php?page=student_subject">
+                                    <i class="bi bi-journal-bookmark-fill me-2"></i>Subject
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -128,11 +147,6 @@ error_reporting(E_ALL);
                                     <i class="bi bi-journal me-2"></i> Module
                                 </a>
                             </li>
-                            <!-- <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=student_assignment">
-                                    <i class="bi bi-pencil me-2"></i> Assignment
-                                </a>
-                            </li> -->
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=student_quiz">
                                     <i class="bi bi-lightbulb me-2"></i> Quiz
@@ -140,10 +154,9 @@ error_reporting(E_ALL);
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=student_exam">
-                                    <i class="bi bi-book me-2"></i></i>Exam
+                                    <i class="bi bi-book me-2"></i>Exam
                                 </a>
                             </li>
-
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=student_grade">
                                     <i class="bi bi-bar-chart me-2"></i> Grades
@@ -151,15 +164,16 @@ error_reporting(E_ALL);
                             </li>
                             <li class="nav-item">
                                 <a type="button" class="nav-link active" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                                    <i class="bi bi-box-arrow-right  me-1"></i> Logout
+                                    <i class="bi bi-box-arrow-right me-1"></i> Logout
                                 </a>
                             </li>
                         </ul>
+
                     </div>
                 </nav>
 
                 <!-- Logout Modal -->
-                <div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                <div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutModalLabel">
                     <div class="modal-dialog modal-dialog-centered modal-md">
                         <div class="modal-content">
 
@@ -184,4 +198,5 @@ error_reporting(E_ALL);
 
 
     <!-- Bootstrap JS and Dependencies -->
+    <!-- NOTE : DON'T REMOVE THIS DEPENDENCIES  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

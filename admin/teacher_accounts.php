@@ -36,7 +36,7 @@ $mySQLFunction->disconnect();
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h5 class="text-black">List of Faculty Accounts</h5>
+                        <h5 class="fw-bold">List of Faculty Accounts</h5>
                         <div class="d-flex">
                         </div>
                     </div>
@@ -63,9 +63,7 @@ $mySQLFunction->disconnect();
                                 if (!empty($result)) {
                                     $count = 1;
                                     foreach ($result as $row) {
-                                        // Create a DateTime object and format the added_date
-                                        $addedDate = new DateTime($row['date_added']); // Create a DateTime object for the current row
-                                        $formattedDate = $addedDate->format('F j, Y'); // Format to "August 11, 2024"
+
                                         // Check if stu_dob is set and valid before using it
                                         if (isset($row['teacher_dob'])) {
                                             $formattedPassword = $mySQLFunction->generatePassword($row['teacher_dob']);
@@ -80,7 +78,7 @@ $mySQLFunction->disconnect();
                                         echo '<td style="color: #6610f2; font-weight:500;">' . $row["username"] . '</td>';
                                         echo '<td style="color: #6610f2; font-weight:500;">' . $formattedPassword . '</td>';
                                         // echo '<td>' . ucwords(strtolower($row["role"])) . '</td>';
-                                        echo '<td>' . $formattedDate . '</td>';
+                                        echo '<td>' . date('F j, Y', strtotime($row["date_added"])) . '</td>';
 
                                         echo '</tr>';
 

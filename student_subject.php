@@ -24,7 +24,17 @@ $mySQLFunction->disconnect();
         <div class="ms-3 w-100">
             <div class="container mt-4">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="fw-bold text-secondary">SUBJECTS</h5>
+                    <!-- <h5 class="fw-bold text-secondary">SUBJECTS</h5> -->
+
+                    <?php
+                    if (!empty($studentSubjects)) {
+                        echo "<h5 class='fw-bold text-secondary'>" . count($studentSubjects) . " Subject(s)</h5>";
+                    } else {
+                        echo "<h5 class='fw-bold text-secondary'> " . count($studentSubjects) . "  Subject</h5>";
+                    }
+                    ?>
+
+
                     <!-- Search Bar -->
                     <div class="col-md-4">
                         <div class="input-group input-group-sm">
@@ -38,7 +48,7 @@ $mySQLFunction->disconnect();
             </div>
         </div>
     </div>
-    </div>
+
 
 
     <!-- Subject Cards -->
@@ -120,7 +130,7 @@ $mySQLFunction->disconnect();
                         </div>
                         <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
                             <a href="index.php?page=subject_list&sub_code=<?php echo urlencode($subject['sub_code']); ?> &strand_code=<?php echo urlencode($subject['strand_code']); ?> &grade_lvl=<?php echo urlencode($subject['grade_lvl']); ?>" class="btn btn-outline-success w-100 fw-bold d-flex align-items-center justify-content-center">
-                                <i class="bi bi-person-lines-fill me-2"></i> View Module
+                                <i class="bi bi-journals me-2"></i> View Module
                             </a>
                         </div>
                     </div>

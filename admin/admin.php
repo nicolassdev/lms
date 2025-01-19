@@ -182,7 +182,7 @@ include "../admin/includes/Forms/adminform.php";
                         </div>
                         <div class="col-md-6">
                             <strong>Joined:</strong>
-                            <p><?php echo htmlspecialchars($_SESSION["admin_added"]); ?></p>
+                            <p><?php echo htmlspecialchars($_SESSION["REGISTRAR_added"]); ?></p>
                         </div>
                     </div>
 

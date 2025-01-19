@@ -1,6 +1,7 @@
 <?php
 // Define the directory where modules are stored
-$uploadDir = '../../assets/Module/';
+$uploadDir = '../../faculty/module_uploaded/';
+
 
 $errorModal = ''; // Initialize error modal message
 
