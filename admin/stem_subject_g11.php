@@ -97,7 +97,7 @@
 
                      <!-- SUBJECT TABLE -->
                      <div class="table-responsive small ms-3 me-3">
-                         <table id="example" class="table table-bordered table-striped table-sm align-middle ">
+                         <table id="stemSubject" class="table table-bordered table-striped table-sm align-middle ">
                              <thead class="table-dark ">
                                  <tr>
                                      <th scope="col" class="small text-center">Subject</th>
@@ -149,60 +149,9 @@
         ?>
  </main>
 
- <!-- PDF ,EXCEL, PRINT ,CVS -->
- <script>
-     $(document).ready(function() {
-         $("#example").DataTable({
-             dom: "Bfrtip", // Include buttons in the dom
-             buttons: [
-                
-                 {
-                     extend: "excelHtml5",
-                     text: "Download Excel",
-                     exportOptions: {
-                         columns: function(index, data, node) {
-                             // Exclude the "Action" column (assuming index 7)
-                             return index !== 7;
-                         },
-                     },
-                 },
-                 {
-                     extend: "pdfHtml5",
-                     text: "Download PDF",
-                     exportOptions: {
-                         columns: function(index, data, node) {
-
-                             // Exclude the "Action" column (assuming index 7)
-                             return index !== 7;
-                         },
-                     },
-                 },
-                 {
-                     extend: "print",
-                     text: "Print",
-                     autoPrint: true, // This will print in the same tab (no new window)
-                     customize: function(win) {
-                         // Custom styling or adjustments for print can go here
-                         $(win.document.body).css("font-size", "10pt").prepend(
-                             "<h3>Section Details</h3>" // Add a custom title for the print view
-                         );
-                         $(win.document.body)
-                             .find('h1:contains("LMS")') // Adjust the selector if needed
-                             .css("display", "none");
-
-                         $(win.document.body)
-                             .find("table")
-                             .addClass("compact") // Optional: Compact styling for the table in print view
-                             .css("font-size", "inherit");
-                     },
-                     exportOptions: {
-                         columns: function(index, data, node) {
-                             // Exclude the "Action" column (assuming index 7)
-                             return index !== 7;
-                         },
-                     },
-                 },
-             ],
-         });
-     });
- </script>
+  <!-- PDF ,EXCEL, PRINT ,CVS -->
+<script src="../assets/js/globaltables.js"></script>
+<script>
+    initializeDataTable("stemSubject", 5, "STEM Grade-11 | Subject List");
+</script>
+ 

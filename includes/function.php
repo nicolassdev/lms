@@ -493,10 +493,7 @@ class myDataBase
 
         return $result;
     }
-
-    public function getAdviserAndClassmates() {}
-
-
+ 
     public function getAllStudentDetailsBySectionOfTeacher($teacher_id)
     {
         $sql = "
@@ -707,8 +704,6 @@ class myDataBase
 
 
 
-
-
     // GET TEACHER SUBJECT HANDLED by id with COUNT
     public function getTeacherSubjectHandled($teacher_id)
     {
@@ -745,6 +740,8 @@ class myDataBase
         return $data;
     }
 
+
+    // GET ALL Adviser and classmate of student
     public function getAdviserandClassmates($student_id)
     {
         $sql = "
@@ -1588,8 +1585,6 @@ class myDataBase
 
 
 
-
-
     //GET STRAND NAME
     // public function getStrand($row = null, $value = null, $limit = 8, $offset = 0)
     // {
@@ -1613,7 +1608,7 @@ class myDataBase
     //     }
     // }
 
-
+    // GET LIST OF STRAND
     public function getStrand($row = null, $value = null)
     {
         if ($row != null &&  $value != null) {
@@ -1630,49 +1625,6 @@ class myDataBase
         }
     }
 
-
-
-    public function getDescStrand($row = null, $value = null)
-    {
-        if ($row != null &&  $value != null) {
-
-            $sql = "SELECT * FROM `strand` WHERE `$row` = '$value'";
-            $stored = ($this->con->query($sql))->fetch_assoc();
-            return $stored;
-        } else {
-
-            $sql = "SELECT * FROM `strand` ORDER BY `strand_desc`";
-            $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
-
-            return $stored;
-        }
-    }
-
-
-    //  GET GRADELEVEL LIST 
-    public function getStrandList($row = null, $value = null)
-    {
-        if ($row != null &&  $value != null) {
-
-            $sql = "SELECT `section_code`, section.strand_code, `GRADE_NAME`, CONCAT(`TEACHER_FNAME`, ' ',`TEACHER_INIT`, ' ', `TEACHER_LNAME`) AS ADVISOR 
-            FROM `GRADELEVEL` LEFT JOIN `TEACHER`
-            ON GRADELEVEL.TEACHER_ID = TEACHER.TEACHER_ID
-            WHERE `$row` = '$value'";
-            $stored = ($this->con->query($sql))->fetch_assoc();
-            $stored->close();
-            return $stored;
-        } else {
-
-
-            $sql = "SELECT `GRADE_ID`, `GRADE_NAME`, CONCAT(`TEACHER_FNAME`, ' ',`TEACHER_INIT`, ' ', `TEACHER_LNAME`) AS ADVISOR 
-            FROM `GRADELEVEL` LEFT JOIN `TEACHER`
-            ON GRADELEVEL.TEACHER_ID = TEACHER.TEACHER_ID
-            ORDER BY GRADELEVEL.GRADE_NAME";
-            $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
-
-            return $stored;
-        }
-    }
 
 
     // GET LIST OF SECTION
@@ -1955,6 +1907,7 @@ class myDataBase
             return $stored;
         }
     }
+
 
 
 

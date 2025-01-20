@@ -21,9 +21,6 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
     // print_r($students);
     // echo "</pre>";
 }
-
-
-include "../faculty/includes/Forms/createexamform.php";
 ?>
 
 <style>
@@ -73,41 +70,18 @@ include "../faculty/includes/Forms/createexamform.php";
                                 ?>
                             </h6>
 
-                            <!-- Student Count -->
-                            <?php if (!empty($students)) : ?>
-                                <h6 class="fw-semibold"><?php echo count($students); ?> Student(s)</h6>
-                            <?php else : ?>
-                                <h6 class="text-secondary fw-semibold mt-1">0 Student(s)</h6>
-                            <?php endif; ?>
-
-
                         </div>
 
                         <!-- View exam list to modefied -->
                         <div class="d-flex gap-2 ms-2">
                         <div>
                             <a class="btn btn-primary  fw-bold btn-sm btn-animate" 
-                            href="index.php?page=created_exam_list&sched_id=<?php echo urlencode($sched_id); ?>&sub_code=<?php echo urlencode($sub_code); ?>&section_code=<?php echo urlencode($section_code); ?> "
-                                <span>View exam</span>
+                            href="index.php?page=create_exam&sched_id=<?php echo urlencode($sched_id); ?>&sub_code=<?php echo urlencode($sub_code); ?>&section_code=<?php echo urlencode($section_code); ?> "
+                                <span>Back</span>
                             </a>
                         </div>
 
-
-                        <!-- Upload Button -->
-                        <div>
-                            <?php
-                            $btnClass = empty($students) ? 'btn-danger' : 'btn-primary';
-                            $disabled = empty($students) ? 'disabled' : '';
-                            ?>
-                            <button type="button"
-                                class="btn <?php echo $btnClass; ?> btn-sm fw-bold d-flex align-items-center"
-                                data-bs-toggle="modal"
-                                data-bs-target="#create_exam"
-                                data-bs-whatever="@fat"
-                                <?php echo $disabled; ?>>
-                                <i class="bi-plus-circle me-1"></i>Create Exam
-                            </button>
-                        </div>
+ 
                         </div>
                     </div>
 
@@ -124,9 +98,6 @@ include "../faculty/includes/Forms/createexamform.php";
                                     <th scope="col" style="width: 50px;">Gender</th>
                                     <th scope="col" style="width: 150px;">Address</th>
                                     <th scope="col" style="width: 100px;">Contact</th>
-                                    <th scope="col" style="width: 100px;">Email</th>
-                                    <th scope="col" style="width: 100px;">Year level</th>
-                                    <th scope="col" style="width: 100px;">Section</th>
                                     <th scope="col" style="width: 100px;">Status</th>
                                     <th scope="col" style="width: 100px;">Score</th>
                                 </tr>
@@ -147,9 +118,7 @@ include "../faculty/includes/Forms/createexamform.php";
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
                                         echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
-                                        echo '<td class="small text-center">' . strtolower($row["stu_email"]) . '</td>';
-                                        echo '<td class="small text-center">' .  $row["grade_lvl"] . '</td>';
-                                        echo '<td class="small text-center">' .  $row["section_name"] . '</td>';
+            
 
                                         // Check if there are no files uploaded
                                         echo '<td>';
@@ -230,9 +199,9 @@ include "../faculty/includes/Forms/createexamform.php";
                     text: "Print",
                     autoPrint: true, // This will print in the same tab (no new window)
                     customize: function(win) {
-                        // Custom styling or adjustments for print can go here
+                                              // Hide the LMS heading during print
                         $(win.document.body)
-                            .find('h1:contains("LMS")') // Adjust the selector if needed
+                            .find('h1:contains("Teacher")') // Adjust the selector if needed
                             .css("display", "none");
 
                         $(win.document.body)

@@ -297,7 +297,6 @@ include "../admin/includes/Forms/enrollmentform.php";
 </main>
 
 
-<!-- <script src="../assets/js/enrollment.js"></script> -->
 <!-- PDF ,EXCEL, PRINT ,CVS -->
 <script>
     $(document).ready(function() {

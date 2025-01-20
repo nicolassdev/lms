@@ -77,6 +77,10 @@ switch ($page) {
         require_once 'teacher_quiz.php';
         break;
 
+
+        /** 
+         Exam route */
+
     case "teacher_exam":
         require_once 'teacher_exam.php';
         break;
@@ -85,18 +89,21 @@ switch ($page) {
         require_once 'create_exam.php';
         break;
 
-
-    case "teacher_report":
-        require_once 'teacher_report.php';
+    case "created_exam_list":
+        require_once 'created_exam_list.php';
         break;
 
+        
         /** 
          Subject route */
-
-    case "teacher_subject":
-        require_once 'teacher_subject.php';
-        break;
-
+         
+         case "teacher_subject":
+            require_once 'teacher_subject.php';
+            break;
+                
+        case "teacher_report":
+            require_once 'teacher_report.php';
+            break;
 
 
 

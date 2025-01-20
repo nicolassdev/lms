@@ -107,7 +107,7 @@ $result = $mySQLFunction->getStudentStrandAndSectionaAlsoAdviser($_SESSION['stu_
                                     }
                                     ?>
 
-                                    <h6 class="text-muted mb-3"><?= htmlspecialchars($payload["teacher_fname"] . " " . $payload["teacher_lname"]) ?></h6>
+                                    <h6 class="mb-3"><?= htmlspecialchars  (ucwords(strtolower(($payload["teacher_fname"] . " " . $payload["teacher_lname"])))) ?></h6>
 
                                 </div>
                             <?php else : ?>
@@ -162,7 +162,7 @@ $result = $mySQLFunction->getStudentStrandAndSectionaAlsoAdviser($_SESSION['stu_
                                                     }
                                                     ?>
                                                     <div class="card-body">
-                                                        <h6 class="card-title"><?= htmlspecialchars($classmate["classmate_fname"] . " " . $classmate["classmate_lname"]) ?></h6>
+                                                        <h6 class="card-title"><?= htmlspecialchars (ucwords(strtolower(($classmate["classmate_fname"] . " " . $classmate["classmate_lname"])))) ?></h6>
                                                     </div>
                                                 </div>
                                             </div>

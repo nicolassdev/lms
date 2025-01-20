@@ -104,7 +104,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
 
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
-                        <table id="example" class="table table-bordered table-striped table-sm align-middle">
+                        <table id="student_subjectlist" class="table table-bordered table-striped table-sm align-middle">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
@@ -180,87 +180,8 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
     ?>
 </main>
 <!-- PDF ,EXCEL, PRINT ,CVS -->
+<script src="../assets/js/globaltables.js"></script>
 <script>
-    $(document).ready(function() {
-        $("#example").DataTable({
-            dom: "Bfrtip", // Include buttons in the dom
-            buttons: [
-                "copy",
-                {
-                    extend: "csvHtml5",
-                    text: "CSV",
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 7)
-                            return index !== 9;
-                        },
-                    },
-                },
-                {
-                    extend: "excelHtml5",
-                    text: "Excel",
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 7)
-                            return index !== 9;
-                        },
-                    },
-                },
-                {
-                    extend: "pdfHtml5",
-                    text: "PDF",
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 7)
-                            return index !== 9;
-                        },
-                    },
-                },
-                {
-                    extend: "print",
-                    text: "Print",
-                    autoPrint: true, // This will print in the same tab (no new window)
-                    customize: function(win) {
-                        // Custom styling or adjustments for print can go here
-                        $(win.document.body)
-                            .find('h1:contains("LMS")') // Adjust the selector if needed
-                            .css("display", "none");
-
-                        $(win.document.body)
-                            .css("font-size", "10pt")
-                            .prepend(
-                                // This is the container that holds both left and right aligned text
-                                '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-                                // Left-aligned: List of Enrolled Students
-                                '<div style="text-align:left; flex: 1;">' +
-                                "<h5 style='font-size: 14px;'>Enrolled Students</h5>" +
-                                "</div>" +
-                                // Right-aligned: Computer Systems Institute
-                                '<div style="text-align:right; flex: 1;">' +
-                                "<h6>Computer Systems Institute</h6>" +
-                                "<small>F. Imperial st., Brgy. 36 - Capantawan, Legazpi City</small><br>" +
-                                "</div>" +
-                                "</div>"
-                            );
-
-                        $(win.document.body)
-                            .find("table thead th")
-                            .css("background-color", "#007bff") // Header color
-                            .css("color", "#ffffff")
-                            .css("padding", "10px");
-                        $(win.document.body)
-                            .find("table")
-                            .addClass("compact") // Optional: Compact styling for the table in print view
-                            .css("font-size", "inherit");
-                    },
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 7)
-                            return index !== 9;
-                        },
-                    },
-                },
-            ],
-        });
-    });
+    initializeDataTable("student_subjectlist", 8, "List of Students");
 </script>
+ 
