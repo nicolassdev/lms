@@ -26,7 +26,7 @@ $account = $mySQLFunction->getAccountUser($_SESSION['id']);
 // $principalFullName = $principalInfo['firstname'] . ' ' . $principalInfo['middlename'] . ' ' . $principalInfo['lastname'];
 
 
-$principalInfo = $mySQLFunction->getInfo('PRINCIPAL', $_SESSION['principal_id']);
+$principalInfo = $mySQLFunction->getInfo('principal', $_SESSION['principal_id']);
 if ($principalInfo) { // Check if data was returned
     $principalFullName = $principalInfo['firstname'] . ' ' . $principalInfo['middlename'] . ' ' . $principalInfo['lastname'];
     // echo "Full Name: $fullName";
