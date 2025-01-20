@@ -196,7 +196,7 @@ class myDataBase
     public function getInfo($tableName)
     {
         // Sanitize table name to prevent SQL injection
-        $allowedTables = ['REGISTRAR', 'PRINCIPAL'];
+        $allowedTables = ['registrar', 'principal'];
         if (!in_array($tableName, $allowedTables)) {
             throw new Exception("Invalid table name");
         }
