@@ -178,7 +178,7 @@ class myDataBase
     //GET SCHOOL INFORMATIONM
     public function getSchool()
     {
-        $sql = "SELECT * FROM `SCHOOL`";
+        $sql = "SELECT * FROM `school`";
         $stored = ($this->con->query($sql))->fetch_assoc();
         return $stored;
     }
@@ -196,7 +196,7 @@ class myDataBase
     public function getInfo($tableName)
     {
         // Sanitize table name to prevent SQL injection
-        $allowedTables = ['REGISTRAR', 'PRINCIPAL'];
+        $allowedTables = ['registrar', 'principal'];
         if (!in_array($tableName, $allowedTables)) {
             throw new Exception("Invalid table name");
         }
@@ -874,7 +874,7 @@ class myDataBase
     public function updateSchool($column, $value)
     {
         $value = mysqli_real_escape_string($this->con, $value);
-        $sql = "UPDATE `SCHOOL` SET `$column` = '$value'";
+        $sql = "UPDATE `school` SET `$column` = '$value'";
         $result = $this->con->query($sql);
         return $result;
     }

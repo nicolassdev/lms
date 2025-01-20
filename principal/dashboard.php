@@ -8,15 +8,15 @@ if (!isset($_SESSION['principal_id'])) {
 <?php
 include "../includes/dbh-inc.php";
 $mySQLFunction->connection();
-$numberOfTeacher = $mySQLFunction->checkRowCount("TEACHER");
+$numberOfTeacher = $mySQLFunction->checkRowCount("teacher");
 
-$numberOfSection = $mySQLFunction->checkRowCount("SECTION");
+$numberOfSection = $mySQLFunction->checkRowCount("section");
 
-$numberOfStudent = $mySQLFunction->checkRowCount("STUDENT");
+$numberOfStudent = $mySQLFunction->checkRowCount("student");
 
-$numberOfSubject = $mySQLFunction->checkRowCount("SUBJECT");
+$numberOfSubject = $mySQLFunction->checkRowCount("subject");
 
-$numberOfEnrolled = $mySQLFunction->checkRowCount("ENROLL");
+$numberOfEnrolled = $mySQLFunction->checkRowCount("enroll");
 
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');

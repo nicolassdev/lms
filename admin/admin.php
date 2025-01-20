@@ -9,7 +9,7 @@ $mySQLFunction->connection();
 $showSchool = $mySQLFunction->getSchool();
 
 
-$showResult = $mySQLFunction->getInfo('REGISTRAR');
+$showResult = $mySQLFunction->getInfo('registrar');
 if ($showResult) { // Check if data was returned
     $fullName = $showResult['firstname'] . ' ' . $showResult['middlename'] . ' ' . $showResult['lastname'];
 } else {

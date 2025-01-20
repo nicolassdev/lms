@@ -8,19 +8,19 @@ if (!isset($_SESSION['registrar_id'])) {
 <?php
 include "../includes/dbh-inc.php";
 $mySQLFunction->connection();
-$numberOfTotalUsers = $mySQLFunction->checkRowCount("USERS");
+$numberOfTotalUsers = $mySQLFunction->checkRowCount("users");
 
-$numberOfStrand = $mySQLFunction->checkRowCount("STRAND");
+$numberOfStrand = $mySQLFunction->checkRowCount("strand");
 
-$numberOfTeacher = $mySQLFunction->checkRowCount("TEACHER");
+$numberOfTeacher = $mySQLFunction->checkRowCount("teacher");
 
-$numberOfAdviser = $mySQLFunction->checkRowCount("SECTION");
+$numberOfAdviser = $mySQLFunction->checkRowCount("section");
 
-$numberOfStudent = $mySQLFunction->checkRowCount("STUDENT");
+$numberOfStudent = $mySQLFunction->checkRowCount("student");
 
-$numberOfSubject = $mySQLFunction->checkRowCount("SUBJECT");
+$numberOfSubject = $mySQLFunction->checkRowCount("subject");
 
-$numberOfEnrolled = $mySQLFunction->checkRowCount("ENROLL");
+$numberOfEnrolled = $mySQLFunction->checkRowCount("enroll");
 
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
@@ -243,30 +243,7 @@ $mySQLFunction->disconnect();
 
 
 
-        <!--       Teachers Card with count
-            <div class="col-lg-6 col-sm-12">
-                <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
-                    <div class="card-body">
-                        <h5 class="card-title">Teacher</h5>
-                        <p class="card-text">Number of teachers registered.</p>
-                        <div id="teacherChart" style="height: 250px; max-width:100%;"></div>
-                    </div>
-                </div>
-            </div>
-
-            Students Card with count
-            <div class="col-lg-6 col-sm-12">
-                <div class="card mb-3 mx-auto shadow-sm animate__animated animate__fadeInUp" style="max-width: 100%;">
-                    <div class="card-body">
-                        <h5 class="card-title">Student</h5>
-                        <p class="card-text">Number of Senior High School students enrolled.</p>
-                        <div id="studentChart" style="height: 250px; max-width:100%;"></div>
-                    </div>
-                </div>
-            </div> -->
-
-
-        <?php
+     <?php
         include "../includes/footer.php";
         ?>
     </main>
@@ -294,48 +271,3 @@ $mySQLFunction->disconnect();
         updateTime(); // Initial call
     </script>
 
-    <!-- Morris.js Chart Script -->
-    <script>
-        $(document).ready(function() {
-            new Morris.Donut({
-                element: 'teacherChart',
-                data: [{
-                        label: 'Teacher',
-                        value: <?php echo $numberOfTeacher; ?>
-                    },
-                    {
-                        label: 'Adviser',
-                        value: <?php echo $numberOfAdviser; ?>
-                    },
-                    {
-                        label: 'Subject',
-                        value: <?php echo $numberOfSubject; ?>
-                    }
-                ],
-                colors: ['#D91656', '#640D5F', '#180161'],
-                resize: true
-            });
-        });
-
-        $(document).ready(function() {
-            new Morris.Donut({
-                element: 'studentChart',
-                data: [{
-
-                        label: 'Student',
-                        value: <?php echo $numberOfStudent; ?>
-                    },
-                    {
-                        label: 'Section',
-                        value: <?php echo $numberOfAdviser; ?>
-                    },
-                    {
-                        label: 'Enrolled',
-                        value: <?php echo $numberOfEnrolled; ?>
-                    }
-                ],
-                colors: ['#F3C623', '#EB8317', '#00FF9C'],
-                resize: true
-            });
-        });
-    </script>
