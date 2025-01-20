@@ -9,7 +9,7 @@ $mySQLFunction->connection();
 $showSchool = $mySQLFunction->getSchool();
 
 
-$showResult = $mySQLFunction->getInfo('PRINCIPAL');
+$showResult = $mySQLFunction->getInfo('principal');
 if ($showResult) { // Check if data was returned
     $fullName = $showResult['firstname'] . ' ' . $showResult['middlename'] . ' ' . $showResult['lastname'];
     // echo "Full Name: $fullName";
