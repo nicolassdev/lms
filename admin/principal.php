@@ -10,7 +10,7 @@ $showSchool = $mySQLFunction->getSchool();
 
 
 
-$showResult = $mySQLFunction->getInfo('PRINCIPAL');
+$showResult = $mySQLFunction->getInfo('principal');
 if ($showResult) { // Check if data was returned
 
     $principalfullName = $showResult['firstname'] . ' ' . $showResult['middlename'] . ' ' . $showResult['lastname'];
