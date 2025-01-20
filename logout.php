@@ -40,7 +40,7 @@ session_destroy(); // Destroys the session
         }, 500); // Start fade-out after 0.5 seconds
 
         setTimeout(() => {
-            window.location.href = "../lms/login.php?success=logout";
+            window.location.href = "login.php?success=logout";
         }, 1500); // Redirect after 1.5 seconds
     </script>
 </head>
