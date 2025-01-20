@@ -7,8 +7,6 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
    <link rel="website icon" type="webp" href="assets/img/csi.webp">
    <link rel="stylesheet" href="assets/css/login.css?v=<?php echo time(); ?>" />
-   <link rel="stylesheet" href="/assets/bootstrap-5.3.3-dist/css/bootstrap.min.css">
-
    <title>Login</title>
 
  </head>
