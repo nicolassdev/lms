@@ -81,7 +81,7 @@ try {
         $_SESSION['success'] = "Teacher Information has been updated successfully.";
 
         // Redirect to teacher profile page
-        header("location:/lms/faculty/index.php?page=teacher_prof");
+        header("location:../../index.php?page=teacher_prof");
         exit();
     }
 } catch (Exception $e) {
