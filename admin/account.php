@@ -26,7 +26,7 @@ $account = $mySQLFunction->getAccountUser($_SESSION['id']);
 // $registrarFullName = $registrarlInfo['firstname'] . ' ' . $registrarlInfo['middlename'] . ' ' . $registrarlInfo['lastname'];
 
 
-$registrarlInfo = $mySQLFunction->getInfo('REGISTRAR', $_SESSION['registrar_id']);
+$registrarlInfo = $mySQLFunction->getInfo('registrar', $_SESSION['registrar_id']);
 if ($registrarlInfo) { // Check if data was returned
     $registrarFullName = $registrarlInfo['firstname'] . ' ' . $registrarlInfo['middlename'] . ' ' . $registrarlInfo['lastname'];
     // echo "Full Name: $fullName";
