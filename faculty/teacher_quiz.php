@@ -38,7 +38,7 @@ $mySQLFunction->disconnect();
     }
 
     .card-body {
-        padding: 30px;
+        padding: 25px;
         font-size: 14px;
         color: #6c757d;
     }
@@ -96,12 +96,12 @@ $mySQLFunction->disconnect();
                                         <div class="card-body">
                                             <div class="text-muted fw-semibold mb-0">
 
-                                                <div class="fs-6 fw-semibold"><?php echo ucwords(strtolower($schedule["grade_lvl"])) . ' ' . htmlspecialchars($schedule["section_name"]); ?></div>
+                                                <div class="fw-bold"><?php echo ucwords(strtolower($schedule["grade_lvl"])) . ' ' . htmlspecialchars($schedule["section_name"]); ?></div>
                                             </div>
-                                            <small class="text-muted fw-semibold mb-3">
-                                                <?php echo  ucwords(strtolower($schedule["strand_desc"])) ?? 'No Strand'; ?>
+                                            <small class="text-sm fw-semibold mb-3">
+                                                <?php echo   $schedule["strand_desc"] ?? 'No Strand'; ?>
                                             </small>
-                                            <div class="text-muted mb-2 mt-3">
+                                            <div class="text-muted mb-2 mt-4 fw-semibold">
                                                 <i class="bi bi-people-fill text-success"></i> Total Students:
                                                 <?php
                                                 $mySQLFunction->connection();
@@ -119,7 +119,7 @@ $mySQLFunction->disconnect();
 
                                         <!-- Card Footer -->
                                         <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
-                                            <a href="index.php?page=student_subject_list&sched_id=<?php echo urlencode($schedule['sched_id']); ?>&sub_code=<?php echo urlencode($schedule['sub_code']); ?>&section_code=<?php echo urlencode($schedule['section_code']); ?>"
+                                            <a href="index.php?page=create_quiz&sched_id=<?php echo urlencode($schedule['sched_id']); ?>&sub_code=<?php echo urlencode($schedule['sub_code']); ?>&section_code=<?php echo urlencode($schedule['section_code']); ?>"
                                                 class="btn btn-outline-success w-100 fw-bold">
                                                 <i class="bi bi-pencil-square me-2"></i>Create Quiz
                                             </a>

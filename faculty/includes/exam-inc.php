@@ -2,6 +2,8 @@
 session_start();
 include "../../includes/dbh-inc.php"; // Database connection
 
+
+
 if (!isset($_POST["submit"])) {
     $sched_id = $_GET['sched_id'] ?? '';
     $sub_id = $_GET['sub_code'] ?? '';
@@ -9,6 +11,7 @@ if (!isset($_POST["submit"])) {
     header("Location: ../index.php?page=create_exam&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
     exit();
 }
+
 
 try {
     // Get POST data and sanitize inputs
@@ -64,7 +67,7 @@ try {
     $mySQLFunction->connection();
 
     // Insert exam details into database
-    $stmt = $mySQLFunction->con->prepare("INSERT INTO exam (exam_id, sched_id, exam_type, exam_quarter, exam_duration, exam_title, exam_desc, exam_number, exam_date) 
+    $stmt = $mySQLFunction->con->prepare("INSERT INTO exam (exam_id, sched_id, exam_type, exam_quarter, exam_duration, exam_title, exam_desc, exam_items, exam_date) 
                                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("sssssssss", $exam_id, $sched_id, $examType, $examQuarter, $examDuration, $examTitle, $examDescription, $examTotal, $examDate);
     $stmt->execute();

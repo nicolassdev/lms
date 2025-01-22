@@ -52,8 +52,8 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center ms-3 me-3">
-                        <h5 class="fw-bold">
-                            <div class="fs-6 text-muted">
+                        <h5 class="fw-semibold">
+                            <div class="fs-6 text-danger">
                                 <?php
                                 if (!empty($modules)) {
                                     foreach ($modules as $module) {
@@ -64,17 +64,18 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                 // else {
                                 //     echo "<div class='text-danger'>NO MODULE FOUND!</div>"; // Optional: Display a message when there are no modules
                                 // }
+
                                 ?>
                             </div>
-                            <div class="fs-6 text-muted">
+                            <div class="text-muted text-sm">
                                 <?php
                                 if (!empty($modules)) {
                                     echo htmlspecialchars($module['grade_lvl']) . ' ' . htmlspecialchars($module['strand_name']) . ' ';
                                 } else {
-                                    echo "<small class='text-danger'>No modules uploaded.</small>"; // Optional: Display fallback content
+                                    echo "<small class='alert alert-warning  d-flex'><strong class='me-2'>No Uploaded Module! </strong>  It seems there is no exam uploaded yet.</small>"; // Optional: Display fallback content
                                 }
-                                ?><br>
-                                Modules
+                                ?>
+                                <!-- Modules -->
                             </div>
                         </h5>
 
@@ -288,7 +289,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                         ';
                                     }
                                 } else {
-                                    echo '<tr><td colspan="5" class="text-center text-danger">No modules found.</td></tr>';
+                                    echo '<tr><td colspan="5" class="text-center">No modules found.</td></tr>';
                                 }
                                 ?>
 

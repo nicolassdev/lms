@@ -1,11 +1,11 @@
 <!-- STUDENT INFORMATION ENTRY MODAL -->
-<div class="modal fade" id="create_exam" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="create_quiz" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content b-grey">
             <div class="modal-body">
-                <h4 class="fw-bold">Exam Details</h4>
+                <h4 class="fw-bold">Quiz Details</h4>
 
-                <form id="createExamForm" action="./includes/exam-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation" novalidate>
+                <form id="createQuizForm" action="./includes/quiz-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation" novalidate>
 
                     <!-- Hidden Inputs -->
                     <input type="hidden" name="schedID" value="<?php echo htmlspecialchars($_GET['sched_id']); ?>">
@@ -62,7 +62,7 @@
                     <!-- Create Exam Button -->
                     <div class="text-end">
                         <button name="submit" type="submit" class="btn btn-primary">
-                            Create Exam
+                            Create Quiz
                         </button>
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" onclick="resetFormUpload()">Cancel</button>
                     </div>
@@ -210,7 +210,7 @@
     // Function to clear the form
     function resetFormUpload() {
         // Get the form element by ID
-        const form = document.getElementById('createExamForm');
+        const form = document.getElementById('createQuizForm');
 
         if (form) {
             // Reset the form values and validation state

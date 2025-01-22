@@ -83,7 +83,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                         <!-- Back button -->
                         <div class="d-flex gap-2 ms-2">
                             <a class="btn btn-primary fw-bold btn-sm btn-animate"
-                                href="index.php?page=create_exam<?php if ($sched_id && $sub_code && $section_code) {
+                                href="index.php?page=create_quiz<?php if ($sched_id && $sub_code && $section_code) {
                                                                     echo '&sched_id=' . urlencode($sched_id) . '&sub_code=' . urlencode($sub_code) . '&section_code=' . urlencode($section_code);
                                                                 } ?>">
                                 <span>Back</span>

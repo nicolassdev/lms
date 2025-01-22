@@ -23,7 +23,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
 }
 
 
-include "../faculty/includes/Forms/createexamform.php";
+include "../faculty/includes/Forms/createquizform.php";
 ?>
 
 <style>
@@ -87,10 +87,13 @@ include "../faculty/includes/Forms/createexamform.php";
                         <div class="d-flex gap-2 ms-2">
                             <div>
                                 <a class="btn btn-primary fw-bold btn-sm btn-animate"
-                                    href="index.php?page=created_exam_list&sched_id=<?php echo urlencode($_GET['sched_id']); ?>&sub_code=<?php echo urlencode($_GET['sub_code']); ?>&section_code=<?php echo urlencode($_GET['section_code']); ?>">
-                                    <span>View Exam</span>
+                                    href="index.php?page=created_quiz_list&sched_id=<?php echo urlencode($_GET['sched_id']); ?>&sub_code=<?php echo urlencode($_GET['sub_code']); ?>&section_code=<?php echo urlencode($_GET['section_code']); ?>">
+                                    <span>View Quiz</span>
                                 </a>
                             </div>
+
+
+
 
 
 
@@ -103,10 +106,10 @@ include "../faculty/includes/Forms/createexamform.php";
                                 <button type="button"
                                     class="btn <?php echo $btnClass; ?> btn-sm fw-bold d-flex align-items-center"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#create_exam"
+                                    data-bs-target="#create_quiz"
                                     data-bs-whatever="@fat"
                                     <?php echo $disabled; ?>>
-                                    <i class="bi-plus-circle me-1"></i>Create Exam
+                                    <i class="bi-plus-circle me-1"></i>Create Quiz
                                 </button>
                             </div>
                         </div>
@@ -155,7 +158,7 @@ include "../faculty/includes/Forms/createexamform.php";
                                         // Check if there are no files uploaded
                                         echo '<td>';
                                         if (empty($row['file_names']) || count($fileNames) == 0) {
-                                            echo '<span class="text-danger mr-2">No Exam</span>';
+                                            echo '<span class="text-danger mr-2">No Quiz</span>';
                                         } else {
                                             foreach ($fileNames as $fileName) {
                                                 $fileNameForDownload = htmlspecialchars(trim($fileName)); // Clean up file name

@@ -93,12 +93,12 @@ $mySQLFunction->disconnect();
                                         <div class="card-body">
                                             <div class="text-muted fw-semibold mb-0">
 
-                                                <div class="fs-5 fw-bold"><?php echo ucwords(strtolower($schedule["grade_lvl"])) . ' ' . htmlspecialchars($schedule["section_name"]); ?></div>
+                                                <div class="fw-bold"><?php echo ucwords(strtolower($schedule["grade_lvl"])) . ' ' . htmlspecialchars($schedule["section_name"]); ?></div>
                                             </div>
-                                            <small class="text-muted fw-semibold mb-3">
-                                                <?php echo  ucwords(strtolower($schedule["strand_desc"])) ?? 'No Strand'; ?>
+                                            <small class="text-sm fw-semibold mb-3">
+                                                <?php echo   $schedule["strand_desc"] ?? 'No Strand'; ?>
                                             </small>
-                                            <div class="text-muted mb-2 mt-3">
+                                            <div class="text-muted mb-2 mt-4 fw-semibold">
                                                 <i class="bi bi-people-fill text-danger"></i> Total Students:
                                                 <?php
                                                 $mySQLFunction->connection();

@@ -266,6 +266,17 @@ class myDataBase
     // GET TEACHER'S SUBJECT SCHEDULE HANDLED BY ID
     public function getTeacherSubSchedule($teacher_id)
     {
+        // Get the active semester
+        $activeSemesters = $this->checkSemStatus('semester');
+
+        // Check if there are any active semesters
+        if (empty($activeSemesters)) {
+            return []; // Return an empty array if no active semester
+        }
+
+        // Prepare the active semester condition
+        $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
+
         // Query to fetch subject schedule, section, and strand details based on teacher_id
         $sql = "
         SELECT 
@@ -277,6 +288,7 @@ class myDataBase
             sec.grade_lvl,
             sec.section_name,
             sub.sub_code,
+            sub.sub_semester,
             sub.sub_title,
             st.strand_name,
             st.strand_desc
@@ -436,6 +448,7 @@ class myDataBase
 
 
 
+
     //GET TEACHER SECTION HANDLED by id
     public function getTeacherSectionHandled($teacher_id)
     {
@@ -493,7 +506,7 @@ class myDataBase
 
         return $result;
     }
- 
+
     public function getAllStudentDetailsBySectionOfTeacher($teacher_id)
     {
         $sql = "
@@ -605,6 +618,7 @@ class myDataBase
                     sec.grade_lvl,
                     sched.sched_id,
                     sub.sub_title,
+                    sub.sub_semester,
                     GROUP_CONCAT(ma.file_name ORDER BY ma.date_uploaded DESC) AS file_names,  -- Concatenate files
                     GROUP_CONCAT(ma.date_uploaded ORDER BY ma.date_uploaded DESC) AS upload_dates,  -- Concatenate dates
                     COUNT(e.stu_lrn) OVER (PARTITION BY sec.section_code) AS enrolled_count
@@ -767,14 +781,14 @@ class myDataBase
             WHERE e.stu_lrn = ? 
             AND c.stu_lrn != ?  -- Exclude the current student from the classmates list
         ";
-    
+
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("ss", $student_id, $student_id);  // Binding student_id twice
         $stmt->execute();
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         return $result;
     }
-    
+
 
 
     //GET STUDENT SECTION HANDLED by id  
@@ -2254,6 +2268,12 @@ class myDataBase
     // USERS | ENROLLMENT | STUDENT | TEACHER | SUBJECT | REGISTRAR| PRINCIPAL
     public function updateRecord($table, $row, $value, $whereColumn, $whereValue = null)
     {
+        // Handle array values
+        if (is_array($value)) {
+            // Convert array to a comma-separated string for storage
+            $value = implode(',', $value);
+        }
+
         // Sanitize the value
         $value = mysqli_real_escape_string($this->con, $value);
 
@@ -2266,7 +2286,10 @@ class myDataBase
         if (is_array($whereColumn)) {
             $whereClause = [];
             foreach ($whereColumn as $column => $columnValue) {
-                // Sanitize each column value
+                // Handle array values in the WHERE clause
+                if (is_array($columnValue)) {
+                    $columnValue = implode(',', $columnValue);
+                }
                 $columnValue = mysqli_real_escape_string($this->con, $columnValue);
                 $whereClause[] = "`$column` = '$columnValue'";
             }
@@ -2285,6 +2308,7 @@ class myDataBase
         // Return true on success, false on failure
         return $result ? true : false;
     }
+
 
 
 
@@ -2589,4 +2613,149 @@ class myDataBase
 
         return $modules;
     }
+
+
+
+    // =========================================== EXAM FUNCTION ====================================================
+
+    // GET ALL EXAM CREATED BY TEACHER HANDLED SUBJECT IN EVERY same strand and grade lvl
+    function getAllExamCreatedByTeacher($teacherId, $subjectId, $sectionCode)
+    {
+        try {
+            $sql = "
+                SELECT 
+                    e.exam_id,
+                    e.exam_title,
+                    e.exam_desc,
+                    e.exam_type,
+                    e.exam_quarter,
+                    e.exam_duration,
+                    e.exam_items,
+                    e.exam_date,
+                    sec.section_code,
+                    sec.section_name,
+                    sec.grade_lvl,
+                    str.strand_code,
+                    sub.sub_code,
+                    sub.sub_semester,
+                    sub.sub_title,
+                    sched.sched_id,
+                    -- Fetch multiple-choice questions
+                     (SELECT JSON_ARRAYAGG(
+                        JSON_OBJECT(
+                            'mul_id', mul_id,
+                            'question', mul_question,
+                            'A', choice_a,
+                            'B', choice_b,
+                            'C', choice_c,
+                            'D', choice_d,
+                            'correct', is_correct
+                        )
+                    ) FROM exam_multiple WHERE exam_id = e.exam_id) AS multiple_questions,
+
+                     -- Fetch enumeration questions
+                    (SELECT JSON_ARRAYAGG(
+                        JSON_OBJECT(
+                            'enum_id', enum_id,
+                            'question', enum_question,
+                            'answers', enum_answer
+                        )
+                    ) FROM exam_enumeration WHERE exam_id = e.exam_id) AS enumeration_questions,
+
+                    -- Fetch essay questions
+                    (SELECT JSON_ARRAYAGG( 
+                        JSON_OBJECT(
+                            'essay_id', essay_id,
+                            'question', essay_question
+                        )
+                    ) FROM exam_essay WHERE exam_id = e.exam_id) AS essay_questions,
+
+                    -- Fetch true/false questions
+                    (SELECT JSON_ARRAYAGG(
+                                JSON_OBJECT(
+                                    'tf_id', tf_id,
+                                    'question', tf_question,
+                                    'correct', tf_answer
+                                )
+                            ) 
+                    FROM exam_tf 
+                    WHERE exam_id = e.exam_id) AS tf_questions
+                FROM 
+                    exam e
+                INNER JOIN 
+                    schedule sched ON e.sched_id = sched.sched_id
+                INNER JOIN 
+                    section sec ON sched.section_code = sec.section_code
+                INNER JOIN 
+                    strand str ON sec.strand_code = str.strand_code
+                INNER JOIN 
+                    subject sub ON sched.sub_code = sub.sub_code
+                WHERE 
+                    sched.teacher_id = ?
+                    AND sched.sub_code = ?
+                    AND sched.section_code = ?
+                ORDER BY 
+                    e.exam_date DESC, e.exam_title
+            ";
+
+            // Prepare the query
+            $stmt = $this->con->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
+            }
+            // Bind parameters
+            $stmt->bind_param("sss", $teacherId, $subjectId, $sectionCode);
+            // Execute the statement
+            $stmt->execute();
+            $result = $stmt->get_result();
+            // Fetch all matching rows
+            $exams = $result->fetch_all(MYSQLI_ASSOC);
+            // Free resources
+            $stmt->close();
+            return $exams;
+        } catch (Exception $e) {
+            // Log the error message
+            error_log("Error fetching exams created by teacher: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public function updateMultipleRecord($table, $row, $value, $whereColumn, $whereValue)
+    {
+        $stmt = $this->con->prepare("UPDATE `$table` SET `$row` = ? WHERE `$whereColumn` = ?");
+        $stmt->bind_param("ss", $value, $whereValue);
+        $stmt->execute();
+        $stmt->close();
+        return $stmt;
+    }
+
+    public function updateEnumerationRecord($enum_id, $question, $answer)
+    {
+        $stmt = $this->con->prepare("UPDATE `exam_enumeration` SET `enum_question` = ?, `enum_answer` = ? WHERE `enum_id` = ?");
+        $stmt->bind_param("ssi", $question, $answer, $enum_id);
+        $stmt->execute();
+        $stmt->close();
+        return $stmt;
+    }
+
+    public function updateEssayRecord($essay_id, $question)
+    {
+        $stmt = $this->con->prepare("UPDATE `exam_essay` SET `essay_question` = ? WHERE `essay_id` = ?");
+        $stmt->bind_param("si", $question, $essay_id);
+        $stmt->execute();
+        $stmt->close();
+        return $stmt;
+    }
+
+    public function updateTrueFalseRecord($tf_id, $question, $answer)
+    {
+        $stmt = $this->con->prepare("UPDATE `exam_tf` SET `tf_question` = ?, `tf_answer` = ? WHERE `tf_id` = ?");
+        $stmt->bind_param("ssi", $question, $answer, $tf_id);
+        $stmt->execute();
+        $stmt->close();
+        return $stmt;
+    }
+
+
+    // =========================================== QUIZ FUNCTION ====================================================
 }
