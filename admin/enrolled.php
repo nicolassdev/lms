@@ -142,7 +142,7 @@ include "../admin/includes/Forms/enrollmentform.php";
                                         $count++;
 
 
-                                        // Modal for updating enrolled
+                                        // todo Modal for updating enrolled
                                         echo '
                                                                                     
                                             <div class="modal fade" id="edit_enrolled' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
@@ -151,7 +151,7 @@ include "../admin/includes/Forms/enrollmentform.php";
                                                         <div class="modal-header bg-success text-white">
                                                             <div class="d-flex align-items-center justify-content-between w-100">
                                                             <div class="text-start">
-                                                                <h1 class="modal-title fs-5 text-white">Edit Student Enrolled</h1>
+                                                                <h1 class="modal-title fs-5 text-white">Update Student Requirements</h1>
                                                             </div>
                                                             </div>
                                                             <div class="text-end">
@@ -302,8 +302,7 @@ include "../admin/includes/Forms/enrollmentform.php";
     $(document).ready(function() {
         $("#example").DataTable({
             dom: "Bfrtip", // Include buttons in the dom
-            buttons:
-               [ {
+            buttons: [{
                     extend: "excelHtml5",
                     text: '<i class="fas fa-file-excel"></i>Download Excel',
                     className: "btn btn-sm btn-success",

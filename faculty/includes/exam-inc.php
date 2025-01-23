@@ -78,7 +78,7 @@ try {
             foreach ($_POST['exam_type'] as $questionIndex => $type) {
                 switch ($type) {
                     case "1": // Multiple Choice
-                        $question = $_POST['exm_question'][$questionIndex] ?? '';
+                        $question = $_POST['exam_question'][$questionIndex] ?? '';
                         $choiceA = $_POST['choice_a'][$questionIndex] ?? '';
                         $choiceB = $_POST['choice_b'][$questionIndex] ?? '';
                         $choiceC = $_POST['choice_c'][$questionIndex] ?? '';

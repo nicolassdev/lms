@@ -14,18 +14,18 @@
 
                     <!-- Exam Title & Description -->
                     <div class="mb-2">
-                        <label for="examTitle" class="form-label fw-bold">Exam Title</label>
-                        <input type="text" id="examTitle" name="exam_title" class="form-control" placeholder="Enter the exam title" required>
+                        <label for="quizTitle" class="form-label fw-bold">Quiz Title</label>
+                        <input type="text" id="quizTitle" name="quiz_title" class="form-control" placeholder="Enter the quiz title" required>
                     </div>
                     <div class="mb-4">
-                        <label for="examDescription" class="form-label fw-bold">Description</label>
-                        <textarea id="examDescription" name="exam_description" class="form-control" rows="3" placeholder="Enter a brief description"></textarea>
+                        <label for="quizDescription" class="form-label fw-bold">Description</label>
+                        <textarea id="quizDescription" name="quiz_description" class="form-control" rows="3" placeholder="Enter a brief description"></textarea>
                     </div>
 
                     <!-- Quarterly Exam Type -->
                     <div class=" mb-4">
-                        <label for="quarterExam" class="form-label fw-bold">Quarterly Exam</label>
-                        <select id="quarterExam" name="exam_quarter" class="form-select" required>
+                        <label for="quarterQuiz" class="form-label fw-bold">Quarterly Quiz</label>
+                        <select id="quarterQuiz" name="quiz_quarter" class="form-select" required>
                             <option value="" selected disabled>Select a quarter...</option>
                             <option value="1st">1st Quarter</option>
                             <option value="2nd">2nd Quarter</option>
@@ -37,12 +37,12 @@
                     <!-- Exam Date & Duration -->
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="examDate" class="form-label fw-bold">Exam Date</label>
-                            <input type="date" id="examDate" name="exam_date" class="form-control" required>
+                            <label for="quizDate" class="form-label fw-bold">Date</label>
+                            <input type="date" id="quizDate" name="quiz_date" class="form-control" required>
                         </div>
                         <div class="col-md-6">
-                            <label for="examDuration" class="form-label fw-bold">Duration (minutes)</label>
-                            <input type="number" id="examDuration" name="exam_duration" class="form-control" placeholder="Enter duration" min="1" oninput="checkNegativeValue(this)" required>
+                            <label for="quizDuration" class="form-label fw-bold">Duration (minutes)</label>
+                            <input type="number" id="quizDuration" name="quiz_duration" class="form-control" placeholder="Enter duration" min="1" oninput="checkNegativeValue(this)" required>
                         </div>
                     </div>
 
@@ -51,7 +51,7 @@
                     <hr>
 
                     <!-- Exam Questions -->
-                    <div id="questionsArea"></div>
+                    <div id="questionsQuizArea"></div>
 
                     <button type="button" id="addQuestionButton" class="btn btn-success mb-4">
                         <i class="bi bi-plus-circle"></i> Add Another Question
@@ -64,7 +64,7 @@
                         <button name="submit" type="submit" class="btn btn-primary">
                             Create Quiz
                         </button>
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" onclick="resetFormUpload()">Cancel</button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" onclick="resetFormQuiz()">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -89,7 +89,7 @@
                 <div class="col-md-4">
                                 <label class="form-label fw-bold">${questionIndex}. Question</label>
 
-                    <select class="form-select question-type" name="exam_type[${questionIndex}]" required onchange="updateQuestionType(${questionIndex})">
+                    <select class="form-select question-type" name="quiz_type[${questionIndex}]" required onchange="updateQuestionType(${questionIndex})">
                         <option value="1" >Multiple Choice</option>
                         <option value="2" >Enumeration</option>
                         <option value="3" >Essay</option>
@@ -106,61 +106,58 @@
             <div class="question-content mt-3" id="questionContent${questionIndex}">
                 <!-- Default: Multiple Choice -->
 
-                <input type="text" name="exm_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
+                <input type="text" name="quiz_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
 
                 <div id="choicesContainer${questionIndex}">
                     <label class="form-label fw-bold">Choices</label>
                         <div class="d-flex align-items-center mb-2">
-                            <input type="radio" name="correct_answer[${questionIndex}]" value="A" class="form-check-input" required>
+                            <input type="radio" name="quiz_correct_answer[${questionIndex}]" value="A" class="form-check-input" required>
                             <input type="text" name="choice_a[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice A">
                         </div>
                         <div class="d-flex align-items-center mb-2">
-                            <input type="radio" name="correct_answer[${questionIndex}]" value="B" class="form-check-input" required>
+                            <input type="radio" name="quiz_correct_answer[${questionIndex}]" value="B" class="form-check-input" required>
                             <input type="text" name="choice_b[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice B">
                         </div>
                         <div class="d-flex align-items-center mb-2">
-                            <input type="radio" name="correct_answer[${questionIndex}]" value="C" class="form-check-input" required>
+                            <input type="radio" name="quiz_correct_answer[${questionIndex}]" value="C" class="form-check-input" required>
                             <input type="text" name="choice_c[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice C">
                         </div>
                         <div class="d-flex align-items-center mb-2">
-                            <input type="radio" name="correct_answer[${questionIndex}]" value="D" class="form-check-input" required>
+                            <input type="radio" name="quiz_correct_answer[${questionIndex}]" value="D" class="form-check-input" required>
                             <input type="text" name="choice_d[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice D">
                         </div>
-                        
-                    
-                    
-                    
+                                                                                
                 </div>
             </div>
         </div>`;
 
-        document.getElementById('questionsArea').insertAdjacentHTML('beforeend', questionHtml);
+        document.getElementById('questionsQuizArea').insertAdjacentHTML('beforeend', questionHtml);
         updateQuestionNumbers(); // Recalculate question numbers
     }
 
     function updateQuestionType(questionIndex) {
-        let type = document.querySelector(`[name="exam_type[${questionIndex}]"]`).value;
+        let type = document.querySelector(`[name="quiz_type[${questionIndex}]"]`).value;
         let container = document.getElementById(`questionContent${questionIndex}`);
 
         if (type === "1") {
             // Multiple Choice
             container.innerHTML = `
-                <input type="text" name="exm_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
+                <input type="text" name="quiz_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
                 <label class="form-label fw-bold">Choices</label>
                     <div class="d-flex align-items-center mb-2">
-                        <input type="radio" name="correct_answer[${questionIndex}]" value="A" class="form-check-input" required>
+                        <input type="radio" name="quiz_correct_answer[${questionIndex}]" value="A" class="form-check-input" required>
                         <input type="text" name="choice_a[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice A">
                     </div>
                     <div class="d-flex align-items-center mb-2">
-                        <input type="radio" name="correct_answer[${questionIndex}]" value="B" class="form-check-input" required>
+                        <input type="radio" name="quiz_correct_answer[${questionIndex}]" value="B" class="form-check-input" required>
                         <input type="text" name="choice_b[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice B">
                     </div>
                     <div class="d-flex align-items-center mb-2">
-                        <input type="radio" name="correct_answer[${questionIndex}]" value="C" class="form-check-input" required>
+                        <input type="radio" name="quiz_correct_answer[${questionIndex}]" value="C" class="form-check-input" required>
                         <input type="text" name="choice_c[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice C">
                     </div>
                     <div class="d-flex align-items-center mb-2">
-                        <input type="radio" name="correct_answer[${questionIndex}]" value="D" class="form-check-input" required>
+                        <input type="radio" name="quiz_correct_answer[${questionIndex}]" value="D" class="form-check-input" required>
                         <input type="text" name="choice_d[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice D">
                     </div>
   
@@ -168,21 +165,21 @@
         } else if (type === "2") {
             // Enumeration
             container.innerHTML = `
-                <input type="text" name="enumeration_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
-                <textarea name="enumeration_answers[${questionIndex}]" class="form-control" rows="3" placeholder="Enter expected answers separated by commas"></textarea>
+                <input type="text" name="quiz_enumeration_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
+                <textarea name="quiz_enumeration_answers[${questionIndex}]" class="form-control" rows="3" placeholder="Enter expected answers separated by commas"></textarea>
  
 
             `;
         } else if (type === "3") {
             // Essay
             container.innerHTML = `
-                <textarea name="essay_question[${questionIndex}]" class="form-control" rows="4" placeholder="Enter the essay question" required></textarea>
+                <textarea name="quiz_essay_question[${questionIndex}]" class="form-control" rows="4" placeholder="Enter the essay question" required></textarea>
             `;
         } else if (type === "4") {
             // True/False
             container.innerHTML = `
-                 <input type="text" name="tf_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
-                <select name="correct_answer[${questionIndex}]" class="form-select">
+                 <input type="text" name="quiz_tf_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
+                <select name="quiz_correct_answer[${questionIndex}]" class="form-select">
                     <option value="True">True</option>
                     <option value="False">False</option>
                 </select>
@@ -208,7 +205,7 @@
     }
 
     // Function to clear the form
-    function resetFormUpload() {
+    function resetFormQuiz() {
         // Get the form element by ID
         const form = document.getElementById('createQuizForm');
 
@@ -218,9 +215,9 @@
             form.classList.remove('was-validated');
 
             // Clear dynamically added questions
-            const questionsArea = document.getElementById('questionsArea');
-            if (questionsArea) {
-                questionsArea.innerHTML = ''; // Remove all added question elements
+            const questionsQuizArea = document.getElementById('questionsQuizArea');
+            if (questionsQuizArea) {
+                questionsQuizArea.innerHTML = ''; // Remove all added question elements
             }
 
             // Reset indexes and counters used for dynamically added questions

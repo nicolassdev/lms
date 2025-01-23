@@ -102,7 +102,8 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                     <th scope="col" style="width: 50px;" class="text-center">Quarterly Exam</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Exam Name</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Exam Description</th>
-                                    <th scope="col" style="width: 50px;" class="text-center">Modified</th>
+                                    <th scope="col" style="width: 50px;" class="text-center">Date</th>
+                                    <th scope="col" style="width: 50px;" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -123,6 +124,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                         echo '<td class="small text-center">' .  ucwords(strtolower($exam["exam_quarter"])) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($exam["exam_title"])) . '</td>';
                                         echo '<td class="small text-center">' . (strpos($exam["exam_desc"], '!') !== false ? '<p class="text-danger">No description</p>' :  ucwords(strtolower($exam["exam_desc"]))) . '</td>';
+                                        echo '<td class="small text-center">' . date('F j, Y', strtotime($exam["exam_date"])) .  '</td>';
                                         echo '
                                         <td class="d-flex justify-content-center">
                                         <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#edit_exam' . $exam['exam_id'] . '">

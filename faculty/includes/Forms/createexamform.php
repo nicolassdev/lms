@@ -106,7 +106,7 @@
             <div class="question-content mt-3" id="questionContent${questionIndex}">
                 <!-- Default: Multiple Choice -->
 
-                <input type="text" name="exm_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
+                <input type="text" name="exam_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
 
                 <div id="choicesContainer${questionIndex}">
                     <label class="form-label fw-bold">Choices</label>
@@ -145,7 +145,7 @@
         if (type === "1") {
             // Multiple Choice
             container.innerHTML = `
-                <input type="text" name="exm_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
+                <input type="text" name="exam_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
                 <label class="form-label fw-bold">Choices</label>
                     <div class="d-flex align-items-center mb-2">
                         <input type="radio" name="correct_answer[${questionIndex}]" value="A" class="form-check-input" required>
@@ -170,8 +170,6 @@
             container.innerHTML = `
                 <input type="text" name="enumeration_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
                 <textarea name="enumeration_answers[${questionIndex}]" class="form-control" rows="3" placeholder="Enter expected answers separated by commas"></textarea>
- 
-
             `;
         } else if (type === "3") {
             // Essay

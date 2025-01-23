@@ -131,7 +131,7 @@ $mySQLFunction->disconnect();
                             <div class="col-12 text-center py-5">
                                 <div class="card">
                                     <div class="card-body">
-                                        <i class="bi bi-info-circle-fill text-success display-4 mb-3"></i>
+                                        <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
                                         <h5 class="text-secondary fw-bold">No Subject Assigned</h5>
                                         <p class="text-muted">You currently have no assigned subjects. Check with your administrator.</p>
                                     </div>
