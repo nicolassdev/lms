@@ -1,4 +1,5 @@
 <?php
+
 include "../includes/dbh-inc.php";
 
 // Prevent unauthorized access
@@ -16,7 +17,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
 
 
     // Fetch students by subject handled of teacher 
-    $exams = $mySQLFunction->getAllExamCreatedByTeacher($_SESSION['teacher_id'], $sub_code, $section_code);
+    $exams = $mySQLFunction->getAllExamCreatedByTeacher($_SESSION['teacher_id'], $sub_code,  $section_code);
     // echo "<pre>";
     // print_r($exams);
     // echo "</pre>";
@@ -47,6 +48,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                             <!-- Display Subject Title -->
                             <h6 class="fw-bold text-primary">
                                 <!-- Subject: -->
+                                 
                                 <?php
                                 if (!empty($exams)) {
                                     foreach ($exams as $student) {
@@ -111,13 +113,18 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                 if (!empty($exams)) {
                                     $count = 1;
                                     foreach ($exams as $exam) {
-                                        $multipleQuestions = json_decode($exam["multiple_questions"], true);
-                                        $enumerationQuestions = json_decode($exam["enumeration_questions"], true);
-                                        $essayQuestions = json_decode($exam["essay_questions"], true);
+                                        $multipleQuestions = ($exam["multiple_questions"]);
+                                        $enumerationQuestions =  ($exam["enumeration_questions"]);
+                                        $essayQuestions = ($exam["essay_questions"]);
+                                        $trueFalseQuestions = ($exam["tf_questions"]);
 
-                                        // Assuming this part is within the loop processing the exams
-                                        // $essayQuestions = explode(" || ", $exam["essay_questions"]); // Split the string into an array
-                                        $trueFalseQuestions = json_decode($exam["tf_questions"], true);
+                                        // $multipleQuestions = json_decode($exam["multiple_questions"], true);
+                                        // $enumerationQuestions = json_decode($exam["enumeration_questions"], true);
+                                        // $essayQuestions = json_decode($exam["essay_questions"], true);
+
+                                        // // Assuming this part is within the loop processing the exams
+                                        // // $essayQuestions = explode(" || ", $exam["essay_questions"]); // Split the string into an array
+                                        // $trueFalseQuestions = json_decode($exam["tf_questions"], true);
 
                                         echo '<tr>';
                                         // echo '<td>' . $count . '</td>';

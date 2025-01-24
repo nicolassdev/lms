@@ -2623,9 +2623,122 @@ class myDataBase
     // =========================================== EXAM FUNCTION ====================================================
 
     // GET ALL EXAM CREATED BY TEACHER HANDLED SUBJECT IN EVERY same strand and grade lvl
+    // function getAllExamCreatedByTeacher($teacherId, $subjectId, $sectionCode)
+    // {
+    //     try {
+    //         $sql = "
+    //             SELECT 
+    //                 e.exam_id,
+    //                 e.exam_title,
+    //                 e.exam_desc,
+    //                 e.exam_type,
+    //                 e.exam_quarter,
+    //                 e.exam_duration,
+    //                 e.exam_items,
+    //                 e.exam_date,
+    //                 sec.section_code,
+    //                 sec.section_name,
+    //                 sec.grade_lvl,
+    //                 str.strand_code,
+    //                 sub.sub_code,
+    //                 sub.sub_semester,
+    //                 sub.sub_title,
+    //                 sched.sched_id,
+    //                 -- Fetch multiple-choice questions
+    //                  (SELECT JSON_ARRAYAGG(
+    //                     JSON_OBJECT(
+    //                         'mul_id', mul_id,
+    //                         'question', mul_question,
+    //                         'A', choice_a,
+    //                         'B', choice_b,
+    //                         'C', choice_c,
+    //                         'D', choice_d,
+    //                         'correct', is_correct
+    //                     )
+    //                 ) FROM exam_multiple WHERE exam_id = e.exam_id) AS multiple_questions,
+
+    //                  -- Fetch enumeration questions
+    //                 (SELECT JSON_ARRAYAGG(
+    //                     JSON_OBJECT(
+    //                         'enum_id', enum_id,
+    //                         'question', enum_question,
+    //                         'answers', enum_answer
+    //                     )
+    //                 ) FROM exam_enumeration WHERE exam_id = e.exam_id) AS enumeration_questions,
+
+    //                 -- Fetch essay questions
+    //                 (SELECT JSON_ARRAYAGG( 
+    //                     JSON_OBJECT(
+    //                         'essay_id', essay_id,
+    //                         'question', essay_question
+    //                     )
+    //                 ) FROM exam_essay WHERE exam_id = e.exam_id) AS essay_questions,
+
+    //                 -- Fetch true/false questions
+    //                 (SELECT JSON_ARRAYAGG(
+    //                             JSON_OBJECT(
+    //                                 'tf_id', tf_id,
+    //                                 'question', tf_question,
+    //                                 'correct', tf_answer
+    //                             )
+    //                         ) 
+    //                 FROM exam_tf 
+    //                 WHERE exam_id = e.exam_id) AS tf_questions
+    //             FROM 
+    //                 exam e
+    //             INNER JOIN 
+    //                 schedule sched ON e.sched_id = sched.sched_id
+    //             INNER JOIN 
+    //                 section sec ON sched.section_code = sec.section_code
+    //             INNER JOIN 
+    //                 strand str ON sec.strand_code = str.strand_code
+    //             INNER JOIN 
+    //                 subject sub ON sched.sub_code = sub.sub_code
+    //             WHERE 
+    //                 sched.teacher_id = ?
+    //                 AND sched.sub_code = ?
+    //                 AND sched.section_code = ?
+    //             ORDER BY 
+    //                 e.exam_date desc, e.exam_title
+    //         ";
+
+    //         // Prepare the query
+    //         $stmt = $this->con->prepare($sql);
+    //         if (!$stmt) {
+    //             throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
+    //         }
+    //         // Bind parameters
+    //         $stmt->bind_param("sss", $teacherId, $subjectId, $sectionCode);
+    //         // Execute the statement
+    //         $stmt->execute();
+    //         $result = $stmt->get_result();
+    //         // Fetch all matching rows
+    //         $exams = $result->fetch_all(MYSQLI_ASSOC);
+    //         // Free resources
+    //         $stmt->close();
+    //         return $exams;
+    //     } catch (Exception $e) {
+    //         // Log the error message
+    //         error_log("Error fetching exams created by teacher: " . $e->getMessage());
+    //         return [];
+    //     }
+    // }
+
     function getAllExamCreatedByTeacher($teacherId, $subjectId, $sectionCode)
     {
         try {
+            // Get the active semester
+            $activeSemesters = $this->checkSemStatus('semester');
+
+            // Check if there are any active semesters
+            if (empty($activeSemesters)) {
+                return []; // Return an empty array if no active semester
+            }
+
+            // Prepare the active semester condition
+            $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
+
+            // Query to fetch exam data and join it with related question tables
             $sql = "
                 SELECT 
                     e.exam_id,
@@ -2644,46 +2757,30 @@ class myDataBase
                     sub.sub_semester,
                     sub.sub_title,
                     sched.sched_id,
-                    -- Fetch multiple-choice questions
-                     (SELECT JSON_ARRAYAGG(
-                        JSON_OBJECT(
-                            'mul_id', mul_id,
-                            'question', mul_question,
-                            'A', choice_a,
-                            'B', choice_b,
-                            'C', choice_c,
-                            'D', choice_d,
-                            'correct', is_correct
-                        )
-                    ) FROM exam_multiple WHERE exam_id = e.exam_id) AS multiple_questions,
 
-                     -- Fetch enumeration questions
-                    (SELECT JSON_ARRAYAGG(
-                        JSON_OBJECT(
-                            'enum_id', enum_id,
-                            'question', enum_question,
-                            'answers', enum_answer
-                        )
-                    ) FROM exam_enumeration WHERE exam_id = e.exam_id) AS enumeration_questions,
+                    -- Multiple-choice question fields
+                    em.mul_id AS mul_id,
+                    em.mul_question AS mul_question,
+                    em.choice_a AS choice_a,
+                    em.choice_b AS choice_b,
+                    em.choice_c AS choice_c,
+                    em.choice_d AS choice_d,
+                    em.is_correct AS mul_correct,
 
-                    -- Fetch essay questions
-                    (SELECT JSON_ARRAYAGG( 
-                        JSON_OBJECT(
-                            'essay_id', essay_id,
-                            'question', essay_question
-                        )
-                    ) FROM exam_essay WHERE exam_id = e.exam_id) AS essay_questions,
+                    -- Enumeration question fields
+                    en.enum_id AS enum_id,
+                    en.enum_question AS enum_question,
+                    en.enum_answer AS enum_answer,
 
-                    -- Fetch true/false questions
-                    (SELECT JSON_ARRAYAGG(
-                                JSON_OBJECT(
-                                    'tf_id', tf_id,
-                                    'question', tf_question,
-                                    'correct', tf_answer
-                                )
-                            ) 
-                    FROM exam_tf 
-                    WHERE exam_id = e.exam_id) AS tf_questions
+                    -- Essay question fields
+                    ee.essay_id AS essay_id,
+                    ee.essay_question AS essay_question,
+
+                    -- True/False question fields
+                    tf.tf_id AS tf_id,
+                    tf.tf_question AS tf_question,
+                    tf.tf_answer AS tf_correct
+
                 FROM 
                     exam e
                 INNER JOIN 
@@ -2694,12 +2791,24 @@ class myDataBase
                     strand str ON sec.strand_code = str.strand_code
                 INNER JOIN 
                     subject sub ON sched.sub_code = sub.sub_code
+
+                -- Left join question tables
+                LEFT JOIN 
+                    exam_multiple em ON e.exam_id = em.exam_id
+                LEFT JOIN 
+                    exam_enumeration en ON e.exam_id = en.exam_id
+                LEFT JOIN 
+                    exam_essay ee ON e.exam_id = ee.exam_id
+                LEFT JOIN 
+                    exam_tf tf ON e.exam_id = tf.exam_id
+
                 WHERE 
                     sched.teacher_id = ?
                     AND sched.sub_code = ?
                     AND sched.section_code = ?
+                    AND $activeSemesterCondition 
                 ORDER BY 
-                    e.exam_date desc, e.exam_title
+                    e.exam_date DESC, e.exam_title
             ";
 
             // Prepare the query
@@ -2707,16 +2816,89 @@ class myDataBase
             if (!$stmt) {
                 throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
             }
+
             // Bind parameters
             $stmt->bind_param("sss", $teacherId, $subjectId, $sectionCode);
+
             // Execute the statement
             $stmt->execute();
+
+            // Fetch raw result set
             $result = $stmt->get_result();
-            // Fetch all matching rows
-            $exams = $result->fetch_all(MYSQLI_ASSOC);
-            // Free resources
+            $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+            // Organize the result set into a structured format
+            $exams = [];
+            foreach ($rows as $row) {
+                $examId = $row['exam_id'];
+                if (!isset($exams[$examId])) {
+                    $exams[$examId] = [
+                        'exam_id' => $row['exam_id'],
+                        'exam_title' => $row['exam_title'],
+                        'exam_desc' => $row['exam_desc'],
+                        'exam_type' => $row['exam_type'],
+                        'exam_quarter' => $row['exam_quarter'],
+                        'exam_duration' => $row['exam_duration'],
+                        'exam_items' => $row['exam_items'],
+                        'exam_date' => $row['exam_date'],
+                        'section_code' => $row['section_code'],
+                        'section_name' => $row['section_name'],
+                        'grade_lvl' => $row['grade_lvl'],
+                        'strand_code' => $row['strand_code'],
+                        'sub_code' => $row['sub_code'],
+                        'sub_semester' => $row['sub_semester'],
+                        'sub_title' => $row['sub_title'],
+                        'sched_id' => $row['sched_id'],
+                        'multiple_questions' => [],
+                        'enumeration_questions' => [],
+                        'essay_questions' => [],
+                        'tf_questions' => [],
+                    ];
+                }
+
+                // Add multiple-choice question
+                if (!empty($row['mul_id'])) {
+                    $exams[$examId]['multiple_questions'][] = [
+                        'mul_id' => $row['mul_id'],
+                        'question' => $row['mul_question'],
+                        'A' => $row['choice_a'],
+                        'B' => $row['choice_b'],
+                        'C' => $row['choice_c'],
+                        'D' => $row['choice_d'],
+                        'correct' => $row['mul_correct'],
+                    ];
+                }
+
+                // Add enumeration question
+                if (!empty($row['enum_id'])) {
+                    $exams[$examId]['enumeration_questions'][] = [
+                        'enum_id' => $row['enum_id'],
+                        'question' => $row['enum_question'],
+                        'answers' => $row['enum_answer'],
+                    ];
+                }
+
+                // Add essay question
+                if (!empty($row['essay_id'])) {
+                    $exams[$examId]['essay_questions'][] = [
+                        'essay_id' => $row['essay_id'],
+                        'question' => $row['essay_question'],
+                    ];
+                }
+
+                // Add true/false question
+                if (!empty($row['tf_id'])) {
+                    $exams[$examId]['tf_questions'][] = [
+                        'tf_id' => $row['tf_id'],
+                        'question' => $row['tf_question'],
+                        'correct' => $row['tf_correct'],
+                    ];
+                }
+            }
+
+            // Reset indexes
             $stmt->close();
-            return $exams;
+            return array_values($exams);
         } catch (Exception $e) {
             // Log the error message
             error_log("Error fetching exams created by teacher: " . $e->getMessage());
