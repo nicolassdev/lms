@@ -48,7 +48,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                             <!-- Display Subject Title -->
                             <h6 class="fw-bold text-primary">
                                 <!-- Subject: -->
-                                 
+
                                 <?php
                                 if (!empty($exams)) {
                                     foreach ($exams as $student) {

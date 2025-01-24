@@ -39,13 +39,9 @@ include "../includes/dbh-inc.php";
         <div class="row">
             <div class="col-12">
                 <div class="data-table">
-
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h5 class="text-black">Student Masterlist</h5>
-
+                        <h5 class="fw-bold">Student Masterlist</h5>
                     </div>
-
-
                     <div class="table-responsive small ms-3 me-3">
                         <table id="example" class="table table-bordered table-striped table-sm align-middle">
 

@@ -134,29 +134,30 @@ $mySQLFunction->disconnect();
             </div>
 
             <!-- Teacher Card -->
-            <div class="col-md-4 col-sm-6 col-12">
+            <!-- <h1 class="text-success fw-bold display-5"></?php echo $numberOfTeacher; ?></h1> -->
+            <!-- <div class="col-md-4 col-sm-6 col-12">
                 <div class="card shadow-lg h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between">
-                            <!-- Icon and title -->
+
                             <div class="" style="margin-left:20px">
                                 <i class="bi bi-people-fill display-5 text-success mb-2"></i>
                                 <h5 class="card-title">Faculty</h5>
                                 <p class="card-text">Total number of faculty members</p>
                             </div>
-                            <!-- Number of Faculty -->
+
                             <div class="text-end">
-                                <h1 class="text-success fw-bold display-5"><?php echo $numberOfTeacher; ?></h1>
+                                dito ilagay h1
                             </div>
                         </div>
                         <hr class="text-muted" />
-                        <!-- View account button -->
+
                         <div class="text-start mt-3 ms-3">
                             <a href="?page=facultymembers" class="btn btn-success w-70">View faculty members</a>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
             <!-- Section Card -->

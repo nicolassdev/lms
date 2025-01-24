@@ -456,9 +456,20 @@ class myDataBase
     //GET TEACHER SECTION HANDLED by id
     public function getTeacherSectionHandled($teacher_id)
     {
+        // Get the active semester
+        $activeSchoolYear = $this->checkSyStatus('sy');
+
+        // Check if there are any active semesters
+        if (empty($activeSchoolYear)) {
+            return []; // Return an empty array if no active semester
+        }
+        // Prepare the active semester condition
+        $activeSchoolYearCondition = "s.school_year IN ('" . implode("','", $activeSchoolYear) . "')";
+
         $sql = "
             SELECT 
                 s.grade_lvl, 
+                s.school_year,
                 s.section_name, 
                 st.strand_name, 
                 st.strand_desc
@@ -469,7 +480,9 @@ class myDataBase
             ON 
                 s.strand_code = st.strand_code
             WHERE 
-                s.teacher_id = ?";
+                s.teacher_id = ?
+                AND $activeSchoolYearCondition
+                ";
 
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("s", $teacher_id);
@@ -1649,9 +1662,11 @@ class myDataBase
     public function getSection($row = null, $value = null)
     {
         if ($row != null && $value != null) {
-            $sql = "SELECT `section_code`, `strand_name` ,`strand_desc` , `section.strand_code` , `grade_lvl` ,
-            `section_name`, `teacher_fname` , `teacher_lname` , `section.teacher_id` , 
-            CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS adviser FROM `section`
+            $sql = "SELECT `section_code`, `strand_name`,
+            `strand_desc`, `section.strand_code`, `grade_lvl`,
+            `section_name`, `teacher_fname`, `teacher_lname`, `school_year`,
+            `section.teacher_id`, CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`) AS adviser
+            FROM `section`
             INNER JOIN `strand`
             ON section.strand_code = strand.strand_code
             INNER JOIN `teacher`
@@ -1662,8 +1677,11 @@ class myDataBase
 
             return $stored;
         } else {
-            $sql = "SELECT `section_code`, `strand_name` ,`strand_desc` , `grade_lvl` , `section_name`, `teacher_fname` , `teacher_lname` ,
-            CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS adviser FROM  `section`
+            $sql = "SELECT `section_code`, `strand_name`,
+            `strand_desc`, `grade_lvl`, `section_name`,
+            `teacher_fname` , `teacher_lname`, `school_year`,
+            CONCAT(`teacher_fname`,' ', `teacher_mname`, ' ', `teacher_lname`)AS adviser
+            FROM  `section`
             INNER JOIN `strand`
             ON section.strand_code = strand.strand_code
             LEFT JOIN `teacher`
@@ -2979,46 +2997,30 @@ class myDataBase
                     sub.sub_semester,
                     sub.sub_title,
                     sched.sched_id,
-                    -- Fetch multiple-choice questions
-                     (SELECT JSON_ARRAYAGG(
-                        JSON_OBJECT(
-                            'q_mul_id', q_mul_id,
-                            'question', q_mul_question,
-                            'A', q_choice_a,
-                            'B', q_choice_b,
-                            'C', q_choice_c,
-                            'D', q_choice_d,
-                            'correct', is_correct
-                        )
-                    ) FROM quiz_multiple WHERE quiz_id = q.quiz_id) AS quiz_multiple_questions,
 
-                     -- Fetch enumeration questions
-                    (SELECT JSON_ARRAYAGG(
-                        JSON_OBJECT(
-                            'q_enum_id', q_enum_id,
-                            'question', q_enum_question,
-                            'answers', q_enum_answer
-                        )
-                    ) FROM quiz_enumeration WHERE quiz_id = q.quiz_id) AS quiz_enumeration_questions,
 
-                    -- Fetch essay questions
-                    (SELECT JSON_ARRAYAGG( 
-                        JSON_OBJECT(
-                            'q_essay_id', q_essay_id,
-                            'question', q_essay_question
-                        )
-                    ) FROM quiz_essay WHERE quiz_id = q.quiz_id) AS quiz_essay_questions,
+                    -- Multiple-choice question fields
+                    em.q_mul_id AS q_mul_id,
+                    em.q_mul_question AS q_mul_question,
+                    em.q_choice_a AS q_choice_a,
+                    em.q_choice_b AS q_choice_b,
+                    em.q_choice_c AS q_choice_c,
+                    em.q_choice_d AS q_choice_d,
+                    em.is_correct AS mul_correct,
 
-                    -- Fetch true/false questions
-                    (SELECT JSON_ARRAYAGG(
-                                JSON_OBJECT(
-                                    'q_tf_id', q_tf_id,
-                                    'question', q_tf_question,
-                                    'correct', q_tf_answer
-                                )
-                            ) 
-                    FROM quiz_tf 
-                    WHERE quiz_id = q.quiz_id) AS quiz_tf_questions
+                    -- Enumeration question fields
+                    en.q_enum_id AS q_enum_id,
+                    en.q_enum_question AS q_enum_question,
+                    en.q_enum_answer AS q_enum_answer,
+
+                  -- Essay question fields
+                    ee.q_essay_id AS q_essay_id,
+                    ee.q_essay_question AS q_essay_question,
+
+                    -- True/False question fields
+                    tf.q_tf_id AS q_tf_id,
+                    tf.q_tf_question AS q_tf_question,
+                    tf.q_tf_answer AS q_tf_correct
                 FROM 
                     quiz q
                 INNER JOIN 
@@ -3029,6 +3031,17 @@ class myDataBase
                     strand str ON sec.strand_code = str.strand_code
                 INNER JOIN 
                     subject sub ON sched.sub_code = sub.sub_code
+
+                -- Left join question tables
+                LEFT JOIN 
+                    quiz_multiple em ON q.quiz_id = em.quiz_id
+                LEFT JOIN 
+                    quiz_enumeration en ON q.quiz_id = en.quiz_id
+                LEFT JOIN 
+                    quiz_essay ee ON q.quiz_id = ee.quiz_id
+                LEFT JOIN 
+                    quiz_tf tf ON q.quiz_id = tf.quiz_id
+
                 WHERE 
                     sched.teacher_id = ?
                     AND sched.sub_code = ?
@@ -3049,10 +3062,80 @@ class myDataBase
             $stmt->execute();
             $result = $stmt->get_result();
             // Fetch all matching rows
-            $quizzes = $result->fetch_all(MYSQLI_ASSOC);
-            // Free resources
+            $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+            // Organize the result set into a structured format
+            $quizzes = [];
+            foreach ($rows as $row) {
+                $quizId = $row['quiz_id'];
+                if (!isset($quizzes[$quizId])) {
+                    $quizzes[$quizId] = [
+                        'quiz_id' => $row['quiz_id'],
+                        'quiz_title' => $row['quiz_title'],
+                        'quiz_desc' => $row['quiz_desc'],
+                        'quiz_type' => $row['quiz_type'],
+                        'quiz_quarter' => $row['quiz_quarter'],
+                        'quiz_duration' => $row['quiz_duration'],
+                        'quiz_items' => $row['quiz_items'],
+                        'quiz_date' => $row['quiz_date'],
+                        'section_code' => $row['section_code'],
+                        'section_name' => $row['section_name'],
+                        'grade_lvl' => $row['grade_lvl'],
+                        'strand_code' => $row['strand_code'],
+                        'sub_code' => $row['sub_code'],
+                        'sub_semester' => $row['sub_semester'],
+                        'sub_title' => $row['sub_title'],
+                        'sched_id' => $row['sched_id'],
+                        'quiz_multiple_questions' => [],
+                        'quiz_enumeration_questions' => [],
+                        'quiz_essay_questions' => [],
+                        'quiz_tf_questions' => [],
+                    ];
+                }
+
+                // Add multiple-choice question
+                if (!empty($row['q_mul_id'])) {
+                    $quizzes[$quizId]['quiz_multiple_questions'][] = [
+                        'q_mul_id' => $row['q_mul_id'],
+                        'question' => $row['q_mul_question'],
+                        'A' => $row['q_choice_a'],
+                        'B' => $row['q_choice_b'],
+                        'C' => $row['q_choice_c'],
+                        'D' => $row['q_choice_d'],
+                        'correct' => $row['mul_correct'],
+                    ];
+                }
+
+                // Add enumeration question
+                if (!empty($row['q_enum_id'])) {
+                    $quizzes[$quizId]['quiz_enumeration_questions'][] = [
+                        'q_enum_id' => $row['q_enum_id'],
+                        'question' => $row['q_enum_question'],
+                        'answers' => $row['q_enum_answer'],
+                    ];
+                }
+
+                // Add essay question
+                if (!empty($row['q_essay_id'])) {
+                    $quizzes[$quizId]['quiz_essay_questions'][] = [
+                        'q_essay_id' => $row['q_essay_id'],
+                        'question' => $row['q_essay_question'],
+                    ];
+                }
+
+                // Add true/false question
+                if (!empty($row['q_tf_id'])) {
+                    $quizzes[$quizId]['quiz_tf_questions'][] = [
+                        'q_tf_id' => $row['q_tf_id'],
+                        'question' => $row['q_tf_question'],
+                        'correct' => $row['q_tf_correct'],
+                    ];
+                }
+            }
+
+            // Reset indexes
             $stmt->close();
-            return $quizzes;
+            return array_values($quizzes);
         } catch (Exception $e) {
             // Log the error message
             error_log("Error fetching quizzes created by teacher: " . $e->getMessage());

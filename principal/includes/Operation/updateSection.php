@@ -14,9 +14,9 @@ if (!isset($_SESSION["principal_id"])) {
         if (isset($_POST["submit"])) {
             // Sanitize and prepare input
             $sec_id = $_POST["sectionID"];
-            $strand = strtoupper(trim($_POST["strand_desc"]));
-            $gradelvl = strtoupper(trim($_POST["gradelvl"]));
             $section = strtoupper(trim($_POST["section"]));
+            $gradelvl = strtoupper(trim($_POST["gradelvl"]));
+            $sy = trim($_POST["school_year"]);
 
             // Check if section name already exist 
             if ($mySQLFunction->checkSectionName("section", "section_name", $section, $sec_id) == 1) {
@@ -33,13 +33,9 @@ if (!isset($_SESSION["principal_id"])) {
             } else {
                 // Proceed with updating the section details
 
-                // $mySQLFunction->updateSection("strand_code", $strand, $sec_id);
-                // $mySQLFunction->updateSection("grade_lvl", $gradelvl, $sec_id);
-                // $mySQLFunction->updateSection("section_name", $section, $sec_id);
-
                 $mySQLFunction->updateRecord("section", "section_name", $section, "section_code", $sec_id);
                 $mySQLFunction->updateRecord("section", "grade_lvl", $gradelvl, "section_code", $sec_id);
-
+                $mySQLFunction->updateRecord("section", "school_year", $sy, "section_code", $sec_id);
 
                 // Disconnect after updating
                 $mySQLFunction->disconnect();

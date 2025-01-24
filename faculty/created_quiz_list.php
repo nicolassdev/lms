@@ -111,10 +111,16 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                 if (!empty($quizzes)) {
                                     $count = 1;
                                     foreach ($quizzes as $quiz) {
-                                        $multipleQuestions = json_decode($quiz["quiz_multiple_questions"], true);
-                                        $enumerationQuestions = json_decode($quiz["quiz_enumeration_questions"], true);
-                                        $essayQuestions = json_decode($quiz["quiz_essay_questions"], true);
-                                        $trueFalseQuestions = json_decode($quiz["quiz_tf_questions"], true);
+                                        $multipleQuestions = ($quiz["quiz_multiple_questions"]);
+                                        $enumerationQuestions =  ($quiz["quiz_enumeration_questions"]);
+                                        $essayQuestions = ($quiz["quiz_essay_questions"]);
+                                        $trueFalseQuestions = ($quiz["quiz_tf_questions"]);
+
+
+                                        // $multipleQuestions = json_decode($quiz["quiz_multiple_questions"], true);
+                                        // $enumerationQuestions = json_decode($quiz["quiz_enumeration_questions"], true);
+                                        // $essayQuestions = json_decode($quiz["quiz_essay_questions"], true);
+                                        // $trueFalseQuestions = json_decode($quiz["quiz_tf_questions"], true);
 
                                         // Assuming this part is within the loop processing the quizzes
                                         // $essayQuestions = explode(" || ", $quiz["essay_questions"]); // Split the string into an array

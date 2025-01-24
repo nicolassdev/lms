@@ -22,7 +22,7 @@ include "../principal/includes/Forms/sectionform.php";
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h4 class="text-black">List of Section</h4>
+                        <h5 class="fw-bold">List of Section</h5>
                         <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#section" data-bs-whatever="@fat">
                             <i class="bi bi-plus-circle-fill me-2"></i>Add Section
                         </button>
@@ -53,6 +53,7 @@ include "../principal/includes/Forms/sectionform.php";
                                     <th scope="col" class="small text-center">Section</th>
                                     <th scope="col" class="small text-center">Strand</th>
                                     <th scope="col" class="small text-center">Year level</th>
+                                    <th scope="col" class="small text-center">School year</th>
                                     <th scope="col" class="small text-center">Adviser</th>
                                     <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
 
@@ -74,6 +75,7 @@ include "../principal/includes/Forms/sectionform.php";
                                         echo '<td class="small text-center">' . $row["section_name"] . '</td>';
                                         echo '<td class="small text-center">' . $row["strand_name"] . '</td>';
                                         echo '<td class="small text-center">' . $row["grade_lvl"] . '</td>';
+                                        echo '<td class="small text-center">' . $row["school_year"] . '</td>';
                                         echo '<td class="small text-center">' . ucwords(strtolower($row["adviser"])) . '</td>';
 
                                         echo '
@@ -155,6 +157,27 @@ include "../principal/includes/Forms/sectionform.php";
                                                                     Please select a grade level.
                                                                 </div>
                                                             </div>
+
+
+                                                            <div class="col-md-12 mb-3">
+                                                            <label class="form-label fw-bold">School year</label>
+                                                            <select name="school_year" class="form-select" id="strand_code' . htmlspecialchars($row['section_code']) . '" > ';
+                                        // Fetch and populate sy options
+                                        $mySQLFunction->connection();
+                                        $schoolyear = $mySQLFunction->getSchoolyear();
+                                        foreach ($schoolyear as $sy) {
+                                            // Check if the sy matches the current row
+                                            $selected = $sy["school_year"] == $row['school_year'] ? ' selected' : '';
+                                            echo '<option value="' . htmlspecialchars($sy["school_year"]) . '"' . $selected . '>' . htmlspecialchars($sy["school_year"]) . '</option>';
+                                        }
+                                        $mySQLFunction->disconnect();
+
+                                        echo '  </select>
+                                                                <div class="invalid-feedback">
+                                                                    Please input a strand name.
+                                                                 </div>
+                                                            </div>
+
 
 
                                                          <div class="col-md-12 mb-3">
