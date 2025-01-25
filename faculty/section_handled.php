@@ -128,9 +128,9 @@ $mySQLFunction->disconnect();
                 <div class="col-12 text-center">
                     <div class="py-5 mt-5">
                         <div class="card-body">
-                            <i class="bi bi-exclamation-circle text-danger display-4 mb-3"></i>
-                            <h5 class="text-secondary fw-bold">No Section Available</h5>
-                            <p class="text-muted mb-0">There are currently no sections assigned to you.</p>
+                        <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
+                        <h5 class="text-secondary fw-bold">No Section Available</h5>
+                            <p class="text-muted mb-0">There are currently no sections assigned to you. Check with your administrator.</p>
                         </div>
                     </div>
                 </div>

@@ -27,11 +27,11 @@ error_reporting(E_ALL);
 
 <body class="lms-scroll-bar">
     <!-- Top Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark nav-shadow">
         <div class="container-fluid">
             <!-- Sidebar Toggle Button -->
             <button
-                class="navbar-toggler"
+                class="navbar-toggler bg-light"
                 type="button"
                 data-bs-toggle="offcanvas"
                 data-bs-target="#sidebar"
@@ -48,15 +48,17 @@ error_reporting(E_ALL);
                         <img src="assets/img/csi.webp" alt="LMS Logo">
                     </span>
                 </a>
-                <!-- Desktop LMS Title (Left-aligned on large screens) -->
-                <div class="navbar-brand text-black d-none d-lg-block">
-                    Learning Management System
+                <!-- Small title for mobile view -->
+                <div class="navbar-brand text-white d-none d-lg-inline">
+                    <span class="color">L</span>earning <span class="color">M</span>anagement
+                    <span class="color">S</span>ystem
                 </div>
 
-                <!-- Mobile LMS Title (Centered on mobile screens, hidden on larger screens) -->
-                <div class="navbar-brand text-black mx-auto text-center d-block d-lg-none fs-6">
-                    Learning Management System
-                </div>
+                <!-- Large title for desktop view -->
+                <span class="text-white fs-6 me-3 d-inline d-lg-none">
+                    <span class="color">L</span>earning <span class="color">M</span>anagement
+                    <span class="color">S</span>ystem
+                </span>
             </div>
 
 
@@ -66,8 +68,8 @@ error_reporting(E_ALL);
                     <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="text-black fs-6">
                             <!-- show user role -->
-                            <small class="text-primary fw-semibold">Welcome, <?php echo ucwords(strtolower($_SESSION["user_role"])); ?></small>
-                            <i class="bi bi-person-circle ms-1" style="font-size: 1.3rem;"></i>
+                            <small class="text-white fw-semibold">Welcome, <?php echo ucwords(strtolower($_SESSION["user_role"])); ?></small>
+                            <i class="bi bi-person-circle ms-1 text-white" style="font-size: 1.3rem;"></i>
                         </div>
                     </a>
 

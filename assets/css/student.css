@@ -13,6 +13,13 @@ body {
   transition: all 0.3s;
 }
 
+.color {
+  color: #fabc3f;
+}
+
+.nav-shadow {
+  box-shadow: 0 14px 8px rgba(49, 49, 49, 0.2);
+}
 .navbar .image {
   display: flex;
   align-items: center;
