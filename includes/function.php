@@ -337,7 +337,9 @@ class myDataBase
             return null; // No rows found
         }
     }
-    // GET STUDENT'S SUBJECTS BY GRADE LEVEL, STRAND, AND SCHEDULE
+
+
+    // GET STUDENT'S SUBJECTS BY SECTION, GRADE LEVEL, STRAND, AND SCHEDULE
     public function getStudentSubjects($stu_lrn)
     {
         // Get the active semester
@@ -351,22 +353,23 @@ class myDataBase
         // Prepare the active semester condition
         $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
 
-        // First, get the grade level, strand, and strand name of the student
+        // First, get the grade level, strand, strand name, and section of the student
         $studentQuery = "
-            SELECT 
-                sec.grade_lvl,
-                sec.strand_code,
-                st.strand_name
-            FROM 
-                enroll e
-            INNER JOIN 
-                section sec ON e.section_code = sec.section_code
-            LEFT JOIN 
-                strand st ON sec.strand_code = st.strand_code
-            WHERE 
-                e.stu_lrn = ?
-                AND e.enroll_status = 'Enrolled'
-            LIMIT 1";
+        SELECT 
+            sec.grade_lvl,
+            sec.strand_code,
+            sec.section_code,  -- Added section_code
+            st.strand_name
+        FROM 
+            enroll e
+        INNER JOIN 
+            section sec ON e.section_code = sec.section_code
+        LEFT JOIN 
+            strand st ON sec.strand_code = st.strand_code
+        WHERE 
+            e.stu_lrn = ?
+            AND e.enroll_status = 'Enrolled'
+        LIMIT 1";
 
         // Prepare and execute the student grade level/strand query
         $stmtStudent = $this->con->prepare($studentQuery);
@@ -374,52 +377,54 @@ class myDataBase
         $stmtStudent->execute();
         $resultStudent = $stmtStudent->get_result();
 
-        // Check if we found grade level and strand for the student
+        // Check if we found grade level, strand, and section for the student
         if ($resultStudent->num_rows === 0) {
             return []; // Return an empty array if no data found for the student
         }
 
-        // Fetch the student's grade level, strand code, and strand name
+        // Fetch the student's grade level, strand code, section, and strand name
         $studentData = $resultStudent->fetch_assoc();
         $gradeLevel = $studentData['grade_lvl'];
         $strandCode = $studentData['strand_code'];
-        $strandName = $studentData['strand_name']; // Store strand name
+        $sectionCode = $studentData['section_code']; // Store section_code
+        $strandName = $studentData['strand_name'];
 
-        // Now fetch the subjects based on grade level and strand
+        // Now fetch the subjects based on section, grade level, and strand
         $sql = "
-            SELECT 
-                sub.sub_code,
-                sub.sub_title,
-                sub.sub_type,
-                sub.sub_semester,
-                sched.sched_day,
-                sched.sched_from,
-                sched.sched_to,
-                t.teacher_fname,
-                t.teacher_lname,
-                t.teacher_gender,
-                t.teacher_id,
-                t.image
-            FROM 
-                schedule sched
-            INNER JOIN 
-                section sec ON sched.section_code = sec.section_code
-            INNER JOIN 
-                subject sub ON sched.sub_code = sub.sub_code
-            INNER JOIN 
-                teacher t ON sched.teacher_id = t.teacher_id
-            WHERE 
-                sec.grade_lvl = ?
-                AND sec.strand_code = ?
-                AND $activeSemesterCondition
-            ORDER BY 
-                sched.sched_day, sched.sched_from";
+        SELECT 
+            sub.sub_code,
+            sub.sub_title,
+            sub.sub_type,
+            sub.sub_semester,
+            sched.sched_day,
+            sched.sched_from,
+            sched.sched_to,
+            t.teacher_fname,
+            t.teacher_lname,
+            t.teacher_gender,
+            t.teacher_id,
+            t.image
+        FROM 
+            schedule sched
+        INNER JOIN 
+            section sec ON sched.section_code = sec.section_code
+        INNER JOIN 
+            subject sub ON sched.sub_code = sub.sub_code
+        INNER JOIN 
+            teacher t ON sched.teacher_id = t.teacher_id
+        WHERE 
+            sec.grade_lvl = ?
+            AND sec.strand_code = ?
+            AND sec.section_code = ?  -- Added section condition
+            AND $activeSemesterCondition
+        ORDER BY 
+            sched.sched_day, sched.sched_from";
 
         // Prepare the main SQL statement
         $stmt = $this->con->prepare($sql);
 
-        // Bind the grade level and strand parameters
-        $stmt->bind_param("ss", $gradeLevel, $strandCode);
+        // Bind the grade level, strand, and section parameters
+        $stmt->bind_param("sss", $gradeLevel, $strandCode, $sectionCode);
 
         // Execute the query
         $stmt->execute();
@@ -435,12 +440,13 @@ class myDataBase
                 $data[] = $row;
             }
 
-            // Add the strand name to the data before returning
+            // Add additional data before returning
             foreach ($data as &$subject) {
                 $subject['strand_code'] = $strandCode;
                 $subject['strand_name'] = $strandName;
                 $subject['strand_desc'] = $strandName;
                 $subject['grade_lvl'] = $gradeLevel;
+                $subject['section_code'] = $sectionCode; // Added section_code in the result
             }
 
             return $data; // Return all rows as an array
@@ -448,6 +454,267 @@ class myDataBase
             return []; // No rows found
         }
     }
+
+
+
+
+
+
+
+
+    // THIS IS TO GET HE ALL EXAM OF STUDENT IN EVERY SUBJECT
+    public function getAllStudentSubjectsExam($stu_lrn)
+    {
+        // Get active semester
+        $activeSemesters = $this->checkSemStatus('semester');
+
+        if (empty($activeSemesters)) {
+            return []; // No active semester
+        }
+
+        $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
+
+        // Get student's section, grade level, and strand
+        $studentQuery = "
+            SELECT sec.grade_lvl, sec.strand_code, sec.section_code, st.strand_name, st.strand_desc
+            FROM enroll e
+            INNER JOIN section sec ON e.section_code = sec.section_code
+            LEFT JOIN strand st ON sec.strand_code = st.strand_code
+            WHERE e.stu_lrn = ? AND e.enroll_status = 'Enrolled'
+            LIMIT 1";
+
+        $stmtStudent = $this->con->prepare($studentQuery);
+        $stmtStudent->bind_param("s", $stu_lrn);
+        $stmtStudent->execute();
+        $resultStudent = $stmtStudent->get_result();
+
+        if ($resultStudent->num_rows === 0) {
+            return []; // No data found for the student
+        }
+
+        $studentData = $resultStudent->fetch_assoc();
+        $gradeLevel = $studentData['grade_lvl'];
+        $strandCode = $studentData['strand_code'];
+        $sectionCode = $studentData['section_code']; // Added section code
+        $strandName = $studentData['strand_name'];
+        $strandDesc = $studentData['strand_desc'];
+
+        // Get subjects and their schedules
+        $sql = "
+            SELECT 
+                sched.sched_id,
+                sub.sub_code,
+                sub.sub_title,
+                sub.sub_type,
+                sub.sub_semester,
+                sec.section_code,
+                sec.section_name,
+                sched.sched_day,
+                sched.sched_from,
+                sched.sched_to,
+                t.teacher_fname,
+                t.teacher_lname,
+                t.teacher_gender,
+                t.teacher_id,
+                t.image
+            FROM schedule sched
+            INNER JOIN 
+                section sec ON sched.section_code = sec.section_code
+            INNER JOIN 
+                subject sub ON sched.sub_code = sub.sub_code
+            INNER JOIN 
+                teacher t ON sched.teacher_id = t.teacher_id
+            WHERE 
+                sec.grade_lvl = ? 
+                AND sec.strand_code = ? 
+                AND sec.section_code = ?   
+                AND $activeSemesterCondition
+            ORDER BY sched.sched_day, sched.sched_from";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("sss", $gradeLevel, $strandCode, $sectionCode);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 0) {
+            return [];
+        }
+
+        $subjects = [];
+
+        // Process subjects and group exams
+        while ($row = $result->fetch_assoc()) {
+            $schedId = $row['sched_id'];
+
+            // Fetch exams related to the schedule
+            $examQuery = "SELECT exam_id, exam_type, exam_quarter, exam_duration, 
+                                 exam_title, exam_desc, exam_items, exam_date
+                          FROM exam WHERE sched_id = ?";
+            $stmtExam = $this->con->prepare($examQuery);
+            $stmtExam->bind_param("s", $schedId);
+            $stmtExam->execute();
+            $examResult = $stmtExam->get_result();
+
+            $exams = [];
+            while ($examRow = $examResult->fetch_assoc()) {
+                $exams[] = $examRow;
+            }
+
+            // Add subject details and its exams
+            $row['exams'] = $exams;
+            $row['strand_code'] = $strandCode;
+            $row['strand_name'] = $strandName;
+            $row['strand_desc'] = $strandDesc;
+            $row['grade_lvl'] = $gradeLevel;
+            $row['section_code'] = $sectionCode; // Added section_code in the result
+
+
+            $subjects[] = $row;
+        }
+
+        return $subjects;
+    }
+
+
+
+    public function getAllExamTypeBySubjectsOfStudents($stu_lrn, $exam_id, $sub_code, $section_code, $grade_lvl)
+    {
+        // Get student's section, grade level, and strand
+        $studentQuery = "
+            SELECT sec.grade_lvl, sec.strand_code, sec.section_code, st.strand_name, st.strand_desc
+            FROM enroll e
+            INNER JOIN section sec ON e.section_code = sec.section_code
+            LEFT JOIN strand st ON sec.strand_code = st.strand_code
+            WHERE e.stu_lrn = ? AND e.enroll_status = 'Enrolled'
+            LIMIT 1";
+
+        $stmtStudent = $this->con->prepare($studentQuery);
+        $stmtStudent->bind_param("s", $stu_lrn);
+        $stmtStudent->execute();
+        $resultStudent = $stmtStudent->get_result();
+
+        if ($resultStudent->num_rows === 0) {
+            return []; // No data found for the student
+        }
+
+        $studentData = $resultStudent->fetch_assoc();
+        $strandCode = $studentData['strand_code'];
+
+        // Get subjects and their schedules
+        $sql = "
+            SELECT 
+                sched.sched_id,
+                sub.sub_code,
+                sub.sub_title,
+                sub.sub_type,
+                sub.sub_semester,
+                sec.section_code,
+                sec.section_name,
+                sched.sched_day,
+                sched.sched_from,
+                sched.sched_to,
+                t.teacher_fname,
+                t.teacher_lname,
+                t.teacher_gender,
+                t.teacher_id,
+                t.image,
+                e.exam_id,
+                e.exam_type,
+                e.exam_quarter,
+                e.exam_duration,
+                e.exam_title,
+                e.exam_desc,
+                e.exam_items,
+                e.exam_date
+            FROM schedule sched
+            INNER JOIN section sec ON sched.section_code = sec.section_code
+            INNER JOIN subject sub ON sched.sub_code = sub.sub_code
+            INNER JOIN teacher t ON sched.teacher_id = t.teacher_id
+            LEFT JOIN exam e ON sched.sched_id = e.sched_id
+            WHERE sec.grade_lvl = ? 
+            AND sec.strand_code = ? 
+            AND sec.section_code = ?
+            AND sub.sub_code = ?
+            ORDER BY sched.sched_day, sched.sched_from";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("ssss", $grade_lvl, $strandCode, $section_code, $sub_code);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 0) {
+            return [];
+        }
+
+        $subjects = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $schedId = $row['sched_id'];
+
+            // Fetch exams related to the schedule with filters
+            $examQuery = "SELECT * FROM exam WHERE sched_id = ? AND exam_id = ?";
+            $stmtExam = $this->con->prepare($examQuery);
+            $stmtExam->bind_param("ss", $schedId, $exam_id);
+            $stmtExam->execute();
+            $examResult = $stmtExam->get_result();
+
+            $exams = [];
+            while ($examRow = $examResult->fetch_assoc()) {
+                $examId = $examRow['exam_id'];
+
+                // Fetch exam types
+                $examRow['enumeration'] = $this->fetchExamType("exam_enumeration", "enum_id", "enum_question, enum_answer", $examId);
+                $examRow['true_false'] = $this->fetchExamType("exam_tf", "tf_id", "tf_question, tf_answer", $examId);
+                $examRow['multiple_choice'] = $this->fetchExamType("exam_multiple", "mul_id", "mul_question, choice_a, choice_b, choice_c, choice_d, is_correct", $examId);
+                $examRow['essay'] = $this->fetchExamType("exam_essay", "essay_id", "essay_question", $examId);
+
+                $exams[] = $examRow;
+            }
+
+            $row['exams'] = $exams;
+            $row['strand_code'] = $strandCode;
+            $row['strand_name'] = $studentData['strand_name'];
+            $row['strand_desc'] = $studentData['strand_desc'];
+            $row['grade_lvl'] = $grade_lvl;
+            $row['section_code'] = $section_code;
+
+            $subjects[] = $row;
+        }
+
+        return $subjects;
+    }
+
+    // Helper function to fetch exam questions of a specific type
+    private function fetchExamType($table, $idColumn, $columns, $examId)
+    {
+        $query = "SELECT $columns FROM $table WHERE exam_id = ?";
+        $stmt = $this->con->prepare($query);
+        $stmt->bind_param("s", $examId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $data = [];
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+        return $data;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -984,44 +1251,6 @@ class myDataBase
 
 
 
-
-    // // GET USER INDIVIDUAL CREDENTIAL 
-    // function getCredential($row, $value)
-    // {
-    //     $sql = "SELECT * FROM `users` WHERE `$row` = '$value'";
-    //     $stored = ($this->con->query($sql))->fetch_assoc();
-    //     return $stored;
-    // }
-    // // GET STUDENT CREDENTIAL 
-    // function getStudentCredential($row, $value)
-    // {
-    //     $sql = "SELECT * FROM `student` WHERE `$row` = '$value'";
-    //     $stored = ($this->con->query($sql))->fetch_assoc();
-    //     return $stored;
-    // }
-    // //GET ADMIN CREDENTIAL
-    // function getAdminCredential($row, $value)
-    // {
-    //     $sql = "SELECT * FROM `registrar` WHERE `$row` = '$value'";
-    //     $stored = ($this->con->query($sql))->fetch_assoc();
-    //     return $stored;
-    // }
-    // //GET ADMIN CREDENTIAL
-    // function getPrincipalCredential($row, $value)
-    // {
-    //     $sql = "SELECT * FROM `principal` WHERE `$row` = '$value'";
-    //     $stored = ($this->con->query($sql))->fetch_assoc();
-    //     return $stored;
-    // }
-    // // GET TEACHER CREDENTIAL 
-    // function getTeacherCredential($row, $value)
-    // {
-    //     $sql = "SELECT * FROM `teacher` WHERE `$row` = '$value'";
-    //     $stored = ($this->con->query($sql))->fetch_assoc();
-    //     return $stored;
-    // }
-
-
     // General function for getting credentials
     function getCredential($table, $row, $value)
     {
@@ -1029,9 +1258,6 @@ class myDataBase
         $stored = ($this->con->query($sql))->fetch_assoc();
         return $stored;
     }
-
-
-
 
 
     // COUNT THE NUMBER OF ROWS IN TABLE
@@ -1113,11 +1339,6 @@ class myDataBase
     }
 
 
-
-
-
-
-
     function checkEnrollmentInSemester($stu_lrn, $semester)
     {
         // Connect to the database
@@ -1142,9 +1363,6 @@ class myDataBase
         // Return the count; if it's 0, the student is not enrolled
         return $row['enrolled_count'];
     }
-
-
-
 
 
     //Check active STATUS in school year
@@ -1216,26 +1434,6 @@ class myDataBase
     }
 
 
-    // public function checkFacultyExist($firstname, $lastname, $excludeID)
-    // {
-    //     $sql = "SELECT * FROM teacher WHERE teacher_fname = ? AND teacher_lname = ? AND teacher_id != ?";
-    //     $stmt = $this->con->prepare($sql);
-    //     $stmt->bind_param("ssi", $firstname, $lastname, $excludeID);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
-    //     return $result->fetch_assoc(); // Return the first row if exists
-    // }
-
-    // public function checkStudentExist($firstname, $lastname, $excludeID)
-    // {
-    //     $sql = "SELECT * FROM student WHERE stu_fname = ? AND stu_lname = ? AND stu_lrn != ?";
-    //     $stmt = $this->con->prepare($sql);
-    //     $stmt->bind_param("ssi", $firstname, $lastname, $excludeID);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
-    //     return $result->fetch_assoc(); // Return the first row if exists
-    // }
-
     public function checkUserExist($username)
     {
         $sql = "SELECT * FROM users WHERE  username = ?";
@@ -1304,7 +1502,6 @@ class myDataBase
 
 
 
-
     public function insertSy($table, $sy)
     {
         // First, check if the school year already exists in the table
@@ -1342,7 +1539,7 @@ class myDataBase
 
 
 
-    // // INSERT INTO TABLE SEMESTER
+    // INSERT INTO TABLE SEMESTER
     public function insertSem($table, $sem)
     {
 
@@ -1367,7 +1564,6 @@ class myDataBase
         $result = $stmt->get_result();
         return $result->num_rows > 0; // Returns true if a record exists, false otherwise
     }
-
 
 
     public function checkExistingSY($table, $sy)

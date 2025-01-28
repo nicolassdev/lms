@@ -1,7 +1,7 @@
 <?php
 include "../includes/dbh-inc.php";
 
-// Prevent unauthorized access
+// Prevent unauthorized accessstudent_subject
 if (!isset($_SESSION['teacher_id'])) {
     header("location:../login.php?error=accessdenied");
     exit;

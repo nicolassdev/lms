@@ -61,8 +61,16 @@ switch ($page) {
     case "student_account":
         require_once 'student_account.php';
         break;
+
+        /** 
+        EXAM Routes 
+         */
     case "student_take_exam":
         require_once 'student_take_exam.php';
+        break;
+
+    case "student_exam_result":
+        require_once 'student_exam_result.php';
         break;
 
     default:

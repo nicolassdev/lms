@@ -149,16 +149,47 @@ error_reporting(E_ALL);
                                     <i class="bi bi-journal me-2"></i> Module
                                 </a>
                             </li>
+
+                            <!-- THISI IS THE ROUTE OF QUIZ -->
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=student_quiz">
-                                    <i class="bi bi-lightbulb me-2"></i> Quiz
+                                <a class="nav-link  text-white" href="#quizMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
+                                    <i class="bi bi-lightbulb me-2"></i>Quiz <i class="bi bi-chevron-down" style="margin-left: 50px;" id="quizIcon"></i>
                                 </a>
+                                <ul class="collapse list-unstyled ps-1" id="quizMenu">
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=student_quiz">
+                                            <i class="bi  bi-file-text-fill me-2"></i>Start Quiz
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=student_quiz_result">
+                                            <i class="bi bi-clipboard-data me-2"></i>Result of Quiz
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
+
+                            <!-- THISI IS THE ROUTE OF EXAM -->
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=student_exam">
-                                    <i class="bi bi-book me-2"></i>Exam
+                                <a class="nav-link  text-white" href="#examMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
+                                    <i class="bi bi-book me-2"></i>Exam <i class="bi bi-chevron-down" style="margin-left: 50px;" id="examIcon"></i>
                                 </a>
+                                <ul class="collapse list-unstyled ps-1" id="examMenu">
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=student_exam">
+                                            <i class="bi  bi-file-text-fill me-2"></i>Start Exam
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=student_exam_result">
+                                            <i class="bi bi-clipboard-data me-2"></i>Result of Exam
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
+
+
+
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=student_grade">
                                     <i class="bi bi-bar-chart me-2"></i> Grades
@@ -202,3 +233,27 @@ error_reporting(E_ALL);
     <!-- Bootstrap JS and Dependencies -->
     <!-- NOTE : DON'T REMOVE THIS DEPENDENCIES  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Reusable function for handling the icon toggle based on the collapse behavior
+            function toggleCollapseIcon(menuId, iconId) {
+                const menu = document.getElementById(menuId);
+                const icon = document.getElementById(iconId);
+
+                menu.addEventListener('show.bs.collapse', function() {
+                    icon.classList.remove('bi-chevron-down'); // Original icon
+                    icon.classList.add('bi-chevron-up'); // Change to up icon
+                });
+
+                menu.addEventListener('hide.bs.collapse', function() {
+                    icon.classList.remove('bi-chevron-up'); // Remove up icon
+                    icon.classList.add('bi-chevron-down'); // Change back to original icon
+                });
+            }
+
+            // Apply the function to different menus and icons
+            toggleCollapseIcon('examMenu', 'examIcon');
+            toggleCollapseIcon('quizMenu', 'quizIcon');
+        });
+    </script>

@@ -1,65 +1,201 @@
 <?php
-
-if (!isset($_SESSION['username'])) {
-    header("location:login.php?error=accessdenied");
-    exit();
-} elseif (isset($_SESSION['user_role'])) {
-
-    $user_role = strtolower($_SESSION['user_role']);
-    if ($user_role !== 'student') {
-        header("location:login.php?error=accessdenied"); // redirect access denied if user role is not admin
-        exit();
-    }
-} else {
-    header("location:login.php"); // Redirect to login page if user role is not exist 
-    exit();
+// Prevent unauthorized access
+if (!isset($_SESSION['stu_lrn'])) {
+    header("location:./login.php?error=accessdenied");
+    exit;
 }
+
+include "./includes/dbh-inc.php";
+
+$mySQLFunction->connection();
+$activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
+$activeSem = $mySQLFunction->checkSemStatus('semester');
+// Get teacher's assigned subjects
+$studentSubjects = $mySQLFunction->getAllStudentSubjectsExam($_SESSION['stu_lrn']);
+// echo "<pre>";
+// print_r($studentSubjects);
+// echo "</pre>";
+// Disconnect DB
+$mySQLFunction->disconnect();
 ?>
 
+
 <!-- Main QUIZ -->
-<div class="my-5">
-    <main class="col-md-12 ms-sm-auto col-lg-10">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-
-                    <div class="container-fluid ">
-                        <h2>Exam</h2>
-                        <p class="text-muted">Here, you can take your subject exam and view the results.</p>
-
-                        <div class="row mt-4">
-
-                            <!-- VIEW RESULT Exam -->
-                            <!-- Exam Card -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card shadow-sm h-100">
-                                    <div class="card-body text-center">
-                                        <i class="bi bi-book display-4 text-info mb-3"></i>
-                                        <h5 class="card-title">Exam</h5>
-                                        <p class="card-text">Check your exam performance.</p>
-                                        <a href="#" class="btn btn-info text-black">View Exam</a>
-                                    </div>
-                                </div>
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="container-fluid">
+                    <h4 class="fw-bold text-muted">
+                        Exam
+                    </h4>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="text-muted"> Here, you will test your knowledge and skills in the subject matter within a set time limit.</p>
+                        <!-- Search Bar -->
+                        <div class="col-md-4">
+                            <div class="input-group input-group-sm">
+                                <!-- Search Input -->
+                                <input type="text" id="searchBar" class="form-control" placeholder="Search subjects ...">
+                                <i class="bi bi-search me-2 ms-2"></i>
                             </div>
-
-                            <!-- TAKE Exam -->
-                            <!-- Exam Card -->
-                            <!-- Exam Card -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card shadow-sm h-100">
-                                    <div class="card-body text-center">
-                                        <i class="bi bi-book display-4 text-info mb-3"></i>
-                                        <h5 class="card-title">Exam</h5>
-                                        <p class="card-text">Start your exam.</p>
-                                        <a href="index.php?page=student_take_exam" class="btn btn-info text-black">Take Exam</a>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
+                    <hr>
+
+
+                    <div class="row g-4 mb-3" id="subjectContainer">
+                        <?php if (!empty($studentSubjects)): ?>
+                            <?php $hasExams = false; ?>
+                            <?php foreach ($studentSubjects as $subject): ?>
+                                <?php if (!empty($subject['exams'])): ?>
+                                    <?php $hasExams = true; ?>
+                                    <div class="col-lg-4 col-md-6 col-sm-12 subject-card" data-title="<?php echo htmlspecialchars(strtolower($subject['sub_title'])); ?>">
+                                        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+
+                                            <!-- Card Header -->
+                                            <div class="card-header bg-success text-white rounded-top-4 px-3 py-3 d-flex align-items-center">
+                                                <i class="bi bi-book-half fs-4 me-2"></i>
+                                                <div class="text-truncate">
+                                                    <h6 class="mb-0 fw-bold text-truncate"><?php echo htmlspecialchars(ucwords(strtolower($subject['sub_title'] ?? 'No Title'))); ?></h6>
+                                                    <small class="fw-semibold"><?php echo htmlspecialchars(ucwords(strtolower($subject['sub_type'] ?? 'No Type'))); ?> Subject</small>
+                                                </div>
+                                            </div>
+
+                                            <!-- Card Body -->
+                                            <div class="card-body">
+                                                <div class="mb-3">
+                                                    <i class="bi bi-person-circle text-success me-2"></i>
+                                                    <span class="fw-bold">
+                                                        <?php echo ucwords(strtolower($subject["teacher_fname"] . ' ' . $subject["teacher_lname"])) ?: 'No Subject Teacher'; ?>
+                                                    </span>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <i class="bi bi-layers text-primary me-2"></i>
+                                                    <span class="text-muted fw-semibold">
+                                                        <?php echo  $subject["grade_lvl"] . ' ' . htmlspecialchars($subject["section_name"]); ?><br>
+                                                    </span>
+                                                    <small class="text-muted ms-4">
+                                                        <?php echo ucwords(strtolower($subject["strand_desc"])); ?>
+
+                                                    </small>
+                                                </div>
+
+                                                <div class="exam-info">
+                                                    <i class="bi bi-calendar3 text-warning me-2"></i>
+                                                    <span class="text-secondary">
+                                                        <?php
+                                                        foreach ($subject["exams"] as $exam) {
+                                                            echo '<span class="text-muted fw-bold">' . htmlspecialchars($exam["exam_quarter"]) . ' Quarter - ' . $subject["sub_semester"] . ' </span> <br> ' .
+
+                                                                '<span class="text-primary fw-semibold ms-4">' . ($exam["exam_items"] ?? 'No subject set time') . ' items</span><br>';
+                                                        }
+                                                        ?>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Card Footer -->
+                                            <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
+                                                <a href="index.php?page=student_take_exam&exam_id=<?php echo urlencode($exam['exam_id']); ?>&sub_code=<?php echo urlencode($subject['sub_code']); ?>&section_code=<?php echo urlencode($subject['section_code']); ?>&grade_lvl=<?php echo urlencode($subject['grade_lvl']); ?>"
+                                                    class="btn btn-success w-100 fw-bold d-flex align-items-center justify-content-center shadow-sm">
+                                                    Take Exam
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+
+                            <!-- No Subjects Found -->
+                            <div class="col-12 text-center d-none no-results">
+                                <div class="py-5">
+                                    <div class="card-body">
+                                        <i class="bi bi-exclamation-circle text-danger display-4 mb-3"></i>
+                                        <h5 class="text-secondary fw-bold no-subject">No Subjects Found</h5>
+                                        <p class="text-muted mb-0">You can use the search bar above to find your subjects.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- No Exams Available -->
+                            <?php if (!$hasExams): ?>
+                                <div class="col-12 text-center py-5">
+                                    <div class="card-body">
+                                        <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
+                                        <h5 class="text-secondary fw-bold">No Exam Found</h5>
+                                        <small class="text-muted">You currently have no assigned exams. Check with your subject teacher.</small>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                        <?php else: ?>
+                            <!-- No Exams Available -->
+                            <div class="col-12 text-center py-5">
+                                <div class="card-body">
+                                    <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
+                                    <h5 class="text-secondary fw-bold">No Exam Found</h5>
+                                    <small class="text-muted">You currently have no assigned exams. Check with your subject teacher.</small>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
             </div>
         </div>
-    </main>
-</div>
+    </div>
+</main>
+
+
+
+<script>
+    document.getElementById('searchBar').addEventListener('input', function() {
+        const filter = this.value.toLowerCase();
+        const cards = document.querySelectorAll('.subject-card');
+        let found = false;
+
+        cards.forEach(card => {
+            const title = card.getAttribute('data-title') || '';
+            const matches = title.includes(filter);
+            card.style.display = matches ? '' : 'none';
+            if (matches) found = true;
+        });
+
+        // Show/Hide the "No Results Found" message
+        document.querySelector('.no-results').classList.toggle('d-none', found);
+    });
+</script>

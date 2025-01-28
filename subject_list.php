@@ -53,7 +53,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center ms-3 me-3">
                         <h5 class="fw-semibold">
-                            <div class="fs-6 text-danger">
+                            <div class="fs-6 text-success">
                                 <?php
                                 if (!empty($modules)) {
                                     foreach ($modules as $module) {
@@ -122,7 +122,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
 
                                         echo '
                                         <td class="d-flex justify-content-center">
-                                          <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#download_module' . $row['module_id'] . '">
+                                          <button class="btn btn-sm btn-success me-2" data-bs-toggle="modal" data-bs-target="#download_module' . $row['module_id'] . '">
                                             <i class="fas fa-download"></i>Download
                                           </button>
                                           <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#upload_answer' . $row['module_id'] . '">
