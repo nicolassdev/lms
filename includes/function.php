@@ -3178,7 +3178,7 @@ class myDataBase
 
     // INSERT ANSWER OF STUDENT 
     // Insert function
-    function insertAnswer($stud_id, $exam_id, $question_id, $question_type, $student_answer)
+    public function insertStudentExamAnswer($stud_id, $exam_id, $question_id, $question_type, $student_answer)
     {
         $sql = "INSERT INTO student_exam_answers (stu_lrn, exam_id, question_id, question_type, student_answer)
                VALUES (?, ?, ?, ?, ?)";
@@ -3186,6 +3186,157 @@ class myDataBase
         $stmt->bind_param("ssiss", $stud_id, $exam_id, $question_id, $question_type, $student_answer);
         $stmt->execute();
     }
+
+    public function getStudentExamResults($stu_lrn, $exam_id)
+    {
+        $query = "
+            SELECT 
+                sea.answer_id,
+                sea.stu_lrn,
+                sea.exam_id,
+                sea.question_id,
+                sea.question_type,
+                sea.student_answer,
+    
+                CASE 
+                    WHEN sea.question_type = 'multiple_choice' THEN em.mul_question
+                    WHEN sea.question_type = 'enumeration' THEN ee.enum_question
+                    WHEN sea.question_type = 'true_false' THEN et.tf_question
+                    WHEN sea.question_type = 'essay' THEN es.essay_question
+                END AS question_text,
+    
+                CASE 
+                    WHEN sea.question_type = 'multiple_choice' THEN em.is_correct
+                    WHEN sea.question_type = 'enumeration' THEN ee.enum_answer
+                    WHEN sea.question_type = 'true_false' THEN et.tf_answer
+                    ELSE NULL  
+                END AS correct_answer
+    
+            FROM student_exam_answers sea
+            LEFT JOIN exam_multiple em ON sea.question_id = em.mul_id AND sea.question_type = 'multiple_choice'
+            LEFT JOIN exam_enumeration ee ON sea.question_id = ee.enum_id AND sea.question_type = 'enumeration'
+            LEFT JOIN exam_tf et ON sea.question_id = et.tf_id AND sea.question_type = 'true_false'
+            LEFT JOIN exam_essay es ON sea.question_id = es.essay_id AND sea.question_type = 'essay'
+            WHERE sea.stu_lrn = ? AND sea.exam_id = ?";
+
+        $stmt = $this->con->prepare($query);
+        $stmt->bind_param("ss", $stu_lrn, $exam_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $exam_results = [];
+        while ($row = $result->fetch_assoc()) {
+            // Default to incorrect
+            $is_correct = 'Incorrect';
+
+            if (!empty($row['student_answer']) && !empty($row['correct_answer'])) {
+                if ($row['question_type'] === 'enumeration') {
+                    // Convert answers to lowercase and split into arrays
+                    $student_answers_array = array_map('trim', explode(',', strtolower($row['student_answer'])));
+                    $correct_answers_array = array_map('trim', explode(',', strtolower($row['correct_answer'])));
+
+                    // Sort both arrays
+                    sort($student_answers_array);
+                    sort($correct_answers_array);
+
+                    // Compare sorted arrays
+                    if ($student_answers_array === $correct_answers_array) {
+                        $is_correct = 'Correct';
+                    }
+                } else {
+                    // Regular comparison for other question types
+                    if (strtolower(trim($row['student_answer'])) === strtolower(trim($row['correct_answer']))) {
+                        $is_correct = 'Correct';
+                    }
+                }
+            }
+
+            $exam_results[] = [
+                'answer_id' => $row['answer_id'],
+                'question_id' => $row['question_id'],
+                'question_type' => $row['question_type'],
+                'question_text' => $row['question_text'],
+                'student_answer' => $row['student_answer'],
+                'correct_answer' => $row['correct_answer'],
+                'is_correct' => $is_correct
+            ];
+        }
+
+        return $exam_results;
+    }
+
+
+    // CALCULATE THE SCORE OF STUDENT 
+    public function calculateAndStoreStudentScore($stud_id, $exam_id)
+    {
+        // Initialize scores
+        $total_questions = 0;
+        $correct_answers = 0;
+
+        // Query to fetch student answers and correct answers
+        $sql = "
+            SELECT 
+                sea.question_id, sea.question_type, sea.student_answer,
+                CASE 
+                    WHEN sea.question_type = 'multiple_choice' THEN em.is_correct
+                    WHEN sea.question_type = 'enumeration' THEN ee.enum_answer
+                    WHEN sea.question_type = 'true_false' THEN et.tf_answer
+                    ELSE NULL  
+                END AS correct_answer
+            FROM student_exam_answers sea
+            LEFT JOIN exam_multiple em ON sea.question_id = em.mul_id AND sea.question_type = 'multiple_choice'
+            LEFT JOIN exam_enumeration ee ON sea.question_id = ee.enum_id AND sea.question_type = 'enumeration'
+            LEFT JOIN exam_tf et ON sea.question_id = et.tf_id AND sea.question_type = 'true_false'
+            WHERE sea.stu_lrn = ? AND sea.exam_id = ?";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("ss", $stud_id, $exam_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $total_questions++;
+
+            // Convert both answers to lowercase (case-insensitive check)
+            $student_answer = strtolower(trim($row['student_answer']));
+            $correct_answer = strtolower(trim($row['correct_answer']));
+
+            if ($row['question_type'] === 'enumeration') {
+                // Split the answers into arrays and remove extra spaces
+                $student_answers_array = array_map('trim', explode(',', strtolower($student_answer)));
+                $correct_answers_array = array_map('trim', explode(',', strtolower($correct_answer)));
+
+                // Sort both arrays to ignore order
+                sort($student_answers_array);
+                sort($correct_answers_array);
+
+                // If sorted arrays match, it's correct
+                if ($student_answers_array === $correct_answers_array) {
+                    $correct_answers++;
+                }
+            } else {
+                // For other question types (Multiple Choice & True/False)
+                if ($student_answer === $correct_answer) {
+                    $correct_answers++;
+                }
+            }
+        }
+
+        // Compute Score Percentage
+        $score_percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 100 : 0;
+
+        // Store score in student_exam_scores
+        $sql = "INSERT INTO student_exam_scores (stu_lrn, exam_id, total_questions, correct_answers, score_percentage)
+                VALUES (?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE correct_answers = VALUES(correct_answers), score_percentage = VALUES(score_percentage)";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("ssiid", $stud_id, $exam_id, $total_questions, $correct_answers, $score_percentage);
+        $stmt->execute();
+    }
+
+
+
 
 
     // =========================================== QUIZ FUNCTION ====================================================

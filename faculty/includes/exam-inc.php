@@ -119,7 +119,7 @@ try {
 
                     case "2": // Enumeration
                         $question = $_POST['enumeration_question'][$questionIndex] ?? '';
-                        $answers = $_POST['enumeration_answers'][$questionIndex] ?? '';
+                        $answers = strtolower($_POST['enumeration_answers'][$questionIndex] ?? '');
 
                         // Example: Insert into exam_enumeration table
                         $stmt = $mySQLFunction->con->prepare("INSERT INTO exam_enumeration (exam_id, enum_question, enum_answer) VALUES (?, ?, ?)");
@@ -138,7 +138,7 @@ try {
 
                     case "4": // True/False
                         $question = $_POST['tf_question'][$questionIndex] ?? '';
-                        $correctAnswer = $_POST['correct_answer'][$questionIndex] ?? '';
+                        $correctAnswer = strtolower($_POST['correct_answer'][$questionIndex] ?? '');
 
                         // Example: Insert into exam_tf table
                         $stmt = $mySQLFunction->con->prepare("INSERT INTO exam_tf (exam_id, tf_question, tf_answer) VALUES (?, ?, ?)");

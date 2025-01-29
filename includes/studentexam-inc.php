@@ -14,13 +14,12 @@ try {
     // Database connection
     $mySQLFunction->connection();
 
-
     // Handle Multiple Choice Questions
     if (!empty($_POST['mulId'])) {
         foreach ($_POST['mulId'] as $mul_id) {
             if (!empty($_POST["mcq_$mul_id"])) {
-                $answer = $_POST["mcq_$mul_id"]; // Directly store the selected choice
-                $mySQLFunction->insertAnswer($stud_id, $exam_id, $mul_id, "multiple_choice", $answer);
+                $mul_answer = $_POST["mcq_$mul_id"];
+                $mySQLFunction->insertStudentExamAnswer($stud_id, $exam_id, $mul_id, "multiple_choice", $mul_answer);
             }
         }
     }
@@ -29,16 +28,17 @@ try {
     if (!empty($_POST['enumId'])) {
         foreach ($_POST['enumId'] as $enum_id) {
             if (!empty($_POST["enum_$enum_id"])) {
-                $mySQLFunction->insertAnswer($stud_id, $exam_id, $enum_id, "enumeration", $_POST["enum_$enum_id"]);
+                $enum_answer = strtolower($_POST["enum_$enum_id"]);
+                $mySQLFunction->insertStudentExamAnswer($stud_id, $exam_id, $enum_id, "enumeration", $enum_answer);
             }
         }
     }
 
-    // Handle Essay Questions
+    // Handle Essay Questions (Not auto-scored)
     if (!empty($_POST['essayId'])) {
         foreach ($_POST['essayId'] as $essay_id) {
             if (!empty($_POST["essay_$essay_id"])) {
-                $mySQLFunction->insertAnswer($stud_id, $exam_id, $essay_id, "essay", $_POST["essay_$essay_id"]);
+                $mySQLFunction->insertStudentExamAnswer($stud_id, $exam_id, $essay_id, "essay", $_POST["essay_$essay_id"]);
             }
         }
     }
@@ -47,10 +47,14 @@ try {
     if (!empty($_POST['tfId'])) {
         foreach ($_POST['tfId'] as $tf_id) {
             if (!empty($_POST["tf_$tf_id"])) {
-                $mySQLFunction->insertAnswer($stud_id, $exam_id, $tf_id, "true_false", $_POST["tf_$tf_id"]);
+                $tf_answer = strtolower($_POST["tf_$tf_id"]);
+                $mySQLFunction->insertStudentExamAnswer($stud_id, $exam_id, $tf_id, "true_false", $tf_answer);
             }
         }
     }
+
+    // ✅ After inserting answers, calculate and store the student's score
+    $mySQLFunction->calculateAndStoreStudentScore($stud_id, $exam_id);
 
     $_SESSION['success_handler'] = "Successfully submitted exam!";
     header("Location: ../index.php?page=student_exam");

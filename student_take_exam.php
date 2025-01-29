@@ -27,6 +27,11 @@ if (!empty($_GET['exam_id']) && !empty($_GET['sub_code']) && !empty($_GET['secti
     // check if the student is already  take the exam if yes then the button will be disabled
     $checkIdExist = $mySQLFunction->checkExistIDinAssessment("student_exam_answers", $student_lrn, $exam_id);
     $isExamTaken = $checkIdExist > 0;
+
+    $result = $mySQLFunction->getStudentExamResults($student_lrn, $exam_id);
+    // echo "<pre>";
+    // print_r($result);
+    // echo "</pre>";
 }
 
 $mySQLFunction->disconnect();
