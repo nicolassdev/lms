@@ -30,7 +30,7 @@ $mySQLFunction->disconnect();
 
 
 <!-- TABLE -->
-<main class="col-md-12 ms-sm-auto col-lg-10">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4">
     <div class="container">
         <div class="row">
             <div class="col-12">

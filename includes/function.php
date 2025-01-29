@@ -687,7 +687,7 @@ class myDataBase
     // Helper function to fetch exam questions of a specific type
     private function fetchExamType($table, $idColumn, $columns, $examId)
     {
-        $query = "SELECT $columns FROM $table WHERE exam_id = ?";
+        $query = "SELECT $idColumn, $columns FROM $table WHERE exam_id = ?";
         $stmt = $this->con->prepare($query);
         $stmt->bind_param("s", $examId);
         $stmt->execute();
@@ -1274,6 +1274,26 @@ class myDataBase
         return $result;
     }
 
+    public function checkExistIDinAssessment($table, $stu_lrn = null, $exam_id = null)
+    {
+        if ($stu_lrn !== null && $exam_id !== null) {
+            $stu_lrn = mysqli_real_escape_string($this->con, $stu_lrn);
+            $exam_id = mysqli_real_escape_string($this->con, $exam_id);
+            $sql = "SELECT 1 FROM `$table` WHERE `stu_lrn` = '$stu_lrn' AND `exam_id` = '$exam_id' LIMIT 1"; // Optimized query
+        } else {
+            // Handle the case where either stu_lrn or exam_id is missing (if needed)
+            return 0; // Or throw an exception, or return all rows if that's your intended behavior
+        }
+
+        $query = $this->con->query($sql);
+
+        if ($query) {
+            return $query->num_rows > 0; // Return true/false directly
+        } else {
+            // Handle query error (e.g., log it)
+            return false; // Or throw an exception
+        }
+    }
 
     // COUNT THE NUMBER OF ROWS IN TABLE TO VALIDATION SELECTED IN UPDATE
     public function checkRowCountSubject($table, $row = null, $value = null, $id = null)
@@ -3154,6 +3174,17 @@ class myDataBase
         $stmt->execute();
         $stmt->close();
         return $stmt;
+    }
+
+    // INSERT ANSWER OF STUDENT 
+    // Insert function
+    function insertAnswer($stud_id, $exam_id, $question_id, $question_type, $student_answer)
+    {
+        $sql = "INSERT INTO student_exam_answers (stu_lrn, exam_id, question_id, question_type, student_answer)
+               VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("ssiss", $stud_id, $exam_id, $question_id, $question_type, $student_answer);
+        $stmt->execute();
     }
 
 

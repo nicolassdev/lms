@@ -22,7 +22,7 @@ $mySQLFunction->disconnect();
         <h5 class="fw-bold ms-3">School Information</h5>
 
         <!-- Button container for proper alignment -->
-        <div class="d-flex gap-2 ms-2">
+        <div class="d-flex gap-2 me-3 ms-3">
             <!-- Admin ACCOUNT button -->
             <a href="index.php?page=account" class="btn btn-dark btn-sm btn-animate">
                 <i class="bi bi-person-vcard-fill me-2"></i><span>Account</span>

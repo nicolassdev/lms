@@ -15,6 +15,8 @@ $studentSubjects = $mySQLFunction->getAllStudentSubjectsExam($_SESSION['stu_lrn'
 // echo "<pre>";
 // print_r($studentSubjects);
 // echo "</pre>";
+
+
 // Disconnect DB
 $mySQLFunction->disconnect();
 ?>
@@ -26,11 +28,11 @@ $mySQLFunction->disconnect();
         <div class="row">
             <div class="col-12">
                 <div class="container-fluid">
-                    <h4 class="fw-bold text-muted">
-                        Exam
-                    </h4>
                     <div class="d-flex justify-content-between align-items-center">
-                        <p class="text-muted"> Here, you will test your knowledge and skills in the subject matter within a set time limit.</p>
+                        <h4 class="fw-bold text-muted">
+                            Exam
+                        </h4>
+                        <!-- <p class="text-muted"> Here, you will test your knowledge and skills in the subject matter within a set time limit.</p> -->
                         <!-- Search Bar -->
                         <div class="col-md-4">
                             <div class="input-group input-group-sm">
@@ -72,23 +74,22 @@ $mySQLFunction->disconnect();
 
                                                 <div class="mb-3">
                                                     <i class="bi bi-layers text-primary me-2"></i>
-                                                    <span class="text-muted fw-semibold">
+                                                    <span class="text-dark fw-semibold">
                                                         <?php echo  $subject["grade_lvl"] . ' ' . htmlspecialchars($subject["section_name"]); ?><br>
                                                     </span>
-                                                    <small class="text-muted ms-4">
+                                                    <small class="text-dark ms-4">
                                                         <?php echo ucwords(strtolower($subject["strand_desc"])); ?>
 
                                                     </small>
                                                 </div>
 
                                                 <div class="exam-info">
-                                                    <i class="bi bi-calendar3 text-warning me-2"></i>
+                                                    <i class="bi bi-calendar3 text-warning me-1"></i>
                                                     <span class="text-secondary">
                                                         <?php
                                                         foreach ($subject["exams"] as $exam) {
-                                                            echo '<span class="text-muted fw-bold">' . htmlspecialchars($exam["exam_quarter"]) . ' Quarter - ' . $subject["sub_semester"] . ' </span> <br> ' .
-
-                                                                '<span class="text-primary fw-semibold ms-4">' . ($exam["exam_items"] ?? 'No subject set time') . ' items</span><br>';
+                                                            echo '<span class="text-dark">' . htmlspecialchars($exam["exam_quarter"]) . ' Quarter - ' . $subject["sub_semester"] . ' </span> <br> ' .
+                                                                '<small class="text-dark ms-4">Date of Exam : ' . date('F j, Y', strtotime($exam["exam_date"])) . ' </small> ';
                                                         }
                                                         ?>
                                                     </span>
@@ -141,38 +142,6 @@ $mySQLFunction->disconnect();
                             </div>
                         <?php endif; ?>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                 </div>
             </div>

@@ -1,3 +1,9 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+error_reporting(E_ALL);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,11 +49,11 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-dark nav-shadow">
         <div class="container-fluid">
             <!-- Sidebar Toggle Button -->
-            <button 
-                class="navbar-toggler bg-light" 
-                type="button" 
-                data-bs-toggle="offcanvas" 
-                data-bs-target="#sidebar" 
+            <button
+                class="navbar-toggler bg-light"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#sidebar"
                 aria-controls="sidebar">
                 <span class="navbar-toggler-icon"></span>
             </button>
