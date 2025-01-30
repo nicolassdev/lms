@@ -3186,8 +3186,8 @@ class myDataBase
         $stmt->bind_param("ssiss", $stud_id, $exam_id, $question_id, $question_type, $student_answer);
         $stmt->execute();
     }
-
-    public function getStudentExamResults($stu_lrn, $exam_id)
+    // GET ALL CORRECT QUESTION AND ANSWERS OF EXAM  OF STUDENT 
+    public function getCorrectExamResult($stu_lrn, $exam_id)
     {
         $query = "
             SELECT 
@@ -3197,6 +3197,16 @@ class myDataBase
                 sea.question_id,
                 sea.question_type,
                 sea.student_answer,
+                em.mul_question,
+                em.choice_a, 
+                em.choice_b,
+                em.choice_c, 
+                em.choice_d, 
+                em.is_correct, 
+                ee.enum_question, 
+                ee.enum_answer, 
+                et.tf_question, 
+                et.tf_answer,
     
                 CASE 
                     WHEN sea.question_type = 'multiple_choice' THEN em.mul_question
@@ -3266,9 +3276,126 @@ class myDataBase
     }
 
 
+    //GET ALL SCORE OF STUDENT IN EXAM
+    public function getStudentExamScore($stud_id, $exam_id)
+    {
+        $sql = "SELECT correct_answers, total_questions, score_percentage
+                FROM student_exam_scores
+                WHERE stu_lrn = ? AND exam_id = ?";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("ss", $stud_id, $exam_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // If a score already exists, return it
+        if ($row = $result->fetch_assoc()) {
+            return [
+                'correct_answers' => $row['correct_answers'],
+                'total_questions' => $row['total_questions'],
+                'score_percentage' => $row['score_percentage']
+            ];
+        }
+    }
+
+    // public function calculateAndStoreStudentScore($stud_id, $exam_id)
+    // {
+    //     // First, check if the score already exists for the student in the student_exam_scores table
+    //     $sql = "SELECT correct_answers, total_questions, score_percentage
+    //             FROM student_exam_scores
+    //             WHERE stu_lrn = ? AND exam_id = ?";
+
+    //     $stmt = $this->con->prepare($sql);
+    //     $stmt->bind_param("ss", $stud_id, $exam_id);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+
+    //     // If a score already exists, return it
+    //     if ($row = $result->fetch_assoc()) {
+    //         return [
+    //             'correct_answers' => $row['correct_answers'],
+    //             'total_questions' => $row['total_questions'],
+    //             'score_percentage' => $row['score_percentage']
+    //         ];
+    //     }
+
+    //     // If no score exists, calculate the score by checking student answers
+    //     $total_questions = 0;
+    //     $correct_answers = 0;
+
+    //     $sql = "
+    //         SELECT 
+    //             sea.question_id, sea.question_type, sea.student_answer,
+    //             CASE 
+    //                 WHEN sea.question_type = 'multiple_choice' THEN em.is_correct
+    //                 WHEN sea.question_type = 'enumeration' THEN ee.enum_answer
+    //                 WHEN sea.question_type = 'true_false' THEN et.tf_answer
+    //                 ELSE NULL  
+    //             END AS correct_answer
+    //         FROM student_exam_answers sea
+    //         LEFT JOIN exam_multiple em ON sea.question_id = em.mul_id AND sea.question_type = 'multiple_choice'
+    //         LEFT JOIN exam_enumeration ee ON sea.question_id = ee.enum_id AND sea.question_type = 'enumeration'
+    //         LEFT JOIN exam_tf et ON sea.question_id = et.tf_id AND sea.question_type = 'true_false'
+    //         WHERE sea.stu_lrn = ? AND sea.exam_id = ?";
+
+    //     $stmt = $this->con->prepare($sql);
+    //     $stmt->bind_param("ss", $stud_id, $exam_id);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+
+    //     while ($row = $result->fetch_assoc()) {
+    //         $total_questions++;
+
+    //         // Convert both answers to lowercase (case-insensitive check)
+    //         $student_answer = strtolower(trim($row['student_answer']));
+    //         $correct_answer = strtolower(trim($row['correct_answer']));
+
+    //         if ($row['question_type'] === 'enumeration') {
+    //             // Split the answers into arrays and remove extra spaces
+    //             $student_answers_array = array_map('trim', explode(',', strtolower($student_answer)));
+    //             $correct_answers_array = array_map('trim', explode(',', strtolower($correct_answer)));
+
+    //             // Sort both arrays to ignore order
+    //             sort($student_answers_array);
+    //             sort($correct_answers_array);
+
+    //             // If sorted arrays match, it's correct
+    //             if ($student_answers_array === $correct_answers_array) {
+    //                 $correct_answers++;
+    //             }
+    //         } else {
+    //             // For other question types (Multiple Choice & True/False)
+    //             if ($student_answer === $correct_answer) {
+    //                 $correct_answers++;
+    //             }
+    //         }
+    //     }
+
+    //     // Compute Score Percentage
+    //     $score_percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 100 : 0;
+
+    //     // Store score in student_exam_scores
+    //     $sql = "INSERT INTO student_exam_scores (stu_lrn, exam_id, total_questions, correct_answers, score_percentage)
+    //             VALUES (?, ?, ?, ?, ?)
+    //             ON DUPLICATE KEY UPDATE correct_answers = VALUES(correct_answers), score_percentage = VALUES(score_percentage)";
+
+    //     $stmt = $this->con->prepare($sql);
+    //     $stmt->bind_param("ssiid", $stud_id, $exam_id, $total_questions, $correct_answers, $score_percentage);
+    //     $stmt->execute();
+
+    //     // Return the calculated results
+    //     return [
+    //         'correct_answers' => $correct_answers,
+    //         'total_questions' => $total_questions,
+    //         'score_percentage' => $score_percentage
+    //     ];
+    // }
+
+
     // CALCULATE THE SCORE OF STUDENT 
     public function calculateAndStoreStudentScore($stud_id, $exam_id)
     {
+
         // Initialize scores
         $total_questions = 0;
         $correct_answers = 0;
@@ -3334,6 +3461,7 @@ class myDataBase
         $stmt->bind_param("ssiid", $stud_id, $exam_id, $total_questions, $correct_answers, $score_percentage);
         $stmt->execute();
     }
+
 
 
 
