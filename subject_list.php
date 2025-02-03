@@ -46,7 +46,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
     }
 </style>
 
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-3">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-4">
     <div class="container ">
         <div class="row">
             <div class="col-12">
@@ -80,7 +80,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                         </h5>
 
                         <!-- Search Module  -->
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-end mb-2">
                             <input type="text" id="searchInput" class="form-control form-control-sm w-100 me-1" placeholder="Search modules...">
                             <i class="bi bi-search ms-1 fs-4"></i>
                         </div>
@@ -95,7 +95,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                 <tr>
                                     <th>#</th>
                                     <th>Filename</th>
-                                    <th>Uploaded Date</th>
+                                    <th>Date Uploaded</th>
                                     <th>Uploaded by</th>
                                     <th class="text-center">Module</th>
                                 </tr>
@@ -106,6 +106,13 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                 if (!empty($modules)) {
                                     $count = 1;
                                     foreach ($modules as $row) {
+                                        // check if there is module id and student lrn exist in the module_answer table if yes status will be done 
+                                        $moduleId = $row['module_id'];
+                                        $studentId = $_SESSION['stu_lrn'];
+
+                                        $hasStudentUploaded = $mySQLFunction->checkExistByID("module_answer", "module_id", $moduleId)
+                                            && $mySQLFunction->checkExistByID("module_answer", "stu_lrn", $studentId);
+
                                         // Extract the base file name for display
                                         $fileNameForDisplay = basename($row['file_name']);
                                         $fileNameForDownload = htmlspecialchars($row['file_name']); // Prevent XSS attacks
@@ -120,17 +127,25 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                         // echo '<td><a href="faculty/includes/download.php?file=' . urlencode($fileNameForDownload) . '" class="btn btn-success btn-sm">';
                                         // echo '<i class="fas fa-download"></i> Download</a></td>';
 
-                                        echo '
-                                        <td class="d-flex justify-content-center">
-                                          <button class="btn btn-sm btn-success me-2" data-bs-toggle="modal" data-bs-target="#download_module' . $row['module_id'] . '">
-                                            <i class="fas fa-download"></i>Download
-                                          </button>
-                                          <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#upload_answer' . $row['module_id'] . '">
-                                            <i class="fas fa-download"></i>Upload
-                                          </button>
-                                        </td>
-                                        ';
+                                        if ($hasStudentUploaded) {
+                                            echo '<td class="d-flex justify-content-center">
+                                            <button class="btn  btn-sm btn-outline-success text-center" disabled>
+                                                <i class="fas fa-check"></i> Done uploaded
+                                            </button>
+                                        </td>';
+                                        } else {
 
+                                            echo '
+                                            <td class="d-flex justify-content-center">
+                                            <button class="btn btn-sm btn-success me-2" data-bs-toggle="modal" data-bs-target="#download_module' . $row['module_id'] . '">
+                                                <i class="fas fa-download"></i>Download
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#upload_answer' . $row['module_id'] . '">
+                                                <i class="fas fa-download"></i>Upload
+                                            </button>
+                                            </td>
+                                        ';
+                                        }
                                         echo '</tr>';
 
 

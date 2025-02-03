@@ -109,14 +109,14 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
                                     <!-- <th scope="col" style="width: 50px;">LRN</th> -->
-                                    <th scope="col" style="width: 100px;">Full name</th>
-                                    <th scope="col" style="width: 50px;">Gender</th>
+                                    <th scope="col" class="text-center" style="width: 100px;">Student name</th>
+                                    <!-- <th scope="col" style="width: 50px;">Gender</th>
                                     <th scope="col" style="width: 150px;">Address</th>
                                     <th scope="col" style="width: 100px;">Contact</th>
                                     <th scope="col" style="width: 100px;">Email</th>
                                     <th scope="col" style="width: 100px;">Year level</th>
-                                    <th scope="col" style="width: 100px;">Section</th>
-                                    <th scope="col" style="width: 100px;">Module Answer</th>
+                                    <th scope="col" style="width: 100px;">Section</th> -->
+                                    <th scope="col" class="text-center" style="width: 150px;">Module Answer</th>
 
 
 
@@ -135,25 +135,28 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                         echo '<td>' . $count . '</td>';
                                         // echo '<td class="text-center text-primary"><a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">' . $row["stu_lrn"] . '</a></td>';
                                         echo '<td class="small text-center"> ' . $row["stu_lname"] . ', ' .  ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"] . '')) . '</td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
-                                        echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
-                                        echo '<td class="small text-center">' . strtolower($row["stu_email"]) . '</td>';
-                                        echo '<td class="small text-center">' .  $row["grade_lvl"] . '</td>';
-                                        echo '<td class="small text-center">' .  $row["section_name"] . '</td>';
+                                        // echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
+                                        // echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
+                                        // echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
+                                        // echo '<td class="small text-center">' . strtolower($row["stu_email"]) . '</td>';
+                                        // echo '<td class="small text-center">' .  $row["grade_lvl"] . '</td>';
+                                        // echo '<td class="small text-center">' .  $row["section_name"] . '</td>';
 
                                         // Check if there are no files uploaded
-                                        echo '<td>';
+                                        echo '<td class="text-center">';
                                         if (empty($row['file_names']) || count($fileNames) == 0) {
                                             echo '<span class="text-danger">No file uploaded</span>';
                                         } else {
+                                            echo '<div class="d-flex flex-wrap gap-1">'; // Flex container for row layout
                                             foreach ($fileNames as $fileName) {
                                                 $fileNameForDownload = htmlspecialchars(trim($fileName)); // Clean up file name
-                                                echo '<a href="includes/download.php?file=' . urlencode($fileNameForDownload) . '" class="btn btn-success btn-sm mb-1">';
-                                                echo '<i class="fas fa-download"></i> Download</a><br>';
+                                                echo '<a href="includes/download.php?file=' . urlencode($fileNameForDownload) . '" class="btn btn-success btn-sm">';
+                                                echo '<i class="fas fa-download"></i> Download</a>';
                                             }
+                                            echo '</div>';
                                         }
                                         echo '</td>';
+
 
                                         echo '</tr>';
                                         $count++;
@@ -182,6 +185,5 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
 <!-- PDF ,EXCEL, PRINT ,CVS -->
 <script src="../assets/js/globaltables.js"></script>
 <script>
-    initializeDataTable("student_subjectlist", 8, "List of Students");
+    initializeDataTable("student_subjectlist", 8, "List of Students Who Uploaded Modules");
 </script>
- 

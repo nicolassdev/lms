@@ -15,7 +15,18 @@ $studentSubjects = $mySQLFunction->getAllStudentSubjectsExam($_SESSION['stu_lrn'
 // echo "<pre>";
 // print_r($studentSubjects);
 // echo "</pre>";
+// foreach ($studentSubjects as $subject) {
+//     foreach ($subject["exams"] as $exam) {
+//         $exam_id = $exam['exam_id'];
+//         echo "<pre>";
+//         print_r($exam_id);
+//         echo "</pre>";
+//     }
+// }
 
+
+// $hideExam = $mySQLFunction->checkExistIDinAssessment("student_exam_scores", $_SESSION['stu_lrn'], $exam_id);
+// $hideDoneExam = $hideExam > 0;
 
 // Disconnect DB
 $mySQLFunction->disconnect();
@@ -37,23 +48,42 @@ $mySQLFunction->disconnect();
                         <div class="col-md-4">
                             <div class="input-group input-group-sm">
                                 <!-- Search Input -->
-                                <input type="text" id="searchBar" class="form-control" placeholder="Search subjects ...">
+                                <input type="text" id="searchBar" class="form-control" placeholder="Search subject exam ...">
                                 <i class="bi bi-search me-2 ms-2"></i>
                             </div>
                         </div>
                     </div>
                     <hr>
 
-
                     <div class="row g-4 mb-3" id="subjectContainer">
                         <?php if (!empty($studentSubjects)): ?>
-                            <?php $hasExams = false; ?>
+                            <?php $hasExams = false; ?> <!-- Boolean -->
                             <?php foreach ($studentSubjects as $subject): ?>
-                                <?php if (!empty($subject['exams'])): ?>
-                                    <?php $hasExams = true; ?>
+                                <?php
+                                $mySQLFunction->connection();
+                                $allExamsCompleted = true; // Assume all exams are completed
+
+                                if (!empty($subject['exams'])):
+                                    foreach ($subject["exams"] as $exam) {
+                                        $exam_id = $exam['exam_id'];
+                                        // check if the student have answer in table STUDENT EXAM ANSWERS and EXAM SCORES
+                                        $hideExam = $mySQLFunction->checkExistIDinAssessment("student_exam_answers", $_SESSION['stu_lrn'], $exam_id);
+                                        $hideExamScore = $mySQLFunction->checkExistIDinAssessment("student_exam_scores", $_SESSION['stu_lrn'], $exam_id);
+
+                                        if ($hideExam == 0 && $hideExamScore == 0) {
+                                            $allExamsCompleted = false; // At least one exam is not completed
+                                            break;
+                                        }
+                                    }
+
+                                    if ($allExamsCompleted) {
+                                        continue; // Skip rendering this subject if all exams are completed
+                                    }
+
+                                    $hasExams = true;
+                                ?>
                                     <div class="col-lg-4 col-md-6 col-sm-12 subject-card" data-title="<?php echo htmlspecialchars(strtolower($subject['sub_title'])); ?>">
                                         <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
-
                                             <!-- Card Header -->
                                             <div class="card-header bg-success text-white rounded-top-4 px-3 py-3 d-flex align-items-center">
                                                 <i class="bi bi-book-half fs-4 me-2"></i>
@@ -79,7 +109,6 @@ $mySQLFunction->disconnect();
                                                     </span>
                                                     <small class="text-dark ms-4">
                                                         <?php echo ucwords(strtolower($subject["strand_desc"])); ?>
-
                                                     </small>
                                                 </div>
 
@@ -103,24 +132,13 @@ $mySQLFunction->disconnect();
                                                     Take Exam
                                                 </a>
                                             </div>
-
                                         </div>
                                     </div>
+
                                 <?php endif; ?>
                             <?php endforeach; ?>
 
-                            <!-- No Subjects Found -->
-                            <div class="col-12 text-center d-none no-results">
-                                <div class="py-5">
-                                    <div class="card-body">
-                                        <i class="bi bi-exclamation-circle text-danger display-4 mb-3"></i>
-                                        <h5 class="text-secondary fw-bold no-subject">No Subjects Found</h5>
-                                        <p class="text-muted mb-0">You can use the search bar above to find your subjects.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- No Exams Available -->
+                            <!-- No Subjects EXAM Found -->
                             <?php if (!$hasExams): ?>
                                 <div class="col-12 text-center py-5">
                                     <div class="card-body">
@@ -130,6 +148,15 @@ $mySQLFunction->disconnect();
                                     </div>
                                 </div>
                             <?php endif; ?>
+                            <!-- NOTE: for search bar purpose -->
+                            <!-- No Subjects Found Message  search bar-->
+                            <div class="col-12 text-center d-none no-results">
+                                <div class="card-body">
+                                    <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
+                                    <h5 class="text-secondary fw-bold">No Exam Found</h5>
+                                    <small class="text-muted">You can use the search bar above to find your exam.</small>
+                                </div>
+                            </div>
 
                         <?php else: ?>
                             <!-- No Exams Available -->

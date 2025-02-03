@@ -61,7 +61,7 @@ $mySQLFunction->disconnect();
 
 
     <!-- Subject Cards -->
-    <div class="row g-4 mb-4" id="subjectContainer">
+    <div class="row g-4 mb-4 ms-2 me-2" id="subjectContainer">
         <?php if (!empty($studentSubjects)): ?>
             <?php foreach ($studentSubjects as $subject): ?>
                 <div class="col-lg-4 col-md-6 col-sm-12 subject-card" data-title="<?php echo htmlspecialchars(strtolower($subject['sub_title'])); ?>">
@@ -76,14 +76,7 @@ $mySQLFunction->disconnect();
                                     <?php echo htmlspecialchars(ucwords(strtolower($subject['sub_type'] ?? 'No Type'))); ?> Subject
                                 </small>
                             </div>
-                            <div class="dropdown">
-                                <i class="bi bi-three-dots-vertical text-white fs-5" id="kebabMenu" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="cursor: pointer;"></i>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="kebabMenu">
-                                    <li><a class="dropdown-item text-black" href="#" onclick="confirmDelete()">Move</a></li>
-                                    <hr class="dropdown-divider">
-                                    <li><a class="dropdown-item text-black" href="#" onclick="cancelAction()">Cancel</a></li>
-                                </ul>
-                            </div>
+
                         </div>
 
                         <div class="card-body">
@@ -137,11 +130,7 @@ $mySQLFunction->disconnect();
                                 </span>
                             </div>
                         </div>
-                        <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
-                            <a href="index.php?page=subject_list&sub_code=<?php echo urlencode($subject['sub_code']); ?> &strand_code=<?php echo urlencode($subject['strand_code']); ?> &grade_lvl=<?php echo urlencode($subject['grade_lvl']); ?>" class="btn btn-outline-success w-100 fw-bold d-flex align-items-center justify-content-center">
-                                <i class="bi bi-journals me-2"></i> View Module
-                            </a>
-                        </div>
+
                     </div>
                 </div>
             <?php endforeach; ?>

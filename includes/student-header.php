@@ -139,21 +139,21 @@ error_reporting(E_ALL);
                                     <i class="bi bi-building-fill me-2"></i> Section
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=student_subject">
                                     <i class="bi bi-journal-bookmark-fill me-2"></i>Subject
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=student_module">
-                                    <i class="bi bi-journal me-2"></i> Module
+                                    <i class="bi bi-journal-bookmark-fill me-2"></i> Module
                                 </a>
                             </li>
 
                             <!-- THISI IS THE ROUTE OF QUIZ -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#quizMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
-                                    <i class="bi bi-lightbulb me-2"></i>Quiz <i class="bi bi-chevron-down" style="margin-left: 55px;" id="quizIcon"></i>
+                                    <i class="bi bi-lightbulb me-2"></i>Quiz <i class="bi bi-chevron-down" style="margin-left: 60px;" id="quizIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="quizMenu">
                                     <li class="nav-item mt-2">
@@ -172,7 +172,7 @@ error_reporting(E_ALL);
                             <!-- THISI IS THE ROUTE OF EXAM -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#examMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
-                                    <i class="bi bi-book me-2"></i>Exam <i class="bi bi-chevron-down" style="margin-left: 50px;" id="examIcon"></i>
+                                    <i class="bi bi-book me-2"></i>Exam <i class="bi bi-chevron-down" style="margin-left: 55px;" id="examIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="examMenu">
                                     <li class="nav-item mt-2">

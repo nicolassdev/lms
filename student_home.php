@@ -83,7 +83,7 @@ $mySQLFunction->disconnect();
                                         <i class="bi bi-journal display-4 text-info mb-3"></i>
                                         <h5 class="card-title">Module</h5>
                                         <p class="card-text">Submit and track your Module.</p>
-                                        <a href="#" class="btn btn-info text-black">View Module</a>
+                                        <a href="?page=student_module" class="btn btn-info text-black">View Module</a>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +119,7 @@ $mySQLFunction->disconnect();
                                         <i class="bi bi-book display-4 text-info mb-3"></i>
                                         <h5 class="card-title">Exam</h5>
                                         <p class="card-text">Check your exam performance.</p>
-                                        <a href="#" class="btn btn-info text-black">View Exam</a>
+                                        <a href="?page=student_exam_result" class="btn btn-info text-black">View Exam</a>
                                     </div>
                                 </div>
                             </div>

@@ -35,13 +35,6 @@ error_reporting(E_ALL);
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
 
 
-    <!-- Include Morris.js and jQuery -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    <!-- Include Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
 </head>
 
@@ -50,7 +43,7 @@ error_reporting(E_ALL);
     <nav class="navbar navbar-expand-lg navbar-light bg-dark nav-shadow">
         <div class="container-fluid">
             <!-- Sidebar Toggle Button -->
-            <button class="navbar-toggler bg-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+            <button class="navbar-toggler bg-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle sidebar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="image d-flex align-items-center">
@@ -164,14 +157,44 @@ error_reporting(E_ALL);
 
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=section_handled">
-                                    <i class="bi bi-buildings me-1"></i>Section Handled
+                                    <i class="bi bi-buildings me-2"></i>Section Handled
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=teacher_subject">
-                                    <i class="bi bi-journal-bookmark-fill me-1"></i>Subjects Handled
+                                    <i class="bi bi-journal-bookmark-fill me-2"></i>Subjects Handled
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link active" href="index.php?page=teacher_module">
+                                    <i class="bi bi-book me-2"></i></i>Module
+                                </a>
+                            </li>
+
+                            <!-- THISI IS THE ROUTE OF QUIZ -->
+                            <li class="nav-item">
+                                <a class="nav-link  text-white" href="#assessmentMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
+                                    <i class="bi bi-card-heading me-2"></i>Assessment <i class="bi bi-chevron-down" style="margin-left: 55px;" id="assessmentIcon"></i>
+                                </a>
+                                <ul class="collapse list-unstyled ps-1" id="assessmentMenu">
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=teacher_quiz">
+                                            <i class="bi  bi-lightbulb me-2"></i>Quiz
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=teacher_exam">
+                                            <i class="bi bi-book me-2"></i>Exam
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+
+
+                            <!-- 
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=teacher_quiz">
                                     <i class="bi bi-lightbulb me-2"></i>Quiz
@@ -181,7 +204,8 @@ error_reporting(E_ALL);
                                 <a class="nav-link active" href="index.php?page=teacher_exam">
                                     <i class="bi bi-book me-2"></i></i>Exam
                                 </a>
-                            </li>
+                            </li> -->
+
 
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=teacher_report">
@@ -226,20 +250,28 @@ error_reporting(E_ALL);
     <!-- Bootstrap JS and Dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- THIS IS SIDE BAR SCRIPT TO SHOW TOOGGLE UP AND DOWN  -->
-    <!-- <script>
+    <script>
         // Add event listener to toggle the icon when dropdown is shown/hidden
         document.addEventListener('DOMContentLoaded', function() {
-            const studentMenu = document.getElementById('studentMenu');
-            const studentIcon = document.getElementById('studentIcon');
 
-            studentMenu.addEventListener('show.bs.collapse', function() {
-                studentIcon.classList.remove('bi-chevron-down'); // Original icon
-                studentIcon.classList.add('bi-chevron-up'); // Change to up icon
-            });
+            // Reusable function for handling the icon toggle based on the collapse behavior
+            function toggleCollapseIcon(menuId, iconId) {
+                const menu = document.getElementById(menuId);
+                const icon = document.getElementById(iconId);
 
-            studentMenu.addEventListener('hide.bs.collapse', function() {
-                studentIcon.classList.remove('bi-chevron-up'); // Remove up icon
-                studentIcon.classList.add('bi-chevron-down'); // Change back to original icon
-            });
+                menu.addEventListener('show.bs.collapse', function() {
+                    icon.classList.remove('bi-chevron-down'); // Original icon
+                    icon.classList.add('bi-chevron-up'); // Change to up icon
+                });
+
+                menu.addEventListener('hide.bs.collapse', function() {
+                    icon.classList.remove('bi-chevron-up'); // Remove up icon
+                    icon.classList.add('bi-chevron-down'); // Change back to original icon
+                });
+
+            }
+
+            // Apply the function to different menus and icons
+            toggleCollapseIcon('assessmentMenu', 'assessmentIcon');
         });
-    </script> -->
+    </script>

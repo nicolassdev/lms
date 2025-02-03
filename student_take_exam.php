@@ -33,10 +33,6 @@ if (!empty($_GET['exam_id']) && !empty($_GET['sub_code']) && !empty($_GET['secti
 
     // GET THE SCORE OF STUDENT IN EXAM
     $examScore = $mySQLFunction->getStudentExamScore($student_lrn, $exam_id);
-
-    // echo "<pre>";
-    // print_r($examScore);
-    // echo "</pre>";
 }
 
 $mySQLFunction->disconnect();
@@ -51,7 +47,8 @@ $mySQLFunction->disconnect();
                     <!-- Header Section -->
                     <div class="card mb-2 shadow-lg border-0">
                         <div class="card-body text-center <?php echo $isExamTaken ? 'bg-dark' : 'bg-primary'; ?> text-white rounded position-relative">
-                            <div class="d-flex flex-column align-items-end"> <a href="index.php?page=student_exam" class="btn btn-sm btn-outline-light mt-2"> Back</a>
+                            <div class="d-flex flex-column align-items-end">
+                                <a <?php echo $isExamTaken ? 'href="index.php?page=student_exam_result" ' : 'href="index.php?page=student_exam" ' ?> class="btn btn-sm btn-outline-light mt-2"> Back</a>
                                 <div class="w-100  text-center"> <?php if ($isExamTaken): ?>
                                         <h1 class="card-title fw-bold">Done <i class="bi bi-check-circle-fill fs-3 text-success"></i></h1>
                                         <p class="card-text"> You have already taken this exam. </p>
@@ -81,13 +78,17 @@ $mySQLFunction->disconnect();
                                 <!-- Exam Title and Details -->
                                 <div class="card mb-2 shadow-sm border-0">
                                     <div class="card-body">
-                                        <h4 class="fw-bold text-dark">
-                                            <?= htmlspecialchars(ucwords(strtolower($examData["exam_title"] ?? 'No Exam Title'))) ?>
-                                        </h4>
-                                        <p class=" text-secondary">
-                                            Subject: <span class="text-primary fw-semibold"><?= htmlspecialchars(ucwords(strtolower($examData["sub_title"] ?? 'No Subject'))) ?></span><br>
-                                            Subject Teacher: <?= htmlspecialchars(ucwords(strtolower($examData["teacher_fname"] .  '  ' . $examData["teacher_lname"] . ' ' ?? 'N/A'))) ?><br>
-                                            Quarter & Semester: <?= htmlspecialchars(($examData["exam_quarter"] . ' Quarter' . ' / ' . $examData["sub_semester"] . ' ' ?? 'N/A')) ?>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h4 class="fw-bold text-dark">
+                                                <?= htmlspecialchars(ucwords(strtolower($examData["exam_title"] ?? 'No Exam Title'))) ?>
+                                            </h4>
+                                            <span class="badge bg-dark py-2 text-white">
+                                                <?= htmlspecialchars(($examData["exam_quarter"] . ' Quarter' . ' / ' . $examData["sub_semester"] . ' ' ?? 'N/A')) ?>
+                                            </span>
+                                        </div>
+                                        <p class="text-secondary">
+                                            <span class="fw-bold">Subject:</span> <span class="text-primary fw-semibold"><?= htmlspecialchars(ucwords(strtolower($examData["sub_title"] ?? 'No Subject'))) ?></span><br>
+                                            <span class="fw-bold">Teacher:</span> <?= htmlspecialchars(ucwords(strtolower($examData["teacher_fname"] . ' ' . $examData["teacher_lname"] . ' ' ?? 'N/A'))) ?>
                                         </p>
                                     </div>
                                 </div>
@@ -138,7 +139,7 @@ $mySQLFunction->disconnect();
                                                 <?= htmlspecialchars($examData["exam_items"] . ' Items' ?? 'No Items') ?><br>
                                             </p>
                                         </div>
-                                        <!-- FORM ELEMENTS -->
+                                        <!-- FORM ELEMENTS OF EXAM -->
                                         <form action="./includes/studentexam-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation" novalidate>
 
                                             <!-- Hidden Inputs -->

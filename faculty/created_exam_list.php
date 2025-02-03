@@ -73,7 +73,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                     echo
                                     '<div class="alert alert-warning d-flex align-items-center" role="alert">
                                         <div>
-                                            <strong>No Uploaded Exam!</strong> It seems there is no exam uploaded yet.
+                                            <strong>No Exam Created!</strong> It seems there are no exams uploaded yet.
                                         </div>
                                     </div>';
                                 }
@@ -149,7 +149,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
 
                                         echo '
                                         <div class="modal fade" id="edit_exam' . $exam['exam_id'] . '" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                                            <div class="modal-dialog modal-lg">
+                                        <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                         <div class="modal-header bg-success text-white">
                                                             <div class="d-flex align-items-center justify-content-between w-100">
@@ -203,9 +203,10 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                                             ';
                                         // Check if there are multiple questions
                                         if (!empty($multipleQuestions)) {
+                                            $multipleCounter = 1;
                                             foreach ($multipleQuestions as $index => $mcq) {
                                                 echo '<div class="mb-3 p-3 border rounded" id="question-container-' . $mcq["mul_id"] . '">';
-                                                echo '<label class="form-label">Question ' . ($index + 1) . ':</label>';
+                                                echo '<label class="form-label">Question ' . $multipleCounter . ':</label>';
                                                 echo '<input type="hidden" name="multipleID[]" value="' . $mcq["mul_id"] . '">';
                                                 echo '<textarea class="form-control" name="question[]" rows="2">' . htmlspecialchars($mcq["question"]) . '</textarea>';
                                                 echo '<div class="row mt-2">';
@@ -232,6 +233,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                                 echo '</div>';
                                                 echo '</div>';
                                                 echo '</div>';
+                                                $multipleCounter++;
                                             }
                                         } else {
                                             echo '<p class="text-danger">No multiple-choice questions found.</p>';
@@ -280,9 +282,10 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                         // Check if there are true/false questions
                                         echo '<hr><h6 class="text-primary">True/False Questions</h6>';
                                         if (!empty($trueFalseQuestions)) {
+                                            $tfCounter = 1;
                                             foreach ($trueFalseQuestions as $index => $tf) {
                                                 echo '<div class="mb-3">';
-                                                echo '<label class="form-label"> Question ' . ($index + 1) . ':</label>';
+                                                echo '<label class="form-label"> Question ' . $tfCounter . ':</label>';
                                                 // ***ADD HIDDEN INPUT HERE***
                                                 echo '<input type="hidden" name="tf_id[]" value="' . $tf["tf_id"] . '">'; // CRUCIAL
                                                 echo '<textarea class="form-control" name="true_false_questions[]" rows="2" required>' . htmlspecialchars($tf["question"]) . '</textarea>';
@@ -292,6 +295,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                                 echo '<option value="False"' . ($tf["correct"] == "False" ? " selected" : "") . '>False</option>';
                                                 echo '</select>';
                                                 echo '</div>';
+                                                $tfCounter++;
                                             }
                                         } else {
                                             echo '<p class="text-danger">No true/false questions found.</p>';

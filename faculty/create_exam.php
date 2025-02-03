@@ -157,11 +157,12 @@ include "../faculty/includes/Forms/createexamform.php";
                                         if (empty($row['file_names']) || count($fileNames) == 0) {
                                             echo '<span class="text-danger mr-2">No Exam</span>';
                                         } else {
-                                            foreach ($fileNames as $fileName) {
-                                                $fileNameForDownload = htmlspecialchars(trim($fileName)); // Clean up file name
-                                                echo '<a href="includes/download.php?file=' . urlencode($fileNameForDownload) . '" class="btn btn-success btn-sm mb-1">';
-                                                echo '<i class="fas fa-download"></i> Download</a><br>';
-                                            }
+                                            echo '<span class="text-danger mr-2">No Exam</span>';
+                                            // foreach ($fileNames as $fileName) {
+                                            //     $fileNameForDownload = htmlspecialchars(trim($fileName)); // Clean up file name
+                                            //     echo '<a href="includes/download.php?file=' . urlencode($fileNameForDownload) . '" class="btn btn-success btn-sm mb-1">';
+                                            //     echo '<i class="fas fa-download"></i> Download</a><br>';
+                                            // }
                                         }
                                         echo '</td>';
                                         echo '<td class="small text-center"> <span class="text-danger mr-2">No Score</span></td>';

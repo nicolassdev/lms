@@ -104,6 +104,13 @@ switch ($page) {
         require_once 'created_quiz_list.php';
         break;
 
+        /** 
+         Module route */
+
+    case "teacher_module":
+        require_once 'teacher_module.php';
+        break;
+
 
         /** 
          Subject route */

@@ -392,6 +392,7 @@ class myDataBase
         // Now fetch the subjects based on section, grade level, and strand
         $sql = "
         SELECT 
+            sched.sched_id,
             sub.sub_code,
             sub.sub_title,
             sub.sub_type,
@@ -1294,6 +1295,29 @@ class myDataBase
             return false; // Or throw an exception
         }
     }
+
+
+    public function checkExistByID($table, $column, $value)
+    {
+        if (!empty($value)) {
+            $value = mysqli_real_escape_string($this->con, $value);
+            $sql = "SELECT 1 FROM `$table` WHERE `$column` = '$value' LIMIT 1";
+        } else {
+            return 0; // Or throw an exception
+        }
+
+        $query = $this->con->query($sql);
+
+        if ($query) {
+            return $query->num_rows > 0;
+        } else {
+            // Handle query error (e.g., log it)
+            return false;
+        }
+    }
+
+
+
 
     // COUNT THE NUMBER OF ROWS IN TABLE TO VALIDATION SELECTED IN UPDATE
     public function checkRowCountSubject($table, $row = null, $value = null, $id = null)
@@ -2727,6 +2751,7 @@ class myDataBase
                 sub.sub_code,
                 sub.sub_title,
                 sub.sub_semester,
+                sched.sched_id,
                 sched.teacher_id,
                 t.teacher_fname, 
                 t.teacher_lname
@@ -3090,43 +3115,63 @@ class myDataBase
                     ];
                 }
 
-                // Add multiple-choice question
+                // Add multiple-choice question (Ensure uniqueness)
                 if (!empty($row['mul_id'])) {
-                    $exams[$examId]['multiple_questions'][] = [
-                        'mul_id' => $row['mul_id'],
-                        'question' => $row['mul_question'],
-                        'A' => $row['choice_a'],
-                        'B' => $row['choice_b'],
-                        'C' => $row['choice_c'],
-                        'D' => $row['choice_d'],
-                        'correct' => $row['mul_correct'],
-                    ];
+                    $mulId = $row['mul_id'];
+                    // Check if the multiple choice question is already added
+                    if (!isset($exams[$examId]['multiple_questions'][$mulId])) {
+                        $exams[$examId]['multiple_questions'][$mulId] = [
+                            'mul_id' => $mulId,
+                            'question' => $row['mul_question'],
+                            'A' => $row['choice_a'],
+                            'B' => $row['choice_b'],
+                            'C' => $row['choice_c'],
+                            'D' => $row['choice_d'],
+                            'correct' => $row['mul_correct'],
+                        ];
+                    }
                 }
 
-                // Add enumeration question
+
+                // Add enumeration question (Ensure uniqueness)
                 if (!empty($row['enum_id'])) {
-                    $exams[$examId]['enumeration_questions'][] = [
-                        'enum_id' => $row['enum_id'],
-                        'question' => $row['enum_question'],
-                        'answers' => $row['enum_answer'],
-                    ];
+                    $enumId = $row['enum_id'];
+
+                    // Check if the enumeration question is already added
+                    if (!isset($exams[$examId]['enumeration_questions'][$enumId])) {
+                        $exams[$examId]['enumeration_questions'][$enumId] = [
+                            'enum_id' => $enumId,
+                            'question' => $row['enum_question'],
+                            'answers' => $row['enum_answer'],
+                        ];
+                    }
                 }
 
-                // Add essay question
+
+                // Add essay question (Ensure uniqueness)
                 if (!empty($row['essay_id'])) {
-                    $exams[$examId]['essay_questions'][] = [
-                        'essay_id' => $row['essay_id'],
-                        'question' => $row['essay_question'],
-                    ];
+                    $essayId = $row['essay_id'];
+
+                    if (!isset($exams[$examId]['essay_questions'][$essayId])) {
+                        $exams[$examId]['essay_questions'][$essayId] = [
+                            'essay_id' => $essayId,
+                            'question' => $row['essay_question'],
+                        ];
+                    }
                 }
 
-                // Add true/false question
+
+                // Add true/false question (Ensure uniqueness)
                 if (!empty($row['tf_id'])) {
-                    $exams[$examId]['tf_questions'][] = [
-                        'tf_id' => $row['tf_id'],
-                        'question' => $row['tf_question'],
-                        'correct' => $row['tf_correct'],
-                    ];
+                    $tfId = $row['tf_id'];
+
+                    if (!isset($exams[$examId]['tf_questions'][$tfId])) {
+                        $exams[$examId]['tf_questions'][$tfId] = [
+                            'tf_id' => $tfId,
+                            'question' => $row['tf_question'],
+                            'correct' => $row['tf_correct'],
+                        ];
+                    }
                 }
             }
 
@@ -3599,43 +3644,59 @@ class myDataBase
                     ];
                 }
 
-                // Add multiple-choice question
+                // Add multiple-choice question (Ensure uniqueness)
                 if (!empty($row['q_mul_id'])) {
-                    $quizzes[$quizId]['quiz_multiple_questions'][] = [
-                        'q_mul_id' => $row['q_mul_id'],
-                        'question' => $row['q_mul_question'],
-                        'A' => $row['q_choice_a'],
-                        'B' => $row['q_choice_b'],
-                        'C' => $row['q_choice_c'],
-                        'D' => $row['q_choice_d'],
-                        'correct' => $row['mul_correct'],
-                    ];
+                    $qMulId = $row['q_mul_id'];
+
+                    if (!isset($quizzes[$quizId]['quiz_multiple_questions'][$qMulId])) {
+                        $quizzes[$quizId]['quiz_multiple_questions'][$qMulId] = [
+                            'q_mul_id' => $qMulId,
+                            'question' => $row['q_mul_question'],
+                            'A' => $row['q_choice_a'],
+                            'B' => $row['q_choice_b'],
+                            'C' => $row['q_choice_c'],
+                            'D' => $row['q_choice_d'],
+                            'correct' => $row['mul_correct'],
+                        ];
+                    }
                 }
 
-                // Add enumeration question
+                // Add enumeration question (Ensure uniqueness)
                 if (!empty($row['q_enum_id'])) {
-                    $quizzes[$quizId]['quiz_enumeration_questions'][] = [
-                        'q_enum_id' => $row['q_enum_id'],
-                        'question' => $row['q_enum_question'],
-                        'answers' => $row['q_enum_answer'],
-                    ];
+                    $qEnumId = $row['q_enum_id'];
+
+                    if (!isset($quizzes[$quizId]['quiz_enumeration_questions'][$qEnumId])) {
+                        $quizzes[$quizId]['quiz_enumeration_questions'][$qEnumId] = [
+                            'q_enum_id' => $qEnumId,
+                            'question' => $row['q_enum_question'],
+                            'answers' => $row['q_enum_answer'],
+                        ];
+                    }
                 }
 
-                // Add essay question
+                // Add essay question (Ensure uniqueness)
                 if (!empty($row['q_essay_id'])) {
-                    $quizzes[$quizId]['quiz_essay_questions'][] = [
-                        'q_essay_id' => $row['q_essay_id'],
-                        'question' => $row['q_essay_question'],
-                    ];
+                    $qEssayId = $row['q_essay_id'];
+
+                    if (!isset($quizzes[$quizId]['quiz_essay_questions'][$qEssayId])) {
+                        $quizzes[$quizId]['quiz_essay_questions'][$qEssayId] = [
+                            'q_essay_id' => $qEssayId,
+                            'question' => $row['q_essay_question'],
+                        ];
+                    }
                 }
 
-                // Add true/false question
+                // Add true/false question (Ensure uniqueness)
                 if (!empty($row['q_tf_id'])) {
-                    $quizzes[$quizId]['quiz_tf_questions'][] = [
-                        'q_tf_id' => $row['q_tf_id'],
-                        'question' => $row['q_tf_question'],
-                        'correct' => $row['q_tf_correct'],
-                    ];
+                    $qTfId = $row['q_tf_id'];
+
+                    if (!isset($quizzes[$quizId]['quiz_tf_questions'][$qTfId])) {
+                        $quizzes[$quizId]['quiz_tf_questions'][$qTfId] = [
+                            'q_tf_id' => $qTfId,
+                            'question' => $row['q_tf_question'],
+                            'correct' => $row['q_tf_correct'],
+                        ];
+                    }
                 }
             }
 
