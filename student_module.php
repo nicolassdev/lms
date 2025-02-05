@@ -59,7 +59,7 @@ $mySQLFunction->disconnect();
                             ?>
 
                             <!-- Search Input -->
-                            <input type="text" id="searchBar" class="form-control" placeholder="Search subject module..." <?php echo $hasModules ? '' : 'disabled'; ?>>
+                            <input type="text" id="searchModule" class="form-control" placeholder="Search subject module..." <?php echo $hasModules ? '' : 'disabled'; ?>>
                             <i class="bi bi-search me-2 ms-2"></i>
                         </div>
                     </div>
@@ -177,7 +177,7 @@ $mySQLFunction->disconnect();
                     <div class="card-body">
                         <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
                         <h5 class="text-secondary fw-bold">No Modules Found</h5>
-                        <small class="text-muted">Please contact your subject teacher or administrator for assistance.</small>
+                        <small class="text-muted"> Please reach out to your subject teacher or administrator for further assistance.</small>
                     </div>
                 </div>
             <?php endif; ?>
@@ -212,7 +212,7 @@ $mySQLFunction->disconnect();
 </main>
 
 <script>
-    document.getElementById('searchBar').addEventListener('input', function() {
+    document.getElementById('searchModule').addEventListener('input', function() {
         const filter = this.value.toLowerCase();
         const cards = document.querySelectorAll('.subject-card');
         let found = false;

@@ -160,7 +160,7 @@ include "../admin/includes/Forms/adminform.php";
                         <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
                     </h5>
 
-                    <p class="text-muted"><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
+                    <p class="text-muted"><?php echo ucwords(strtolower($showSchool['school_name'])); ?></p>
                 </div>
 
                 <div class="profile-details">

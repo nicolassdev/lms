@@ -53,11 +53,11 @@ $mySQLFunction->disconnect();
         </div>
         <div class="mb-3 fade-in-input">
             <label for="school" class="form-label"><i class="bi bi-bank text-primary"></i> School Name</label>
-            <input type="text" id="school" name="school" value="<?php echo ucwords(strtolower($result['SCHOOL_NAME'])); ?>" class="form-control" autocomplete="off" disabled>
+            <input type="text" id="school" name="school" value="<?php echo ucwords(strtolower($result['school_name'])); ?>" class="form-control" autocomplete="off" disabled>
         </div>
         <div class="mb-3 fade-in-input">
             <label for="address" class="form-label"><i class="bi bi-geo-alt-fill me-2 text-danger"></i>Address</label>
-            <input type="text" id="address" name="address" value="<?php echo ucwords(strtolower($result['SCHOOL_ADDRESS'])); ?>" class="form-control" autocomplete="off" disabled>
+            <input type="text" id="address" name="address" value="<?php echo ucwords(strtolower($result['school_address'])); ?>" class="form-control" autocomplete="off" disabled>
         </div>
         <div class="col-6 mb-3 fade-in-input">
             <label for="schoolyear" class="form-label"><i class="bi bi-calendar4-week text-warning"></i> School Year</label>

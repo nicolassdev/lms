@@ -323,7 +323,7 @@ $mySQLFunction->disconnect();
                         <div class="row mb-1">
                             <div class="col-md-6">
                                 <strong>School Name:</strong>
-                                <p><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
+                                <p><?php echo ucwords(strtolower($showSchool['school_name'])); ?></p>
                             </div>
                             <div class="col-md-6">
                                 <strong>Address:</strong>

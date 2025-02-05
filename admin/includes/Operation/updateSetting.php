@@ -22,11 +22,11 @@
                      <div class="mb-3">
                          <label for="school" class="form-label">School Name</label>
 
-                         <input type="text" id="school" name="school" value="<?php echo $result['SCHOOL_NAME']; ?>" class="form-control">
+                         <input type="text" id="school" name="school" value="<?php echo $result['school_name']; ?>" class="form-control">
                      </div>
                      <div class="mb-3">
                          <label for="address" class="form-label">Address</label>
-                         <input type="text" id="address" name="address" value="<?php echo $result['SCHOOL_ADDRESS']; ?>" class="form-control" autocomplete="off">
+                         <input type="text" id="address" name="address" value="<?php echo $result['school_address']; ?>" class="form-control" autocomplete="off">
                      </div>
 
 

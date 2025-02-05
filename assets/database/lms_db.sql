@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2025 at 06:48 PM
+-- Generation Time: Feb 05, 2025 at 09:04 AM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.12
 
@@ -79,10 +79,7 @@ CREATE TABLE `exam` (
 --
 
 INSERT INTO `exam` (`exam_id`, `sched_id`, `exam_type`, `exam_quarter`, `exam_duration`, `exam_title`, `exam_desc`, `exam_items`, `exam_date`) VALUES
-('EXM-2620', 'SCHED-3088', '4,4,2,1,1,1,1,2', '1st', 10, 'earth and life', 'this is earth and life exam', 8, '2025-01-30'),
-('EXM-2984', 'SCHED-9034', '1', '1st', 13, 'exam in ORAL COMMUNICATION IN TEXT', 'ORAL COMMUNICATION IN TEXT', 1, '2025-01-31'),
-('EXM-4400', 'SCHED-1393', '1,1', '1st', 4, 'PC OPERATIONS', 'PC OPERATIONS', 2, '2025-01-31'),
-('EXM-7053', 'SCHED-3005', '1,2,3,4', '1st', 10, 'exam1', 'exam1', 4, '2025-01-30');
+('EXM-6416', 'SCHED-3005', '1', '1st', 10, 'abc exam', 'abc exam', 1, '2025-02-05');
 
 -- --------------------------------------------------------
 
@@ -97,15 +94,6 @@ CREATE TABLE `exam_enumeration` (
   `enum_answer` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `exam_enumeration`
---
-
-INSERT INTO `exam_enumeration` (`enum_id`, `exam_id`, `enum_question`, `enum_answer`) VALUES
-(32, 'EXM-7053', 'give some planet in universe?', 'mars, earth, saturn'),
-(33, 'EXM-2620', 'List the three main islands of the Philippines.', 'luzon, visayas, mindanao'),
-(34, 'EXM-2620', 'Enumerate the six colors of the rainbow.', 'red, orange, yellow, green, blue, violet');
-
 -- --------------------------------------------------------
 
 --
@@ -117,13 +105,6 @@ CREATE TABLE `exam_essay` (
   `exam_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
   `essay_question` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `exam_essay`
---
-
-INSERT INTO `exam_essay` (`essay_id`, `exam_id`, `essay_question`) VALUES
-(18, 'EXM-7053', 'Make essay about your self');
 
 -- --------------------------------------------------------
 
@@ -147,14 +128,7 @@ CREATE TABLE `exam_multiple` (
 --
 
 INSERT INTO `exam_multiple` (`mul_id`, `exam_id`, `mul_question`, `choice_a`, `choice_b`, `choice_c`, `choice_d`, `is_correct`) VALUES
-(7, 'EXM-7053', 'test', 'test1', 'test2', 'test3', 'test4', 'test2'),
-(9, 'EXM-4400', 'asdsa', '222asd', 'asdsa', 'adsa3', 'hadas2', '222asd'),
-(10, 'EXM-4400', 'acbad', 'aa1', 'ww3', 'dd2', 'gg3', 'ww3'),
-(11, 'EXM-2984', 'asdas', 'ddd2', 'ggg2', 'hhh2', 'jjjj2', 'jjjj2'),
-(12, 'EXM-2620', 'Which of the following planets is known as the \"Red Planet\"?', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Mars'),
-(13, 'EXM-2620', 'What is the capital of the Philippines?', 'Manila', 'Cebu', 'Davao', 'Bacolod', 'Manila'),
-(14, 'EXM-2620', 'Which of the following is a type of computer software?', 'Hardware', 'Application', 'Network', 'Database', 'Application'),
-(15, 'EXM-2620', 'Who is the author of the book \"To Kill a Mockingbird\"?', 'F. Scott Fitzgerald', 'Harper Lee', 'Jane Austen', 'J.K. Rowling', 'Harper Lee');
+(25, 'EXM-6416', 'AKO SI ', 'ANTHONY', 'JONH', 'RUSSEL', 'DEO', 'ANTHONY');
 
 -- --------------------------------------------------------
 
@@ -168,15 +142,6 @@ CREATE TABLE `exam_tf` (
   `tf_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `tf_answer` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `exam_tf`
---
-
-INSERT INTO `exam_tf` (`tf_id`, `exam_id`, `tf_question`, `tf_answer`) VALUES
-(11, 'EXM-7053', 'I\'m handsome ?', 'True'),
-(12, 'EXM-2620', 'The capital of the Philippines is Cebu', 'false'),
-(13, 'EXM-2620', 'The Philippines is an archipelago. ', 'true');
 
 -- --------------------------------------------------------
 
@@ -193,6 +158,13 @@ CREATE TABLE `module` (
   `sched_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date_uploaded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `module`
+--
+
+INSERT INTO `module` (`module_id`, `file_name`, `file_size`, `formatted_size`, `file_type`, `sched_id`, `date_uploaded`) VALUES
+('MOD-2458', '../../faculty/module_uploaded/home.png', 845, '845 B', 'image/png', 'SCHED-3005', '2025-02-04 23:17:46');
 
 -- --------------------------------------------------------
 
@@ -260,9 +232,7 @@ CREATE TABLE `quiz` (
 --
 
 INSERT INTO `quiz` (`quiz_id`, `sched_id`, `quiz_type`, `quiz_quarter`, `quiz_duration`, `quiz_title`, `quiz_desc`, `quiz_items`, `quiz_date`) VALUES
-('QZ-3089', 'SCHED-3005', '1', '3rd', 2, 'quiz 3', 'quiz 3', 1, '2025-01-01'),
-('QZ-4396', 'SCHED-3005', '1', '1st', 5, 'test quiz 1', 'test quiz 1', 1, '2025-01-02'),
-('QZ-9923', 'SCHED-3005', '1,2,3,4', '2nd', 5, 'test quiz 2', 'test quiz 2', 4, '2025-01-24');
+('QZ-5701', 'SCHED-3005', '2,1,1', '1st', 10, 'THIS IS QUIZ 1', 'SHORT QUIZ', 3, '2025-02-05');
 
 -- --------------------------------------------------------
 
@@ -282,7 +252,7 @@ CREATE TABLE `quiz_enumeration` (
 --
 
 INSERT INTO `quiz_enumeration` (`q_enum_id`, `quiz_id`, `q_enum_question`, `q_enum_answer`) VALUES
-(1, 'QZ-9923', 'give me name of volcano', 'mt mayon, mt pinatubo, mt apo');
+(2, 'QZ-5701', 'What is may nickname?', 'Anthony, tony, ngaw');
 
 -- --------------------------------------------------------
 
@@ -295,13 +265,6 @@ CREATE TABLE `quiz_essay` (
   `quiz_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
   `q_essay_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `quiz_essay`
---
-
-INSERT INTO `quiz_essay` (`q_essay_id`, `quiz_id`, `q_essay_question`) VALUES
-(1, 'QZ-9923', 'create and describe your self using things in or object');
 
 -- --------------------------------------------------------
 
@@ -325,9 +288,8 @@ CREATE TABLE `quiz_multiple` (
 --
 
 INSERT INTO `quiz_multiple` (`q_mul_id`, `quiz_id`, `q_mul_question`, `q_choice_a`, `q_choice_b`, `q_choice_c`, `q_choice_d`, `is_correct`) VALUES
-(1, 'QZ-4396', 'what is may name ?', 'Anthony', 'Marco', 'Dywane', 'Dave', 'Anthony'),
-(2, 'QZ-9923', 'How many do i have siblings', '6', '5', '1', '10', '6'),
-(3, 'QZ-3089', 'who is the cute in jungle?', 'leo', 'kingkong', 'panda', 'leopard', 'panda');
+(4, 'QZ-5701', 'Cutie baby born in?', '2002', '2024', '2007', '2006', '2002'),
+(5, 'QZ-5701', 'Name of my GF?', 'Maricar', 'Anna', 'Liza', 'Angel', 'Maricar');
 
 -- --------------------------------------------------------
 
@@ -341,13 +303,6 @@ CREATE TABLE `quiz_tf` (
   `q_tf_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `q_tf_answer` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `quiz_tf`
---
-
-INSERT INTO `quiz_tf` (`q_tf_id`, `quiz_id`, `q_tf_question`, `q_tf_answer`) VALUES
-(1, 'QZ-9923', 'Do i look handsome?', 'True');
 
 -- --------------------------------------------------------
 
@@ -415,16 +370,16 @@ INSERT INTO `schedule` (`sched_id`, `teacher_id`, `section_code`, `sub_code`, `s
 --
 
 CREATE TABLE `school` (
-  `ID` int NOT NULL,
-  `SCHOOL_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `SCHOOL_ADDRESS` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+  `id` int NOT NULL,
+  `school_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `school_address` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `school`
 --
 
-INSERT INTO `school` (`ID`, `SCHOOL_NAME`, `SCHOOL_ADDRESS`) VALUES
+INSERT INTO `school` (`id`, `school_name`, `school_address`) VALUES
 (1, 'COMPUTER SYSTEMS INSTITUTE, INC.', 'F. IMPERIAL ST., BRGY. 36 - CAPANTAWAN, LEGAZPI CITY');
 
 -- --------------------------------------------------------
@@ -552,45 +507,31 @@ INSERT INTO `student` (`stu_lrn`, `stu_fname`, `stu_mname`, `stu_lname`, `stu_ad
 -- --------------------------------------------------------
 
 --
--- Table structure for table `student_exam_answers`
+-- Table structure for table `student_answers`
 --
 
-CREATE TABLE `student_exam_answers` (
+CREATE TABLE `student_answers` (
   `answer_id` int NOT NULL,
-  `stu_lrn` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
-  `exam_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_lrn` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `exam_id` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Set as Nullable',
+  `quiz_id` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Set as Nullable',
   `question_id` int NOT NULL,
-  `question_type` enum('multiple_choice','enumeration','essay','true_false') COLLATE utf8mb4_general_ci NOT NULL,
-  `student_answer` text COLLATE utf8mb4_general_ci NOT NULL
+  `question_type` enum('multiple_choice','enumeration','essay','true_false') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `student_answer` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `submitted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `student_exam_answers`
---
-
-INSERT INTO `student_exam_answers` (`answer_id`, `stu_lrn`, `exam_id`, `question_id`, `question_type`, `student_answer`) VALUES
-(81, '124167743724', 'EXM-2620', 12, 'multiple_choice', 'Mars'),
-(82, '124167743724', 'EXM-2620', 13, 'multiple_choice', 'Davao'),
-(83, '124167743724', 'EXM-2620', 14, 'multiple_choice', 'Application'),
-(84, '124167743724', 'EXM-2620', 15, 'multiple_choice', 'Jane Austen'),
-(85, '124167743724', 'EXM-2620', 33, 'enumeration', 'luzon, visayas, mindanao'),
-(86, '124167743724', 'EXM-2620', 34, 'enumeration', 'dasda, asdas, asd,asd'),
-(87, '124167743724', 'EXM-2620', 12, 'true_false', 'false'),
-(88, '124167743724', 'EXM-2620', 13, 'true_false', 'false'),
-(89, '124167743724', 'EXM-7053', 7, 'multiple_choice', 'test3'),
-(90, '124167743724', 'EXM-7053', 32, 'enumeration', 'saturn, mars ,earth'),
-(91, '124167743724', 'EXM-7053', 11, 'true_false', 'true');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `student_exam_scores`
+-- Table structure for table `student_scores`
 --
 
-CREATE TABLE `student_exam_scores` (
+CREATE TABLE `student_scores` (
   `score_id` int NOT NULL,
   `stu_lrn` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
-  `exam_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `exam_id` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Set as Nullable',
+  `quiz_id` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Set as Nullable',
   `total_questions` int NOT NULL DEFAULT '0',
   `correct_answers` int NOT NULL DEFAULT '0',
   `score_percentage` decimal(5,2) NOT NULL DEFAULT '0.00',
@@ -598,12 +539,11 @@ CREATE TABLE `student_exam_scores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `student_exam_scores`
+-- Dumping data for table `student_scores`
 --
 
-INSERT INTO `student_exam_scores` (`score_id`, `stu_lrn`, `exam_id`, `total_questions`, `correct_answers`, `score_percentage`, `created_at`) VALUES
-(19, '124167743724', 'EXM-2620', 8, 4, 50.00, '2025-01-30 16:20:15'),
-(29, '124167743724', 'EXM-7053', 3, 2, 66.67, '2025-01-30 17:45:16');
+INSERT INTO `student_scores` (`score_id`, `stu_lrn`, `exam_id`, `quiz_id`, `total_questions`, `correct_answers`, `score_percentage`, `created_at`) VALUES
+(44, '124167743724', NULL, 'QZ-5701', 3, 2, 66.67, '2025-02-05 04:37:00');
 
 -- --------------------------------------------------------
 
@@ -732,7 +672,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_added`) VALUES
-(122, 'USER-0399', '718412412421', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2025-01-06 20:13:20'),
+(122, 'USER-0399', '718412412421', 'd5c48298ea865071763de498586364b908b03a73', 'STUDENT', '2025-01-06 20:13:20'),
 (94, 'USER-0607', 'LMS-209505-5945', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-28 20:11:17'),
 (69, 'USER-1316', '114432325253', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-04 06:56:15'),
 (110, 'USER-1829', '114455013001', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-12-07 01:57:56'),
@@ -895,7 +835,7 @@ ALTER TABLE `schedule`
 -- Indexes for table `school`
 --
 ALTER TABLE `school`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `section`
@@ -919,20 +859,22 @@ ALTER TABLE `student`
   ADD KEY `id` (`id`);
 
 --
--- Indexes for table `student_exam_answers`
+-- Indexes for table `student_answers`
 --
-ALTER TABLE `student_exam_answers`
+ALTER TABLE `student_answers`
   ADD PRIMARY KEY (`answer_id`),
-  ADD KEY `stu_lrn` (`stu_lrn`),
-  ADD KEY `exam_id` (`exam_id`);
+  ADD KEY `stu_lrn` (`stu_lrn`) USING BTREE,
+  ADD KEY `exam_id` (`exam_id`) USING BTREE,
+  ADD KEY `quiz_id` (`quiz_id`) USING BTREE;
 
 --
--- Indexes for table `student_exam_scores`
+-- Indexes for table `student_scores`
 --
-ALTER TABLE `student_exam_scores`
+ALTER TABLE `student_scores`
   ADD PRIMARY KEY (`score_id`),
   ADD KEY `stu_lrn` (`stu_lrn`),
-  ADD KEY `exam_id` (`exam_id`);
+  ADD KEY `exam_id` (`exam_id`),
+  ADD KEY `quiz_id` (`quiz_id`) USING BTREE;
 
 --
 -- Indexes for table `subject`
@@ -962,7 +904,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `exam_enumeration`
 --
 ALTER TABLE `exam_enumeration`
-  MODIFY `enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `exam_essay`
@@ -974,19 +916,19 @@ ALTER TABLE `exam_essay`
 -- AUTO_INCREMENT for table `exam_multiple`
 --
 ALTER TABLE `exam_multiple`
-  MODIFY `mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `exam_tf`
 --
 ALTER TABLE `exam_tf`
-  MODIFY `tf_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `tf_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `quiz_enumeration`
 --
 ALTER TABLE `quiz_enumeration`
-  MODIFY `q_enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `q_enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `quiz_essay`
@@ -998,7 +940,7 @@ ALTER TABLE `quiz_essay`
 -- AUTO_INCREMENT for table `quiz_multiple`
 --
 ALTER TABLE `quiz_multiple`
-  MODIFY `q_mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `q_mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `quiz_tf`
@@ -1010,19 +952,19 @@ ALTER TABLE `quiz_tf`
 -- AUTO_INCREMENT for table `school`
 --
 ALTER TABLE `school`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `student_exam_answers`
+-- AUTO_INCREMENT for table `student_answers`
 --
-ALTER TABLE `student_exam_answers`
-  MODIFY `answer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+ALTER TABLE `student_answers`
+  MODIFY `answer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
 
 --
--- AUTO_INCREMENT for table `student_exam_scores`
+-- AUTO_INCREMENT for table `student_scores`
 --
-ALTER TABLE `student_exam_scores`
-  MODIFY `score_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+ALTER TABLE `student_scores`
+  MODIFY `score_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1148,18 +1090,20 @@ ALTER TABLE `student`
   ADD CONSTRAINT `fk_student_users` FOREIGN KEY (`id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `student_exam_answers`
+-- Constraints for table `student_answers`
 --
-ALTER TABLE `student_exam_answers`
-  ADD CONSTRAINT `student_exam_answers_ibfk_1` FOREIGN KEY (`stu_lrn`) REFERENCES `student` (`stu_lrn`) ON DELETE CASCADE,
-  ADD CONSTRAINT `student_exam_answers_ibfk_2` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`) ON DELETE CASCADE;
+ALTER TABLE `student_answers`
+  ADD CONSTRAINT `fk_student_answers_exam` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_student_answers_quiz` FOREIGN KEY (`quiz_id`) REFERENCES `quiz` (`quiz_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_student_answers_student` FOREIGN KEY (`stu_lrn`) REFERENCES `student` (`stu_lrn`) ON DELETE CASCADE;
 
 --
--- Constraints for table `student_exam_scores`
+-- Constraints for table `student_scores`
 --
-ALTER TABLE `student_exam_scores`
-  ADD CONSTRAINT `student_exam_scores_ibfk_1` FOREIGN KEY (`stu_lrn`) REFERENCES `student` (`stu_lrn`) ON DELETE CASCADE,
-  ADD CONSTRAINT `student_exam_scores_ibfk_2` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`) ON DELETE CASCADE;
+ALTER TABLE `student_scores`
+  ADD CONSTRAINT `fk_student_scores_ibfk_3` FOREIGN KEY (`quiz_id`) REFERENCES `quiz` (`quiz_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `student_scores_ibfk_1` FOREIGN KEY (`stu_lrn`) REFERENCES `student` (`stu_lrn`) ON DELETE CASCADE,
+  ADD CONSTRAINT `student_scores_ibfk_2` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `teacher`

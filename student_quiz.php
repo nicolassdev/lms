@@ -11,22 +11,19 @@ $mySQLFunction->connection();
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
 // Get teacher's assigned subjects
-$studentSubjects = $mySQLFunction->getAllStudentSubjectsExam($_SESSION['stu_lrn']);
+$studentSubjects = $mySQLFunction->getAllStudentSubjectsQuiz($_SESSION['stu_lrn']);
 // echo "<pre>";
 // print_r($studentSubjects);
 // echo "</pre>";
 // foreach ($studentSubjects as $subject) {
-//     foreach ($subject["exams"] as $exam) {
-//         $exam_id = $exam['exam_id'];
+//     foreach ($subject["exams"] as $quiz) {
+//         $quiz_id = $quiz['quiz_id'];
 //         echo "<pre>";
-//         print_r($exam_id);
+//         print_r($quiz_id);
 //         echo "</pre>";
 //     }
 // }
 
-
-// $hideExam = $mySQLFunction->checkExistIDinAssessment("student_exam_scores", $_SESSION['stu_lrn'], $exam_id);
-// $hideDoneExam = $hideExam > 0;
 
 // Disconnect DB
 $mySQLFunction->disconnect();
@@ -43,12 +40,26 @@ $mySQLFunction->disconnect();
                         <h4 class="fw-bold text-muted">
                             Quiz
                         </h4>
-                        <!-- <p class="text-muted"> Here, you will test your knowledge and skills in the subject matter within a set time limit.</p> -->
                         <!-- Search Bar -->
                         <div class="col-md-4">
                             <div class="input-group input-group-sm">
+                                <?php
+                                $hasQuiz = false; // Start with the assumption that no modules are found.
+
+                                foreach ($studentSubjects as $subject):
+                                    $mySQLFunction->connection();
+                                    $schedId = $subject['sched_id'];
+                                    $hasQuiz = $mySQLFunction->checkExistByID("quiz", "sched_id", $schedId);
+
+                                    if ($hasQuiz > 0): // If module exists for this subject
+                                        $hasQuiz = true;
+                                        break; // No need to continue checking other subjects if we already found a module.
+                                    endif;
+                                endforeach;
+                                ?>
+
                                 <!-- Search Input -->
-                                <input type="text" id="searchBar" class="form-control" placeholder="Search subjects ...">
+                                <input type="text" id="searchQuiz" class="form-control" placeholder="Search subject quiz..." <?php echo $hasQuiz ? '' : 'disabled'; ?>>
                                 <i class="bi bi-search me-2 ms-2"></i>
                             </div>
                         </div>
@@ -57,30 +68,31 @@ $mySQLFunction->disconnect();
 
                     <div class="row g-4 mb-3" id="subjectContainer">
                         <?php if (!empty($studentSubjects)): ?>
-                            <?php $hasExams = false; ?>
+                            <?php $hasQuiz = false; ?>
                             <?php foreach ($studentSubjects as $subject): ?>
                                 <?php
                                 $mySQLFunction->connection();
-                                $allExamsCompleted = true; // Assume all exams are completed
+                                $allQuizCompleted = true; // Assume all quizzes are completed
 
-                                if (!empty($subject['exams'])):
-                                    foreach ($subject["exams"] as $exam) {
-                                        $exam_id = $exam['exam_id'];
-                                        // check if the student have answer in table STUDENT EXAM ANSWERS and EXAM SCORES
-                                        $hideExam = $mySQLFunction->checkExistIDinAssessment("student_exam_answers", $_SESSION['stu_lrn'], $exam_id);
-                                        $hideExamScore = $mySQLFunction->checkExistIDinAssessment("student_exam_scores", $_SESSION['stu_lrn'], $exam_id);
+                                if (!empty($subject['quizzes'])):
+                                    foreach ($subject["quizzes"] as $quiz) {
+                                        $quiz_id = $quiz['quiz_id'];
+                                        $stu_lrn = $_SESSION['stu_lrn'];
+                                        // check if the student have answer in table STUDENT ANSWERS and STUDENT SCORES
+                                        $hideQuiz = $mySQLFunction->checkExistByMultipleIDs("student_answers", ["stu_lrn" => $stu_lrn, "quiz_id" => $quiz_id]);
+                                        $hideQuizScore = $mySQLFunction->checkExistByMultipleIDs("student_scores",  ["stu_lrn" => $stu_lrn, "quiz_id" => $quiz_id]);
 
-                                        if ($hideExam == 0 && $hideExamScore == 0) {
-                                            $allExamsCompleted = false; // At least one exam is not completed
+                                        if ($hideQuiz == 0 && $hideQuizScore == 0) {
+                                            $allQuizCompleted = false; // At least one quiz is not completed
                                             break;
                                         }
                                     }
 
-                                    if ($allExamsCompleted) {
-                                        continue; // Skip rendering this subject if all exams are completed
+                                    if ($allQuizCompleted) {
+                                        continue; // Skip rendering this subject if all quiz are completed
                                     }
 
-                                    $hasExams = true;
+                                    $hasQuiz = true;
                                 ?>
                                     <div class="col-lg-4 col-md-6 col-sm-12 subject-card" data-title="<?php echo htmlspecialchars(strtolower($subject['sub_title'])); ?>">
                                         <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
@@ -112,13 +124,13 @@ $mySQLFunction->disconnect();
                                                     </small>
                                                 </div>
 
-                                                <div class="exam-info">
+                                                <div class="quiz-info">
                                                     <i class="bi bi-calendar3 text-warning me-1"></i>
                                                     <span class="text-secondary">
                                                         <?php
-                                                        foreach ($subject["exams"] as $exam) {
-                                                            echo '<span class="text-dark">' . htmlspecialchars($exam["exam_quarter"]) . ' Quarter - ' . $subject["sub_semester"] . ' </span> <br> ' .
-                                                                '<small class="text-dark ms-4">Date of Exam : ' . date('F j, Y', strtotime($exam["exam_date"])) . ' </small> ';
+                                                        foreach ($subject["quizzes"] as $quiz) {
+                                                            echo '<span class="text-dark">' . htmlspecialchars($quiz["quiz_quarter"]) . ' Quarter - ' . $subject["sub_semester"] . ' </span> <br> ' .
+                                                                '<small class="text-dark ms-4">Date of Quiz : ' . date('F j, Y', strtotime($quiz["quiz_date"])) . ' </small> ';
                                                         }
                                                         ?>
                                                     </span>
@@ -127,7 +139,7 @@ $mySQLFunction->disconnect();
 
                                             <!-- Card Footer -->
                                             <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
-                                                <a href="index.php?page=student_take_exam&exam_id=<?php echo urlencode($exam['exam_id']); ?>&sub_code=<?php echo urlencode($subject['sub_code']); ?>&section_code=<?php echo urlencode($subject['section_code']); ?>&grade_lvl=<?php echo urlencode($subject['grade_lvl']); ?>"
+                                                <a href="index.php?page=student_take_quiz&quiz_id=<?php echo urlencode($quiz['quiz_id']); ?>&sub_code=<?php echo urlencode($subject['sub_code']); ?>&section_code=<?php echo urlencode($subject['section_code']); ?>&grade_lvl=<?php echo urlencode($subject['grade_lvl']); ?>"
                                                     class="btn btn-success w-100 fw-bold d-flex align-items-center justify-content-center shadow-sm">
                                                     Take Quiz
                                                 </a>
@@ -138,23 +150,32 @@ $mySQLFunction->disconnect();
                             <?php endforeach; ?>
 
                             <!-- No Subjects Found -->
-                            <?php if (!$hasExams): ?>
+                            <?php if (!$hasQuiz): ?>
                                 <div class="col-12 text-center py-5">
                                     <div class="card-body">
                                         <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
-                                        <h5 class="text-secondary fw-bold">No Exam Found</h5>
-                                        <small class="text-muted">You currently have no assigned exams. Check with your subject teacher.</small>
+                                        <h5 class="text-secondary fw-bold">No Quiz Found</h5>
+                                        <small class="text-muted">You currently have no assigned quizzes. Check with your subject teacher.</small>
                                     </div>
                                 </div>
                             <?php endif; ?>
+                            <!-- NOTE: for search bar purpose -->
+                            <!-- No Subjects Found Message  search bar-->
+                            <div class="col-12 text-center d-none no-results">
+                                <div class="card-body">
+                                    <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
+                                    <h5 class="text-secondary fw-bold">Quiz Not Found</h5>
+                                    <small class="text-muted">You can use the search bar above to find your quiz.</small>
+                                </div>
+                            </div>
 
                         <?php else: ?>
-                            <!-- No Exams Available -->
+                            <!-- No Quiz Available -->
                             <div class="col-12 text-center py-5">
                                 <div class="card-body">
                                     <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
-                                    <h5 class="text-secondary fw-bold">No Exam Found</h5>
-                                    <small class="text-muted">You currently have no assigned exams. Check with your subject teacher.</small>
+                                    <h5 class="text-secondary fw-bold">No Quiz Found</h5>
+                                    <small class="text-muted">You currently have no assigned quizzes. Check with your subject teacher.</small>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -169,7 +190,7 @@ $mySQLFunction->disconnect();
 
 
 <script>
-    document.getElementById('searchBar').addEventListener('input', function() {
+    document.getElementById('searchQuiz').addEventListener('input', function() {
         const filter = this.value.toLowerCase();
         const cards = document.querySelectorAll('.subject-card');
         let found = false;

@@ -109,7 +109,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                             <tbody>
                                 <?php
                                 if (!empty($quizzes)) {
-                                    $count = 1;
+                                    $rowQuizCount = 1;
                                     foreach ($quizzes as $quiz) {
                                         $multipleQuestions = ($quiz["quiz_multiple_questions"]);
                                         $enumerationQuestions =  ($quiz["quiz_enumeration_questions"]);
@@ -202,10 +202,9 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                                             ';
                                         // Check if there are multiple questions
                                         if (!empty($multipleQuestions)) {
-                                            $multipleCounter = 1;
                                             foreach ($multipleQuestions as $index => $mcq) {
                                                 echo '<div class="mb-3 p-3 border rounded" id="question-container-' . $mcq["q_mul_id"] . '">';
-                                                echo '<label class="form-label">Question ' . $multipleCounter . ':</label>';
+                                                echo '<label class="form-label">Question ' . $rowQuizCount++ . ':</label>';
                                                 echo '<input type="hidden" name="quiz_multipleId[]" value="' . $mcq["q_mul_id"] . '">';
                                                 echo '<textarea class="form-control" name="question[]" rows="2">' . htmlspecialchars($mcq["question"]) . '</textarea>';
                                                 echo '<div class="row mt-2">';
@@ -232,7 +231,6 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                                 echo '</div>';
                                                 echo '</div>';
                                                 echo '</div>';
-                                                $multipleCounter++;
                                             }
                                         } else {
                                             echo '<p class="text-danger">No multiple-choice questions found.</p>';
@@ -240,10 +238,9 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                         // Check if there are enumeration questions
                                         echo '<hr><h6 class="text-primary">Enumeration Questions</h6>';
                                         if (!empty($enumerationQuestions)) {
-                                            $enumerationCounter = 1;
                                             foreach ($enumerationQuestions as $enumQuestion) {
                                                 echo '<div class="mb-3">';
-                                                echo '<label class="form-label">Question ' . $enumerationCounter . ':</label>';
+                                                echo '<label class="form-label">Question ' . $rowQuizCount++ . ':</label>';
                                                 // ***ADD HIDDEN INPUT HERE***
                                                 echo '<input type="hidden" name="quiz_enumId[]" value="' . $enumQuestion["q_enum_id"] . '">'; // CRUCIAL
                                                 echo '<textarea class="form-control" name="enum_questions[]" rows="2" required>' . htmlspecialchars($enumQuestion["question"]) . '</textarea>';
@@ -255,7 +252,6 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                                 }
                                                 echo '</div>';
                                                 echo '</div>';
-                                                $enumerationCounter++;
                                             }
                                         } else {
                                             echo '<p class="text-danger">No enumeration questions found.</p>';
@@ -264,15 +260,13 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                         // Check if there are essay questions
                                         echo '<hr><h6 class="text-primary">Essay Questions</h6>';
                                         if (!empty($essayQuestions)) {
-                                            $essayCounter = 1;
                                             foreach ($essayQuestions as $essayQuestion) {
                                                 echo '<div class="mb-3">';
-                                                echo '<label class="form-label">Question ' . $essayCounter . ':</label>';
+                                                echo '<label class="form-label">Question ' . $rowQuizCount++ . ':</label>';
                                                 // ***ADD HIDDEN INPUT HERE***
                                                 echo '<input type="hidden" name="quiz_essayId[]" value="' . $essayQuestion["q_essay_id"] . '">'; // CRUCIAL
                                                 echo '<textarea class="form-control" name="essay_questions[]" rows="4" required>' . htmlspecialchars($essayQuestion["question"]) . '</textarea>';
                                                 echo '</div>';
-                                                $essayCounter++;
                                             }
                                         } else {
                                             echo '<p class="text-danger">No essay questions found.</p>';
@@ -281,10 +275,9 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                         // Check if there are true/false questions
                                         echo '<hr><h6 class="text-primary">True/False Questions</h6>';
                                         if (!empty($trueFalseQuestions)) {
-                                            $tfCounter = 1;
                                             foreach ($trueFalseQuestions as $index => $tf) {
                                                 echo '<div class="mb-3">';
-                                                echo '<label class="form-label"> Question ' . $tfCounter . ':</label>';
+                                                echo '<label class="form-label"> Question ' . $rowQuizCount++ . ':</label>';
                                                 // ***ADD HIDDEN INPUT HERE***
                                                 echo '<input type="hidden" name="quiz_tfId[]" value="' . $tf["q_tf_id"] . '">'; // CRUCIAL
                                                 echo '<textarea class="form-control" name="true_false_questions[]" rows="2" required>' . htmlspecialchars($tf["question"]) . '</textarea>';
@@ -294,7 +287,6 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                                 echo '<option value="False"' . ($tf["correct"] == "False" ? " selected" : "") . '>False</option>';
                                                 echo '</select>';
                                                 echo '</div>';
-                                                $tfCounter++;
                                             }
                                         } else {
                                             echo '<p class="text-danger">No true/false questions found.</p>';

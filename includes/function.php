@@ -463,7 +463,7 @@ class myDataBase
 
 
 
-    // THIS IS TO GET HE ALL EXAM OF STUDENT IN EVERY SUBJECT
+    // THIS IS TO GET THE ALL EXAM OF STUDENT IN EVERY SUBJECT
     public function getAllStudentSubjectsExam($stu_lrn)
     {
         // Get active semester
@@ -577,7 +577,135 @@ class myDataBase
     }
 
 
+    // THIS IS TO GET THE ALL QUIZZIES OF STUDENT IN EVERY SUBJECT
+    public function getAllStudentSubjectsQuiz($stu_lrn)
+    {
+        // Get active semester
+        $activeSemesters = $this->checkSemStatus('semester');
 
+        if (empty($activeSemesters)) {
+            return []; // No active semester
+        }
+
+        $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
+
+        // Get student's section, grade level, and strand
+        $studentQuery = "
+            SELECT sec.grade_lvl, sec.strand_code, sec.section_code, st.strand_name, st.strand_desc
+            FROM enroll e
+            INNER JOIN section sec ON e.section_code = sec.section_code
+            LEFT JOIN strand st ON sec.strand_code = st.strand_code
+            WHERE e.stu_lrn = ? AND e.enroll_status = 'Enrolled'
+            LIMIT 1";
+
+        $stmtStudent = $this->con->prepare($studentQuery);
+        $stmtStudent->bind_param("s", $stu_lrn);
+        $stmtStudent->execute();
+        $resultStudent = $stmtStudent->get_result();
+
+        if ($resultStudent->num_rows === 0) {
+            return []; // No data found for the student
+        }
+
+        $studentData = $resultStudent->fetch_assoc();
+        $gradeLevel = $studentData['grade_lvl'];
+        $strandCode = $studentData['strand_code'];
+        $sectionCode = $studentData['section_code']; // Added section code
+        $strandName = $studentData['strand_name'];
+        $strandDesc = $studentData['strand_desc'];
+
+        // Get subjects and their schedules
+        $sql = "
+            SELECT 
+                sched.sched_id,
+                sub.sub_code,
+                sub.sub_title,
+                sub.sub_type,
+                sub.sub_semester,
+                sec.section_code,
+                sec.section_name,
+                sched.sched_day,
+                sched.sched_from,
+                sched.sched_to,
+                t.teacher_fname,
+                t.teacher_lname,
+                t.teacher_gender,
+                t.teacher_id,
+                t.image
+            FROM schedule sched
+            INNER JOIN 
+                section sec ON sched.section_code = sec.section_code
+            INNER JOIN 
+                subject sub ON sched.sub_code = sub.sub_code
+            INNER JOIN 
+                teacher t ON sched.teacher_id = t.teacher_id
+            WHERE 
+                sec.grade_lvl = ? 
+                AND sec.strand_code = ? 
+                AND sec.section_code = ?   
+                AND $activeSemesterCondition
+            ORDER BY sched.sched_day, sched.sched_from";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("sss", $gradeLevel, $strandCode, $sectionCode);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 0) {
+            return [];
+        }
+
+        $subjects = [];
+
+        // Process subjects and group exams
+        while ($row = $result->fetch_assoc()) {
+            $schedId = $row['sched_id'];
+
+            // Fetch exams related to the schedule
+            $quizQuery = "SELECT quiz_id, quiz_type, quiz_quarter, quiz_duration, 
+                                 quiz_title, quiz_desc, quiz_items, quiz_date
+                          FROM quiz WHERE sched_id = ?";
+            $stmtQuiz = $this->con->prepare($quizQuery);
+            $stmtQuiz->bind_param("s", $schedId);
+            $stmtQuiz->execute();
+            $quizResult = $stmtQuiz->get_result();
+
+            $quizzes = [];
+            while ($quizRow = $quizResult->fetch_assoc()) {
+                $quizzes[] = $quizRow;
+            }
+
+            // Add subject details and its quizzes
+            $row['quizzes'] = $quizzes;
+            $row['strand_code'] = $strandCode;
+            $row['strand_name'] = $strandName;
+            $row['strand_desc'] = $strandDesc;
+            $row['grade_lvl'] = $gradeLevel;
+            $row['section_code'] = $sectionCode; // Added section_code in the result
+
+
+            $subjects[] = $row;
+        }
+
+        return $subjects;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // GET THE ALL EXAM TYPES IN TEACHER UPLOADED OR CREATED
     public function getAllExamTypeBySubjectsOfStudents($stu_lrn, $exam_id, $sub_code, $section_code, $grade_lvl)
     {
         // Get student's section, grade level, and strand
@@ -664,10 +792,10 @@ class myDataBase
                 $examId = $examRow['exam_id'];
 
                 // Fetch exam types
-                $examRow['enumeration'] = $this->fetchExamType("exam_enumeration", "enum_id", "enum_question, enum_answer", $examId);
-                $examRow['true_false'] = $this->fetchExamType("exam_tf", "tf_id", "tf_question, tf_answer", $examId);
-                $examRow['multiple_choice'] = $this->fetchExamType("exam_multiple", "mul_id", "mul_question, choice_a, choice_b, choice_c, choice_d, is_correct", $examId);
-                $examRow['essay'] = $this->fetchExamType("exam_essay", "essay_id", "essay_question", $examId);
+                $examRow['enumeration'] = $this->fetchByType("exam_enumeration", "enum_id", "enum_question, enum_answer", $examId);
+                $examRow['true_false'] = $this->fetchByType("exam_tf", "tf_id", "tf_question, tf_answer", $examId);
+                $examRow['multiple_choice'] = $this->fetchByType("exam_multiple", "mul_id", "mul_question, choice_a, choice_b, choice_c, choice_d, is_correct", $examId);
+                $examRow['essay'] = $this->fetchByType("exam_essay", "essay_id", "essay_question", $examId);
 
                 $exams[] = $examRow;
             }
@@ -685,12 +813,123 @@ class myDataBase
         return $subjects;
     }
 
-    // Helper function to fetch exam questions of a specific type
-    private function fetchExamType($table, $idColumn, $columns, $examId)
+
+    // GET THE ALL QUIZ TYPES IN TEACHER UPLOADED OR CREATED
+    public function getAllQuizTypeBySubjectsOfStudents($stu_lrn, $quiz_id, $sub_code, $section_code, $grade_lvl)
     {
-        $query = "SELECT $idColumn, $columns FROM $table WHERE exam_id = ?";
+        // Get student's section, grade level, and strand
+        $studentQuery = "
+            SELECT sec.grade_lvl, sec.strand_code, sec.section_code, st.strand_name, st.strand_desc
+            FROM enroll e
+            INNER JOIN section sec ON e.section_code = sec.section_code
+            LEFT JOIN strand st ON sec.strand_code = st.strand_code
+            WHERE e.stu_lrn = ? AND e.enroll_status = 'Enrolled'
+            LIMIT 1";
+
+        $stmtStudent = $this->con->prepare($studentQuery);
+        $stmtStudent->bind_param("s", $stu_lrn);
+        $stmtStudent->execute();
+        $resultStudent = $stmtStudent->get_result();
+
+        if ($resultStudent->num_rows === 0) {
+            return []; // No data found for the student
+        }
+
+        $studentData = $resultStudent->fetch_assoc();
+        $strandCode = $studentData['strand_code'];
+
+        // Get subjects and their schedules
+        $sql = "
+            SELECT 
+                sched.sched_id,
+                sub.sub_code,
+                sub.sub_title,
+                sub.sub_type,
+                sub.sub_semester,
+                sec.section_code,
+                sec.section_name,
+                sched.sched_day,
+                sched.sched_from,
+                sched.sched_to,
+                t.teacher_fname,
+                t.teacher_lname,
+                t.teacher_gender,
+                t.teacher_id,
+                t.image,
+                q.quiz_id,
+                q.quiz_type,
+                q.quiz_quarter,
+                q.quiz_duration,
+                q.quiz_title,
+                q.quiz_desc,
+                q.quiz_items,
+                q.quiz_date
+            FROM schedule sched
+            INNER JOIN section sec ON sched.section_code = sec.section_code
+            INNER JOIN subject sub ON sched.sub_code = sub.sub_code
+            INNER JOIN teacher t ON sched.teacher_id = t.teacher_id
+            LEFT JOIN quiz q ON sched.sched_id = q.sched_id
+            WHERE sec.grade_lvl = ? 
+            AND sec.strand_code = ? 
+            AND sec.section_code = ?
+            AND sub.sub_code = ?
+            ORDER BY sched.sched_day, sched.sched_from";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("ssss", $grade_lvl, $strandCode, $section_code, $sub_code);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 0) {
+            return [];
+        }
+
+        $subjects = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $schedId = $row['sched_id'];
+
+            // Fetch quiz related to the schedule with filters
+            $quizQuery = "SELECT * FROM quiz WHERE sched_id = ? AND quiz_id = ?";
+            $stmtQuiz = $this->con->prepare($quizQuery);
+            $stmtQuiz->bind_param("ss", $schedId, $quiz_id);
+            $stmtQuiz->execute();
+            $quizResult = $stmtQuiz->get_result();
+
+            $quiz = [];
+            while ($quizRow = $quizResult->fetch_assoc()) {
+                $quizId = $quizRow['quiz_id'];
+
+                // Fetch quiz types
+                $quizRow['enumeration'] = $this->fetchByType("quiz_enumeration", "q_enum_id", "q_enum_question, q_enum_answer", $quizId, "quiz_id");
+                $quizRow['true_false'] = $this->fetchByType("quiz_tf", "q_tf_id", "q_tf_question, q_tf_answer", $quizId, "quiz_id");
+                $quizRow['multiple_choice'] = $this->fetchByType("quiz_multiple", "q_mul_id", "q_mul_question, q_choice_a, q_choice_b, q_choice_c, q_choice_d, is_correct", $quizId, "quiz_id");
+                $quizRow['essay'] = $this->fetchByType("quiz_essay", "q_essay_id", "q_essay_question", $quizId, "quiz_id");
+
+                $quiz[] = $quizRow;
+            }
+
+            $row['quizzes'] = $quiz;
+            $row['strand_code'] = $strandCode;
+            $row['strand_name'] = $studentData['strand_name'];
+            $row['strand_desc'] = $studentData['strand_desc'];
+            $row['grade_lvl'] = $grade_lvl;
+            $row['section_code'] = $section_code;
+
+            $subjects[] = $row;
+        }
+
+        return $subjects;
+    }
+
+
+    // Helper function to fetch exam questions of a specific type
+    // NOTE: THE DEFAULT FETCHING OF ASSESSMENT WILL BE Exam because clause was exam_id
+    private function fetchByType($table, $idColumn, $columns, $id, $idType = 'exam_id')
+    {
+        $query = "SELECT $idColumn, $columns FROM $table WHERE $idType = ?";
         $stmt = $this->con->prepare($query);
-        $stmt->bind_param("s", $examId);
+        $stmt->bind_param("s", $id);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -701,22 +940,20 @@ class myDataBase
         return $data;
     }
 
+    // private function fetchExamType($table, $idColumn, $columns, $examId)
+    // {
+    //     $query = "SELECT $idColumn, $columns FROM $table WHERE exam_id = ?";
+    //     $stmt = $this->con->prepare($query);
+    //     $stmt->bind_param("s", $examId);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //     $data = [];
+    //     while ($row = $result->fetch_assoc()) {
+    //         $data[] = $row;
+    //     }
+    //     return $data;
+    // }
 
 
 
@@ -1275,24 +1512,47 @@ class myDataBase
         return $result;
     }
 
-    public function checkExistIDinAssessment($table, $stu_lrn = null, $exam_id = null)
+    // public function checkExistIDinAssessment($table, $stu_lrn = null, $exam_id = null)
+    // {
+    //     if ($stu_lrn !== null && $exam_id !== null) {
+    //         $stu_lrn = mysqli_real_escape_string($this->con, $stu_lrn);
+    //         $exam_id = mysqli_real_escape_string($this->con, $exam_id);
+    //         $sql = "SELECT 1 FROM `$table` WHERE `stu_lrn` = '$stu_lrn' AND `exam_id` = '$exam_id' LIMIT 1"; // Optimized query
+    //     } else {
+    //         // Handle the case where either stu_lrn or exam_id is missing (if needed)
+    //         return 0; // Or throw an exception, or return all rows if that's your intended behavior
+    //     }
+
+    //     $query = $this->con->query($sql);
+
+    //     if ($query) {
+    //         return $query->num_rows > 0; // Return true/false directly
+    //     } else {
+    //         // Handle query error (e.g., log it)
+    //         return false; // Or throw an exception
+    //     }
+    // }
+
+    public function checkExistByMultipleIDs($table, $conditions)
     {
-        if ($stu_lrn !== null && $exam_id !== null) {
-            $stu_lrn = mysqli_real_escape_string($this->con, $stu_lrn);
-            $exam_id = mysqli_real_escape_string($this->con, $exam_id);
-            $sql = "SELECT 1 FROM `$table` WHERE `stu_lrn` = '$stu_lrn' AND `exam_id` = '$exam_id' LIMIT 1"; // Optimized query
-        } else {
-            // Handle the case where either stu_lrn or exam_id is missing (if needed)
-            return 0; // Or throw an exception, or return all rows if that's your intended behavior
+        $sql = "SELECT 1 FROM `$table` WHERE ";
+        $whereClauses = [];
+
+        foreach ($conditions as $column => $value) {
+            $value = mysqli_real_escape_string($this->con, $value);
+            $whereClauses[] = "`$column` = '$value'";
         }
+
+        $sql .= implode(" AND ", $whereClauses);
+        $sql .= " LIMIT 1";
 
         $query = $this->con->query($sql);
 
         if ($query) {
-            return $query->num_rows > 0; // Return true/false directly
+            return $query->num_rows > 0;
         } else {
             // Handle query error (e.g., log it)
-            return false; // Or throw an exception
+            return false;
         }
     }
 
@@ -3222,26 +3482,46 @@ class myDataBase
     }
 
     // INSERT ANSWER OF STUDENT 
-    // Insert function
-    public function insertStudentExamAnswer($stud_id, $exam_id, $question_id, $question_type, $student_answer)
+    // Insert function fo student answers table if QUIZ OR EXAM
+    // NOTE: if quiz will be inserted exam will be null same in exam
+    public function insertStudentAnswer($stud_id, $exam_id, $quiz_id, $question_id, $question_type, $student_answer)
     {
-        $sql = "INSERT INTO student_exam_answers (stu_lrn, exam_id, question_id, question_type, student_answer)
-               VALUES (?, ?, ?, ?, ?)";
-        $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("ssiss", $stud_id, $exam_id, $question_id, $question_type, $student_answer);
-        $stmt->execute();
+        try {
+            if (!empty($exam_id)) {
+                $sql = "INSERT INTO student_answers (stu_lrn, exam_id, quiz_id, question_id, question_type, student_answer) 
+                        VALUES (?, ?, NULL, ?, ?, ?)";
+                $stmt = $this->con->prepare($sql);
+                $stmt->bind_param("ssiss", $stud_id, $exam_id,  $question_id, $question_type, $student_answer);
+            } elseif (!empty($quiz_id)) {
+                $sql = "INSERT INTO student_answers (stu_lrn, exam_id, quiz_id, question_id, question_type, student_answer) 
+                        VALUES (?, NULL, ?, ?, ?, ?)";
+                $stmt = $this->con->prepare($sql);
+                $stmt->bind_param("ssiss", $stud_id, $quiz_id, $question_id, $question_type, $student_answer);
+            }
+
+            if ($stmt) {
+                $stmt->execute();
+                $stmt->close();
+            } else {
+                throw new Exception("Failed to prepare statement.");
+            }
+        } catch (Exception $e) {
+            // Handle exceptions gracefully
+            echo "Error: " . $e->getMessage();
+        }
     }
+
     // GET ALL CORRECT QUESTION AND ANSWERS OF EXAM  OF STUDENT 
     public function getCorrectExamResult($stu_lrn, $exam_id)
     {
         $query = "
             SELECT 
-                sea.answer_id,
-                sea.stu_lrn,
-                sea.exam_id,
-                sea.question_id,
-                sea.question_type,
-                sea.student_answer,
+                sa.answer_id,
+                sa.stu_lrn,
+                sa.exam_id,
+                sa.question_id,
+                sa.question_type,
+                sa.student_answer,
                 em.mul_question,
                 em.choice_a, 
                 em.choice_b,
@@ -3254,25 +3534,25 @@ class myDataBase
                 et.tf_answer,
     
                 CASE 
-                    WHEN sea.question_type = 'multiple_choice' THEN em.mul_question
-                    WHEN sea.question_type = 'enumeration' THEN ee.enum_question
-                    WHEN sea.question_type = 'true_false' THEN et.tf_question
-                    WHEN sea.question_type = 'essay' THEN es.essay_question
+                    WHEN sa.question_type = 'multiple_choice' THEN em.mul_question
+                    WHEN sa.question_type = 'enumeration' THEN ee.enum_question
+                    WHEN sa.question_type = 'true_false' THEN et.tf_question
+                    WHEN sa.question_type = 'essay' THEN es.essay_question
                 END AS question_text,
     
                 CASE 
-                    WHEN sea.question_type = 'multiple_choice' THEN em.is_correct
-                    WHEN sea.question_type = 'enumeration' THEN ee.enum_answer
-                    WHEN sea.question_type = 'true_false' THEN et.tf_answer
+                    WHEN sa.question_type = 'multiple_choice' THEN em.is_correct
+                    WHEN sa.question_type = 'enumeration' THEN ee.enum_answer
+                    WHEN sa.question_type = 'true_false' THEN et.tf_answer
                     ELSE NULL  
                 END AS correct_answer
     
-            FROM student_exam_answers sea
-            LEFT JOIN exam_multiple em ON sea.question_id = em.mul_id AND sea.question_type = 'multiple_choice'
-            LEFT JOIN exam_enumeration ee ON sea.question_id = ee.enum_id AND sea.question_type = 'enumeration'
-            LEFT JOIN exam_tf et ON sea.question_id = et.tf_id AND sea.question_type = 'true_false'
-            LEFT JOIN exam_essay es ON sea.question_id = es.essay_id AND sea.question_type = 'essay'
-            WHERE sea.stu_lrn = ? AND sea.exam_id = ?";
+            FROM student_answers sa
+            LEFT JOIN exam_multiple em ON sa.question_id = em.mul_id AND sa.question_type = 'multiple_choice'
+            LEFT JOIN exam_enumeration ee ON sa.question_id = ee.enum_id AND sa.question_type = 'enumeration'
+            LEFT JOIN exam_tf et ON sa.question_id = et.tf_id AND sa.question_type = 'true_false'
+            LEFT JOIN exam_essay es ON sa.question_id = es.essay_id AND sa.question_type = 'essay'
+            WHERE sa.stu_lrn = ? AND sa.exam_id = ?";
 
         $stmt = $this->con->prepare($query);
         $stmt->bind_param("ss", $stu_lrn, $exam_id);
@@ -3320,12 +3600,111 @@ class myDataBase
         return $exam_results;
     }
 
+    // GET ALL CORRECT QUESTION AND ANSWERS OF QUIZ OF STUDENT 
+    public function getCorrectQuizResult($stu_lrn, $quiz_id)
+    {
+        $query = "
+            SELECT 
+                sa.answer_id,
+                sa.stu_lrn,
+                sa.quiz_id,
+                sa.question_id,
+                sa.question_type,
+                sa.student_answer,
+                qm.q_mul_question,
+                qm.q_choice_a, 
+                qm.q_choice_b,
+                qm.q_choice_c, 
+                qm.q_choice_d, 
+                qm.is_correct, 
+                qe.q_enum_question, 
+                qe.q_enum_answer, 
+                qtf.q_tf_question, 
+                qtf.q_tf_answer,
+    
+                CASE 
+                    WHEN sa.question_type = 'multiple_choice' THEN qm.q_mul_question
+                    WHEN sa.question_type = 'enumeration' THEN qe.q_enum_question
+                    WHEN sa.question_type = 'true_false' THEN qtf.q_tf_question
+                    WHEN sa.question_type = 'essay' THEN qes.q_essay_question
+                END AS question_text,
+    
+                CASE 
+                    WHEN sa.question_type = 'multiple_choice' THEN qm.is_correct
+                    WHEN sa.question_type = 'enumeration' THEN qe.q_enum_answer
+                    WHEN sa.question_type = 'true_false' THEN qtf.q_tf_answer
+                    ELSE NULL  
+                END AS correct_answer
+    
+            FROM student_answers sa
+            LEFT JOIN quiz_multiple qm ON sa.question_id = qm.q_mul_id AND sa.question_type = 'multiple_choice'
+            LEFT JOIN quiz_enumeration qe ON sa.question_id = qe.q_enum_id AND sa.question_type = 'enumeration'
+            LEFT JOIN quiz_tf qtf ON sa.question_id = qtf.q_tf_id AND sa.question_type = 'true_false'
+            LEFT JOIN quiz_essay qes ON sa.question_id = qes.q_essay_id AND sa.question_type = 'essay'
+            WHERE sa.stu_lrn = ? AND sa.quiz_id = ?";
+
+        $stmt = $this->con->prepare($query);
+        $stmt->bind_param("ss", $stu_lrn, $quiz_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $quiz_results = [];
+        while ($row = $result->fetch_assoc()) {
+            // Default to incorrect
+            $is_correct = 'Incorrect';
+
+            if (!empty($row['student_answer']) && !empty($row['correct_answer'])) {
+                if ($row['question_type'] === 'enumeration') {
+                    // Convert answers to lowercase and split into arrays
+                    $student_answers_array = array_map('trim', explode(',', strtolower($row['student_answer'])));
+                    $correct_answers_array = array_map('trim', explode(',', strtolower($row['correct_answer'])));
+
+                    // Sort both arrays
+                    sort($student_answers_array);
+                    sort($correct_answers_array);
+
+                    // Compare sorted arrays
+                    if ($student_answers_array === $correct_answers_array) {
+                        $is_correct = 'Correct';
+                    }
+                } else {
+                    // Regular comparison for other question types
+                    if (strtolower(trim($row['student_answer'])) === strtolower(trim($row['correct_answer']))) {
+                        $is_correct = 'Correct';
+                    }
+                }
+            }
+
+            $quiz_results[] = [
+                'answer_id' => $row['answer_id'],
+                'question_id' => $row['question_id'],
+                'question_type' => $row['question_type'],
+                'question_text' => $row['question_text'],
+                'student_answer' => $row['student_answer'],
+                'correct_answer' => $row['correct_answer'],
+                'is_correct' => $is_correct
+            ];
+        }
+
+        return $quiz_results;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     //GET ALL SCORE OF STUDENT IN EXAM
     public function getStudentExamScore($stud_id, $exam_id)
     {
         $sql = "SELECT correct_answers, total_questions, score_percentage
-                FROM student_exam_scores
+                FROM student_scores
                 WHERE stu_lrn = ? AND exam_id = ?";
 
         $stmt = $this->con->prepare($sql);
@@ -3343,11 +3722,40 @@ class myDataBase
         }
     }
 
+
+    //GET ALL SCORE OF STUDENT IN QUIZ
+    public function getStudentQuizScore($stud_id, $quiz_id)
+    {
+        $sql = "SELECT correct_answers, total_questions, score_percentage
+                    FROM student_scores
+                    WHERE stu_lrn = ? AND quiz_id = ?";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("ss", $stud_id, $quiz_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // If a score already exists, return it
+        if ($row = $result->fetch_assoc()) {
+            return [
+                'correct_answers' => $row['correct_answers'],
+                'total_questions' => $row['total_questions'],
+                'score_percentage' => $row['score_percentage']
+            ];
+        }
+    }
+
+
+
+
+
+
+
     // public function calculateAndStoreStudentScore($stud_id, $exam_id)
     // {
-    //     // First, check if the score already exists for the student in the student_exam_scores table
+    //     // First, check if the score already exists for the student in the student_scores table
     //     $sql = "SELECT correct_answers, total_questions, score_percentage
-    //             FROM student_exam_scores
+    //             FROM student_scores
     //             WHERE stu_lrn = ? AND exam_id = ?";
 
     //     $stmt = $this->con->prepare($sql);
@@ -3377,7 +3785,7 @@ class myDataBase
     //                 WHEN sea.question_type = 'true_false' THEN et.tf_answer
     //                 ELSE NULL  
     //             END AS correct_answer
-    //         FROM student_exam_answers sea
+    //         FROM student_answers sea
     //         LEFT JOIN exam_multiple em ON sea.question_id = em.mul_id AND sea.question_type = 'multiple_choice'
     //         LEFT JOIN exam_enumeration ee ON sea.question_id = ee.enum_id AND sea.question_type = 'enumeration'
     //         LEFT JOIN exam_tf et ON sea.question_id = et.tf_id AND sea.question_type = 'true_false'
@@ -3419,8 +3827,8 @@ class myDataBase
     //     // Compute Score Percentage
     //     $score_percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 100 : 0;
 
-    //     // Store score in student_exam_scores
-    //     $sql = "INSERT INTO student_exam_scores (stu_lrn, exam_id, total_questions, correct_answers, score_percentage)
+    //     // Store score in student_scores
+    //     $sql = "INSERT INTO student_scores (stu_lrn, exam_id, total_questions, correct_answers, score_percentage)
     //             VALUES (?, ?, ?, ?, ?)
     //             ON DUPLICATE KEY UPDATE correct_answers = VALUES(correct_answers), score_percentage = VALUES(score_percentage)";
 
@@ -3438,31 +3846,40 @@ class myDataBase
 
 
     // CALCULATE THE SCORE OF STUDENT 
-    public function calculateAndStoreStudentScore($stud_id, $exam_id)
+    public function calculateAndStoreStudentScore($stud_id, $exam_id = null, $quiz_id = null)
     {
-
         // Initialize scores
         $total_questions = 0;
         $correct_answers = 0;
 
-        // Query to fetch student answers and correct answers
+        // Determine if calculating for an exam or a quiz
+        $condition = $exam_id ? "sa.exam_id = ?" : "sa.quiz_id = ?";
+        $param = $exam_id ?: $quiz_id; // Set param to exam_id if provided, otherwise use quiz_id
+
+        // Query to fetch student answers and match them with correct answers
         $sql = "
-            SELECT 
-                sea.question_id, sea.question_type, sea.student_answer,
-                CASE 
-                    WHEN sea.question_type = 'multiple_choice' THEN em.is_correct
-                    WHEN sea.question_type = 'enumeration' THEN ee.enum_answer
-                    WHEN sea.question_type = 'true_false' THEN et.tf_answer
-                    ELSE NULL  
-                END AS correct_answer
-            FROM student_exam_answers sea
-            LEFT JOIN exam_multiple em ON sea.question_id = em.mul_id AND sea.question_type = 'multiple_choice'
-            LEFT JOIN exam_enumeration ee ON sea.question_id = ee.enum_id AND sea.question_type = 'enumeration'
-            LEFT JOIN exam_tf et ON sea.question_id = et.tf_id AND sea.question_type = 'true_false'
-            WHERE sea.stu_lrn = ? AND sea.exam_id = ?";
+                SELECT 
+                    sa.question_id, sa.question_type, sa.student_answer,
+                    CASE 
+                        WHEN sa.question_type = 'multiple_choice' 
+                            THEN COALESCE(em.is_correct, qm.is_correct) -- Exam or Quiz Multiple Choice
+                        WHEN sa.question_type = 'enumeration' 
+                            THEN COALESCE(ee.enum_answer, qe.q_enum_answer) -- Exam or Quiz Enumeration
+                        WHEN sa.question_type = 'true_false' 
+                            THEN COALESCE(et.tf_answer, qtf.q_tf_answer) -- Exam or Quiz True/False
+                        ELSE NULL  
+                    END AS correct_answer
+                FROM student_answers sa
+                LEFT JOIN exam_multiple em ON sa.question_id = em.mul_id AND sa.question_type = 'multiple_choice' AND sa.exam_id IS NOT NULL
+                LEFT JOIN exam_enumeration ee ON sa.question_id = ee.enum_id AND sa.question_type = 'enumeration' AND sa.exam_id IS NOT NULL
+                LEFT JOIN exam_tf et ON sa.question_id = et.tf_id AND sa.question_type = 'true_false' AND sa.exam_id IS NOT NULL
+                LEFT JOIN quiz_multiple qm ON sa.question_id = qm.q_mul_id AND sa.question_type = 'multiple_choice' AND sa.quiz_id IS NOT NULL
+                LEFT JOIN quiz_enumeration qe ON sa.question_id = qe.q_enum_id AND sa.question_type = 'enumeration' AND sa.quiz_id IS NOT NULL
+                LEFT JOIN quiz_tf qtf ON sa.question_id = qtf.q_tf_id AND sa.question_type = 'true_false' AND sa.quiz_id IS NOT NULL
+                WHERE sa.stu_lrn = ? AND $condition";
 
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("ss", $stud_id, $exam_id);
+        $stmt->bind_param("ss", $stud_id, $param);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -3497,15 +3914,16 @@ class myDataBase
         // Compute Score Percentage
         $score_percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 100 : 0;
 
-        // Store score in student_exam_scores
-        $sql = "INSERT INTO student_exam_scores (stu_lrn, exam_id, total_questions, correct_answers, score_percentage)
-                VALUES (?, ?, ?, ?, ?)
+        // Store score in student_scores table, now considering `quiz_id`
+        $sql = "INSERT INTO student_scores (stu_lrn, exam_id, quiz_id, total_questions, correct_answers, score_percentage)
+                VALUES (?, ?, ?, ?, ?, ?)
                 ON DUPLICATE KEY UPDATE correct_answers = VALUES(correct_answers), score_percentage = VALUES(score_percentage)";
 
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("ssiid", $stud_id, $exam_id, $total_questions, $correct_answers, $score_percentage);
+        $stmt->bind_param("sssiid", $stud_id, $exam_id, $quiz_id, $total_questions, $correct_answers, $score_percentage);
         $stmt->execute();
     }
+
 
 
 

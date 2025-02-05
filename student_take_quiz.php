@@ -10,29 +10,29 @@ include "./includes/dbh-inc.php";
 $mySQLFunction->connection();
 
 // Check if required GET parameters are set
-if (!empty($_GET['exam_id']) && !empty($_GET['sub_code']) && !empty($_GET['section_code']) && !empty($_GET['grade_lvl'])) {
-    $exam_id = $_GET['exam_id'];
+if (!empty($_GET['quiz_id']) && !empty($_GET['sub_code']) && !empty($_GET['section_code']) && !empty($_GET['grade_lvl'])) {
+    $quiz_id = $_GET['quiz_id'];
     $sub_code = $_GET['sub_code'];
     $section_code = $_GET['section_code'];
     $grade_lvl = $_GET['grade_lvl'];
     $student_lrn = $_SESSION['stu_lrn'];
 
     // Fetch exam details and questions
-    $exams = $mySQLFunction->getAllExamTypeBySubjectsOfStudents($_SESSION['stu_lrn'], $exam_id, $sub_code, $section_code, $grade_lvl);
+    $quizzes = $mySQLFunction->getAllQuizTypeBySubjectsOfStudents($_SESSION['stu_lrn'], $quiz_id, $sub_code, $section_code, $grade_lvl);
     // echo "<pre>";
-    // print_r($exams);
+    // print_r($quizzes);
     // echo "</pre>";
 
 
-    // check if the student is already  take the exam if yes then the button will be disabled
-    $checkIdExist = $mySQLFunction->checkExistByMultipleIDs("student_answers", ["stu_lrn" => $student_lrn, "exam_id" => $exam_id]);
-    $isExamTaken = $checkIdExist > 0;
+    // check if the student is already  take the QUIZ if yes then the button will be disabled
+    $checkIdExist = $mySQLFunction->checkExistByMultipleIDs("student_answers", ["stu_lrn" => $student_lrn, "quiz_id" => $quiz_id]);
+    $isQuizTaken = $checkIdExist > 0;
 
-    // GET THE EXAM CORRECT RESULT IN EXAM
-    $examResult = $mySQLFunction->getCorrectExamResult($student_lrn, $exam_id);
+    // GET THE QUIZ CORRECT RESULT IN QUIZ
+    $quizResult = $mySQLFunction->getCorrectQuizResult($student_lrn, $quiz_id);
 
-    // GET THE SCORE OF STUDENT IN EXAM
-    $examScore = $mySQLFunction->getStudentExamScore($student_lrn, $exam_id);
+    // GET THE SCORE OF STUDENT IN QUIZ
+    $quizScore = $mySQLFunction->getStudentQuizScore($student_lrn, $quiz_id);
 }
 
 $mySQLFunction->disconnect();
@@ -46,21 +46,21 @@ $mySQLFunction->disconnect();
                 <div class="container">
                     <!-- Header Section -->
                     <div class="card mb-2 shadow-lg border-0">
-                        <div class="card-body text-center <?php echo $isExamTaken ? 'bg-dark' : 'bg-success'; ?> text-white rounded position-relative">
+                        <div class="card-body text-center <?php echo $isQuizTaken ? 'bg-dark' : 'bg-primary'; ?> text-white rounded position-relative">
                             <div class="d-flex flex-column align-items-end">
-                                <a <?php echo $isExamTaken ? 'href="index.php?page=student_exam_result" ' : 'href="index.php?page=student_exam" ' ?> class="btn btn-sm btn-outline-light mt-2"> Back</a>
-                                <div class="w-100  text-center"> <?php if ($isExamTaken): ?>
+                                <a <?php echo $isQuizTaken ? 'href="index.php?page=student_quiz_result" ' : 'href="index.php?page=student_exam" ' ?> class="btn btn-sm btn-outline-light mt-2"> Back</a>
+                                <div class="w-100  text-center"> <?php if ($isQuizTaken): ?>
                                         <h1 class="card-title fw-bold">Done <i class="bi bi-check-circle-fill fs-3 text-success"></i></h1>
-                                        <p class="card-text"> You have already taken this exam. <br><small>Click here view exam results</small></p>
+                                        <p class="card-text"> You have already taken this quiz. </p>
                                         <button class="btn btn-outline-light btn-lg px-5 rounded-pill"
                                             data-bs-toggle="collapse" data-bs-target="#examResultArea">
                                             <i class="bi bi-clipboard-data me-2"></i> View Result
                                         </button>
                                     <?php else: ?>
-                                        <h1 class="card-title fw-bold">Take Your Exam</h1>
+                                        <h1 class="card-title fw-bold">Take Your Quiz</h1>
                                         <p class="card-text"> Get ready to demonstrate your knowledge. Best of luck! </p>
                                         <button class="btn btn-outline-light btn-lg px-5 rounded-pill" id="startExamButton">
-                                            <i class="bi bi-play-circle me-2"></i> Start Exam
+                                            <i class="bi bi-play-circle me-2"></i> Start Quiz
                                         </button>
 
 
@@ -73,38 +73,38 @@ $mySQLFunction->disconnect();
                     <!-- Exam Details Section -->
 
                     <div id="examDetails">
-                        <?php if (!empty($exams)) : ?>
-                            <?php foreach ($exams as $examData) : ?>
+                        <?php if (!empty($quizzes)) : ?>
+                            <?php foreach ($quizzes  as $quizData) : ?>
                                 <!-- Exam Title and Details -->
                                 <div class="card mb-2 shadow-sm border-0">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h4 class="fw-bold text-dark">
-                                                <?= htmlspecialchars(ucwords(strtolower($examData["exam_title"] ?? 'No Exam Title'))) ?>
+                                                <?= htmlspecialchars(ucwords(strtolower($quizData["quiz_title"] ?? 'No Exam Title'))) ?>
                                             </h4>
-                                            <span class="badge bg-success py-2 text-white">
-                                                <?= htmlspecialchars(($examData["exam_quarter"] . ' Quarter' . ' / ' . $examData["sub_semester"] . ' ' ?? 'N/A')) ?>
+                                            <span class="badge bg-dark py-2 text-white">
+                                                <?= htmlspecialchars(($quizData["quiz_quarter"] . ' Quarter' . ' / ' . $quizData["sub_semester"] . ' ' ?? 'N/A')) ?>
                                             </span>
                                         </div>
-                                        <p class="text-dark">
-                                            <span class="fw-bold mb-2">Subject:</span> <span class="badge bg-success py-2 text-white fw-semibold mb-1"><?= htmlspecialchars(ucwords(strtolower($examData["sub_title"] ?? 'No Subject'))) ?></span><br>
-                                            <span class="fw-bold">Teacher:</span> <span class="badge bg-success py-2 text-white fw-semibold"><?= htmlspecialchars(ucwords(strtolower($examData["teacher_fname"] . ' ' . $examData["teacher_lname"] . ' ' ?? 'N/A'))) ?></span>
+                                        <p class="text-secondary">
+                                            <span class="fw-bold">Subject:</span> <span class="badge bg-success py-2 text-white fw-semibold"><?= htmlspecialchars(ucwords(strtolower($quizData["sub_title"] ?? 'No Subject'))) ?></span><br>
+                                            <span class="fw-bold">Teacher:</span> <?= htmlspecialchars(ucwords(strtolower($quizData["teacher_fname"] . ' ' . $quizData["teacher_lname"] . ' ' ?? 'N/A'))) ?>
                                         </p>
                                     </div>
                                 </div>
                                 <!-- Exam Instructions -->
-                                <?php if (!$isExamTaken): ?>
+                                <?php if (!$isQuizTaken): ?>
                                     <div class="card mb-2 shadow-sm border-0">
                                         <div class="card-body bg-light">
                                             <h5 class="fw-bold text-dark">Exam Instructions</h5>
                                             <ul class="list-group list-group-flush">
                                                 <li class="list-group-item bg-light">
                                                     <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                                    This exam has <span class="fw-semibold"><?= htmlspecialchars($examData["exam_items"] ?? 'N/A') ?> items</span> includes multiple-choice, enumeration, true or false, and essay questions.
+                                                    This exam has <span class="fw-semibold"><?= htmlspecialchars($quizData["quiz_items"] ?? 'N/A') ?> items</span> includes multiple-choice, enumeration, true or false, and essay questions.
                                                 </li>
                                                 <li class="list-group-item bg-light">
                                                     <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                                    Duration: <span class="fw-semibold"><?= htmlspecialchars($examData["exam_duration"] ?? 'N/A') ?> minutes</span>.
+                                                    Duration: <span class="fw-semibold"><?= htmlspecialchars($quizData["quiz_duration"] ?? 'N/A') ?> minutes</span>.
                                                 </li>
                                                 <li class="list-group-item bg-light">
                                                     <i class="bi bi-check-circle-fill text-success me-2"></i>
@@ -125,7 +125,7 @@ $mySQLFunction->disconnect();
 
                 </div>
                 <!-- NOTE: If student not have not yet taken the exam this will be display  exam and the button will be start exam  -->
-                <?php if (!$isExamTaken): ?>
+                <?php if (!$isQuizTaken): ?>
                     <!-- Timer and Exam Questions -->
                     <div id="examArea" class="d-none">
                         <div class="row">
@@ -136,33 +136,36 @@ $mySQLFunction->disconnect();
                                         <div class="d-flex justify-content-between">
                                             <h5 class="fw-bold text-start">Questions</h5>
                                             <p class="fw-semibold text-end">
-                                                <?= htmlspecialchars($examData["exam_items"] . ' Items' ?? 'No Items') ?><br>
+                                                <?= htmlspecialchars($quizData["quiz_items"] . ' Items' ?? 'No Items') ?><br>
                                             </p>
                                         </div>
-                                        <!-- FORM ELEMENTS OF EXAM -->
+                                        <!-- FORM ELEMENTS OF QUIZ -->
                                         <form action="./includes/studentexam-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation" novalidate>
+
                                             <!-- Hidden Inputs -->
                                             <input type="hidden" name="studID" value="<?php echo htmlspecialchars($_SESSION['stu_lrn']); ?>">
-                                            <input type="hidden" name="examID" value="<?php echo htmlspecialchars($_GET['exam_id']); ?>">
+                                            <input type="hidden" name="quizID" value="<?php echo htmlspecialchars($_GET['quiz_id']); ?>">
                                             <input type="hidden" name="subID" value="<?php echo htmlspecialchars($_GET['sub_code']); ?>">
                                             <input type="hidden" name="secID" value="<?php echo htmlspecialchars($_GET['section_code']); ?>">
                                             <input type="hidden" name="gradelvlID" value="<?php echo htmlspecialchars($_GET['grade_lvl']); ?>">
+
+
                                             <ul class="list-group ">
-                                                <?php if (!empty($exams)) : ?>
-                                                    <?php foreach ($exams as $examData) : ?>
+                                                <?php if (!empty($quizzes)) : ?>
+                                                    <?php foreach ($quizzes as $quizData) : ?>
                                                         <!-- Start of Question Loop -->
                                                         <?php $rowCount = 1; ?>
-                                                        <?php if (!empty($examData['exams'][0]['multiple_choice'])) : ?>
+                                                        <?php if (!empty($quizData['quizzes'][0]['multiple_choice'])) : ?>
                                                             <li class="list-group-item">
                                                                 <h6>Multiple Choice:</h6>
-                                                                <?php foreach ($examData['exams'][0]['multiple_choice'] as $mcq) : ?>
-                                                                    <p class="pt-2"><?= $rowCount++ ?>.) <?= htmlspecialchars($mcq['mul_question']) ?></p>
+                                                                <?php foreach ($quizData['quizzes'][0]['multiple_choice'] as $mcq) : ?>
+                                                                    <p class="pt-2"><?= $rowCount++ ?>.) <?= htmlspecialchars($mcq['q_mul_question']) ?></p>
                                                                     <ul class="list-unstyled">
                                                                         <!-- id of multiple choice -->
-                                                                        <input type="hidden" class="form-control" name="mulId[]" value="<?= htmlspecialchars($mcq['mul_id']) ?>">
-                                                                        <?php foreach (['choice_a', 'choice_b', 'choice_c', 'choice_d'] as $choice) : ?>
+                                                                        <input type="hidden" class="form-control" name="qMulId[]" value="<?= htmlspecialchars($mcq['q_mul_id']) ?>">
+                                                                        <?php foreach (['q_choice_a', 'q_choice_b', 'q_choice_c', 'q_choice_d'] as $choice) : ?>
                                                                             <li>
-                                                                                <input type="radio" name="mcq_<?= htmlspecialchars($mcq['mul_id']) ?>"
+                                                                                <input type="radio" name="qmcq_<?= htmlspecialchars($mcq['q_mul_id']) ?>"
                                                                                     value="<?= htmlspecialchars($mcq[$choice]) ?>" required>
                                                                                 <?= htmlspecialchars($mcq[$choice]) ?>
                                                                             </li>
@@ -172,43 +175,43 @@ $mySQLFunction->disconnect();
                                                             </li>
                                                         <?php endif; ?>
 
-                                                        <?php if (!empty($examData['exams'][0]['enumeration'])) : ?>
+                                                        <?php if (!empty($quizData['quizzes'][0]['enumeration'])) : ?>
                                                             <li class="list-group-item">
                                                                 <h6>Enumeration:</h6>
-                                                                <?php foreach ($examData['exams'][0]['enumeration'] as $enum) : ?>
-                                                                    <p><?= $rowCount++ ?>.) <?= htmlspecialchars($enum['enum_question']) ?></p>
+                                                                <?php foreach ($quizData['quizzes'][0]['enumeration'] as $enum) : ?>
+                                                                    <p><?= $rowCount++ ?>.) <?= htmlspecialchars($enum['q_enum_question']) ?></p>
                                                                     <!-- id of enumeration -->
-                                                                    <input type="hidden" class="form-control" name="enumId[]" value="<?= htmlspecialchars($enum['enum_id']) ?>">
-                                                                    <input type="text" class="form-control" name="enum_<?= htmlspecialchars($enum['enum_id']) ?>"
+                                                                    <input type="hidden" class="form-control" name="qEnumId[]" value="<?= htmlspecialchars($enum['q_enum_id']) ?>">
+                                                                    <input type="text" class="form-control" name="qenum_<?= htmlspecialchars($enum['q_enum_id']) ?>"
                                                                         placeholder="Enter your answer here, separated by commas ( , )" required>
                                                                 <?php endforeach; ?>
                                                             </li>
                                                         <?php endif; ?>
 
-                                                        <?php if (!empty($examData['exams'][0]['essay'])) : ?>
+                                                        <?php if (!empty($quizData['quizzes'][0]['essay'])) : ?>
                                                             <li class="list-group-item">
                                                                 <h6>Essay:</h6>
-                                                                <?php foreach ($examData['exams'][0]['essay'] as $essay) : ?>
-                                                                    <p><?= $rowCount++ ?>.) <?= htmlspecialchars($essay['essay_question']) ?></p>
+                                                                <?php foreach ($quizData['quizzes'][0]['essay'] as $essay) : ?>
+                                                                    <p><?= $rowCount++ ?>.) <?= htmlspecialchars($essay['q_essay_question']) ?></p>
                                                                     <!-- id of essay -->
-                                                                    <input type="hidden" class="form-control" name="essayId[]" value="<?= htmlspecialchars($essay['essay_id']) ?>">
-                                                                    <textarea class="form-control" name="essay_<?= htmlspecialchars($essay['essay_id']) ?>"
+                                                                    <input type="hidden" class="form-control" name="qEssayId[]" value="<?= htmlspecialchars($essay['q_essay_id']) ?>">
+                                                                    <textarea class="form-control" name="qessay_<?= htmlspecialchars($essay['q_essay_id']) ?>"
                                                                         rows="4" placeholder="Write your essay here"></textarea>
                                                                 <?php endforeach; ?>
                                                             </li>
                                                         <?php endif; ?>
 
-                                                        <?php if (!empty($examData['exams'][0]['true_false'])) : ?>
+                                                        <?php if (!empty($quizData['quizzes'][0]['true_false'])) : ?>
                                                             <li class="list-group-item">
                                                                 <h6>True/False:</h6>
-                                                                <?php foreach ($examData['exams'][0]['true_false'] as $tf) : ?>
-                                                                    <p><?= $rowCount++ ?>.) <?= htmlspecialchars($tf['tf_question']) ?></p>
+                                                                <?php foreach ($quizData['quizzes'][0]['true_false'] as $tf) : ?>
+                                                                    <p><?= $rowCount++ ?>.) <?= htmlspecialchars($tf['q_tf_question']) ?></p>
                                                                     <div>
                                                                         <!-- id of true/false -->
-                                                                        <input type="hidden" class="form-control" name="tfId[]" value="<?= htmlspecialchars($tf['tf_id']) ?>">
-                                                                        <input type="radio" name="tf_<?= htmlspecialchars($tf['tf_id']) ?>"
+                                                                        <input type="hidden" class="form-control" name="qTfId[]" value="<?= htmlspecialchars($tf['q_tf_id']) ?>">
+                                                                        <input type="radio" name="qtf_<?= htmlspecialchars($tf['q_tf_id']) ?>"
                                                                             value="True" required> True <br>
-                                                                        <input type="radio" name="tf_<?= htmlspecialchars($tf['tf_id']) ?>"
+                                                                        <input type="radio" name="qtf_<?= htmlspecialchars($tf['q_tf_id']) ?>"
                                                                             value="False" required> False
                                                                     </div>
                                                                 <?php endforeach; ?>
@@ -220,6 +223,7 @@ $mySQLFunction->disconnect();
                                                     <p>No questions available.</p>
                                                 <?php endif; ?>
                                             </ul>
+
                                             <!-- Submit Button -->
                                             <div class="mt-3">
                                                 <button name="submit" type="submit" class="btn btn-primary">Submit Answers</button>
@@ -238,7 +242,7 @@ $mySQLFunction->disconnect();
                                             00:00
                                         </div>
                                         <p class="text-muted">Time remaining</p>
-                                        <button class="btn btn-danger mt-2" id="endExamButton">End Exam</button>
+                                        <button class="btn btn-danger mt-2" id="endExamButton">End Quiz</button>
                                     </div>
                                 </div>
                             </div>
@@ -250,23 +254,23 @@ $mySQLFunction->disconnect();
                     <div id="examResultArea" class="collapse">
                         <div class="card shadow-sm ms-2 me-2">
                             <div class="card-header bg-success text-white text-center">
-                                <h4 class="fw-bold mb-0">Exam Result</h4>
+                                <h4 class="fw-bold mb-0">Quiz Result</h4>
                             </div>
                             <div class="card-body">
                                 <div class="text-center mb-3">
-                                    <?php if (!empty($examScore)) : ?>
-                                        <h5 class="fw-bold">Total Score: <?= htmlspecialchars($examScore["correct_answers"] ?? '0') ?> / <?= htmlspecialchars($examScore["total_questions"] ?? 'N/A') ?></h5>
-                                        <p class="text-muted">You have completed the exam successfully.</p>
+                                    <?php if (!empty($quizScore)) : ?>
+                                        <h5 class="fw-bold">Total Score: <?= htmlspecialchars($quizScore["correct_answers"] ?? '0') ?> / <?= htmlspecialchars($quizScore["total_questions"] ?? 'N/A') ?></h5>
+                                        <p class="text-muted">You have completed the quiz successfully.</p>
                                     <?php endif; ?>
                                 </div>
-                                <?php if (!empty($examResult)) : ?>
+                                <?php if (!empty($quizResult)) : ?>
 
                                     <?php
-                                    $correctAnswers = array_filter($examResult, function ($question) {
+                                    $correctAnswers = array_filter($quizResult, function ($question) {
                                         return $question["is_correct"] === "Correct";
                                     });
 
-                                    $incorrectAnswers = array_filter($examResult, function ($question) {
+                                    $incorrectAnswers = array_filter($quizResult, function ($question) {
                                         return $question["is_correct"] === "Incorrect";
                                     });
                                     ?>
@@ -317,7 +321,7 @@ $mySQLFunction->disconnect();
                                     </div>
 
                                 <?php else: ?>
-                                    <p class="text-center text-muted">No exam results found.</p>
+                                    <p class="text-center text-muted">No quiz results found.</p>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -328,9 +332,9 @@ $mySQLFunction->disconnect();
 
                 <!-- Exam Completion Section -->
                 <div id="examEndNotification" class="d-none text-center my-5">
-                    <h2 class="fw-bold text-success">Exam Completed!</h2>
+                    <h2 class="fw-bold text-success">Quiz Completed!</h2>
                     <p>Your answers have been submitted successfully.</p>
-                    <a href="?page=student_exam_result" class="btn btn-outline-success">
+                    <a href="?page=student_quiz_result" class="btn btn-outline-success">
                         <i class="bi bi-clipboard-data me-2"></i> View Results
                     </a>
                 </div>
@@ -350,7 +354,7 @@ $mySQLFunction->disconnect();
         const examTimer = document.getElementById("examTimer");
         const endExamButton = document.getElementById("endExamButton");
         const examEndNotification = document.getElementById("examEndNotification");
-        let timerDuration = <?= json_encode($examData["exam_duration"] ?? 0) ?>; // In minutes
+        let timerDuration = <?= json_encode($quizData["quiz_duration"] ?? 0) ?>; // In minutes
 
         // Check if the exam has been taken
         startButton.addEventListener("click", function() {

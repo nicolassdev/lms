@@ -25,7 +25,7 @@ $studentSubjects = $mySQLFunction->getAllStudentSubjectsExam($_SESSION['stu_lrn'
 // }
 
 
-// $hideExam = $mySQLFunction->checkExistIDinAssessment("student_exam_scores", $_SESSION['stu_lrn'], $exam_id);
+// $hideExam = $mySQLFunction->checkExistIDinAssessment("student_scores", $_SESSION['stu_lrn'], $exam_id);
 // $hideDoneExam = $hideExam > 0;
 
 // Disconnect DB
@@ -47,8 +47,24 @@ $mySQLFunction->disconnect();
                         <!-- Search Bar -->
                         <div class="col-md-4">
                             <div class="input-group input-group-sm">
+                                <?php
+                                $hasExams = false; // Start with the assumption that no exam are found.
+
+                                foreach ($studentSubjects as $subject):
+                                    $mySQLFunction->connection();
+                                    foreach ($subject["exams"] as $exam) {
+                                        $exam_id = $exam['exam_id'];
+                                        $hasExams = $mySQLFunction->checkExistByID("student_answers", "exam_id", $exam_id);
+                                    }
+
+                                    if ($hasExams > 0): // If exam exists for this subject
+                                        $hasExams = true;
+                                        break; // No need to continue checking other subjects if we already found a exam.
+                                    endif;
+                                endforeach;
+                                ?>
                                 <!-- Search Input -->
-                                <input type="text" id="searchBar" class="form-control" placeholder="Search subjects ...">
+                                <input type="text" id="searchResult" class="form-control" placeholder="Search subject exam..." <?php echo $hasExams ? '' : 'disabled'; ?>>
                                 <i class="bi bi-search me-2 ms-2"></i>
                             </div>
                         </div>
@@ -66,9 +82,10 @@ $mySQLFunction->disconnect();
                                 if (!empty($subject['exams'])):
                                     foreach ($subject["exams"] as $exam) {
                                         $exam_id = $exam['exam_id'];
+                                        $stu_lrn = $_SESSION['stu_lrn'];
                                         // Check if the student has answered in both tables
-                                        $hideExam = $mySQLFunction->checkExistIDinAssessment("student_exam_answers", $_SESSION['stu_lrn'], $exam_id);
-                                        $hideExamScore = $mySQLFunction->checkExistIDinAssessment("student_exam_scores", $_SESSION['stu_lrn'], $exam_id);
+                                        $hideExam = $mySQLFunction->checkExistByMultipleIDs("student_answers", ["stu_lrn" => $stu_lrn, "exam_id" => $exam_id]);
+                                        $hideExamScore = $mySQLFunction->checkExistByMultipleIDs("student_scores", ["stu_lrn" => $stu_lrn, "exam_id" => $exam_id]);
 
                                         if ($hideExam == 0 || $hideExamScore == 0) {
                                             $allExamsCompleted = false; // Subject is not fully completed
@@ -136,7 +153,7 @@ $mySQLFunction->disconnect();
                                 <?php endif; ?>
                             <?php endforeach; ?>
 
-                            <!-- No Subjects Found -->
+                            <!-- No Subjects EXAM result Found -->
                             <?php if (!$hasCompletedSubjects): ?>
                                 <div class="col-12 text-center py-5">
                                     <div class="card-body">
@@ -148,12 +165,22 @@ $mySQLFunction->disconnect();
                                 </div>
                             <?php endif; ?>
 
+                            <!-- NOTE: for search bar purpose -->
+                            <!-- No Subjects Found Message  search bar-->
+                            <div class="col-12 text-center d-none no-results">
+                                <div class="card-body">
+                                    <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
+                                    <h5 class="text-secondary fw-bold">No Exam Found</h5>
+                                    <small class="text-muted">You can use the search bar above to find your exam.</small>
+                                </div>
+                            </div>
+
                         <?php else: ?>
                             <!-- No Subjects Available -->
                             <div class="col-12 text-center py-5">
                                 <div class="card-body">
                                     <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
-                                    <h5 class="text-secondary fw-bold">No Subjects Found</h5>
+                                    <h5 class="text-secondary fw-bold">No Exam Found</h5>
                                     <small class="text-muted">You currently have no assigned subjects.</small>
                                 </div>
                             </div>
@@ -171,7 +198,7 @@ $mySQLFunction->disconnect();
 
 
 <script>
-    document.getElementById('searchBar').addEventListener('input', function() {
+    document.getElementById('searchResult').addEventListener('input', function() {
         const filter = this.value.toLowerCase();
         const cards = document.querySelectorAll('.subject-card');
         let found = false;

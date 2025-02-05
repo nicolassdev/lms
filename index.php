@@ -28,21 +28,13 @@ $page = isset($_GET["page"]) ? $_GET["page"] : "student_home";
  This is Student Routes 
  */
 switch ($page) {
-    case "student_module":
-        require_once 'student_module.php';
-        break;
+
     case "student_section":
         require_once 'student_section.php';
         break;
-
     case "student_subject":
         require_once 'student_subject.php';
         break;
-
-    case "subject_list":
-        require_once 'subject_list.php';
-        break;
-
     case "student_prof":
         require_once 'student_prof.php';
         break;
@@ -63,6 +55,16 @@ switch ($page) {
         break;
 
         /** 
+        MODULE Routes 
+         */
+    case "student_module":
+        require_once 'student_module.php';
+        break;
+    case "subject_list":
+        require_once 'subject_list.php';
+        break;
+
+        /** 
         EXAM Routes 
          */
     case "student_take_exam":
@@ -71,6 +73,17 @@ switch ($page) {
 
     case "student_exam_result":
         require_once 'student_exam_result.php';
+        break;
+
+        /** 
+        QUIZ Routes 
+         */
+    case "student_take_quiz":
+        require_once 'student_take_quiz.php';
+        break;
+
+    case "student_quiz_result":
+        require_once 'student_quiz_result.php';
         break;
 
     default:

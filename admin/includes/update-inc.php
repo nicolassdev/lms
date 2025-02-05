@@ -10,10 +10,10 @@ if (isset($_POST["submit"])) {
     $sy = isset($_POST["address"]) ? strtoupper(trim($_POST["address"])) : null;
 
 
-     
+
     $mySQLFunction->connection();
-    $mySQLFunction->updateSchool("SCHOOL_NAME", $name);
-    $mySQLFunction->updateSchool("SCHOOL_ADDRESS", $address);
+    $mySQLFunction->updateSchool("school_name", $name);
+    $mySQLFunction->updateSchool("school_address", $address);
     $mySQLFunction->disconnect();
 
     // Trigger the modal using a Bootstrap modal component
