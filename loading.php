@@ -142,7 +142,7 @@ $userRole = isset($_SESSION['user_role']) ? ucfirst(strtolower($_SESSION['user_r
 <body>
     <div class="loading-container">
         <div class="loader"></div>
-        <h1>Welcome <?php echo $userRole; ?> Back!</h1>
+        <h1>Welcome <?php echo $userRole; ?></h1>
         <p><i class="bi bi-arrow-clockwise"></i> Retrieving your information...</p>
         <p class="blinking">
             <i class="bi bi-hourglass-split"></i> Fetching updates from our server...

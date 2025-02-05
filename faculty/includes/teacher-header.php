@@ -111,7 +111,7 @@ error_reporting(E_ALL);
 
 
                         <ul class="nav flex-column">
-                            <div class="nav-link fs-5 text-white fw-bold dasboard d-none d-lg-inline mb-3 ">
+                            <div class="nav-link fs-5 text-white fw-bold dasboard d-none d-lg-inline mb-2">
                                 MENU
                             </div>
 

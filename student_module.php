@@ -60,7 +60,7 @@ $mySQLFunction->disconnect();
 
                             <!-- Search Input -->
                             <input type="text" id="searchModule" class="form-control" placeholder="Search subject module..." <?php echo $hasModules ? '' : 'disabled'; ?>>
-                            <i class="bi bi-search me-2 ms-2"></i>
+                            <i class="bi bi-search me-2 ms-2 fs-5"></i>
                         </div>
                     </div>
 

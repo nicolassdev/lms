@@ -64,7 +64,7 @@ $mySQLFunction->disconnect();
                                 ?>
                                 <!-- Search Input -->
                                 <input type="text" id="searchBar" class="form-control" placeholder="Search subject exam..." <?php echo $hasQuiz ? '' : 'disabled'; ?>>
-                                <i class="bi bi-search me-2 ms-2"></i>
+                                <i class="bi bi-search me-2 ms-2 fs-5"></i>
                             </div>
                         </div>
                     </div>
@@ -159,7 +159,7 @@ $mySQLFunction->disconnect();
                                         <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
                                         <h5 class="text-secondary fw-bold">No Result Found</h5>
                                         <small class="text-muted">You have not completed any quizzes yet.</small><br>
-                                        <small><a href="?page=student_quiz">Take an quiz now!</a></small>
+                                        <small><a href="?page=student_quiz">Take a quiz now!</a></small>
                                     </div>
                                 </div>
                             <?php endif; ?>

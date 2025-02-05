@@ -91,11 +91,9 @@ $mySQLFunction->disconnect();
                             }
                             ?>
                             <!-- Info name -->
-                            <p>Logged in as :
-                                <?php
-                                echo ucwords(strtolower($_SESSION['teacher_fname'] . ' ' . $_SESSION['teacher_lname']));
-                                ?>
-                            </p>
+                            <div>Logged in as :
+                                <span><?php echo ucwords(strtolower($_SESSION['teacher_fname'] . ' ' . $_SESSION['teacher_lname'])); ?></span>
+                            </div>
                         </div>
 
                     </div>

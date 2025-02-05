@@ -46,7 +46,7 @@ $mySQLFunction->disconnect();
                 <div class="container">
                     <!-- Header Section -->
                     <div class="card mb-2 shadow-lg border-0">
-                        <div class="card-body text-center <?php echo $isQuizTaken ? 'bg-dark' : 'bg-primary'; ?> text-white rounded position-relative">
+                        <div class="card-body text-center <?php echo $isQuizTaken ? 'bg-dark' : 'bg-success'; ?> text-white rounded position-relative">
                             <div class="d-flex flex-column align-items-end">
                                 <a <?php echo $isQuizTaken ? 'href="index.php?page=student_quiz_result" ' : 'href="index.php?page=student_exam" ' ?> class="btn btn-sm btn-outline-light mt-2"> Back</a>
                                 <div class="w-100  text-center"> <?php if ($isQuizTaken): ?>

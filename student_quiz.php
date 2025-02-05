@@ -43,24 +43,38 @@ $mySQLFunction->disconnect();
                         <!-- Search Bar -->
                         <div class="col-md-4">
                             <div class="input-group input-group-sm">
-                                <?php
-                                $hasQuiz = false; // Start with the assumption that no modules are found.
-
-                                foreach ($studentSubjects as $subject):
+                                <?php $hasQuiz = false; ?>
+                                <?php foreach ($studentSubjects as $subject): ?>
+                                    <?php
                                     $mySQLFunction->connection();
-                                    $schedId = $subject['sched_id'];
-                                    $hasQuiz = $mySQLFunction->checkExistByID("quiz", "sched_id", $schedId);
+                                    $allQuizCompleted = true; // Assume all quizzes are completed
 
-                                    if ($hasQuiz > 0): // If module exists for this subject
+                                    if (!empty($subject['quizzes'])):
+                                        foreach ($subject["quizzes"] as $quiz) {
+                                            $quiz_id = $quiz['quiz_id'];
+                                            $stu_lrn = $_SESSION['stu_lrn'];
+                                            // check if the student have answer in table STUDENT ANSWERS and STUDENT SCORES
+                                            $hideQuiz = $mySQLFunction->checkExistByMultipleIDs("student_answers", ["stu_lrn" => $stu_lrn, "quiz_id" => $quiz_id]);
+                                            $hideQuizScore = $mySQLFunction->checkExistByMultipleIDs("student_scores",  ["stu_lrn" => $stu_lrn, "quiz_id" => $quiz_id]);
+
+                                            if ($hideQuiz == 0 && $hideQuizScore == 0) {
+                                                $allQuizCompleted = false; // At least one quiz is not completed
+                                                break;
+                                            }
+                                        }
+
+                                        if ($allQuizCompleted) {
+                                            continue; // Skip rendering this subject if all quiz are completed
+                                        }
+
                                         $hasQuiz = true;
-                                        break; // No need to continue checking other subjects if we already found a module.
-                                    endif;
-                                endforeach;
-                                ?>
+                                    ?>
 
-                                <!-- Search Input -->
-                                <input type="text" id="searchQuiz" class="form-control" placeholder="Search subject quiz..." <?php echo $hasQuiz ? '' : 'disabled'; ?>>
-                                <i class="bi bi-search me-2 ms-2"></i>
+                                        <!-- Search Input -->
+                                        <input type="text" id="searchQuiz" class="form-control" placeholder="Search subject quiz...">
+                                        <i class="bi bi-search me-2 ms-2 fs-5"></i>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>

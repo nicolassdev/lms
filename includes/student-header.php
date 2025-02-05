@@ -153,7 +153,7 @@ error_reporting(E_ALL);
                             <!-- THISI IS THE ROUTE OF QUIZ -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#quizMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
-                                    <i class="bi bi-lightbulb me-2"></i>Quiz <i class="bi bi-chevron-down" style="margin-left: 60px;" id="quizIcon"></i>
+                                    <i class="bi bi-lightbulb me-2"></i>Quiz <i class="bi bi-chevron-down" style="margin-left: 55px;" id="quizIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="quizMenu">
                                     <li class="nav-item mt-2">
@@ -172,7 +172,7 @@ error_reporting(E_ALL);
                             <!-- THISI IS THE ROUTE OF EXAM -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#examMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
-                                    <i class="bi bi-book me-2"></i>Exam <i class="bi bi-chevron-down" style="margin-left: 55px;" id="examIcon"></i>
+                                    <i class="bi bi-book me-2"></i>Exam <i class="bi bi-chevron-down" style="margin-left: 50px;" id="examIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="examMenu">
                                     <li class="nav-item mt-2">

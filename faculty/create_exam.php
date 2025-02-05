@@ -138,7 +138,7 @@ include "../faculty/includes/Forms/createexamform.php";
                                     $count = 1;
                                     foreach ($students as $row) {
                                         // Split the file names into an array
-                                        $fileNames = explode(',', $row['file_names']); // Split the file names by comma
+                                        $scores = explode(',', $row['exam_scores']); // Split the file names by comma
 
                                         // Loop through the file names and generate download links
                                         echo '<tr>';
@@ -152,20 +152,21 @@ include "../faculty/includes/Forms/createexamform.php";
                                         echo '<td class="small text-center">' .  $row["grade_lvl"] . '</td>';
                                         echo '<td class="small text-center">' .  $row["section_name"] . '</td>';
 
-                                        // Check if there are no files uploaded
+                                        // Check if there are no exam uploaded
                                         echo '<td>';
-                                        if (empty($row['file_names']) || count($fileNames) == 0) {
-                                            echo '<span class="text-danger mr-2">No Exam</span>';
+                                        if (empty($row['exam_scores']) || count($scores) == 0) {
+                                            echo '<span class="text-danger ms-2">No Exam</span>';
                                         } else {
-                                            echo '<span class="text-danger mr-2">No Exam</span>';
-                                            // foreach ($fileNames as $fileName) {
-                                            //     $fileNameForDownload = htmlspecialchars(trim($fileName)); // Clean up file name
-                                            //     echo '<a href="includes/download.php?file=' . urlencode($fileNameForDownload) . '" class="btn btn-success btn-sm mb-1">';
-                                            //     echo '<i class="fas fa-download"></i> Download</a><br>';
-                                            // }
+                                            echo '<span class="text-success ms-3">Done</span>';
                                         }
                                         echo '</td>';
-                                        echo '<td class="small text-center"> <span class="text-danger mr-2">No Score</span></td>';
+                                        echo '<td>';
+                                        if (empty($row['exam_scores']) || count($scores) == 0) {
+                                            echo '<span class="text-danger ms-3">0</span>';
+                                        } else {
+                                            echo '<span class="text-success ms-3"> ' .  $row['exam_scores'] . ' /' . $row['exam_items'] . '</span>'; //student exam score
+                                        }
+                                        echo '</td>';
                                         echo '</tr>';
                                         $count++;
                                     }

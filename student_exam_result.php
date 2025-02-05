@@ -65,7 +65,7 @@ $mySQLFunction->disconnect();
                                 ?>
                                 <!-- Search Input -->
                                 <input type="text" id="searchResult" class="form-control" placeholder="Search subject exam..." <?php echo $hasExams ? '' : 'disabled'; ?>>
-                                <i class="bi bi-search me-2 ms-2"></i>
+                                <i class="bi bi-search me-2 ms-2 fs-5"></i>
                             </div>
                         </div>
                     </div>

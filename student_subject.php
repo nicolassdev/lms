@@ -50,7 +50,7 @@ $mySQLFunction->disconnect();
                         <div class="input-group input-group-sm">
                             <!-- Search Input -->
                             <input type="text" id="searchBar" class="form-control" placeholder="Search subjects ...">
-                            <i class="bi bi-search me-2 ms-2"></i>
+                            <i class="bi bi-search me-2 ms-2 fs-5"></i>
                         </div>
                     </div>
 

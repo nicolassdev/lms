@@ -37,14 +37,18 @@ $mySQLFunction->disconnect();
                 <div class="col-md-12">
                     <img
                         style="position: absolute; top: 50%; right: 5%; transform: translate(-0%, -45%); 
-               width: 500px; opacity: 0.1; z-index: -1;"
+                         width: 500px; opacity: 0.1; z-index: -1;"
                         src="./assets/img/csi.webp"
                         alt="LMS Logo">
                     <div class="container-fluid ">
 
                         <!-- <h5 class="text-muted">Here you can manage your exam, quiz, assignments, and view your grades.</h5> -->
                         <!-- School Year and Semester Display -->
-                        <div class="col-md-12 text-muted">
+                        <div class="col-md-12 text-muted ms-3">
+                            <!-- Info name -->
+                            <div class="fs-5">Hello,
+                                <?php echo ucwords(strtolower($_SESSION['stu_fname'] . ' ' . $_SESSION['stu_lname'])); ?><span class="fs-2">👋</span>
+                            </div>
                             <?php
                             if (!empty($activeSchoolYears) && !empty($activeSem)) {
                                 foreach ($activeSchoolYears as $index => $schoolYear) {
@@ -55,13 +59,6 @@ $mySQLFunction->disconnect();
                                 echo '<div class="alert alert-warning">No school year and semester found.</div>';
                             }
                             ?>
-
-                            <!-- Info name -->
-                            <p>Logged in as :
-                                <?php
-                                echo ucwords(strtolower($_SESSION['stu_fname'] . ' ' . $_SESSION['stu_lname']));
-                                ?>
-                            </p>
                         </div>
                         <div class="row mt-4">
                             <!-- Courses Card -->

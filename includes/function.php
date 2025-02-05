@@ -1141,9 +1141,13 @@ class myDataBase
                     sched.sched_id,
                     sub.sub_title,
                     sub.sub_semester,
+                    GROUP_CONCAT(sq.total_questions) AS quiz_items,
+                    GROUP_CONCAT(sq.correct_answers) AS quiz_scores,
+                    GROUP_CONCAT(se.total_questions) AS exam_items,
+                    GROUP_CONCAT(se.correct_answers) AS exam_scores,
                     GROUP_CONCAT(ma.file_name ORDER BY ma.date_uploaded DESC) AS file_names,  -- Concatenate files
                     GROUP_CONCAT(ma.date_uploaded ORDER BY ma.date_uploaded DESC) AS upload_dates,  -- Concatenate dates
-                    COUNT(e.stu_lrn) OVER (PARTITION BY sec.section_code) AS enrolled_count
+                    COUNT(e.stu_lrn) OVER (PARTITION BY sec.section_code) AS enrolled_count 
                 FROM 
                     student s
                 INNER JOIN 
@@ -1158,6 +1162,15 @@ class myDataBase
                     module m ON sched.sched_id = m.sched_id
                 LEFT JOIN 
                     module_answer ma ON ma.module_id = m.module_id AND ma.stu_lrn = s.stu_lrn
+                LEFT JOIN 
+                    quiz q ON sched.sched_id = q.sched_id 
+                LEFT JOIN 
+                    student_scores sq ON sq.quiz_id = q.quiz_id AND sq.stu_lrn = s.stu_lrn
+                LEFT JOIN 
+                    exam ex ON sched.sched_id = ex.sched_id 
+                LEFT JOIN 
+                    student_scores se ON se.exam_id = ex.exam_id AND se.stu_lrn = s.stu_lrn                     
+                                  
                 WHERE 
                     sched.teacher_id = ?
                     AND sched.sub_code = ?
