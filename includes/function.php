@@ -923,7 +923,7 @@ class myDataBase
     }
 
 
-    // Helper function to fetch exam questions of a specific type
+    // Helper function to fetch exam questions of a specific type AND
     // NOTE: THE DEFAULT FETCHING OF ASSESSMENT WILL BE Exam because clause was exam_id
     private function fetchByType($table, $idColumn, $columns, $id, $idType = 'exam_id')
     {
@@ -940,21 +940,29 @@ class myDataBase
         return $data;
     }
 
-    // private function fetchExamType($table, $idColumn, $columns, $examId)
-    // {
-    //     $query = "SELECT $idColumn, $columns FROM $table WHERE exam_id = ?";
-    //     $stmt = $this->con->prepare($query);
-    //     $stmt->bind_param("s", $examId);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
+    //Helper function determine or highlight enumeration specific correct answer for exam and quiz 
+    public function highlightEnumerationAnswer($studentAnswer, $correctAnswer)
+    {
+        $studentWords = array_map('trim', explode(',', strtolower($studentAnswer)));
+        $correctWords = array_map('trim', explode(',', strtolower($correctAnswer)));
 
-    //     $data = [];
-    //     while ($row = $result->fetch_assoc()) {
-    //         $data[] = $row;
-    //     }
-    //     return $data;
-    // }
+        $highlighted = [];
+        foreach ($studentWords as $word) {
+            if (in_array($word, $correctWords)) {
+                $highlighted[] = "<span class='text-success fw-bold'>$word</span>"; // Green for correct words
+            } else {
+                $highlighted[] = "<span class='text-danger fw-bold'>$word</span>"; // Red for incorrect words
+            }
+        }
 
+        // Highlight missing words from the correct answer
+        $missingWords = array_diff($correctWords, $studentWords);
+        foreach ($missingWords as $word) {
+            $highlighted[] = "<span class='text-primary fw-bold'>$word</span>"; // Blue for missing correct words
+        }
+
+        return implode(', ', $highlighted);
+    }
 
 
 
@@ -3858,6 +3866,7 @@ class myDataBase
     // }
 
 
+
     // CALCULATE THE SCORE OF STUDENT 
     public function calculateAndStoreStudentScore($stud_id, $exam_id = null, $quiz_id = null)
     {
@@ -3871,32 +3880,38 @@ class myDataBase
 
         // Query to fetch student answers and match them with correct answers
         $sql = "
-                SELECT 
-                    sa.question_id, sa.question_type, sa.student_answer,
-                    CASE 
-                        WHEN sa.question_type = 'multiple_choice' 
-                            THEN COALESCE(em.is_correct, qm.is_correct) -- Exam or Quiz Multiple Choice
-                        WHEN sa.question_type = 'enumeration' 
-                            THEN COALESCE(ee.enum_answer, qe.q_enum_answer) -- Exam or Quiz Enumeration
-                        WHEN sa.question_type = 'true_false' 
-                            THEN COALESCE(et.tf_answer, qtf.q_tf_answer) -- Exam or Quiz True/False
-                        ELSE NULL  
-                    END AS correct_answer
-                FROM student_answers sa
-                LEFT JOIN exam_multiple em ON sa.question_id = em.mul_id AND sa.question_type = 'multiple_choice' AND sa.exam_id IS NOT NULL
-                LEFT JOIN exam_enumeration ee ON sa.question_id = ee.enum_id AND sa.question_type = 'enumeration' AND sa.exam_id IS NOT NULL
-                LEFT JOIN exam_tf et ON sa.question_id = et.tf_id AND sa.question_type = 'true_false' AND sa.exam_id IS NOT NULL
-                LEFT JOIN quiz_multiple qm ON sa.question_id = qm.q_mul_id AND sa.question_type = 'multiple_choice' AND sa.quiz_id IS NOT NULL
-                LEFT JOIN quiz_enumeration qe ON sa.question_id = qe.q_enum_id AND sa.question_type = 'enumeration' AND sa.quiz_id IS NOT NULL
-                LEFT JOIN quiz_tf qtf ON sa.question_id = qtf.q_tf_id AND sa.question_type = 'true_false' AND sa.quiz_id IS NOT NULL
-                WHERE sa.stu_lrn = ? AND $condition";
+        SELECT 
+            sa.question_id, sa.question_type, sa.student_answer,
+            CASE 
+                WHEN sa.question_type = 'multiple_choice' 
+                    THEN COALESCE(em.is_correct, qm.is_correct) -- Exam or Quiz Multiple Choice
+                WHEN sa.question_type = 'enumeration' 
+                    THEN COALESCE(ee.enum_answer, qe.q_enum_answer) -- Exam or Quiz Enumeration
+                WHEN sa.question_type = 'true_false' 
+                    THEN COALESCE(et.tf_answer, qtf.q_tf_answer) -- Exam or Quiz True/False
+                ELSE NULL  
+            END AS correct_answer,
+            COALESCE(ex.exam_items, qz.quiz_items) AS total_items -- Fetch total items dynamically
+        FROM student_answers sa
+        LEFT JOIN exam_multiple em ON sa.question_id = em.mul_id AND sa.question_type = 'multiple_choice' AND sa.exam_id IS NOT NULL
+        LEFT JOIN exam_enumeration ee ON sa.question_id = ee.enum_id AND sa.question_type = 'enumeration' AND sa.exam_id IS NOT NULL
+        LEFT JOIN exam_tf et ON sa.question_id = et.tf_id AND sa.question_type = 'true_false' AND sa.exam_id IS NOT NULL
+        LEFT JOIN quiz_multiple qm ON sa.question_id = qm.q_mul_id AND sa.question_type = 'multiple_choice' AND sa.quiz_id IS NOT NULL
+        LEFT JOIN quiz_enumeration qe ON sa.question_id = qe.q_enum_id AND sa.question_type = 'enumeration' AND sa.quiz_id IS NOT NULL
+        LEFT JOIN quiz_tf qtf ON sa.question_id = qtf.q_tf_id AND sa.question_type = 'true_false' AND sa.quiz_id IS NOT NULL
+        LEFT JOIN exam ex ON sa.exam_id = ex.exam_id 
+        LEFT JOIN quiz qz ON sa.quiz_id = qz.quiz_id 
+        WHERE sa.stu_lrn = ? AND $condition";
 
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("ss", $stud_id, $param);
         $stmt->execute();
         $result = $stmt->get_result();
 
+        $total_items = 0;
+
         while ($row = $result->fetch_assoc()) {
+            $total_items = (int) $row['total_items']; // Get the total items from exam/quiz table
             $total_questions++;
 
             // Convert both answers to lowercase (case-insensitive check)
@@ -3908,14 +3923,14 @@ class myDataBase
                 $student_answers_array = array_map('trim', explode(',', strtolower($student_answer)));
                 $correct_answers_array = array_map('trim', explode(',', strtolower($correct_answer)));
 
-                // Sort both arrays to ignore order
-                sort($student_answers_array);
-                sort($correct_answers_array);
-
-                // If sorted arrays match, it's correct
-                if ($student_answers_array === $correct_answers_array) {
-                    $correct_answers++;
+                // Count correct enumeration matches
+                $correct_count = 0;
+                foreach ($student_answers_array as $answer) {
+                    if (in_array($answer, $correct_answers_array)) {
+                        $correct_count++;
+                    }
                 }
+                $correct_answers += $correct_count;
             } else {
                 // For other question types (Multiple Choice & True/False)
                 if ($student_answer === $correct_answer) {
@@ -3925,18 +3940,17 @@ class myDataBase
         }
 
         // Compute Score Percentage
-        $score_percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 100 : 0;
+        $score_percentage = ($total_items > 0) ? ($correct_answers / $total_items) * 100 : 0;
 
         // Store score in student_scores table, now considering `quiz_id`
         $sql = "INSERT INTO student_scores (stu_lrn, exam_id, quiz_id, total_questions, correct_answers, score_percentage)
-                VALUES (?, ?, ?, ?, ?, ?)
-                ON DUPLICATE KEY UPDATE correct_answers = VALUES(correct_answers), score_percentage = VALUES(score_percentage)";
+            VALUES (?, ?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE correct_answers = VALUES(correct_answers), score_percentage = VALUES(score_percentage)";
 
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("sssiid", $stud_id, $exam_id, $quiz_id, $total_questions, $correct_answers, $score_percentage);
+        $stmt->bind_param("sssiid", $stud_id, $exam_id, $quiz_id, $total_items, $correct_answers, $score_percentage);
         $stmt->execute();
     }
-
 
 
 

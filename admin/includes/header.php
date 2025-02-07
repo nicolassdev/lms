@@ -94,7 +94,8 @@ error_reporting(E_ALL);
                         <?php echo ucwords(strtolower($_SESSION["user_role"])) ?>
                     </li>
                     <hr class="mx-3 my-1">
-                    <li><a class="dropdown-item" href="?page=admin">My Profile</a></li>
+                    <li><a class="dropdown-item" href="?page=account">Account<i class="bi bi-box-arrow-up-right ms-3"></i></a></li>
+                    <li><a class="dropdown-item" href="?page=admin">Profile</a></li>
                     <li><a class="dropdown-item" href="?page=settings">Settings</a></li>
                     <li>
                         <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>

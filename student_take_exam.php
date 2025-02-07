@@ -30,7 +30,9 @@ if (!empty($_GET['exam_id']) && !empty($_GET['sub_code']) && !empty($_GET['secti
 
     // GET THE EXAM CORRECT RESULT IN EXAM
     $examResult = $mySQLFunction->getCorrectExamResult($student_lrn, $exam_id);
-
+    // echo "<pre>";
+    // print_r($examResult);
+    // echo "</pre>";
     // GET THE SCORE OF STUDENT IN EXAM
     $examScore = $mySQLFunction->getStudentExamScore($student_lrn, $exam_id);
 }
@@ -179,7 +181,7 @@ $mySQLFunction->disconnect();
                                                                     <p><?= $rowCount++ ?>.) <?= htmlspecialchars($enum['enum_question']) ?></p>
                                                                     <!-- id of enumeration -->
                                                                     <input type="hidden" class="form-control" name="enumId[]" value="<?= htmlspecialchars($enum['enum_id']) ?>">
-                                                                    <input type="text" class="form-control" name="enum_<?= htmlspecialchars($enum['enum_id']) ?>"
+                                                                    <input type="text" class="form-control mb-2" name="enum_<?= htmlspecialchars($enum['enum_id']) ?>"
                                                                         placeholder="Enter your answer here, separated by commas ( , )" required>
                                                                 <?php endforeach; ?>
                                                             </li>
@@ -283,9 +285,10 @@ $mySQLFunction->disconnect();
                                                 <div class="accordion-body">
                                                     <ul class="list-group">
                                                         <?php foreach ($correctAnswers as $question) : ?>
-                                                            <li class="list-group-item text-success">
-                                                                <strong>Q:</strong> <?= htmlspecialchars($question["question_text"]) ?><br>
-                                                                <strong>Your Answer:</strong> <?= htmlspecialchars($question["student_answer"]) ?>
+                                                            <li class="list-group-item">
+                                                                <strong class="text-success">Q:</strong> <?= htmlspecialchars($question["question_text"]) ?><br>
+                                                                <strong>Your Answer:</strong>
+                                                                <?= ($question["question_type"] === 'enumeration') ? $mySQLFunction->highlightEnumerationAnswer($question["student_answer"], $question["correct_answer"]) : "<span class='text-success'>" . htmlspecialchars($question["student_answer"]) . "</span>"; ?>
                                                             </li>
                                                         <?php endforeach; ?>
                                                     </ul>
@@ -304,10 +307,11 @@ $mySQLFunction->disconnect();
                                                 <div class="accordion-body">
                                                     <ul class="list-group">
                                                         <?php foreach ($incorrectAnswers as $question) : ?>
-                                                            <li class="list-group-item text-danger">
-                                                                <strong>Q:</strong> <?= htmlspecialchars($question["question_text"]) ?><br>
-                                                                <strong>Your Answer:</strong> <?= htmlspecialchars($question["student_answer"]) ?><br>
-                                                                <strong>Correct Answer:</strong> <?= htmlspecialchars($question["correct_answer"]) ?>
+                                                            <li class="list-group-item">
+                                                                <strong class="text-danger">Q:</strong> <?= htmlspecialchars($question["question_text"]) ?><br>
+                                                                <strong>Your Answer:</strong>
+                                                                <?= ($question["question_type"] === 'enumeration') ? $mySQLFunction->highlightEnumerationAnswer($question["student_answer"], $question["correct_answer"]) : "<span class='text-danger'>" . htmlspecialchars($question["student_answer"]) . "</span>"; ?><br>
+                                                                <strong>Correct Answer:</strong> <span class="text-success"><?= htmlspecialchars($question["correct_answer"]) ?>
                                                             </li>
                                                         <?php endforeach; ?>
                                                     </ul>

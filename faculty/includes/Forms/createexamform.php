@@ -110,19 +110,19 @@
                     <label class="form-label fw-bold">Choices</label>
                         <div class="d-flex align-items-center mb-2">
                             <input type="radio" name="correct_answer[${questionIndex}]" value="A" class="form-check-input" required>
-                            <input type="text" name="choice_a[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice A">
+                            <input type="text" name="choice_a[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice A" required>
                         </div>
                         <div class="d-flex align-items-center mb-2">
                             <input type="radio" name="correct_answer[${questionIndex}]" value="B" class="form-check-input" required>
-                            <input type="text" name="choice_b[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice B">
+                            <input type="text" name="choice_b[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice B" required>
                         </div>
                         <div class="d-flex align-items-center mb-2">
                             <input type="radio" name="correct_answer[${questionIndex}]" value="C" class="form-check-input" required>
-                            <input type="text" name="choice_c[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice C">
+                            <input type="text" name="choice_c[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice C" required>
                         </div>
                         <div class="d-flex align-items-center mb-2">
                             <input type="radio" name="correct_answer[${questionIndex}]" value="D" class="form-check-input" required>
-                            <input type="text" name="choice_d[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice D">
+                            <input type="text" name="choice_d[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice D" required>
                         </div>
                         
                     
@@ -147,19 +147,19 @@
                 <label class="form-label fw-bold">Choices</label>
                     <div class="d-flex align-items-center mb-2">
                         <input type="radio" name="correct_answer[${questionIndex}]" value="A" class="form-check-input" required>
-                        <input type="text" name="choice_a[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice A">
+                        <input type="text" name="choice_a[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice A" required>
                     </div>
                     <div class="d-flex align-items-center mb-2">
                         <input type="radio" name="correct_answer[${questionIndex}]" value="B" class="form-check-input" required>
-                        <input type="text" name="choice_b[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice B">
+                        <input type="text" name="choice_b[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice B" required>
                     </div>
                     <div class="d-flex align-items-center mb-2">
                         <input type="radio" name="correct_answer[${questionIndex}]" value="C" class="form-check-input" required>
-                        <input type="text" name="choice_c[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice C">
+                        <input type="text" name="choice_c[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice C" required>
                     </div>
                     <div class="d-flex align-items-center mb-2">
                         <input type="radio" name="correct_answer[${questionIndex}]" value="D" class="form-check-input" required>
-                        <input type="text" name="choice_d[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice D">
+                        <input type="text" name="choice_d[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice D" required>
                     </div>
   
             `;
@@ -167,7 +167,7 @@
             // Enumeration
             container.innerHTML = `
                 <input type="text" name="enumeration_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
-                <textarea name="enumeration_answers[${questionIndex}]" class="form-control" rows="3" placeholder="Enter expected answers separated by commas"></textarea>
+                <textarea name="enumeration_answers[${questionIndex}]" class="form-control" rows="3" placeholder="Enter expected answers separated by commas"  required></textarea>
             `;
         } else if (type === "3") {
             // Essay

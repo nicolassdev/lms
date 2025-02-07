@@ -28,9 +28,7 @@ try {
     $quizType = is_array($_POST['quiz_type']) ? implode(',', $_POST['quiz_type']) : '';
 
     // to count the total number of exam 
-    $quizTotalItems = isset($_POST['quiz_type']) && is_array($_POST['quiz_type'])
-        ? count($_POST['quiz_type'])
-        : 0;
+    $quizTotalItems = 0;
 
 
     $quiz_id = trim($mySQLFunction->generateID("QZ-"));
@@ -56,45 +54,38 @@ try {
                         // Get and sanitize the correct answer
                         $quiz_correct_answer = strtoupper(trim($_POST["quiz_correct_answer"][$questionIndex] ?? '')); // Convert to uppercase to standardize input
 
-                        // Map the correct answer to the corresponding choice
-                        switch ($quiz_correct_answer) {
-                            case 'A':
-                                $isCorrect = $choiceA;
-                                break;
-                            case 'B':
-                                $isCorrect = $choiceB;
-                                break;
-                            case 'C':
-                                $isCorrect = $choiceC;
-                                break;
-                            case 'D':
-                                $isCorrect = $choiceD;
-                                break;
-                            default:
-                                $isCorrect = ''; // If the correct answer does not match A-D, set as empty
-                        }
-
-                        // Skip inserting if isCorrect is empty (invalid answer provided)
-                        if (empty($isCorrect)) {
-                            continue;
-                        }
-
+                        $isCorrect = match ($quiz_correct_answer) {
+                            'A' => $choiceA,
+                            'B' => $choiceB,
+                            'C' => $choiceC,
+                            'D' => $choiceD,
+                            default => ''
+                        };
                         // Validate and insert into the database
                         // Example: Insert into quiz_multiple table
-                        $stmt = $mySQLFunction->con->prepare("INSERT INTO quiz_multiple (quiz_id, q_mul_question, q_choice_a, q_choice_b, q_choice_c, q_choice_d, is_correct) 
-                                              VALUES (?, ?, ?, ?, ?, ?, ?)");
-                        $stmt->bind_param("sssssss", $quiz_id, $question, $choiceA, $choiceB, $choiceC, $choiceD, $isCorrect);
-                        $stmt->execute();
+                        if (!empty($isCorrect)) {
+                            $stmt = $mySQLFunction->con->prepare("INSERT INTO quiz_multiple (quiz_id, q_mul_question, q_choice_a, q_choice_b, q_choice_c, q_choice_d, is_correct) 
+                                                  VALUES (?, ?, ?, ?, ?, ?, ?)");
+                            $stmt->bind_param("sssssss", $quiz_id, $question, $choiceA, $choiceB, $choiceC, $choiceD, $isCorrect);
+                            $stmt->execute();
+                            $quizTotalItems++;
+                        }
                         break;
 
                     case "2": // Enumeration
                         $question = $_POST['quiz_enumeration_question'][$questionIndex] ?? '';
-                        $answers = $_POST['quiz_enumeration_answers'][$questionIndex] ?? '';
+                        $answers = strtolower($_POST['quiz_enumeration_answers'][$questionIndex] ?? '');
 
-                        // Example: Insert into exam_enumeration table
+                        // Count the number of enumeration answers (split by comma)
+                        $answerCount = count(array_filter(array_map('trim', explode(',', $answers))));
+
+                        // Insert into the exam_enumeration table
                         $stmt = $mySQLFunction->con->prepare("INSERT INTO quiz_enumeration (quiz_id, q_enum_question, q_enum_answer) VALUES (?, ?, ?)");
                         $stmt->bind_param("sss", $quiz_id, $question, $answers);
                         $stmt->execute();
+
+                        // Increase the exam items count based on enumeration answers
+                        $quizTotalItems += $answerCount;
                         break;
 
                     case "3": // Essay
@@ -104,6 +95,8 @@ try {
                         $stmt = $mySQLFunction->con->prepare("INSERT INTO quiz_essay (quiz_id, q_essay_question) VALUES (?, ?)");
                         $stmt->bind_param("ss", $quiz_id, $question);
                         $stmt->execute();
+
+                        $quizTotalItems++;
                         break;
 
                     case "4": // True/False
@@ -114,6 +107,8 @@ try {
                         $stmt = $mySQLFunction->con->prepare("INSERT INTO quiz_tf (quiz_id, q_tf_question, q_tf_answer) VALUES (?, ?, ?)");
                         $stmt->bind_param("sss", $quiz_id, $question, $correctAnswer);
                         $stmt->execute();
+
+                        $quizTotalItems++;
                         break;
 
                     default:
@@ -123,6 +118,11 @@ try {
             }
         }
     }
+
+    // Update quiz_items count in the database
+    $stmt = $mySQLFunction->con->prepare("UPDATE quiz SET quiz_items = ? WHERE quiz_id = ?");
+    $stmt->bind_param("is", $quizTotalItems, $quiz_id);
+    $stmt->execute();
 
     $_SESSION['success'] = "Successfully created exam!";
     header("Location: ../index.php?page=create_quiz&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));

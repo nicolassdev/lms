@@ -125,11 +125,11 @@ include "../faculty/includes/Forms/createexamform.php";
                                     <th scope="col" style="width: 50px;">Gender</th>
                                     <th scope="col" style="width: 150px;">Address</th>
                                     <th scope="col" style="width: 100px;">Contact</th>
-                                    <th scope="col" style="width: 100px;">Email</th>
                                     <th scope="col" style="width: 100px;">Year level</th>
                                     <th scope="col" style="width: 100px;">Section</th>
                                     <th scope="col" style="width: 100px;">Status</th>
                                     <th scope="col" style="width: 100px;">Score</th>
+                                    <th scope="col" style="width: 100px;">Total Items</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -148,25 +148,14 @@ include "../faculty/includes/Forms/createexamform.php";
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
                                         echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
-                                        echo '<td class="small text-center">' . strtolower($row["stu_email"]) . '</td>';
                                         echo '<td class="small text-center">' .  $row["grade_lvl"] . '</td>';
                                         echo '<td class="small text-center">' .  $row["section_name"] . '</td>';
 
                                         // Check if there are no exam uploaded
-                                        echo '<td>';
-                                        if (empty($row['exam_scores']) || count($scores) == 0) {
-                                            echo '<span class="text-danger ms-2">No Exam</span>';
-                                        } else {
-                                            echo '<span class="text-success ms-3">Done</span>';
-                                        }
-                                        echo '</td>';
-                                        echo '<td>';
-                                        if (empty($row['exam_scores']) || count($scores) == 0) {
-                                            echo '<span class="text-danger ms-3">0</span>';
-                                        } else {
-                                            echo '<span class="text-success ms-3"> ' .  $row['exam_scores'] . ' /' . $row['exam_items'] . '</span>'; //student exam score
-                                        }
-                                        echo '</td>';
+                                        $status = (!empty($row['exam_scores']) && count($scores) > 0);
+                                        echo '<td class="text-center"><span class=" ' . ($status ? 'text-success"><i class="bi bi-check-circle"></i> Done' : 'text-danger"><i class="bi bi-x-circle"></i> No Exam') . '</span></td>';
+                                        echo '<td class="text-center"><span class=" ' . ($status ? 'text-success">' . htmlspecialchars($row['exam_scores']) : 'text-danger">0') . '</span></td>';
+                                        echo '<td class="text-center"><span class=" ' . ($status ? 'text-success">' . htmlspecialchars($row['exam_items']) : 'text-danger">0') . '</span></td>';
                                         echo '</tr>';
                                         $count++;
                                     }

@@ -75,7 +75,7 @@ error_reporting(E_ALL);
 
 
 
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                    <ul class="dropdown-menu dropdown-menu-end " aria-labelledby="profileDropdown">
                         <li class="ms-3">
                             <i class="bi bi-patch-check-fill text-success"></i>
                             <?php echo ucwords(strtolower($_SESSION["user_role"])) ?>

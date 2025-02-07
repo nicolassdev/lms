@@ -82,13 +82,13 @@ $mySQLFunction->disconnect();
                                             <h4 class="fw-bold text-dark">
                                                 <?= htmlspecialchars(ucwords(strtolower($quizData["quiz_title"] ?? 'No Exam Title'))) ?>
                                             </h4>
-                                            <span class="badge bg-dark py-2 text-white">
+                                            <span class="badge bg-success py-2 text-white">
                                                 <?= htmlspecialchars(($quizData["quiz_quarter"] . ' Quarter' . ' / ' . $quizData["sub_semester"] . ' ' ?? 'N/A')) ?>
                                             </span>
                                         </div>
-                                        <p class="text-secondary">
-                                            <span class="fw-bold">Subject:</span> <span class="badge bg-success py-2 text-white fw-semibold"><?= htmlspecialchars(ucwords(strtolower($quizData["sub_title"] ?? 'No Subject'))) ?></span><br>
-                                            <span class="fw-bold">Teacher:</span> <?= htmlspecialchars(ucwords(strtolower($quizData["teacher_fname"] . ' ' . $quizData["teacher_lname"] . ' ' ?? 'N/A'))) ?>
+                                        <p class="text-dark">
+                                            <span class="fw-bold">Subject:</span> <span class="badge bg-success py-2 text-white fw-semibold mb-1"><?= htmlspecialchars(ucwords(strtolower($quizData["sub_title"] ?? 'No Subject'))) ?></span><br>
+                                            <span class="fw-bold">Teacher:</span><span class="badge bg-success py-2 text-white fw-semibold"><?= htmlspecialchars(ucwords(strtolower($quizData["teacher_fname"] . ' ' . $quizData["teacher_lname"] . ' ' ?? 'N/A'))) ?></span>
                                         </p>
                                     </div>
                                 </div>
@@ -265,17 +265,20 @@ $mySQLFunction->disconnect();
                                 </div>
                                 <?php if (!empty($quizResult)) : ?>
 
+
                                     <?php
                                     $correctAnswers = array_filter($quizResult, function ($question) {
-                                        return $question["is_correct"] === "Correct";
+                                        return $question["is_correct"] === "Correct" || ($question["is_correct"] === "Partial");
                                     });
 
                                     $incorrectAnswers = array_filter($quizResult, function ($question) {
                                         return $question["is_correct"] === "Incorrect";
                                     });
+
+
                                     ?>
 
-                                    <div class="accordion" id="examResultDetails">
+                                    <div class="accordion" id="quizResultDetails">
                                         <!-- Correct Answers -->
                                         <div class="accordion-item">
                                             <h2 class="accordion-header">
@@ -287,9 +290,10 @@ $mySQLFunction->disconnect();
                                                 <div class="accordion-body">
                                                     <ul class="list-group">
                                                         <?php foreach ($correctAnswers as $question) : ?>
-                                                            <li class="list-group-item text-success">
-                                                                <strong>Q:</strong> <?= htmlspecialchars($question["question_text"]) ?><br>
-                                                                <strong>Your Answer:</strong> <?= htmlspecialchars($question["student_answer"]) ?>
+                                                            <li class="list-group-item">
+                                                                <strong class="text-success">Q:</strong> <?= htmlspecialchars($question["question_text"]) ?><br>
+                                                                <strong>Your Answer:</strong>
+                                                                <?= ($question["question_type"] === 'enumeration') ? $mySQLFunction->highlightEnumerationAnswer($question["student_answer"], $question["correct_answer"]) : "<span class='text-success'>" . htmlspecialchars($question["student_answer"]) . "</span>"; ?>
                                                             </li>
                                                         <?php endforeach; ?>
                                                     </ul>
@@ -308,10 +312,11 @@ $mySQLFunction->disconnect();
                                                 <div class="accordion-body">
                                                     <ul class="list-group">
                                                         <?php foreach ($incorrectAnswers as $question) : ?>
-                                                            <li class="list-group-item text-danger">
-                                                                <strong>Q:</strong> <?= htmlspecialchars($question["question_text"]) ?><br>
-                                                                <strong>Your Answer:</strong> <?= htmlspecialchars($question["student_answer"]) ?><br>
-                                                                <strong>Correct Answer:</strong> <?= htmlspecialchars($question["correct_answer"]) ?>
+                                                            <li class="list-group-item">
+                                                                <strong class="text-danger">Q:</strong> <?= htmlspecialchars($question["question_text"]) ?><br>
+                                                                <strong>Your Answer:</strong>
+                                                                <?= ($question["question_type"] === 'enumeration') ? $mySQLFunction->highlightEnumerationAnswer($question["student_answer"], $question["correct_answer"]) : "<span class='text-danger'>" . htmlspecialchars($question["student_answer"]) . "</span>"; ?><br>
+                                                                <strong>Correct Answer:</strong> <span class="text-success"><?= htmlspecialchars($question["correct_answer"]) ?></span>
                                                             </li>
                                                         <?php endforeach; ?>
                                                     </ul>
@@ -319,6 +324,7 @@ $mySQLFunction->disconnect();
                                             </div>
                                         </div>
                                     </div>
+
 
                                 <?php else: ?>
                                     <p class="text-center text-muted">No quiz results found.</p>
