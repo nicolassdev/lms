@@ -87,8 +87,8 @@ $mySQLFunction->disconnect();
                                             </span>
                                         </div>
                                         <p class="text-dark">
-                                            <span class="fw-bold">Subject:</span> <span class="badge bg-success py-2 text-white fw-semibold mb-1"><?= htmlspecialchars(ucwords(strtolower($quizData["sub_title"] ?? 'No Subject'))) ?></span><br>
-                                            <span class="fw-bold">Teacher:</span><span class="badge bg-success py-2 text-white fw-semibold"><?= htmlspecialchars(ucwords(strtolower($quizData["teacher_fname"] . ' ' . $quizData["teacher_lname"] . ' ' ?? 'N/A'))) ?></span>
+                                            <span class="fw-bold mb-2">Subject:</span> <span class="badge bg-success py-2 text-white fw-semibold mb-1"><?= htmlspecialchars(ucwords(strtolower($quizData["sub_title"] ?? 'No Subject'))) ?></span><br>
+                                            <span class="fw-bold">Teacher:</span> <span class="badge bg-success py-2 text-white fw-semibold"><?= htmlspecialchars(ucwords(strtolower($quizData["teacher_fname"] . ' ' . $quizData["teacher_lname"] . ' ' ?? 'N/A'))) ?></span>
                                         </p>
                                     </div>
                                 </div>

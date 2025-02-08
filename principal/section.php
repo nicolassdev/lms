@@ -45,7 +45,7 @@ include "../principal/includes/Forms/sectionform.php";
                     ?>
                     <!-- TABLE -->
                     <div class="table-responsive small ms-3 me-3">
-                        <table id="example" class="table table-bordered table-striped table-sm align-middle">
+                        <table id="sectionRecord" class="table table-bordered table-striped table-sm align-middle">
                             <thead class="table-dark ">
                                 <tr>
                                     <!-- <th scope="col">#</th> -->
@@ -275,7 +275,7 @@ include "../principal/includes/Forms/sectionform.php";
 <!-- PDF ,EXCEL, PRINT ,CVS -->
 <script>
     $(document).ready(function() {
-        $("#example").DataTable({
+        $("#sectionRecord").DataTable({
             dom: "Bfrtip", // Include buttons in the dom
             buttons: [{
                     extend: "excelHtml5",
@@ -294,10 +294,41 @@ include "../principal/includes/Forms/sectionform.php";
                     className: "btn btn-sm btn-danger",
                     titleAttr: "Export as PDF",
                     exportOptions: {
-                        columns: function(index, data, node) {
-                            return index !== 4;
-                        },
+                        columns: [0, 1, 2, 3], // Explicitly include columns 0 to 3
+                        orientation: 'landscape',
+                        pageSize: 'A4'
                     },
+                    customize: function(doc) {
+                        doc.pageMargins = [40, 60, 40, 60];
+                        doc.defaultStyle.fontSize = 10;
+                        doc.styles.tableHeader.fontSize = 12;
+
+                        // Add header and footer (example)
+                        doc['header'] = (function(page, pages) {
+                            return {
+                                columns: [{
+                                    alignment: 'right',
+                                    text: ['Page ', {
+                                        text: page.toString()
+                                    }, ' of ', {
+                                        text: pages.toString()
+                                    }]
+                                }],
+                                margin: [10, 10, 10, 0]
+                            }
+                        });
+
+                        doc.styles.header = {
+                            fontSize: 18,
+                            bold: true,
+                            margin: [0, 0, 0, 10]
+                        };
+
+                        doc.content[1].table.widths =
+                            Array(doc.content[1].table.body[0].length + 1).join('*').split('').map(function(s) {
+                                return '*';
+                            });
+                    }
                 },
                 {
                     extend: "print",
@@ -349,3 +380,10 @@ include "../principal/includes/Forms/sectionform.php";
         });
     });
 </script>
+
+
+<!-- PDF ,EXCEL, PRINT ,CVS -->
+<!-- <script src="../assets/js/globaltables.js"></script>
+<script>
+    initializeDataTable("sectionRecord", 5, "Sections");
+</script> -->
