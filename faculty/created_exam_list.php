@@ -71,7 +71,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                     }
                                 } else {
                                     echo
-                                    '<div class="alert alert-warning d-flex align-items-center" role="alert">
+                                    '<div class="alert alert-danger d-flex align-items-center badge">
                                         <div>
                                             <strong>No Exam Created!</strong> It seems there are no exams uploaded yet.
                                         </div>

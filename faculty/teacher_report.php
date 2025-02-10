@@ -11,7 +11,7 @@ include "../includes/dbh-inc.php";
 
 include "../faculty/includes/Forms/uploadmoduleform.php";
 $mySQLFunction->connection();
-
+$activeSem = $mySQLFunction->checkSyStatus('sy');
 $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
 
 
@@ -42,8 +42,21 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
 
-                        <div class="fw-bold fs-5 text-dark">
-                            Reports<br>
+                        <div class="text-dark">
+                            <div class="fs-5 fw-bold">Reports</div>
+                            <small class="fw-semibold">
+                                <span class="me-1">Quarter:</span>
+                                <span class="alert alert-warning badge py-1 d-inline-block" style="font-size: small;">No active quarter found.</span>
+                                <span class="ms-2">Semester:</span>
+                                <?php if (!empty($activeSem)) {
+                                    foreach ($activeSem as $semester) {
+                                        echo '<span class="ms-1">' . htmlspecialchars($semester) . '</span> 
+                                        <i class="bi bi-check-circle-fill text-success"></i>';
+                                    }
+                                } else {
+                                    echo '<span class="alert alert-warning badge py-1 d-inline-block" style="font-size: small;">No active semester found.</span>';
+                                } ?>
+                            </small>
 
                         </div>
                         <div class="text-black">

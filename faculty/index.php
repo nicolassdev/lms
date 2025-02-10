@@ -69,10 +69,6 @@ switch ($page) {
         require_once 'student_list.php';
         break;
 
-    case "student_subject_list":
-        require_once 'student_subject_list.php';
-        break;
-
         /** 
          Exam route */
 
@@ -87,7 +83,6 @@ switch ($page) {
     case "created_exam_list":
         require_once 'created_exam_list.php';
         break;
-
 
         /** 
          Quiz route */
@@ -109,6 +104,14 @@ switch ($page) {
 
     case "teacher_module":
         require_once 'teacher_module.php';
+        break;
+
+    case "upload_module":
+        require_once 'upload_module.php';
+        break;
+
+    case "uploaded_module_list":
+        require_once 'uploaded_module_list.php';
         break;
 
 

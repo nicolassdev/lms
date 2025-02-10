@@ -114,7 +114,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                             && $mySQLFunction->checkExistByID("module_answer", "stu_lrn", $studentId);
 
                                         // Extract the base file name for display
-                                        $fileNameForDisplay = basename($row['file_name']);
+                                        $fileNameForDisplay = pathinfo($row['file_name'], PATHINFO_FILENAME);
                                         $fileNameForDownload = htmlspecialchars($row['file_name']); // Prevent XSS attacks
 
                                         echo '<tr>';

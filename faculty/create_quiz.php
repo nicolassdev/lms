@@ -92,11 +92,6 @@ include "../faculty/includes/Forms/createquizform.php";
                                 </a>
                             </div>
 
-
-
-
-
-
                             <!-- Upload Button -->
                             <div>
                                 <?php

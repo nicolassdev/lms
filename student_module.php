@@ -231,7 +231,7 @@ $mySQLFunction->disconnect();
 
 
 <!-- This is post method -->
-<!-- <form action="index.php?page=student_subject_list" method="POST" class="d-inline">
+<!-- <form action="index.php?page=upload_module" method="POST" class="d-inline">
     <input type="hidden" name="sub_code" value=" ">
     <input type="hidden" name="section_code" value=" ">
     <button type="submit" class="btn btn-outline-success w-100 fw-bold">

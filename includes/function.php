@@ -3090,6 +3090,88 @@ class myDataBase
         }
     }
 
+    // Fetch modules created by teacher
+    function getModuleCreatedByTeacher($teacherId, $subjectId, $sectionCode)
+    {
+        $activeSemesters = $this->checkSemStatus('semester');
+
+        // Check if there are any active semesters
+        if (empty($activeSemesters)) {
+            return []; // Return an empty array if no active semester
+        }
+
+        // Prepare the active semester condition
+        $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
+
+        try {
+            // Updated query to relax section condition
+            $sql = "
+           SELECT 
+               m.module_id, 
+               m.file_name, 
+               m.file_size, 
+               m.formatted_size, 
+               m.file_type, 
+               m.date_uploaded AS uploaded_date,
+               sec.section_code, 
+                sec.section_name, 
+               sec.grade_lvl, 
+               st.strand_code, 
+               st.strand_name, 
+               sub.sub_code,
+               sub.sub_title,
+               sub.sub_semester,
+               sched.sched_id,
+               sched.teacher_id,
+                CONCAT(t.teacher_fname, ' ', t.teacher_lname) AS teacher
+           FROM 
+               MODULE m
+           INNER JOIN  
+               SCHEDULE sched ON sched.sched_id = m.sched_id
+           INNER JOIN  
+               SECTION sec ON sec.section_code = sched.section_code
+           INNER JOIN  
+               STRAND st ON sec.strand_code = st.strand_code
+           INNER JOIN  
+               SUBJECT sub ON sub.sub_code = sched.sub_code
+           INNER JOIN  
+               TEACHER t ON t.teacher_id = sched.teacher_id
+           WHERE 
+                sched.teacher_id = ?
+                AND sched.sub_code = ?
+                AND sched.section_code = ?
+                AND $activeSemesterCondition
+           ";
+
+            // Prepare the query
+            $stmt = $this->con->prepare($sql);
+            if (!$stmt) {
+                throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
+            }
+
+            // Bind parameters
+            $stmt->bind_param("sss", $teacherId, $subjectId, $sectionCode);
+
+            // Execute the statement
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            // Fetch all the module data
+            $modules = [];
+            while ($row = $result->fetch_assoc()) {
+                $modules[] = $row;
+            }
+
+            // Free resources
+            $stmt->close();
+
+            return $modules ?: []; // Return an empty array if no data
+        } catch (Exception $e) {
+            // Log the error message
+            error_log("Error fetching student modules: " . $e->getMessage());
+            return []; // Return an empty array on error
+        }
+    }
 
 
     // Helper function to format file size

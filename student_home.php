@@ -91,7 +91,7 @@ $mySQLFunction->disconnect();
                                         <i class="bi bi-pencil-fill display-4 text-success mb-3"></i>
                                         <h5 class="card-title">Activity</h5>
                                         <p class="card-text">Submit and track your Activity.</p>
-                                        <a href="#" class="btn btn-success">View Activity</a>
+                                        <a href="?page=student_module" class="btn btn-success">View Activity</a>
                                     </div>
                                 </div>
                             </div>
@@ -113,10 +113,10 @@ $mySQLFunction->disconnect();
                             <div class="col-md-4 mb-4">
                                 <div class="card shadow-sm h-100">
                                     <div class="card-body text-center">
-                                        <i class="bi bi-book display-4 text-info mb-3"></i>
+                                        <i class="bi bi-book display-4 text-warning mb-3"></i>
                                         <h5 class="card-title">Exam</h5>
                                         <p class="card-text">Check your exam performance.</p>
-                                        <a href="?page=student_exam_result" class="btn btn-info text-black">View Exam</a>
+                                        <a href="?page=student_exam_result" class="btn btn-warning text-black">View Exam</a>
                                     </div>
                                 </div>
                             </div>
@@ -126,10 +126,10 @@ $mySQLFunction->disconnect();
                             <div class="col-md-4 mb-4">
                                 <div class="card shadow-sm h-100">
                                     <div class="card-body text-center">
-                                        <i class="bi bi-bar-chart-fill display-4 text-warning mb-3"></i>
+                                        <i class="bi bi-bar-chart-fill display-4 text-secondary mb-3"></i>
                                         <h5 class="card-title">Grades</h5>
                                         <p class="card-text">Check your academic performance.</p>
-                                        <a href="#" class="btn btn-warning text-black">View Grades</a>
+                                        <a href="#" class="btn btn-secondary">View Grades</a>
                                     </div>
                                 </div>
                             </div>

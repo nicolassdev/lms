@@ -83,20 +83,30 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
 
                         </div>
 
-                        <!-- Upload Button -->
-                        <div>
-                            <?php
-                            $btnClass = empty($students) ? 'btn-danger' : 'btn-primary';
-                            $disabled = empty($students) ? 'disabled' : '';
-                            ?>
-                            <button type="button"
-                                class="btn <?php echo $btnClass; ?> btn-sm fw-bold d-flex align-items-center"
-                                data-bs-toggle="modal"
-                                data-bs-target="#upload_module"
-                                data-bs-whatever="@fat"
-                                <?php echo $disabled; ?>>
-                                <i class="bi bi-cloud-arrow-up me-1"></i>Upload Module
-                            </button>
+                        <!-- View Module Button -->
+                        <div class="d-flex gap-2 ms-2">
+                            <div>
+                                <a class="btn btn-primary fw-bold btn-sm btn-animate"
+                                    href="index.php?page=uploaded_module_list&sched_id=<?php echo urlencode($_GET['sched_id']); ?>&sub_code=<?php echo urlencode($_GET['sub_code']); ?>&section_code=<?php echo urlencode($_GET['section_code']); ?>">
+                                    <span>View Module</span>
+                                </a>
+                            </div>
+
+                            <!-- Upload Button -->
+                            <div>
+                                <?php
+                                $btnClass = empty($students) ? 'btn-danger' : 'btn-primary';
+                                $disabled = empty($students) ? 'disabled' : '';
+                                ?>
+                                <button type="button"
+                                    class="btn <?php echo $btnClass; ?> btn-sm fw-bold d-flex align-items-center"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#upload_module"
+                                    data-bs-whatever="@fat"
+                                    <?php echo $disabled; ?>>
+                                    <i class="bi bi-cloud-arrow-up me-1"></i>Upload Module
+                                </button>
+                            </div>
                         </div>
                     </div>
 

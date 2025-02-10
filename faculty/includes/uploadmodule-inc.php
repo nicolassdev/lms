@@ -5,7 +5,7 @@ if (!isset($_POST["submit"])) {
     $sched_id = $_GET['sched_id'] ?? '';
     $sub_id = $_GET['sub_code'] ?? '';
     $sec_id = $_GET['section_code'] ?? '';
-    header("Location: ../index.php?page=student_subject_list&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
+    header("Location: ../index.php?page=upload_module&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
     exit();
 } else {
     include "../../includes/dbh-inc.php";
@@ -31,7 +31,7 @@ if (!isset($_POST["submit"])) {
         // Check if the limit of 5 uploads is reached
         if ($uploadCount >= 5) {
             $_SESSION['error'] = "You have already uploaded 5 modules for this subject.";
-            header("Location: ../index.php?page=student_subject_list&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
+            header("Location: ../index.php?page=upload_module&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
             exit();
         }
 
@@ -62,13 +62,13 @@ if (!isset($_POST["submit"])) {
                 $errors = [];
                 if (!in_array($fileType, $allowedTypes)) {
                     $_SESSION['error'] = "Invalid file type: $fileType. Please upload allowed file types only.";
-                    header("Location: ../index.php?page=student_subject_list&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
+                    header("Location: ../index.php?page=upload_module&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
                     exit();
                 }
 
                 if ($fileSize > $maxFileSize) {
                     $_SESSION['error'] = "File too large. Maximum size allowed is " . $mySQLFunction->formatFileSize($maxFileSize);
-                    header("Location: ../index.php?page=student_subject_list&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
+                    header("Location: ../index.php?page=upload_module&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
                     exit();
                 }
 
@@ -76,7 +76,7 @@ if (!isset($_POST["submit"])) {
                 $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt'];
                 if (!in_array($fileExtension, $allowedExtensions)) {
                     $_SESSION['error'] = "Invalid file extension. Allowed extensions are: " . implode(', ', $allowedExtensions);
-                    header("Location: ../index.php?page=student_subject_list&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
+                    header("Location: ../index.php?page=upload_module&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
                     exit();
                 }
 
@@ -91,27 +91,27 @@ if (!isset($_POST["submit"])) {
 
                     if ($stmt->execute()) {
                         $_SESSION['success'] = "File successfully uploaded.";
-                        header("Location: ../index.php?page=student_subject_list&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
+                        header("Location: ../index.php?page=upload_module&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
                         exit();
                     } else {
                         $_SESSION['error'] = "Database error: " . $stmt->error;
-                        header("Location: ../index.php?page=student_subject_list&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
+                        header("Location: ../index.php?page=upload_module&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
                         exit();
                     }
                 } else {
                     $_SESSION['error'] = "Error moving uploaded file.";
-                    header("Location: ../index.php?page=student_subject_list&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
+                    header("Location: ../index.php?page=upload_module&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
                     exit();
                 }
             } else {
                 $_SESSION['error'] = "No file uploaded.";
-                header("Location: ../index.php?page=student_subject_list&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
+                header("Location: ../index.php?page=upload_module&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
                 exit();
             }
         }
     } catch (Exception $e) {
         $_SESSION['error'] = "Error: " . $e->getMessage();
-        header("Location: ../index.php?page=student_subject_list&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
+        header("Location: ../index.php?page=upload_module&sched_id=" . urlencode($sched_id) . "&sub_code=" . urlencode($sub_id) . "&section_code=" . urlencode($sec_id));
         exit();
     } finally {
         $mySQLFunction->disconnect();

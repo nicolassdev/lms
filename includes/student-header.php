@@ -163,7 +163,7 @@ error_reporting(E_ALL);
                                     </li>
                                     <li class="nav-item mt-2">
                                         <a class="nav-link active" href="index.php?page=student_quiz_result">
-                                            <i class="bi bi-clipboard-data me-2"></i>Result of Quiz
+                                            <i class="bi bi-clipboard-data me-2"></i>Quiz Result
                                         </a>
                                     </li>
                                 </ul>
@@ -182,7 +182,7 @@ error_reporting(E_ALL);
                                     </li>
                                     <li class="nav-item mt-2">
                                         <a class="nav-link active" href="index.php?page=student_exam_result">
-                                            <i class="bi bi-clipboard-data me-2"></i>Result of Exam
+                                            <i class="bi bi-clipboard-data me-2"></i>Exam Result
                                         </a>
                                     </li>
                                 </ul>
