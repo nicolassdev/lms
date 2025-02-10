@@ -36,9 +36,7 @@ function initializeDataTable(tableId, excludeIndex, title) {
           customize: function (win) {
             // Custom styling or adjustments for print can go here
             $(win.document.body)
-              .find(
-                'h1:contains("Teacher"), h1:contains("Learning Management System")'
-              )
+              .find('h1:contains("Learning Management System")')
               .css("display", "none");
 
             // Customize print view

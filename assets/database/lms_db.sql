@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2025 at 09:04 AM
+-- Generation Time: Feb 10, 2025 at 01:45 PM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.12
 
@@ -51,7 +51,7 @@ INSERT INTO `enroll` (`stu_lrn`, `section_code`, `semester`, `school_year`, `dat
 ('114455013001', 'SECTION-2663', '1st Semester', '2024-2025', '2024-12-29', 'Enrolled', 'ARIMBAY HIGH SCHOLL', NULL, 'ARIMBAY LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('114455667788', 'SECTION-2387', '1st Semester', '2024-2025', '2025-01-11', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('114482392392', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-20', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
-('114497427472', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-23', 'Pending', 'CABANGAN HIGH SCOLL', NULL, 'CABANGAN LEGAZPI VCITY', 'PUBLIC', 'SF9, SF10, PSA, LCR'),
+('114497427472', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-23', 'Enrolled', 'CABANGAN HIGH SCOLL', NULL, 'CABANGAN LEGAZPI VCITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('114498343414', 'SECTION-1859', '1st Semester', '2024-2025', '2025-01-12', 'Enrolled', 'ORO SITE HIGH SCHOOL', NULL, 'ORO SITE LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('124167743724', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-26', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('718412412421', 'SECTION-1859', '1st Semester', '2024-2025', '2025-01-06', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC');
@@ -79,7 +79,8 @@ CREATE TABLE `exam` (
 --
 
 INSERT INTO `exam` (`exam_id`, `sched_id`, `exam_type`, `exam_quarter`, `exam_duration`, `exam_title`, `exam_desc`, `exam_items`, `exam_date`) VALUES
-('EXM-6416', 'SCHED-3005', '1', '1st', 10, 'abc exam', 'abc exam', 1, '2025-02-05');
+('EXM-7725', 'SCHED-3005', '1,4,1', '1st', 10, 'EXAM1', 'EXAM1', 3, '2025-02-05'),
+('EXM-9212', 'SCHED-0950', '2,2,2,1', '1st', 3, 'exam1', 'exam1', 10, '2025-02-07');
 
 -- --------------------------------------------------------
 
@@ -93,6 +94,15 @@ CREATE TABLE `exam_enumeration` (
   `enum_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `enum_answer` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `exam_enumeration`
+--
+
+INSERT INTO `exam_enumeration` (`enum_id`, `exam_id`, `enum_question`, `enum_answer`) VALUES
+(47, 'EXM-9212', 'name of may pet', 'cleo, waffle, lucky'),
+(48, 'EXM-9212', 'types of programming lang', 'php, python, csharp'),
+(49, 'EXM-9212', 'give type of sense of human', 'smell, touch, see');
 
 -- --------------------------------------------------------
 
@@ -128,7 +138,9 @@ CREATE TABLE `exam_multiple` (
 --
 
 INSERT INTO `exam_multiple` (`mul_id`, `exam_id`, `mul_question`, `choice_a`, `choice_b`, `choice_c`, `choice_d`, `is_correct`) VALUES
-(25, 'EXM-6416', 'AKO SI ', 'ANTHONY', 'JONH', 'RUSSEL', 'DEO', 'ANTHONY');
+(26, 'EXM-7725', 'TODAY IS THE GOOD DAY TO ? ', 'DIE ', 'SMILE ', 'GO AWAY', 'OKAY', 'DIE '),
+(27, 'EXM-7725', 'What is the biggest planet in galaxy?', 'Saturn', 'Jupiter', 'Mars', 'Venus', 'Jupiter'),
+(32, 'EXM-9212', 'What is may name ?', 'Anthony', 'John', 'Bayong', 'TUBOL', 'Anthony');
 
 -- --------------------------------------------------------
 
@@ -142,6 +154,13 @@ CREATE TABLE `exam_tf` (
   `tf_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `tf_answer` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `exam_tf`
+--
+
+INSERT INTO `exam_tf` (`tf_id`, `exam_id`, `tf_question`, `tf_answer`) VALUES
+(18, 'EXM-7725', 'Anthony is handsome?', 'true');
 
 -- --------------------------------------------------------
 
@@ -218,7 +237,7 @@ INSERT INTO `principal` (`principal_id`, `firstname`, `middlename`, `lastname`, 
 CREATE TABLE `quiz` (
   `quiz_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
   `sched_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `quiz_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '1: Multi, 2: Enumeration, 3: Essay, 4: True or False',
+  `quiz_type` tinyint NOT NULL COMMENT '0 : Short Quiz, 1: Long Quiz',
   `quiz_quarter` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `quiz_duration` int NOT NULL,
   `quiz_title` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
@@ -232,7 +251,7 @@ CREATE TABLE `quiz` (
 --
 
 INSERT INTO `quiz` (`quiz_id`, `sched_id`, `quiz_type`, `quiz_quarter`, `quiz_duration`, `quiz_title`, `quiz_desc`, `quiz_items`, `quiz_date`) VALUES
-('QZ-5701', 'SCHED-3005', '2,1,1', '1st', 10, 'THIS IS QUIZ 1', 'SHORT QUIZ', 3, '2025-02-05');
+('QZ-8035', 'SCHED-1393', 0, '1st', 10, 'quiz 1', 'quiz 1', 10, '2025-02-09');
 
 -- --------------------------------------------------------
 
@@ -252,7 +271,7 @@ CREATE TABLE `quiz_enumeration` (
 --
 
 INSERT INTO `quiz_enumeration` (`q_enum_id`, `quiz_id`, `q_enum_question`, `q_enum_answer`) VALUES
-(2, 'QZ-5701', 'What is may nickname?', 'Anthony, tony, ngaw');
+(7, 'QZ-8035', 'Give types of sense', 'see, touch, smell');
 
 -- --------------------------------------------------------
 
@@ -265,6 +284,14 @@ CREATE TABLE `quiz_essay` (
   `quiz_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
   `q_essay_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `quiz_essay`
+--
+
+INSERT INTO `quiz_essay` (`q_essay_id`, `quiz_id`, `q_essay_question`) VALUES
+(2, 'QZ-8035', 'make essay about selft'),
+(3, 'QZ-8035', 'Make essay about parents');
 
 -- --------------------------------------------------------
 
@@ -288,8 +315,9 @@ CREATE TABLE `quiz_multiple` (
 --
 
 INSERT INTO `quiz_multiple` (`q_mul_id`, `quiz_id`, `q_mul_question`, `q_choice_a`, `q_choice_b`, `q_choice_c`, `q_choice_d`, `is_correct`) VALUES
-(4, 'QZ-5701', 'Cutie baby born in?', '2002', '2024', '2007', '2006', '2002'),
-(5, 'QZ-5701', 'Name of my GF?', 'Maricar', 'Anna', 'Liza', 'Angel', 'Maricar');
+(16, 'QZ-8035', 'what is my name?', 'anthony', 'james', 'nicolas', 'pogi', 'anthony'),
+(17, 'QZ-8035', 'can you give me the code x', '11akd', '22dwk', 'bsc223', 'kkd3', 'kkd3'),
+(18, 'QZ-8035', 'who is you mother name?', 'tinay', 'marilou', 'cholou', 'kalbed', 'cholou');
 
 -- --------------------------------------------------------
 
@@ -303,6 +331,14 @@ CREATE TABLE `quiz_tf` (
   `q_tf_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `q_tf_answer` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `quiz_tf`
+--
+
+INSERT INTO `quiz_tf` (`q_tf_id`, `quiz_id`, `q_tf_question`, `q_tf_answer`) VALUES
+(7, 'QZ-8035', 'im handsome?', 'True'),
+(8, 'QZ-8035', 'Maricar is boss', 'True');
 
 -- --------------------------------------------------------
 
@@ -353,6 +389,7 @@ CREATE TABLE `schedule` (
 
 INSERT INTO `schedule` (`sched_id`, `teacher_id`, `section_code`, `sub_code`, `sched_day`, `sched_from`, `sched_to`, `created_at`) VALUES
 ('SCHED-0762', '24-209505-8181', 'SECTION-2663', 'SUB-3699', 'Friday', '08:00 AM', '10:00 AM', '2024-12-28 20:02:31'),
+('SCHED-0892', '24-049512-1359', 'SECTION-3891', 'SUB-2971', 'Monday', '09:05 AM', '11:00 AM', '2025-02-07 14:12:01'),
 ('SCHED-0950', '24-299710-4779', 'SECTION-2387', 'SUB-3375', 'Friday', '08:00 AM', '10:00 AM', '2024-12-30 20:21:44'),
 ('SCHED-1274', '24-279707-4937', 'SECTION-2287', 'SUB-7279', 'Monday', '07:30 AM', '10:30 AM', '2024-12-30 12:31:59'),
 ('SCHED-1393', '24-059310-4617', 'SECTION-1859', 'SUB-3164', 'Monday', '08:30 AM', '10:30 AM', '2024-12-28 19:31:30'),
@@ -521,6 +558,25 @@ CREATE TABLE `student_answers` (
   `submitted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `student_answers`
+--
+
+INSERT INTO `student_answers` (`answer_id`, `stu_lrn`, `exam_id`, `quiz_id`, `question_id`, `question_type`, `student_answer`, `submitted_at`) VALUES
+(183, '114497427472', 'EXM-7725', NULL, 26, 'multiple_choice', 'DIE ', '2025-02-05 15:12:12'),
+(184, '114497427472', 'EXM-7725', NULL, 27, 'multiple_choice', 'Jupiter', '2025-02-05 15:12:12'),
+(185, '114497427472', 'EXM-7725', NULL, 18, 'true_false', 'true', '2025-02-05 15:12:12'),
+(190, '114423232323', 'EXM-9212', NULL, 32, 'multiple_choice', 'Anthony', '2025-02-07 17:01:16'),
+(191, '114423232323', 'EXM-9212', NULL, 47, 'enumeration', 'cleo, waffle, lucky', '2025-02-07 17:01:16'),
+(192, '114423232323', 'EXM-9212', NULL, 48, 'enumeration', 'php, python, daekoaram', '2025-02-07 17:01:16'),
+(193, '114423232323', 'EXM-9212', NULL, 49, 'enumeration', 'smell, touch, see', '2025-02-07 17:01:16'),
+(204, '124167743724', NULL, 'QZ-8035', 16, 'multiple_choice', 'anthony', '2025-02-10 10:44:01'),
+(205, '124167743724', NULL, 'QZ-8035', 17, 'multiple_choice', '11akd', '2025-02-10 10:44:01'),
+(206, '124167743724', NULL, 'QZ-8035', 18, 'multiple_choice', 'tinay', '2025-02-10 10:44:01'),
+(207, '124167743724', NULL, 'QZ-8035', 7, 'enumeration', 'smell,touch, see', '2025-02-10 10:44:01'),
+(208, '124167743724', NULL, 'QZ-8035', 7, 'true_false', 'true', '2025-02-10 10:44:01'),
+(209, '124167743724', NULL, 'QZ-8035', 8, 'true_false', 'true', '2025-02-10 10:44:01');
+
 -- --------------------------------------------------------
 
 --
@@ -534,7 +590,7 @@ CREATE TABLE `student_scores` (
   `quiz_id` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Set as Nullable',
   `total_questions` int NOT NULL DEFAULT '0',
   `correct_answers` int NOT NULL DEFAULT '0',
-  `score_percentage` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `equivalent_score` decimal(5,2) NOT NULL DEFAULT '0.00',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -542,8 +598,9 @@ CREATE TABLE `student_scores` (
 -- Dumping data for table `student_scores`
 --
 
-INSERT INTO `student_scores` (`score_id`, `stu_lrn`, `exam_id`, `quiz_id`, `total_questions`, `correct_answers`, `score_percentage`, `created_at`) VALUES
-(44, '124167743724', NULL, 'QZ-5701', 3, 2, 66.67, '2025-02-05 04:37:00');
+INSERT INTO `student_scores` (`score_id`, `stu_lrn`, `exam_id`, `quiz_id`, `total_questions`, `correct_answers`, `equivalent_score`, `created_at`) VALUES
+(61, '114423232323', 'EXM-9212', NULL, 10, 9, 90.00, '2025-02-07 17:01:16'),
+(64, '124167743724', NULL, 'QZ-8035', 10, 6, 83.00, '2025-02-10 10:44:01');
 
 -- --------------------------------------------------------
 
@@ -695,7 +752,7 @@ INSERT INTO `users` (`user_num`, `id`, `username`, `password`, `role`, `date_add
 (73, 'USER-6346', '114499887766', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-11-06 15:50:17'),
 (83, 'USER-6429', 'LMS-299211-3180', 'b74689565cd91566a7b3d8dde4c2b0ffe3ce486a', 'TEACHER', '2024-11-24 22:23:16'),
 (77, 'USER-6462', '114423232323', '39bd71ceb3a7ee0febd8fce816505355acc46eb8', 'STUDENT', '2024-11-24 18:48:44'),
-(82, 'USER-6486', 'LMS-059310-1695', '6c5bc6fb30aa22e9b6b70bf482a0f470e810d98d', 'TEACHER', '2024-11-24 22:21:53'),
+(82, 'USER-6486', 'LMS-059310-1695', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'TEACHER', '2024-11-24 22:21:53'),
 (113, 'USER-6627', '114486120037', 'd35519a066831dc5506c8711aec94132b93bec6b', 'STUDENT', '2024-12-07 02:14:22'),
 (125, 'USER-6711', '114124124124', '1574262594647f0c50eb5668d08b3358ab17b683', 'STUDENT', '2025-01-20 23:37:09'),
 (107, 'USER-7881', 'nicolas', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'STUDENT', '2024-12-07 01:02:17'),
@@ -904,7 +961,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `exam_enumeration`
 --
 ALTER TABLE `exam_enumeration`
-  MODIFY `enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `exam_essay`
@@ -916,37 +973,37 @@ ALTER TABLE `exam_essay`
 -- AUTO_INCREMENT for table `exam_multiple`
 --
 ALTER TABLE `exam_multiple`
-  MODIFY `mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `exam_tf`
 --
 ALTER TABLE `exam_tf`
-  MODIFY `tf_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `tf_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `quiz_enumeration`
 --
 ALTER TABLE `quiz_enumeration`
-  MODIFY `q_enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `q_enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `quiz_essay`
 --
 ALTER TABLE `quiz_essay`
-  MODIFY `q_essay_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `q_essay_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `quiz_multiple`
 --
 ALTER TABLE `quiz_multiple`
-  MODIFY `q_mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `q_mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `quiz_tf`
 --
 ALTER TABLE `quiz_tf`
-  MODIFY `q_tf_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `q_tf_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `school`
@@ -958,13 +1015,13 @@ ALTER TABLE `school`
 -- AUTO_INCREMENT for table `student_answers`
 --
 ALTER TABLE `student_answers`
-  MODIFY `answer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
+  MODIFY `answer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=210;
 
 --
 -- AUTO_INCREMENT for table `student_scores`
 --
 ALTER TABLE `student_scores`
-  MODIFY `score_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `score_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -42,7 +42,11 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
 
-                        <div class="fw-bold fs-5 text-danger">
+                        <div class="fw-bold fs-5 text-dark">
+                            Reports<br>
+
+                        </div>
+                        <div class="text-black">
                             <?php if (!empty($result)) {
                                 foreach ($result as $student) {
                                     echo htmlspecialchars($student["grade_lvl"]) . '  ';
@@ -51,8 +55,6 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
                                 }
                             }
                             ?>
-                        </div>
-                        <div class="text-black">
                             <?php
                             if (!empty($result)) {
                                 echo "<h6 class='text-black'>" . count($result) . " Student(s)</h6>";
@@ -66,16 +68,16 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
 
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
-                        <table id="student_list" class="table table-bordered table-striped table-sm align-middle">
+                        <table id="student_report" class="table table-bordered table-striped table-sm align-middle">
                             <thead class="table-dark">
                                 <tr>
 
-                                    <th scope="col" style="width: 50px;">LRN</th>
+                                    <!-- <th scope="col" style="width: 50px;">LRN</th> -->
                                     <th scope="col" style="width: 100px;">Student name</th>
                                     <th scope="col" style="width: 50px;">Gender</th>
-                                    <th scope="col" style="width: 150px;">Address</th>
-                                    <th scope="col" style="width: 100px;">Contact</th>
                                     <th scope="col" style="width: 100px;">Section</th>
+                                    <th scope="col" style="width: 100px;">Equivalent Quiz Score</th>
+                                    <th scope="col" style="width: 100px;">Equivalent Exam Score</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -87,13 +89,26 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
                                         $addedDate = new DateTime($row['stu_dob']);
                                         $formattedBdate = $addedDate->format('F j, Y');
 
-                                        echo '<td class=" text-primary"> <a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">'
-                                            . $row["stu_lrn"] . '</a></td>';
-                                        echo '<td class="small "> ' . $row["stu_lname"] . ',  ' .  ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"] . '')) . '</td>';
-                                        echo '<td class="small ">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
-                                        echo '<td class="small ">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
-                                        echo '<td class="small ">+63' . $row["stu_contact"] . '</td>';
-                                        echo '<td class="small ">' .  $row["section_name"] . '</td>';
+                                        // echo '<td class="text-dark"> <a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">'
+                                        //     . $row["stu_lrn"] . '</a></td>';
+                                        echo '<td class="small"> ' . $row["stu_lname"] . ',  ' .  ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"] . '')) . '</td>';
+                                        echo '<td class="small">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
+                                        echo '<td class="small">' .  $row["section_name"] . '</td>';
+
+                                        // Quiz Equivalent Score
+                                        echo '<td class="text-center fw-bold ' .
+                                            (empty($row["quiz_id"]) || empty($row["equivalent_score"]) ? 'text-danger' : 'text-success') .
+                                            '">';
+                                        echo (!empty($row["quiz_id"]) && !empty($row["equivalent_score"])) ? htmlspecialchars($row["equivalent_score"]) : 'N/A';
+                                        echo '</td>';
+
+                                        // Exam Equivalent Score
+                                        echo '<td class="text-center fw-bold ' .
+                                            (empty($row["exam_id"]) || empty($row["equivalent_score"]) ? 'text-danger' : 'text-success') .
+                                            '">';
+                                        echo (!empty($row["exam_id"]) && !empty($row["equivalent_score"])) ? htmlspecialchars($row["equivalent_score"]) : 'N/A';
+                                        echo '</td>';
+
 
 
                                         echo '</tr>';
@@ -440,5 +455,5 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
 <script src="../assets/js/globaltables.js"></script>
 <!-- PDF ,EXCEL, PRINT ,CVS -->
 <script>
-    initializeDataTable("student_list", 7, "List of Students");
+    initializeDataTable("student_report", 7, "Reports");
 </script>

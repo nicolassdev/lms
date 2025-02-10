@@ -78,22 +78,35 @@ $mySQLFunction->disconnect();
                         <?php if (!empty($exams)) : ?>
                             <?php foreach ($exams as $examData) : ?>
                                 <!-- Exam Title and Details -->
-                                <div class="card mb-2 shadow-sm border-0">
+                                <div class="card mb-3 shadow-sm border-0">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <h4 class="fw-bold text-dark">
+                                            <h4 class="fw-bold text-dark mb-0">
                                                 <?= htmlspecialchars(ucwords(strtolower($examData["exam_title"] ?? 'No Exam Title'))) ?>
                                             </h4>
-                                            <span class="badge bg-success py-2 text-white">
-                                                <?= htmlspecialchars(($examData["exam_quarter"] . ' Quarter' . ' / ' . $examData["sub_semester"] . ' ' ?? 'N/A')) ?>
+                                            <span class="badge bg-success text-white px-3 py-2">
+                                                <?= htmlspecialchars(($examData["exam_quarter"] ?? 'N/A') . ' Quarter / ' . ($examData["sub_semester"] ?? 'N/A')) ?>
                                             </span>
                                         </div>
-                                        <p class="text-dark">
-                                            <span class="fw-bold mb-2">Subject:</span> <span class="badge bg-success py-2 text-white fw-semibold mb-1"><?= htmlspecialchars(ucwords(strtolower($examData["sub_title"] ?? 'No Subject'))) ?></span><br>
-                                            <span class="fw-bold">Teacher:</span> <span class="badge bg-success py-2 text-white fw-semibold"><?= htmlspecialchars(ucwords(strtolower($examData["teacher_fname"] . ' ' . $examData["teacher_lname"] . ' ' ?? 'N/A'))) ?></span>
-                                        </p>
+
+                                        <hr class="my-3">
+
+                                        <div class="mb-2">
+                                            <span class="fw-bold">Subject:</span>
+                                            <span class="badge bg-success text-white px-3 py-2">
+                                                <?= htmlspecialchars(ucwords(strtolower($examData["sub_title"] ?? 'No Subject'))) ?>
+                                            </span>
+                                        </div>
+
+                                        <div>
+                                            <span class="fw-bold">Teacher:</span>
+                                            <span class="badge bg-success text-white px-3 py-2">
+                                                <?= htmlspecialchars(ucwords(strtolower(($examData["teacher_fname"] ?? '') . ' ' . ($examData["teacher_lname"] ?? 'N/A')))) ?>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
+
                                 <!-- Exam Instructions -->
                                 <?php if (!$isExamTaken): ?>
                                     <div class="card mb-2 shadow-sm border-0">

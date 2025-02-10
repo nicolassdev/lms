@@ -1017,7 +1017,10 @@ class myDataBase
             SELECT 
                 b.*, 
                 s.section_name, 
-                s.grade_lvl, 
+                s.grade_lvl,
+                sc.quiz_id,
+                sc.exam_id,
+                sc.equivalent_score, 
                 COUNT(e.stu_lrn) OVER (PARTITION BY s.section_code) AS enrolled_count
             FROM 
                 enroll e
@@ -1025,6 +1028,8 @@ class myDataBase
                 section s ON e.section_code = s.section_code
             INNER JOIN 
                 student b ON e.stu_lrn = b.stu_lrn
+            LEFT JOIN
+                student_scores sc ON e.stu_lrn = sc.stu_lrn
             WHERE 
                 s.teacher_id = ?
         ";
@@ -3724,7 +3729,7 @@ class myDataBase
     //GET ALL SCORE OF STUDENT IN EXAM
     public function getStudentExamScore($stud_id, $exam_id)
     {
-        $sql = "SELECT correct_answers, total_questions, score_percentage
+        $sql = "SELECT correct_answers, total_questions, equivalent_score
                 FROM student_scores
                 WHERE stu_lrn = ? AND exam_id = ?";
 
@@ -3738,7 +3743,7 @@ class myDataBase
             return [
                 'correct_answers' => $row['correct_answers'],
                 'total_questions' => $row['total_questions'],
-                'score_percentage' => $row['score_percentage']
+                'equivalent_score' => $row['equivalent_score']
             ];
         }
     }
@@ -3747,7 +3752,7 @@ class myDataBase
     //GET ALL SCORE OF STUDENT IN QUIZ
     public function getStudentQuizScore($stud_id, $quiz_id)
     {
-        $sql = "SELECT correct_answers, total_questions, score_percentage
+        $sql = "SELECT correct_answers, total_questions, equivalent_score
                     FROM student_scores
                     WHERE stu_lrn = ? AND quiz_id = ?";
 
@@ -3761,7 +3766,7 @@ class myDataBase
             return [
                 'correct_answers' => $row['correct_answers'],
                 'total_questions' => $row['total_questions'],
-                'score_percentage' => $row['score_percentage']
+                'equivalent_score' => $row['equivalent_score']
             ];
         }
     }
@@ -3939,16 +3944,33 @@ class myDataBase
             }
         }
 
-        // Compute Score Percentage
-        $score_percentage = ($total_items > 0) ? ($correct_answers / $total_items) * 100 : 0;
+
+        // Input Validation (important!)
+        if ($total_items <= 0 || $correct_answers < 0 || $correct_answers > $total_items) {
+            return "Invalid data in the database for this student.";
+        }
+
+        // Calculate the percentage
+        $percentage = ($correct_answers / $total_items) * 100;
+        // Define equivalent score range
+        $highest_equivalent = 95;
+        $lowest_equivalent = 65;
+
+        // Calculate equivalent score using linear interpolation
+        $equivalent_score = round(
+            $lowest_equivalent + ($percentage / 100) * ($highest_equivalent - $lowest_equivalent)
+        );
+
+        // Ensure score stays within the range
+        $equivalent_score = min($highest_equivalent, max($lowest_equivalent, $equivalent_score));
 
         // Store score in student_scores table, now considering `quiz_id`
-        $sql = "INSERT INTO student_scores (stu_lrn, exam_id, quiz_id, total_questions, correct_answers, score_percentage)
+        $sql = "INSERT INTO student_scores (stu_lrn, exam_id, quiz_id, total_questions, correct_answers, equivalent_score)
             VALUES (?, ?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE correct_answers = VALUES(correct_answers), score_percentage = VALUES(score_percentage)";
+            ON DUPLICATE KEY UPDATE correct_answers = VALUES(correct_answers), equivalent_score = VALUES(equivalent_score)";
 
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("sssiid", $stud_id, $exam_id, $quiz_id, $total_items, $correct_answers, $score_percentage);
+        $stmt->bind_param("sssiid", $stud_id, $exam_id, $quiz_id, $total_items, $correct_answers, $equivalent_score);
         $stmt->execute();
     }
 

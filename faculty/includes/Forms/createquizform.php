@@ -22,8 +22,8 @@
                         <textarea id="quizDescription" name="quiz_description" class="form-control" rows="3" placeholder="Enter a brief description"></textarea>
                     </div>
 
-                    <!-- Quarterly Exam Type -->
-                    <div class=" mb-4">
+                    <!-- Quarterly Quiz Type -->
+                    <div class="col-6 mb-3">
                         <label for="quarterQuiz" class="form-label fw-bold">Quarterly Quiz</label>
                         <select id="quarterQuiz" name="quiz_quarter" class="form-select" required>
                             <option value="" selected disabled>Select a quarter...</option>
@@ -34,17 +34,27 @@
                         </select>
                     </div>
 
-                    <!-- Exam Date & Duration -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="quizDate" class="form-label fw-bold">Date</label>
-                            <input type="date" id="quizDate" name="quiz_date" class="form-control" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="quizDuration" class="form-label fw-bold">Duration (minutes)</label>
-                            <input type="number" id="quizDuration" name="quiz_duration" class="form-control" placeholder="Enter duration" min="1" oninput="checkNegativeValue(this)" required>
-                        </div>
+                    <!-- Quiz Type -->
+                    <div class="col-6 mb-3">
+                        <label for="typeQuiz" class="form-label fw-bold">Type of Quiz</label>
+                        <select id="typeQuiz" name="types" class="form-select" required>
+                            <option value="" selected disabled>Select a type...</option>
+                            <option value="0">Short Quiz</option>
+                            <option value="1">Long Quiz</option>
+                        </select>
                     </div>
+
+                    <!-- Exam Date & Duration -->
+
+                    <div class="col-6">
+                        <label for="quizDate" class="form-label fw-bold">Date</label>
+                        <input type="date" id="quizDate" name="quiz_date" class="form-control" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="quizDuration" class="form-label fw-bold">Duration (minutes)</label>
+                        <input type="number" id="quizDuration" name="quiz_duration" class="form-control" placeholder="Enter duration" min="1" oninput="checkNegativeValue(this)" required>
+                    </div>
+
 
 
 

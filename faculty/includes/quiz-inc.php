@@ -25,8 +25,10 @@ try {
     $quizDate = trim($_POST["quiz_date"] ?? '');
 
     // to know what type of exam is 
-    $quizType = is_array($_POST['quiz_type']) ? implode(',', $_POST['quiz_type']) : '';
+    // $quizType = is_array($_POST['quiz_type']) ? implode(',', $_POST['quiz_type']) : '';
 
+
+    $quizType = trim($_POST["types"]);
     // to count the total number of exam 
     $quizTotalItems = 0;
 
