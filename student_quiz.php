@@ -43,40 +43,43 @@ $mySQLFunction->disconnect();
                         <!-- Search Bar -->
                         <div class="col-md-4">
                             <div class="input-group input-group-sm">
-                                <?php $hasQuiz = false; ?>
-                                <?php foreach ($studentSubjects as $subject): ?>
-                                    <?php
-                                    $mySQLFunction->connection();
-                                    $allQuizCompleted = true; // Assume all quizzes are completed
 
-                                    if (!empty($subject['quizzes'])):
-                                        foreach ($subject["quizzes"] as $quiz) {
-                                            $quiz_id = $quiz['quiz_id'];
-                                            $stu_lrn = $_SESSION['stu_lrn'];
-                                            // check if the student have answer in table STUDENT ANSWERS and STUDENT SCORES
-                                            $hideQuiz = $mySQLFunction->checkExistByMultipleIDs("student_answers", ["stu_lrn" => $stu_lrn, "quiz_id" => $quiz_id]);
-                                            $hideQuizScore = $mySQLFunction->checkExistByMultipleIDs("student_scores",  ["stu_lrn" => $stu_lrn, "quiz_id" => $quiz_id]);
-
-                                            if ($hideQuiz == 0 && $hideQuizScore == 0) {
-                                                $allQuizCompleted = false; // At least one quiz is not completed
-                                                break;
-                                            }
-                                        }
-
-                                        if ($allQuizCompleted) {
-                                            continue; // Skip rendering this subject if all quiz are completed
-                                        }
-
-                                        $hasQuiz = true;
-                                    ?>
-
-                                        <!-- Search Input -->
-                                        <input type="text" id="searchQuiz" class="form-control" placeholder="Search subject quiz...">
-                                        <i class="bi bi-search me-2 ms-2 fs-5"></i>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
+                                <!-- Search Input -->
+                                <input type="text" id="searchQuiz" class="form-control" placeholder="Search subject quiz...">
+                                <i class="bi bi-search me-2 ms-2 fs-5"></i>
                             </div>
                         </div>
+
+                        <?php $hasQuiz = false; ?>
+                        <?php foreach ($studentSubjects as $subject): ?>
+                            <?php
+                            $mySQLFunction->connection();
+                            $allQuizCompleted = true; // Assume all quizzes are completed
+
+                            if (!empty($subject['quizzes'])):
+                                foreach ($subject["quizzes"] as $quiz) {
+                                    $quiz_id = $quiz['quiz_id'];
+                                    $stu_lrn = $_SESSION['stu_lrn'];
+                                    // check if the student have answer in table STUDENT ANSWERS and STUDENT SCORES
+                                    $hideQuiz = $mySQLFunction->checkExistByMultipleIDs("student_answers", ["stu_lrn" => $stu_lrn, "quiz_id" => $quiz_id]);
+                                    $hideQuizScore = $mySQLFunction->checkExistByMultipleIDs("student_scores",  ["stu_lrn" => $stu_lrn, "quiz_id" => $quiz_id]);
+
+                                    if ($hideQuiz == 0 && $hideQuizScore == 0) {
+                                        $allQuizCompleted = false; // At least one quiz is not completed
+                                        break;
+                                    }
+                                }
+
+                                if ($allQuizCompleted) {
+                                    continue; // Skip rendering this subject if all quiz are completed
+                                }
+
+                                $hasQuiz = true;
+                            ?>
+
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+
                     </div>
                     <hr>
 
@@ -143,7 +146,7 @@ $mySQLFunction->disconnect();
                                                     <span class="text-secondary">
                                                         <?php
                                                         foreach ($subject["quizzes"] as $quiz) {
-                                                            echo '<span class="text-dark">' . htmlspecialchars($quiz["quiz_quarter"]) . ' Quarter - ' . $subject["sub_semester"] . ' </span> <br> ' .
+                                                            echo '<span class="text-dark">' . htmlspecialchars($quiz["quiz_quarter"]) . ' - ' . $subject["sub_semester"] . ' </span> <br> ' .
                                                                 '<small class="text-dark ms-4">Date of Quiz : ' . date('F j, Y', strtotime($quiz["quiz_date"])) . ' </small> ';
                                                         }
                                                         ?>

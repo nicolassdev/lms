@@ -12,14 +12,10 @@
                     <input type="hidden" name="subID" value="<?php echo htmlspecialchars($_GET['sub_code']); ?>">
                     <input type="hidden" name="secID" value="<?php echo htmlspecialchars($_GET['section_code']); ?>">
 
-                    <!-- Exam Title & Description -->
+                    <!-- Exam Quiz -->
                     <div class="mb-2">
                         <label for="quizTitle" class="form-label fw-bold">Quiz Title</label>
                         <input type="text" id="quizTitle" name="quiz_title" class="form-control" placeholder="Enter the quiz title" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="quizDescription" class="form-label fw-bold">Description</label>
-                        <textarea id="quizDescription" name="quiz_description" class="form-control" rows="3" placeholder="Enter a brief description"></textarea>
                     </div>
 
                     <!-- Quarterly Quiz Type -->
@@ -27,10 +23,10 @@
                         <label for="quarterQuiz" class="form-label fw-bold">Quarterly Quiz</label>
                         <select id="quarterQuiz" name="quiz_quarter" class="form-select" required>
                             <option value="" selected disabled>Select a quarter...</option>
-                            <option value="1st">1st Quarter</option>
-                            <option value="2nd">2nd Quarter</option>
-                            <option value="3rd">3rd Quarter</option>
-                            <option value="4th">4th Quarter</option>
+                            <option value="1st Quarter">1st Quarter</option>
+                            <option value="2nd Quarter">2nd Quarter</option>
+                            <option value="3rd Quarter">3rd Quarter</option>
+                            <option value="4th Quarter">4th Quarter</option>
                         </select>
                     </div>
 

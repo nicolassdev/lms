@@ -549,7 +549,7 @@ class myDataBase
 
             // Fetch exams related to the schedule
             $examQuery = "SELECT exam_id, exam_type, exam_quarter, exam_duration, 
-                                 exam_title, exam_desc, exam_items, exam_date
+                                 exam_title, exam_items, exam_date
                           FROM exam WHERE sched_id = ?";
             $stmtExam = $this->con->prepare($examQuery);
             $stmtExam->bind_param("s", $schedId);
@@ -663,7 +663,7 @@ class myDataBase
 
             // Fetch exams related to the schedule
             $quizQuery = "SELECT quiz_id, quiz_type, quiz_quarter, quiz_duration, 
-                                 quiz_title, quiz_desc, quiz_items, quiz_date
+                                 quiz_title, quiz_items, quiz_date
                           FROM quiz WHERE sched_id = ?";
             $stmtQuiz = $this->con->prepare($quizQuery);
             $stmtQuiz->bind_param("s", $schedId);
@@ -752,7 +752,6 @@ class myDataBase
                 e.exam_quarter,
                 e.exam_duration,
                 e.exam_title,
-                e.exam_desc,
                 e.exam_items,
                 e.exam_date
             FROM schedule sched
@@ -861,7 +860,6 @@ class myDataBase
                 q.quiz_quarter,
                 q.quiz_duration,
                 q.quiz_title,
-                q.quiz_desc,
                 q.quiz_items,
                 q.quiz_date
             FROM schedule sched
@@ -1749,6 +1747,33 @@ class myDataBase
         }
     }
 
+    //Check active STATUS in semester
+    public function checkQuarterStatus($table)
+    {
+        $semesters = [];
+
+        // Prepare the SQL query to get the active semester name
+        $sql = "SELECT `quarterly_name` 
+                    FROM `$table`
+                    WHERE `status` = 'Active'";
+
+        // Execute the query
+        $result = $this->con->query($sql);
+
+        // Check if the query was successful
+        if ($result && $result->num_rows > 0) {
+            // Fetch the active semester(s)
+            while ($row = $result->fetch_assoc()) {
+                $semesters[] = $row['quarterly_name'];
+            }
+
+            // Return the active semester(s)
+            return $semesters;
+        } else {
+            return []; // Return an empty array if no active semester is found
+        }
+    }
+
     public function getActiveSemester()
     {
         // Query to get the active semester
@@ -1883,6 +1908,21 @@ class myDataBase
             return false;
         }
     }
+    // INSERT INTO TABLE QUARTERLY
+    public function insertQuarter($table, $quarter)
+    {
+
+        $sql = "UPDATE `quarterly` SET `status` = 'Inactive'";
+        $result = $this->con->query($sql);
+
+        if ($result) {
+            $sql = "INSERT INTO `$table` VALUES ('$quarter', 'Active');";
+            $result = $this->con->query($sql);
+        } else {
+            return false;
+        }
+    }
+
 
 
     public function checkExistingSem($table, $semester)
@@ -1890,6 +1930,16 @@ class myDataBase
         $sql = "SELECT * FROM $table WHERE semester_name = ?";
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("s", $semester);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0; // Returns true if a record exists, false otherwise
+    }
+
+    public function checkExistingQuarter($table, $quarter)
+    {
+        $sql = "SELECT * FROM $table WHERE quarterly_name = ?";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $quarter);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->num_rows > 0; // Returns true if a record exists, false otherwise
@@ -1949,7 +1999,32 @@ class myDataBase
             $stmt->bind_param('s', $id);
             $stmt->execute();
 
+            // Return the success or failure of the operation
+            if ($stmt->affected_rows > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            // Log the error for debugging purposes
+            error_log("Error updating school year status: " . $e->getMessage());
+            return false;
+        }
+    }
 
+    //UPDATE INTO TABLE ACTIVE QUARTER
+    public function setQuarter($table, $status, $id)
+    {
+        try {
+            // Step 1: Set all rows to 'Inactive'
+            $sql = "UPDATE `$table` SET `status` = 'Inactive'";
+            $this->con->query($sql);
+
+            //Set the selected row to 'Active' based on the passed school year ID
+            $sql = "UPDATE `$table` SET `status` = 'Active' WHERE `quarterly_name` = ?";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bind_param('s', $id);
+            $stmt->execute();
 
             // Return the success or failure of the operation
             if ($stmt->affected_rows > 0) {
@@ -2107,6 +2182,24 @@ class myDataBase
             return $stored;
         }
     }
+
+    //GET QUARTER
+    public function getQuarter($row = null, $value = null)
+    {
+        if ($row != null &&  $value != null) {
+
+            $sql = "SELECT * FROM `quarterly` WHERE `$row` = '$value'";
+            $stored = ($this->con->query($sql))->fetch_assoc();
+            return $stored;
+        } else {
+
+            $sql = "SELECT * FROM `quarterly` ORDER BY `quarterly_name`";
+            $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
+            return $stored;
+        }
+    }
+
+
 
     function hasSubjectTimeConflict($section_code, $sub_code, $day, $from, $to)
     {
@@ -3257,7 +3350,6 @@ class myDataBase
     //             SELECT 
     //                 e.exam_id,
     //                 e.exam_title,
-    //                 e.exam_desc,
     //                 e.exam_type,
     //                 e.exam_quarter,
     //                 e.exam_duration,
@@ -3370,7 +3462,6 @@ class myDataBase
                 SELECT 
                     e.exam_id,
                     e.exam_title,
-                    e.exam_desc,
                     e.exam_type,
                     e.exam_quarter,
                     e.exam_duration,
@@ -3462,7 +3553,6 @@ class myDataBase
                     $exams[$examId] = [
                         'exam_id' => $row['exam_id'],
                         'exam_title' => $row['exam_title'],
-                        'exam_desc' => $row['exam_desc'],
                         'exam_type' => $row['exam_type'],
                         'exam_quarter' => $row['exam_quarter'],
                         'exam_duration' => $row['exam_duration'],
@@ -4083,7 +4173,6 @@ class myDataBase
                 SELECT 
                     q.quiz_id,
                     q.quiz_title,
-                    q.quiz_desc,
                     q.quiz_type,
                     q.quiz_quarter,
                     q.quiz_duration,
@@ -4172,7 +4261,6 @@ class myDataBase
                     $quizzes[$quizId] = [
                         'quiz_id' => $row['quiz_id'],
                         'quiz_title' => $row['quiz_title'],
-                        'quiz_desc' => $row['quiz_desc'],
                         'quiz_type' => $row['quiz_type'],
                         'quiz_quarter' => $row['quiz_quarter'],
                         'quiz_duration' => $row['quiz_duration'],

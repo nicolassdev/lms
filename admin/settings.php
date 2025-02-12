@@ -10,6 +10,9 @@ include "../admin/includes/Operation/updateSetting.php";
 $mySQLFunction->connection();
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
+$activeQuarter = $mySQLFunction->checkQuarterStatus('quarterly');
+
+
 $mySQLFunction->disconnect();
 
 
@@ -22,25 +25,34 @@ $mySQLFunction->disconnect();
         <h5 class="fw-bold ms-3">School Information</h5>
 
         <!-- Button container for proper alignment -->
-        <div class="d-flex gap-2 me-3 ms-3">
-            <!-- Admin ACCOUNT button -->
-            <a href="index.php?page=account" class="btn btn-dark btn-sm btn-animate">
-                <i class="bi bi-person-vcard-fill me-2"></i><span>Account</span>
-            </a>
-            <!-- Semester button -->
-            <a href="index.php?page=semester" class="btn btn-dark btn-sm btn-animate">
-                <span>📅 Semester</span>
+        <div class="d-flex flex-wrap gap-2 justify-content-center p-3">
+            <!-- Admin Account Button -->
+            <a href="index.php?page=account" class="btn btn-outline-dark btn-sm rounded-pill shadow-sm px-3 py-2">
+                <i class="bi bi-person-vcard-fill me-2"></i> Account
             </a>
 
-            <a href="index.php?page=schoolyear" class="btn btn-dark  btn-sm btn-animate">
-                <span>🗓 School Year</span>
+            <!-- Quarterly Button -->
+            <a href="index.php?page=quarterly" class="btn btn-outline-dark btn-sm rounded-pill shadow-sm px-3 py-2">
+                <i class="bi bi-gear-fill me-2"></i> Quarterly
             </a>
 
-            <!-- Edit button with tooltip
+            <!-- Semester Button -->
+            <a href="index.php?page=semester" class="btn btn-outline-dark btn-sm rounded-pill shadow-sm px-3 py-2">
+                <i class="bi bi-sliders me-2"></i> Semester
+            </a>
+
+            <!-- School Year Button -->
+            <a href="index.php?page=schoolyear" class="btn btn-outline-dark btn-sm rounded-pill shadow-sm px-3 py-2">
+                <i class="bi bi-calendar3 me-2"></i> School Year
+            </a>
+        </div>
+
+
+        <!-- Edit button with tooltip
             <button type="button" class="btn btn-secondary btn-sm btn-animate" title="Edit" data-bs-toggle="modal" data-bs-target="#setting" data-bs-whatever="@fat">
                 <i class="bi bi-pencil-square"></i>
             </button> -->
-        </div>
+        <!-- </div> -->
     </div>
 
     <!-- Form Section -->
@@ -59,7 +71,29 @@ $mySQLFunction->disconnect();
             <label for="address" class="form-label"><i class="bi bi-geo-alt-fill me-2 text-danger"></i>Address</label>
             <input type="text" id="address" name="address" value="<?php echo ucwords(strtolower($result['school_address'])); ?>" class="form-control" autocomplete="off" disabled>
         </div>
-        <div class="col-6 mb-3 fade-in-input">
+        <div class="col-4 mb-3 fade-in-input">
+            <label for="semester" class="form-label"> <i class="bi bi-gear-fill text-secondary"></i> Quarter</label>
+            <input type="text" name="semester" value="<?php
+                                                        if (!empty($activeQuarter)) {
+                                                            foreach ($activeQuarter as $quarter) {
+                                                                echo $quarter;
+                                                            }
+                                                        } else {
+                                                            echo "No active quarter found.";
+                                                        } ?>" class="form-control" autocomplete="off" disabled>
+        </div>
+        <div class="col-4 mb-3 fade-in-input">
+            <label for="semester" class="form-label"><i class="bi bi-sliders text-success"></i> Semester</label>
+            <input type="text" name="semester" value="<?php
+                                                        if (!empty($activeSem)) {
+                                                            foreach ($activeSem as $semester) {
+                                                                echo $semester;
+                                                            }
+                                                        } else {
+                                                            echo "No active semester found.";
+                                                        } ?>" class="form-control" autocomplete="off" disabled>
+        </div>
+        <div class="col-4 mb-3 fade-in-input">
             <label for="schoolyear" class="form-label"><i class="bi bi-calendar4-week text-warning"></i> School Year</label>
             <input type="text" name="schoolyear" value="<?php
                                                         if (!empty($activeSchoolYears)) {
@@ -68,17 +102,6 @@ $mySQLFunction->disconnect();
                                                             }
                                                         } else {
                                                             echo "No active school year found.";
-                                                        } ?>" class="form-control" autocomplete="off" disabled>
-        </div>
-        <div class="col-6 mb-3 fade-in-input">
-            <label for="semester" class="form-label"><i class="bi bi-calendar-month text-success"></i> Semester</label>
-            <input type="text" name="semester" value="<?php
-                                                        if (!empty($activeSem)) {
-                                                            foreach ($activeSem as $semester) {
-                                                                echo $semester;
-                                                            }
-                                                        } else {
-                                                            echo "No active semester found.";
                                                         } ?>" class="form-control" autocomplete="off" disabled>
         </div>
     </form>

@@ -199,6 +199,9 @@ include "./includes/alert-modal.php";
         case "semester":
             require_once 'semester.php';
             break;
+        case "quarterly":
+            require_once 'quarterly.php';
+            break;
         case "account":
             require_once 'account.php';
             break;

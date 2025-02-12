@@ -133,7 +133,7 @@ $mySQLFunction->disconnect();
                                                     <span class="text-secondary">
                                                         <?php
                                                         foreach ($subject["quizzes"] as $quiz) {
-                                                            echo '<span class="text-dark">' . htmlspecialchars($quiz["quiz_quarter"]) . ' Quarter - ' . $subject["sub_semester"] . ' </span> <br> ' .
+                                                            echo '<span class="text-dark">' . htmlspecialchars($quiz["quiz_quarter"]) . ' - ' . $subject["sub_semester"] . ' </span> <br> ' .
                                                                 '<small class="text-dark ms-4">Date of Quiz : ' . date('F j, Y', strtotime($quiz["quiz_date"])) . ' </small> ';
                                                         }
                                                         ?>

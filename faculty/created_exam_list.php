@@ -103,7 +103,6 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                     <!-- <th scope="col" style="width: 50px;">#</th> -->
                                     <th scope="col" style="width: 50px;" class="text-center">Quarterly Exam</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Exam Name</th>
-                                    <th scope="col" style="width: 50px;" class="text-center">Exam Description</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Date</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Action</th>
                                 </tr>
@@ -130,7 +129,6 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                         // echo '<td>' . $count . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($exam["exam_quarter"])) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($exam["exam_title"])) . '</td>';
-                                        echo '<td class="small text-center">' . (strpos($exam["exam_desc"], '!') !== false ? '<p class="text-danger">No description</p>' :  ucwords(strtolower($exam["exam_desc"]))) . '</td>';
                                         echo '<td class="small text-center">' . date('F j, Y', strtotime($exam["exam_date"])) .  '</td>';
                                         echo '
                                         <td class="d-flex justify-content-center">
@@ -173,11 +171,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                                                 <label for="examTitle" class="form-label fw-bold">Exam Title</label>
                                                                 <input type="text" id="examTitle" name="exam_title" value="' . htmlspecialchars($exam['exam_title']) . '" class="form-control" placeholder="Enter the exam title" required>
                                                             </div>
-                                                            <div class="mb-4">
-                                                                <label for="examDescription" class="form-label fw-bold">Description</label>
-                                                                <textarea id="examDescription" name="exam_description" class="form-control" rows="3" placeholder="Enter a brief description">' . htmlspecialchars($exam['exam_desc']) . '</textarea>
-                                                            </div>
-                                        
+ 
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                         <label for="examDate" class="form-label fw-bold">Exam Date</label>
@@ -192,10 +186,10 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                                                 <label for="quarterExam" class="form-label fw-bold mt-2">Quarterly Exam</label>
                                                                 <select id="quarterExam" name="exam_quarter" class="form-select" required>
                                                                     <option  disabled value="">Select a quarter...</option>
-                                                                    <option value="1st"' . ($exam['exam_quarter'] == '1st' ? ' selected' : '') . '>1st Quarter</option>
-                                                                    <option value="2nd"' . ($exam['exam_quarter'] == '2nd' ? ' selected' : '') . '>2nd Quarter</option>
-                                                                    <option value="3rd"' . ($exam['exam_quarter'] == '3rd' ? ' selected' : '') . '>3rd Quarter</option>
-                                                                    <option value="4th"' . ($exam['exam_quarter'] == '4th' ? ' selected' : '') . '>4th Quarter</option>
+                                                                    <option value="1st Quarter"' . ($exam['exam_quarter'] == '1st Quarter' ? ' selected' : '') . '>1st Quarter</option>
+                                                                    <option value="2nd Quarter"' . ($exam['exam_quarter'] == '2nd Quarter' ? ' selected' : '') . '>2nd Quarter</option>
+                                                                    <option value="3rd Quarter"' . ($exam['exam_quarter'] == '3rd Quarter' ? ' selected' : '') . '>3rd Quarter</option>
+                                                                    <option value="4th Quarter"' . ($exam['exam_quarter'] == '4th Quarter' ? ' selected' : '') . '>4th Quarter</option>
                                                                 </select>
                                                             </div>
                                                             <hr>

@@ -83,7 +83,7 @@ $mySQLFunction->disconnect();
                                                 <?= htmlspecialchars(ucwords(strtolower($quizData["quiz_title"] ?? 'No Exam Title'))) ?>
                                             </h4>
                                             <span class="badge bg-success text-white px-3 py-2">
-                                                <?= htmlspecialchars(($quizData["quiz_quarter"] ?? 'N/A') . ' Quarter / ' . ($quizData["sub_semester"] ?? 'N/A')) ?>
+                                                <?= htmlspecialchars(($quizData["quiz_quarter"] ?? 'N/A') . ' / ' . ($quizData["sub_semester"] ?? 'N/A')) ?>
                                             </span>
                                         </div>
 

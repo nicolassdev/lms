@@ -118,7 +118,7 @@ error_reporting(E_ALL);
                         <hr class=" d-lg-none">
 
                         <ul class="nav flex-column">
-                            <li class="fw-bold dasboard text-center d-none d-lg-inline">
+                            <li class="fw-bold dasboard text-center d-none d-lg-inline mb-2">
                                 DASHBOARD
                             </li>
                             <li>

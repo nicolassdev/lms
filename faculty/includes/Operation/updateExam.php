@@ -31,7 +31,6 @@ try {
 
         $id = $_POST["examID"];
         $exam_title = trim($_POST["exam_title"] ?? '');
-        $exam_desc = trim($_POST["exam_description"] ?? '');
         $exam_duration = trim($_POST["exam_duration"] ?? '');
         $exam_quarter = trim($_POST["exam_quarter"] ?? '');
         $exam_date = trim($_POST["exam_date"] ?? '');
@@ -61,7 +60,6 @@ try {
             'exam_title' => $exam_title,
             'exam_quarter' => $exam_quarter,
             'exam_duration' => $exam_duration,
-            'exam_desc' => $exam_desc,
             'exam_date' => $exam_date,
         ];
 

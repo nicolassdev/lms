@@ -232,22 +232,22 @@ $mySQLFunction->disconnect();
 
                     <div class="profile-details">
                         <div class="row mb-1">
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-5">
                                 <strong>Email:</strong>
                                 <p><?php echo strtolower($studentInfo['stu_email']); ?></p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-5">
                                 <strong>Phone:</strong>
                                 <p>+63<?php echo $studentInfo['stu_contact']; ?></p>
                             </div>
                         </div>
 
                         <div class="row mb-1">
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-5">
                                 <strong>Role:</strong>
                                 <p><?php echo ucwords(strtolower($_SESSION["user_role"])); ?></p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-5">
                                 <strong>Gender</strong>
                                 <p><?php echo ucwords(strtolower($studentInfo['stu_gender'])); ?></p>
                             </div>
@@ -255,12 +255,12 @@ $mySQLFunction->disconnect();
 
 
                         <div class="row mb-1">
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-5">
                                 <strong>Date of Birth</strong>
                                 <p><?php echo htmlspecialchars($formattedbirthDate); ?></p>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-5">
                                 <strong>Place of Birth</strong>
                                 <p><?php echo $studentInfo['stu_pob']; ?></p>
                             </div>
@@ -270,7 +270,7 @@ $mySQLFunction->disconnect();
 
 
                         <div class="row mb-1">
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-5">
                                 <strong>Strand and Grade level:</strong>
                                 <p>
                                     <?php
@@ -284,7 +284,7 @@ $mySQLFunction->disconnect();
                                     ?>
                                 </p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-5">
                                 <strong>Section and Adviser:</strong>
                                 <p>
                                     <?php
@@ -304,13 +304,13 @@ $mySQLFunction->disconnect();
 
 
                         <div class="row mb-1">
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-5">
                                 <strong>Parents/ Guardian:</strong>
                                 <p><?php echo ucwords(strtolower($studentInfo['father_name'])); ?></br>
                                     <?php echo ucwords(strtolower($studentInfo['mother_name'])); ?></p>
 
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-5">
                                 <strong>Guardian Contact:</strong>
                                 <p>+63<?php echo  $studentInfo['parent_contact']; ?></p>
 
@@ -321,11 +321,11 @@ $mySQLFunction->disconnect();
 
 
                         <div class="row mb-1">
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-5">
                                 <strong>School Name:</strong>
                                 <p><?php echo ucwords(strtolower($showSchool['school_name'])); ?></p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-5">
                                 <strong>Address:</strong>
                                 <p><?php echo ucwords(strtolower($studentInfo['stu_address'])); ?></p>
                             </div>
@@ -334,11 +334,11 @@ $mySQLFunction->disconnect();
 
 
                         <div class="row mb-1">
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-5">
                                 <strong> Status:</strong>
                                 <p>Active</p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-5">
                                 <strong>Joined:</strong>
                                 <p><?php echo htmlspecialchars($_SESSION["STUDENT_added"]); ?></p>
                             </div>

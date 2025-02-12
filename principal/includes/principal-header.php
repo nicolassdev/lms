@@ -119,7 +119,7 @@
 
 
                         <ul class="nav flex-column ">
-                            <div class="nav-link fw-bold dasboard d-none d-lg-inline mb-3">
+                            <div class="nav-link fw-bold dasboard d-none d-lg-inline mb-4">
                                 DASHBOARD
                             </div>
                             <li class="nav-item">

@@ -87,16 +87,21 @@ include "../admin/includes/Forms/semesterform.php";
             ?>
 
             <div class="mb-4 col-5">
-                <label class="form-label">Active semester <i class="bi bi-check-circle-fill text-success"></i> </label>
-                <input type="text" class="col-md-12" name="schoolyear" value="<?php if (!empty($activeSemester)) {
-                                                                                    foreach ($activeSemester as $semester) {
-                                                                                        echo   "" . $semester . "";
-                                                                                    }
-                                                                                } else {
-                                                                                    echo "No active semester found.";
-                                                                                } ?>" class="form-control form-control-lg" autocomplete="off" disabled />
-
+                <h6 class="fw-semibold text-dark mb-2">
+                    Active Semester
+                    <i class="bi bi-check-circle-fill text-success"></i>
+                </h6>
+                <span class="badge bg-success text-white px-3 py-2 rounded-pill">
+                    <?php if (!empty($activeSemester)) {
+                        foreach ($activeSemester as $semester) {
+                            echo htmlspecialchars($semester);
+                        }
+                    } else {
+                        echo "No active semester found.";
+                    } ?>
+                </span>
             </div>
+
             <thead class="table-dark">
                 <tr>
                     <th scope="col">Semester</th>

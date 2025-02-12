@@ -24,6 +24,7 @@ $numberOfEnrolled = $mySQLFunction->checkRowCount("enroll");
 
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
+$activeQuarter = $mySQLFunction->checkQuarterStatus('quarterly');
 $mySQLFunction->disconnect();
 ?>
 
@@ -68,8 +69,9 @@ $mySQLFunction->disconnect();
                         <!-- School Year and Semester Display -->
                         <div class="col-md-12 date-display">
                             <?php
-                            if (!empty($activeSchoolYears) && !empty($activeSem)) {
+                            if (!empty($activeSchoolYears) && !empty($activeSem) && !empty($activeQuarter)) {
                                 foreach ($activeSchoolYears as $index => $schoolYear) {
+                                    echo '<div>Quarterly: ' . htmlspecialchars($activeQuarter[$index]) . '<i class="bi bi-check-circle-fill text-success ms-2"></i> </div>';
                                     echo '<div>Semester: ' . htmlspecialchars($activeSem[$index]) . '<i class="bi bi-check-circle-fill text-success ms-2"></i> </div>';
                                     echo '<div>School Year: ' . htmlspecialchars($schoolYear) . '<i class="bi bi-check-circle-fill text-success ms-2"></i></div>';
                                 }
@@ -243,7 +245,7 @@ $mySQLFunction->disconnect();
 
 
 
-     <?php
+        <?php
         include "../includes/footer.php";
         ?>
     </main>
@@ -270,4 +272,3 @@ $mySQLFunction->disconnect();
         setInterval(updateTime, 1000); // Update time every second
         updateTime(); // Initial call
     </script>
-

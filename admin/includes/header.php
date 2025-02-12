@@ -94,7 +94,7 @@ error_reporting(E_ALL);
                         <?php echo ucwords(strtolower($_SESSION["user_role"])) ?>
                     </li>
                     <hr class="mx-3 my-1">
-                    <li><a class="dropdown-item" href="?page=account">Account<i class="bi bi-box-arrow-up-right ms-3"></i></a></li>
+                    <li><a class="dropdown-item" href="?page=account">Account</a></li>
                     <li><a class="dropdown-item" href="?page=admin">Profile</a></li>
                     <li><a class="dropdown-item" href="?page=settings">Settings</a></li>
                     <li>
@@ -126,7 +126,7 @@ error_reporting(E_ALL);
 
 
                         <ul class="nav flex-column ">
-                            <div class="nav-link fs-5 fw-bold dasboard d-none d-lg-inline mb-3 ">
+                            <div class="nav-link fs-5 fw-bold dasboard d-none d-lg-inline mb-4">
                                 MENU
                             </div>
                             <li class="nav-item">

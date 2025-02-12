@@ -31,7 +31,6 @@ try {
 
         $id = $_POST["quizID"];
         $quiz_title = trim($_POST["quiz_title"] ?? '');
-        $quiz_desc = trim($_POST["quiz_description"] ?? '');
         $quiz_duration = trim($_POST["quiz_duration"] ?? '');
         $quiz_quarter = trim($_POST["quiz_quarter"] ?? '');
         $quiz_date = trim($_POST["quiz_date"] ?? '');
@@ -61,7 +60,6 @@ try {
             'quiz_title' => $quiz_title,
             'quiz_quarter' => $quiz_quarter,
             'quiz_duration' => $quiz_duration,
-            'quiz_desc' => $quiz_desc,
             'quiz_date' => $quiz_date,
         ];
 

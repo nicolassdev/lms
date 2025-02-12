@@ -19,7 +19,6 @@ try {
     $sec_id = trim($_POST["secID"] ?? '');
     $sched_id = trim($_POST["schedID"] ?? '');
     $examTitle = trim($_POST["exam_title"] ?? '');
-    $examDescription = trim($_POST["exam_description"] ?? '');
     $examDuration = trim($_POST["exam_duration"] ?? '');
     $examQuarter = trim($_POST["exam_quarter"] ?? '');
     $examDate = trim($_POST["exam_date"] ?? '');
@@ -36,9 +35,9 @@ try {
     $mySQLFunction->connection();
 
     // Insert exam details into database
-    $stmt = $mySQLFunction->con->prepare("INSERT INTO exam (exam_id, sched_id, exam_type, exam_quarter, exam_duration, exam_title, exam_desc, exam_items, exam_date) 
-                                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssssss", $exam_id, $sched_id, $examType, $examQuarter, $examDuration, $examTitle, $examDescription, $examTotal, $examDate);
+    $stmt = $mySQLFunction->con->prepare("INSERT INTO exam (exam_id, sched_id, exam_type, exam_quarter, exam_duration, exam_title, exam_items, exam_date) 
+                                          VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssss", $exam_id, $sched_id, $examType, $examQuarter, $examDuration, $examTitle, $examTotal, $examDate);
     $stmt->execute();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -99,10 +99,10 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                             <thead class="table-dark">
                                 <tr>
                                     <!-- <th scope="col" style="width: 50px;">#</th> -->
-                                    <th scope="col" style="width: 50px;" class="text-center">Quarterly Quiz</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Quiz Title</th>
-                                    <th scope="col" style="width: 50px;" class="text-center">Quiz Description</th>
+                                    <th scope="col" style="width: 50px;" class="text-center">Type of Quiz</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Date</th>
+                                    <th scope="col" style="width: 50px;" class="text-center">Quarterly</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -127,10 +127,10 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
 
                                         echo '<tr>';
                                         // echo '<td>' . $count . '</td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($quiz["quiz_quarter"])) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($quiz["quiz_title"])) . '</td>';
-                                        echo '<td class="small text-center">' . (strpos($quiz["quiz_desc"], '!') !== false ? '<p class="text-danger">No description</p>' :  ucwords(strtolower($quiz["quiz_desc"]))) . '</td>';
+                                        echo '<td class="small text-center">' . ($quiz["quiz_type"] == 0 ? "Short Quiz" : "Long Quiz") . '</td>';
                                         echo '<td class="small text-center">' . date('F j, Y', strtotime($quiz["quiz_date"])) .  '</td>';
+                                        echo '<td class="small text-center">' .  ucwords(strtolower($quiz["quiz_quarter"])) . '</td>';
                                         echo '
                                         <td class="d-flex justify-content-center">
                                         <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#edit_quiz' . $quiz['quiz_id'] . '">
@@ -172,11 +172,6 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                                                 <label for="quizTitle" class="form-label fw-bold">Quiz Title</label>
                                                                 <input type="text" id="quizTitle" name="quiz_title" value="' . htmlspecialchars($quiz['quiz_title']) . '" class="form-control" placeholder="Enter the quiz title" required>
                                                             </div>
-                                                            <div class="mb-4">
-                                                                <label for="quizDescription" class="form-label fw-bold">Description</label>
-                                                                <textarea id="quizDescription" name="quiz_description" class="form-control" rows="3" placeholder="Enter a brief description">' . htmlspecialchars($quiz['quiz_desc']) . '</textarea>
-                                                            </div>
-                                        
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                         <label for="quizDate" class="form-label fw-bold">Date</label>
@@ -191,10 +186,10 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                                                 <label for="quarterQuiz" class="form-label fw-bold mt-2">Quarterly Quiz</label>
                                                                 <select id="quarterQuiz" name="quiz_quarter" class="form-select" required>
                                                                     <option  disabled value="">Select a quarter...</option>
-                                                                    <option value="1st"' . ($quiz['quiz_quarter'] == '1st' ? ' selected' : '') . '>1st Quarter</option>
-                                                                    <option value="2nd"' . ($quiz['quiz_quarter'] == '2nd' ? ' selected' : '') . '>2nd Quarter</option>
-                                                                    <option value="3rd"' . ($quiz['quiz_quarter'] == '3rd' ? ' selected' : '') . '>3rd Quarter</option>
-                                                                    <option value="4th"' . ($quiz['quiz_quarter'] == '4th' ? ' selected' : '') . '>4th Quarter</option>
+                                                                    <option value="1st Quarter"' . ($quiz['quiz_quarter'] == '1st Quarter' ? ' selected' : '') . '>1st Quarter</option>
+                                                                    <option value="2nd Quarter"' . ($quiz['quiz_quarter'] == '2nd Quarter' ? ' selected' : '') . '>2nd Quarter</option>
+                                                                    <option value="3rd Quarter"' . ($quiz['quiz_quarter'] == '3rd Quarter' ? ' selected' : '') . '>3rd Quarter</option>
+                                                                    <option value="4th Quarter"' . ($quiz['quiz_quarter'] == '4th Quarter' ? ' selected' : '') . '>4th Quarter</option>
                                                                 </select>
                                                             </div>
                                                             <hr>
