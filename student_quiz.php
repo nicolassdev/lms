@@ -31,7 +31,7 @@ $mySQLFunction->disconnect();
 
 
 <!-- Main QUIZ -->
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-4 mt-2">
     <div class="container">
         <div class="row">
             <div class="col-12">

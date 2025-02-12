@@ -184,11 +184,12 @@ $mySQLFunction->disconnect();
                             onclick="location.href='index.php?page=index'">
                             <i class="bi bi-arrow-left-circle me-1"></i> Back
                         </button> -->
-
-                        <button type="button" class="btn btn-primary btn-sm mt-4"
-                            title="Edit" data-bs-toggle="modal" data-bs-target="#updatestudentinfo">
-                            <i class="bi bi-pencil-square me-1"></i>Edit information
-                        </button>
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-primary btn-sm mt-4"
+                                title="Edit" data-bs-toggle="modal" data-bs-target="#updatestudentinfo">
+                                <i class="bi bi-pencil-square me-1"></i>Edit information
+                            </button>
+                        </div>
                     </div>
 
                     <div class="profile-header text-center mb-3">

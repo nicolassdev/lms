@@ -20,6 +20,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
     // echo "<pre>";
     // print_r($students);
     // echo "</pre>";
+    $activeQuarter = $mySQLFunction->checkQuarterStatus('quarterly');
 }
 
 
@@ -118,16 +119,12 @@ include "../faculty/includes/Forms/createquizform.php";
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
-                                    <!-- <th scope="col" style="width: 50px;">LRN</th> -->
                                     <th scope="col" style="width: 100px;">Full name</th>
                                     <th scope="col" style="width: 50px;">Gender</th>
-                                    <th scope="col" style="width: 150px;">Address</th>
-                                    <th scope="col" style="width: 100px;">Contact</th>
-                                    <th scope="col" style="width: 100px;">Year level</th>
-                                    <th scope="col" style="width: 100px;">Section</th>
                                     <th scope="col" style="width: 100px;">Status</th>
                                     <th scope="col" style="width: 100px;">Score</th>
                                     <th scope="col" style="width: 100px;">Total Items</th>
+                                    <th scope="col" style="width: 100px;">Transmutation Grade</th>
 
                                 </tr>
                             </thead>
@@ -137,41 +134,50 @@ include "../faculty/includes/Forms/createquizform.php";
                                     $count = 1;
                                     foreach ($students as $row) {
                                         // Split the file names into an array
-                                        $scores = explode(',', $row['quiz_scores']); // Split the file names by comma
+                                        $scores = explode(',', $row['quiz_scores'] ?? '');
 
-                                        // Loop through the file names and generate download links
-                                        echo '<tr>';
-                                        echo '<td>' . $count . '</td>';
-                                        // echo '<td class="text-center text-primary"><a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">' . $row["stu_lrn"] . '</a></td>';
-                                        echo '<td class="small text-center"> ' . $row["stu_lname"] . ', ' .  ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"] . '')) . '</td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
-                                        echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
-                                        echo '<td class="small text-center">' .  $row["grade_lvl"] . '</td>';
-                                        echo '<td class="small text-center">' .  $row["section_name"] . '</td>';
+                                        // Determine if the student's quarter matches the active quarter
+                                        $isCurrentQuarter = in_array($row["quarter"], explode(",", implode(",", $activeQuarter)));
 
-                                        // Check if there are no quiz uploaded 
-                                        //THIS  Shorter CONDITIONAL 
+                                        // Determine status
                                         $status = (!empty($row['quiz_scores']) && count($scores) > 0);
-                                        echo '<td class="text-center"><span class=" ' . ($status ? 'text-success"><i class="bi bi-check-circle"></i> Done' : 'text-danger"><i class="bi bi-x-circle"></i> No Exam') . '</span></td>';
-                                        echo '<td class="text-center"><span class=" ' . ($status ? 'text-success">' . htmlspecialchars($row['quiz_scores']) : 'text-danger">0') . '</span></td>';
-                                        echo '<td class="text-center"><span class=" ' . ($status ? 'text-success">' . htmlspecialchars($row['quiz_items']) : 'text-danger">0') . '</span></td>';
+
+                                        echo '<tr>';
+                                        echo '<td class="text-center fw-bold">' . $count . '</td>';
+                                        echo '<td class="text-center">' . $row["stu_lname"] . ', ' . ucwords(strtolower($row["stu_fname"])) . ' </td>';
+                                        echo '<td class="text-center">' . ucwords(strtolower($row["stu_gender"])) . '</td>';
+
+                                        echo '<td class="text-center">';
+                                        if ($isCurrentQuarter) {
+                                            if ($status) {
+                                                echo '<span class="badge bg-success" data-bs-toggle="tooltip" title="Exam Completed"><i class="bi bi-check-circle"></i> Done</span>';
+                                            } else {
+                                                echo '<span class="badge bg-danger" data-bs-toggle="tooltip" title="No Exam Uploaded"><i class="bi bi-x-circle"></i> No Exam</span>';
+                                            }
+                                        } else {
+                                            // Default to "No Exam" if quarter does not match
+                                            echo '<span class="badge bg-danger" data-bs-toggle="tooltip" title="No Exam Available"><i class="bi bi-x-circle"></i> No Exam</span>';
+                                        }
+                                        echo '</td>';
+
+                                        // Hide exam scores, total items, and equivalent if quarter does not match
+                                        if ($isCurrentQuarter) {
+                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['quiz_scores']) : '0') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['quiz_items']) : '0') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['equivalent']) : '0') . '</td>';
+                                        } else {
+                                            echo '<td class="text-center text-muted">-</td>';
+                                            echo '<td class="text-center text-muted">-</td>';
+                                            echo '<td class="text-center text-muted">-</td>';
+                                        }
 
                                         echo '</tr>';
                                         $count++;
                                     }
-                                } else {
-                                    echo '<tr>
-                                <td colspan="10" class="text-center mt-2 text-danger"><strong>Student not found.</strong>
-                                </td>
-                              </tr>';
                                 }
-
-                                echo '</tbody>';
-                                echo '</table>';
-                                $mySQLFunction->disconnect();
                                 ?>
-
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

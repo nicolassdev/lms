@@ -142,8 +142,6 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                         
                                         </td>';
 
-                                        $count++;
-
                                         // todo Modal for editing quiz
 
                                         echo '

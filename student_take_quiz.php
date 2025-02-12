@@ -39,7 +39,7 @@ $mySQLFunction->disconnect();
 ?>
 
 <main class="col-md-12 ms-sm-auto col-lg-10">
-    <div class="container my-3">
+    <div class="container my-4">
         <div class="row">
             <div class="col-md-12">
                 <!-- Exam Header Section -->

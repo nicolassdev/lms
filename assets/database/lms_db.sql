@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 10, 2025 at 01:45 PM
+-- Generation Time: Feb 12, 2025 at 08:35 PM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.12
 
@@ -69,7 +69,6 @@ CREATE TABLE `exam` (
   `exam_quarter` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `exam_duration` int NOT NULL,
   `exam_title` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `exam_desc` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `exam_items` tinyint NOT NULL,
   `exam_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -78,9 +77,10 @@ CREATE TABLE `exam` (
 -- Dumping data for table `exam`
 --
 
-INSERT INTO `exam` (`exam_id`, `sched_id`, `exam_type`, `exam_quarter`, `exam_duration`, `exam_title`, `exam_desc`, `exam_items`, `exam_date`) VALUES
-('EXM-7725', 'SCHED-3005', '1,4,1', '1st', 10, 'EXAM1', 'EXAM1', 3, '2025-02-05'),
-('EXM-9212', 'SCHED-0950', '2,2,2,1', '1st', 3, 'exam1', 'exam1', 10, '2025-02-07');
+INSERT INTO `exam` (`exam_id`, `sched_id`, `exam_type`, `exam_quarter`, `exam_duration`, `exam_title`, `exam_items`, `exam_date`) VALUES
+('EXM-5171', 'SCHED-1393', '2', '1st Quarter', 1, 'EXAM1', 3, '2025-02-12'),
+('EXM-6992', 'SCHED-3005', '1,1,1,1,1,1,1,2', '1st Quarter', 10, 'ENGLISH FOR ACADEMIC AND PROFESSIONAL', 10, '2025-02-13'),
+('EXM-9212', 'SCHED-0950', '2,2,2,1', '1st Quarter', 3, 'exam1', 10, '2025-02-07');
 
 -- --------------------------------------------------------
 
@@ -102,7 +102,9 @@ CREATE TABLE `exam_enumeration` (
 INSERT INTO `exam_enumeration` (`enum_id`, `exam_id`, `enum_question`, `enum_answer`) VALUES
 (47, 'EXM-9212', 'name of may pet', 'cleo, waffle, lucky'),
 (48, 'EXM-9212', 'types of programming lang', 'php, python, csharp'),
-(49, 'EXM-9212', 'give type of sense of human', 'smell, touch, see');
+(49, 'EXM-9212', 'give type of sense of human', 'smell, touch, see'),
+(50, 'EXM-5171', 'ASDSA', 'dsadsa,dasdsa ,asdsa'),
+(51, 'EXM-6992', 'Give at least 3 human sense', 'smell, touch, see');
 
 -- --------------------------------------------------------
 
@@ -125,11 +127,11 @@ CREATE TABLE `exam_essay` (
 CREATE TABLE `exam_multiple` (
   `mul_id` int NOT NULL,
   `exam_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
-  `mul_question` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `choice_a` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `choice_b` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `choice_c` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `choice_d` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `mul_question` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `choice_a` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `choice_b` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `choice_c` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `choice_d` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `is_correct` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -138,9 +140,14 @@ CREATE TABLE `exam_multiple` (
 --
 
 INSERT INTO `exam_multiple` (`mul_id`, `exam_id`, `mul_question`, `choice_a`, `choice_b`, `choice_c`, `choice_d`, `is_correct`) VALUES
-(26, 'EXM-7725', 'TODAY IS THE GOOD DAY TO ? ', 'DIE ', 'SMILE ', 'GO AWAY', 'OKAY', 'DIE '),
-(27, 'EXM-7725', 'What is the biggest planet in galaxy?', 'Saturn', 'Jupiter', 'Mars', 'Venus', 'Jupiter'),
-(32, 'EXM-9212', 'What is may name ?', 'Anthony', 'John', 'Bayong', 'TUBOL', 'Anthony');
+(32, 'EXM-9212', 'What is may name ?', 'Anthony', 'John', 'Bayong', 'TUBOL', 'Anthony'),
+(33, 'EXM-6992', 'What is the main idea of the passage?', ' The cost of solar panels is decreasing.', ' Renewable energy technologies are becoming more popular.', 'Sustainable energy sources are in high demand.', 'Solar energy is the most viable option for many countries.', 'Sustainable energy sources are in high demand.'),
+(34, 'EXM-6992', 'What is the main benefit of implementing a four-day workweek, according to the study?', ' Increased productivity', 'Improved work-life balance', ' Reduced overhead costs', ' All of the above', ' Increased productivity'),
+(35, 'EXM-6992', 'What is coniosis means?', 'disease of the lungs', 'very small', 'brain musces', 'None', 'disease of the lungs'),
+(36, 'EXM-6992', 'Choose the correct definition of the word \"demographics\"', 'The study of population statistics.', ' The study of economic trends.', 'The study of social and cultural influences.', 'The study of environmental impacts', 'The study of population statistics.'),
+(37, 'EXM-6992', 'The study of environmental impacts', 'Capable of succeeding or being effective.', 'Capable of being maintained or continued.', 'Capable of being used or applied.', 'Capable of being sold or marketed', 'Capable of succeeding or being effective.'),
+(38, 'EXM-6992', 'Choose the correct definition of the word \"sustainable\".', 'Capable of being maintained at a certain rate or level.', 'Able to be used without being completely used up or destroyed.', 'Relating to the protection of the environment.', 'All of the above', 'All of the above'),
+(39, 'EXM-6992', 'What is the biggest planet?', 'Earth', 'Mars', 'Venus', 'Jupiter', 'Jupiter');
 
 -- --------------------------------------------------------
 
@@ -154,13 +161,6 @@ CREATE TABLE `exam_tf` (
   `tf_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `tf_answer` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `exam_tf`
---
-
-INSERT INTO `exam_tf` (`tf_id`, `exam_id`, `tf_question`, `tf_answer`) VALUES
-(18, 'EXM-7725', 'Anthony is handsome?', 'true');
 
 -- --------------------------------------------------------
 
@@ -183,7 +183,7 @@ CREATE TABLE `module` (
 --
 
 INSERT INTO `module` (`module_id`, `file_name`, `file_size`, `formatted_size`, `file_type`, `sched_id`, `date_uploaded`) VALUES
-('MOD-2458', '../../faculty/module_uploaded/home.png', 845, '845 B', 'image/png', 'SCHED-3005', '2025-02-04 23:17:46');
+('MOD-5107', '../../faculty/module_uploaded/csi.png', 8461, '8.26 KB', 'image/png', 'SCHED-3005', '2025-02-11 01:44:49');
 
 -- --------------------------------------------------------
 
@@ -231,6 +231,27 @@ INSERT INTO `principal` (`principal_id`, `firstname`, `middlename`, `lastname`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `quarterly`
+--
+
+CREATE TABLE `quarterly` (
+  `quarterly_name` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `quarterly`
+--
+
+INSERT INTO `quarterly` (`quarterly_name`, `status`) VALUES
+('1st Quarter', 'Active'),
+('2nd Quarter', 'Inactive'),
+('3rd Quarter', 'Inactive'),
+('4th Quarter', 'Inactive');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `quiz`
 --
 
@@ -241,7 +262,6 @@ CREATE TABLE `quiz` (
   `quiz_quarter` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `quiz_duration` int NOT NULL,
   `quiz_title` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `quiz_desc` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `quiz_items` tinyint NOT NULL,
   `quiz_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -250,8 +270,9 @@ CREATE TABLE `quiz` (
 -- Dumping data for table `quiz`
 --
 
-INSERT INTO `quiz` (`quiz_id`, `sched_id`, `quiz_type`, `quiz_quarter`, `quiz_duration`, `quiz_title`, `quiz_desc`, `quiz_items`, `quiz_date`) VALUES
-('QZ-8035', 'SCHED-1393', 0, '1st', 10, 'quiz 1', 'quiz 1', 10, '2025-02-09');
+INSERT INTO `quiz` (`quiz_id`, `sched_id`, `quiz_type`, `quiz_quarter`, `quiz_duration`, `quiz_title`, `quiz_items`, `quiz_date`) VALUES
+('QZ-8035', 'SCHED-1393', 0, '1st Quarter', 10, 'quiz 1', 10, '2025-02-09'),
+('QZ-9256', 'SCHED-3238', 0, '1st Quarter', 1, 'sample', 7, '2025-02-12');
 
 -- --------------------------------------------------------
 
@@ -271,7 +292,8 @@ CREATE TABLE `quiz_enumeration` (
 --
 
 INSERT INTO `quiz_enumeration` (`q_enum_id`, `quiz_id`, `q_enum_question`, `q_enum_answer`) VALUES
-(7, 'QZ-8035', 'Give types of sense', 'see, touch, smell');
+(7, 'QZ-8035', 'Give types of sense', 'see, touch, smell'),
+(8, 'QZ-9256', 'Give the name of planets ', 'mars, venus, earth, jupiter, saturn, uranos, pluto');
 
 -- --------------------------------------------------------
 
@@ -302,11 +324,11 @@ INSERT INTO `quiz_essay` (`q_essay_id`, `quiz_id`, `q_essay_question`) VALUES
 CREATE TABLE `quiz_multiple` (
   `q_mul_id` int NOT NULL,
   `quiz_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
-  `q_mul_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `q_choice_a` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `q_choice_b` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `q_choice_c` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `q_choice_d` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `q_mul_question` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `q_choice_a` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `q_choice_b` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `q_choice_c` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `q_choice_d` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `is_correct` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -455,8 +477,8 @@ INSERT INTO `section` (`section_code`, `strand_code`, `grade_lvl`, `section_name
 --
 
 CREATE TABLE `semester` (
-  `semester_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+  `semester_name` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -563,19 +585,18 @@ CREATE TABLE `student_answers` (
 --
 
 INSERT INTO `student_answers` (`answer_id`, `stu_lrn`, `exam_id`, `quiz_id`, `question_id`, `question_type`, `student_answer`, `submitted_at`) VALUES
-(183, '114497427472', 'EXM-7725', NULL, 26, 'multiple_choice', 'DIE ', '2025-02-05 15:12:12'),
-(184, '114497427472', 'EXM-7725', NULL, 27, 'multiple_choice', 'Jupiter', '2025-02-05 15:12:12'),
-(185, '114497427472', 'EXM-7725', NULL, 18, 'true_false', 'true', '2025-02-05 15:12:12'),
 (190, '114423232323', 'EXM-9212', NULL, 32, 'multiple_choice', 'Anthony', '2025-02-07 17:01:16'),
 (191, '114423232323', 'EXM-9212', NULL, 47, 'enumeration', 'cleo, waffle, lucky', '2025-02-07 17:01:16'),
 (192, '114423232323', 'EXM-9212', NULL, 48, 'enumeration', 'php, python, daekoaram', '2025-02-07 17:01:16'),
 (193, '114423232323', 'EXM-9212', NULL, 49, 'enumeration', 'smell, touch, see', '2025-02-07 17:01:16'),
-(204, '124167743724', NULL, 'QZ-8035', 16, 'multiple_choice', 'anthony', '2025-02-10 10:44:01'),
-(205, '124167743724', NULL, 'QZ-8035', 17, 'multiple_choice', '11akd', '2025-02-10 10:44:01'),
-(206, '124167743724', NULL, 'QZ-8035', 18, 'multiple_choice', 'tinay', '2025-02-10 10:44:01'),
-(207, '124167743724', NULL, 'QZ-8035', 7, 'enumeration', 'smell,touch, see', '2025-02-10 10:44:01'),
-(208, '124167743724', NULL, 'QZ-8035', 7, 'true_false', 'true', '2025-02-10 10:44:01'),
-(209, '124167743724', NULL, 'QZ-8035', 8, 'true_false', 'true', '2025-02-10 10:44:01');
+(218, '124167743724', 'EXM-6992', NULL, 33, 'multiple_choice', 'Sustainable energy sources are in high demand.', '2025-02-12 16:30:59'),
+(219, '124167743724', 'EXM-6992', NULL, 34, 'multiple_choice', ' All of the above', '2025-02-12 16:30:59'),
+(220, '124167743724', 'EXM-6992', NULL, 35, 'multiple_choice', 'disease of the lungs', '2025-02-12 16:30:59'),
+(221, '124167743724', 'EXM-6992', NULL, 36, 'multiple_choice', 'The study of population statistics.', '2025-02-12 16:30:59'),
+(222, '124167743724', 'EXM-6992', NULL, 37, 'multiple_choice', 'Capable of succeeding or being effective.', '2025-02-12 16:30:59'),
+(223, '124167743724', 'EXM-6992', NULL, 38, 'multiple_choice', 'All of the above', '2025-02-12 16:30:59'),
+(224, '124167743724', 'EXM-6992', NULL, 39, 'multiple_choice', 'Jupiter', '2025-02-12 16:30:59'),
+(225, '124167743724', 'EXM-6992', NULL, 51, 'enumeration', 'smell, touch, hear', '2025-02-12 16:30:59');
 
 -- --------------------------------------------------------
 
@@ -600,7 +621,7 @@ CREATE TABLE `student_scores` (
 
 INSERT INTO `student_scores` (`score_id`, `stu_lrn`, `exam_id`, `quiz_id`, `total_questions`, `correct_answers`, `equivalent_score`, `created_at`) VALUES
 (61, '114423232323', 'EXM-9212', NULL, 10, 9, 90.00, '2025-02-07 17:01:16'),
-(64, '124167743724', NULL, 'QZ-8035', 10, 6, 83.00, '2025-02-10 10:44:01');
+(66, '124167743724', 'EXM-6992', NULL, 10, 8, 89.00, '2025-02-12 16:30:59');
 
 -- --------------------------------------------------------
 
@@ -655,8 +676,8 @@ INSERT INTO `subject` (`sub_code`, `sub_title`, `sub_type`, `sub_time`, `sub_sem
 --
 
 CREATE TABLE `sy` (
-  `school_year` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+  `school_year` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -961,7 +982,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `exam_enumeration`
 --
 ALTER TABLE `exam_enumeration`
-  MODIFY `enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `exam_essay`
@@ -973,7 +994,7 @@ ALTER TABLE `exam_essay`
 -- AUTO_INCREMENT for table `exam_multiple`
 --
 ALTER TABLE `exam_multiple`
-  MODIFY `mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `exam_tf`
@@ -985,7 +1006,7 @@ ALTER TABLE `exam_tf`
 -- AUTO_INCREMENT for table `quiz_enumeration`
 --
 ALTER TABLE `quiz_enumeration`
-  MODIFY `q_enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `q_enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `quiz_essay`
@@ -1015,13 +1036,13 @@ ALTER TABLE `school`
 -- AUTO_INCREMENT for table `student_answers`
 --
 ALTER TABLE `student_answers`
-  MODIFY `answer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=210;
+  MODIFY `answer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=226;
 
 --
 -- AUTO_INCREMENT for table `student_scores`
 --
 ALTER TABLE `student_scores`
-  MODIFY `score_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `score_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `users`

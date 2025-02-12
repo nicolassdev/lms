@@ -1009,6 +1009,59 @@ class myDataBase
     }
 
     //Check how man enrolled in section 
+    public function setStudentEquivalentScoreBySubject($teacher_id)
+    {
+        $sql = "
+        SELECT 
+            b.stu_lrn,
+            b.stu_lname,
+            b.stu_fname,
+            b.stu_mname,
+            b.stu_gender,
+            b.stu_contact,
+            b.stu_address,
+            b.stu_email,
+            s.section_name, 
+            s.grade_lvl,
+            sub.sub_title AS subject,
+            COUNT(DISTINCT e.stu_lrn) AS enrolled_count, -- Count students per section
+            GROUP_CONCAT(DISTINCT sc.quiz_id) AS quiz_ids,
+            GROUP_CONCAT(DISTINCT sc.exam_id) AS exam_ids,
+            GROUP_CONCAT(DISTINCT ex.exam_quarter) AS quarter,
+            GROUP_CONCAT(DISTINCT sc.equivalent_score) AS equivalent_scores, 
+            GROUP_CONCAT(DISTINCT sc.total_questions) AS exam_items,
+            GROUP_CONCAT(DISTINCT sc.correct_answers) AS exam_scores
+        FROM 
+            enroll e
+        INNER JOIN 
+            section s ON e.section_code = s.section_code
+        INNER JOIN 
+            student b ON e.stu_lrn = b.stu_lrn
+        LEFT JOIN
+            student_scores sc ON e.stu_lrn = sc.stu_lrn
+        LEFT JOIN
+            schedule sch ON s.section_code = sch.section_code 
+        LEFT JOIN
+            subject sub ON sch.sub_code = sub.sub_code 
+        LEFT JOIN
+            exam ex ON ex.sched_id = sch.sched_id 
+        WHERE 
+            s.teacher_id = ?
+        GROUP BY 
+            b.stu_lrn, b.stu_lname, b.stu_fname, b.stu_gender, 
+            b.stu_contact, b.stu_address, b.stu_email,
+            s.section_name, s.grade_lvl, sub.sub_title
+    ";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $teacher_id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        return $result;
+    }
+
+
     public function checkEnrolledCountByTeacher($teacher_id)
     {
         $sql = "
@@ -1016,9 +1069,6 @@ class myDataBase
                 b.*, 
                 s.section_name, 
                 s.grade_lvl,
-                sc.quiz_id,
-                sc.exam_id,
-                sc.equivalent_score, 
                 COUNT(e.stu_lrn) OVER (PARTITION BY s.section_code) AS enrolled_count
             FROM 
                 enroll e
@@ -1026,8 +1076,6 @@ class myDataBase
                 section s ON e.section_code = s.section_code
             INNER JOIN 
                 student b ON e.stu_lrn = b.stu_lrn
-            LEFT JOIN
-                student_scores sc ON e.stu_lrn = sc.stu_lrn
             WHERE 
                 s.teacher_id = ?
         ";
@@ -1039,6 +1087,8 @@ class myDataBase
 
         return $result;
     }
+
+
 
     public function getAllStudentDetailsBySectionOfTeacher($teacher_id)
     {
@@ -1152,10 +1202,12 @@ class myDataBase
                     sched.sched_id,
                     sub.sub_title,
                     sub.sub_semester,
+                    GROUP_CONCAT(ex.exam_quarter) AS quarter,
                     GROUP_CONCAT(sq.total_questions) AS quiz_items,
                     GROUP_CONCAT(sq.correct_answers) AS quiz_scores,
                     GROUP_CONCAT(se.total_questions) AS exam_items,
                     GROUP_CONCAT(se.correct_answers) AS exam_scores,
+                    GROUP_CONCAT(se.equivalent_score) AS equivalent,
                     GROUP_CONCAT(ma.file_name ORDER BY ma.date_uploaded DESC) AS file_names,  -- Concatenate files
                     GROUP_CONCAT(ma.date_uploaded ORDER BY ma.date_uploaded DESC) AS upload_dates,  -- Concatenate dates
                     COUNT(e.stu_lrn) OVER (PARTITION BY sec.section_code) AS enrolled_count 
@@ -1750,7 +1802,7 @@ class myDataBase
     //Check active STATUS in semester
     public function checkQuarterStatus($table)
     {
-        $semesters = [];
+        $quarter = [];
 
         // Prepare the SQL query to get the active semester name
         $sql = "SELECT `quarterly_name` 
@@ -1764,11 +1816,11 @@ class myDataBase
         if ($result && $result->num_rows > 0) {
             // Fetch the active semester(s)
             while ($row = $result->fetch_assoc()) {
-                $semesters[] = $row['quarterly_name'];
+                $quarter[] = $row['quarterly_name'];
             }
 
             // Return the active semester(s)
-            return $semesters;
+            return $quarter;
         } else {
             return []; // Return an empty array if no active semester is found
         }

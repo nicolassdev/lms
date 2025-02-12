@@ -138,13 +138,13 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                     $count = 1;
                                     foreach ($students as $row) {
                                         // Split the file names into an array
-                                        $fileNames = explode(',', $row['file_names']); // Split the file names by comma
+                                        $fileNames = explode(',', $row['file_names'] ?? ''); // Split the file names by comma
 
                                         // Loop through the file names and generate download links
                                         echo '<tr>';
                                         echo '<td>' . $count . '</td>';
                                         // echo '<td class="text-center text-primary"><a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">' . $row["stu_lrn"] . '</a></td>';
-                                        echo '<td class="small text-center"> ' . $row["stu_lname"] . ', ' .  ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"] . '')) . '</td>';
+                                        echo '<td class="small text-center"> ' . $row["stu_lname"] . ', ' .  ucwords(strtolower($row["stu_fname"] .  '')) . '</td>';
                                         // echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
                                         // echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
                                         // echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
