@@ -48,7 +48,7 @@ $mySQLFunction->disconnect();
                     <div class="card mb-2 shadow-lg border-0">
                         <div class="card-body text-center <?php echo $isQuizTaken ? 'bg-dark' : 'bg-success'; ?> text-white rounded position-relative">
                             <div class="d-flex flex-column align-items-end">
-                                <a <?php echo $isQuizTaken ? 'href="index.php?page=student_quiz_result" ' : 'href="index.php?page=student_exam" ' ?> class="btn btn-sm btn-outline-light mt-2"> Back</a>
+                                <a <?php echo $isQuizTaken ? 'href="index.php?page=student_quiz_result" ' : 'href="index.php?page=student_quiz" ' ?> class="btn btn-sm btn-outline-light mt-2"> Back</a>
                                 <div class="w-100  text-center"> <?php if ($isQuizTaken): ?>
                                         <h1 class="card-title fw-bold">Done <i class="bi bi-check-circle-fill fs-3 text-success"></i></h1>
                                         <p class="card-text"> You have already taken this quiz. </p>

@@ -94,10 +94,10 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                             <thead class="table-dark">
                                 <tr>
                                     <th>#</th>
-                                    <th>Filename</th>
+                                    <th>Module name</th>
                                     <th>Date Uploaded</th>
                                     <th>Uploaded by</th>
-                                    <th class="text-center">Module</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
 

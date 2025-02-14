@@ -47,9 +47,6 @@ switch ($page) {
     case "student_assignment":
         require_once 'student_assignment.php';
         break;
-    case "student_grade":
-        require_once 'student_grade.php';
-        break;
     case "student_account":
         require_once 'student_account.php';
         break;
@@ -84,6 +81,17 @@ switch ($page) {
 
     case "student_quiz_result":
         require_once 'student_quiz_result.php';
+        break;
+
+        /** 
+        Grades Routes 
+         */
+    case "student_exam_grade":
+        require_once 'student_exam_grade.php';
+        break;
+
+    case "student_quiz_grade":
+        require_once 'student_quiz_grade.php';
         break;
 
     default:

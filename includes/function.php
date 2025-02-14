@@ -1008,50 +1008,52 @@ class myDataBase
         }
     }
 
-    //Check how man enrolled in section 
-    public function setStudentEquivalentScoreBySubject($teacher_id)
+
+    // DYNAMIC FUNCTION TO GET THE EQUIVALENT SCORE OF STUDENT - TEACHER SIDE
+    public function setEquivalentScoreBySubjectOfStudent($teacher_id, $type)
     {
+        // Determine whether to fetch exam or quiz data
+        $id_column = ($type === 'exam') ? 'sc.exam_id' : 'sc.quiz_id';
+        $title_column = ($type === 'exam') ? 'ex.exam_quarter' : 'qz.quiz_quarter';
+        $join_table = ($type === 'exam') ? 'exam ex' : 'quiz qz';
+        $join_condition = ($type === 'exam') ? 'sc.exam_id = ex.exam_id' : 'sc.quiz_id = qz.quiz_id';
+
         $sql = "
-        SELECT 
-            b.stu_lrn,
-            b.stu_lname,
-            b.stu_fname,
-            b.stu_mname,
-            b.stu_gender,
-            b.stu_contact,
-            b.stu_address,
-            b.stu_email,
-            s.section_name, 
-            s.grade_lvl,
-            sub.sub_title AS subject,
-            COUNT(DISTINCT e.stu_lrn) AS enrolled_count, -- Count students per section
-            GROUP_CONCAT(DISTINCT sc.quiz_id) AS quiz_ids,
-            GROUP_CONCAT(DISTINCT sc.exam_id) AS exam_ids,
-            GROUP_CONCAT(DISTINCT ex.exam_quarter) AS quarter,
-            GROUP_CONCAT(DISTINCT sc.equivalent_score) AS equivalent_scores, 
-            GROUP_CONCAT(DISTINCT sc.total_questions) AS exam_items,
-            GROUP_CONCAT(DISTINCT sc.correct_answers) AS exam_scores
-        FROM 
-            enroll e
-        INNER JOIN 
-            section s ON e.section_code = s.section_code
-        INNER JOIN 
-            student b ON e.stu_lrn = b.stu_lrn
-        LEFT JOIN
-            student_scores sc ON e.stu_lrn = sc.stu_lrn
-        LEFT JOIN
-            schedule sch ON s.section_code = sch.section_code 
-        LEFT JOIN
-            subject sub ON sch.sub_code = sub.sub_code 
-        LEFT JOIN
-            exam ex ON ex.sched_id = sch.sched_id 
-        WHERE 
-            s.teacher_id = ?
-        GROUP BY 
-            b.stu_lrn, b.stu_lname, b.stu_fname, b.stu_gender, 
-            b.stu_contact, b.stu_address, b.stu_email,
-            s.section_name, s.grade_lvl, sub.sub_title
-    ";
+            SELECT 
+                b.stu_lrn,
+                b.stu_lname,
+                b.stu_fname,
+                b.stu_mname,
+                b.stu_gender,
+                b.stu_contact,
+                b.stu_address,
+                b.stu_email,
+                s.section_name, 
+                s.grade_lvl,
+                sub.sub_title AS subject,
+                GROUP_CONCAT(DISTINCT $title_column) AS quarter,
+                GROUP_CONCAT(DISTINCT sc.equivalent_score) AS equivalent_scores, 
+                GROUP_CONCAT(DISTINCT sc.total_questions) AS total_items,
+                GROUP_CONCAT(DISTINCT sc.correct_answers) AS scores
+            FROM 
+                enroll e
+            INNER JOIN 
+                section s ON e.section_code = s.section_code
+            INNER JOIN 
+                student b ON e.stu_lrn = b.stu_lrn
+            LEFT JOIN
+                student_scores sc ON e.stu_lrn = sc.stu_lrn
+            LEFT JOIN
+                subject sub ON sc.sub_code = sub.sub_code 
+            LEFT JOIN
+                $join_table ON $join_condition AND $id_column IS NOT NULL
+            WHERE 
+                s.teacher_id = ?
+            GROUP BY 
+                b.stu_lrn, b.stu_lname, b.stu_fname, b.stu_gender, 
+                b.stu_contact, b.stu_address, b.stu_email,
+                s.section_name, s.grade_lvl, sub.sub_title
+        ";
 
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("s", $teacher_id);
@@ -1061,7 +1063,56 @@ class myDataBase
         return $result;
     }
 
+    // DYNAMIC FUNCTION TO GET THE EQUIVALENT SCORE BY INDIVIDUAL STUDENT PER SUBJECT - STUDENT SIDE
+    public function getEquivalentScoreBySubjectOfIndividualStudent($student_lrn, $type)
+    {
+        // Determine whether to fetch exam or quiz data
+        $id_column = ($type === 'exam') ? 'sc.exam_id' : 'sc.quiz_id';
+        $title_column = ($type === 'exam') ? 'ex.exam_quarter' : 'qz.quiz_quarter';
+        $join_table = ($type === 'exam') ? 'exam ex' : 'quiz qz';
+        $join_condition = ($type === 'exam') ? 'sc.exam_id = ex.exam_id' : 'sc.quiz_id = qz.quiz_id';
 
+        $sql = "
+        SELECT 
+            b.stu_lrn,
+            b.stu_lname,
+            b.stu_fname,
+            b.stu_mname,
+            s.section_name, 
+            s.grade_lvl,
+            sub.sub_title AS subject,
+            $title_column AS quarter,
+            sc.total_questions AS total_items,
+            sc.correct_answers AS scores,
+            sc.equivalent_score AS equivalent_scores
+        FROM 
+            enroll e
+        INNER JOIN 
+            section s ON e.section_code = s.section_code
+        INNER JOIN 
+            student b ON e.stu_lrn = b.stu_lrn
+        LEFT JOIN
+            student_scores sc ON e.stu_lrn = sc.stu_lrn
+        LEFT JOIN
+            subject sub ON sc.sub_code = sub.sub_code 
+        LEFT JOIN
+            $join_table ON $join_condition AND $id_column IS NOT NULL
+        WHERE 
+            b.stu_lrn = ?
+        ORDER BY 
+            sub.sub_title, quarter
+        ";
+
+        $stmt = $this->con->prepare($sql);
+        $stmt->bind_param("s", $student_lrn);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        return $result;
+    }
+
+
+    //Check how man enrolled in section 
     public function checkEnrolledCountByTeacher($teacher_id)
     {
         $sql = "
@@ -3732,21 +3783,21 @@ class myDataBase
     }
 
     // INSERT ANSWER OF STUDENT 
-    // Insert function fo student answers table if QUIZ OR EXAM
+    // Insert function is dynamically to student answers table if QUIZ OR EXAM 
     // NOTE: if quiz will be inserted exam will be null same in exam
-    public function insertStudentAnswer($stud_id, $exam_id, $quiz_id, $question_id, $question_type, $student_answer)
+    public function insertStudentAnswer($stud_id, $sub_code, $exam_id, $quiz_id, $question_id, $question_type, $student_answer)
     {
         try {
             if (!empty($exam_id)) {
-                $sql = "INSERT INTO student_answers (stu_lrn, exam_id, quiz_id, question_id, question_type, student_answer) 
-                        VALUES (?, ?, NULL, ?, ?, ?)";
+                $sql = "INSERT INTO student_answers (stu_lrn, sub_code,  exam_id, quiz_id, question_id, question_type, student_answer) 
+                        VALUES (?, ?, ?, NULL, ?, ?, ?)";
                 $stmt = $this->con->prepare($sql);
-                $stmt->bind_param("ssiss", $stud_id, $exam_id,  $question_id, $question_type, $student_answer);
+                $stmt->bind_param("sssiss", $stud_id, $sub_code, $exam_id,  $question_id, $question_type, $student_answer);
             } elseif (!empty($quiz_id)) {
-                $sql = "INSERT INTO student_answers (stu_lrn, exam_id, quiz_id, question_id, question_type, student_answer) 
-                        VALUES (?, NULL, ?, ?, ?, ?)";
+                $sql = "INSERT INTO student_answers (stu_lrn, sub_code, exam_id, quiz_id, question_id, question_type, student_answer) 
+                        VALUES (?, ?, NULL, ?, ?, ?, ?)";
                 $stmt = $this->con->prepare($sql);
-                $stmt->bind_param("ssiss", $stud_id, $quiz_id, $question_id, $question_type, $student_answer);
+                $stmt->bind_param("sssiss", $stud_id, $sub_code, $quiz_id, $question_id, $question_type, $student_answer);
             }
 
             if ($stmt) {
@@ -4096,7 +4147,8 @@ class myDataBase
 
 
 
-    // CALCULATE THE SCORE OF STUDENT 
+    // CALCULATE THE EQUIVALENT SCORE OF STUDENT 
+    // NOTE : This function is dynamiclly fetch and inserting the equiavalent score of student
     public function calculateAndStoreStudentScore($stud_id, $exam_id = null, $quiz_id = null)
     {
         // Initialize scores
@@ -4110,7 +4162,7 @@ class myDataBase
         // Query to fetch student answers and match them with correct answers
         $sql = "
         SELECT 
-            sa.question_id, sa.question_type, sa.student_answer,
+            sa.question_id, sa.sub_code, sa.question_type, sa.student_answer,
             CASE 
                 WHEN sa.question_type = 'multiple_choice' 
                     THEN COALESCE(em.is_correct, qm.is_correct) -- Exam or Quiz Multiple Choice
@@ -4142,6 +4194,9 @@ class myDataBase
         while ($row = $result->fetch_assoc()) {
             $total_items = (int) $row['total_items']; // Get the total items from exam/quiz table
             $total_questions++;
+
+            //Get subject code for inserting in studen_scores
+            $sub_code = trim($row['sub_code']);
 
             // Convert both answers to lowercase (case-insensitive check)
             $student_answer = strtolower(trim($row['student_answer']));
@@ -4189,12 +4244,12 @@ class myDataBase
         $equivalent_score = min($highest_equivalent, max($lowest_equivalent, $equivalent_score));
 
         // Store score in student_scores table, now considering `quiz_id`
-        $sql = "INSERT INTO student_scores (stu_lrn, exam_id, quiz_id, total_questions, correct_answers, equivalent_score)
-            VALUES (?, ?, ?, ?, ?, ?)
+        $sql = "INSERT INTO student_scores (stu_lrn, sub_code, exam_id, quiz_id, total_questions, correct_answers, equivalent_score)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE correct_answers = VALUES(correct_answers), equivalent_score = VALUES(equivalent_score)";
 
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("sssiid", $stud_id, $exam_id, $quiz_id, $total_items, $correct_answers, $equivalent_score);
+        $stmt->bind_param("ssssiid", $stud_id, $sub_code, $exam_id, $quiz_id, $total_items, $correct_answers, $equivalent_score);
         $stmt->execute();
     }
 

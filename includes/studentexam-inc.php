@@ -8,7 +8,8 @@ if (!isset($_POST["submit"])) {
 }
 
 try {
-    $stud_id = $_POST['studID'];
+    $stud_id = $_POST['studID']; // student lrn 
+    $sub_code = $_POST['subID'];  // subect code 
     $exam_id = $_POST['examID'] ?? null; // If examID exists, else set null
     $quiz_id = $_POST['quizID'] ?? null; // If quizID exists, else set null
 
@@ -21,7 +22,7 @@ try {
             foreach ($_POST['mulId'] as $mul_id) {
                 if (!empty($_POST["mcq_$mul_id"])) {
                     $mul_answer = $_POST["mcq_$mul_id"];
-                    $mySQLFunction->insertStudentAnswer($stud_id, $exam_id, $quiz_id, $mul_id, "multiple_choice", $mul_answer);
+                    $mySQLFunction->insertStudentAnswer($stud_id, $sub_code, $exam_id, $quiz_id, $mul_id, "multiple_choice", $mul_answer);
                 }
             }
         }
@@ -31,7 +32,7 @@ try {
             foreach ($_POST['enumId'] as $enum_id) {
                 if (!empty($_POST["enum_$enum_id"])) {
                     $enum_answer = strtolower($_POST["enum_$enum_id"]);
-                    $mySQLFunction->insertStudentAnswer($stud_id, $exam_id, $quiz_id, $enum_id, "enumeration", $enum_answer);
+                    $mySQLFunction->insertStudentAnswer($stud_id, $sub_code, $exam_id, $quiz_id, $enum_id, "enumeration", $enum_answer);
                 }
             }
         }
@@ -41,7 +42,7 @@ try {
             foreach ($_POST['tfId'] as $tf_id) {
                 if (!empty($_POST["tf_$tf_id"])) {
                     $tf_answer = strtolower($_POST["tf_$tf_id"]);
-                    $mySQLFunction->insertStudentAnswer($stud_id, $exam_id, $quiz_id, $tf_id, "true_false", $tf_answer);
+                    $mySQLFunction->insertStudentAnswer($stud_id, $sub_code, $exam_id, $quiz_id, $tf_id, "true_false", $tf_answer);
                 }
             }
         }
@@ -51,7 +52,7 @@ try {
             foreach ($_POST['essayId'] as $essay_id) {
                 if (!empty($_POST["essay_$essay_id"])) {
                     $essay_answer = $_POST["essay_$essay_id"];
-                    $mySQLFunction->insertStudentAnswer($stud_id, $exam_id, $quiz_id, $essay_id, "essay", $essay_answer);
+                    $mySQLFunction->insertStudentAnswer($stud_id, $sub_code, $exam_id, $quiz_id, $essay_id, "essay", $essay_answer);
                 }
             }
         }
@@ -63,7 +64,7 @@ try {
             foreach ($_POST['qMulId'] as $q_mul_id) {
                 if (!empty($_POST["qmcq_$q_mul_id"])) {
                     $mul_answer = $_POST["qmcq_$q_mul_id"];
-                    $mySQLFunction->insertStudentAnswer($stud_id, $exam_id, $quiz_id, $q_mul_id, "multiple_choice", $mul_answer);
+                    $mySQLFunction->insertStudentAnswer($stud_id, $sub_code, $exam_id, $quiz_id, $q_mul_id, "multiple_choice", $mul_answer);
                 }
             }
         }
@@ -73,7 +74,7 @@ try {
             foreach ($_POST['qEnumId'] as $q_enum_id) {
                 if (!empty($_POST["qenum_$q_enum_id"])) {
                     $enum_answer = strtolower($_POST["qenum_$q_enum_id"]);
-                    $mySQLFunction->insertStudentAnswer($stud_id, $exam_id, $quiz_id, $q_enum_id, "enumeration", $enum_answer);
+                    $mySQLFunction->insertStudentAnswer($stud_id, $sub_code, $exam_id, $quiz_id, $q_enum_id, "enumeration", $enum_answer);
                 }
             }
         }
@@ -83,7 +84,7 @@ try {
             foreach ($_POST['qTfId'] as $q_tf_id) {
                 if (!empty($_POST["qtf_$q_tf_id"])) {
                     $tf_answer = strtolower($_POST["qtf_$q_tf_id"]);
-                    $mySQLFunction->insertStudentAnswer($stud_id, $exam_id, $quiz_id, $q_tf_id, "true_false", $tf_answer);
+                    $mySQLFunction->insertStudentAnswer($stud_id, $sub_code, $exam_id, $quiz_id, $q_tf_id, "true_false", $tf_answer);
                 }
             }
         }
@@ -93,7 +94,7 @@ try {
             foreach ($_POST['qEssayId'] as $q_essay_id) {
                 if (!empty($_POST["qessay_$q_essay_id"])) {
                     $essay_answer = $_POST["qessay_$q_essay_id"];
-                    $mySQLFunction->insertStudentAnswer($stud_id, $exam_id, $quiz_id, $q_essay_id, "essay", $essay_answer);
+                    $mySQLFunction->insertStudentAnswer($stud_id, $sub_code, $exam_id, $quiz_id, $q_essay_id, "essay", $essay_answer);
                 }
             }
         }

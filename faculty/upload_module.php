@@ -95,7 +95,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                             <!-- Upload Button -->
                             <div>
                                 <?php
-                                $btnClass = empty($students) ? 'btn-danger' : 'btn-primary';
+                                $btnClass = empty($students) ? 'btn-primary' : 'btn-primary';
                                 $disabled = empty($students) ? 'disabled' : '';
                                 ?>
                                 <button type="button"

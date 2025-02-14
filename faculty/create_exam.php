@@ -98,7 +98,7 @@ include "../faculty/includes/Forms/createexamform.php";
                             <!-- Upload Button -->
                             <div>
                                 <?php
-                                $btnClass = empty($students) ? 'btn-danger' : 'btn-primary';
+                                $btnClass = empty($students) ? 'btn-primary' : 'btn-primary';
                                 $disabled = empty($students) ? 'disabled' : '';
                                 ?>
                                 <button type="button"
@@ -121,7 +121,7 @@ include "../faculty/includes/Forms/createexamform.php";
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
-                                    <th scope="col" style="width: 100px;">Full name</th>
+                                    <th scope="col" style="width: 100px;">Student name</th>
                                     <th scope="col" style="width: 50px;">Gender</th>
                                     <th scope="col" style="width: 100px;">Status</th>
                                     <th scope="col" style="width: 100px;">Score</th>

@@ -188,13 +188,31 @@ error_reporting(E_ALL);
                                 </ul>
                             </li>
 
-
-
+                            <!-- THISI IS THE FOR EQUIVALENT GRADE OF STUDENT IF EXAM OR QUIZ -->
                             <li class="nav-item">
+                                <a class="nav-link  text-white" href="#gradeMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
+                                    <i class="bi bi-bar-chart me-2"></i>Grades <i class="bi bi-chevron-down" style="margin-left: 40px;" id="gradeIcon"></i>
+                                </a>
+                                <ul class="collapse list-unstyled ps-1" id="gradeMenu">
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=student_exam_grade">
+                                            <i class="bi bi-file-earmark-text me-2"></i>Exam Grade
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=student_quiz_grade">
+                                            <i class="bi bi-clipboard-check me-2"></i>Quiz Grade
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <!-- <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=student_grade">
                                     <i class="bi bi-bar-chart me-2"></i> Grades
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="nav-item">
                                 <a type="button" class="nav-link active" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                     <i class="bi bi-box-arrow-right me-1"></i> Logout
@@ -255,5 +273,6 @@ error_reporting(E_ALL);
             // Apply the function to different menus and icons
             toggleCollapseIcon('examMenu', 'examIcon');
             toggleCollapseIcon('quizMenu', 'quizIcon');
+            toggleCollapseIcon('gradeMenu', 'gradeIcon');
         });
     </script>

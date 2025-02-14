@@ -23,9 +23,9 @@ include "../admin/includes/Forms/sectionform.php";
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
                         <h4 class="text-black">List of Section</h4>
-                        <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#section" data-bs-whatever="@fat">
+                        <!-- <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#section" data-bs-whatever="@fat">
                             <i class="bi bi-plus-circle-fill me-2"></i>Add Section
-                        </button>
+                        </button> -->
                     </div>
                     <!-- NOTIFICATION -->
 
@@ -54,7 +54,7 @@ include "../admin/includes/Forms/sectionform.php";
                                     <th scope="col" class="small text-center">Strand</th>
                                     <th scope="col" class="small text-center">Year level</th>
                                     <th scope="col" class="small text-center">Adviser</th>
-                                    <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
+                                    <!-- <th scope="col" class="text-center">Action</th>   -->
 
                                 </tr>
                             </thead>
@@ -76,14 +76,14 @@ include "../admin/includes/Forms/sectionform.php";
                                         echo '<td class="small text-center">' . $row["grade_lvl"] . '</td>';
                                         echo '<td class="small text-center">' . ucwords(strtolower($row["adviser"])) . '</td>';
 
-                                        echo '
-                                        <td class="d-flex justify-content-center">
-                                            <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#edit_section' . $row['section_code'] . '">
-                                                <i class="bi bi-pencil-square me-1"></i>Edit
-                                            </button>
-                                        
-                                            </td>
-                                            ';
+                                        // echo '
+                                        // <td class="d-flex justify-content-center">
+                                        //     <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#edit_section' . $row['section_code'] . '">
+                                        //         <i class="bi bi-pencil-square me-1"></i>Edit
+                                        //     </button>
+
+                                        //     </td>
+                                        //     ';
                                         // THIS IS THE DELETE BUTTON I WILL LEAVE IT COMMENT , IF NEEDED JUST UNCOMMENT 
                                         // <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_section' . $row['section_code'] . '">
                                         //     <i class="bi bi-trash"></i>Delete
@@ -254,7 +254,7 @@ include "../admin/includes/Forms/sectionform.php";
         $("#example").DataTable({
             dom: "Bfrtip", // Include buttons in the dom
             buttons: [
-              
+
                 {
                     extend: "excelHtml5",
                     text: "Download Excel",

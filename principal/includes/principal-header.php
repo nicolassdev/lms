@@ -141,7 +141,7 @@
                             </li>
                             <li class="nav-item mt-2">
                                 <a class="nav-link active" href="index.php?page=section">
-                                    <i class="bi bi-building-fill-add me-2"></i>Section
+                                    <i class="bi bi-bank me-2"></i>Section
                                 </a>
                             </li>
 

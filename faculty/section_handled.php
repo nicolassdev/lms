@@ -1,7 +1,22 @@
-<!-- VALIDATION CAN'T ACCESS THE URL -->
 <?php
+// Prevent unauthorized access
 if (!isset($_SESSION['teacher_id'])) {
     header("location:../login.php?error=accessdenied");
+    exit;
+}
+if (!isset($_SESSION['username'])) {
+    header("location:../login.php?error=accessdenied");
+    exit();
+} elseif (isset($_SESSION['user_role'])) {
+
+    $user_role = strtolower($_SESSION['user_role']);
+    if ($user_role !== 'teacher') {
+        header("location:../login.php?error=accessdenied"); // redirect access denied if user role is not admin
+        exit();
+    }
+} else {
+    header("location:../login.php"); // Redirect to login page if user role is not exist 
+    exit();
 }
 ?>
 
@@ -91,7 +106,7 @@ $mySQLFunction->disconnect();
                             <div class="d-flex align-items-center justify-content-between mb-4 mt-4">
                                 <!-- Icon and Title -->
                                 <div class="d-flex align-items-center">
-                                    <i class="bi bi-people-fill display-4 text-danger me-2"></i>
+                                    <i class="bi bi-bank display-4 text-danger me-3"></i>
                                     <div>
                                         <h5 class="fw-bold text-secondary mb-1">
                                             <?php echo htmlspecialchars($teacherSectionHandled["section_name"]); ?>
@@ -103,7 +118,7 @@ $mySQLFunction->disconnect();
                                     </div>
                                 </div>
                                 <!-- Number of Students -->
-                                <div class="text-end">
+                                <div class="text-end me-2">
                                     <h2 class="text-danger fw-bold mb-0">
                                         <?php echo $totalStudentinSection; ?>
                                     </h2>

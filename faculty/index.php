@@ -122,10 +122,16 @@ switch ($page) {
         require_once 'teacher_subject.php';
         break;
 
-    case "teacher_report":
-        require_once 'teacher_report.php';
+        /** 
+         Report route */
+
+    case "teacher_exam_report":
+        require_once 'teacher_exam_report.php';
         break;
 
+    case "teacher_quiz_report":
+        require_once 'teacher_quiz_report.php';
+        break;
 
 
     default:

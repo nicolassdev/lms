@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2025 at 08:35 PM
+-- Generation Time: Feb 14, 2025 at 08:27 PM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.12
 
@@ -572,6 +572,7 @@ INSERT INTO `student` (`stu_lrn`, `stu_fname`, `stu_mname`, `stu_lname`, `stu_ad
 CREATE TABLE `student_answers` (
   `answer_id` int NOT NULL,
   `stu_lrn` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `sub_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `exam_id` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Set as Nullable',
   `quiz_id` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Set as Nullable',
   `question_id` int NOT NULL,
@@ -584,19 +585,26 @@ CREATE TABLE `student_answers` (
 -- Dumping data for table `student_answers`
 --
 
-INSERT INTO `student_answers` (`answer_id`, `stu_lrn`, `exam_id`, `quiz_id`, `question_id`, `question_type`, `student_answer`, `submitted_at`) VALUES
-(190, '114423232323', 'EXM-9212', NULL, 32, 'multiple_choice', 'Anthony', '2025-02-07 17:01:16'),
-(191, '114423232323', 'EXM-9212', NULL, 47, 'enumeration', 'cleo, waffle, lucky', '2025-02-07 17:01:16'),
-(192, '114423232323', 'EXM-9212', NULL, 48, 'enumeration', 'php, python, daekoaram', '2025-02-07 17:01:16'),
-(193, '114423232323', 'EXM-9212', NULL, 49, 'enumeration', 'smell, touch, see', '2025-02-07 17:01:16'),
-(218, '124167743724', 'EXM-6992', NULL, 33, 'multiple_choice', 'Sustainable energy sources are in high demand.', '2025-02-12 16:30:59'),
-(219, '124167743724', 'EXM-6992', NULL, 34, 'multiple_choice', ' All of the above', '2025-02-12 16:30:59'),
-(220, '124167743724', 'EXM-6992', NULL, 35, 'multiple_choice', 'disease of the lungs', '2025-02-12 16:30:59'),
-(221, '124167743724', 'EXM-6992', NULL, 36, 'multiple_choice', 'The study of population statistics.', '2025-02-12 16:30:59'),
-(222, '124167743724', 'EXM-6992', NULL, 37, 'multiple_choice', 'Capable of succeeding or being effective.', '2025-02-12 16:30:59'),
-(223, '124167743724', 'EXM-6992', NULL, 38, 'multiple_choice', 'All of the above', '2025-02-12 16:30:59'),
-(224, '124167743724', 'EXM-6992', NULL, 39, 'multiple_choice', 'Jupiter', '2025-02-12 16:30:59'),
-(225, '124167743724', 'EXM-6992', NULL, 51, 'enumeration', 'smell, touch, hear', '2025-02-12 16:30:59');
+INSERT INTO `student_answers` (`answer_id`, `stu_lrn`, `sub_code`, `exam_id`, `quiz_id`, `question_id`, `question_type`, `student_answer`, `submitted_at`) VALUES
+(249, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 33, 'multiple_choice', ' Renewable energy technologies are becoming more popular.', '2025-02-13 18:51:58'),
+(250, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 34, 'multiple_choice', 'Improved work-life balance', '2025-02-13 18:51:58'),
+(251, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 35, 'multiple_choice', 'disease of the lungs', '2025-02-13 18:51:58'),
+(252, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 36, 'multiple_choice', ' The study of economic trends.', '2025-02-13 18:51:58'),
+(253, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 37, 'multiple_choice', 'Capable of succeeding or being effective.', '2025-02-13 18:51:58'),
+(254, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 38, 'multiple_choice', 'All of the above', '2025-02-13 18:51:58'),
+(255, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 39, 'multiple_choice', 'Jupiter', '2025-02-13 18:51:58'),
+(256, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 51, 'enumeration', 'smell, see, touch', '2025-02-13 18:51:58'),
+(257, '124167743724', 'SUB-3164', 'EXM-5171', NULL, 50, 'enumeration', 'sampe , sadsad ,asdsa', '2025-02-13 18:57:45'),
+(258, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 33, 'multiple_choice', 'Sustainable energy sources are in high demand.', '2025-02-13 19:01:45'),
+(259, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 34, 'multiple_choice', ' All of the above', '2025-02-13 19:01:45'),
+(260, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 35, 'multiple_choice', 'disease of the lungs', '2025-02-13 19:01:45'),
+(261, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 36, 'multiple_choice', 'The study of population statistics.', '2025-02-13 19:01:45'),
+(262, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 37, 'multiple_choice', 'Capable of succeeding or being effective.', '2025-02-13 19:01:45'),
+(263, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 38, 'multiple_choice', 'All of the above', '2025-02-13 19:01:45'),
+(264, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 39, 'multiple_choice', 'Jupiter', '2025-02-13 19:01:45'),
+(265, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 51, 'enumeration', 'smell, touch,see', '2025-02-13 19:01:45'),
+(266, '718412412421', 'SUB-9527', NULL, 'QZ-9256', 8, 'enumeration', 'asdsa,adasdas,asdasd', '2025-02-13 19:03:13'),
+(267, '124167743724', 'SUB-9527', NULL, 'QZ-9256', 8, 'enumeration', 'mars, jupiter, earth, saturn. pluto, venus, uranus', '2025-02-14 15:58:47');
 
 -- --------------------------------------------------------
 
@@ -607,6 +615,7 @@ INSERT INTO `student_answers` (`answer_id`, `stu_lrn`, `exam_id`, `quiz_id`, `qu
 CREATE TABLE `student_scores` (
   `score_id` int NOT NULL,
   `stu_lrn` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
+  `sub_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `exam_id` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Set as Nullable',
   `quiz_id` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Set as Nullable',
   `total_questions` int NOT NULL DEFAULT '0',
@@ -619,9 +628,11 @@ CREATE TABLE `student_scores` (
 -- Dumping data for table `student_scores`
 --
 
-INSERT INTO `student_scores` (`score_id`, `stu_lrn`, `exam_id`, `quiz_id`, `total_questions`, `correct_answers`, `equivalent_score`, `created_at`) VALUES
-(61, '114423232323', 'EXM-9212', NULL, 10, 9, 90.00, '2025-02-07 17:01:16'),
-(66, '124167743724', 'EXM-6992', NULL, 10, 8, 89.00, '2025-02-12 16:30:59');
+INSERT INTO `student_scores` (`score_id`, `stu_lrn`, `sub_code`, `exam_id`, `quiz_id`, `total_questions`, `correct_answers`, `equivalent_score`, `created_at`) VALUES
+(71, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 10, 7, 86.00, '2025-02-13 18:51:58'),
+(72, '124167743724', 'SUB-3164', 'EXM-5171', NULL, 3, 1, 75.00, '2025-02-13 18:57:45'),
+(73, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 10, 9, 92.00, '2025-02-13 19:01:45'),
+(75, '124167743724', 'SUB-9527', NULL, 'QZ-9256', 7, 4, 82.00, '2025-02-14 15:58:47');
 
 -- --------------------------------------------------------
 
@@ -943,7 +954,8 @@ ALTER TABLE `student_answers`
   ADD PRIMARY KEY (`answer_id`),
   ADD KEY `stu_lrn` (`stu_lrn`) USING BTREE,
   ADD KEY `exam_id` (`exam_id`) USING BTREE,
-  ADD KEY `quiz_id` (`quiz_id`) USING BTREE;
+  ADD KEY `quiz_id` (`quiz_id`) USING BTREE,
+  ADD KEY `sub_code` (`sub_code`) USING BTREE;
 
 --
 -- Indexes for table `student_scores`
@@ -952,7 +964,8 @@ ALTER TABLE `student_scores`
   ADD PRIMARY KEY (`score_id`),
   ADD KEY `stu_lrn` (`stu_lrn`),
   ADD KEY `exam_id` (`exam_id`),
-  ADD KEY `quiz_id` (`quiz_id`) USING BTREE;
+  ADD KEY `quiz_id` (`quiz_id`) USING BTREE,
+  ADD KEY `sub_code` (`sub_code`) USING BTREE;
 
 --
 -- Indexes for table `subject`
@@ -1036,13 +1049,13 @@ ALTER TABLE `school`
 -- AUTO_INCREMENT for table `student_answers`
 --
 ALTER TABLE `student_answers`
-  MODIFY `answer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=226;
+  MODIFY `answer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=268;
 
 --
 -- AUTO_INCREMENT for table `student_scores`
 --
 ALTER TABLE `student_scores`
-  MODIFY `score_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `score_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1173,13 +1186,15 @@ ALTER TABLE `student`
 ALTER TABLE `student_answers`
   ADD CONSTRAINT `fk_student_answers_exam` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_student_answers_quiz` FOREIGN KEY (`quiz_id`) REFERENCES `quiz` (`quiz_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_student_answers_student` FOREIGN KEY (`stu_lrn`) REFERENCES `student` (`stu_lrn`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_student_answers_student` FOREIGN KEY (`stu_lrn`) REFERENCES `student` (`stu_lrn`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_student_answers_subject` FOREIGN KEY (`sub_code`) REFERENCES `subject` (`sub_code`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `student_scores`
 --
 ALTER TABLE `student_scores`
   ADD CONSTRAINT `fk_student_scores_ibfk_3` FOREIGN KEY (`quiz_id`) REFERENCES `quiz` (`quiz_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_student_scores_subject` FOREIGN KEY (`sub_code`) REFERENCES `subject` (`sub_code`) ON DELETE CASCADE,
   ADD CONSTRAINT `student_scores_ibfk_1` FOREIGN KEY (`stu_lrn`) REFERENCES `student` (`stu_lrn`) ON DELETE CASCADE,
   ADD CONSTRAINT `student_scores_ibfk_2` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`exam_id`) ON DELETE CASCADE;
 

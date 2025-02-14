@@ -1,7 +1,6 @@
 <?php
-ini_set('display_errors', 0);
 ini_set('log_errors', 1);
-ini_set('display_errors', 1);
+ini_set('display_errors', 1); // set 0 to not show the error 
 error_reporting(E_ALL);
 
 ?>
@@ -158,7 +157,7 @@ error_reporting(E_ALL);
 
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=section_handled">
-                                    <i class="bi bi-buildings me-2"></i>Section Handled
+                                    <i class="bi bi-bank me-2"></i>Section Handled
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -176,17 +175,17 @@ error_reporting(E_ALL);
                             <!-- THISI IS THE ROUTE OF QUIZ -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#assessmentMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
-                                    <i class="bi bi-card-heading me-2"></i>Assessment <i class="bi bi-chevron-down" style="margin-left: 55px;" id="assessmentIcon"></i>
+                                    <i class="bi bi-card-heading me-2"></i>Assessment <i class="bi bi-chevron-down" style="margin-left: 35px;" id="assessmentIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="assessmentMenu">
                                     <li class="nav-item mt-2">
                                         <a class="nav-link active" href="index.php?page=teacher_quiz">
-                                            <i class="bi  bi-lightbulb me-2"></i>Quiz
+                                            <i class="bi bi-pencil-square me-2"></i>Quiz
                                         </a>
                                     </li>
                                     <li class="nav-item mt-2">
                                         <a class="nav-link active" href="index.php?page=teacher_exam">
-                                            <i class="bi bi-book me-2"></i>Exam
+                                            <i class="bi bi-pencil-square  me-2"></i>Exam
                                         </a>
                                     </li>
                                 </ul>
@@ -194,25 +193,25 @@ error_reporting(E_ALL);
 
 
 
-
-                            <!-- 
+                            <!-- THISI IS THE ROUTE OF REPORTS QUIZ AND EXAM -->
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=teacher_quiz">
-                                    <i class="bi bi-lightbulb me-2"></i>Quiz
+                                <a class="nav-link  text-white" href="#reportMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
+                                    <i class="bi bi-bar-chart me-2"></i>Reports <i class="bi bi-chevron-down" style="margin-left: 55px;" id="reportIcon"></i>
                                 </a>
+                                <ul class="collapse list-unstyled ps-1" id="reportMenu">
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=teacher_quiz_report">
+                                            <i class="bi bi-clipboard-check me-2"></i>Quiz Report
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=teacher_exam_report">
+                                            <i class="bi bi-file-earmark-text me-2"></i>Exam Report
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=teacher_exam">
-                                    <i class="bi bi-book me-2"></i></i>Exam
-                                </a>
-                            </li> -->
 
-
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=teacher_report">
-                                    <i class="bi bi-bar-chart me-2"></i>Reports
-                                </a>
-                            </li>
                             <li class="nav-item">
                                 <a type="button" class="nav-link active" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                     <i class="bi bi-box-arrow-right  me-1"></i> Logout
@@ -274,5 +273,7 @@ error_reporting(E_ALL);
 
             // Apply the function to different menus and icons
             toggleCollapseIcon('assessmentMenu', 'assessmentIcon');
+            toggleCollapseIcon('reportMenu', 'reportIcon');
+
         });
     </script>

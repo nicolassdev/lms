@@ -1,45 +1,42 @@
-<!-- VALIDATION CAN'T ACCESS THE URL -->
 <?php
+// Prevent unauthorized access
 if (!isset($_SESSION['teacher_id'])) {
     header("location:../login.php?error=accessdenied");
+    exit;
+}
+if (!isset($_SESSION['username'])) {
+    header("location:../login.php?error=accessdenied");
+    exit();
+} elseif (isset($_SESSION['user_role'])) {
+
+    $user_role = strtolower($_SESSION['user_role']);
+    if ($user_role !== 'teacher') {
+        header("location:../login.php?error=accessdenied"); // redirect access denied if user role is not admin
+        exit();
+    }
+} else {
+    header("location:../login.php"); // Redirect to login page if user role is not exist 
+    exit();
 }
 ?>
 
-<!-- FORM MODAL ADD STUDENT  -->
+
 <?php
 include "../includes/dbh-inc.php";
-
-include "../faculty/includes/Forms/uploadmoduleform.php";
 $mySQLFunction->connection();
 $activeQuarter = $mySQLFunction->checkQuarterStatus('quarterly');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
 $activeSy = $mySQLFunction->checkSyStatus('sy');
 
-$result = $mySQLFunction->setStudentEquivalentScoreBySubject($_SESSION['teacher_id']);
+$examResult = $mySQLFunction->setEquivalentScoreBySubjectOfStudent($_SESSION['teacher_id'], 'exam');
+$numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']); //section handled by teacher
 
 // echo "<pre>";
-// print_r($result);
+// print_r($examResult);
 // echo "</pre>";
 ?>
 
-
-<style>
-    .data-table {
-        font-size: 0.8em;
-        /* Reduce font size */
-    }
-
-    .table th,
-    .table td {
-        padding: 0.1rem;
-        /* Adjust padding */
-    }
-</style>
-
-
-<!-- TABLE -->
-
-
+<!-- TABLE REPORT -->
 <main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-3">
     <div class="container">
         <div class="row">
@@ -48,7 +45,7 @@ $result = $mySQLFunction->setStudentEquivalentScoreBySubject($_SESSION['teacher_
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
 
                         <div class="text-dark">
-                            <div class="fs-5 fw-bold">Transmutation Grade</div>
+                            <div class="fs-5 fw-bold">Exam Reports</div>
                             <small class="fw-semibold">
                                 <span class="me-1">Quarterly:</span>
                                 <?php if (!empty($activeQuarter)) {
@@ -80,9 +77,9 @@ $result = $mySQLFunction->setStudentEquivalentScoreBySubject($_SESSION['teacher_
                             </small>
 
                         </div>
-                        <div class="text-black">
-                            <?php if (!empty($result)) {
-                                foreach ($result as $student) {
+                        <div class="text-dark fw-bold">
+                            <?php if (!empty($examResult)) {
+                                foreach ($examResult as $student) {
                                     echo htmlspecialchars($student["grade_lvl"]) . '  ';
                                     echo htmlspecialchars($student["section_name"]);
                                     break; // Exit loop after processing the first student
@@ -90,10 +87,10 @@ $result = $mySQLFunction->setStudentEquivalentScoreBySubject($_SESSION['teacher_
                             }
                             ?>
                             <?php
-                            if (!empty($result)) {
-                                echo "<h6 class='text-black'>" . count($result) . " Student(s)</h6>";
+                            if (!empty($numberOfEnrolledInSection)) {
+                                echo "<h6 class='text-black'>" . count($numberOfEnrolledInSection) .  " Student(s)</h6>";
                             } else {
-                                echo "<h6 class='text-black'> " . count($result) . "  Student</h6>";
+                                echo "<h6 class='text-black'> " . count($numberOfEnrolledInSection) . "  Student</h6>";
                             }
                             ?>
                         </div>
@@ -116,28 +113,29 @@ $result = $mySQLFunction->setStudentEquivalentScoreBySubject($_SESSION['teacher_
                             </thead>
                             <tbody>
                                 <?php
-                                if (!empty($result)) {
+                                if (!empty($examResult)) {
                                     $count = 1;
-                                    foreach ($result as $row) {
+                                    foreach ($examResult as $row) {
                                         // Split scores
-                                        $scores = explode(',', $row['exam_scores'] ?? '');
+                                        $scores = explode(',', $row['scores'] ?? '');
 
                                         // Determine if the student's quarter matches the active quarter
                                         $isCurrentQuarter = in_array($row["quarter"], explode(",", implode(",", $activeQuarter)));
 
                                         // Determine status
-                                        $status = (!empty($row['exam_scores']) && count($scores) > 0);
+                                        $status = (!empty($row['scores']) && count($scores) > 0);
 
 
 
                                         echo '<td class="small"> ' . $row["stu_lname"] . ',  ' .  ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"] . '')) . '</td>';
-                                        echo '<td class="small">' . ucwords(strtolower($row["subject"])) . '</td>';
 
                                         if ($isCurrentQuarter) {
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['exam_scores']) : '<span class="text-danger">0</span>') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['exam_items']) : '<span class="text-danger">0</span>') . '</td>';
+                                            echo '<td class="small">' . (!empty($row["subject"]) ? ucwords(strtolower($row["subject"])) : '-') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['scores']) : '<span class="text-danger">0</span>') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['total_items']) : '<span class="text-danger">0</span>') . '</td>';
                                             echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['equivalent_scores']) : '<span class="text-danger">N/A</span>') . '</td>';
                                         } else {
+                                            echo '<td class="text-center text-muted">-</td>';
                                             echo '<td class="text-center text-muted">-</td>';
                                             echo '<td class="text-center text-muted">-</td>';
                                             echo '<td class="text-center text-muted">-</td>';
@@ -177,5 +175,5 @@ $result = $mySQLFunction->setStudentEquivalentScoreBySubject($_SESSION['teacher_
 <script src="../assets/js/globaltables.js"></script>
 <!-- PDF ,EXCEL, PRINT ,CVS -->
 <script>
-    initializeDataTable("student_report", 7, "Reports");
+    initializeDataTable("student_report", 7, "Exam Reports");
 </script>
