@@ -45,6 +45,12 @@
  </head>
 
  <body>
+   <!-- About & Contact Us Links in Upper Right -->
+   <div class="position-absolute top-0 end-0 p-3 d-flex gap-3">
+     <a href="about.php" class="text-white fw-bold text-decoration-none">About</a>
+     <a href="contact.php" class="text-white fw-bold text-decoration-none">Contact Us</a>
+   </div>
+
    <?php
     include("includes/alert-notify.php");
     ?>
@@ -66,7 +72,7 @@
            <div class="login-container">
              <!-- desktop design -->
              <div class="d-none d-lg-inline text-center ">
-               <h4 class="text-dark fw-bold mb-0">Learning Management System</h4>
+               <h4 class="text-dark fw-bold mb-0 mt-3">Learning Management System</h4>
              </div>
              <!-- mobile design  -->
              <div class="d-flex align-items-center mb-5 pb-1">
@@ -81,7 +87,7 @@
              </div>
              <!-- FORM ELEMENT  -->
              <form action="./includes/login-inc.php" method="POST" onsubmit="showLoading()">
-               <h6 class="fw-normal mb-4" style="letter-spacing: 1px;">Login into your account</h6>
+               <h6 class="fw-semibold mb-4" style="letter-spacing: 1px;">Login into your account</h6>
                <!-- Username -->
                <div class="form-outline mb-4">
                  <input type="text" name="username" class="form-control form-control-lg" autocomplete="off" required />
@@ -96,8 +102,8 @@
 
                <!-- Login Button -->
                <button type="submit" name="submit" class="btn btn-primary btn-lg btn-block mb-4">Login</button>
-             </form>
 
+             </form>
            </div>
          </div>
 
