@@ -249,26 +249,3 @@ $mySQLFunction->disconnect();
         include "../includes/footer.php";
         ?>
     </main>
-
-    <!-- Time and Date Script -->
-    <script>
-        function updateTime() {
-            var now = new Date();
-            var timeString = now.toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-            var dateString = now.toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric',
-                weekday: 'long'
-            });
-
-            document.getElementById('time').innerHTML = 'Time: ' + timeString;
-            document.getElementById('date').innerHTML = 'Today is: ' + dateString;
-        }
-
-        setInterval(updateTime, 1000); // Update time every second
-        updateTime(); // Initial call
-    </script>

@@ -81,7 +81,7 @@ include "../includes/dbh-inc.php";
                             <td><?= ucwords(strtolower($row["role"])); ?></td>
                             <td><?= date('F j, Y', strtotime($row["date_added"])) ?></td>
                             <td class="text-center">
-                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit_user<?= $row['user_id']; ?>"><i class="bi bi-pencil-square"></i></button>
+                                <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#edit_user<?= $row['user_id']; ?>"><i class="bi bi-pencil-square"></i></button>
                             </td>
                             <td class="text-center">
                                 <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_user<?= $row['user_id']; ?>"><i class="bi bi-trash"></i></button>
@@ -93,7 +93,7 @@ include "../includes/dbh-inc.php";
                             <div class="modal-dialog modal-md">
                                 <div class="modal-content shadow">
                                     <div class="modal-header border-bottom-0">
-                                        <h1 class="modal-title fs-5 text-primary" id="modalHeader<?= $row['user_id']; ?>">
+                                        <h1 class="modal-title fs-5 fw-bold text-success" id="modalHeader<?= $row['user_id']; ?>">
                                             <?= $row['role'] == 'TEACHER' ? 'Teacher Account' : ($row['role'] == 'PRINCIPAL' ? 'Principal Account' : 'Student Account'); ?>
                                         </h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -102,7 +102,7 @@ include "../includes/dbh-inc.php";
                                         <div style="position: relative;">
                                             <img style="position: absolute; top: 50%; left: 55%; transform: translate(-30%, -15%); width: 300px; opacity: 0.1; z-index: 1;" src="../assets/img/csi.webp" alt="LMS Logo">
                                         </div>
-                                        <form action="./includes/Operation/updateUser.php" method="POST" class="needs-validation" novalidate onsubmit="return validatePasswords()">
+                                        <form id="usersForm" action="./includes/Operation/updateUser.php" method="POST" class="needs-validation" novalidate onsubmit="return validatePasswords()">
                                             <input type="hidden" name="userID" value="<?= $row['user_id']; ?>">
 
                                             <div class="mb-3">
@@ -134,7 +134,7 @@ include "../includes/dbh-inc.php";
 
                                             <div class="d-flex justify-content-between mt-4 gap-1">
                                                 <div class="col-6">
-                                                    <button name="submit" class="btn btn-primary w-100" type="submit">Update</button>
+                                                    <button name="submit" class="btn btn-success w-100" type="submit">Update</button>
                                                 </div>
                                                 <div class="col-6">
                                                     <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm()">Cancel</button>
@@ -194,4 +194,17 @@ include "../includes/dbh-inc.php";
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
-<script src="../js/clearinput.js"></script>
+
+<script>
+    // Function to reset the form inputs
+    function resetForm() {
+        const form = document.getElementById('usersForm');
+        form.reset();
+        form.classList.remove('was-validated');
+
+        // Reset the select elements
+        document.querySelectorAll('select').forEach(select => {
+            select.value = '';
+        });
+    }
+</script>

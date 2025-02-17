@@ -63,39 +63,40 @@ $mySQLFunction->disconnect();
                         <!-- Search Bar -->
                         <div class="col-md-4">
                             <div class="input-group input-group-sm">
-                                <?php $hasExams = false; ?> <!-- Boolean -->
-                                <?php foreach ($studentSubjects as $subject): ?>
-                                    <?php
-                                    $mySQLFunction->connection();
-                                    $allExamsCompleted = true; // Assume all exams are completed
-
-                                    if (!empty($subject['exams'])):
-                                        foreach ($subject["exams"] as $exam) {
-                                            $exam_id = $exam['exam_id'];
-                                            $stu_lrn = $_SESSION['stu_lrn'];
-                                            // check if the student have answer in table STUDENT ANSWERS and STUDENT SCORES
-                                            $hideExam = $mySQLFunction->checkExistByMultipleIDs("student_answers", ["stu_lrn" => $stu_lrn, "exam_id" => $exam_id]);
-                                            $hideExamScore = $mySQLFunction->checkExistByMultipleIDs("student_scores",  ["stu_lrn" => $stu_lrn, "exam_id" => $exam_id]);
-
-                                            if ($hideExam == 0 && $hideExamScore == 0) {
-                                                $allExamsCompleted = false; // At least one exam is not completed
-                                                break;
-                                            }
-                                        }
-
-                                        if ($allExamsCompleted) {
-                                            continue; // Skip rendering this subject if all exams are completed
-                                        }
-
-                                        $hasExams = true;
-                                    ?>
-                                        <!-- Search Input -->
-                                        <input type="text" id="searchExam" class="form-control" placeholder="Search subject exam ...">
-                                        <i class="bi bi-search me-2 ms-2 fs-5"></i>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
+                                <input type="text" id="searchExam" class="form-control" placeholder="Search subject exam ...">
+                                <i class="bi bi-search me-2 ms-2 fs-5"></i>
                             </div>
                         </div>
+                        <?php $hasExams = false; ?> <!-- Boolean -->
+                        <?php foreach ($studentSubjects as $subject): ?>
+                            <?php
+                            $mySQLFunction->connection();
+                            $allExamsCompleted = true; // Assume all exams are completed
+
+                            if (!empty($subject['exams'])):
+                                foreach ($subject["exams"] as $exam) {
+                                    $exam_id = $exam['exam_id'];
+                                    $stu_lrn = $_SESSION['stu_lrn'];
+                                    // check if the student have answer in table STUDENT ANSWERS and STUDENT SCORES
+                                    $hideExam = $mySQLFunction->checkExistByMultipleIDs("student_answers", ["stu_lrn" => $stu_lrn, "exam_id" => $exam_id]);
+                                    $hideExamScore = $mySQLFunction->checkExistByMultipleIDs("student_scores",  ["stu_lrn" => $stu_lrn, "exam_id" => $exam_id]);
+
+                                    if ($hideExam == 0 && $hideExamScore == 0) {
+                                        $allExamsCompleted = false; // At least one exam is not completed
+                                        break;
+                                    }
+                                }
+
+                                if ($allExamsCompleted) {
+                                    continue; // Skip rendering this subject if all exams are completed
+                                }
+
+                                $hasExams = true;
+                            ?>
+                                <!-- Search Input -->
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+
                     </div>
                     <hr>
 

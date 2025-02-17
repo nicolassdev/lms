@@ -68,10 +68,14 @@
 }
 
 .login-container {
-  background: #fff;
-  padding: 40px;
-  border-radius: 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  text-align: center;
+  background: #1e1e1e;
+  padding: 30px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  /* box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); */
+  animation: fadeIn 0.8s ease-in-out;
 }
 
 @keyframes float {
@@ -102,4 +106,63 @@
     opacity: 0;
     transform: translateY(20px);
   }
+}
+
+.btn-custom {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-custom a {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 5px;
+  font-size: 14px;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.btn-custom a:hover {
+  color: #17a2b8;
+  transform: scale(1.1);
+}
+
+/* Ensure the input text is also white */
+.form-outline .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid white !important;
+}
+
+/* Change label color */
+.form-outline .form-label {
+  color: white !important;
+}
+
+/* Change the focus effect (outline glow) */
+.form-outline .form-control:focus {
+  border-color: white !important;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.7) !important;
+}
+
+.btn-login {
+  background-color: #17a2b8;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  font-size: 16px;
+  border: none !important;
+  outline: none !important;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-login:hover {
+  background-color: #17a2b8;
+  transform: scale(1.02);
 }

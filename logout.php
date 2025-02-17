@@ -24,7 +24,7 @@ session_destroy(); // Destroys the session
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #212529;
+            background-color: #1e1e1e;
             color: #ecf0f1;
         }
 

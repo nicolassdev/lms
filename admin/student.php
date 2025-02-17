@@ -169,7 +169,7 @@ include "../admin/includes/Forms/studentform.php";
 
 
  
-                                                        <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="editTeacherForm' . htmlspecialchars($row['stu_lrn']) . '">
+                                                        <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-2 needs-validation mb-3" novalidate id="viewForm' . htmlspecialchars($row['stu_lrn']) . '">
                                                             <!-- Use hidden input -->
                                                             <input type="hidden" name="lrnID" value="' . htmlspecialchars($row['stu_lrn']) . '">
                                                                 <div class="row">
@@ -269,7 +269,7 @@ include "../admin/includes/Forms/studentform.php";
 
                                         // todo Modal for updating student
                                         echo '
-                                        <div class="modal fade" id="edit_student' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="editStudentModal" aria-hidden="true">
+                                        <div class="modal fade" id="edit_student' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="studentModal" aria-hidden="true">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                         <div class="modal-header bg-success text-white">
@@ -283,7 +283,7 @@ include "../admin/includes/Forms/studentform.php";
                                                             </div>                           
                                                         </div>
                                                     <div class="modal-body p-4">
-                                                        <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-3 needs-validation" novalidate id="editTeacherForm' . htmlspecialchars($row['stu_lrn']) . '">
+                                                        <form action="./includes/Operation/updateStudent.php" method="POST" class="row g-3 needs-validation" novalidate id="editStudentForm' . htmlspecialchars($row['stu_lrn']) . '">
                                                         <div class="row">
                                                         <!-- Use hidden input -->
                                                             <input type="hidden" name="lrnID" value="' . htmlspecialchars($row['stu_lrn']) . '">
@@ -401,7 +401,7 @@ include "../admin/includes/Forms/studentform.php";
                                     
                                                             <div class="d-flex justify-content-between mt-4 gap-2">
                                                                 <button name="submit" class="btn btn-success w-100" type="submit">Update</button>
-                                                                <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm(\'' . htmlspecialchars($row['stu_lrn']) . '\')">Cancel</button>
+                                                                <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="modal" aria-label="Close" onclick="resetstudentForm(\'' . htmlspecialchars($row['stu_lrn']) . '\')">Cancel</button>
                                                             </div>
                                                             </div>
                                                         </form>
@@ -409,12 +409,11 @@ include "../admin/includes/Forms/studentform.php";
                                                 </div>
                                             </div>
                                         </div>
-                                         
-                                    
-
+                                        <script src="../assets/js/validationform.js"></script>
+                                
                                         <script>
-                                            function resetForm(id) {
-                                                var form = document.getElementById("editTeacherForm" + id);
+                                            function resetstudentForm(id) {
+                                                var form = document.getElementById("editStudentForm" + id);
                                                 if (form) {
                                                     form.reset(); // Clears the form fields
                                                     form.classList.remove("was-validated"); // Removes the validation styling
