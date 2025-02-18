@@ -55,7 +55,6 @@ $mySQLFunction->disconnect();
                         <!-- Search Bar -->
                         <div class="col-md-4">
                             <div class="input-group input-group-sm">
-
                                 <!-- Search Input -->
                                 <input type="text" id="searchQuiz" class="form-control" placeholder="Search subject quiz...">
                                 <i class="bi bi-search me-2 ms-2 fs-5"></i>

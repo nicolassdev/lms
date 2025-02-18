@@ -50,12 +50,12 @@ $mySQLFunction->disconnect();
 ?>
 
 <!-- Modal to Update STUDENT Information -->
-<div class="modal fade" id="updateteacherinfo" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="updateteacherinfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content bg-light shadow">
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title">Teacher Information</h5>
-                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm()"></button>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" onclick="resetTeacherForm()"></button>
             </div>
             <div class="modal-body">
                 <form action="./includes/Operation/updateTeacherProfile.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate id="editTeacherInfo">
@@ -132,13 +132,21 @@ $mySQLFunction->disconnect();
                             </select>
                             <div class="invalid-feedback">Please select an employment status.</div>
                         </div>
+
+                        <!-- Image Preview -->
+                        <div class="mb-3 text-center">
+                            <img id="imagePreview" class="profile-img rounded-circle shadow-sm"
+                                src="#"
+                                alt="Image Preview"
+                                style="display:none; width: 130px; height: 130px; object-fit: cover; border: 2px solid #ddd;">
+                        </div>
+
                         <!-- Profile Image -->
                         <div class="mb-3">
                             <label class="form-label">Upload photo</label>
                             <input type="file" class="form-control" name="profile_image" accept="image/*" onchange="previewImage(event)">
                             <div class="invalid-feedback">Please upload an image.</div>
                         </div>
-
 
                         <div class="text-end">
                             <button name="submit" class="btn btn-primary" type="submit">Update Information</button>
@@ -314,12 +322,26 @@ $mySQLFunction->disconnect();
 
 
 <script>
-    function resetForm() {
+    function resetTeacherForm() {
         var form = document.getElementById("editTeacherInfo");
         if (form) {
             form.reset(); // Clears the form fields
             form.classList.remove("was-validated"); // Removes the validation styling
         }
+        // Hide image preview
+        var imagePreview = document.getElementById("imagePreview");
+        imagePreview.src = "#";
+        imagePreview.style.display = "none";
+    }
+
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('imagePreview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
     }
 </script>
 <script src="../assets/js/validationform.js"></script>

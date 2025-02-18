@@ -43,7 +43,7 @@ $mySQLFunction->disconnect();
 
 
 <!-- Modal to Update STUDENT Information -->
-<div class="modal fade" id="updatestudentinfo" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="updatestudentinfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content bg-light shadow">
             <div class="modal-header bg-primary text-white">
@@ -112,6 +112,13 @@ $mySQLFunction->disconnect();
                             <div class="invalid-feedback">Please enter the first name.</div>
                         </div>
 
+                        <!-- Image Preview -->
+                        <div class="mb-3 text-center">
+                            <img id="imagePreview" class="profile-img rounded-circle shadow-sm"
+                                src="#"
+                                alt="Image Preview"
+                                style="display:none; width: 130px; height: 130px; object-fit: cover; border: 2px solid #ddd;">
+                        </div>
                         <!-- Profile Image -->
                         <div class="mb-3">
                             <label class="form-label">Upload photo</label>
@@ -119,10 +126,6 @@ $mySQLFunction->disconnect();
                             <div class="invalid-feedback">Please upload an image.</div>
                         </div>
 
-
-                        <div class="mb-3 text-center">
-                            <img id="imagePreview" class="profile-img" src="#" alt="Image Preview" style="display:none;">
-                        </div>
 
 
                         <div class="modal-header text-black mb-3">
@@ -363,6 +366,20 @@ $mySQLFunction->disconnect();
             form.reset(); // Clears the form fields
             form.classList.remove("was-validated"); // Removes the validation styling
         }
+        // Hide image preview
+        var imagePreview = document.getElementById("imagePreview");
+        imagePreview.src = "#";
+        imagePreview.style.display = "none";
+    }
+
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('imagePreview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
     }
 </script>
 <script src="/lms/assets/js/validationform.js"></script>

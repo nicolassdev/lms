@@ -76,7 +76,7 @@ $result = $mySQLFunction->getStudentStrandAndSectionaAlsoAdviser($_SESSION['stu_
                             </div>
                             <div type="button"
                                 class="btn btn-sm fw-bold d-flex align-items-center bg-success text-white">
-                                <a class="nav-link active" href="index.php?page=student_subject">
+                                <a class="nav-link active" href="index.php?page=student_subject"><i class="bi bi-journals"></i>
                                     View Subjects
                                 </a>
                             </div>

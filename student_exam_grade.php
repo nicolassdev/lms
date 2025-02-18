@@ -91,7 +91,6 @@ $examResult = $mySQLFunction->getEquivalentScoreBySubjectOfIndividualStudent($_S
                         <table id="student_report" class="table table-bordered table-striped table-sm align-middle">
                             <thead class="table-dark">
                                 <tr>
-
                                     <th scope="col" style="width: 100px;">Subject</th>
                                     <th scope="col" class="text-center" style="width: 100px;">Score</th>
                                     <th scope="col" class="text-center" style="width: 100px;">Total Items</th>
@@ -101,42 +100,39 @@ $examResult = $mySQLFunction->getEquivalentScoreBySubjectOfIndividualStudent($_S
                             <tbody>
                                 <?php
                                 if (!empty($examResult)) {
-                                    $count = 1;
+                                    $count = 0;
                                     foreach ($examResult as $row) {
-                                        // Skip rows where the subject is empty
-                                        if (empty($row["subject"])) {
-                                            continue;
-                                        }
+                                        if (empty($row["subject"])) continue;
 
-                                        // Split scores
                                         $scores = explode(',', $row['scores'] ?? '');
-
-                                        // Determine if the student's quarter matches the active quarter
                                         $isCurrentQuarter = in_array($row["quarter"], explode(",", implode(",", $activeQuarter)));
-
-                                        // Determine status
                                         $status = (!empty($row['scores']) && count($scores) > 0);
 
-                                        echo '<tr>';
                                         if ($isCurrentQuarter) {
+                                            echo '<tr>';
                                             echo '<td class="small">' . (!empty($row["subject"]) ? ucwords(strtolower($row["subject"])) : '-') . '</td>';
                                             echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['scores']) : '<span class="text-danger">0</span>') . '</td>';
                                             echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['total_items']) : '<span class="text-danger">0</span>') . '</td>';
                                             echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['equivalent_scores']) : '<span class="text-danger">N/A</span>') . '</td>';
+                                            echo '</tr>';
+                                            $count++;
                                         }
-
-                                        echo '</tr>';
-                                        $count++;
+                                    }
+                                    // If no valid subjects were displayed, show "Student not found."
+                                    if ($count === 0) {
+                                        echo '<tr>
+                                            <td colspan="4" class="text-center mt-2 fw-semibold">Result not found.</td>
+                                        </tr>';
                                     }
                                 } else {
                                     echo '<tr>
-                                            <td colspan="10" class="text-center mt-2 text-danger"><strong>Student not found.</strong></td>
-                                         </tr>';
+                                        <td colspan="4" class="text-center mt-2 fw-semibold">Result not found.</td>
+                                    </tr>';
                                 }
+
                                 ?>
                             </tbody>
-
-
+                        </table>
                     </div>
                 </div>
             </div>

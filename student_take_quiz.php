@@ -53,13 +53,13 @@ $mySQLFunction->disconnect();
                                         <h1 class="card-title fw-bold">Done <i class="bi bi-check-circle-fill fs-3 text-success"></i></h1>
                                         <p class="card-text"> You have already taken this quiz. </p>
                                         <button class="btn btn-outline-light btn-lg px-5 rounded-pill"
-                                            data-bs-toggle="collapse" data-bs-target="#examResultArea">
+                                            data-bs-toggle="collapse" data-bs-target="#quizResultArea">
                                             <i class="bi bi-clipboard-data me-2"></i> View Result
                                         </button>
                                     <?php else: ?>
                                         <h1 class="card-title fw-bold">Take Your Quiz</h1>
                                         <p class="card-text"> Get ready to demonstrate your knowledge. Best of luck! </p>
-                                        <button class="btn btn-outline-light btn-lg px-5 rounded-pill" id="startExamButton">
+                                        <button class="btn btn-outline-light btn-lg px-5 rounded-pill" id="startQuizButton">
                                             <i class="bi bi-play-circle me-2"></i> Start Quiz
                                         </button>
 
@@ -72,7 +72,7 @@ $mySQLFunction->disconnect();
                     </div>
                     <!-- Exam Details Section -->
 
-                    <div id="examDetails">
+                    <div id="quizDetails">
                         <?php if (!empty($quizzes)) : ?>
                             <?php foreach ($quizzes  as $quizData) : ?>
                                 <!-- Exam Title and Details -->
@@ -147,7 +147,7 @@ $mySQLFunction->disconnect();
                 <!-- NOTE: If student not have not yet taken the exam this will be display  exam and the button will be start exam  -->
                 <?php if (!$isQuizTaken): ?>
                     <!-- Timer and Exam Questions -->
-                    <div id="examArea" class="d-none">
+                    <div id="quizArea" class="d-none">
                         <div class="row">
                             <!-- EXAM QUESTION ELEMENT -->
                             <div class="col-md-9">
@@ -253,25 +253,39 @@ $mySQLFunction->disconnect();
                                     </div>
                                 </div>
                             </div>
-                            <!-- EXAM TIMER EMELEMENT -->
-                            <div class="col-md-2" style="position:fixed; margin-left: 64%;">
+
+                            <!-- QUIZ TIMER EMELEMENT FOR DESKTOP -->
+                            <div class="col-md-2 d-none d-md-block " style="position:fixed; margin-left: 64%;">
                                 <div class="card mb-4 shadow-sm text-center">
                                     <div class="card-body">
                                         <h4 class="fw-bold">Timer</h4>
-                                        <div id="examTimer" class="display-5 text-danger">
+                                        <div id="quizTimerDesktop" class="display-5 text-danger">
                                             00:00
                                         </div>
                                         <p class="text-muted">Time remaining</p>
-                                        <button class="btn btn-danger mt-2" id="endExamButton">End Quiz</button>
+                                        <button class="btn btn-danger mt-2" id="endQuizButtonDesktop">End Quiz</button>
                                     </div>
                                 </div>
                             </div>
+                            <!-- QUIZ TIMER EMELEMENT FOR MOBILE -->
+                            <div class="col-6 col-sm-4 col-md-3 position-fixed end-0 top-50 translate-middle-y d-lg-none">
+                                <div class="card shadow-sm text-center p-2">
+                                    <div class="card-body p-2">
+                                        <h6 class="fw-bold mb-1">Timer</h6>
+                                        <div id="quizTimerMobile" class="fs-4 fw-bold text-danger">00:00</div>
+                                        <p class="text-muted small mb-1">Time left</p>
+                                        <button class="btn btn-sm btn-danger" id="endQuizButtonMobile">End</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                     <!-- NOTE: If student taken the exam this will be display  exam and the button will be view result  -->
                 <?php else: ?>
                     <!-- Exam Result Section -->
-                    <div id="examResultArea" class="collapse">
+                    <div id="quizResultArea" class="collapse">
                         <div class="card shadow-sm ms-2 me-2">
                             <div class="card-header bg-success text-white text-center">
                                 <h4 class="fw-bold mb-0">Quiz Result</h4>
@@ -357,7 +371,7 @@ $mySQLFunction->disconnect();
 
 
                 <!-- Exam Completion Section -->
-                <div id="examEndNotification" class="d-none text-center my-5">
+                <div id="quizEndNotification" class="d-none text-center my-5">
                     <h2 class="fw-bold text-success">Quiz Completed!</h2>
                     <p>Your answers have been submitted successfully.</p>
                     <a href="?page=student_quiz_result" class="btn btn-outline-success">
@@ -373,23 +387,28 @@ $mySQLFunction->disconnect();
     document.addEventListener("DOMContentLoaded", function() {
         const form = document.querySelector(".needs-validation");
         const viewResultButton = document.getElementById("viewExamResultButton");
-        const examResultArea = document.getElementById("examResultArea");
-        const startButton = document.getElementById("startExamButton");
-        const examDetails = document.getElementById("examDetails"); // Reference to the exam details section
-        const examArea = document.getElementById("examArea");
-        const examTimer = document.getElementById("examTimer");
-        const endExamButton = document.getElementById("endExamButton");
-        const examEndNotification = document.getElementById("examEndNotification");
+        const quizResultArea = document.getElementById("quizResultArea");
+        const startButton = document.getElementById("startQuizButton");
+        const quizDetails = document.getElementById("quizDetails"); // Reference to the exam details section
+        const quizArea = document.getElementById("quizArea");
+
+        const quizTimerDesktop = document.getElementById("quizTimerDesktop");
+        const quizTimerMobile = document.getElementById("quizTimerMobile");
+        const endQuizButtonDesktop = document.getElementById("endQuizButtonDesktop");
+        const endQuizButtonMobile = document.getElementById("endQuizButtonMobile");
+
+        const quizEndNotification = document.getElementById("quizEndNotification");
+
         let timerDuration = <?= json_encode($quizData["quiz_duration"] ?? 0) ?>; // In minutes
 
         // Check if the exam has been taken
         startButton.addEventListener("click", function() {
             // Hide the header card and exam details section
             startButton.closest('.card').classList.add("d-none");
-            examDetails.classList.add("d-none"); // Hide the exam details section
+            quizDetails.classList.add("d-none"); // Hide the exam details section
 
             // Show the exam area
-            examArea.classList.remove("d-none");
+            quizArea.classList.remove("d-none");
 
             // Start Timer
             let timer = timerDuration * 60;
@@ -397,23 +416,41 @@ $mySQLFunction->disconnect();
                 const minutes = Math.floor(timer / 60);
                 const seconds = timer % 60;
                 // This part targets the HTML element where the timer will be displayed.
-                examTimer.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+                const formattedTime = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+                // Update both desktop and mobile timers
+                if (quizTimerDesktop) quizTimerDesktop.textContent = formattedTime;
+                if (quizTimerMobile) quizTimerMobile.textContent = formattedTime;
                 timer--;
 
                 if (timer < 0) {
                     clearInterval(timerInterval);
                     alert("Time's up!");
-                    examArea.classList.add("d-none");
-                    examEndNotification.classList.remove("d-none");
+                    quizArea.classList.add("d-none");
+                    quizEndNotification.classList.remove("d-none");
                 }
             }, 1000);
 
-            endExamButton.addEventListener("click", function() {
-                clearInterval(timerInterval);
-                alert("Exam ended.");
-                examArea.classList.add("d-none");
-                examEndNotification.classList.remove("d-none");
-            });
+            // End Exam Button for Desktop
+            if (endQuizButtonDesktop) {
+                endQuizButtonDesktop.addEventListener("click", function() {
+                    clearInterval(timerInterval);
+                    alert("Quiz ended.");
+                    quizArea.classList.add("d-none");
+                    quizEndNotification.classList.remove("d-none");
+                });
+            }
+
+            // End Exam Button for Mobile
+            if (endQuizButtonMobile) {
+                endQuizButtonMobile.addEventListener("click", function() {
+                    clearInterval(timerInterval);
+                    alert("Quiz ended.");
+                    quizArea.classList.add("d-none");
+                    quizEndNotification.classList.remove("d-none");
+                });
+            }
+
         });
 
 
@@ -426,8 +463,6 @@ $mySQLFunction->disconnect();
             }
             form.classList.add("was-validated");
         }, false);
-
-
 
     });
 </script>

@@ -61,12 +61,51 @@ $mySQLFunction->disconnect();
                             Exam
                         </h4>
                         <!-- Search Bar -->
+                        <!-- Search Bar -->
                         <div class="col-md-4">
                             <div class="input-group input-group-sm">
+                                <!-- Search Input (Placed outside the loop to display only once) -->
                                 <input type="text" id="searchExam" class="form-control" placeholder="Search subject exam ...">
                                 <i class="bi bi-search me-2 ms-2 fs-5"></i>
                             </div>
                         </div>
+
+                        <?php
+                        $hasExams = false; // Boolean
+
+                        foreach ($studentSubjects as $subject):
+                            $mySQLFunction->connection();
+                            $allExamsCompleted = true; // Assume all exams are completed
+
+                            if (!empty($subject['exams'])):
+                                foreach ($subject["exams"] as $exam) {
+                                    $exam_id = $exam['exam_id'];
+                                    $stu_lrn = $_SESSION['stu_lrn'];
+                                    // Check if the student has answered in the STUDENT ANSWERS and STUDENT SCORES tables
+                                    $hideExam = $mySQLFunction->checkExistByMultipleIDs("student_answers", ["stu_lrn" => $stu_lrn, "exam_id" => $exam_id]);
+                                    $hideExamScore = $mySQLFunction->checkExistByMultipleIDs("student_scores",  ["stu_lrn" => $stu_lrn, "exam_id" => $exam_id]);
+
+                                    if ($hideExam == 0 && $hideExamScore == 0) {
+                                        $allExamsCompleted = false; // At least one exam is not completed
+                                        break;
+                                    }
+                                }
+
+                                if ($allExamsCompleted) {
+                                    continue; // Skip rendering this subject if all exams are completed
+                                }
+
+                                $hasExams = true;
+                            endif;
+                        endforeach;
+                        ?>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row g-4 mb-3" id="subjectContainer">
+                    <?php if (!empty($studentSubjects)): ?>
                         <?php $hasExams = false; ?> <!-- Boolean -->
                         <?php foreach ($studentSubjects as $subject): ?>
                             <?php
@@ -93,119 +132,64 @@ $mySQLFunction->disconnect();
 
                                 $hasExams = true;
                             ?>
-                                <!-- Search Input -->
+                                <div class="col-lg-4 col-md-6 col-sm-12 subject-card" data-title="<?php echo htmlspecialchars(strtolower($subject['sub_title'])); ?>">
+                                    <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                                        <!-- Card Header -->
+                                        <div class="card-header bg-success text-white rounded-top-4 px-3 py-3 d-flex align-items-center">
+                                            <i class="bi bi-book-half fs-4 me-2"></i>
+                                            <div class="text-truncate">
+                                                <h6 class="mb-0 fw-bold text-truncate"><?php echo htmlspecialchars(ucwords(strtolower($subject['sub_title'] ?? 'No Title'))); ?></h6>
+                                                <small class="fw-semibold"><?php echo htmlspecialchars(ucwords(strtolower($subject['sub_type'] ?? 'No Type'))); ?> Subject</small>
+                                            </div>
+                                        </div>
+
+                                        <!-- Card Body -->
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <i class="bi bi-person-circle text-success me-2"></i>
+                                                <span class="fw-bold">
+                                                    <?php echo ucwords(strtolower($subject["teacher_fname"] . ' ' . $subject["teacher_lname"])) ?: 'No Subject Teacher'; ?>
+                                                </span>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <i class="bi bi-layers text-primary me-2"></i>
+                                                <span class="text-dark fw-semibold student_take_exam">
+                                                    <?php echo  $subject["grade_lvl"] . ' ' . htmlspecialchars($subject["section_name"]); ?><br>
+                                                </span>
+                                                <small class="text-dark ms-4 ">
+                                                    <?php echo ucwords(strtolower($subject["strand_desc"])); ?>
+                                                </small>
+                                            </div>
+
+                                            <div class="exam-info">
+                                                <i class="bi bi-calendar3 text-warning me-1"></i>
+                                                <span class="text-secondary">
+                                                    <?php
+                                                    foreach ($subject["exams"] as $exam) {
+                                                        echo '<span class="text-dark">' . htmlspecialchars($exam["exam_quarter"]) . ' - ' . $subject["sub_semester"] . ' </span> <br> ' .
+                                                            '<small class="text-dark ms-4">Date of Exam : ' . date('F j, Y', strtotime($exam["exam_date"])) . ' </small> ';
+                                                    }
+                                                    ?>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Card Footer -->
+                                        <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
+                                            <a href="index.php?page=student_take_exam&exam_id=<?php echo urlencode($exam['exam_id']); ?>&sub_code=<?php echo urlencode($subject['sub_code']); ?>&section_code=<?php echo urlencode($subject['section_code']); ?>&grade_lvl=<?php echo urlencode($subject['grade_lvl']); ?>"
+                                                class="btn btn-success w-100 fw-bold d-flex align-items-center justify-content-center shadow-sm">
+                                                Take Exam
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
                             <?php endif; ?>
                         <?php endforeach; ?>
 
-                    </div>
-                    <hr>
-
-                    <div class="row g-4 mb-3" id="subjectContainer">
-                        <?php if (!empty($studentSubjects)): ?>
-                            <?php $hasExams = false; ?> <!-- Boolean -->
-                            <?php foreach ($studentSubjects as $subject): ?>
-                                <?php
-                                $mySQLFunction->connection();
-                                $allExamsCompleted = true; // Assume all exams are completed
-
-                                if (!empty($subject['exams'])):
-                                    foreach ($subject["exams"] as $exam) {
-                                        $exam_id = $exam['exam_id'];
-                                        $stu_lrn = $_SESSION['stu_lrn'];
-                                        // check if the student have answer in table STUDENT ANSWERS and STUDENT SCORES
-                                        $hideExam = $mySQLFunction->checkExistByMultipleIDs("student_answers", ["stu_lrn" => $stu_lrn, "exam_id" => $exam_id]);
-                                        $hideExamScore = $mySQLFunction->checkExistByMultipleIDs("student_scores",  ["stu_lrn" => $stu_lrn, "exam_id" => $exam_id]);
-
-                                        if ($hideExam == 0 && $hideExamScore == 0) {
-                                            $allExamsCompleted = false; // At least one exam is not completed
-                                            break;
-                                        }
-                                    }
-
-                                    if ($allExamsCompleted) {
-                                        continue; // Skip rendering this subject if all exams are completed
-                                    }
-
-                                    $hasExams = true;
-                                ?>
-                                    <div class="col-lg-4 col-md-6 col-sm-12 subject-card" data-title="<?php echo htmlspecialchars(strtolower($subject['sub_title'])); ?>">
-                                        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
-                                            <!-- Card Header -->
-                                            <div class="card-header bg-success text-white rounded-top-4 px-3 py-3 d-flex align-items-center">
-                                                <i class="bi bi-book-half fs-4 me-2"></i>
-                                                <div class="text-truncate">
-                                                    <h6 class="mb-0 fw-bold text-truncate"><?php echo htmlspecialchars(ucwords(strtolower($subject['sub_title'] ?? 'No Title'))); ?></h6>
-                                                    <small class="fw-semibold"><?php echo htmlspecialchars(ucwords(strtolower($subject['sub_type'] ?? 'No Type'))); ?> Subject</small>
-                                                </div>
-                                            </div>
-
-                                            <!-- Card Body -->
-                                            <div class="card-body">
-                                                <div class="mb-3">
-                                                    <i class="bi bi-person-circle text-success me-2"></i>
-                                                    <span class="fw-bold">
-                                                        <?php echo ucwords(strtolower($subject["teacher_fname"] . ' ' . $subject["teacher_lname"])) ?: 'No Subject Teacher'; ?>
-                                                    </span>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <i class="bi bi-layers text-primary me-2"></i>
-                                                    <span class="text-dark fw-semibold student_take_exam">
-                                                        <?php echo  $subject["grade_lvl"] . ' ' . htmlspecialchars($subject["section_name"]); ?><br>
-                                                    </span>
-                                                    <small class="text-dark ms-4 ">
-                                                        <?php echo ucwords(strtolower($subject["strand_desc"])); ?>
-                                                    </small>
-                                                </div>
-
-                                                <div class="exam-info">
-                                                    <i class="bi bi-calendar3 text-warning me-1"></i>
-                                                    <span class="text-secondary">
-                                                        <?php
-                                                        foreach ($subject["exams"] as $exam) {
-                                                            echo '<span class="text-dark">' . htmlspecialchars($exam["exam_quarter"]) . ' - ' . $subject["sub_semester"] . ' </span> <br> ' .
-                                                                '<small class="text-dark ms-4">Date of Exam : ' . date('F j, Y', strtotime($exam["exam_date"])) . ' </small> ';
-                                                        }
-                                                        ?>
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            <!-- Card Footer -->
-                                            <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
-                                                <a href="index.php?page=student_take_exam&exam_id=<?php echo urlencode($exam['exam_id']); ?>&sub_code=<?php echo urlencode($subject['sub_code']); ?>&section_code=<?php echo urlencode($subject['section_code']); ?>&grade_lvl=<?php echo urlencode($subject['grade_lvl']); ?>"
-                                                    class="btn btn-success w-100 fw-bold d-flex align-items-center justify-content-center shadow-sm">
-                                                    Take Exam
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-
-                            <!-- No Subjects EXAM Found -->
-                            <?php if (!$hasExams): ?>
-                                <div class="col-12 text-center py-5">
-                                    <div class="card-body">
-                                        <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
-                                        <h5 class="text-secondary fw-bold">No Exam Found</h5>
-                                        <small class="text-muted">You currently have no assigned exams. Check with your subject teacher.</small>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                            <!-- NOTE: for search bar purpose -->
-                            <!-- No Subjects Found Message  search bar-->
-                            <div class="col-12 text-center d-none no-results">
-                                <div class="card-body">
-                                    <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
-                                    <h5 class="text-secondary fw-bold">Exam Not Found</h5>
-                                    <small class="text-muted">You can use the search bar above to find your exam.</small>
-                                </div>
-                            </div>
-
-                        <?php else: ?>
-                            <!-- No Exams Available -->
+                        <!-- No Subjects EXAM Found -->
+                        <?php if (!$hasExams): ?>
                             <div class="col-12 text-center py-5">
                                 <div class="card-body">
                                     <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
@@ -214,11 +198,31 @@ $mySQLFunction->disconnect();
                                 </div>
                             </div>
                         <?php endif; ?>
-                    </div>
+                        <!-- NOTE: for search bar purpose -->
+                        <!-- No Subjects Found Message  search bar-->
+                        <div class="col-12 text-center d-none no-results">
+                            <div class="card-body">
+                                <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
+                                <h5 class="text-secondary fw-bold">Exam Not Found</h5>
+                                <small class="text-muted">You can use the search bar above to find your exam.</small>
+                            </div>
+                        </div>
 
+                    <?php else: ?>
+                        <!-- No Exams Available -->
+                        <div class="col-12 text-center py-5">
+                            <div class="card-body">
+                                <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
+                                <h5 class="text-secondary fw-bold">No Exam Found</h5>
+                                <small class="text-muted">You currently have no assigned exams. Check with your subject teacher.</small>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
+
             </div>
         </div>
+    </div>
     </div>
 </main>
 

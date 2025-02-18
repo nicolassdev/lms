@@ -466,14 +466,20 @@ class myDataBase
     // THIS IS TO GET THE ALL EXAM OF STUDENT IN EVERY SUBJECT
     public function getAllStudentSubjectsExam($stu_lrn)
     {
-        // Get active semester
+        // Get the active semester
         $activeSemesters = $this->checkSemStatus('semester');
-
+        $activeQuarter = $this->checkQuarterStatus('quarterly');
+        // Check if there are any active semesters
         if (empty($activeSemesters)) {
-            return []; // No active semester
+            return []; // Return an empty array if no active semester
+        }
+        if (empty($activeQuarter)) {
+            return []; // Return an empty array if no active semester
         }
 
+        // Prepare the active semester condition
         $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
+        $activeQuarterCondition = "exam_quarter IN ('" . implode("','", $activeQuarter) . "')";
 
         // Get student's section, grade level, and strand
         $studentQuery = "
@@ -550,7 +556,7 @@ class myDataBase
             // Fetch exams related to the schedule
             $examQuery = "SELECT exam_id, exam_type, exam_quarter, exam_duration, 
                                  exam_title, exam_items, exam_date
-                          FROM exam WHERE sched_id = ?";
+                          FROM exam WHERE sched_id = ? AND  $activeQuarterCondition";
             $stmtExam = $this->con->prepare($examQuery);
             $stmtExam->bind_param("s", $schedId);
             $stmtExam->execute();
@@ -580,14 +586,20 @@ class myDataBase
     // THIS IS TO GET THE ALL QUIZZIES OF STUDENT IN EVERY SUBJECT
     public function getAllStudentSubjectsQuiz($stu_lrn)
     {
-        // Get active semester
+        // Get the active semester
         $activeSemesters = $this->checkSemStatus('semester');
-
+        $activeQuarter = $this->checkQuarterStatus('quarterly');
+        // Check if there are any active semesters
         if (empty($activeSemesters)) {
-            return []; // No active semester
+            return []; // Return an empty array if no active semester
+        }
+        if (empty($activeQuarter)) {
+            return []; // Return an empty array if no active semester
         }
 
+        // Prepare the active semester condition
         $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
+        $activeQuarterCondition = "quiz_quarter IN ('" . implode("','", $activeQuarter) . "')";
 
         // Get student's section, grade level, and strand
         $studentQuery = "
@@ -664,7 +676,7 @@ class myDataBase
             // Fetch exams related to the schedule
             $quizQuery = "SELECT quiz_id, quiz_type, quiz_quarter, quiz_duration, 
                                  quiz_title, quiz_items, quiz_date
-                          FROM quiz WHERE sched_id = ?";
+                          FROM quiz WHERE sched_id = ? AND $activeQuarterCondition";
             $stmtQuiz = $this->con->prepare($quizQuery);
             $stmtQuiz->bind_param("s", $schedId);
             $stmtQuiz->execute();
@@ -2379,7 +2391,6 @@ class myDataBase
     }
 
 
-
     // GET LIST OF SECTION
     public function getSection($row = null, $value = null)
     {
@@ -3551,14 +3562,19 @@ class myDataBase
         try {
             // Get the active semester
             $activeSemesters = $this->checkSemStatus('semester');
-
+            $activeQuarter = $this->checkQuarterStatus('quarterly');
             // Check if there are any active semesters
             if (empty($activeSemesters)) {
+                return []; // Return an empty array if no active semester
+            }
+            if (empty($activeQuarter)) {
                 return []; // Return an empty array if no active semester
             }
 
             // Prepare the active semester condition
             $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
+            $activeQuarterCondition = " e.exam_quarter IN ('" . implode("','", $activeQuarter) . "')";
+
 
             // Query to fetch exam data and join it with related question tables
             $sql = "
@@ -3628,6 +3644,7 @@ class myDataBase
                     AND sched.sub_code = ?
                     AND sched.section_code = ?
                     AND $activeSemesterCondition 
+                    AND $activeQuarterCondition
                 ORDER BY 
                     e.exam_date DESC, e.exam_title
             ";

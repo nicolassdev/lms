@@ -244,19 +244,32 @@ $mySQLFunction->disconnect();
                                     </div>
                                 </div>
                             </div>
-                            <!-- EXAM TIMER EMELEMENT -->
-                            <div class="col-md-2" style="position:fixed; margin-left: 64%;">
+                            <!-- EXAM TIMER EMELEMENT FOR DESKTOP -->
+                            <div class="col-md-2 d-none d-md-block" style="position:fixed; margin-left: 64%;">
                                 <div class="card mb-4 shadow-sm text-center">
                                     <div class="card-body">
                                         <h4 class="fw-bold">Timer</h4>
-                                        <div id="examTimer" class="display-5 text-danger">
-                                            00:00
-                                        </div>
+                                        <div id="examTimerDesktop" class="display-5 text-danger">00:00</div>
                                         <p class="text-muted">Time remaining</p>
-                                        <button class="btn btn-danger mt-2" id="endExamButton">End Exam</button>
+                                        <button class="btn btn-danger mt-2" id="endExamButtonDesktop">End Quiz</button>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- EXAM TIMER EMELEMENT FOR MOBILE -->
+                            <div class="col-6 col-sm-4 col-md-3 position-fixed end-0 top-50 translate-middle-y d-lg-none">
+                                <div class="card shadow-sm text-center p-2">
+                                    <div class="card-body p-2">
+                                        <h6 class="fw-bold mb-1">Timer</h6>
+                                        <div id="examTimerMobile" class="fs-4 fw-bold text-danger">00:00</div>
+                                        <p class="text-muted small mb-1">Time left</p>
+                                        <button class="btn btn-sm btn-danger" id="endExamButtonMobile">End</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                         </div>
                     </div>
                     <!-- NOTE: If student taken the exam this will be display  exam and the button will be view result  -->
@@ -364,9 +377,13 @@ $mySQLFunction->disconnect();
         const startButton = document.getElementById("startExamButton");
         const examDetails = document.getElementById("examDetails"); // Reference to the exam details section
         const examArea = document.getElementById("examArea");
-        const examTimer = document.getElementById("examTimer");
-        const endExamButton = document.getElementById("endExamButton");
+
+        const examTimerDesktop = document.getElementById("examTimerDesktop");
+        const examTimerMobile = document.getElementById("examTimerMobile");
+        const endExamButtonDesktop = document.getElementById("endExamButtonDesktop");
+        const endExamButtonMobile = document.getElementById("endExamButtonMobile");
         const examEndNotification = document.getElementById("examEndNotification");
+
         let timerDuration = <?= json_encode($examData["exam_duration"] ?? 0) ?>; // In minutes
 
         // Check if the exam has been taken
@@ -384,7 +401,11 @@ $mySQLFunction->disconnect();
                 const minutes = Math.floor(timer / 60);
                 const seconds = timer % 60;
                 // This part targets the HTML element where the timer will be displayed.
-                examTimer.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+                const formattedTime = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+                // Update both desktop and mobile timers
+                if (examTimerDesktop) examTimerDesktop.textContent = formattedTime;
+                if (examTimerMobile) examTimerMobile.textContent = formattedTime;
                 timer--;
 
                 if (timer < 0) {
@@ -395,12 +416,25 @@ $mySQLFunction->disconnect();
                 }
             }, 1000);
 
-            endExamButton.addEventListener("click", function() {
-                clearInterval(timerInterval);
-                alert("Exam ended.");
-                examArea.classList.add("d-none");
-                examEndNotification.classList.remove("d-none");
-            });
+            // End Exam Button for Desktop
+            if (endExamButtonDesktop) {
+                endExamButtonDesktop.addEventListener("click", function() {
+                    clearInterval(timerInterval);
+                    alert("Exam ended.");
+                    examArea.classList.add("d-none");
+                    examEndNotification.classList.remove("d-none");
+                });
+            }
+
+            // End Exam Button for Mobile
+            if (endExamButtonMobile) {
+                endExamButtonMobile.addEventListener("click", function() {
+                    clearInterval(timerInterval);
+                    alert("Exam ended.");
+                    examArea.classList.add("d-none");
+                    examEndNotification.classList.remove("d-none");
+                });
+            }
         });
 
 

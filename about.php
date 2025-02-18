@@ -29,7 +29,7 @@
             border-radius: 12px;
             backdrop-filter: blur(12px);
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-            margin-top: 20px;
+            margin-top: 50px;
             transition: transform 0.3s ease-in-out;
         }
 
@@ -75,43 +75,21 @@
             color: #17a2b8;
             transform: scale(1.1);
         }
-
-
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .nav-links {
-                top: 10px;
-                right: 10px;
-                flex-direction: column;
-                align-items: flex-end;
-            }
-
-            .container-custom {
-                width: 95%;
-                padding: 20px;
-                margin-top: 10px;
-            }
-
-            .btn-custom {
-                font-size: 14px;
-                padding: 8px 15px;
-            }
-        }
     </style>
 </head>
 
 <body>
+
     <!-- Navigation Links -->
-    <div class="nav-links">
+    <div class="nav-links ">
         <a href="login.php"><i class="fa-solid fa-sign-in-alt"></i> Login</a>
         <a href="contact.php"><i class="fa-solid fa-envelope"></i> Contact Us</a>
     </div>
     <!-- About Section -->
     <div>
-        <div class="d-flex align-items-center justify-content-center vh-150">
+        <div class="d-flex align-items-center justify-content-center">
             <div class="container-custom">
-                <h2 class="fw-bold">About Us</h2>
+                <h2 class="fw-bold mb-4">About Us</h2>
 
                 <p>
                     Welcome to the <strong>Learning Management System (LMS)</strong> of Computer Systems Institute.

@@ -42,15 +42,15 @@ include "../admin/includes/Forms/principalform.php";
 </style>
 
 <!-- Modal to Update Admin Information -->
-<div class="modal fade" id="updateprincipalinfo" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="updateprincipalinfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content bg-light shadow">
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title">Update Principal Information</h5>
-                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm()"></button>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" onclick="resetPrincipalForm()"></button>
             </div>
             <div class="modal-body">
-                <form action="./includes/Operation/updatePrincipal.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate id="editAdminInfo">
+                <form action="./includes/Operation/updatePrincipal.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate id="editPrincipalInfo">
                     <div class="row">
                         <input type="hidden" name="prinID" value="<?php echo htmlspecialchars($showResult['principal_id']); ?>">
                         <div class="col-md-4 mb-3">
@@ -99,15 +99,19 @@ include "../admin/includes/Forms/principalform.php";
                             <div class="invalid-feedback">Please enter your address.</div>
                         </div>
 
+                        <!-- Image Preview -->
+                        <div class="mb-3 text-center">
+                            <img id="imagePreview" class="profile-img rounded-circle shadow-sm"
+                                src="#"
+                                alt="Image Preview"
+                                style="display:none; width: 130px; height: 130px; object-fit: cover; border: 2px solid #ddd;">
+                        </div>
+
                         <!-- Profile Image -->
                         <div class="mb-3">
                             <label class="form-label">Profile Image</label>
                             <input type="file" class="form-control" name="profile_image" accept="image/*" onchange="previewImage(event)">
                             <div class="invalid-feedback">Please upload an image.</div>
-                        </div>
-
-                        <div class="mb-3 text-center">
-                            <img id="imagePreview" class="profile-img" src="#" alt="Image Preview" style="display:none;">
                         </div>
 
                         <div class="text-end">
@@ -248,12 +252,26 @@ include "../admin/includes/Forms/principalform.php";
 
 
 <script>
-    function resetForm() {
-        var form = document.getElementById("editAdminInfo");
+    function resetPrincipalForm() {
+        var form = document.getElementById("editPrincipalInfo");
         if (form) {
             form.reset(); // Clears the form fields
             form.classList.remove("was-validated"); // Removes the validation styling
         }
+        // Hide image preview
+        var imagePreview = document.getElementById("imagePreview");
+        imagePreview.src = "#";
+        imagePreview.style.display = "none";
+    }
+
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('imagePreview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
     }
 </script>
 <script src="../assets/js/validationform.js"></script>
