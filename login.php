@@ -71,7 +71,7 @@
          </div>
 
          <!-- Right Side - Login Form -->
-         <div class="col-md-5">
+         <div class="col-md-4">
            <div class="login-container">
              <!-- desktop design -->
              <!-- <div class="d-none d-lg-inline text-center ">
@@ -90,7 +90,7 @@
              </div>
              <!-- FORM ELEMENT  -->
              <form action="./includes/login-inc.php" method="POST" onsubmit="showLoading()">
-               <h4 class="fw-semibold mb-5 text-light" style="letter-spacing: 1px;">Login into your account</h4>
+               <h5 class="fw-semibold mb-5 text-light" style="letter-spacing: 1px;">Login into your account</h5>
                <!-- Username -->
                <div class="form-outline text-light mb-4">
                  <input type="text" name="username" class="form-control form-control-lg text-light" autocomplete="off" required />
