@@ -96,20 +96,31 @@ include "../faculty/includes/Forms/createexamform.php";
 
 
                             <!-- Upload Button -->
+                            <?php
+                            // Fetch schedule ID (Make sure you get this from the right context)
+                            $sched_id = $_GET['sched_id']; // Adjust as needed
+
+                            // Check if an exam exists for the schedule in the active quarter
+                            $examExists = $sched_id ? $mySQLFunction->checkExistExam($sched_id) : false;
+                            // Check if students are available
+                            $studentsAvailable = !empty($students);
+                            // Determine button state
+                            $btnClass = ($examExists || !$studentsAvailable) ? 'btn-primary' : 'btn-primary';
+                            $disabled = ($examExists || !$studentsAvailable) ? 'disabled' : '';
+                            ?>
+                            <!-- Upload Button -->
                             <div>
-                                <?php
-                                $btnClass = empty($students) ? 'btn-primary' : 'btn-primary';
-                                $disabled = empty($students) ? 'disabled' : '';
-                                ?>
                                 <button type="button"
                                     class="btn <?php echo $btnClass; ?> btn-sm fw-bold d-flex align-items-center"
                                     data-bs-toggle="modal"
                                     data-bs-target="#create_exam"
                                     data-bs-whatever="@fat"
                                     <?php echo $disabled; ?>>
-                                    <i class="bi-plus-circle me-1"></i>Create Exam
+                                    <i class="bi-plus-circle me-1"></i> Create Exam
                                 </button>
                             </div>
+
+
                         </div>
                     </div>
 
@@ -122,7 +133,7 @@ include "../faculty/includes/Forms/createexamform.php";
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
                                     <th scope="col" style="width: 100px;">Student name</th>
-                                    <th scope="col" style="width: 50px;">Gender</th>
+                                    <!-- <th scope="col" style="width: 50px;">Gender</th> -->
                                     <th scope="col" style="width: 100px;">Status</th>
                                     <th scope="col" style="width: 100px;">Score</th>
                                     <th scope="col" style="width: 100px;">Total Items</th>
@@ -134,6 +145,8 @@ include "../faculty/includes/Forms/createexamform.php";
                                 if (!empty($students)) {
                                     $count = 1;
                                     foreach ($students as $row) {
+                                        if ($activeQuarter) {
+                                        }
                                         // Split scores
                                         $scores = explode(',', $row['exam_scores'] ?? '');
 
@@ -146,7 +159,7 @@ include "../faculty/includes/Forms/createexamform.php";
                                         echo '<tr>';
                                         echo '<td class="text-center fw-bold">' . $count . '</td>';
                                         echo '<td class="text-center">' . $row["stu_lname"] . ', ' . ucwords(strtolower($row["stu_fname"])) . ' </td>';
-                                        echo '<td class="text-center">' . ucwords(strtolower($row["stu_gender"])) . '</td>';
+                                        // echo '<td class="text-center">' . ucwords(strtolower($row["stu_gender"])) . '</td>';
 
                                         echo '<td class="text-center">';
                                         if ($isCurrentQuarter) {
