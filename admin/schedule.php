@@ -262,9 +262,18 @@ include "../admin/includes/Forms/scheduleform.php";
                                     }
                                 } else {
                                     echo '<tr>
-                                <td colspan="10" class="text-center ">Schedule not found.<br>
-                                </td>
-                              </tr>';
+                                    <td class="text-center text-danger">Please add new  subject schedule for this semester.</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>    
+                                    <td class="text-center text-muted">-</td> 
+                                    <td class="text-center text-muted">-</td> 
+                                    </tr>';
                                 }
 
                                 echo '</tbody>';
@@ -296,12 +305,12 @@ include "../admin/includes/Forms/scheduleform.php";
     ?>
 </main>
 
- <!-- PDF ,EXCEL, PRINT ,CVS -->
+<!-- PDF ,EXCEL, PRINT ,CVS -->
 <script src="../assets/js/globaltables.js"></script>
 <script>
     initializeDataTable("subjectSched", 10, "Schedule Records");
 </script>
- 
+
 <?php
 $school_year_semester = '';
 
@@ -314,5 +323,3 @@ if (!empty($activeSchoolYears) && !empty($activeSem)) {
     $school_year_semester = '<div class="alert alert-warning">No school year and semester found.</div>';
 }
 ?>
-
- 

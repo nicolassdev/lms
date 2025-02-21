@@ -71,7 +71,7 @@
          </div>
 
          <!-- Right Side - Login Form -->
-         <div class="col-md-4">
+         <div class="col-md-5">
            <div class="login-container">
              <!-- desktop design -->
              <!-- <div class="d-none d-lg-inline text-center ">

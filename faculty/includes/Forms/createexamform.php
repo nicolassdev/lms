@@ -47,7 +47,7 @@
                     <!-- Exam Questions -->
                     <div id="questionsArea"></div>
                     <div class="d-flex justify-content-end">
-                        <button type="button" id="addQuestionButton" class="btn btn-success mb-3">
+                        <button type="button" id="addQuestionButton" class="btn btn-success mb-3 rounded-pill">
                             <i class="bi bi-plus-circle"></i> Add Question
                         </button>
                     </div>

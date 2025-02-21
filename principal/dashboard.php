@@ -16,10 +16,11 @@ $numberOfStudent = $mySQLFunction->checkRowCount("student");
 
 $numberOfSubject = $mySQLFunction->checkRowCount("subject");
 
-$numberOfEnrolled = $mySQLFunction->checkRowCount("enroll");
+$activeSem = $mySQLFunction->checkSemStatus('semester');
+
+$numberOfEnrolled = $mySQLFunction->checkRowCount("enroll", "semester", $activeSem[0]);
 
 $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
-$activeSem = $mySQLFunction->checkSemStatus('semester');
 $mySQLFunction->disconnect();
 ?>
 
@@ -98,7 +99,7 @@ $mySQLFunction->disconnect();
                             <!-- Icon and title -->
                             <div class="" style="margin-left:20px">
                                 <i class="bi bi-person-lines-fill display-5 text-primary mb-2"></i>
-                                <h5 class="card-title">Student</h5>
+                                <h5 class="card-title">Enrolled</h5>
                                 <p class="card-text">Total number of students enrolled.</p>
                             </div>
                             <!-- Number of students -->

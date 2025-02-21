@@ -82,9 +82,14 @@ $mySQLFunction->disconnect();
                                             <div class="dropdown">
                                                 <i class="bi bi-three-dots-vertical text-white " id="kebabMenu" data-bs-toggle="dropdown" aria-expanded="false" role="button"></i>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="#" onclick="confirmDelete()">Move</a></li>
+                                                    <li>
+                                                        <a href="index.php?page=create_exam&sched_id=<?php echo urlencode($schedule['sched_id']); ?>&sub_code=<?php echo urlencode($schedule['sub_code']); ?>&section_code=<?php echo urlencode($schedule['section_code']); ?>"
+                                                            class="dropdown-item text-black ">
+                                                            <i class="bi bi-people-fill me-2 text-danger"></i>View students
+                                                        </a>
+                                                    </li>
                                                     <hr class="dropdown-divider">
-                                                    <li><a class="dropdown-item" href="#" onclick="cancelAction()">Cancel</a></li>
+                                                    <li><a class="dropdown-item" href="?page=teacher_exam">Cancel</a></li>
                                                 </ul>
                                             </div>
                                         </div>

@@ -262,9 +262,17 @@ include "../admin/includes/Forms/enrollmentform.php";
                                     }
                                 } else {
                                     echo '<tr>
-                                <td colspan="10" class="text-center ">Enrolled students not found.<br>
-                                </td>
-                              </tr>';
+                                    <td class="text-center text-danger">No students are enrolled for this semester.</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>    
+                                    <td class="text-center text-muted">-</td>                                         
+                                </tr>';
                                 }
 
                                 echo '</tbody>';

@@ -508,7 +508,7 @@ if (isset($_SESSION['error_enrolled']) && $_SESSION['error_enrolled'] == true) {
                         <div class="text-danger">
                             <i class="bbi bi-exclamation-circle fs-1"></i><br><br>
                         </div>
-                        <p class="mb-4">The student has been already enrolled.</p>
+                        <p class="mb-4">Error enrolling student.</p>
                     </div>
                     <div class="d-flex justify-content-center mt-3 mb-5 ">
                         <button class="btn btn-danger me-2" data-bs-dismiss="modal" style="width: 120px;">Okay</button>
