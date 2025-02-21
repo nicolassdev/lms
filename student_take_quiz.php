@@ -371,7 +371,7 @@ $mySQLFunction->disconnect();
 
 
                 <!-- Exam Completion Section -->
-                <div id="quizEndNotification" class="d-none text-center my-5">
+                <div id="quizEndNotification" class="d-none text-center my-5 mt-5 pt-5">
                     <h2 class="fw-bold text-success">Quiz Completed!</h2>
                     <p>Your answers have been submitted successfully.</p>
                     <a href="?page=student_quiz_result" class="btn btn-outline-success">

@@ -131,7 +131,7 @@ include "../admin/includes/Forms/scheduleform.php";
                                         
                                         <td class="d-flex justify-content-center pt-2 pb-3 ">
                                             <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#edit_enrolled' . urlencode($row['sched_id']) . '">
-                                                <i class="bi bi-pencil-square me-1"></i>Edit
+                                                <i class="bi bi-pencil-square"></i>
                                             </button>
                                         
                                         </td>
@@ -261,10 +261,19 @@ include "../admin/includes/Forms/scheduleform.php";
                                         </div>';
                                     }
                                 } else {
-                                    echo '<tr>
-                                <td colspan="10" class="text-center ">Schedule not found.<br>
-                                </td>
-                              </tr>';
+                                     echo '<tr>
+                                            <td class="text-center text-danger">Please add new  subject schedule for semester.</td>
+                                            <td class="text-center text-muted">-</td>
+                                            <td class="text-center text-muted">-</td>
+                                            <td class="text-center text-muted">-</td>
+                                            <td class="text-center text-muted">-</td>
+                                            <td class="text-center text-muted">-</td>
+                                            <td class="text-center text-muted">-</td>
+                                            <td class="text-center text-muted">-</td>
+                                            <td class="text-center text-muted">-</td>    
+                                            <td class="text-center text-muted">-</td> 
+                                            <td class="text-center text-muted">-</td> 
+                                            </tr>';
                                 }
 
                                 echo '</tbody>';

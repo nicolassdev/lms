@@ -49,11 +49,12 @@ include "../admin/includes/Forms/sectionform.php";
                             <thead class="table-dark ">
                                 <tr>
                                     <!-- <th scope="col">#</th> -->
-                                    <th scope="col" class="small text-center">Section Code</th>
+                                    <!-- <th scope="col" class="small text-center">Section Code</th> -->
                                     <th scope="col" class="small text-center">Section</th>
                                     <th scope="col" class="small text-center">Strand</th>
                                     <th scope="col" class="small text-center">Year level</th>
                                     <th scope="col" class="small text-center">Adviser</th>
+                                    <th scope="col" class="small text-center">School year</th>
                                     <!-- <th scope="col" class="text-center">Action</th>   -->
 
                                 </tr>
@@ -70,11 +71,12 @@ include "../admin/includes/Forms/sectionform.php";
                                     foreach ($result as $row) {
                                         echo '<tr>';
 
-                                        echo '<td class="small text-center">' . $row["section_code"] . '</td>';
+                                        // echo '<td class="small text-center">' . $row["section_code"] . '</td>';
                                         echo '<td class="small text-center">' . $row["section_name"] . '</td>';
                                         echo '<td class="small text-center">' . $row["strand_name"] . '</td>';
                                         echo '<td class="small text-center">' . $row["grade_lvl"] . '</td>';
                                         echo '<td class="small text-center">' . ucwords(strtolower($row["adviser"])) . '</td>';
+                                        echo '<td class="small text-center">' . $row["school_year"] . '</td>';
 
                                         // echo '
                                         // <td class="d-flex justify-content-center">
