@@ -77,7 +77,7 @@ $mySQLFunction->disconnect();
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card shadow-sm rounded-4 h-100">
                                         <!-- Card Header -->
-                                        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center rounded-top-4">
+                                        <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center rounded-top-4">
                                             <div class="mb-0 fw-bold text-truncate pt-2 pb-2">
                                                 <i class="bi bi-book me-2"></i>
                                                 <?php echo htmlspecialchars(ucwords(strtolower($schedule['sub_title'] ?? 'No Title'))); ?>
@@ -85,9 +85,16 @@ $mySQLFunction->disconnect();
                                             <div class="dropdown">
                                                 <i class="bi bi-three-dots-vertical text-white " id="kebabMenu" data-bs-toggle="dropdown" aria-expanded="false" role="button"></i>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="#" onclick="confirmDelete()">Move</a></li>
+                                                    <li>
+                                                        <a href="index.php?page=create_quiz&sched_id=<?php echo urlencode($schedule['sched_id']); ?>&sub_code=<?php echo urlencode($schedule['sub_code']); ?>&section_code=<?php echo urlencode($schedule['section_code']); ?>"
+                                                            class="dropdown-item text-black ">
+                                                            <i class="bi bi-people-fill me-2 text-danger"></i>View students
+                                                        </a>
+                                                    </li>
                                                     <hr class="dropdown-divider">
-                                                    <li><a class="dropdown-item" href="#" onclick="cancelAction()">Cancel</a></li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="?page=teacher_quiz">Cancel</a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -102,7 +109,7 @@ $mySQLFunction->disconnect();
                                                 <?php echo   $schedule["strand_desc"] ?? 'No Strand'; ?>
                                             </small>
                                             <div class="text-muted mb-2 mt-4 fw-semibold">
-                                                <i class="bi bi-people-fill text-success"></i> Total Students:
+                                                <i class="bi bi-people-fill text-danger"></i> Total Students:
                                                 <?php
                                                 $mySQLFunction->connection();
                                                 $students = $mySQLFunction->getAllStudentBySectionAndSubjectWithModuleUploads($_SESSION['teacher_id'], $schedule['sub_code'], $schedule['section_code']);
@@ -120,7 +127,7 @@ $mySQLFunction->disconnect();
                                         <!-- Card Footer -->
                                         <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
                                             <a href="index.php?page=create_quiz&sched_id=<?php echo urlencode($schedule['sched_id']); ?>&sub_code=<?php echo urlencode($schedule['sub_code']); ?>&section_code=<?php echo urlencode($schedule['section_code']); ?>"
-                                                class="btn btn-outline-success w-100 fw-bold">
+                                                class="btn btn-outline-danger w-100 fw-bold">
                                                 <i class="bi bi-pencil-square me-2"></i>Create Quiz
                                             </a>
                                         </div>

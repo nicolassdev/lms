@@ -304,7 +304,7 @@ include "../includes/dbh-inc.php";
                                     <td class="text-center text-muted">-</td>
                                     <td class="text-center text-muted">-</td>    
                                     <td class="text-center text-muted">-</td>                                         
-                                </tr>';
+                                    </tr>';
                                 }
 
                                 echo '</tbody>';

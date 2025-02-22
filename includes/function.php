@@ -1032,6 +1032,73 @@ class myDataBase
 
 
     // DYNAMIC FUNCTION TO GET THE EQUIVALENT SCORE OF STUDENT - TEACHER SIDE
+    // public function setEquivalentScoreBySubjectOfStudent($teacher_id, $type)
+    // {
+    //     $activeQuarters = $this->checkQuarterStatus('quarterly');
+
+    //     if (empty($activeQuarters)) {
+    //         return false; // No active quarter, no need to check
+    //     }
+
+    //     // Prepare placeholders for the IN clause based on the number of quarters
+    //     $activeQuarterPlaceholders = implode(",", array_fill(0, count($activeQuarters), "?"));
+
+
+
+    //     // Determine whether to fetch exam or quiz data
+    //     $id_column = ($type === 'exam') ? 'sc.exam_id' : 'sc.quiz_id';
+    //     $title_column = ($type === 'exam') ? 'ex.exam_quarter' : 'qz.quiz_quarter';
+    //     $join_table = ($type === 'exam') ? 'exam ex' : 'quiz qz';
+    //     $join_condition = ($type === 'exam') ? 'sc.exam_id = ex.exam_id' : 'sc.quiz_id = qz.quiz_id';
+
+    //     $sql = "
+    //         SELECT 
+    //             b.stu_lrn,
+    //             b.stu_lname,
+    //             b.stu_fname,
+    //             b.stu_mname,
+    //             b.stu_gender,
+    //             b.stu_contact,
+    //             b.stu_address,
+    //             b.stu_email,
+    //             s.section_name, 
+    //             s.grade_lvl,
+    //             sub.sub_title AS subject,
+    //             GROUP_CONCAT(DISTINCT $title_column) AS quarter,
+    //             GROUP_CONCAT(DISTINCT sc.equivalent_score) AS equivalent_scores, 
+    //             GROUP_CONCAT(DISTINCT sc.total_questions) AS total_items,
+    //             GROUP_CONCAT(DISTINCT sc.correct_answers) AS scores
+    //         FROM 
+    //             enroll e
+    //         INNER JOIN 
+    //             section s ON e.section_code = s.section_code
+    //         INNER JOIN 
+    //             student b ON e.stu_lrn = b.stu_lrn
+    //         LEFT JOIN
+    //             student_scores sc ON e.stu_lrn = sc.stu_lrn
+    //         LEFT JOIN
+    //             subject sub ON sc.sub_code = sub.sub_code 
+    //         LEFT JOIN
+    //             $join_table ON $join_condition AND $id_column IS NOT NULL AND $title_column IN ($activeQuarterPlaceholders)
+    //         WHERE 
+    //             s.teacher_id = ?
+    //         GROUP BY 
+    //             b.stu_lrn, b.stu_lname, b.stu_fname, b.stu_gender, 
+    //             b.stu_contact, b.stu_address, b.stu_email,
+    //             s.section_name, s.grade_lvl, sub.sub_title
+    //     ";
+
+    //     $stmt = $this->con->prepare($sql);
+    //     // Bind parameters dynamically
+    //     $types = str_repeat("s", count($activeQuarters)) . "s"; // Add 's' for each quarter + teacher_id
+    //     $params = array_merge($activeQuarters, [$teacher_id]);
+
+    //     $stmt->bind_param($types, ...$params);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+    //     return $result;
+    // }
     public function setEquivalentScoreBySubjectOfStudent($teacher_id, $type)
     {
         $activeQuarters = $this->checkQuarterStatus('quarterly');
@@ -1043,8 +1110,6 @@ class myDataBase
         // Prepare placeholders for the IN clause based on the number of quarters
         $activeQuarterPlaceholders = implode(",", array_fill(0, count($activeQuarters), "?"));
 
-
-
         // Determine whether to fetch exam or quiz data
         $id_column = ($type === 'exam') ? 'sc.exam_id' : 'sc.quiz_id';
         $title_column = ($type === 'exam') ? 'ex.exam_quarter' : 'qz.quiz_quarter';
@@ -1052,7 +1117,7 @@ class myDataBase
         $join_condition = ($type === 'exam') ? 'sc.exam_id = ex.exam_id' : 'sc.quiz_id = qz.quiz_id';
 
         $sql = "
-            SELECT 
+            SELECT
                 b.stu_lrn,
                 b.stu_lname,
                 b.stu_fname,
@@ -1061,31 +1126,29 @@ class myDataBase
                 b.stu_contact,
                 b.stu_address,
                 b.stu_email,
-                s.section_name, 
+                s.section_name,
                 s.grade_lvl,
                 sub.sub_title AS subject,
-                GROUP_CONCAT(DISTINCT $title_column) AS quarter,
-                GROUP_CONCAT(DISTINCT sc.equivalent_score) AS equivalent_scores, 
-                GROUP_CONCAT(DISTINCT sc.total_questions) AS total_items,
-                GROUP_CONCAT(DISTINCT sc.correct_answers) AS scores
-            FROM 
+                $title_column AS quarter,
+                sc.equivalent_score AS equivalent_scores,
+                sc.total_questions AS total_items,
+                sc.correct_answers AS scores
+            FROM
                 enroll e
-            INNER JOIN 
+            INNER JOIN
                 section s ON e.section_code = s.section_code
-            INNER JOIN 
+            INNER JOIN
                 student b ON e.stu_lrn = b.stu_lrn
             LEFT JOIN
                 student_scores sc ON e.stu_lrn = sc.stu_lrn
             LEFT JOIN
-                subject sub ON sc.sub_code = sub.sub_code 
+                subject sub ON sc.sub_code = sub.sub_code
             LEFT JOIN
                 $join_table ON $join_condition AND $id_column IS NOT NULL AND $title_column IN ($activeQuarterPlaceholders)
-            WHERE 
+            WHERE
                 s.teacher_id = ?
-            GROUP BY 
-                b.stu_lrn, b.stu_lname, b.stu_fname, b.stu_gender, 
-                b.stu_contact, b.stu_address, b.stu_email,
-                s.section_name, s.grade_lvl, sub.sub_title
+            ORDER BY
+                b.stu_lrn, sub.sub_title;
         ";
 
         $stmt = $this->con->prepare($sql);
@@ -1099,6 +1162,8 @@ class myDataBase
 
         return $result;
     }
+
+
 
     // DYNAMIC FUNCTION TO GET THE EQUIVALENT SCORE BY INDIVIDUAL STUDENT PER SUBJECT - STUDENT SIDE
     public function getEquivalentScoreBySubjectOfIndividualStudent($student_lrn, $type)

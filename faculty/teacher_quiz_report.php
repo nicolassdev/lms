@@ -116,51 +116,29 @@ $numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSI
                                 <?php
                                 if (!empty($quizResult)) {
                                     $count = 1;
+                                    $activeQuarterArray = $mySQLFunction->checkQuarterStatus('quarterly');
+
                                     foreach ($quizResult as $row) {
-                                        // Split scores
-                                        $scores = explode(',', $row['scores'] ?? '');
+                                        // Check if the current quarter matches the active quarter
+                                        if (isset($row['quarter']) && trim($row['quarter']) === trim($activeQuarterArray[0])) {
+                                            echo '<tr>';
+                                            echo '<td class="small"> ' . $row["stu_lname"] . ',  ' . ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"])) . '</td>';
+                                            $subject = !empty($row["subject"]) ? ucwords(strtolower($row["subject"])) : '-';
+                                            echo '<td class="small">' . htmlspecialchars($subject) . '</td>';
 
-                                        // Determine if the student's quarter matches the active quarter
-                                        $isCurrentQuarter = in_array($row["quarter"], explode(",", implode(",", $activeQuarter)));
+                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['scores'] ?? '0') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['total_items'] ?? '0') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['equivalent_scores'] ?? 'N/A') . '</td>';
 
-                                        // Determine status
-                                        $status = (!empty($row['scores']) && count($scores) > 0);
-
-
-
-                                        echo '<td class="small"> ' . $row["stu_lname"] . ',  ' .  ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"] . '')) . '</td>';
-
-                                        if ($isCurrentQuarter) {
-                                            echo '<td class="small">' . (!empty($row["subject"]) ? ucwords(strtolower($row["subject"])) : '-') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['scores']) : '<span class="text-danger">0</span>') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['total_items']) : '<span class="text-danger">0</span>') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['equivalent_scores']) : '<span class="text-danger">N/A</span>') . '</td>';
-                                        } else {
-                                            echo '<td class="text-center text-muted">-</td>';
-                                            echo '<td class="text-center text-muted">-</td>';
-                                            echo '<td class="text-center text-muted">-</td>';
-                                            echo '<td class="text-center text-muted">-</td>';
+                                            echo '</tr>';
+                                            $count++;
                                         }
-
-
-
-
-                                        echo '</tr>';
-
-                                        $count++;
                                     }
                                 } else {
-                                    echo '<tr>
-                                <td colspan="10" class="text-center mt-2 text-danger"><strong>Student not found.</strong>
-                                </td>
-                              </tr>';
+                                    echo '<tr><td colspan="10" class="text-center mt-2 text-danger"><strong>Student not found.</strong></td></tr>';
                                 }
-
-                                echo '</tbody>';
-                                echo '</table>';
-                                $mySQLFunction->disconnect();
                                 ?>
-
+                            </tbody>
                     </div>
                 </div>
             </div>

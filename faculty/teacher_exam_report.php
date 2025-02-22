@@ -115,59 +115,26 @@ $numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSI
                                 <?php
                                 if (!empty($examResult)) {
                                     $count = 1;
-
-                                    // Get active quarter (only 1 quarter should be active at a time)
                                     $activeQuarterArray = $mySQLFunction->checkQuarterStatus('quarterly');
 
                                     foreach ($examResult as $row) {
-                                        echo '<tr>';
-                                        echo '<td class="small"> ' . $row["stu_lname"] . ',  ' .  ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"])) . '</td>';
+                                        // Check if the current quarter matches the active quarter
+                                        if (isset($row['quarter']) && trim($row['quarter']) === trim($activeQuarterArray[0])) {
+                                            echo '<tr>';
+                                            echo '<td class="small"> ' . $row["stu_lname"] . ',  ' . ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"])) . '</td>';
+                                            $subject = !empty($row["subject"]) ? ucwords(strtolower($row["subject"])) : '-';
+                                            echo '<td class="small">' . htmlspecialchars($subject) . '</td>';
 
-                                        // ✅ Make sure the subject is included
-                                        $subject = !empty($row["subject"]) ? ucwords(strtolower($row["subject"])) : '-';
-                                        echo '<td class="small">' . htmlspecialchars($subject) . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['scores'] ?? '0') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['total_items'] ?? '0') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['equivalent_scores'] ?? 'N/A') . '</td>';
 
-                                        // Convert quarter, scores, total items, and equivalent scores into arrays
-                                        $quartersArray = explode(',', $row['quarter'] ?? '');
-                                        $scoresArray = explode(',', $row['scores'] ?? '');
-                                        $totalItemsArray = explode(',', $row['total_items'] ?? '');
-                                        $equivalentScoresArray = explode(',', $row['equivalent_scores'] ?? '');
-
-                                        // Default values
-                                        $filteredScore = '0';
-                                        $filteredTotalItems = '0';
-                                        $filteredEquivalentScore = 'N/A';
-
-                                        // Check if there is an active quarter and extract corresponding score
-                                        $found = false;
-                                        foreach ($quartersArray as $index => $quarter) {
-                                            if (trim($quarter) === trim($activeQuarterArray[0])) {
-                                                $filteredScore = $scoresArray[$index] ?? '0';
-                                                $filteredTotalItems = $totalItemsArray[$index] ?? '0';
-                                                $filteredEquivalentScore = $equivalentScoresArray[$index] ?? 'N/A';
-                                                $found = true;
-                                                break; // Stop when the correct quarter is found
-                                            }
+                                            echo '</tr>';
+                                            $count++;
                                         }
-
-                                        // If no matching quarter, show placeholders
-                                        if (!$found) {
-                                            echo '<td class="text-center text-muted">-</td>';
-                                            echo '<td class="text-center text-muted">-</td>';
-                                            echo '<td class="text-center text-muted">-</td>';
-                                        } else {
-                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($filteredScore) . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($filteredTotalItems) . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($filteredEquivalentScore) . '</td>';
-                                        }
-
-                                        echo '</tr>';
-                                        $count++;
                                     }
                                 } else {
-                                    echo '<tr>
-                                            <td colspan="10" class="text-center mt-2 text-danger"><strong>Student not found.</strong></td>
-                                        </tr>';
+                                    echo '<tr><td colspan="10" class="text-center mt-2 text-danger"><strong>Student not found.</strong></td></tr>';
                                 }
                                 ?>
                             </tbody>

@@ -119,12 +119,12 @@ include "../faculty/includes/Forms/createquizform.php";
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
-                                    <th scope="col" style="width: 100px;">Full name</th>
+                                    <th scope="col" style="width: 100px;">Student Name</th>
                                     <th scope="col" style="width: 50px;">Gender</th>
                                     <th scope="col" style="width: 100px;">Status</th>
                                     <th scope="col" style="width: 100px;">Score</th>
                                     <th scope="col" style="width: 100px;">Total Items</th>
-                                    <th scope="col" style="width: 100px;">Transmutation Grade</th>
+                                    <th scope="col" style="width: 100px;">Equivalent Grade</th>
 
                                 </tr>
                             </thead>

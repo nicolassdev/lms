@@ -128,12 +128,12 @@ include "../faculty/includes/Forms/createexamform.php";
 
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
-                        <table id="example" class="table table-bordered table-striped table-sm align-middle">
+                        <table id="studenttakeexam" class="table table-bordered table-striped table-sm align-middle">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
-                                    <th scope="col" style="width: 100px;">Student name</th>
-                                    <!-- <th scope="col" style="width: 50px;">Gender</th> -->
+                                    <th scope="col" style="width: 100px;">Student Name</th>
+                                    <th scope="col" style="width: 50px;">Quarter</th>
                                     <th scope="col" style="width: 100px;">Status</th>
                                     <th scope="col" style="width: 100px;">Score</th>
                                     <th scope="col" style="width: 100px;">Total Items</th>
@@ -145,40 +145,40 @@ include "../faculty/includes/Forms/createexamform.php";
                                 if (!empty($students)) {
                                     $count = 1;
                                     foreach ($students as $row) {
-                                        if ($activeQuarter) {
-                                        }
-                                        // Split scores
-                                        $scores = explode(',', $row['exam_scores'] ?? '');
+                                        // if ($activeQuarter) {
+                                        // }
 
                                         // Determine if the student's quarter matches the active quarter
                                         $isCurrentQuarter = in_array($row["quarter"], explode(",", implode(",", $activeQuarter)));
 
-                                        // Determine status
-                                        $status = (!empty($row['exam_scores']) && count($scores) > 0);
+                                        // Determine if an exam was taken (regardless of score)
+                                        $examTaken = !empty($row['exam_items']); // Check if exam_items has a value
 
                                         echo '<tr>';
                                         echo '<td class="text-center fw-bold">' . $count . '</td>';
                                         echo '<td class="text-center">' . $row["stu_lname"] . ', ' . ucwords(strtolower($row["stu_fname"])) . ' </td>';
-                                        // echo '<td class="text-center">' . ucwords(strtolower($row["stu_gender"])) . '</td>';
+
+                                        foreach ($activeQuarter as $quarter) {
+                                            echo '<td class="text-center">'  . ucwords(strtolower($quarter)) . ' </td>';
+                                        }
 
                                         echo '<td class="text-center">';
                                         if ($isCurrentQuarter) {
-                                            if ($status) {
+                                            if ($examTaken) {
                                                 echo '<span class="badge bg-success" data-bs-toggle="tooltip" title="Exam Completed"><i class="bi bi-check-circle"></i> Done</span>';
                                             } else {
                                                 echo '<span class="badge bg-danger" data-bs-toggle="tooltip" title="No Exam Uploaded"><i class="bi bi-x-circle"></i> No Exam</span>';
                                             }
                                         } else {
-                                            // Default to "No Exam" if quarter does not match
                                             echo '<span class="badge bg-danger" data-bs-toggle="tooltip" title="No Exam Available"><i class="bi bi-x-circle"></i> No Exam</span>';
                                         }
                                         echo '</td>';
 
-                                        // Hide exam scores, total items, and equivalent if quarter does not match
+                                        // Display scores, items, and equivalent if the quarter matches, regardless of score
                                         if ($isCurrentQuarter) {
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['exam_scores']) : '0') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['exam_items']) : '0') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['equivalent']) : '0') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['exam_scores'] ?? '0') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['exam_items'] ?? '0') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['equivalent'] ?? '0') . '</td>';
                                         } else {
                                             echo '<td class="text-center text-muted">-</td>';
                                             echo '<td class="text-center text-muted">-</td>';
@@ -205,5 +205,5 @@ include "../faculty/includes/Forms/createexamform.php";
 <!-- PDF ,EXCEL, PRINT ,CVS -->
 <script src="../assets/js/globaltables.js"></script>
 <script>
-    initializeDataTable("example", 10, "Student taken exam");
+    initializeDataTable("studenttakeexam", 7, "Student taken exam");
 </script>

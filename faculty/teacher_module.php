@@ -103,7 +103,10 @@ $mySQLFunction->disconnect();
                                                 <i class="bi bi-three-dots-vertical text-white kebab-menu" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="cursor: pointer;"></i>
                                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="kebabMenu">
                                                     <li>
-                                                        <a class="dropdown-item text-black" href="#" onclick="confirmDelete()">Move</a>
+                                                        <a href="index.php?page=upload_module&sched_id=<?php echo urlencode($schedule['sched_id']); ?>&sub_code=<?php echo urlencode($schedule['sub_code']); ?>&section_code=<?php echo urlencode($schedule['section_code']); ?>"
+                                                            class="dropdown-item text-black">
+                                                            <i class="bi bi-people-fill me-2"></i>View students
+                                                        </a>
                                                     </li>
                                                     <hr class="me-2 ms-2">
                                                     <li>
