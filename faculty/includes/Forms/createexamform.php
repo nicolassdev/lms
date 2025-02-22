@@ -46,10 +46,11 @@
 
                     <!-- Exam Questions -->
                     <div id="questionsArea"></div>
-
-                    <button type="button" id="addQuestionButton" class="btn btn-success mb-4">
-                        <i class="bi bi-plus-circle"></i> Add Another Question
-                    </button>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" id="addQuestionButton" class="btn btn-success mb-3">
+                            <i class="bi bi-plus-circle"></i> Add Question
+                        </button>
+                    </div>
 
                     <hr>
 
@@ -72,6 +73,7 @@
 
     document.getElementById("addQuestionButton").addEventListener("click", function() {
         addQuestion();
+        updateButtonLabel();
     });
 
     function addQuestion() {
@@ -188,6 +190,7 @@
             questionElement.remove();
             availableIndexes.push(questionIndex); // Store removed index for reuse
             updateQuestionNumbers(); // Recalculate question numbers
+            updateButtonLabel(); // Update button label after removing a question
         }
     }
 
@@ -199,6 +202,11 @@
         });
     }
 
+    function updateButtonLabel() {
+        let button = document.getElementById("addQuestionButton");
+        let questionCount = document.querySelectorAll('.question-item').length;
+        button.innerHTML = `<i class="bi bi-plus-circle"></i> ${questionCount >= 1 ? 'Add Another Question' : 'Add Question'}`;
+    }
     // Function to clear the form
     function resetFormUpload() {
         // Get the form element by ID

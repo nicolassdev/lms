@@ -287,69 +287,89 @@ $mySQLFunction->disconnect();
                                         <p class="text-muted">You have completed the exam successfully.</p>
                                     <?php endif; ?>
                                 </div>
-                                <?php if (!empty($examResult)) : ?>
 
-                                    <?php
-                                    $correctAnswers = array_filter($examResult, function ($question) {
-                                        return $question["is_correct"] === "Correct";
-                                    });
+                                <!-- BLOCK RESULT -->
+                                <!-- NOTE*: THIS IS THE PART WHERE YOU CAN DISPLAY THE RESULT OF THE STUDENT IF ALL CLASSMATES HAVE TAKEN THE EXAM , RESULT WILL NOT BE DISPLAYED HERE -->
+                                <?php
+                                $mySQLFunction->connection();
+                                $allClassmatesTookExam = $mySQLFunction->checkIfHaveAllClassmatesTakenExam($_SESSION['stu_lrn'], $sub_code);
+                                // echo "<pre>";
+                                // print_r($sub_code);
+                                // echo "</pre>";
+                                ?>
 
-                                    $incorrectAnswers = array_filter($examResult, function ($question) {
-                                        return $question["is_correct"] === "Incorrect";
-                                    });
-                                    ?>
+                                <?php if ($allClassmatesTookExam) : ?>
+                                    <div>
+                                        <?php if (!empty($examResult)) : ?>
 
-                                    <div class="accordion" id="examResultDetails">
-                                        <!-- Correct Answers -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header">
-                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#correctAnswers">
-                                                    ✅ Correct Answers (<?= count($correctAnswers) ?>)
-                                                </button>
-                                            </h2>
-                                            <div id="correctAnswers" class="accordion-collapse collapse show">
-                                                <div class="accordion-body">
-                                                    <ul class="list-group">
-                                                        <?php foreach ($correctAnswers as $question) : ?>
-                                                            <li class="list-group-item">
-                                                                <strong class="text-success">Q:</strong> <?= htmlspecialchars($question["question_text"]) ?><br>
-                                                                <strong>Your Answer:</strong>
-                                                                <?= ($question["question_type"] === 'enumeration') ? $mySQLFunction->highlightEnumerationAnswer($question["student_answer"], $question["correct_answer"]) : "<span class='text-success'>" . htmlspecialchars($question["student_answer"]) . "</span>"; ?>
-                                                            </li>
-                                                        <?php endforeach; ?>
-                                                    </ul>
+                                            <?php
+                                            $correctAnswers = array_filter($examResult, function ($question) {
+                                                return $question["is_correct"] === "Correct";
+                                            });
+
+                                            $incorrectAnswers = array_filter($examResult, function ($question) {
+                                                return $question["is_correct"] === "Incorrect";
+                                            });
+                                            ?>
+
+                                            <div class="accordion" id="examResultDetails">
+                                                <!-- Correct Answers -->
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header">
+                                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#correctAnswers">
+                                                            ✅ Correct Answers (<?= count($correctAnswers) ?>)
+                                                        </button>
+                                                    </h2>
+                                                    <div id="correctAnswers" class="accordion-collapse collapse show">
+                                                        <div class="accordion-body">
+                                                            <ul class="list-group">
+                                                                <?php foreach ($correctAnswers as $question) : ?>
+                                                                    <li class="list-group-item">
+                                                                        <strong class="text-success">Q:</strong> <?= htmlspecialchars($question["question_text"]) ?><br>
+                                                                        <strong>Your Answer:</strong>
+                                                                        <?= ($question["question_type"] === 'enumeration') ? $mySQLFunction->highlightEnumerationAnswer($question["student_answer"], $question["correct_answer"]) : "<span class='text-success'>" . htmlspecialchars($question["student_answer"]) . "</span>"; ?>
+                                                                    </li>
+                                                                <?php endforeach; ?>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Incorrect Answers -->
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header">
+                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#incorrectAnswers">
+                                                            ❌ Incorrect Answers (<?= count($incorrectAnswers) ?>)
+                                                        </button>
+                                                    </h2>
+                                                    <div id="incorrectAnswers" class="accordion-collapse collapse">
+                                                        <div class="accordion-body">
+                                                            <ul class="list-group">
+                                                                <?php foreach ($incorrectAnswers as $question) : ?>
+                                                                    <li class="list-group-item">
+                                                                        <strong class="text-danger">Q:</strong> <?= htmlspecialchars($question["question_text"]) ?><br>
+                                                                        <strong>Your Answer:</strong>
+                                                                        <?= ($question["question_type"] === 'enumeration') ? $mySQLFunction->highlightEnumerationAnswer($question["student_answer"], $question["correct_answer"]) : "<span class='text-danger'>" . htmlspecialchars($question["student_answer"]) . "</span>"; ?><br>
+                                                                        <strong>Correct Answer:</strong> <span class="text-success"><?= htmlspecialchars($question["correct_answer"]) ?>
+                                                                    </li>
+                                                                <?php endforeach; ?>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <!-- Incorrect Answers -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#incorrectAnswers">
-                                                    ❌ Incorrect Answers (<?= count($incorrectAnswers) ?>)
-                                                </button>
-                                            </h2>
-                                            <div id="incorrectAnswers" class="accordion-collapse collapse">
-                                                <div class="accordion-body">
-                                                    <ul class="list-group">
-                                                        <?php foreach ($incorrectAnswers as $question) : ?>
-                                                            <li class="list-group-item">
-                                                                <strong class="text-danger">Q:</strong> <?= htmlspecialchars($question["question_text"]) ?><br>
-                                                                <strong>Your Answer:</strong>
-                                                                <?= ($question["question_type"] === 'enumeration') ? $mySQLFunction->highlightEnumerationAnswer($question["student_answer"], $question["correct_answer"]) : "<span class='text-danger'>" . htmlspecialchars($question["student_answer"]) . "</span>"; ?><br>
-                                                                <strong>Correct Answer:</strong> <span class="text-success"><?= htmlspecialchars($question["correct_answer"]) ?>
-                                                            </li>
-                                                        <?php endforeach; ?>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <?php else: ?>
+                                            <p class="text-center text-muted">No exam results found.</p>
+                                        <?php endif; ?>
                                     </div>
-
                                 <?php else: ?>
-                                    <p class="text-center text-muted">No exam results found.</p>
+                                    <p class="text-center text-muted">Exam results will be available once all classmates have taken the exam.</p>
                                 <?php endif; ?>
+
+
                             </div>
+
                         </div>
                     </div>
                 <?php endif; ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 14, 2025 at 08:27 PM
+-- Generation Time: Feb 20, 2025 at 10:58 PM
 -- Server version: 8.0.35
 -- PHP Version: 8.2.12
 
@@ -46,6 +46,7 @@ CREATE TABLE `enroll` (
 --
 
 INSERT INTO `enroll` (`stu_lrn`, `section_code`, `semester`, `school_year`, `date_enroll`, `enroll_status`, `current_school`, `school_id`, `school_address`, `school_type`, `requirements_submit`) VALUES
+('113312312541', 'SECTION-1859', '1st Semester', '2024-2025', '2025-02-17', 'Enrolled', 'LEGAZPI HIGH SCHOOL', NULL, 'LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('114423232323', 'SECTION-2387', '1st Semester', '2024-2025', '2024-12-30', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('114432325251', 'SECTION-2287', '1st Semester', '2024-2025', '2024-12-13', 'Enrolled', 'PAGASA NATIONAL HIGH SCHOOL', NULL, 'RAWIS LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('114455013001', 'SECTION-2663', '1st Semester', '2024-2025', '2024-12-29', 'Enrolled', 'ARIMBAY HIGH SCHOLL', NULL, 'ARIMBAY LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
@@ -53,6 +54,7 @@ INSERT INTO `enroll` (`stu_lrn`, `section_code`, `semester`, `school_year`, `dat
 ('114482392392', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-20', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('114497427472', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-23', 'Enrolled', 'CABANGAN HIGH SCOLL', NULL, 'CABANGAN LEGAZPI VCITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('114498343414', 'SECTION-1859', '1st Semester', '2024-2025', '2025-01-12', 'Enrolled', 'ORO SITE HIGH SCHOOL', NULL, 'ORO SITE LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
+('114499887766', 'SECTION-9151', '1st Semester', '2024-2025', '2025-02-20', 'Enrolled', 'LEGAZPI CITY', NULL, 'SAMPLE', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('124167743724', 'SECTION-1859', '1st Semester', '2024-2025', '2024-12-26', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC'),
 ('718412412421', 'SECTION-1859', '1st Semester', '2024-2025', '2025-01-06', 'Enrolled', 'CABANGAN HIGH SCHOOL', NULL, 'CABANGAN LEGAZPI CITY', 'PUBLIC', 'SF9, SF10, PSA, LCR, GMCC');
 
@@ -78,9 +80,11 @@ CREATE TABLE `exam` (
 --
 
 INSERT INTO `exam` (`exam_id`, `sched_id`, `exam_type`, `exam_quarter`, `exam_duration`, `exam_title`, `exam_items`, `exam_date`) VALUES
+('EXM-1131', 'SCHED-3005', '4', '2nd Quarter', 1, 'ENGLISH FOR ACADEMIC AND PROFESSIONAL', 1, '2025-02-21'),
 ('EXM-5171', 'SCHED-1393', '2', '1st Quarter', 1, 'EXAM1', 3, '2025-02-12'),
 ('EXM-6992', 'SCHED-3005', '1,1,1,1,1,1,1,2', '1st Quarter', 10, 'ENGLISH FOR ACADEMIC AND PROFESSIONAL', 10, '2025-02-13'),
-('EXM-9212', 'SCHED-0950', '2,2,2,1', '1st Quarter', 3, 'exam1', 10, '2025-02-07');
+('EXM-8193', 'SCHED-3005', '4,1', '3rd Quarter', 2, 'ENGLISH FOR ACADEMIC AND PROFESSIONAL', 2, '2025-02-21'),
+('EXM-9313', 'SCHED-3005', '4,2', '4th Quarter', 1, 'ENGLISH FOR ACADEMIC AND PROFESSIONAL', 4, '2025-02-21');
 
 -- --------------------------------------------------------
 
@@ -100,11 +104,9 @@ CREATE TABLE `exam_enumeration` (
 --
 
 INSERT INTO `exam_enumeration` (`enum_id`, `exam_id`, `enum_question`, `enum_answer`) VALUES
-(47, 'EXM-9212', 'name of may pet', 'cleo, waffle, lucky'),
-(48, 'EXM-9212', 'types of programming lang', 'php, python, csharp'),
-(49, 'EXM-9212', 'give type of sense of human', 'smell, touch, see'),
 (50, 'EXM-5171', 'ASDSA', 'dsadsa,dasdsa ,asdsa'),
-(51, 'EXM-6992', 'Give at least 3 human sense', 'smell, touch, see');
+(51, 'EXM-6992', 'Give at least 3 human sense', 'smell, touch, see'),
+(52, 'EXM-9313', 'give the nickname', 'toni,nicolas, gwapo');
 
 -- --------------------------------------------------------
 
@@ -140,14 +142,14 @@ CREATE TABLE `exam_multiple` (
 --
 
 INSERT INTO `exam_multiple` (`mul_id`, `exam_id`, `mul_question`, `choice_a`, `choice_b`, `choice_c`, `choice_d`, `is_correct`) VALUES
-(32, 'EXM-9212', 'What is may name ?', 'Anthony', 'John', 'Bayong', 'TUBOL', 'Anthony'),
 (33, 'EXM-6992', 'What is the main idea of the passage?', ' The cost of solar panels is decreasing.', ' Renewable energy technologies are becoming more popular.', 'Sustainable energy sources are in high demand.', 'Solar energy is the most viable option for many countries.', 'Sustainable energy sources are in high demand.'),
 (34, 'EXM-6992', 'What is the main benefit of implementing a four-day workweek, according to the study?', ' Increased productivity', 'Improved work-life balance', ' Reduced overhead costs', ' All of the above', ' Increased productivity'),
 (35, 'EXM-6992', 'What is coniosis means?', 'disease of the lungs', 'very small', 'brain musces', 'None', 'disease of the lungs'),
 (36, 'EXM-6992', 'Choose the correct definition of the word \"demographics\"', 'The study of population statistics.', ' The study of economic trends.', 'The study of social and cultural influences.', 'The study of environmental impacts', 'The study of population statistics.'),
 (37, 'EXM-6992', 'The study of environmental impacts', 'Capable of succeeding or being effective.', 'Capable of being maintained or continued.', 'Capable of being used or applied.', 'Capable of being sold or marketed', 'Capable of succeeding or being effective.'),
 (38, 'EXM-6992', 'Choose the correct definition of the word \"sustainable\".', 'Capable of being maintained at a certain rate or level.', 'Able to be used without being completely used up or destroyed.', 'Relating to the protection of the environment.', 'All of the above', 'All of the above'),
-(39, 'EXM-6992', 'What is the biggest planet?', 'Earth', 'Mars', 'Venus', 'Jupiter', 'Jupiter');
+(39, 'EXM-6992', 'What is the biggest planet?', 'Earth', 'Mars', 'Venus', 'Jupiter', 'Jupiter'),
+(41, 'EXM-8193', 'anthony the ', 'greate', 'smell', 'happy', 'programmer', 'programmer');
 
 -- --------------------------------------------------------
 
@@ -161,6 +163,15 @@ CREATE TABLE `exam_tf` (
   `tf_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `tf_answer` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `exam_tf`
+--
+
+INSERT INTO `exam_tf` (`tf_id`, `exam_id`, `tf_question`, `tf_answer`) VALUES
+(23, 'EXM-1131', 'mahal kita', 'true'),
+(24, 'EXM-8193', 'abc', 'true'),
+(25, 'EXM-9313', 'im handsome', 'true');
 
 -- --------------------------------------------------------
 
@@ -201,6 +212,13 @@ CREATE TABLE `module_answer` (
   `file_type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `date_uploaded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `module_answer`
+--
+
+INSERT INTO `module_answer` (`answer_id`, `module_id`, `stu_lrn`, `file_name`, `file_size`, `formatted_size`, `file_type`, `date_uploaded`) VALUES
+('ANS-1863', 'MOD-5107', '124167743724', '../../includes/uploaded_files/bgh.jpg', 41118, '40.15 KB', 'image/jpeg', '2025-02-21 05:57:04');
 
 -- --------------------------------------------------------
 
@@ -244,8 +262,8 @@ CREATE TABLE `quarterly` (
 --
 
 INSERT INTO `quarterly` (`quarterly_name`, `status`) VALUES
-('1st Quarter', 'Active'),
-('2nd Quarter', 'Inactive'),
+('1st Quarter', 'Inactive'),
+('2nd Quarter', 'Active'),
 ('3rd Quarter', 'Inactive'),
 ('4th Quarter', 'Inactive');
 
@@ -418,6 +436,7 @@ INSERT INTO `schedule` (`sched_id`, `teacher_id`, `section_code`, `sub_code`, `s
 ('SCHED-3005', '24-299710-4779', 'SECTION-1859', 'SUB-3563', 'Monday', '03:00 PM', '05:20 PM', '2024-12-28 19:35:09'),
 ('SCHED-3088', '24-199603-2911', 'SECTION-1859', 'SUB-3375', 'Wednesday', '08:30 AM', '10:30 AM', '2025-01-29 15:05:16'),
 ('SCHED-3238', '24-059310-4617', 'SECTION-1859', 'SUB-9527', 'Tuesday', '08:30 AM', '11:30 AM', '2024-12-28 19:24:12'),
+('SCHED-7688', '24-299909-9301', 'SECTION-9151', 'SUB-1921', 'Monday', '10:00 AM', '12:00 PM', '2025-02-20 15:00:46'),
 ('SCHED-8004', '24-199603-2911', 'SECTION-3943', 'SUB-7279', 'Monday', '07:20 AM', '09:11 AM', '2025-01-13 15:10:48'),
 ('SCHED-8714', '24-229809-8556', 'SECTION-3891', 'SUB-2557', 'Thursday', '07:30 AM', '09:30 AM', '2024-12-30 20:29:41'),
 ('SCHED-9034', '24-049512-1359', 'SECTION-1859', 'SUB-7279', 'Monday', '07:00 AM', '10:38 PM', '2024-12-30 10:39:03');
@@ -556,10 +575,10 @@ INSERT INTO `student` (`stu_lrn`, `stu_fname`, `stu_mname`, `stu_lname`, `stu_ad
 ('114483293271', 'JOHN', 'BELBIS', 'UYALS', 'PAWA', '9329392932', 'MALE', 'leon@gmail.com', '2002-10-03', 'BITANO', 'SAMPLE', 'SAMNPLE', '9392932939', '', 'USER-9986'),
 ('114485140095', 'MAECHELLE', 'GAVERIA', 'ACOSTA', 'DARAGA', '9329392932', 'FEMALE', 'maechelle@gmail.com', '2003-11-29', 'Legazpi City', 'ACOSTA, HUELDOR', 'ACOSTA, MAE', '9329392939', '', 'USER-8853'),
 ('114486120037', 'SHYRIEN', 'NUNEZ', 'VIBAL', 'LEGAZPI CITY', '9329392392', 'FEMALE', 'shyrien@gmail.com', '2002-11-29', 'LEGAZPI CITY', 'VIBAL, MELCHOR', 'VIBAL. ESABELLA', '9329392932', '', 'USER-6627'),
-('114497427472', 'LESTER', '', 'SAPULA', 'BITANO', '9329392932', 'MALE', 'lester@gmail.com', '2002-07-04', 'BITANO', 'ASDAS', 'DASDSA', '9329329932', '', 'USER-9261'),
+('114497427472', 'LESTER', '', 'SAPULA', 'BITANO', '9329392932', 'MALE', 'lester@gmail.com', '2002-07-04', 'Bitano', 'ASDAS', 'DASDSA', '9329329932', 'student_67b4a59fc382d4.16450808.png', 'USER-9261'),
 ('114498343414', 'DWAYNE ADRIAN', 'OSEñA', 'TUIZA', 'BURAGUIS LEGAZPI CITY', '9123421321', 'MALE', 'dwaynetuweza@gmail.com', '2024-10-16', 'Buraguis Legazpi City', 'JOHN BALDES TUIZA', 'CRISTINE BALDES TUIZA', '9123123123', 'student_6783d561d37be3.65803100.jpg', 'USER-3431'),
 ('114499887766', 'MARVIN', '', 'TAUZON', 'BURAGUIS', '9329392392', 'MALE', 'marvin@gmail.com', '2024-11-10', 'Legazpi City', 'PAPA TAUZON', 'MAMA TAUZON', '9412949194', '', 'USER-6346'),
-('124167743724', 'ANTHONY NICOLE', 'DADO', 'DAEN', 'BURAGUIS LEGAZPI CITY', '9329392392', 'MALE', 'anthonydaen25@gmail.com', '2002-05-10', 'Legazpi City', 'DAEN, SIMEON LUNAS', 'DAEN, CRISTINA DADO', '9329329392', 'student_67545f4c50dfa9.77726496.jpg', 'USER-7881'),
+('124167743724', 'ANTHONY NICOLE', 'DADO', 'DAEN', 'BURAGUIS LEGAZPI CITY', '9329392392', 'MALE', 'anthonydaen25@gmail.com', '2002-05-10', 'Legazpi City', 'DAEN, SIMEON LUNAS', 'DAEN, CRISTINA DADO', '9329329392', 'student_67b4ae309adbc7.67948000.jpg', 'USER-7881'),
 ('151522424677', 'JOHN PAUL', 'ABAD', 'AVELINO', 'VICTORY VILLAGE', '9992193129', 'MALE', 'johnpaul@gmail.com', '2004-01-24', 'VICTOR VILLAGE', 'AVELINO, EDWIN', 'AVELINO, MERGIE', '9329392932', '', 'USER-4158'),
 ('718412412421', 'MARCO', 'DADO', 'DAEN', 'BURAGUIS LEGAZPI CITY', '9329392392', 'MALE', 'marco@gmail.com', '2006-03-28', 'LEGAZPI CITY', 'DAEN, SIMEON', 'DAEN, CRISTINA', '9431924912', '', 'USER-0399');
 
@@ -586,25 +605,16 @@ CREATE TABLE `student_answers` (
 --
 
 INSERT INTO `student_answers` (`answer_id`, `stu_lrn`, `sub_code`, `exam_id`, `quiz_id`, `question_id`, `question_type`, `student_answer`, `submitted_at`) VALUES
-(249, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 33, 'multiple_choice', ' Renewable energy technologies are becoming more popular.', '2025-02-13 18:51:58'),
-(250, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 34, 'multiple_choice', 'Improved work-life balance', '2025-02-13 18:51:58'),
-(251, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 35, 'multiple_choice', 'disease of the lungs', '2025-02-13 18:51:58'),
-(252, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 36, 'multiple_choice', ' The study of economic trends.', '2025-02-13 18:51:58'),
-(253, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 37, 'multiple_choice', 'Capable of succeeding or being effective.', '2025-02-13 18:51:58'),
-(254, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 38, 'multiple_choice', 'All of the above', '2025-02-13 18:51:58'),
-(255, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 39, 'multiple_choice', 'Jupiter', '2025-02-13 18:51:58'),
-(256, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 51, 'enumeration', 'smell, see, touch', '2025-02-13 18:51:58'),
-(257, '124167743724', 'SUB-3164', 'EXM-5171', NULL, 50, 'enumeration', 'sampe , sadsad ,asdsa', '2025-02-13 18:57:45'),
-(258, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 33, 'multiple_choice', 'Sustainable energy sources are in high demand.', '2025-02-13 19:01:45'),
-(259, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 34, 'multiple_choice', ' All of the above', '2025-02-13 19:01:45'),
-(260, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 35, 'multiple_choice', 'disease of the lungs', '2025-02-13 19:01:45'),
-(261, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 36, 'multiple_choice', 'The study of population statistics.', '2025-02-13 19:01:45'),
-(262, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 37, 'multiple_choice', 'Capable of succeeding or being effective.', '2025-02-13 19:01:45'),
-(263, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 38, 'multiple_choice', 'All of the above', '2025-02-13 19:01:45'),
-(264, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 39, 'multiple_choice', 'Jupiter', '2025-02-13 19:01:45'),
-(265, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 51, 'enumeration', 'smell, touch,see', '2025-02-13 19:01:45'),
-(266, '718412412421', 'SUB-9527', NULL, 'QZ-9256', 8, 'enumeration', 'asdsa,adasdas,asdasd', '2025-02-13 19:03:13'),
-(267, '124167743724', 'SUB-9527', NULL, 'QZ-9256', 8, 'enumeration', 'mars, jupiter, earth, saturn. pluto, venus, uranus', '2025-02-14 15:58:47');
+(359, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 33, 'multiple_choice', 'Sustainable energy sources are in high demand.', '2025-02-20 21:53:29'),
+(360, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 34, 'multiple_choice', ' All of the above', '2025-02-20 21:53:29'),
+(361, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 35, 'multiple_choice', 'disease of the lungs', '2025-02-20 21:53:29'),
+(362, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 36, 'multiple_choice', 'The study of population statistics.', '2025-02-20 21:53:29'),
+(363, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 37, 'multiple_choice', 'Capable of succeeding or being effective.', '2025-02-20 21:53:29'),
+(364, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 38, 'multiple_choice', 'All of the above', '2025-02-20 21:53:29'),
+(365, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 39, 'multiple_choice', 'Jupiter', '2025-02-20 21:53:29'),
+(366, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 51, 'enumeration', 'see, touch, smell', '2025-02-20 21:53:29'),
+(367, '124167743724', 'SUB-3164', 'EXM-5171', NULL, 50, 'enumeration', 'asdsadsad,sadasd ,dsadsa', '2025-02-20 21:54:28'),
+(368, '124167743724', 'SUB-3563', 'EXM-1131', NULL, 23, 'true_false', 'true', '2025-02-20 21:54:54');
 
 -- --------------------------------------------------------
 
@@ -621,6 +631,7 @@ CREATE TABLE `student_scores` (
   `total_questions` int NOT NULL DEFAULT '0',
   `correct_answers` int NOT NULL DEFAULT '0',
   `equivalent_score` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `quarterly` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -628,11 +639,10 @@ CREATE TABLE `student_scores` (
 -- Dumping data for table `student_scores`
 --
 
-INSERT INTO `student_scores` (`score_id`, `stu_lrn`, `sub_code`, `exam_id`, `quiz_id`, `total_questions`, `correct_answers`, `equivalent_score`, `created_at`) VALUES
-(71, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 10, 7, 86.00, '2025-02-13 18:51:58'),
-(72, '124167743724', 'SUB-3164', 'EXM-5171', NULL, 3, 1, 75.00, '2025-02-13 18:57:45'),
-(73, '718412412421', 'SUB-3563', 'EXM-6992', NULL, 10, 9, 92.00, '2025-02-13 19:01:45'),
-(75, '124167743724', 'SUB-9527', NULL, 'QZ-9256', 7, 4, 82.00, '2025-02-14 15:58:47');
+INSERT INTO `student_scores` (`score_id`, `stu_lrn`, `sub_code`, `exam_id`, `quiz_id`, `total_questions`, `correct_answers`, `equivalent_score`, `quarterly`, `created_at`) VALUES
+(94, '124167743724', 'SUB-3563', 'EXM-6992', NULL, 10, 9, 92.00, '1st Quarter', '2025-02-20 21:53:29'),
+(95, '124167743724', 'SUB-3164', 'EXM-5171', NULL, 3, 1, 75.00, '1st Quarter', '2025-02-20 21:54:28'),
+(96, '124167743724', 'SUB-3563', 'EXM-1131', NULL, 1, 1, 95.00, '2nd Quarter', '2025-02-20 21:54:54');
 
 -- --------------------------------------------------------
 
@@ -995,7 +1005,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `exam_enumeration`
 --
 ALTER TABLE `exam_enumeration`
-  MODIFY `enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `exam_essay`
@@ -1007,13 +1017,13 @@ ALTER TABLE `exam_essay`
 -- AUTO_INCREMENT for table `exam_multiple`
 --
 ALTER TABLE `exam_multiple`
-  MODIFY `mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `exam_tf`
 --
 ALTER TABLE `exam_tf`
-  MODIFY `tf_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `tf_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `quiz_enumeration`
@@ -1049,13 +1059,13 @@ ALTER TABLE `school`
 -- AUTO_INCREMENT for table `student_answers`
 --
 ALTER TABLE `student_answers`
-  MODIFY `answer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=268;
+  MODIFY `answer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=369;
 
 --
 -- AUTO_INCREMENT for table `student_scores`
 --
 ALTER TABLE `student_scores`
-  MODIFY `score_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `score_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT for table `users`

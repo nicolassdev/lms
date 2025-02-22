@@ -57,7 +57,7 @@ try {
             }
         }
 
-        $mySQLFunction->calculateAndStoreStudentScore($stud_id, $exam_id, null);
+        $mySQLFunction->calculateEquivalentAndStoreStudentScore($stud_id, $exam_id, null);
     } else if (!empty($quiz_id)) {
         // ✅ Handle Multiple Choice Questions (QUIZ)
         if (!empty($_POST['qMulId'])) {
@@ -99,7 +99,7 @@ try {
             }
         }
 
-        $mySQLFunction->calculateAndStoreStudentScore($stud_id, null, $quiz_id);
+        $mySQLFunction->calculateEquivalentAndStoreStudentScore($stud_id, null, $quiz_id);
     }
 
     // ✅ Redirect Based on Exam or Quiz
