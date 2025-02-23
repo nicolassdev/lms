@@ -21,8 +21,8 @@ $mySQLFunction->disconnect();
 
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4">
-        <h5 class="fw-bold ms-3">Settings</h5>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center  ">
+        <h3 class="fw-bold ms-3">Settings</h3>
 
         <!-- Button container for proper alignment -->
         <div class="d-flex flex-wrap gap-2 justify-content-center p-3">
