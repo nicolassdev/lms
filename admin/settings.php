@@ -22,7 +22,7 @@ $mySQLFunction->disconnect();
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4">
-        <h5 class="fw-bold ms-3">School Information</h5>
+        <h5 class="fw-bold ms-3">Settings</h5>
 
         <!-- Button container for proper alignment -->
         <div class="d-flex flex-wrap gap-2 justify-content-center p-3">
@@ -56,55 +56,76 @@ $mySQLFunction->disconnect();
     </div>
 
     <!-- Form Section -->
-    <form action="?page=settings" method="POST" class="border rounded p-4 bg-light mb-5 ms-3 me-3 shadow-lg row form-hover custom-shadow">
-        <!-- Edit button with tooltip -->
-        <div class="text-end">
-            <button type="button" class="btn btn-success btn-sm btn-animate" title="Edit" data-bs-toggle="modal" data-bs-target="#setting" data-bs-whatever="@fat">
-                <i class="bi bi-pencil-square"></i>
-            </button>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-20">
+                <div class="row">
+                    <div class="col-md-7 mb-4">
+                        <div class="card shadow-lg fade-in-input">
+                            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0 fw-semibold">School Information</h6>
+                                <button type="button" class="btn btn-success btn-sm btn-animate" title="Edit" data-bs-toggle="modal" data-bs-target="#setting" data-bs-whatever="@fat">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                            </div>
+                            <div class="card-body p-4">
+                                <form action="?page=settings" method="POST" class="row g-3">
+                                    <div class="col-md-12">
+                                        <label for="school" class="form-label"><i class="bi bi-bank text-primary"></i> School Name</label>
+                                        <input type="text" id="school" name="school" value="<?php echo ucwords(strtolower($result['school_name'])); ?>" class="form-control" autocomplete="off" disabled>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="address" class="form-label"><i class="bi bi-geo-alt-fill me-2 text-danger"></i> Address</label>
+                                        <input type="text" id="address" name="address" value="<?php echo ucwords(strtolower($result['school_address'])); ?>" class="form-control" autocomplete="off" disabled>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 mb-4">
+                        <div class="card shadow-lg fade-in-input">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0 fw-semibold">Active Periods</h6>
+                            </div>
+                            <div class="card-body p-4 row g-3">
+                                <div class="col-md-12 mb-3">
+                                    <label for="semester" class="form-label"> <i class="bi bi-gear-fill text-secondary"></i> Quarter</label>
+                                    <input type="text" name="semester" value="<?php if (!empty($activeQuarter)) {
+                                                                                    foreach ($activeQuarter as $quarter) {
+                                                                                        echo $quarter;
+                                                                                    }
+                                                                                } else {
+                                                                                    echo "No active quarter found.";
+                                                                                } ?>" class="form-control" autocomplete="off" disabled>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="semester" class="form-label"><i class="bi bi-sliders text-success"></i> Semester</label>
+                                    <input type="text" name="semester" value="<?php if (!empty($activeSem)) {
+                                                                                    foreach ($activeSem as $semester) {
+                                                                                        echo $semester;
+                                                                                    }
+                                                                                } else {
+                                                                                    echo "No active semester found.";
+                                                                                } ?>" class="form-control" autocomplete="off" disabled>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="schoolyear" class="form-label"><i class="bi bi-calendar4-week text-warning"></i> School Year</label>
+                                    <input type="text" name="schoolyear" value="<?php if (!empty($activeSchoolYears)) {
+                                                                                    foreach ($activeSchoolYears as $schoolYear) {
+                                                                                        echo $schoolYear;
+                                                                                    }
+                                                                                } else {
+                                                                                    echo "No active school year found.";
+                                                                                } ?>" class="form-control" autocomplete="off" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="mb-3 fade-in-input">
-            <label for="school" class="form-label"><i class="bi bi-bank text-primary"></i> School Name</label>
-            <input type="text" id="school" name="school" value="<?php echo ucwords(strtolower($result['school_name'])); ?>" class="form-control" autocomplete="off" disabled>
-        </div>
-        <div class="mb-3 fade-in-input">
-            <label for="address" class="form-label"><i class="bi bi-geo-alt-fill me-2 text-danger"></i>Address</label>
-            <input type="text" id="address" name="address" value="<?php echo ucwords(strtolower($result['school_address'])); ?>" class="form-control" autocomplete="off" disabled>
-        </div>
-        <div class="col-4 mb-3 fade-in-input">
-            <label for="semester" class="form-label"> <i class="bi bi-gear-fill text-secondary"></i> Quarter</label>
-            <input type="text" name="semester" value="<?php
-                                                        if (!empty($activeQuarter)) {
-                                                            foreach ($activeQuarter as $quarter) {
-                                                                echo $quarter;
-                                                            }
-                                                        } else {
-                                                            echo "No active quarter found.";
-                                                        } ?>" class="form-control" autocomplete="off" disabled>
-        </div>
-        <div class="col-4 mb-3 fade-in-input">
-            <label for="semester" class="form-label"><i class="bi bi-sliders text-success"></i> Semester</label>
-            <input type="text" name="semester" value="<?php
-                                                        if (!empty($activeSem)) {
-                                                            foreach ($activeSem as $semester) {
-                                                                echo $semester;
-                                                            }
-                                                        } else {
-                                                            echo "No active semester found.";
-                                                        } ?>" class="form-control" autocomplete="off" disabled>
-        </div>
-        <div class="col-4 mb-3 fade-in-input">
-            <label for="schoolyear" class="form-label"><i class="bi bi-calendar4-week text-warning"></i> School Year</label>
-            <input type="text" name="schoolyear" value="<?php
-                                                        if (!empty($activeSchoolYears)) {
-                                                            foreach ($activeSchoolYears as $schoolYear) {
-                                                                echo $schoolYear;
-                                                            }
-                                                        } else {
-                                                            echo "No active school year found.";
-                                                        } ?>" class="form-control" autocomplete="off" disabled>
-        </div>
-    </form>
+    </div>
 </main>
 
 
