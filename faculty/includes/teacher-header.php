@@ -34,8 +34,6 @@ error_reporting(E_ALL);
     <!-- DataTables Buttons CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
 
-
-
 </head>
 
 <body class="lms-scroll-bar">
@@ -246,8 +244,8 @@ error_reporting(E_ALL);
             </div>
         </div>
     </div>
-
     <!-- Bootstrap JS and Dependencies -->
+    <!-- NOTE : DON'T REMOVE THIS DEPENDENCIES  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- THIS IS SIDE BAR SCRIPT TO SHOW TOOGGLE UP AND DOWN  -->
     <script>

@@ -70,7 +70,6 @@ include "../principal/includes/Forms/sectionform.php";
                                     $count = 0;
                                     foreach ($result as $row) {
                                         echo '<tr>';
-
                                         // echo '<td class="small text-center">' . $row["section_code"] . '</td>';
                                         echo '<td class="small text-center">' . $row["section_name"] . '</td>';
                                         echo '<td class="small text-center">' . $row["strand_name"] . '</td>';
@@ -79,17 +78,17 @@ include "../principal/includes/Forms/sectionform.php";
                                         echo '<td class="small text-center">' . ucwords(strtolower($row["adviser"])) . '</td>';
 
                                         echo '
-                                        <td class="d-flex justify-content-center">
+                                            <td class="d-flex justify-content-center">
                                             <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#edit_section' . $row['section_code'] . '">
                                                 <i class="bi bi-pencil-square me-1"></i>Edit
                                             </button>
-                                        
                                             </td>
                                             ';
                                         // THIS IS THE DELETE BUTTON I WILL LEAVE IT COMMENT , IF NEEDED JUST UNCOMMENT 
-                                        // <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_section' . $row['section_code'] . '">
+                                        // <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_section' . $row['section_code'] . '">
                                         //     <i class="bi bi-trash"></i>Delete
                                         // </button>
+
                                         echo '</tr>';
 
                                         $count++;
@@ -225,7 +224,7 @@ include "../principal/includes/Forms/sectionform.php";
 
                                         //todo Modal for deleting section
                                         echo '
-                                        <div class="modal fade" id="del_section' . $row['section_code'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                                        <div class="modal fade" id="delete_section' . htmlspecialchars($row['section_code'])  . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-md">
                                                 <div class="modal-content shadow-lg border-0 rounded">
                                                     <!-- Modal Body -->
@@ -265,11 +264,9 @@ include "../principal/includes/Forms/sectionform.php";
         </div>
     </div>
     <?php
-    include("../admin/includes/extension.php");
+    include("../principal/includes/extension.php");
     ?>
 </main>
-
-
 
 
 <!-- PDF ,EXCEL, PRINT ,CVS -->
@@ -284,7 +281,7 @@ include "../principal/includes/Forms/sectionform.php";
                     titleAttr: "Export as Excel",
                     exportOptions: {
                         columns: function(index, data, node) {
-                            return index !== 4;
+                            return index !== 5;
                         },
                     },
                 },
@@ -372,7 +369,7 @@ include "../principal/includes/Forms/sectionform.php";
                     },
                     exportOptions: {
                         columns: function(index, data, node) {
-                            return index !== 4;
+                            return index !== 5;
                         },
                     },
                 },

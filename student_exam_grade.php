@@ -102,34 +102,34 @@ $examResult = $mySQLFunction->getEquivalentScoreBySubjectOfIndividualStudent($_S
                                 if (!empty($examResult)) {
                                     $count = 0;
                                     foreach ($examResult as $row) {
+                                        // Skip rows where the subject is empty
                                         if (empty($row["subject"])) continue;
 
+                                        // Split scores
                                         $scores = explode(',', $row['scores'] ?? '');
+
+                                        // Determine if the student's quarter matches the active quarter
                                         $isCurrentQuarter = in_array($row["quarter"], explode(",", implode(",", $activeQuarter)));
+
+                                        // Determine status
                                         $status = (!empty($row['scores']) && count($scores) > 0);
 
                                         if ($isCurrentQuarter) {
                                             echo '<tr>';
                                             echo '<td class="small">' . (!empty($row["subject"]) ? ucwords(strtolower($row["subject"])) : '-') . '</td>';
                                             echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['scores']) : '<span class="text-danger">0</span>') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['total_items']) : '<span class="text-danger">0</span>') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['equivalent_scores']) : '<span class="text-danger">N/A</span>') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . (isset($row['total_items']) ? htmlspecialchars($row['total_items']) : '<span class="text-danger">0</span>') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . (isset($row['equivalent_scores']) ? htmlspecialchars($row['equivalent_scores']) : '<span class="text-danger">N/A</span>') . '</td>';
                                             echo '</tr>';
                                             $count++;
                                         }
                                     }
-                                    // If no valid subjects were displayed, show "Student not found."
                                     if ($count === 0) {
-                                        echo '<tr>
-                                            <td colspan="4" class="text-center mt-2 fw-semibold">Result not found.</td>
-                                        </tr>';
+                                        echo '<tr><td colspan="4" class="text-center mt-2 fw-semibold">Result not found.</td></tr>';
                                     }
                                 } else {
-                                    echo '<tr>
-                                        <td colspan="4" class="text-center mt-2 fw-semibold">Result not found.</td>
-                                    </tr>';
+                                    echo '<tr><td colspan="4" class="text-center mt-2 fw-semibold">Result not found.</td></tr>';
                                 }
-
                                 ?>
                             </tbody>
                         </table>

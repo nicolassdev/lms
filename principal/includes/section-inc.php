@@ -42,7 +42,7 @@ if (!isset($_POST["submit"])) {
 
         // Set session success message
         $_SESSION['success_notify'] = "Section has been created successfully.";
-        header("Location: ../index.php?page=section");
+        header("Location: ../index.php?page=section_list");
         exit();
     } catch (Exception $e) {
         // Rollback the transaction in case of an error
@@ -50,7 +50,7 @@ if (!isset($_POST["submit"])) {
 
         // Set error session message
         $_SESSION['error_section'] = $e->getMessage();
-        header("Location: ../index.php?page=section");
+        header("Location: ../index.php?page=section_list");
         exit();
     } finally {
         // Close the connection

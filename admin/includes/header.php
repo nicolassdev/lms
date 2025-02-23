@@ -291,17 +291,13 @@ error_reporting(E_ALL);
                         </div>
                     </div>
                 </div>
-
-
-
-
             </div>
         </div>
     </header>
 
-
-
-
+    <!-- Bootstrap JS and Dependencies -->
+    <!-- NOTE : DON'T REMOVE THIS DEPENDENCIES  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- JavaScript to toggle icons using Bootstrap collapse events -->
     <script>
@@ -360,5 +356,3 @@ error_reporting(E_ALL);
             }
         });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

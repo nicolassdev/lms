@@ -104,7 +104,7 @@ try {
     $schedColumns = ['sched_id', 'teacher_id', 'section_code', 'sub_code', 'sched_day', 'sched_from', 'sched_to'];
     $schedValues = [$uid, $teacher_id, $section_id, $subject_id, $day, $from, $to];
 
-    $mySQLFunction->insert("SCHEDULE", $schedColumns, $schedValues);
+    $mySQLFunction->insert("schedule", $schedColumns, $schedValues);
 
     $_SESSION['success'] = "Schedule was inserted successfully";
     header("Location: ../index.php?page=schedule");

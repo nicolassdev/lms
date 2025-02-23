@@ -135,7 +135,13 @@ $numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSI
                                         }
                                     }
                                 } else {
-                                    echo '<tr><td colspan="10" class="text-center mt-2 text-danger"><strong>Student not found.</strong></td></tr>';
+                                    echo '<tr>
+                                    <td class="text-center text-danger">No student found</td>
+                                    <td class="text-center text-muted">N/A</td>
+                                    <td class="text-center text-muted">0</td>
+                                    <td class="text-center text-muted">0</td>    
+                                    <td class="text-center text-muted">0</td>  
+                                    </tr>';
                                 }
                                 ?>
                             </tbody>

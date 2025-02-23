@@ -37,8 +37,8 @@ include "./includes/alert-modal.php";
             require_once 'facultymembers.php';
             break;
 
-        case "section":
-            require_once 'section.php';
+        case "section_list":
+            require_once 'section_list.php';
             break;
 
             /**

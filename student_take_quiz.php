@@ -116,11 +116,11 @@ $mySQLFunction->disconnect();
                                 <?php if (!$isQuizTaken): ?>
                                     <div class="card mb-2 shadow-sm border-0">
                                         <div class="card-body bg-light">
-                                            <h5 class="fw-bold text-dark">Exam Instructions</h5>
+                                            <h5 class="fw-bold text-dark">Quiz Instructions</h5>
                                             <ul class="list-group list-group-flush">
                                                 <li class="list-group-item bg-light">
                                                     <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                                    This exam has <span class="fw-semibold"><?= htmlspecialchars($quizData["quiz_items"] ?? 'N/A') ?> items</span> includes multiple-choice, enumeration, true or false, and essay questions.
+                                                    This quiz has <span class="fw-semibold"><?= htmlspecialchars($quizData["quiz_items"] ?? 'N/A') ?> items</span> includes multiple-choice, enumeration, true or false, and essay questions.
                                                 </li>
                                                 <li class="list-group-item bg-light">
                                                     <i class="bi bi-check-circle-fill text-success me-2"></i>
@@ -146,7 +146,7 @@ $mySQLFunction->disconnect();
                 </div>
                 <!-- NOTE: If student not have not yet taken the exam this will be display  exam and the button will be start exam  -->
                 <?php if (!$isQuizTaken): ?>
-                    <!-- Timer and Exam Questions -->
+                    <!-- Timer and Quiz Questions -->
                     <div id="quizArea" class="d-none">
                         <div class="row">
                             <!-- EXAM QUESTION ELEMENT -->
@@ -154,13 +154,13 @@ $mySQLFunction->disconnect();
                                 <div class="card mb-4 shadow-sm">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between">
-                                            <h5 class="fw-bold text-start">Questions</h5>
+                                            <h5 class="fw-bold text-start">Quiz Questions</h5>
                                             <p class="fw-semibold text-end">
                                                 <?= htmlspecialchars($quizData["quiz_items"] . ' Items' ?? 'No Items') ?><br>
                                             </p>
                                         </div>
                                         <!-- FORM ELEMENTS OF QUIZ -->
-                                        <form action="./includes/studentexam-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation" novalidate>
+                                        <form action="./includes/studentanswers-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation" novalidate>
 
                                             <!-- Hidden Inputs -->
                                             <input type="hidden" name="studID" value="<?php echo htmlspecialchars($_SESSION['stu_lrn']); ?>">
@@ -245,8 +245,8 @@ $mySQLFunction->disconnect();
                                             </ul>
 
                                             <!-- Submit Button -->
-                                            <div class="mt-3">
-                                                <button name="submit" type="submit" class="btn btn-primary">Submit Answers</button>
+                                            <div class="mt-3 text-end">
+                                                <button name="submit" type="submit" class="btn btn-primary rounded-pill">Submit Answers</button>
                                             </div>
                                         </form>
 
@@ -259,22 +259,22 @@ $mySQLFunction->disconnect();
                                 <div class="card mb-4 shadow-sm text-center">
                                     <div class="card-body">
                                         <h4 class="fw-bold">Timer</h4>
-                                        <div id="quizTimerDesktop" class="display-5 text-danger">
+                                        <div id="quizTimerDesktop" class="display-5 fw-bold text-danger">
                                             00:00
                                         </div>
                                         <p class="text-muted">Time remaining</p>
-                                        <button class="btn btn-danger mt-2" id="endQuizButtonDesktop">End Quiz</button>
+                                        <!-- <button class="btn btn-danger mt-2" id="endQuizButtonDesktop">End Quiz</button> -->
                                     </div>
                                 </div>
                             </div>
                             <!-- QUIZ TIMER EMELEMENT FOR MOBILE -->
-                            <div class="col-6 col-sm-4 col-md-3 position-fixed end-0 top-50 translate-middle-y d-lg-none">
+                            <div class="col-4 col-sm-4 col-md-3 position-fixed end-0 top-50 translate-middle-y d-lg-none">
                                 <div class="card shadow-sm text-center p-2">
                                     <div class="card-body p-2">
                                         <h6 class="fw-bold mb-1">Timer</h6>
                                         <div id="quizTimerMobile" class="fs-4 fw-bold text-danger">00:00</div>
                                         <p class="text-muted small mb-1">Time left</p>
-                                        <button class="btn btn-sm btn-danger" id="endQuizButtonMobile">End</button>
+                                        <!-- <button class="btn btn-sm btn-danger" id="endQuizButtonMobile">End</button> -->
                                     </div>
                                 </div>
                             </div>
@@ -369,7 +369,6 @@ $mySQLFunction->disconnect();
                 <?php endif; ?>
 
 
-
                 <!-- Exam Completion Section -->
                 <div id="quizEndNotification" class="d-none text-center my-5">
                     <h2 class="fw-bold text-success">Quiz Completed!</h2>
@@ -431,25 +430,38 @@ $mySQLFunction->disconnect();
                 }
             }, 1000);
 
-            // End Exam Button for Desktop
-            if (endQuizButtonDesktop) {
-                endQuizButtonDesktop.addEventListener("click", function() {
-                    clearInterval(timerInterval);
-                    alert("Quiz ended.");
-                    quizArea.classList.add("d-none");
-                    quizEndNotification.classList.remove("d-none");
-                });
-            }
+            // // End Exam Button for Desktop
+            // if (endQuizButtonDesktop) {
+            //     endQuizButtonDesktop.addEventListener("click", function() {
+            //         clearInterval(timerInterval);
+            //         alert("Quiz ended.");
+            //         quizArea.classList.add("d-none");
+            //         quizEndNotification.classList.remove("d-none");
+            //     });
+            // }
 
-            // End Exam Button for Mobile
-            if (endQuizButtonMobile) {
-                endQuizButtonMobile.addEventListener("click", function() {
-                    clearInterval(timerInterval);
-                    alert("Quiz ended.");
-                    quizArea.classList.add("d-none");
-                    quizEndNotification.classList.remove("d-none");
-                });
-            }
+            // // End Exam Button for Mobile
+            // if (endQuizButtonMobile) {
+            //     endQuizButtonMobile.addEventListener("click", function() {
+            //         clearInterval(timerInterval);
+            //         alert("Quiz ended.");
+            //         quizArea.classList.add("d-none");
+            //         quizEndNotification.classList.remove("d-none");
+            //     });
+            // }
+
+            let quizSubmitted = false;
+            // Prevent Exam Loss on Unexpected Tab Close
+            window.addEventListener("beforeunload", function(e) {
+                if (!quizSubmitted) { // Only trigger if the exam is NOT submitted
+                    e.preventDefault();
+                }
+            });
+
+            // Detect form submission and prevent warning
+            form.addEventListener("submit", function() {
+                quizSubmitted = true; // Mark that the form was submitted
+            });
 
         });
 
@@ -465,4 +477,40 @@ $mySQLFunction->disconnect();
         }, false);
 
     });
+
+    // RESTRICT IN ENUMERATION VALIDATION ONLY ACCEPT ANSWER WITH COMMA
+    (function() {
+        'use strict';
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation');
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    // Custom validation for comma-separated answers
+                    var inputFields = form.querySelectorAll('input[name^="qenum_"]');
+                    inputFields.forEach(function(input) {
+                        if (!input.value.includes(',')) {
+                            input.setCustomValidity("Please enter at least two answers separated by commas.");
+                            input.classList.add('is-invalid');
+                            event.preventDefault();
+                            event.stopPropagation();
+                        } else {
+                            input.setCustomValidity(""); // Clear custom validation
+                            input.classList.remove('is-invalid');
+                        }
+                    });
+
+                    form.classList.add('was-validated');
+
+                }, false);
+            });
+    })();
 </script>
