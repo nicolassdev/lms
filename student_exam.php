@@ -58,7 +58,7 @@ $mySQLFunction->disconnect();
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="fw-bold text-muted">
-                            Exam
+                            Start Exam
                         </h4>
                         <!-- Search Bar -->
                         <!-- Search Bar -->

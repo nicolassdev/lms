@@ -37,11 +37,13 @@ $examResult = $mySQLFunction->getEquivalentScoreBySubjectOfIndividualStudent($_S
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="data-table">
+                <div>
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
 
                         <div class="text-dark">
-                            <div class="fs-5 fw-bold">Exam Grade</div>
+                            <h4 class="fw-bold text-muted">
+                                Exam Grade
+                            </h4>
                             <small class="fw-semibold">
                                 <span class="me-1">Quarterly:</span>
                                 <?php if (!empty($activeQuarter)) {
@@ -73,7 +75,7 @@ $examResult = $mySQLFunction->getEquivalentScoreBySubjectOfIndividualStudent($_S
                             </small>
 
                         </div>
-                        <div class="text-dark fw-bold">
+                        <div class="text-dark fw-bold bg-dark text-white py-2 px-3 rounded-3">
                             <?php if (!empty($examResult)) {
                                 foreach ($examResult as $student) {
                                     echo htmlspecialchars($student["grade_lvl"]) . '  ';
@@ -85,55 +87,69 @@ $examResult = $mySQLFunction->getEquivalentScoreBySubjectOfIndividualStudent($_S
                         </div>
                     </div>
 
+                    <hr class="text-secondary" />
+                    <!-- STUDENT EXAM RESULT -->
+                    <div class="small ms-3 me-1 lms-scroll-bar">
+                        <div class="row g-3">
+                            <?php
+                            if (!empty($examResult)) {
+                                $count = 0;
+                                foreach ($examResult as $row) {
+                                    if (empty($row["subject"])) continue;
 
-                    <!-- STUDENT DETAILS -->
-                    <div class="table-responsive small ms-3 me-1">
-                        <table id="student_report" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th scope="col" style="width: 100px;">Subject</th>
-                                    <th scope="col" class="text-center" style="width: 100px;">Score</th>
-                                    <th scope="col" class="text-center" style="width: 100px;">Total Items</th>
-                                    <th scope="col" class="text-center" style="width: 100px;">Equivalent Grade</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                if (!empty($examResult)) {
-                                    $count = 0;
-                                    foreach ($examResult as $row) {
-                                        // Skip rows where the subject is empty
-                                        if (empty($row["subject"])) continue;
+                                    $scores = explode(',', $row['scores'] ?? '');
+                                    $isCurrentQuarter = in_array($row["quarter"], explode(",", implode(",", $activeQuarter)));
+                                    $status = (!empty($row['scores']) && count($scores) > 0);
 
-                                        // Split scores
-                                        $scores = explode(',', $row['scores'] ?? '');
+                                    if ($isCurrentQuarter) {
+                                        // Data processing
+                                        $subject = ucwords(strtolower($row["subject"]));
+                                        $score = $status ? htmlspecialchars($row['scores']) : '0';
+                                        $totalItems = isset($row['total_items']) ? htmlspecialchars($row['total_items']) : '0';
+                                        $equivalentGrade = isset($row['equivalent_scores']) ? htmlspecialchars($row['equivalent_scores']) : 'N/A';
 
-                                        // Determine if the student's quarter matches the active quarter
-                                        $isCurrentQuarter = in_array($row["quarter"], explode(",", implode(",", $activeQuarter)));
+                                        // Color-based on grade
+                                        $gradeColor = ($equivalentGrade != 'N/A' && $equivalentGrade != 65) ? "text-success" : "text-danger";
 
-                                        // Determine status
-                                        $status = (!empty($row['scores']) && count($scores) > 0);
+                                        echo '<div class="col-md-4 col-sm-6 col-12">';
+                                        echo '<div class="card shadow border-0 h-100  rounded-3">';
+                                        echo '<div class="card-body">';
+                                        echo '<h6 class="card-title fw-bold text-truncate text-dark">' . $subject . '</h6>';
+                                        echo '<hr class="text-secondary" />';
+                                        echo '<p class="mb-2 text-dark"><strong>Score:</strong> <span class="text-primary fw-bold">' . $score . '</span></p>';
+                                        echo '<p class="mb-2 text-dark"><strong>Total Items:</strong> <span class="text-info fw-bold">' . $totalItems . '</span></p>';
+                                        echo '<p class="mb-2 text-dark"><strong>Equivalent Grade:</strong> <span class="' . $gradeColor . ' fw-bold">' . $equivalentGrade . '</span></p>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                        echo '</div>';
 
-                                        if ($isCurrentQuarter) {
-                                            echo '<tr>';
-                                            echo '<td class="small">' . (!empty($row["subject"]) ? ucwords(strtolower($row["subject"])) : '-') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['scores']) : '<span class="text-danger">0</span>') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . (isset($row['total_items']) ? htmlspecialchars($row['total_items']) : '<span class="text-danger">0</span>') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . (isset($row['equivalent_scores']) ? htmlspecialchars($row['equivalent_scores']) : '<span class="text-danger">N/A</span>') . '</td>';
-                                            echo '</tr>';
-                                            $count++;
-                                        }
+                                        $count++;
                                     }
-                                    if ($count === 0) {
-                                        echo '<tr><td colspan="4" class="text-center mt-2 fw-semibold">Result not found.</td></tr>';
-                                    }
-                                } else {
-                                    echo '<tr><td colspan="4" class="text-center mt-2 fw-semibold">Result not found.</td></tr>';
                                 }
-                                ?>
-                            </tbody>
-                        </table>
+                                if ($count === 0) {
+                                    echo '
+                                        <div class="card-body text-center">
+                                            <i class="bi bi-info-circle-fill text-danger display-6 mb-3 "></i>
+                                            <h6 class="text-secondary fw-bold">Result not found.</h6>
+                                            <p class="text-muted">Please take exam first.</p>
+                                        </div>
+                                   ';
+                                }
+                            } else {
+                                echo '
+                                <div class="card-body text-center">
+                                    <i class="bi bi-info-circle-fill text-danger display-6 mb-3 "></i>
+                                    <h6 class="text-secondary fw-bold">Result not found.</h6>
+                                    <p class="text-muted">Please take exam first.</p>
+                                </div>
+                           ';
+                            }
+                            ?>
+                        </div>
+
                     </div>
+
+
                 </div>
             </div>
         </div>

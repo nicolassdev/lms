@@ -5,7 +5,6 @@ error_reporting(E_ALL);
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +12,7 @@ error_reporting(E_ALL);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learning Management System</title>
-
+    <!-- WEBSITE ICON-->
     <link rel="icon" type="webp" href="../assets/img/csi.webp">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/teacher.css?v=<?php echo time(); ?>" />

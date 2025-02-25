@@ -50,7 +50,7 @@ $mySQLFunction->disconnect();
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="fw-bold text-muted">
-                            Quiz
+                            Start Quiz
                         </h4>
                         <!-- Search Bar -->
                         <div class="col-md-4">

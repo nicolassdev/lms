@@ -25,7 +25,6 @@ $mySQLFunction->disconnect();
 ?>
 
 <style>
-    /* Add card hover effects and modern shadow */
     .card {
         border: 1px solid #e0e0e0;
         transition: box-shadow 0.3s ease;
@@ -88,9 +87,7 @@ $mySQLFunction->disconnect();
             </div>
         </div>
 
-        <div class="row g-1">
-
-
+        <div class="row g-2">
             <!-- Account Card -->
             <div class="col-md-4 col-sm-6 col-12">
                 <div class="card shadow-lg h-100">
@@ -149,10 +146,10 @@ $mySQLFunction->disconnect();
                         <div class="d-flex align-items-center justify-content-between">
                             <!-- Icon and title -->
                             <div class="" style="margin-left:20px">
-                                <i class="bi bi-building-fill display-5 text-danger mb-2"></i>
+                                <i class="bi bi-bank display-5 text-danger mb-2"></i>
                                 <h5 class="card-title">Section</h5>
                                 <!-- <p class="card-text">Total number of sections</p> -->
-                                <p class="card-text">Manage sections here.</p>
+                                <p class="card-text">Total number of sections.</p>
                             </div>
                             <!-- Number of students -->
                             <div class="text-end">
@@ -162,7 +159,7 @@ $mySQLFunction->disconnect();
                         <hr class="text-muted" />
                         <!-- Manage account button -->
                         <div class="text-start mt-3 ms-3">
-                            <a href="?page=section" class="btn btn-danger w-50">Manage section</a>
+                            <a href="?page=section_list" class="btn btn-danger w-50">Manage section</a>
                         </div>
                     </div>
                 </div>

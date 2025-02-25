@@ -53,14 +53,14 @@ $mySQLFunction->disconnect();
                                 <a <?php echo $isExamTaken ? 'href="index.php?page=student_exam_result" ' : 'href="index.php?page=student_exam" ' ?> class="btn btn-sm btn-outline-light mt-2"> Back</a>
                                 <div class="w-100  text-center"> <?php if ($isExamTaken): ?>
                                         <h1 class="card-title fw-bold">Done <i class="bi bi-check-circle-fill fs-3 text-success"></i></h1>
-                                        <p class="card-text"> You have already taken this exam. <br><small>Click here view exam results</small></p>
+                                        <p> You have already taken this exam. <br><small>Click here view exam results</small></p>
                                         <button class="btn btn-outline-light btn-lg px-5 rounded-pill"
                                             data-bs-toggle="collapse" data-bs-target="#examResultArea">
                                             <i class="bi bi-clipboard-data me-2"></i> View Result
                                         </button>
                                     <?php else: ?>
                                         <h1 class="card-title fw-bold">Take Your Exam</h1>
-                                        <p class="card-text"> Get ready to demonstrate your knowledge. Best of luck! </p>
+                                        <p> Get ready to demonstrate your knowledge. Best of luck! </p>
                                         <button class="btn btn-outline-light btn-lg px-5 rounded-pill" id="startExamButton">
                                             <i class="bi bi-play-circle me-2"></i> Start Exam
                                         </button>
