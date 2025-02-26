@@ -8,7 +8,7 @@ if (!isset($_SESSION['principal_id'])) {
 <?php
 include "../includes/dbh-inc.php";
 ?>
-
+<!-- 
 <style>
     .data-table {
         font-size: 0.8em;
@@ -20,10 +20,10 @@ include "../includes/dbh-inc.php";
         padding: 0.1rem;
         /* Adjust padding */
     }
-</style>
+</style> -->
 
 <!-- TABLE -->
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-2">
 
     <div class="container">
         <div class="row">

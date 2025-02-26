@@ -177,7 +177,7 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                         echo '
                                         <!-- STUDENT INFORMATION ENTRY MODAL -->
                                         <div class="modal fade" id="upload_answer' . $row['module_id'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-                                            <div class="modal-dialog modal-md">
+                                            <div class="modal-dialog  modal-md">
                                                <div class="modal-content shadow-lg">
                                                     <div class="modal-body">
                                                         <!-- Modal Title & Icon -->

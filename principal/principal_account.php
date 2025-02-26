@@ -46,7 +46,7 @@ $mySQLFunction->disconnect();
 
 <!-- Modal to Update STUDENT Account -->
 
-<main class="col-md-12 ms-sm-auto col-lg-10">
+<main class="col-md-12 ms-sm-auto col-lg-10 mt-5 pt-3">
 
     <div class="container mt-3">
         <div class="row">

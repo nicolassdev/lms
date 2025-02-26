@@ -14,24 +14,20 @@ error_reporting(E_ALL);
     <title>Learning Management System</title>
     <!-- WEBSITE ICON-->
     <link rel="icon" type="webp" href="../assets/img/csi.webp">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="../assets/css/teacher.css?v=<?php echo time(); ?>" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-
-
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- DataTables CSS -->
     <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- DataTables Buttons CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/teacher.css?v=<?php echo time(); ?>" />
 
 </head>
 
@@ -172,7 +168,7 @@ error_reporting(E_ALL);
                             <!-- THISI IS THE ROUTE OF QUIZ -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#assessmentMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
-                                    <i class="bi bi-card-heading me-2"></i>Assessment <i class="bi bi-chevron-down" style="margin-left: 35px;" id="assessmentIcon"></i>
+                                    <i class="bi bi-card-heading me-2"></i>Assessment <i class="bi bi-chevron-down" style="margin-left: 25px;" id="assessmentIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="assessmentMenu">
                                     <li class="nav-item mt-2">
@@ -193,7 +189,7 @@ error_reporting(E_ALL);
                             <!-- THISI IS THE ROUTE OF REPORTS QUIZ AND EXAM -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#reportMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
-                                    <i class="bi bi-bar-chart me-2"></i>Reports <i class="bi bi-chevron-down" style="margin-left: 55px;" id="reportIcon"></i>
+                                    <i class="bi bi-bar-chart me-2"></i>Reports <i class="bi bi-chevron-down" style="margin-left: 50px;" id="reportIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="reportMenu">
                                     <li class="nav-item mt-2">

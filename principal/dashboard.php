@@ -26,11 +26,13 @@ $mySQLFunction->disconnect();
 
 <style>
     .card {
-        border: 1px solid #e0e0e0;
-        transition: box-shadow 0.3s ease;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     }
 
     .card:hover {
+        transform: translateY(-5px);
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     }
 </style>
@@ -38,7 +40,7 @@ $mySQLFunction->disconnect();
 
 <body>
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <div class="ms-3">
                 <img
@@ -96,8 +98,8 @@ $mySQLFunction->disconnect();
                             <!-- Icon and title -->
                             <div class="" style="margin-left:20px">
                                 <i class="bi bi-person-lines-fill display-5 text-primary mb-2"></i>
-                                <h5 class="card-title">Enrolled</h5>
-                                <p class="card-text">Total number of students enrolled.</p>
+                                <h5 class="fw-bold">Enrolled</h5>
+                                <small class="card-text">Total number of students enrolled.</small>
                             </div>
                             <!-- Number of students -->
                             <div class="text-end">
@@ -121,8 +123,8 @@ $mySQLFunction->disconnect();
                             <!-- Icon and title -->
                             <div class="" style="margin-left:20px">
                                 <i class="bi bi-people-fill display-5 text-success mb-2"></i>
-                                <h5 class="card-title">Faculty</h5>
-                                <p class="card-text">Total number of faculty.</p>
+                                <h5 class="fw-bold">Faculty</h5>
+                                <small class="card-text">Total number of faculty.</small>
                             </div>
                             <!-- Number of Faculty -->
                             <div class="text-end">
@@ -132,7 +134,7 @@ $mySQLFunction->disconnect();
                         <hr class="text-muted" />
                         <!-- View account button -->
                         <div class="text-start mt-3 ms-3">
-                            <a href="?page=facultymembers" class="btn btn-success w-70">View faculty members</a>
+                            <a href="?page=facultymembers" class="btn btn-success">View faculty members</a>
                         </div>
                     </div>
                 </div>
@@ -147,9 +149,9 @@ $mySQLFunction->disconnect();
                             <!-- Icon and title -->
                             <div class="" style="margin-left:20px">
                                 <i class="bi bi-bank display-5 text-danger mb-2"></i>
-                                <h5 class="card-title">Section</h5>
+                                <h5 class="fw-bold">Section</h5>
                                 <!-- <p class="card-text">Total number of sections</p> -->
-                                <p class="card-text">Total number of sections.</p>
+                                <small class="card-text">Total number of sections.</small>
                             </div>
                             <!-- Number of students -->
                             <div class="text-end">
@@ -159,7 +161,7 @@ $mySQLFunction->disconnect();
                         <hr class="text-muted" />
                         <!-- Manage account button -->
                         <div class="text-start mt-3 ms-3">
-                            <a href="?page=section_list" class="btn btn-danger w-50">Manage section</a>
+                            <a href="?page=section_list" class="btn btn-danger">Manage section</a>
                         </div>
                     </div>
                 </div>

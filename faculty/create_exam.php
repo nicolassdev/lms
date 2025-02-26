@@ -40,7 +40,7 @@ include "../faculty/includes/Forms/createexamform.php";
     }
 </style>
 
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-3">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-3 mt-5 py-4 me-2">
     <div class="container">
         <div class="row">
             <div class="col-12">

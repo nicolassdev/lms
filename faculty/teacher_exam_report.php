@@ -37,7 +37,7 @@ $numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSI
 ?>
 
 <!-- TABLE REPORT -->
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-3">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-3 mt-5 py-4 me-2">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -77,22 +77,26 @@ $numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSI
                             </small>
 
                         </div>
-                        <div class="text-dark fw-bold">
-                            <?php if (!empty($examResult)) {
-                                foreach ($examResult as $student) {
-                                    echo htmlspecialchars($student["grade_lvl"]) . '  ';
-                                    echo htmlspecialchars($student["section_name"]);
-                                    break; // Exit loop after processing the first student
+                        <div class="fw-semibold">
+                            <div class="py-2 px-3 rounded-3 bg-dark text-white">
+                                <?php if (!empty($examResult)) {
+                                    foreach ($examResult as $student) {
+                                        echo htmlspecialchars($student["grade_lvl"]) . '  ';
+                                        echo htmlspecialchars($student["section_name"]);
+                                        break; // Exit loop after processing the first student
+                                    }
                                 }
-                            }
-                            ?>
-                            <?php
-                            if (!empty($numberOfEnrolledInSection)) {
-                                echo "<h6 class='text-black'>" . count($numberOfEnrolledInSection) .  " Student(s)</h6>";
-                            } else {
-                                echo "<h6 class='text-black'> " . count($numberOfEnrolledInSection) . "  Student</h6>";
-                            }
-                            ?>
+                                ?>
+                            </div>
+                            <div class="pt-2">
+                                <?php
+                                if (!empty($numberOfEnrolledInSection)) {
+                                    echo "<p class='text-dark text-end'>" . count($numberOfEnrolledInSection) .  " Student(s)</p>";
+                                } else {
+                                    echo "<p class='text-dark text-end'> " . count($numberOfEnrolledInSection) . "  Student</p>";
+                                }
+                                ?>
+                            </div>
                         </div>
                     </div>
 
@@ -108,7 +112,7 @@ $numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSI
                                     <th scope="col" class="text-center" style="width: 100px;">Score</th>
                                     <th scope="col" class="text-center" style="width: 100px;">Total Items</th>
                                     <!-- <th scope="col" style="width: 100px;">Equivalent Quiz Score</th> -->
-                                    <th scope="col" class="text-center" style="width: 100px;">Equivalent Exam Score</th>
+                                    <th scope="col" class="text-center" style="width: 100px;">Equivalent Score</th>
                                 </tr>
                             </thead>
                             <tbody>

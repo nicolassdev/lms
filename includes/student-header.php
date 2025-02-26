@@ -19,9 +19,6 @@ error_reporting(E_ALL);
     <!-- Custom CSS -->
     <link rel="website icon" type="webp" href="./assets/img/csi.webp">
     <link rel="stylesheet" href="./assets/css/student.css?v=<?php echo time(); ?>" />
-    <style>
-
-    </style>
 
 </head>
 

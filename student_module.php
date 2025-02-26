@@ -145,11 +145,11 @@ $mySQLFunction->disconnect();
                                 </div>
 
                                 <div class="d-flex align-items-center text-muted">
-                                    <i class="bi bi-award text-danger fs-4 me-2"></i>
-                                    <span class="fw-bold fs-6"><?php echo ucwords(strtolower($subject["grade_lvl"])) . ' ' . htmlspecialchars($subject["strand_name"]); ?></span>
+
+                                    <span class="fw-bold fs-6 ms-3"><?php echo ucwords(strtolower($subject["grade_lvl"])) . ' ' . htmlspecialchars($subject["strand_name"]); ?></span>
                                 </div>
 
-                                <div class="text-secondary ms-4">
+                                <div class="text-secondary ms-3">
                                     <small class="fw-semibold">
                                         <?php
                                         if (!empty($activeSchoolYears) && !empty($activeSem)) {
@@ -163,13 +163,7 @@ $mySQLFunction->disconnect();
                                     </small>
                                 </div>
 
-                                <div class="d-flex align-items-center mt-2">
-                                    <i class="bi bi-calendar3 text-success fs-6 me-2"></i>
-                                    <span class="text-secondary">
-                                        <?php echo $subject["sched_day"] ?: 'No subject time'; ?>
-                                        <?php echo $subject["sched_from"] . ' - ' . ($subject["sched_to"] ?? 'No subject set time'); ?>
-                                    </span>
-                                </div>
+
                             </div>
 
                             <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">

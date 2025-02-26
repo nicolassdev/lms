@@ -162,7 +162,7 @@ $mySQLFunction->disconnect();
 
 
 <!-- TABLE -->
-<main class="col-md-12 ms-sm-auto col-lg-10">
+<main class="col-md-12 ms-sm-auto col-lg-10 mt-5 pt-3">
     <div class="container">
         <img
             style="position: absolute; top: 50%; right: 10%; transform: translate(-10%, -45%); 
