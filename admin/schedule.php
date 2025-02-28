@@ -19,26 +19,20 @@ include "../admin/includes/Forms/scheduleform.php";
 
 
 <style>
-    .text-sm {
-        font-size: 0.7em;
-    }
-
     .data-table {
         font-size: 0.7em;
         /* Reduce font size */
     }
 
-    .table th,
-    .table td {
-        padding: 0.1rem;
-        /* Adjust padding */
+    .table th {
+        font-size: 11px;
     }
 </style>
 
 
 <!-- TABLE -->
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-1">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -131,7 +125,7 @@ include "../admin/includes/Forms/scheduleform.php";
                                         
                                         <td class="d-flex justify-content-center pt-2 pb-3 ">
                                             <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#edit_enrolled' . urlencode($row['sched_id']) . '">
-                                                <i class="bi bi-pencil-square me-1"></i>Edit
+                                                <i class="bi bi-pencil-square"></i>
                                             </button>
                                         
                                         </td>

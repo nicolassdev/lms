@@ -12,7 +12,13 @@
  <!-- THIS THE SUBJECT TABLE -->
 
 
- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-3">
+ <style>
+   .data-table {
+     font-size: 0.8em;
+     /* Reduce font size */
+   }
+ </style>
+ <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-1">
    <div class="container">
      <div class="row">
        <div class="col-12">
@@ -57,7 +63,7 @@
                  <tr>
                    <!-- <th scope="col">#</th> -->
                    <!-- <th scope="col" class="small text-center">Subject Code</th> -->
-                   <th scope="col" class="small text-center">Subject</th>
+                   <th scope="col" class="small text-center">Subject Title</th>
                    <th scope="col" class="small text-center">Category</th>
                    <th scope="col" class="small text-center">Time</th>
                    <th scope="col" class="small text-center">Subject semester</th>
@@ -232,8 +238,7 @@
  </main>
 
  <!-- PDF ,EXCEL, PRINT ,CVS -->
-<script src="../assets/js/globaltables.js"></script>
-<script>
-    initializeDataTable("subjectList", 4, "List of Subjects");
-</script>
- 
+ <script src="../assets/js/globaltables.js"></script>
+ <script>
+   initializeDataTable("subjectList", 4, "List of Subjects");
+ </script>

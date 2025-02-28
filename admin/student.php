@@ -25,7 +25,7 @@ include "../admin/includes/Forms/studentform.php";
 
 
 <!-- TABLE -->
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-1">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -72,7 +72,7 @@ include "../admin/includes/Forms/studentform.php";
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col" style="width: 50px;">LRN</th>
-                                    <th scope="col" style="width: 100px;">Full name</th>
+                                    <th scope="col" style="width: 100px;">Student name</th>
                                     <th scope="col" style="width: 50px;">Gender</th>
                                     <th scope="col" style="width: 150px;">Address</th>
                                     <th scope="col" style="width: 100px;">Contact</th>

@@ -16,29 +16,18 @@ include "../admin/includes/Forms/enrollmentform.php";
 ?>
 
 
-
-
 <style>
-    .text-sm {
-        font-size: 0.7em;
-    }
-
     .data-table {
-        font-size: 0.7em;
+        font-size: 0.8em;
         /* Reduce font size */
-    }
-
-    .table th,
-    .table td {
-        padding: 0.1rem;
-        /* Adjust padding */
     }
 </style>
 
 
+
 <!-- TABLE -->
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-1">
     <div class="container">
         <div class="row">
             <div class="col-12">

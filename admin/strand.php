@@ -15,7 +15,7 @@ include "../admin/includes/Forms/strandform.php";
 
 <!-- THSI THE STRAND TABLE -->
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4 mb-5 ms-3 me-3">
     <h5 class="fw-bold">List of Strand</h5>
     <button type="button" class="btn btn-primary btn-animate" data-bs-toggle="modal" data-bs-target="#strand" data-bs-whatever="@fat">

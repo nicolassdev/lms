@@ -15,14 +15,14 @@ include "../admin/includes/Forms/sectionform.php";
 
 
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-1">
 
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
-                        <h4 class="text-black">List of Section</h4>
+                        <h5 class="fw-bold">List of Section</h5>
                         <!-- <button type="button" class="btn btn-primary btn-sm btn-animate" data-bs-toggle="modal" data-bs-target="#section" data-bs-whatever="@fat">
                             <i class="bi bi-plus-circle-fill me-2"></i>Add Section
                         </button> -->
@@ -45,7 +45,7 @@ include "../admin/includes/Forms/sectionform.php";
                     ?>
                     <!-- TABLE -->
                     <div class="table-responsive small ms-3 me-3">
-                        <table id="example" class="table table-bordered table-striped table-sm align-middle">
+                        <table id="sectionDetails" class="table table-bordered table-striped table-sm align-middle">
                             <thead class="table-dark ">
                                 <tr>
                                     <!-- <th scope="col">#</th> -->
@@ -251,47 +251,103 @@ include "../admin/includes/Forms/sectionform.php";
 <!-- PDF ,EXCEL, PRINT ,CVS -->
 <script>
     $(document).ready(function() {
-        $("#example").DataTable({
+        $("#sectionDetails").DataTable({
             dom: "Bfrtip", // Include buttons in the dom
-            buttons: [
-
-                {
+            buttons: [{
                     extend: "excelHtml5",
-                    text: "Download Excel",
+                    text: '<i class="fas fa-file-excel"></i>Download Excel',
+                    className: "btn btn-sm btn-success",
+                    titleAttr: "Export as Excel",
                     exportOptions: {
                         columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 7)
                             return index !== 5;
                         },
                     },
                 },
                 {
                     extend: "pdfHtml5",
-                    text: "Download PDF",
+                    text: '<i class="fas fa-file-pdf"></i> Download PDF',
+                    className: "btn btn-sm btn-danger",
+                    titleAttr: "Export as PDF",
                     exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 7)
-                            return index !== 5;
-                        },
+                        columns: [0, 1, 2, 3], // Explicitly include columns 0 to 3
+                        orientation: 'landscape',
+                        pageSize: 'A4'
                     },
+                    customize: function(doc) {
+                        doc.pageMargins = [40, 60, 40, 60];
+                        doc.defaultStyle.fontSize = 10;
+                        doc.styles.tableHeader.fontSize = 12;
+
+                        // Add header and footer (example)
+                        doc['header'] = (function(page, pages) {
+                            return {
+                                columns: [{
+                                    alignment: 'right',
+                                    text: ['Page ', {
+                                        text: page.toString()
+                                    }, ' of ', {
+                                        text: pages.toString()
+                                    }]
+                                }],
+                                margin: [10, 10, 10, 0]
+                            }
+                        });
+
+                        doc.styles.header = {
+                            fontSize: 18,
+                            bold: true,
+                            margin: [0, 0, 0, 10]
+                        };
+
+                        doc.content[1].table.widths =
+                            Array(doc.content[1].table.body[0].length + 1).join('*').split('').map(function(s) {
+                                return '*';
+                            });
+                    }
                 },
                 {
                     extend: "print",
-                    text: "Print",
-                    autoPrint: true, // This will print in the same tab (no new window)
+                    text: '<i class="fas fa-print"></i> Print',
+                    className: "btn btn-sm btn-info",
+                    titleAttr: "Print Table",
+                    autoPrint: true,
                     customize: function(win) {
-                        // Custom styling or adjustments for print can go here
-                        $(win.document.body).css("font-size", "10pt").prepend(
-                            "<h3>Section Details</h3>" // Add a custom title for the print view
-                        );
+                        // Hide the LMS heading during print
+                        $(win.document.body)
+                            .find('h1:contains("Learning Management System")') // Adjust the selector if needed
+                            .css("display", "none");
+
+                        $(win.document.body)
+                            .css("font-size", "10pt")
+                            .prepend(
+                                // This is the container that holds both left and right aligned text
+                                '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+                                // Left-aligned: List of Enrolled Students
+                                '<div style="text-align:left; flex: 1;">' +
+                                "<h5 style='font-size: 14px; margin-left: 15px;'>Sections</h5>" +
+                                "</div>" +
+                                // Right-aligned: Computer Systems Institute
+                                '<div style="text-align:right; flex: 1;">' +
+                                "<h6>Computer Systems Institute</h6>" +
+                                "<small>F. Imperial st., Brgy. 36 - Capantawan, Legazpi City</small><br>" +
+                                "</div>" +
+                                "</div>"
+                            );
+
+                        $(win.document.body)
+                            .find("table thead th")
+                            .css("background-color", "#007bff") // Header color
+                            .css("color", "#ffffff")
+                            .css("padding", "10px");
+
                         $(win.document.body)
                             .find("table")
-                            .addClass("compact") // Optional: Compact styling for the table in print view
+                            .addClass("compact")
                             .css("font-size", "inherit");
                     },
                     exportOptions: {
                         columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 7)
                             return index !== 5;
                         },
                     },

@@ -14,10 +14,15 @@ $activeSchoolYears = $mySQLFunction->checkSyStatus('sy');
 $activeSem = $mySQLFunction->checkSemStatus('semester');
 $mySQLFunction->disconnect();
 ?>
-
+<style>
+    .data-table {
+        font-size: 0.8em;
+        /* Reduce font size */
+    }
+</style>
 
 <!-- TABLE -->
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-1">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -34,7 +39,7 @@ $mySQLFunction->disconnect();
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Full name</th>
+                                    <th scope="col">Student name</th>
                                     <th scope="col">Username</th>
                                     <th scope="col">Password</th>
                                     <!-- <th scope="col">Role</th> -->

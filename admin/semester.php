@@ -20,7 +20,7 @@ include "../admin/includes/Forms/semesterform.php";
 
 <!-- DISPLAY IN HOME  -->
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4">
         <h5 class="fw-bold ms-3">Semester</h5>
         <!-- Button container for proper alignment -->

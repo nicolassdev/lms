@@ -21,7 +21,7 @@
  <!-- THIS THE SUBJECT TABLE -->
 
 
- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+ <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-1">
      <div class="container">
          <div class="row">
              <div class="col-12">
@@ -155,8 +155,8 @@
         ?>
  </main>
 
-    <!-- PDF ,EXCEL, PRINT ,CVS -->
-<script src="../assets/js/globaltables.js"></script>
-<script>
-    initializeDataTable("cpSubject", 5, "CP Grade-11 | Subject List");
-</script>
+ <!-- PDF ,EXCEL, PRINT ,CVS -->
+ <script src="../assets/js/globaltables.js"></script>
+ <script>
+     initializeDataTable("cpSubject", 5, "CP Grade-11 | Subject List");
+ </script>
