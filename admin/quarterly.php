@@ -40,18 +40,7 @@ include "../admin/includes/Forms/quarterlyform.php";
         <table id="example" class="table table-bordered table-striped table-sm align-middle ">
             <!-- NOTFICATION -->
             <?php
-            if (isset($_SESSION['insert'])) {
-                echo '<div class="alert alert-primary alert-dismissible fade show p-2" role="alert" style="font-size: 14px; line-height: 1.2;  max-width:1000px;">';
-                echo '<i class="bi bi-info-square-fill fs-5 me-2"></i>' . $_SESSION['insert'];
-
-                echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
-
-                // Reduced font size for the timestamp
-                echo '<small class="d-block mt-1 text-muted ms-4">Just now.</small>';
-
-                echo '</div>';
-                unset($_SESSION['insert']);
-            } elseif (isset($_SESSION['setactive'])) {
+            if (isset($_SESSION['setactive'])) {
                 echo '<div class="alert alert-success alert-dismissible fade show p-2" role="alert" style="font-size: 14px; line-height: 1.2;  max-width:1000px;">';
                 echo '<i class="bi bi-check-circle-fill fs-5 me-2"></i>' . $_SESSION['setactive'];
 
@@ -73,16 +62,6 @@ include "../admin/includes/Forms/quarterlyform.php";
 
                 echo '</div>';
                 unset($_SESSION['deleted']);
-            } elseif (isset($_SESSION['error_insert'])) {
-                echo '<div class="alert alert-danger alert-dismissible fade show p-2" role="alert" style="font-size: 14px; line-height: 1.2;  max-width:1000px;">';
-                echo '<i class="bi bi-exclamation-triangle-fill fs-5 me-2"></i>' . $_SESSION['error_insert'];
-
-                echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
-
-                // Reduced font size for the timestamp
-                echo '<small class="d-block mt-1 text-muted ms-4">Just now.</small>';
-                echo '</div>';
-                unset($_SESSION['error_insert']);
             }
             ?>
 

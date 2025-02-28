@@ -178,7 +178,7 @@ $mySQLFunction->disconnect();
                         width: 500px; opacity: 0.1; z-index: -1;"
             src="./assets/img/csi.webp"
             alt="LMS Logo">
-        <div class="row">
+        <div class="row fade-in-input">
 
             <div class="col-md-12">
                 <div class="profile-card">

@@ -43,7 +43,7 @@ $mySQLFunction->disconnect();
 
 <main class="col-md-12 ms-sm-auto col-lg-10 mt-5 pt-3">
 
-    <div class="container">
+    <div class="container fade-in-input">
         <div class="row">
             <div class="col-md-12">
                 <div class="profile-card">

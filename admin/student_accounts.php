@@ -15,23 +15,9 @@ $activeSem = $mySQLFunction->checkSemStatus('semester');
 $mySQLFunction->disconnect();
 ?>
 
-<style>
-    .data-table {
-        font-size: 0.7em;
-        /* Reduce font size */
-    }
-
-    .table th,
-    .table td {
-        padding: 0.1rem;
-        /* Adjust padding */
-    }
-</style>
-
-
 
 <!-- TABLE -->
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
     <div class="container">
         <div class="row">
             <div class="col-12">

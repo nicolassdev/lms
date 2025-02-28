@@ -62,7 +62,7 @@ $mySQLFunction->disconnect();
                             width: 500px; opacity: 0.10; z-index: -1;"
                             src="./assets/img/csi.webp"
                             alt="LMS Logo">
-                        <div class="row justify-content-between">
+                        <div class="row justify-content-between fade-in-input">
                             <!-- Left side: Profile -->
                             <div class="col-md-6 col-12 text-center">
                                 <div class="profile-header" style="margin-top: 60px;">

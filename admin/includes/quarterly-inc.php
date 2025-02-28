@@ -17,12 +17,12 @@ if (!isset($_POST["submit"])) {
 
     if ($existingQuarter) {
         // If the semester already exists, redirect back with an error
-        $_SESSION['error_insert'] = "Quarter has been already taken.";
+        $_SESSION['error'] = "Quarter has been already taken.";
         header("Location: ../index.php?page=quarterly");
     } else {
         // If the semester does not exist, insert it
         $mySQLFunction->insertQuarter("quarterly", $quarter);
-        $_SESSION['insert'] = "Quarter has been inserted successfuly";
+        $_SESSION['success'] = "Quarter has been inserted successfuly";
         header("Location: ../index.php?page=quarterly");
     }
 

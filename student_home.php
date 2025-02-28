@@ -60,7 +60,7 @@ $mySQLFunction->disconnect();
                             }
                             ?>
                         </div>
-                        <div class="row mt-4">
+                        <div class="row mt-4 fade-in-input">
                             <!-- Courses Card -->
                             <div class="col-md-4 mb-4">
                                 <div class="card shadow-sm h-100">

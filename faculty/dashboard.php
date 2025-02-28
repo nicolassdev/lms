@@ -102,7 +102,7 @@ $mySQLFunction->disconnect();
             </div>
         </div>
 
-        <div class="row g-3">
+        <div class="row g-3 fade-in-input">
             <!-- Subject Card -->
             <div class="col-md-4 col-sm-6 col-12">
                 <div class="card shadow-lg h-100">

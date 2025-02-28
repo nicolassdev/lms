@@ -89,7 +89,7 @@ $mySQLFunction->disconnect();
             </div>
         </div>
 
-        <div class="row g-2">
+        <div class="row g-2 fade-in-input">
             <!-- Account Card -->
             <div class="col-md-4 col-sm-6 col-12">
                 <div class="card shadow-lg h-100">

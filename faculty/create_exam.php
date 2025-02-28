@@ -165,12 +165,12 @@ include "../faculty/includes/Forms/createexamform.php";
                                         echo '<td class="text-center">';
                                         if ($isCurrentQuarter) {
                                             if ($examTaken) {
-                                                echo '<span class="badge bg-success" data-bs-toggle="tooltip" title="Exam Completed"><i class="bi bi-check-circle"></i> Done</span>';
+                                                echo '<span style="background-color: #198754; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;" title="Exam Completed">Done</span>';
                                             } else {
-                                                echo '<span class="badge bg-danger" data-bs-toggle="tooltip" title="No Exam Uploaded"><i class="bi bi-x-circle"></i> No Exam</span>';
+                                                echo '<span style="background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;" title="No Exam Uploaded">No Exam</span>';
                                             }
                                         } else {
-                                            echo '<span class="badge bg-danger" data-bs-toggle="tooltip" title="No Exam Available"><i class="bi bi-x-circle"></i> No Exam</span>';
+                                            echo '<span style="background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;" title="No Exam Available">No Exam</span>';
                                         }
                                         echo '</td>';
 

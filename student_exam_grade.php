@@ -90,7 +90,7 @@ $examResult = $mySQLFunction->getEquivalentScoreBySubjectOfIndividualStudent($_S
                     <hr class="text-secondary" />
                     <!-- STUDENT EXAM RESULT -->
                     <div class="small ms-3 me-1 lms-scroll-bar">
-                        <div class="row g-3">
+                        <div class="row g-3 fade-in-input">
                             <?php
                             if (!empty($examResult)) {
                                 $count = 0;

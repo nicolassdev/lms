@@ -386,3 +386,20 @@ body {
 .btn-danger:hover {
   background-color: #c82333;
 }
+
+/* load effect */
+.fade-in-input {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

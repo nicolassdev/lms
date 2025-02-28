@@ -44,7 +44,7 @@ $mySQLFunction->disconnect();
 
 <main class="col-md-12 ms-sm-auto col-lg-10">
 
-    <div class="container py-4">
+    <div class="container py-4 fade-in-input">
         <img
             style="position: absolute; top: 50%; right: 10%; transform: translate(-10%, -45%); 
             width: 500px; opacity: 0.1; z-index: -1;"

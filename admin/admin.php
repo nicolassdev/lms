@@ -109,7 +109,7 @@ include "../admin/includes/Forms/adminform.php";
 
 <!-- TABLE -->
 <main class="col-md-12 ms-sm-auto col-lg-10">
-    <div class="container">
+    <div class="container fade-in-input">
         <img
             style="position: absolute; top: 50%; right: 10%; transform: translate(-10%, -45%); 
                         width: 500px; opacity: 0.1; z-index: -1;"
