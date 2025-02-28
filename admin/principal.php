@@ -127,7 +127,7 @@ include "../admin/includes/Forms/principalform.php";
 
 
 <!-- TABLE -->
-<main class="col-md-12 ms-sm-auto col-lg-10">
+<main class="col-md-12 ms-sm-auto col-lg-10 mt-5 pt-3">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -155,7 +155,7 @@ include "../admin/includes/Forms/principalform.php";
                         width: 450px; opacity: 0.1; z-index: -1;"
                         src="../assets/img/csi.webp"
                         alt="LMS Logo">
-                    <div class="row">
+                    <div class="row fade-in-input">
                         <!-- Left side: Image and Name -->
                         <div class="col-md-4 d-flex flex-column align-items-center text-center">
 
