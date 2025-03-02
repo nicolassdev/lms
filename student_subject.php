@@ -61,7 +61,7 @@ $mySQLFunction->disconnect();
 
 
     <!-- Subject Cards -->
-    <div class="row g-4 mb-4 ms-2 me-2" id="subjectContainer">
+    <div class="row g-4 mb-4 ms-2 me-2 fade-in-input" id="subjectContainer">
         <?php if (!empty($studentSubjects)): ?>
             <?php foreach ($studentSubjects as $subject): ?>
                 <div class="col-lg-4 col-md-6 col-sm-12 subject-card" data-title="<?php echo htmlspecialchars(strtolower($subject['sub_title'])); ?>">

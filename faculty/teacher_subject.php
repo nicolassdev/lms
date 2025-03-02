@@ -42,7 +42,6 @@ $mySQLFunction->disconnect();
         font-size: 14px;
         color: #6c757d;
     }
-
 </style>
 
 
@@ -77,7 +76,7 @@ $mySQLFunction->disconnect();
                     <hr>
 
 
-                    <div class="row g-4">
+                    <div class="row g-4 fade-in-input">
                         <?php if (!empty($teacherSubjectHandled)): ?>
                             <?php foreach ($teacherSubjectHandled as $schedule): ?>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
