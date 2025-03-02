@@ -221,7 +221,7 @@ $mySQLFunction->disconnect();
                         <div class="card-body text-center d-flex flex-column p-4">
                             <i class="bi bi-people text-secondary display-3 mb-3"></i>
                             <h5 class="fw-bold text-dark">Students</h5>
-                            <p class="text-muted small mb-3">Manage enrolled students.</p>
+                            <p class="text-muted small mb-3">Manage student details.</p>
                             <p class="fs-4 text-secondary fw-bold mb-4">
                                 <?php echo htmlspecialchars($numberOfStudent); ?>
                             </p>
