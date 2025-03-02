@@ -586,7 +586,7 @@ class myDataBase
 
 
     // THIS IS TO GET THE ALL QUIZZIES OF STUDENT IN EVERY SUBJECT
-    public function getAllStudentSubjectsQuiz($stu_lrn)
+    public function getAllStudentSubjectsQuiz($stu_lrn, $mode = 'take_quiz')
     {
         // Get the active semester
         $activeSemesters = $this->checkSemStatus('semester');
@@ -647,12 +647,9 @@ class myDataBase
                 t.teacher_id,
                 t.image
             FROM schedule sched
-            INNER JOIN 
-                section sec ON sched.section_code = sec.section_code
-            INNER JOIN 
-                subject sub ON sched.sub_code = sub.sub_code
-            INNER JOIN 
-                teacher t ON sched.teacher_id = t.teacher_id
+            INNER JOIN section sec ON sched.section_code = sec.section_code
+            INNER JOIN subject sub ON sched.sub_code = sub.sub_code
+            INNER JOIN teacher t ON sched.teacher_id = t.teacher_id
             WHERE 
                 sec.grade_lvl = ? 
                 AND sec.strand_code = ? 
@@ -675,12 +672,28 @@ class myDataBase
         while ($row = $result->fetch_assoc()) {
             $schedId = $row['sched_id'];
 
-            // Fetch exams related to the schedule
-            $quizQuery = "SELECT quiz_id, quiz_type, quiz_quarter, quiz_duration, 
-                                 quiz_title, quiz_items, quiz_date
-                          FROM quiz WHERE sched_id = ? AND $activeQuarterCondition";
-            $stmtQuiz = $this->con->prepare($quizQuery);
-            $stmtQuiz->bind_param("s", $schedId);
+            // Conditional fetching of quizzes based on mode
+
+            if ($mode === 'take_quiz') {
+                $quizQuery = "SELECT quiz_id, quiz_type, quiz_quarter, quiz_duration, quiz_title, quiz_items, quiz_date
+                              FROM quiz WHERE sched_id = ? AND $activeQuarterCondition";
+                $stmtQuiz = $this->con->prepare($quizQuery);
+                $stmtQuiz->bind_param("s", $schedId);
+            } elseif ($mode === 'view_results') {
+                $quizQuery = "
+                    SELECT DISTINCT q.quiz_id, q.quiz_type, q.quiz_quarter, q.quiz_duration, q.quiz_title, q.quiz_items, q.quiz_date
+                    FROM quiz q
+                    LEFT JOIN student_answers sa ON q.quiz_id = sa.quiz_id AND sa.stu_lrn = ?
+                    LEFT JOIN student_scores ss ON q.quiz_id = ss.quiz_id AND ss.stu_lrn = ?
+                    WHERE q.sched_id = ? 
+                    AND $activeQuarterCondition
+                    AND (sa.quiz_id IS NOT NULL OR ss.quiz_id IS NOT NULL)";
+                $stmtQuiz = $this->con->prepare($quizQuery);
+                $stmtQuiz->bind_param("sss", $stu_lrn, $stu_lrn, $schedId);
+            } else {
+                return []; // Invalid mode
+            }
+
             $stmtQuiz->execute();
             $quizResult = $stmtQuiz->get_result();
 
@@ -689,21 +702,18 @@ class myDataBase
                 $quizzes[] = $quizRow;
             }
 
-            // Add subject details and its quizzes
             $row['quizzes'] = $quizzes;
             $row['strand_code'] = $strandCode;
             $row['strand_name'] = $strandName;
             $row['strand_desc'] = $strandDesc;
             $row['grade_lvl'] = $gradeLevel;
-            $row['section_code'] = $sectionCode; // Added section_code in the result
-
+            $row['section_code'] = $sectionCode;
 
             $subjects[] = $row;
         }
 
         return $subjects;
     }
-
 
 
 
@@ -893,10 +903,11 @@ class myDataBase
             AND sec.strand_code = ? 
             AND sec.section_code = ?
             AND sub.sub_code = ?
+            AND q.quiz_id = ? 
             ORDER BY sched.sched_day, sched.sched_from";
 
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("ssss", $grade_lvl, $strandCode, $section_code, $sub_code);
+        $stmt->bind_param("sssss", $grade_lvl, $strandCode, $section_code, $sub_code, $quiz_id);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -1365,12 +1376,14 @@ class myDataBase
                     sched.sched_id,
                     sub.sub_title,
                     sub.sub_semester,
-                    GROUP_CONCAT(ex.exam_quarter) AS quarter,
-                    GROUP_CONCAT(sq.total_questions) AS quiz_items,
-                    GROUP_CONCAT(sq.correct_answers) AS quiz_scores,
-                    GROUP_CONCAT(se.total_questions) AS exam_items,
-                    GROUP_CONCAT(se.correct_answers) AS exam_scores,
-                    GROUP_CONCAT(se.equivalent_score) AS equivalent,
+                    GROUP_CONCAT(DISTINCT q.quiz_quarter ORDER BY q.quiz_quarter) AS quarter_quiz,
+                    GROUP_CONCAT(sq.total_questions ORDER BY q.quiz_quarter) AS quiz_items,
+                    GROUP_CONCAT(sq.correct_answers ORDER BY q.quiz_quarter) AS quiz_scores,
+                    GROUP_CONCAT(DISTINCT sq.equivalent_score ORDER BY q.quiz_quarter) AS equivalent_quiz,
+                    GROUP_CONCAT(DISTINCT ex.exam_quarter ORDER BY ex.exam_quarter) AS quarter_exam,
+                    GROUP_CONCAT(DISTINCT se.total_questions ORDER BY ex.exam_quarter) AS exam_items,
+                    GROUP_CONCAT(DISTINCT se.correct_answers ORDER BY ex.exam_quarter) AS exam_scores,
+                    GROUP_CONCAT(DISTINCT se.equivalent_score ORDER BY ex.exam_quarter) AS equivalent_exam,
                     GROUP_CONCAT(ma.file_name ORDER BY ma.date_uploaded DESC) AS file_names,  -- Concatenate files
                     GROUP_CONCAT(ma.date_uploaded ORDER BY ma.date_uploaded DESC) AS upload_dates,  -- Concatenate dates
                     COUNT(e.stu_lrn) OVER (PARTITION BY sec.section_code) AS enrolled_count 
@@ -1405,8 +1418,6 @@ class myDataBase
                     s.stu_lrn, sec.section_code, sched.sched_id
                 ORDER BY 
                     s.stu_lname, s.stu_fname;
-
-
             ";
 
             // Prepare the query

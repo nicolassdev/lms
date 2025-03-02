@@ -27,9 +27,9 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
 include "../faculty/includes/Forms/createquizform.php";
 ?>
 
-<!-- <style>
+<style>
     .data-table {
-        font-size: 0.8em;
+        font-size: 0.7em;
         /* Reduce font size */
     }
 
@@ -38,7 +38,7 @@ include "../faculty/includes/Forms/createquizform.php";
         padding: 0.1rem;
         /* Adjust padding */
     }
-</style> -->
+</style>
 
 <main class="col-md-12 ms-sm-auto col-lg-10 px-md-3 mt-5 py-4 me-2">
     <div class="container">
@@ -119,13 +119,23 @@ include "../faculty/includes/Forms/createquizform.php";
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
-                                    <th scope="col" style="width: 100px;">Student Name</th>
-                                    <th scope="col" style="width: 50px;">Gender</th>
+                                    <th scope="col" style="width: 150px;">Student Name</th>
+                                    <th scope="col" style="width: 100px;">Gender</th>
                                     <th scope="col" style="width: 100px;">Status</th>
-                                    <th scope="col" style="width: 100px;">Score</th>
-                                    <th scope="col" style="width: 100px;">Total Items</th>
-                                    <th scope="col" style="width: 100px;">Equivalent Grade</th>
 
+                                    <?php
+                                    // this function is base in the table count of the quiz 
+                                    // NOTE: IF HOW MANY NUMBER OF THE FACULTY CREATED QUIZ THE NUMBER OF TABLE IN QUIZ NUMBER IN TABLE,
+                                    $numberOfQuiz = $mySQLFunction->checkRowCount("quiz", 'sched_id', $sched_id);
+
+                                    // Dynamically add Quiz Columns based on the highest quiz count
+                                    $maxQuiz = $numberOfQuiz; // Set max quiz count (or you can calculate it dynamically)
+                                    for ($i = 1; $i <= $maxQuiz; $i++) {
+                                        echo "<th scope='col' class='text-center'>Quiz $i Score</th>";
+                                        echo "<th scope='col' class='text-center'>Quiz $i Items</th>";
+                                        echo "<th scope='col' class='text-center'>Quiz $i Equivalent</th>";
+                                    }
+                                    ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -133,41 +143,44 @@ include "../faculty/includes/Forms/createquizform.php";
                                 if (!empty($students)) {
                                     $count = 1;
                                     foreach ($students as $row) {
-                                        // Split the file names into an array
-                                        $scores = explode(',', $row['quiz_scores'] ?? '');
+                                        $scores = !empty($row['quiz_scores']) ? explode(',', $row['quiz_scores']) : [];
+                                        $items = !empty($row['quiz_items']) ? explode(',', $row['quiz_items']) : [];
+                                        $equivalents = !empty($row['equivalent_quiz']) ? explode(',', $row['equivalent_quiz']) : [];
 
-                                        // Determine if the student's quarter matches the active quarter
-                                        $isCurrentQuarter = in_array($row["quarter"], explode(",", implode(",", $activeQuarter)));
 
-                                        // Determine status
+                                        $isCurrentQuarter = in_array($row["quarter_quiz"], explode(",", implode(",", $activeQuarter)));
                                         $status = (!empty($row['quiz_scores']) && count($scores) > 0);
 
                                         echo '<tr>';
                                         echo '<td class="text-center fw-bold">' . $count . '</td>';
-                                        echo '<td class="text-center">' . $row["stu_lname"] . ', ' . ucwords(strtolower($row["stu_fname"])) . ' </td>';
+                                        echo '<td class="text-center">' . $row["stu_lname"] . ', ' . ucwords(strtolower($row["stu_fname"])) . '</td>';
                                         echo '<td class="text-center">' . ucwords(strtolower($row["stu_gender"])) . '</td>';
 
                                         echo '<td class="text-center">';
                                         if ($isCurrentQuarter) {
                                             if ($status) {
-                                                echo '<span style="background-color: #198754; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;" title="Exam Completed">Done</span>';
+                                                echo '<span style="background-color: #198754; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;">Done</span>';
                                             } else {
-                                                echo '<span style="background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;" title="No Exam Uploaded">No Exam</span>';
+                                                echo '<span style="background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;">No Exam</span>';
                                             }
                                         } else {
-                                            echo '<span style="background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;" title="No Exam Available">No Exam</span>';
+                                            echo '<span style="background-color:gray; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;">No Avalable Quiz</span>';
                                         }
                                         echo '</td>';
 
-                                        // Hide exam scores, total items, and equivalent if quarter does not match
+                                        // Display Quiz Scores
                                         if ($isCurrentQuarter) {
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['quiz_scores']) : '0') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['quiz_items']) : '0') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['equivalent']) : '0') . '</td>';
+                                            for ($i = 0; $i < $maxQuiz; $i++) {
+                                                echo '<td class="text-center text-success fw-semibold">' . ($status && isset($scores[$i]) ? htmlspecialchars($scores[$i]) : '-') . '</td>';
+                                                echo '<td class="text-center text-success fw-semibold">' . ($status && isset($items[$i]) ? htmlspecialchars($items[$i]) : '-') . '</td>';
+                                                echo '<td class="text-center text-success fw-semibold">' . ($status && isset($equivalents[$i]) ? htmlspecialchars($equivalents[$i]) : '-') . '</td>';
+                                            }
                                         } else {
-                                            echo '<td class="text-center text-muted">-</td>';
-                                            echo '<td class="text-center text-muted">-</td>';
-                                            echo '<td class="text-center text-muted">-</td>';
+                                            for ($i = 0; $i < $maxQuiz; $i++) {
+                                                echo '<td class="text-center text-muted">-</td>';
+                                                echo '<td class="text-center text-muted">-</td>';
+                                                echo '<td class="text-center text-muted">-</td>';
+                                            }
                                         }
 
                                         echo '</tr>';
@@ -177,6 +190,7 @@ include "../faculty/includes/Forms/createquizform.php";
                                 ?>
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>

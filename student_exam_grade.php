@@ -102,51 +102,60 @@ $examResult = $mySQLFunction->getEquivalentScoreBySubjectOfIndividualStudent($_S
                                     $status = (!empty($row['scores']) && count($scores) > 0);
 
                                     if ($isCurrentQuarter) {
-                                        // Data processing
                                         $subject = ucwords(strtolower($row["subject"]));
                                         $score = $status ? htmlspecialchars($row['scores']) : '0';
                                         $totalItems = isset($row['total_items']) ? htmlspecialchars($row['total_items']) : '0';
                                         $equivalentGrade = isset($row['equivalent_scores']) ? htmlspecialchars($row['equivalent_scores']) : 'N/A';
 
-                                        // Color-based on grade
                                         $gradeColor = ($equivalentGrade != 'N/A' && $equivalentGrade != 65) ? "text-success" : "text-danger";
 
                                         echo '<div class="col-md-4 col-sm-6 col-12">';
-                                        echo '<div class="card shadow border-0 h-100  rounded-3">';
-                                        echo '<div class="card-body">';
-                                        echo '<h6 class="card-title fw-bold text-truncate text-dark">' . $subject . '</h6>';
+                                        echo '<div class="card shadow-sm border-0 h-100 rounded-4">';
+                                        echo '<div class="card-body text-center p-4">';
+                                        echo '<h6 class="card-title fw-bold text-truncate text-primary">' . $subject . '</h6>';
                                         echo '<hr class="text-secondary" />';
-                                        echo '<p class="mb-2 text-dark"><strong>Score:</strong> <span class="text-primary fw-bold">' . $score . '</span></p>';
-                                        echo '<p class="mb-2 text-dark"><strong>Total Items:</strong> <span class="text-info fw-bold">' . $totalItems . '</span></p>';
-                                        echo '<p class="mb-2 text-dark"><strong>Equivalent Grade:</strong> <span class="' . $gradeColor . ' fw-bold">' . $equivalentGrade . '</span></p>';
+                                        echo '<div class="d-flex justify-content-between align-items-center mb-2">';
+                                        echo '<span class="text-dark">Score:</span>';
+                                        echo '<span class="fw-bold text-primary">' . $score . '</span>';
+                                        echo '</div>';
+                                        echo '<div class="d-flex justify-content-between align-items-center mb-2">';
+                                        echo '<span class="text-dark">Total Items:</span>';
+                                        echo '<span class="fw-bold text-info">' . $totalItems . '</span>';
+                                        echo '</div>';
+                                        echo '<div class="d-flex justify-content-between align-items-center">';
+                                        echo '<span class="text-dark">Grade:</span>';
+                                        echo '<span class="fw-bold ' . $gradeColor . '">' . $equivalentGrade . '</span>';
                                         echo '</div>';
                                         echo '</div>';
                                         echo '</div>';
-
+                                        echo '</div>';
                                         $count++;
                                     }
                                 }
                                 if ($count === 0) {
-                                    echo '
-                                        <div class="card-body text-center">
-                                            <i class="bi bi-info-circle-fill text-danger display-6 mb-3 "></i>
-                                            <h6 class="text-secondary fw-bold">Result not found.</h6>
-                                            <p class="text-muted">Please take exam first.</p>
-                                        </div>
-                                   ';
+                                    echo '<div class="col-12 text-center">';
+                                    echo '<div class="card border-0 shadow-sm rounded-4">';
+                                    echo '<div class="card-body py-5">';
+                                    echo '<i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>';
+                                    echo '<h6 class="text-secondary fw-bold">Result not found</h6>';
+                                    echo '<p class="text-muted">Please take your quiz first.</p>';
+                                    echo '</div>';
+                                    echo '</div>';
+                                    echo '</div>';
                                 }
                             } else {
-                                echo '
-                                <div class="card-body text-center">
-                                    <i class="bi bi-info-circle-fill text-danger display-6 mb-3 "></i>
-                                    <h6 class="text-secondary fw-bold">Result not found.</h6>
-                                    <p class="text-muted">Please take exam first.</p>
-                                </div>
-                           ';
+                                echo '<div class="col-12 text-center">';
+                                echo '<div class="card border-0 shadow-sm rounded-4">';
+                                echo '<div class="card-body py-5">';
+                                echo '<i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>';
+                                echo '<h6 class="text-secondary fw-bold">Result not found</h6>';
+                                echo '<p class="text-muted">Please take your quiz first.</p>';
+                                echo '</div>';
+                                echo '</div>';
+                                echo '</div>';
                             }
                             ?>
                         </div>
-
                     </div>
 
 

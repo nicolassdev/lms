@@ -149,7 +149,7 @@ include "../faculty/includes/Forms/createexamform.php";
                                         // }
 
                                         // Determine if the student's quarter matches the active quarter
-                                        $isCurrentQuarter = in_array($row["quarter"], explode(",", implode(",", $activeQuarter)));
+                                        $isCurrentQuarter = in_array($row["quarter_exam"], explode(",", implode(",", $activeQuarter)));
 
                                         // Determine if an exam was taken (regardless of score)
                                         $examTaken = !empty($row['exam_items']); // Check if exam_items has a value
@@ -178,7 +178,7 @@ include "../faculty/includes/Forms/createexamform.php";
                                         if ($isCurrentQuarter) {
                                             echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['exam_scores'] ?? '0') . '</td>';
                                             echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['exam_items'] ?? '0') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['equivalent'] ?? '0') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['equivalent_exam'] ?? '0') . '</td>';
                                         } else {
                                             echo '<td class="text-center text-muted">-</td>';
                                             echo '<td class="text-center text-muted">-</td>';

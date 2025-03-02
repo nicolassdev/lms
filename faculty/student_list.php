@@ -71,7 +71,7 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
                                 <tr>
 
                                     <th scope="col" style="width: 50px;">LRN</th>
-                                    <th scope="col" style="width: 100px;">Full name</th>
+                                    <th scope="col" style="width: 100px;">Student Name</th>
                                     <th scope="col" style="width: 50px;">Gender</th>
                                     <th scope="col" style="width: 150px;">Address</th>
                                     <th scope="col" style="width: 100px;">Contact</th>
