@@ -56,22 +56,6 @@ $mySQLFunction->disconnect();
         font-size: 14px;
         color: #6c757d;
     }
-
-
-    .dropdown-menu {
-        transition: transform 0.4s ease, opacity 0.4s ease;
-        transform: translateY(-10px);
-        /* opacity: 0; */
-    }
-
-    .dropdown.show .dropdown-menu {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    .dropdown-menu a {
-        font-size: 13px;
-    }
 </style>
 
 

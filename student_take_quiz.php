@@ -51,14 +51,14 @@ $mySQLFunction->disconnect();
                                 <a <?php echo $isQuizTaken ? 'href="index.php?page=student_quiz_result" ' : 'href="index.php?page=student_quiz" ' ?> class="btn btn-sm btn-outline-light mt-2"> Back</a>
                                 <div class="w-100  text-center"> <?php if ($isQuizTaken): ?>
                                         <h1 class="card-title fw-bold">Done <i class="bi bi-check-circle-fill fs-3 text-success"></i></h1>
-                                        <p class="card-text"> You have already taken this quiz. </p>
+                                        <p> You have already taken this quiz. <br><small>Click here view quiz results</small> </p>
                                         <button class="btn btn-outline-light btn-lg px-5 rounded-pill"
                                             data-bs-toggle="collapse" data-bs-target="#quizResultArea">
                                             <i class="bi bi-clipboard-data me-2"></i> View Result
                                         </button>
                                     <?php else: ?>
                                         <h1 class="card-title fw-bold">Take Your Quiz</h1>
-                                        <p class="card-text"> Get ready to demonstrate your knowledge. Best of luck! </p>
+                                        <p> Get ready to demonstrate your knowledge. Best of luck! </p>
                                         <button class="btn btn-outline-light btn-lg px-5 rounded-pill" id="startQuizButton">
                                             <i class="bi bi-play-circle me-2"></i> Start Quiz
                                         </button>

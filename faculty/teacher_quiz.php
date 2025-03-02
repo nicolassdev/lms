@@ -55,7 +55,7 @@ $mySQLFunction->disconnect();
         opacity: 1;
     }
 
-    .dropdown-menu a {
+    .dropdown-css a {
         font-size: 13px;
     }
 </style>
@@ -84,7 +84,7 @@ $mySQLFunction->disconnect();
                                             </div>
                                             <div class="dropdown">
                                                 <i class="bi bi-three-dots-vertical text-white " id="kebabMenu" data-bs-toggle="dropdown" aria-expanded="false" role="button"></i>
-                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                <ul class="dropdown-menu dropdown-menu-end dropdown-css">
                                                     <li>
                                                         <a href="index.php?page=create_quiz&sched_id=<?php echo urlencode($schedule['sched_id']); ?>&sub_code=<?php echo urlencode($schedule['sub_code']); ?>&section_code=<?php echo urlencode($schedule['section_code']); ?>"
                                                             class="dropdown-item text-black ">

@@ -106,22 +106,19 @@ error_reporting(E_ALL);
                 <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
                     <div class="position-sticky">
                         <!-- <h3 class="mb-4">Dashboard</h3> -->
-                        <div class="text-white ms-2 d-lg-none mt-2">
+                        <small class="text-white ms-2 d-lg-none mt-2">
                             <?php
                             echo ucwords(strtolower($_SESSION['stu_fname'] . ' ' . $_SESSION['stu_lname']));
                             echo '<i class="bi bi-person-circle ms-3 fs-2"></i>';
                             ?>
-                        </div>
+                        </small>
                         <hr class=" d-lg-none">
 
                         <ul class="nav flex-column">
-                            <li class="fw-bold dasboard text-center d-none d-lg-inline mb-2">
+                            <li class="fw-bold dasboard text-center d-none d-lg-inline mb-4">
                                 DASHBOARD
                             </li>
-                            <li>
-                                <br />
-                            </li>
-                            <li class="nav-item">
+                            <li class="nav-item pt-2">
                                 <a class="nav-link active" href="index.php?page=student_home">
                                     <i class="bi bi-house-door me-2"></i> Home
                                 </a>
