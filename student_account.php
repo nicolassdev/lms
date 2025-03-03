@@ -118,29 +118,29 @@ $mySQLFunction->disconnect();
 
                                     <!-- Username Field -->
                                     <div class="mb-3">
-                                        <small>Username <span class="text-danger">*</span></small>
+                                        <small>Username <b class="text-danger">*</b></small>
                                         <input type="text" name="username" value="<?php echo $account['username']; ?>" class="form-control" required>
                                         <div class="invalid-feedback">Please enter the username.</div>
                                     </div>
 
                                     <!-- Old Password Field -->
                                     <div class="mb-2">
-                                        <small>Enter old password <span class="text-danger">*</span></small>
-                                        <input type="password" name="oldpass" placeholder="Enter the old password" style="font-style:italic" class="form-control" required>
+                                        <small>Enter old password <b class="text-danger">*</b></small>
+                                        <input type="password" name="oldpass" placeholder="Enter the old password" class="form-control" required>
                                         <div class="invalid-feedback">Please enter the old password.</div>
                                     </div>
 
                                     <!-- New Password Field -->
                                     <div class="mb-2">
-                                        <small>New Password <span class="text-danger">*</span></small>
-                                        <input type="password" name="newpass" placeholder="Enter new password" style="font-style:italic" class="form-control" required>
+                                        <small>New Password <b class="text-danger">*</b></small>
+                                        <input type="password" name="newpass" placeholder="Enter new password" class="form-control" required>
                                         <div class="invalid-feedback">Please enter the new password.</div>
                                     </div>
 
                                     <!-- Confirm Password Field -->
                                     <div class="mb-3">
-                                        <small>Confirm Password <span class="text-danger">*</span></small>
-                                        <input type="password" name="confirmpass" placeholder="Confirm your password" style="font-style:italic; " class="form-control" required>
+                                        <small>Confirm Password <b class="text-danger">*</b></small>
+                                        <input type="password" name="confirmpass" placeholder="Confirm your password" class="form-control" required>
                                         <div class="invalid-feedback">Please confirm your password.</div>
                                         <small class="error-message text-danger" style="display: none;">Passwords do not match!</small>
                                     </div>
