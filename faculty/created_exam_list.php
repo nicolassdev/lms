@@ -103,6 +103,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                     <!-- <th scope="col" style="width: 50px;">#</th> -->
                                     <th scope="col" style="width: 50px;" class="text-center">Quarterly Exam</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Exam Name</th>
+                                    <th scope="col" style="width: 50px;" class="text-center">Total Items</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Date</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Action</th>
                                 </tr>
@@ -129,6 +130,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                         // echo '<td>' . $count . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($exam["exam_quarter"])) . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($exam["exam_title"])) . '</td>';
+                                        echo '<td class="small text-center">' .  $exam["exam_items"] . '</td>';
                                         echo '<td class="small text-center">' . date('F j, Y', strtotime($exam["exam_date"])) .  '</td>';
                                         echo '
                                         <td class="d-flex justify-content-center">

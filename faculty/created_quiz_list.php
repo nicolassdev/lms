@@ -101,6 +101,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                     <!-- <th scope="col" style="width: 50px;">#</th> -->
                                     <th scope="col" style="width: 50px;" class="text-center">Quiz Title</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Type of Quiz</th>
+                                    <th scope="col" style="width: 50px;" class="text-center">Total Items</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Date</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Quarterly</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Action</th>
@@ -129,6 +130,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                         // echo '<td>' . $count . '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($quiz["quiz_title"])) . '</td>';
                                         echo '<td class="small text-center">' . ($quiz["quiz_type"] == 0 ? "Short Quiz" : "Long Quiz") . '</td>';
+                                        echo '<td class="small text-center">' .  $quiz["quiz_items"] . '</td>';
                                         echo '<td class="small text-center">' . date('F j, Y', strtotime($quiz["quiz_date"])) .  '</td>';
                                         echo '<td class="small text-center">' .  ucwords(strtolower($quiz["quiz_quarter"])) . '</td>';
                                         echo '
