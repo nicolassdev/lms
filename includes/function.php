@@ -1379,7 +1379,7 @@ class myDataBase
                     GROUP_CONCAT(DISTINCT q.quiz_quarter ORDER BY q.quiz_quarter) AS quarter_quiz,
                     GROUP_CONCAT(sq.total_questions ORDER BY q.quiz_quarter) AS quiz_items,
                     GROUP_CONCAT(sq.correct_answers ORDER BY q.quiz_quarter) AS quiz_scores,
-                    GROUP_CONCAT(DISTINCT sq.equivalent_score ORDER BY q.quiz_quarter) AS equivalent_quiz,
+                    GROUP_CONCAT(sq.equivalent_score ORDER BY q.quiz_quarter) AS equivalent_quiz,
                     GROUP_CONCAT(DISTINCT ex.exam_quarter ORDER BY ex.exam_quarter) AS quarter_exam,
                     GROUP_CONCAT(DISTINCT se.total_questions ORDER BY ex.exam_quarter) AS exam_items,
                     GROUP_CONCAT(DISTINCT se.correct_answers ORDER BY ex.exam_quarter) AS exam_scores,

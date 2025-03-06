@@ -106,7 +106,7 @@ $mySQLFunction->disconnect();
                                         <i class="bi bi-book-half me-2"></i>
                                         <?php echo htmlspecialchars(ucwords(strtolower($subject['sub_title'] ?? 'No Title'))); ?>
                                     </h6>
-                                    <small class="fw-semibold ms-4">
+                                    <small class="fw-semibold ms-4 text-sm">
                                         <?php echo htmlspecialchars(ucwords(strtolower($subject['sub_type'] ?? 'No Type'))); ?> Subject
                                     </small>
                                 </div>
