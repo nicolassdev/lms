@@ -36,6 +36,15 @@ body {
   transition: all 0.3s;
 }
 
+.primary-color{
+  background-color: #16404D !important;
+}
+.primary-text{
+  color: #16404D !important;
+}
+.secondary-color{
+  background-color: #A6CDC6 !important;
+  }
 .color {
   color: #fabc3f;
 }

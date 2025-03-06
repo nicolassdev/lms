@@ -38,9 +38,9 @@ $mySQLFunction->disconnect();
 
                     <?php
                     if (!empty($studentSubjects)) {
-                        echo "<h5 class='fw-bold text-secondary'>" . count($studentSubjects) . " Subject(s)</h5>";
+                        echo "<h5 class='fw-bold text-muted'>" . count($studentSubjects) . " Subject(s)</h5>";
                     } else {
-                        echo "<h5 class='fw-bold text-secondary'> " . count($studentSubjects) . "  Subject</h5>";
+                        echo "<h5 class='fw-bold text-muted'> " . count($studentSubjects) . "  Subject</h5>";
                     }
                     ?>
 
@@ -66,13 +66,13 @@ $mySQLFunction->disconnect();
             <?php foreach ($studentSubjects as $subject): ?>
                 <div class="col-lg-4 col-md-6 col-sm-12 subject-card" data-title="<?php echo htmlspecialchars(strtolower($subject['sub_title'])); ?>">
                     <div class="card h-100 border-0 shadow-lg rounded-4">
-                        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center rounded-top-4 px-3 py-2">
+                        <div class="card-header secondary-color d-flex justify-content-between align-items-center rounded-top-4 px-3 py-2">
                             <div class="text-truncate">
                                 <h6 class="mb-0 fw-bold text-truncate mt-3">
-                                    <i class="bi bi-book-half me-2"></i>
+                                    <i class="bi bi-book-half me-2 text-danger"></i>
                                     <?php echo htmlspecialchars(ucwords(strtolower($subject['sub_title'] ?? 'No Title'))); ?>
                                 </h6>
-                                <small class="fw-semibold ms-4">
+                                <small class="fw-semibold ms-4 text-sm">
                                     <?php echo htmlspecialchars(ucwords(strtolower($subject['sub_type'] ?? 'No Type'))); ?> Subject
                                 </small>
                             </div>
@@ -103,12 +103,11 @@ $mySQLFunction->disconnect();
                                 </div>
                             </div>
 
-                            <div class="d-flex align-items-center text-muted">
-                                <i class="bi bi-award text-danger fs-4 me-2"></i>
+                            <div class="d-flex align-items-center text-muted ms-3">
                                 <span class="fw-bold fs-6"><?php echo ucwords(strtolower($subject["grade_lvl"])) . ' ' . htmlspecialchars($subject["strand_name"]); ?></span>
                             </div>
 
-                            <div class="text-secondary ms-4">
+                            <div class="text-secondary ms-3">
                                 <small class="fw-semibold">
                                     <?php
                                     if (!empty($activeSchoolYears) && !empty($activeSem)) {

@@ -33,7 +33,7 @@ error_reporting(E_ALL);
 
 <body class="lms-scroll-bar">
     <!-- Top Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark nav-shadow">
+    <nav class="navbar navbar-expand-lg navbar-light primary-color nav-shadow">
         <div class="container-fluid">
             <!-- Sidebar Toggle Button -->
             <button class="navbar-toggler bg-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle sidebar">
@@ -92,7 +92,7 @@ error_reporting(E_ALL);
     <div class="side">
         <div class="container-fluid">
             <div class="row">
-                <nav id="sidebar" class="col-md-5 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
+                <nav id="sidebar" class="col-md-5 col-lg-2 primary-color sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
                     <div class="position-sticky">
                         <div class="text-white ms-4 d-lg-none mt-2">
                             <?php
@@ -168,7 +168,7 @@ error_reporting(E_ALL);
                             <!-- THISI IS THE ROUTE OF QUIZ -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#assessmentMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
-                                    <i class="bi bi-card-heading me-2"></i>Assessment <i class="bi bi-chevron-down" style="margin-left: 25px;" id="assessmentIcon"></i>
+                                    <i class="bi bi-card-heading me-2"></i>Assessment <i class="bi bi-chevron-down" style="margin-left: 5px;" id="assessmentIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="assessmentMenu">
                                     <li class="nav-item mt-2">
@@ -189,7 +189,7 @@ error_reporting(E_ALL);
                             <!-- THISI IS THE ROUTE OF REPORTS QUIZ AND EXAM -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#reportMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
-                                    <i class="bi bi-bar-chart me-2"></i>Reports <i class="bi bi-chevron-down" style="margin-left: 50px;" id="reportIcon"></i>
+                                    <i class="bi bi-bar-chart me-2"></i>Reports <i class="bi bi-chevron-down" style="margin-left: 30px;" id="reportIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="reportMenu">
                                     <li class="nav-item mt-2">

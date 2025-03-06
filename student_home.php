@@ -104,7 +104,7 @@ $mySQLFunction->disconnect();
                                         <i class="bi bi-lightbulb display-4 text-danger mb-3"></i>
                                         <h5 class="card-title">Quiz</h5>
                                         <p class="card-text">Check your quiz performance.</p>
-                                        <a href="#" class="btn btn-danger">View Quiz</a>
+                                        <a href="?page=student_quiz_result" class="btn btn-danger">View Quiz</a>
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +129,7 @@ $mySQLFunction->disconnect();
                                         <i class="bi bi-bar-chart-fill display-4 text-secondary mb-3"></i>
                                         <h5 class="card-title">Grades</h5>
                                         <p class="card-text">Check your academic performance.</p>
-                                        <a href="#" class="btn btn-secondary">View Grades</a>
+                                        <a href="?page=student_exam_grade" class="btn btn-secondary">View Grades</a>
                                     </div>
                                 </div>
                             </div>

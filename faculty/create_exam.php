@@ -137,7 +137,7 @@ include "../faculty/includes/Forms/createexamform.php";
                                     <th scope="col" style="width: 100px;">Status</th>
                                     <th scope="col" style="width: 100px;">Score</th>
                                     <th scope="col" style="width: 100px;">Total Items</th>
-                                    <th scope="col" style="width: 100px;">Transmutation Grade</th>
+                                    <th scope="col" style="width: 100px;">Equivalent Grade</th>
                                 </tr>
                             </thead>
                             <tbody>

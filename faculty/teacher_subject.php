@@ -82,24 +82,11 @@ $mySQLFunction->disconnect();
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card h-100 border-0 shadow-lg rounded-4">
                                         <!-- Card Header -->
-                                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
+                                        <div class="card-header secondary-color text-dark d-flex justify-content-between align-items-center rounded-top-4">
                                             <div class="mb-0 fw-bold text-truncate pt-2 pb-2">
-                                                <i class="bi bi-book me-2"></i>
+                                                <i class="bi bi-book-half me-2 text-danger"></i>
                                                 <?php echo htmlspecialchars(ucwords(strtolower($schedule['sub_title'] ?? 'No Title'))); ?>
                                             </div>
-                                            <!-- Kebab Menu
-                                            <div class="dropdown">
-                                                <i class="bi bi-three-dots-vertical text-white kebab-menu" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="cursor: pointer;"></i>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="kebabMenu">
-                                                    <li>
-                                                        <a class="dropdown-item text-black" href="#" onclick="confirmDelete()">Move</a>
-                                                    </li>
-                                                    <hr class="me-2 ms-2">
-                                                    <li>
-                                                        <a class="dropdown-item text-black" href="#" onclick="cancelAction()">Cancel</a>
-                                                    </li>
-                                                </ul>
-                                            </div> -->
                                         </div>
 
                                         <!-- Card Body -->

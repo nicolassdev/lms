@@ -100,24 +100,24 @@ $mySQLFunction->disconnect();
             ?>
                     <div class="col-lg-4 col-md-6 col-sm-12 subject-card" data-title="<?php echo htmlspecialchars(strtolower($subject['sub_title'])); ?>">
                         <div class="card h-100 border-0 shadow-lg rounded-4">
-                            <div class="card-header bg-success text-white d-flex justify-content-between align-items-center rounded-top-4 px-3 py-2">
+                            <div class="card-header secondary-color d-flex justify-content-between align-items-center rounded-top-4 px-3 py-2">
                                 <div class="text-truncate">
                                     <h6 class="mb-0 fw-bold text-truncate mt-3">
-                                        <i class="bi bi-book-half me-2"></i>
+                                        <i class="bi bi-book-half me-2 text-danger"></i>
                                         <?php echo htmlspecialchars(ucwords(strtolower($subject['sub_title'] ?? 'No Title'))); ?>
                                     </h6>
-                                    <small class="fw-semibold ms-4">
+                                    <small class="fw-semibold ms-4 text-sm">
                                         <?php echo htmlspecialchars(ucwords(strtolower($subject['sub_type'] ?? 'No Type'))); ?> Subject
                                     </small>
                                 </div>
-                                <div class="dropdown">
-                                    <i class="bi bi-three-dots-vertical text-white fs-5" id="kebabMenu" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="cursor: pointer;"></i>
+                                <!-- <div class="dropdown">
+                                    <i class="bi bi-three-dots-vertical fs-5" id="kebabMenu" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="cursor: pointer;"></i>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="kebabMenu">
                                         <li><a class="dropdown-item text-black" href="#" onclick="confirmDelete()">Move</a></li>
                                         <hr class="dropdown-divider">
                                         <li><a class="dropdown-item text-black" href="#" onclick="cancelAction()">Cancel</a></li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="card-body">
@@ -167,7 +167,7 @@ $mySQLFunction->disconnect();
                             </div>
 
                             <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
-                                <a href="index.php?page=subject_list&sub_code=<?php echo urlencode($subject['sub_code']); ?>&strand_code=<?php echo urlencode($subject['strand_code']); ?>&grade_lvl=<?php echo urlencode($subject['grade_lvl']); ?>" class="btn btn-outline-success w-100 fw-bold d-flex align-items-center justify-content-center">
+                                <a href="index.php?page=subject_list&sub_code=<?php echo urlencode($subject['sub_code']); ?>&strand_code=<?php echo urlencode($subject['strand_code']); ?>&grade_lvl=<?php echo urlencode($subject['grade_lvl']); ?>" class="btn secondary-color w-100 fw-bold d-flex align-items-center justify-content-center">
                                     <i class="bi bi-journals me-2"></i> View Module
                                 </a>
                             </div>

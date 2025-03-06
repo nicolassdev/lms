@@ -166,8 +166,8 @@ if (!empty($_GET['sub_code']) && !empty($_GET['strand_code']) && !empty($_GET['g
                                                     </div>
                                                     <div class="modal-footer justify-content-center border-0 mt-2 mb-4">
 
-                                                        <a href="includes/Operation/download.php?file=' . urlencode($fileNameForDownload) . '" class="btn btn-success px-4 py-2 me-3" style="width: 120px;">Download</a>
-                                                        <button class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
+                                                        <a href="includes/Operation/download.php?file=' . urlencode($fileNameForDownload) . '" class="btn btn-success px-4 py-2 me-3" style="width: 130px;">Download</a>
+                                                        <button class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal" style="width: 130px;">Cancel</button>
                                                     </div>
                                                 </div>
                                             </div>

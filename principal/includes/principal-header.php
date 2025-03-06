@@ -38,7 +38,7 @@ error_reporting(E_ALL);
 
 
     <!-- Top Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark nav-shadow">
+    <nav class="navbar navbar-expand-lg navbar-light primary-color nav-shadow">
         <div class="container-fluid">
             <!-- Sidebar Toggle Button -->
             <button class="navbar-toggler bg-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
@@ -100,7 +100,7 @@ error_reporting(E_ALL);
         <div class="container-fluid">
             <div class="row mt-4">
                 <!-- Sidebar -->
-                <nav id="sidebar" class="col-md-3 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 230px;">
+                <nav id="sidebar" class="col-md-3 primary-color sidebar offcanvas-md offcanvas-start" style="max-width: 230px;">
                     <div class="position-sticky text-white ">
 
                         <div class="text-white ms-4 d-lg-none">

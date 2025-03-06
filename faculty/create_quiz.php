@@ -115,7 +115,7 @@ include "../faculty/includes/Forms/createquizform.php";
 
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
-                        <table id="example" class="table table-bordered table-striped table-sm align-middle">
+                        <table id="quizTable" class="table table-bordered table-striped table-sm align-middle">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
@@ -161,7 +161,7 @@ include "../faculty/includes/Forms/createquizform.php";
                                             if ($status) {
                                                 echo '<span style="background-color: #198754; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;">Done</span>';
                                             } else {
-                                                echo '<span style="background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;">No Exam</span>';
+                                                echo '<span style="background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;">N/A</span>';
                                             }
                                         } else {
                                             echo '<span style="background-color:gray; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;">No Avalable Quiz</span>';
@@ -170,11 +170,16 @@ include "../faculty/includes/Forms/createquizform.php";
 
                                         // Display Quiz Scores
                                         if ($isCurrentQuarter) {
+                                            $scores = !empty($scores) ? array_reverse($scores) : [];
+                                            $items = !empty($items) ? array_reverse($items) : [];
+                                            $equivalents = !empty($equivalents) ? array_reverse($equivalents) : [];
+                                        
                                             for ($i = 0; $i < $maxQuiz; $i++) {
                                                 echo '<td class="text-center text-success fw-semibold">' . ($status && isset($scores[$i]) ? htmlspecialchars($scores[$i]) : '-') . '</td>';
                                                 echo '<td class="text-center text-success fw-semibold">' . ($status && isset($items[$i]) ? htmlspecialchars($items[$i]) : '-') . '</td>';
                                                 echo '<td class="text-center text-success fw-semibold">' . ($status && isset($equivalents[$i]) ? htmlspecialchars($equivalents[$i]) : '-') . '</td>';
                                             }
+                                            
                                         } else {
                                             for ($i = 0; $i < $maxQuiz; $i++) {
                                                 echo '<td class="text-center text-muted">-</td>';
@@ -190,7 +195,6 @@ include "../faculty/includes/Forms/createquizform.php";
                                 ?>
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
@@ -203,5 +207,5 @@ include "../faculty/includes/Forms/createquizform.php";
 <!-- PDF ,EXCEL, PRINT ,CVS -->
 <script src="../assets/js/globaltables.js"></script>
 <script>
-    initializeDataTable("example", 10, "Student taken exam");
+    initializeDataTable("quizTable", 10, "Student taken exam");
 </script>

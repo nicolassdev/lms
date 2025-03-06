@@ -18,12 +18,10 @@ error_reporting(E_ALL);
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
-
     <!-- SET THE ICON  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- DataTables CSS -->
@@ -41,7 +39,7 @@ error_reporting(E_ALL);
 
 <body class="lms-scroll-bar">
     <!-- Top Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark nav-shadow">
+    <nav class="navbar navbar-expand-lg navbar-light primary-color nav-shadow">
         <div class="container-fluid">
             <!-- Sidebar Toggle Button -->
             <button
@@ -109,7 +107,7 @@ error_reporting(E_ALL);
         <div class="container-fluid">
             <div class="row mt-4">
                 <!-- Sidebar -->
-                <nav id="sidebar" class="col-md-3 bg-dark sidebar offcanvas-md offcanvas-start lms-scroll-bar" style="max-width: 230px;">
+                <nav id="sidebar" class="col-md-3 primary-color sidebar offcanvas-md offcanvas-start lms-scroll-bar" style="max-width: 230px;">
                     <div class="position-sticky text-white ">
 
                         <div class="text-white ms-2 d-lg-none mt-2">

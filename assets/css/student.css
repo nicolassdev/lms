@@ -55,6 +55,7 @@ body {
 }
 
 .sidebar {
+  background-color: #16404D !important;
   color: #fff;
   padding: 20px;
   height: 100vh;
@@ -65,6 +66,16 @@ body {
   overflow-y: auto;
 }
 
+.secondary-color{
+background-color: #A6CDC6 !important;
+}
+ 
+.primary-color{
+  background-color: #16404D !important;
+}
+.primary-text{
+  color: #16404D !important;
+}
 .sidebar-header {
   padding: 20px;
   border-bottom: 1px solid #444;

@@ -21,7 +21,7 @@ $userRole = isset($_SESSION['user_role']) ? ucfirst(strtolower($_SESSION['user_r
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #1e1e1e;
+            background-color: #16404D;
             /* Darker background */
             font-family: 'Poppins', sans-serif;
             text-align: center;

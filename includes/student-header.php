@@ -19,12 +19,12 @@ error_reporting(E_ALL);
     <!-- Custom CSS -->
     <link rel="website icon" type="webp" href="./assets/img/csi.webp">
     <link rel="stylesheet" href="./assets/css/student.css?v=<?php echo time(); ?>" />
-
+ 
 </head>
 
 <body class="lms-scroll-bar">
     <!-- Top Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark nav-shadow">
+    <nav class="navbar navbar-expand-lg navbar-light primary-color nav-shadow">
         <div class="container-fluid">
             <!-- Sidebar Toggle Button -->
             <button
@@ -103,7 +103,7 @@ error_reporting(E_ALL);
     <header>
         <div class="container-fluid">
             <div class="row mt-5">
-                <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
+                <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block  sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
                     <div class="position-sticky">
                         <!-- <h3 class="mb-4">Dashboard</h3> -->
                         <small class="text-white ms-2 d-lg-none mt-2">

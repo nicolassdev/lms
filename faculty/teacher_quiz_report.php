@@ -79,13 +79,15 @@ $numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSI
 
                         </div>
                         <div class="fw-semibold">
-                            <div class="py-2 px-3 rounded-3 bg-dark text-white">
+                            <div class="py-2 px-3 rounded-3 primary-color text-white">
                                 <?php if (!empty($quizResult)) {
                                     foreach ($quizResult as $student) {
                                         echo htmlspecialchars($student["grade_lvl"]) . '  ';
                                         echo htmlspecialchars($student["section_name"]);
                                         break; // Exit loop after processing the first student
                                     }
+                                } else {
+                                    echo "No section";
                                 }
                                 ?>
                             </div>

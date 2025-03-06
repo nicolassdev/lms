@@ -48,20 +48,20 @@ $mySQLFunction->disconnect();
                 <div class="container">
                     <!-- Header Section -->
                     <div class="card mb-2 shadow-lg border-0">
-                        <div class="card-body text-center <?php echo $isExamTaken ? 'bg-dark' : 'bg-success'; ?> text-white rounded position-relative">
+                        <div class="card-body text-center <?php echo $isExamTaken ? 'secondary-color' : 'secondary-color'; ?> text-dark rounded position-relative">
                             <div class="d-flex flex-column align-items-end">
-                                <a <?php echo $isExamTaken ? 'href="index.php?page=student_exam_result" ' : 'href="index.php?page=student_exam" ' ?> class="btn btn-sm btn-outline-light mt-2"> Back</a>
+                                <a <?php echo $isExamTaken ? 'href="index.php?page=student_exam_result" ' : 'href="index.php?page=student_exam" ' ?> class="btn btn-sm btn-outline-dark mt-2"> Back</a>
                                 <div class="w-100  text-center"> <?php if ($isExamTaken): ?>
-                                        <h1 class="card-title fw-bold">Done <i class="bi bi-check-circle-fill fs-3 text-success"></i></h1>
+                                        <h1 class="card-title fw-bold text-dark">Done <i class="bi bi-check-circle-fill fs-3 text-success"></i></h1>
                                         <p> You have already taken this exam. <br><small>Click here view exam results</small></p>
-                                        <button class="btn btn-outline-light btn-lg px-5 rounded-pill"
+                                        <button class="btn btn-outline-dark btn-lg px-5 rounded-pill"
                                             data-bs-toggle="collapse" data-bs-target="#examResultArea">
                                             <i class="bi bi-clipboard-data me-2"></i> View Result
                                         </button>
                                     <?php else: ?>
                                         <h1 class="card-title fw-bold">Take Your Exam</h1>
                                         <p> Get ready to demonstrate your knowledge. Best of luck! </p>
-                                        <button class="btn btn-outline-light btn-lg px-5 rounded-pill" id="startExamButton">
+                                        <button class="btn btn-outline-dark btn-lg px-5 rounded-pill" id="startExamButton">
                                             <i class="bi bi-play-circle me-2"></i> Start Exam
                                         </button>
 
@@ -84,7 +84,7 @@ $mySQLFunction->disconnect();
                                             <h4 class="fw-bold text-dark mb-0">
                                                 <?= htmlspecialchars(ucwords(strtolower($examData["exam_title"] ?? 'No Exam Title'))) ?>
                                             </h4>
-                                            <span class="badge bg-success text-white px-3 py-2">
+                                            <span class="badge secondary-color text-dark px-3 py-2">
                                                 <?= htmlspecialchars(($examData["exam_quarter"] ?? 'N/A') . ' / ' . ($examData["sub_semester"] ?? 'N/A')) ?>
                                             </span>
                                         </div>
@@ -93,14 +93,14 @@ $mySQLFunction->disconnect();
 
                                         <div class="mb-2">
                                             <span class="fw-bold">Subject:</span>
-                                            <span class="badge bg-success text-white px-3 py-2">
+                                            <span class="badge secondary-color text-dark px-3 py-2">
                                                 <?= htmlspecialchars(ucwords(strtolower($examData["sub_title"] ?? 'No Subject'))) ?>
                                             </span>
                                         </div>
 
                                         <div>
                                             <span class="fw-bold">Teacher:</span>
-                                            <span class="badge bg-success text-white px-3 py-2">
+                                            <span class="badge secondary-color text-dark px-3 py-2">
                                                 <?= htmlspecialchars(ucwords(strtolower(($examData["teacher_fname"] ?? '') . ' ' . ($examData["teacher_lname"] ?? 'N/A')))) ?>
                                             </span>
                                         </div>
@@ -277,7 +277,7 @@ $mySQLFunction->disconnect();
                     <!-- Exam Result Section -->
                     <div id="examResultArea" class="collapse">
                         <div class="card shadow-sm ms-2 me-2">
-                            <div class="card-header bg-success text-white text-center">
+                            <div class="card-header secondary-color text-dark text-center">
                                 <h4 class="fw-bold mb-0">Exam Result</h4>
                             </div>
                             <div class="card-body">

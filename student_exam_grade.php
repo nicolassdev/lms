@@ -75,13 +75,15 @@ $examResult = $mySQLFunction->getEquivalentScoreBySubjectOfIndividualStudent($_S
                             </small>
 
                         </div>
-                        <div class="text-dark fw-bold bg-dark text-white py-2 px-3 rounded-3">
+                        <div class="fw-bold primary-color text-white py-2 px-3 rounded-3">
                             <?php if (!empty($examResult)) {
                                 foreach ($examResult as $student) {
                                     echo htmlspecialchars($student["grade_lvl"]) . '  ';
                                     echo htmlspecialchars($student["section_name"]);
                                     break; // Exit loop after processing the first student
                                 }
+                            }else{
+                                echo "No section";
                             }
                             ?>
                         </div>
@@ -112,15 +114,15 @@ $examResult = $mySQLFunction->getEquivalentScoreBySubjectOfIndividualStudent($_S
                                         echo '<div class="col-md-4 col-sm-6 col-12">';
                                         echo '<div class="card shadow-sm border-0 h-100 rounded-4">';
                                         echo '<div class="card-body text-center p-4">';
-                                        echo '<h6 class="card-title fw-bold text-truncate text-primary">' . $subject . '</h6>';
+                                        echo '<h6 class="card-title fw-bold text-truncate primary-text">' . $subject . '</h6>';
                                         echo '<hr class="text-secondary" />';
                                         echo '<div class="d-flex justify-content-between align-items-center mb-2">';
                                         echo '<span class="text-dark">Score:</span>';
-                                        echo '<span class="fw-bold text-primary">' . $score . '</span>';
+                                        echo '<span class="fw-bold primary-text">' . $score . '</span>';
                                         echo '</div>';
                                         echo '<div class="d-flex justify-content-between align-items-center mb-2">';
                                         echo '<span class="text-dark">Total Items:</span>';
-                                        echo '<span class="fw-bold text-info">' . $totalItems . '</span>';
+                                        echo '<span class="fw-bold primary-text">' . $totalItems . '</span>';
                                         echo '</div>';
                                         echo '<div class="d-flex justify-content-between align-items-center">';
                                         echo '<span class="text-dark">Grade:</span>';
