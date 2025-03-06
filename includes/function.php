@@ -3801,15 +3801,17 @@ class myDataBase
         try {
             // Get the active semester
             $activeSemesters = $this->checkSemStatus('semester');
-
+            $activeQuarter = $this->checkQuarterStatus('quarterly');
             // Check if there are any active semesters
             if (empty($activeSemesters)) {
                 return []; // Return an empty array if no active semester
             }
-
+            if (empty($activeQuarter)) {
+                return []; // Return an empty array if no active semester
+            }
             // Prepare the active semester condition
             $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
-
+            $activeQuarterCondition = " q.quiz_quarter IN ('" . implode("','", $activeQuarter) . "')";
 
             $sql = "
                 SELECT 
@@ -3874,6 +3876,7 @@ class myDataBase
                     AND sched.sub_code = ?
                     AND sched.section_code = ?
                     AND $activeSemesterCondition
+                    AND $activeQuarterCondition
                 ORDER BY 
                     q.quiz_id ASC
             ";

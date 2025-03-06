@@ -120,7 +120,7 @@ include "../faculty/includes/Forms/createquizform.php";
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
                                     <th scope="col" style="width: 150px;">Student Name</th>
-                                    <th scope="col" style="width: 100px;">Gender</th>
+                                    <th scope="col" style="width: 100px;">Quarter</th>
                                     <th scope="col" style="width: 100px;">Status</th>
 
                                     <?php
@@ -154,8 +154,9 @@ include "../faculty/includes/Forms/createquizform.php";
                                         echo '<tr>';
                                         echo '<td class="text-center fw-bold">' . $count . '</td>';
                                         echo '<td class="text-center">' . $row["stu_lname"] . ', ' . ucwords(strtolower($row["stu_fname"])) . '</td>';
-                                        echo '<td class="text-center">' . ucwords(strtolower($row["stu_gender"])) . '</td>';
-
+                                        foreach ($activeQuarter as $quarter) {
+                                            echo '<td class="text-center">' . ucwords(strtolower($quarter)) . '</td>';
+                                        }
                                         echo '<td class="text-center">';
                                         if ($isCurrentQuarter) {
                                             if ($status) {
