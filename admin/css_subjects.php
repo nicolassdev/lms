@@ -18,13 +18,13 @@ include "../includes/dbh-inc.php";
         /* Light gray for a clean UI */
     }
 
-    .navbar-brand {
+    .nav-title {
         color: #ffffff;
         font-weight: bold;
         font-size: 1.5rem;
     }
 
-    .navbar-brand:hover {
+    .nav-title:hover {
         color: #d4d4d4;
     }
 
@@ -91,15 +91,12 @@ include "../includes/dbh-inc.php";
     }
 </style>
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-
-
-
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-2">
 
     <!-- Navbar -->
     <nav class="navbar-expand-lg mb-3">
         <div class="container">
-            <div class="navbar-brand text-dark">Computer System Servicing NC II</div>
+            <div class="nav-title text-dark">Computer System Servicing NC II</div>
         </div>
     </nav>
 

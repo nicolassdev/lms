@@ -22,7 +22,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
 }
 ?>
 
-<style>
+<!-- <style>
     .data-table {
         font-size: 0.8em;
         /* Reduce font size */
@@ -33,9 +33,9 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
         padding: 0.1rem;
         /* Adjust padding */
     }
-</style>
+</style> -->
 
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-3">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-5 py-4 me-2">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -44,7 +44,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                         <!-- Grade Level and Section and Subject-->
                         <div>
                             <!-- Display Subject Title -->
-                            <h6 class="fw-bold text-primary">
+                            <h6 class="fw-bold primary-text">
                                 <!-- Subject: -->
 
                                 <?php
@@ -96,7 +96,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                     <!-- Module DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
                                     <th scope="col" style="width: 50px;" class="text-center">Module Name</th>
@@ -150,9 +150,9 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                                         <div class="text-danger">
                                                             <i class="bi bi-trash fs-1 fade-in"></i>
                                                         </div>
-                                                        <h5 class="mt-4 mb-4 text-dark fw-bold">
+                                                        <h6 class="mt-4 mb-4 text-dark fw-bold">
                                                             Are you sure you want to remove "<span class="text-danger">' . ucwords(strtolower($fileNameWithoutExt)) . '</span>"?
-                                                        </h5>
+                                                        </h6>
                                                         <p class="text-muted">This action cannot be undone. Please confirm your decision below.</p>
                                                     </div>
                                                     <div class="modal-footer justify-content-center border-0 mt-2 mb-4">

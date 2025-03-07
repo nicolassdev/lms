@@ -42,31 +42,15 @@ $mySQLFunction->disconnect();
         font-size: 14px;
         color: #6c757d;
     }
-
-
-    .dropdown-menu {
-        transition: transform 0.4s ease, opacity 0.4s ease;
-        transform: translateY(-10px);
-        /* opacity: 0; */
-    }
-
-    .dropdown.show .dropdown-menu {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    .dropdown-menu a {
-        font-size: 13px;
-    }
 </style>
 
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="container-fluid">
-                    <h4 class="fw-bold text-muted mb-3">
+                    <h4 class="fw-bold text-muted mb-3 mt-4">
                         Subject Overview
                     </h4>
                     <div class="">
@@ -92,30 +76,17 @@ $mySQLFunction->disconnect();
                     <hr>
 
 
-                    <div class="row g-4">
+                    <div class="row g-4 fade-in-input">
                         <?php if (!empty($teacherSubjectHandled)): ?>
                             <?php foreach ($teacherSubjectHandled as $schedule): ?>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card h-100 border-0 shadow-lg rounded-4">
                                         <!-- Card Header -->
-                                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
+                                        <div class="card-header secondary-color text-dark d-flex justify-content-between align-items-center rounded-top-4">
                                             <div class="mb-0 fw-bold text-truncate pt-2 pb-2">
-                                                <i class="bi bi-book me-2"></i>
+                                                <i class="bi bi-book-half me-2 text-danger"></i>
                                                 <?php echo htmlspecialchars(ucwords(strtolower($schedule['sub_title'] ?? 'No Title'))); ?>
                                             </div>
-                                            <!-- Kebab Menu
-                                            <div class="dropdown">
-                                                <i class="bi bi-three-dots-vertical text-white kebab-menu" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="cursor: pointer;"></i>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="kebabMenu">
-                                                    <li>
-                                                        <a class="dropdown-item text-black" href="#" onclick="confirmDelete()">Move</a>
-                                                    </li>
-                                                    <hr class="me-2 ms-2">
-                                                    <li>
-                                                        <a class="dropdown-item text-black" href="#" onclick="cancelAction()">Cancel</a>
-                                                    </li>
-                                                </ul>
-                                            </div> -->
                                         </div>
 
                                         <!-- Card Body -->

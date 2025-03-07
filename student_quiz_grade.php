@@ -38,11 +38,11 @@ $quizResult = $mySQLFunction->getEquivalentScoreBySubjectOfIndividualStudent($_S
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="data-table">
+                <div>
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
 
                         <div class="text-dark">
-                            <div class="fs-5 fw-bold">Quiz Reports</div>
+                            <h4 class="fw-bold text-muted">Quiz Reports</h4>
                             <small class="fw-semibold">
                                 <span class="me-1">Quarterly:</span>
                                 <?php if (!empty($activeQuarter)) {
@@ -74,73 +74,92 @@ $quizResult = $mySQLFunction->getEquivalentScoreBySubjectOfIndividualStudent($_S
                             </small>
 
                         </div>
-                        <div class="text-dark fw-bold">
+                        <div class="fw-bold primary-color text-white py-2 px-3 rounded-3">
                             <?php if (!empty($quizResult)) {
                                 foreach ($quizResult as $student) {
                                     echo htmlspecialchars($student["grade_lvl"]) . '  ';
                                     echo htmlspecialchars($student["section_name"]);
                                     break; // Exit loop after processing the first student
                                 }
+                            }else{
+                                echo "No section";
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                    <hr class="text-secondary" />
+                    <!-- STUDENT QUIZ RESULT -->
+                    <div class="small ms-3 me-1 lms-scroll-bar">
+                        <div class="row g-3 fade-in-input">
+                            <?php
+                            if (!empty($quizResult)) {
+                                $count = 0;
+                                foreach ($quizResult as $row) {
+                                    if (empty($row["subject"])) continue;
+
+                                    $scores = explode(',', $row['scores'] ?? '');
+                                    $isCurrentQuarter = in_array($row["quarter"], explode(",", implode(",", $activeQuarter)));
+                                    $status = (!empty($row['scores']) && count($scores) > 0);
+
+                                    if ($isCurrentQuarter) {
+                                        $subject = ucwords(strtolower($row["subject"]));
+                                        $score = $status ? htmlspecialchars($row['scores']) : '0';
+                                        $totalItems = isset($row['total_items']) ? htmlspecialchars($row['total_items']) : '0';
+                                        $equivalentGrade = isset($row['equivalent_scores']) ? htmlspecialchars($row['equivalent_scores']) : 'N/A';
+
+                                        $gradeColor = ($equivalentGrade != 'N/A' && $equivalentGrade != 65) ? "text-success" : "text-danger";
+
+                                        echo '<div class="col-md-4 col-sm-6 col-12">';
+                                        echo '<div class="card shadow-sm border-0 h-100 rounded-4">';
+                                        echo '<div class="card-body text-center p-4">';
+                                        echo '<h6 class="card-title fw-bold text-truncate primary-text">' . $subject . '</h6>';
+                                        echo '<hr class="text-secondary" />';
+                                        echo '<div class="d-flex justify-content-between align-items-center mb-2">';
+                                        echo '<span class="text-dark">Score:</span>';
+                                        echo '<span class="fw-bold primary-text">' . $score . '</span>';
+                                        echo '</div>';
+                                        echo '<div class="d-flex justify-content-between align-items-center mb-2">';
+                                        echo '<span class="text-dark">Total Items:</span>';
+                                        echo '<span class="fw-bold primary-text">' . $totalItems . '</span>';
+                                        echo '</div>';
+                                        echo '<div class="d-flex justify-content-between align-items-center">';
+                                        echo '<span class="text-dark">Grade:</span>';
+                                        echo '<span class="fw-bold ' . $gradeColor . '">' . $equivalentGrade . '</span>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                        echo '</div>';
+                                        $count++;
+                                    }
+                                }
+                                if ($count === 0) {
+                                    echo '<div class="col-12 text-center">';
+                                    echo '<div class="card border-0 shadow-sm rounded-4">';
+                                    echo '<div class="card-body py-5">';
+                                    echo '<i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>';
+                                    echo '<h6 class="text-secondary fw-bold">Result not found</h6>';
+                                    echo '<p class="text-muted">Please take your quiz first.</p>';
+                                    echo '</div>';
+                                    echo '</div>';
+                                    echo '</div>';
+                                }
+                            } else {
+                                echo '<div class="col-12 text-center">';
+                                echo '<div class="card border-0 shadow-sm rounded-4">';
+                                echo '<div class="card-body py-5">';
+                                echo '<i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>';
+                                echo '<h6 class="text-secondary fw-bold">Result not found</h6>';
+                                echo '<p class="text-muted">Please take your quiz first.</p>';
+                                echo '</div>';
+                                echo '</div>';
+                                echo '</div>';
                             }
                             ?>
                         </div>
                     </div>
 
 
-                    <!-- STUDENT DETAILS -->
-                    <div class="table-responsive small ms-3 me-1">
-                        <table id="student_report" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th scope="col" style="width: 100px;">Subject</th>
-                                    <th scope="col" class="text-center" style="width: 100px;">Score</th>
-                                    <th scope="col" class="text-center" style="width: 100px;">Total Items</th>
-                                    <th scope="col" class="text-center" style="width: 100px;">Equivalent Score</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                if (!empty($quizResult)) {
-                                    $count = 0;
-                                    foreach ($quizResult as $row) {
-                                        // Skip rows where the subject is empty
-                                        if (empty($row["subject"])) continue;
-
-                                        // Split scores
-                                        $scores = explode(',', $row['scores'] ?? '');
-
-                                        // Determine if the student's quarter matches the active quarter
-                                        $isCurrentQuarter = in_array($row["quarter"], explode(",", implode(",", $activeQuarter)));
-
-                                        // Determine status
-                                        $status = (!empty($row['scores']) && count($scores) > 0);
-
-                                        if ($isCurrentQuarter) {
-                                            echo '<tr>';
-                                            echo '<td class="small">' . (!empty($row["subject"]) ? ucwords(strtolower($row["subject"])) : '-') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['scores']) : '<span class="text-danger">0</span>') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['total_items']) : '<span class="text-danger">0</span>') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . ($status ? htmlspecialchars($row['equivalent_scores']) : '<span class="text-danger">N/A</span>') . '</td>';
-                                            echo '</tr>';
-                                            $count++;
-                                        }
-                                    }
-                                    // If no valid subjects were displayed, show "Student not found."
-                                    if ($count === 0) {
-                                        echo '<tr>
-                                            <td colspan="4" class="text-center mt-2 fw-semibold">Result not found.</td>
-                                        </tr>';
-                                    }
-                                } else {
-                                    echo '<tr>
-                                        <td colspan="4" class="text-center mt-2 fw-semibold">Result not found.</td>
-                                    </tr>';
-                                }
-
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>

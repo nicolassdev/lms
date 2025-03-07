@@ -14,35 +14,17 @@ $mySQLFunction->connection();
 
 $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
 
-
 ?>
 
 
-<style>
-    .data-table {
-        font-size: 0.8em;
-        /* Reduce font size */
-    }
-
-    .table th,
-    .table td {
-        padding: 0.1rem;
-        /* Adjust padding */
-    }
-</style>
-
-
-<!-- TABLE -->
-
-
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-3">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-3 mt-5 py-4 me-2">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="data-table">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-3  ms-3 me-3">
 
-                        <div class="fw-bold fs-5 text-danger">
+                        <div class="fw-bold fs-5 primary-text">
                             <?php if (!empty($result)) {
                                 foreach ($result as $student) {
                                     echo htmlspecialchars($student["grade_lvl"]) . '  ';
@@ -67,11 +49,10 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="student_list" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
-
                                     <th scope="col" style="width: 50px;">LRN</th>
-                                    <th scope="col" style="width: 100px;">Full name</th>
+                                    <th scope="col" style="width: 100px;">Student Name</th>
                                     <th scope="col" style="width: 50px;">Gender</th>
                                     <th scope="col" style="width: 150px;">Address</th>
                                     <th scope="col" style="width: 100px;">Contact</th>

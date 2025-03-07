@@ -15,26 +15,16 @@ include "../includes/dbh-inc.php";
 
 
 <style>
-    .text-sm {
-        font-size: 0.7em;
-    }
-
     .data-table {
-        font-size: 0.7em;
+        font-size: 0.8em;
         /* Reduce font size */
-    }
-
-    .table th,
-    .table td {
-        padding: 0.1rem;
-        /* Adjust padding */
     }
 </style>
 
 
 <!-- TABLE -->
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-2">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -45,7 +35,7 @@ include "../includes/dbh-inc.php";
                     <div class="table-responsive small ms-3 me-3">
                         <table id="example" class="table table-bordered table-striped table-sm align-middle">
 
-                            <thead class="table-dark text-light">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col" class="small text-center">#</th>
                                     <th scope="col" class="small text-center">Student name</th>
@@ -79,8 +69,8 @@ include "../includes/dbh-inc.php";
                                             : [];
                                         // Determine the background color based on enrollment status
                                         $statusStyle = $row["enroll_status"] !== "Enrolled"
-                                            ? 'background-color: red; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;'
-                                            : 'background-color: green; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;';
+                                            ? 'background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;'
+                                            : 'background-color: #198754; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;';
 
                                         echo '<tr>';
                                         echo '<td>' . $count . '</td>';
@@ -294,8 +284,8 @@ include "../includes/dbh-inc.php";
                                     }
                                 } else {
                                     echo '<tr>
+                                    <td class="text-center text-muted">0</td>
                                     <td class="text-center text-danger">No students are enrolled for this semester.</td>
-                                    <td class="text-center text-muted">-</td>
                                     <td class="text-center text-muted">-</td>
                                     <td class="text-center text-muted">-</td>
                                     <td class="text-center text-muted">-</td>

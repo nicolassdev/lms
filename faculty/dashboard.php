@@ -42,13 +42,14 @@ $mySQLFunction->disconnect();
 ?>
 
 <style>
-    /* Add card hover effects and modern shadow */
     .card {
-        border: 1px solid #e0e0e0;
-        transition: box-shadow 0.3s ease;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     }
 
     .card:hover {
+        transform: translateY(-5px);
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     }
 </style>
@@ -56,7 +57,7 @@ $mySQLFunction->disconnect();
 
 <body>
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <div class="ms-3">
                 <img
@@ -101,7 +102,7 @@ $mySQLFunction->disconnect();
             </div>
         </div>
 
-        <div class="row g-3">
+        <div class="row g-3 fade-in-input">
             <!-- Subject Card -->
             <div class="col-md-4 col-sm-6 col-12">
                 <div class="card shadow-lg h-100">
@@ -110,8 +111,8 @@ $mySQLFunction->disconnect();
                             <!-- Icon and title -->
                             <div class="" style="margin-left:20px">
                                 <i class="bi bi-journal-bookmark-fill display-5 text-primary mb-2"></i>
-                                <h5 class="card-title">Subject</h5>
-                                <p class="card-text">Total number of subject handled</p>
+                                <h5 class="fw-bold">Subject</h5>
+                                <small class="card-text">Total number of subject handled</small>
                             </div>
                             <!-- Number of students -->
                             <div class="text-end">
@@ -136,7 +137,7 @@ $mySQLFunction->disconnect();
 
                             <div class="" style="margin-left:20px">
                                 <i class="bi bi-people-fill display-5 text-success mb-2"></i>
-                                <h5 class="card-title">Faculty</h5>
+                                <h5 class="fw-bold">Faculty</h5>
                                 <p class="card-text">Total number of faculty members</p>
                             </div>
 
@@ -162,8 +163,8 @@ $mySQLFunction->disconnect();
                             <!-- Icon and title -->
                             <div class="" style="margin-left:20px">
                                 <i class="bi bi-people-fill display-5 text-danger mb-2"></i>
-                                <h5 class="card-title">Student</h5>
-                                <p class="card-text">Total number of students in section</p>
+                                <h5 class="fw-bold">Student</h5>
+                                <small class="card-text">Total number of students in section</small>
                             </div>
                             <!-- Number of students -->
                             <div class="text-end">

@@ -19,26 +19,20 @@ include "../admin/includes/Forms/scheduleform.php";
 
 
 <style>
-    .text-sm {
-        font-size: 0.7em;
-    }
-
     .data-table {
         font-size: 0.7em;
         /* Reduce font size */
     }
 
-    .table th,
-    .table td {
-        padding: 0.1rem;
-        /* Adjust padding */
+    .table th {
+        font-size: 11px;
     }
 </style>
 
 
 <!-- TABLE -->
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-1">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -82,7 +76,7 @@ include "../admin/includes/Forms/scheduleform.php";
                     <div class="table-responsive small ms-3 me-3">
                         <table id="subjectSched" class="table table-bordered table-striped table-sm align-middle">
 
-                            <thead class="table-dark text-light">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col" class="small text-center">Subject Teacher</th>
                                     <th scope="col" class="small text-center">Strand</th>

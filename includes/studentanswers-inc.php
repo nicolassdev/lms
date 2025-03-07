@@ -105,10 +105,10 @@ try {
     // ✅ Redirect Based on Exam or Quiz
     if ($exam_id) {
         $_SESSION['success_handler'] = "Successfully submitted exam.";
-        header("Location: ../index.php?page=student_exam");
+        header("Location: ../index.php?page=exam_result");
     } elseif ($quiz_id) {
         $_SESSION['success_handler'] = "Successfully submitted quiz.";
-        header("Location: ../index.php?page=student_quiz");
+        header("Location: ../index.php?page=quiz_result");
     }
     exit();
 } catch (Exception $e) {

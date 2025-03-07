@@ -14,7 +14,7 @@ include "../includes/dbh-inc.php";
 <!-- TABLE -->
 
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <div class="ms-3 w-100">
             <div class="container">
@@ -42,9 +42,9 @@ include "../includes/dbh-inc.php";
 
 
 
-    <div class="table-responsive ms-3 me-3">
+    <div class="table-responsive ms-3 me-3 fade-in-input">
         <table class="table table-bordered table-striped table-sm align-middle">
-            <thead class="table-dark text-light">
+            <thead class="table-info">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Full name</th>

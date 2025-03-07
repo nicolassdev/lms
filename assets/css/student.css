@@ -1,6 +1,8 @@
 /* General Reset */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: #f1f4f9;
 }
 .navbar {
@@ -53,6 +55,7 @@ body {
 }
 
 .sidebar {
+  background-color: #16404D !important;
   color: #fff;
   padding: 20px;
   height: 100vh;
@@ -63,6 +66,16 @@ body {
   overflow-y: auto;
 }
 
+.secondary-color{
+background-color: #A6CDC6 !important;
+}
+ 
+.primary-color{
+  background-color: #16404D !important;
+}
+.primary-text{
+  color: #16404D !important;
+}
 .sidebar-header {
   padding: 20px;
   border-bottom: 1px solid #444;
@@ -333,4 +346,71 @@ body {
 
 .section:hover {
   transform: translateY(-5px);
+}
+
+/* ================================ STUDENT DASHBOARD ======================== */
+.card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  /* font-size: 1.25rem; */
+  font-weight: bold;
+}
+
+.card-text {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.icon {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.btn {
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-weight: 600;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* .btn-success:hover {
+  background-color: #218838;
+} */
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* load effect */
+.fade-in-input {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

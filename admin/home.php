@@ -31,19 +31,49 @@ $mySQLFunction->disconnect();
 <style>
     /* Add card hover effects and modern shadow */
     .card {
-        border: 1px solid #e0e0e0;
-        transition: box-shadow 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .card:hover {
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .card i {
+        font-size: 2.5rem;
+        /* Smaller icons */
+    }
+
+    .btn {
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
+
+    .text-muted {
+        font-size: 0.85rem;
+        /* Slightly smaller text */
+    }
+
+    .fs-4 {
+        font-size: 1.5rem !important;
+        /* Consistent number size */
+    }
+
+    /* Responsive Padding */
+    @media (max-width: 576px) {
+        .card-body {
+            padding: 1rem !important;
+        }
     }
 </style>
 </head>
 
 <body>
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <div class="ms-1">
@@ -94,48 +124,10 @@ $mySQLFunction->disconnect();
 
 
         <style>
-            /* Global Styles */
-            .card {
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
-            }
 
-            .card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            }
-
-            .card i {
-                font-size: 2.5rem;
-                /* Smaller icons */
-            }
-
-            .btn {
-                transition: background-color 0.3s ease, transform 0.2s ease;
-            }
-
-            .btn:hover {
-                transform: scale(1.05);
-            }
-
-            .text-muted {
-                font-size: 0.85rem;
-                /* Slightly smaller text */
-            }
-
-            .fs-4 {
-                font-size: 1.5rem !important;
-                /* Consistent number size */
-            }
-
-            /* Responsive Padding */
-            @media (max-width: 576px) {
-                .card-body {
-                    padding: 1rem !important;
-                }
-            }
         </style>
 
-        <div class="container">
+        <div class="container fade-in-input">
             <div class="row g-4">
 
                 <!-- Account Card -->
@@ -229,7 +221,7 @@ $mySQLFunction->disconnect();
                         <div class="card-body text-center d-flex flex-column p-4">
                             <i class="bi bi-people text-secondary display-3 mb-3"></i>
                             <h5 class="fw-bold text-dark">Students</h5>
-                            <p class="text-muted small mb-3">Manage enrolled students.</p>
+                            <p class="text-muted small mb-3">Manage student details.</p>
                             <p class="fs-4 text-secondary fw-bold mb-4">
                                 <?php echo htmlspecialchars($numberOfStudent); ?>
                             </p>

@@ -17,12 +17,6 @@ include "../admin/includes/Forms/studentform.php";
         font-size: 0.8em;
         /* Reduce font size */
     }
-
-    .table th,
-    .table td {
-        padding: 0.1rem;
-        /* Adjust padding */
-    }
 </style>
 
 
@@ -31,7 +25,7 @@ include "../admin/includes/Forms/studentform.php";
 
 
 <!-- TABLE -->
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-1">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -75,10 +69,10 @@ include "../admin/includes/Forms/studentform.php";
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="studentRecord" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col" style="width: 50px;">LRN</th>
-                                    <th scope="col" style="width: 100px;">Full name</th>
+                                    <th scope="col" style="width: 100px;">Student name</th>
                                     <th scope="col" style="width: 50px;">Gender</th>
                                     <th scope="col" style="width: 150px;">Address</th>
                                     <th scope="col" style="width: 100px;">Contact</th>

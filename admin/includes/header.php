@@ -16,16 +16,12 @@ error_reporting(E_ALL);
     <!-- <link href="../css/bootstrap-icons.css" rel="stylesheet"> -->
     <link rel="icon" type="webp" href="../assets/img/csi.webp">
 
-
-    <link rel="stylesheet" href="../assets/css/admin.css?v=<?php echo time(); ?>" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
 
     <!-- SET THE ICON  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- DataTables CSS -->
@@ -33,19 +29,17 @@ error_reporting(E_ALL);
     <!-- DataTables Buttons CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
 
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-
     <!-- Include Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/admin.css?v=<?php echo time(); ?>" />
 
 </head>
 
 
 <body class="lms-scroll-bar">
     <!-- Top Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark nav-shadow">
+    <nav class="navbar navbar-expand-lg navbar-light primary-color nav-shadow">
         <div class="container-fluid">
             <!-- Sidebar Toggle Button -->
             <button
@@ -113,7 +107,7 @@ error_reporting(E_ALL);
         <div class="container-fluid">
             <div class="row mt-4">
                 <!-- Sidebar -->
-                <nav id="sidebar" class="col-md-3 bg-dark sidebar offcanvas-md offcanvas-start lms-scroll-bar" style="max-width: 230px;">
+                <nav id="sidebar" class="col-md-3 primary-color sidebar offcanvas-md offcanvas-start lms-scroll-bar" style="max-width: 230px;">
                     <div class="position-sticky text-white ">
 
                         <div class="text-white ms-2 d-lg-none mt-2">
@@ -126,7 +120,7 @@ error_reporting(E_ALL);
 
 
                         <ul class="nav flex-column ">
-                            <div class="nav-link fs-5 fw-bold dasboard d-none d-lg-inline mb-4">
+                            <div class="nav-link fs-5 fw-bold dasboard d-none d-lg-inline mb-2">
                                 MENU
                             </div>
                             <li class="nav-item">
@@ -145,7 +139,7 @@ error_reporting(E_ALL);
                             <!-- THIS IS STUDENT DROP DOWN SELECT IN SIDE BAR  -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#studentMenu" data-bs-toggle="collapse" aria-expanded="false" id="studentDropdown">
-                                    <i class="bi  bi-people me-1"></i>Student Management <i class="bi bi-chevron-down" style="margin-left: 1px;" id="studentIcon"></i>
+                                    <i class="bi  bi-people me-1"></i>Student Management <i class="bi bi-chevron-down" style="margin-left: 0px;" id="studentIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="studentMenu">
                                     <li class="nav-item mt-2">
@@ -291,17 +285,13 @@ error_reporting(E_ALL);
                         </div>
                     </div>
                 </div>
-
-
-
-
             </div>
         </div>
     </header>
 
-
-
-
+    <!-- Bootstrap JS and Dependencies -->
+    <!-- NOTE : DON'T REMOVE THIS DEPENDENCIES  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- JavaScript to toggle icons using Bootstrap collapse events -->
     <script>
@@ -360,5 +350,3 @@ error_reporting(E_ALL);
             }
         });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

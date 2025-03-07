@@ -40,7 +40,7 @@ include "../faculty/includes/Forms/createexamform.php";
     }
 </style>
 
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-3">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-3 mt-5 py-4 me-2">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -49,7 +49,7 @@ include "../faculty/includes/Forms/createexamform.php";
                         <!-- Grade Level and Section and Subject-->
                         <div>
                             <!-- Display Subject Title -->
-                            <h6 class="fw-bold text-primary">
+                            <h6 class="fw-bold primary-text">
                                 <!-- Subject: -->
                                 <?php
                                 if (!empty($students)) {
@@ -129,7 +129,7 @@ include "../faculty/includes/Forms/createexamform.php";
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="studenttakeexam" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
                                     <th scope="col" style="width: 100px;">Student Name</th>
@@ -137,7 +137,7 @@ include "../faculty/includes/Forms/createexamform.php";
                                     <th scope="col" style="width: 100px;">Status</th>
                                     <th scope="col" style="width: 100px;">Score</th>
                                     <th scope="col" style="width: 100px;">Total Items</th>
-                                    <th scope="col" style="width: 100px;">Transmutation Grade</th>
+                                    <th scope="col" style="width: 100px;">Equivalent Grade</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -149,7 +149,7 @@ include "../faculty/includes/Forms/createexamform.php";
                                         // }
 
                                         // Determine if the student's quarter matches the active quarter
-                                        $isCurrentQuarter = in_array($row["quarter"], explode(",", implode(",", $activeQuarter)));
+                                        $isCurrentQuarter = in_array($row["quarter_exam"], explode(",", implode(",", $activeQuarter)));
 
                                         // Determine if an exam was taken (regardless of score)
                                         $examTaken = !empty($row['exam_items']); // Check if exam_items has a value
@@ -165,12 +165,12 @@ include "../faculty/includes/Forms/createexamform.php";
                                         echo '<td class="text-center">';
                                         if ($isCurrentQuarter) {
                                             if ($examTaken) {
-                                                echo '<span class="badge bg-success" data-bs-toggle="tooltip" title="Exam Completed"><i class="bi bi-check-circle"></i> Done</span>';
+                                                echo '<span style="background-color: #198754; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;" title="Exam Completed">Done</span>';
                                             } else {
-                                                echo '<span class="badge bg-danger" data-bs-toggle="tooltip" title="No Exam Uploaded"><i class="bi bi-x-circle"></i> No Exam</span>';
+                                                echo '<span style="background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;" title="No Exam Uploaded">No Exam</span>';
                                             }
                                         } else {
-                                            echo '<span class="badge bg-danger" data-bs-toggle="tooltip" title="No Exam Available"><i class="bi bi-x-circle"></i> No Exam</span>';
+                                            echo '<span style="background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;" title="No Exam Available">No Exam</span>';
                                         }
                                         echo '</td>';
 
@@ -178,7 +178,7 @@ include "../faculty/includes/Forms/createexamform.php";
                                         if ($isCurrentQuarter) {
                                             echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['exam_scores'] ?? '0') . '</td>';
                                             echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['exam_items'] ?? '0') . '</td>';
-                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['equivalent'] ?? '0') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['equivalent_exam'] ?? '0') . '</td>';
                                         } else {
                                             echo '<td class="text-center text-muted">-</td>';
                                             echo '<td class="text-center text-muted">-</td>';

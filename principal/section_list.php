@@ -15,7 +15,7 @@ include "../principal/includes/Forms/sectionform.php";
 
 
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-2">
 
     <div class="container">
         <div class="row">
@@ -46,17 +46,14 @@ include "../principal/includes/Forms/sectionform.php";
                     <!-- TABLE -->
                     <div class="table-responsive small ms-3 me-3">
                         <table id="sectionRecord" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark ">
+                            <thead class="table-info">
                                 <tr>
-                                    <!-- <th scope="col">#</th> -->
-                                    <!-- <th scope="col" class="small text-center">Section Code</th> -->
                                     <th scope="col" class="small text-center">Section</th>
                                     <th scope="col" class="small text-center">Strand</th>
                                     <th scope="col" class="small text-center">Year level</th>
                                     <th scope="col" class="small text-center">School year</th>
                                     <th scope="col" class="small text-center">Adviser</th>
-                                    <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
-
+                                    <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,7 +67,6 @@ include "../principal/includes/Forms/sectionform.php";
                                     $count = 0;
                                     foreach ($result as $row) {
                                         echo '<tr>';
-
                                         // echo '<td class="small text-center">' . $row["section_code"] . '</td>';
                                         echo '<td class="small text-center">' . $row["section_name"] . '</td>';
                                         echo '<td class="small text-center">' . $row["strand_name"] . '</td>';
@@ -79,17 +75,17 @@ include "../principal/includes/Forms/sectionform.php";
                                         echo '<td class="small text-center">' . ucwords(strtolower($row["adviser"])) . '</td>';
 
                                         echo '
-                                        <td class="d-flex justify-content-center">
+                                            <td class="d-flex justify-content-center">
                                             <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#edit_section' . $row['section_code'] . '">
                                                 <i class="bi bi-pencil-square me-1"></i>Edit
                                             </button>
-                                        
                                             </td>
                                             ';
                                         // THIS IS THE DELETE BUTTON I WILL LEAVE IT COMMENT , IF NEEDED JUST UNCOMMENT 
-                                        // <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_section' . $row['section_code'] . '">
+                                        // <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete_section' . $row['section_code'] . '">
                                         //     <i class="bi bi-trash"></i>Delete
                                         // </button>
+
                                         echo '</tr>';
 
                                         $count++;
@@ -225,7 +221,7 @@ include "../principal/includes/Forms/sectionform.php";
 
                                         //todo Modal for deleting section
                                         echo '
-                                        <div class="modal fade" id="del_section' . $row['section_code'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+                                        <div class="modal fade" id="delete_section' . htmlspecialchars($row['section_code'])  . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-md">
                                                 <div class="modal-content shadow-lg border-0 rounded">
                                                     <!-- Modal Body -->
@@ -265,11 +261,9 @@ include "../principal/includes/Forms/sectionform.php";
         </div>
     </div>
     <?php
-    include("../admin/includes/extension.php");
+    include("../principal/includes/extension.php");
     ?>
 </main>
-
-
 
 
 <!-- PDF ,EXCEL, PRINT ,CVS -->
@@ -284,7 +278,7 @@ include "../principal/includes/Forms/sectionform.php";
                     titleAttr: "Export as Excel",
                     exportOptions: {
                         columns: function(index, data, node) {
-                            return index !== 4;
+                            return index !== 5;
                         },
                     },
                 },
@@ -372,7 +366,7 @@ include "../principal/includes/Forms/sectionform.php";
                     },
                     exportOptions: {
                         columns: function(index, data, node) {
-                            return index !== 4;
+                            return index !== 5;
                         },
                     },
                 },

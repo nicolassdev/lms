@@ -57,7 +57,6 @@ $mySQLFunction->disconnect();
         color: #6c757d;
     }
 
-
     .dropdown-menu {
         transition: transform 0.4s ease, opacity 0.4s ease;
         transform: translateY(-10px);
@@ -69,18 +68,18 @@ $mySQLFunction->disconnect();
         opacity: 1;
     }
 
-    .dropdown-menu a {
+    .dropdown-css a {
         font-size: 13px;
     }
 </style>
 
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="container-fluid">
-                    <h4 class="fw-bold text-muted mb-3">
+                    <h4 class="fw-bold text-muted mb-3 mt-4">
                         Module
                     </h4>
                     <p class="text-muted">Easily manage subject module, track student progress, and gain valuable insights into performance.</p>
@@ -93,19 +92,19 @@ $mySQLFunction->disconnect();
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card h-100 border-0 shadow-lg rounded-4">
                                         <!-- Card Header -->
-                                        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center rounded-top-4">
+                                        <div class="card-header secondary-color text-dark d-flex justify-content-between align-items-center rounded-top-4">
                                             <div class="mb-0 fw-bold text-truncate pt-2 pb-2">
-                                                <i class="bi bi-book me-2"></i>
+                                                <i class="bi bi-book-half me-2 text-danger"></i>
                                                 <?php echo htmlspecialchars(ucwords(strtolower($schedule['sub_title'] ?? 'No Title'))); ?>
                                             </div>
                                             <!-- Kebab Menu -->
                                             <div class="dropdown">
-                                                <i class="bi bi-three-dots-vertical text-white kebab-menu" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="cursor: pointer;"></i>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="kebabMenu">
+                                                <i class="bi bi-three-dots-vertical text-dark kebab-menu" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="cursor: pointer;"></i>
+                                                <ul class="dropdown-menu dropdown-menu-end dropdown-css" aria-labelledby="kebabMenu">
                                                     <li>
                                                         <a href="index.php?page=upload_module&sched_id=<?php echo urlencode($schedule['sched_id']); ?>&sub_code=<?php echo urlencode($schedule['sub_code']); ?>&section_code=<?php echo urlencode($schedule['section_code']); ?>"
                                                             class="dropdown-item text-black">
-                                                            <i class="bi bi-people-fill me-2"></i>View students
+                                                            <i class="bi bi-people-fill me-2 text-danger"></i>View students
                                                         </a>
                                                     </li>
                                                     <hr class="me-2 ms-2">
@@ -125,8 +124,8 @@ $mySQLFunction->disconnect();
                                             <small class="text-sm fw-semibold">
                                                 <?php echo   $schedule["strand_desc"] ?? 'No Strand'; ?>
                                             </small>
-                                            <div class="text-muted mb-2 mt-4 fw-semibold">
-                                                <i class="bi bi-people-fill text-success fs-6 me-2"></i>
+                                            <div class="text-dark mb-2 mt-4 fw-semibold">
+                                                <!-- <i class="bi bi-people-fill text-success fs-6 me-2"></i> -->
                                                 Total Students: <?php
                                                                 // Get total count for each student in subject handled by teacher
                                                                 $mySQLFunction->connection();
@@ -143,9 +142,9 @@ $mySQLFunction->disconnect();
                                         </div>
 
                                         <!-- Card Footer -->
-                                        <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
+                                        <div class="card-footer d-flex justify-content-center rounded-bottom-4">
                                             <a href="index.php?page=upload_module&sched_id=<?php echo urlencode($schedule['sched_id']); ?>&sub_code=<?php echo urlencode($schedule['sub_code']); ?>&section_code=<?php echo urlencode($schedule['section_code']); ?>"
-                                                class="btn btn-outline-success w-100 fw-bold d-flex align-items-center justify-content-center">
+                                                class="btn secondary-color w-100 fw-bold d-flex align-items-center justify-content-center">
                                                 <i class="bi bi-journals me-2"></i> Upload Module
                                             </a>
                                         </div>

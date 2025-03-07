@@ -48,20 +48,20 @@ $mySQLFunction->disconnect();
                 <div class="container">
                     <!-- Header Section -->
                     <div class="card mb-2 shadow-lg border-0">
-                        <div class="card-body text-center <?php echo $isExamTaken ? 'bg-dark' : 'bg-success'; ?> text-white rounded position-relative">
+                        <div class="card-body text-center <?php echo $isExamTaken ? 'secondary-color' : 'secondary-color'; ?> text-dark rounded position-relative">
                             <div class="d-flex flex-column align-items-end">
-                                <a <?php echo $isExamTaken ? 'href="index.php?page=student_exam_result" ' : 'href="index.php?page=student_exam" ' ?> class="btn btn-sm btn-outline-light mt-2"> Back</a>
+                                <a <?php echo $isExamTaken ? 'href="index.php?page=student_exam_result" ' : 'href="index.php?page=student_exam" ' ?> class="btn btn-sm btn-outline-dark mt-2"> Back</a>
                                 <div class="w-100  text-center"> <?php if ($isExamTaken): ?>
-                                        <h1 class="card-title fw-bold">Done <i class="bi bi-check-circle-fill fs-3 text-success"></i></h1>
-                                        <p class="card-text"> You have already taken this exam. <br><small>Click here view exam results</small></p>
-                                        <button class="btn btn-outline-light btn-lg px-5 rounded-pill"
+                                        <h1 class="card-title fw-bold text-dark">Done <i class="bi bi-check-circle-fill fs-3 text-success"></i></h1>
+                                        <p> You have already taken this exam. <br><small>Click here view exam results</small></p>
+                                        <button class="btn btn-outline-dark btn-lg px-5 rounded-pill"
                                             data-bs-toggle="collapse" data-bs-target="#examResultArea">
                                             <i class="bi bi-clipboard-data me-2"></i> View Result
                                         </button>
                                     <?php else: ?>
                                         <h1 class="card-title fw-bold">Take Your Exam</h1>
-                                        <p class="card-text"> Get ready to demonstrate your knowledge. Best of luck! </p>
-                                        <button class="btn btn-outline-light btn-lg px-5 rounded-pill" id="startExamButton">
+                                        <p> Get ready to demonstrate your knowledge. Best of luck! </p>
+                                        <button class="btn btn-outline-dark btn-lg px-5 rounded-pill" id="startExamButton">
                                             <i class="bi bi-play-circle me-2"></i> Start Exam
                                         </button>
 
@@ -84,7 +84,7 @@ $mySQLFunction->disconnect();
                                             <h4 class="fw-bold text-dark mb-0">
                                                 <?= htmlspecialchars(ucwords(strtolower($examData["exam_title"] ?? 'No Exam Title'))) ?>
                                             </h4>
-                                            <span class="badge bg-success text-white px-3 py-2">
+                                            <span class="badge secondary-color text-dark px-3 py-2">
                                                 <?= htmlspecialchars(($examData["exam_quarter"] ?? 'N/A') . ' / ' . ($examData["sub_semester"] ?? 'N/A')) ?>
                                             </span>
                                         </div>
@@ -93,14 +93,14 @@ $mySQLFunction->disconnect();
 
                                         <div class="mb-2">
                                             <span class="fw-bold">Subject:</span>
-                                            <span class="badge bg-success text-white px-3 py-2">
+                                            <span class="badge secondary-color text-dark px-3 py-2">
                                                 <?= htmlspecialchars(ucwords(strtolower($examData["sub_title"] ?? 'No Subject'))) ?>
                                             </span>
                                         </div>
 
                                         <div>
                                             <span class="fw-bold">Teacher:</span>
-                                            <span class="badge bg-success text-white px-3 py-2">
+                                            <span class="badge secondary-color text-dark px-3 py-2">
                                                 <?= htmlspecialchars(ucwords(strtolower(($examData["teacher_fname"] ?? '') . ' ' . ($examData["teacher_lname"] ?? 'N/A')))) ?>
                                             </span>
                                         </div>
@@ -149,13 +149,13 @@ $mySQLFunction->disconnect();
                                 <div class="card mb-4 shadow-sm">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between">
-                                            <h5 class="fw-bold text-start">Questions</h5>
+                                            <h5 class="fw-bold text-start">Exam Questions</h5>
                                             <p class="fw-semibold text-end">
                                                 <?= htmlspecialchars($examData["exam_items"] . ' Items' ?? 'No Items') ?><br>
                                             </p>
                                         </div>
                                         <!-- FORM ELEMENTS OF EXAM -->
-                                        <form action="./includes/studentexam-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation" novalidate>
+                                        <form action="./includes/studentanswers-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation" novalidate>
                                             <!-- Hidden Inputs -->
                                             <input type="hidden" name="studID" value="<?php echo htmlspecialchars($_SESSION['stu_lrn']); ?>">
                                             <input type="hidden" name="examID" value="<?php echo htmlspecialchars($_GET['exam_id']); ?>">
@@ -236,8 +236,8 @@ $mySQLFunction->disconnect();
                                                 <?php endif; ?>
                                             </ul>
                                             <!-- Submit Button -->
-                                            <div class="mt-3">
-                                                <button name="submit" type="submit" class="btn btn-primary">Submit Answers</button>
+                                            <div class="mt-3 text-end">
+                                                <button name="submit" type="submit" class="btn btn-primary rounded-pill">Submit Answers</button>
                                             </div>
                                         </form>
 
@@ -249,21 +249,21 @@ $mySQLFunction->disconnect();
                                 <div class="card mb-4 shadow-sm text-center">
                                     <div class="card-body">
                                         <h4 class="fw-bold">Timer</h4>
-                                        <div id="examTimerDesktop" class="display-5 text-danger">00:00</div>
-                                        <p class="text-muted">Time remaining</p>
-                                        <button class="btn btn-danger mt-2" id="endExamButtonDesktop">End Quiz</button>
+                                        <div id="examTimerDesktop" class="display-5 fw-bold text-danger">00:00</div>
+                                        <p class="text-muted ">Time remaining</p>
+                                        <!-- <button name="submit" type="submit" class="btn btn-danger mt-2" id="endExamButtonDesktop">End Exam</button> -->
                                     </div>
                                 </div>
                             </div>
 
                             <!-- EXAM TIMER EMELEMENT FOR MOBILE -->
-                            <div class="col-6 col-sm-4 col-md-3 position-fixed end-0 top-50 translate-middle-y d-lg-none">
+                            <div class="col-5 col-sm-4 col-md-3 position-fixed end-0 top-50 translate-middle-y d-lg-none">
                                 <div class="card shadow-sm text-center p-2">
                                     <div class="card-body p-2">
                                         <h6 class="fw-bold mb-1">Timer</h6>
                                         <div id="examTimerMobile" class="fs-4 fw-bold text-danger">00:00</div>
                                         <p class="text-muted small mb-1">Time left</p>
-                                        <button class="btn btn-sm btn-danger" id="endExamButtonMobile">End</button>
+                                        <!-- <button class="btn btn-sm btn-danger" id="endExamButtonMobile">End</button> -->
                                     </div>
                                 </div>
                             </div>
@@ -277,7 +277,7 @@ $mySQLFunction->disconnect();
                     <!-- Exam Result Section -->
                     <div id="examResultArea" class="collapse">
                         <div class="card shadow-sm ms-2 me-2">
-                            <div class="card-header bg-success text-white text-center">
+                            <div class="card-header secondary-color text-dark text-center">
                                 <h4 class="fw-bold mb-0">Exam Result</h4>
                             </div>
                             <div class="card-body">
@@ -406,6 +406,7 @@ $mySQLFunction->disconnect();
 
         let timerDuration = <?= json_encode($examData["exam_duration"] ?? 0) ?>; // In minutes
 
+
         // Check if the exam has been taken
         startButton.addEventListener("click", function() {
             // Hide the header card and exam details section
@@ -433,29 +434,63 @@ $mySQLFunction->disconnect();
                     alert("Time's up!");
                     examArea.classList.add("d-none");
                     examEndNotification.classList.remove("d-none");
+                    // autoSubmitExam();
                 }
             }, 1000);
 
-            // End Exam Button for Desktop
-            if (endExamButtonDesktop) {
-                endExamButtonDesktop.addEventListener("click", function() {
-                    clearInterval(timerInterval);
-                    alert("Exam ended.");
-                    examArea.classList.add("d-none");
-                    examEndNotification.classList.remove("d-none");
-                });
-            }
+            // // End Exam Button for Desktop
+            // if (endExamButtonDesktop) {
+            //     endExamButtonDesktop.addEventListener("click", function() {
+            //         clearInterval(timerInterval);
+            //         alert("Exam ended.");
+            //         examArea.classList.add("d-none");
+            //         examEndNotification.classList.remove("d-none");
+            //     });
+            // }
 
-            // End Exam Button for Mobile
-            if (endExamButtonMobile) {
-                endExamButtonMobile.addEventListener("click", function() {
-                    clearInterval(timerInterval);
-                    alert("Exam ended.");
-                    examArea.classList.add("d-none");
-                    examEndNotification.classList.remove("d-none");
-                });
-            }
+            // // End Exam Button for Mobile
+            // if (endExamButtonMobile) {
+            //     endExamButtonMobile.addEventListener("click", function() {
+            //         clearInterval(timerInterval);
+            //         alert("Exam ended.");
+            //         examArea.classList.add("d-none");
+            //         examEndNotification.classList.remove("d-none");
+            //     });
+            // }
+
+            let examSubmitted = false;
+            // Prevent Exam Loss on Unexpected Tab Close
+            window.addEventListener("beforeunload", function(e) {
+                if (!examSubmitted) { // Only trigger if the exam is NOT submitted
+                    e.preventDefault();
+                }
+            });
+
+            // Detect form submission and prevent warning
+            form.addEventListener("submit", function() {
+                examSubmitted = true; // Mark that the form was submitted
+            });
         });
+
+
+        // Auto-submit function
+        // function autoSubmitExam() {
+        //     const formData = new FormData(form);
+
+        //     fetch("./includes/studentanswers-inc.php", {
+        //             method: "POST",
+        //             body: formData
+        //         })
+        //         .then(response => response.text())
+        //         .then(data => {
+        //             console.log("Exam auto-submitted:", data);
+        //             alert("Your exam has been submitted successfully.");
+        //         })
+        //         .catch(error => {
+        //             console.error("Error submitting exam:", error);
+        //             alert("There was an issue submitting your exam. Please contact support.");
+        //         });
+        // }
 
 
 
@@ -468,7 +503,43 @@ $mySQLFunction->disconnect();
             form.classList.add("was-validated");
         }, false);
 
-
-
     });
+
+
+
+    // RESTRICT IN ENUMERATION VALIDATION ONLY ACCEPT ANSWER WITH COMMA
+    (function() {
+        'use strict';
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation');
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    // Custom validation for comma-separated answers
+                    var inputFields = form.querySelectorAll('input[name^="enum_"]');
+                    inputFields.forEach(function(input) {
+                        if (!input.value.includes(',')) {
+                            input.setCustomValidity("Please enter at least two answers separated by commas.");
+                            input.classList.add('is-invalid');
+                            event.preventDefault();
+                            event.stopPropagation();
+                        } else {
+                            input.setCustomValidity(""); // Clear custom validation
+                            input.classList.remove('is-invalid');
+                        }
+                    });
+
+                    form.classList.add('was-validated');
+
+                }, false);
+            });
+    })();
 </script>

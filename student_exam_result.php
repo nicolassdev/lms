@@ -113,50 +113,59 @@ $mySQLFunction->disconnect();
                                 ?>
                                     <div class="col-lg-4 col-md-6 col-sm-12 subject-card" data-title="<?php echo htmlspecialchars(strtolower($subject['sub_title'])); ?>">
                                         <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
-                                            <!-- Card Header -->
-                                            <div class="card-header bg-success text-white rounded-top-4 px-3 py-3 d-flex align-items-center">
-                                                <i class="bi bi-book-half fs-4 me-2"></i>
-                                                <div class="text-truncate">
-                                                    <h6 class="mb-0 fw-bold text-truncate"><?php echo htmlspecialchars(ucwords(strtolower($subject['sub_title'] ?? 'No Title'))); ?></h6>
-                                                    <small class="fw-semibold"><?php echo htmlspecialchars(ucwords(strtolower($subject['sub_type'] ?? 'No Type'))); ?> Subject</small>
-                                                </div>
+                                        <!-- Card Header -->
+                                        <div class="card-header secondary-color rounded-top-4 px-3 py-3 d-flex align-items-center">
+                                            <div class="text-truncate">
+                                                <h6 class="mb-0 fw-bold text-truncate mt-2">
+                                                    <i class="bi bi-book-half me-2 text-danger"></i>
+                                                    <?php echo htmlspecialchars(ucwords(strtolower($subject['sub_title'] ?? 'No Title'))); ?></h6>
+                                                    <small class="fw-semibold ms-4 text-sm">
+                                                        <?php echo htmlspecialchars(ucwords(strtolower($subject['sub_type'] ?? 'No Type'))); ?> Subject
+                                                    </small>
                                             </div>
-
-                                            <!-- Card Body -->
-                                            <div class="card-body">
-                                                <div class="mb-3">
-                                                    <i class="bi bi-person-circle text-success me-2"></i>
-                                                    <span class="fw-bold">
-                                                        <?php echo ucwords(strtolower($subject["teacher_fname"] . ' ' . $subject["teacher_lname"])) ?: 'No Subject Teacher'; ?>
-                                                    </span>
+                                        </div>
+                                        <!-- Card Body -->
+                                        <div class="card-body">
+                                                <div class="row align-items-center mb-1">
+                                                    <div class="col text-start">
+                                                        <small class="fw-bold fs-6 ms-3">
+                                                            <?php
+                                                            echo ucwords(strtolower($subject["teacher_fname"] . ' ' . $subject["teacher_lname"])) ?: 'No Subject Teacher';
+                                                            ?>
+                                                        </small>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <?php
+                                                        $uploadDir = "./assets/Upload/";
+                                                        if (!empty($subject['image']) && file_exists($uploadDir . $subject['image'])) {
+                                                        ?>
+                                                            <img src="<?php echo htmlspecialchars($uploadDir . $subject['image']); ?>" alt="Profile Image" draggable="false" class="profile-img-teacher">
+                                                        <?php
+                                                        } else {
+                                                            $defaultImage = $subject['teacher_gender'] === "MALE" ? "default-male.png" : "default-female.png";
+                                                        ?>
+                                                            <img src="./assets/Upload/resources/<?php echo $defaultImage; ?>" alt="Profile Image" draggable="false" class="profile-img-teacher">
+                                                        <?php } ?>
+                                                    </div>
                                                 </div>
-
-                                                <div class="mb-3">
-                                                    <i class="bi bi-layers text-primary me-2"></i>
-                                                    <span class="text-dark fw-semibold">
-                                                        <?php echo  $subject["grade_lvl"] . ' ' . htmlspecialchars($subject["section_name"]); ?><br>
+                                                <div class="mb-1">
+                                                    <span class="fw-bold fs-6 ms-3 text-muted">
+                                                        <?php echo $subject["grade_lvl"] . ' ' . htmlspecialchars($subject["section_name"]); ?><br>
                                                     </span>
-                                                    <small class="text-dark ms-4">
+                                                    <small class="  text-sm ms-3 fw-semibold text-muted">
                                                         <?php echo ucwords(strtolower($subject["strand_desc"])); ?>
                                                     </small>
-                                                </div>
-
-                                                <div class="exam-info">
-                                                    <i class="bi bi-calendar3 text-warning me-1"></i>
-                                                    <span class="text-secondary">
-                                                        <?php
-                                                        foreach ($subject["exams"] as $exam) {
-                                                            echo '<span class="text-dark">' . htmlspecialchars($exam["exam_quarter"]) . ' - ' . $subject["sub_semester"] . ' </span> <br> ' .
-                                                                '<small class="text-dark ms-4">Date of Exam : ' . date('F j, Y', strtotime($exam["exam_date"])) . ' </small> ';
-                                                        }
-                                                        ?>
-                                                    </span>
-                                                </div>
-                                            </div>
+                                                    <div>
+                                                        <small class="text-dark text-sm ms-3 fw-semibold ">
+                                                            Date of Exam : <?php echo date('F j, Y', strtotime($exam["exam_date"])); ?>
+                                                        </small>
+                                                    </div>
+                                                </div>                                        
+                                        </div>
                                             <!-- Card Footer -->
                                             <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
                                                 <a href="index.php?page=student_take_exam&exam_id=<?php echo urlencode($exam['exam_id']); ?>&sub_code=<?php echo urlencode($subject['sub_code']); ?>&section_code=<?php echo urlencode($subject['section_code']); ?>&grade_lvl=<?php echo urlencode($subject['grade_lvl']); ?>"
-                                                    class="btn btn-success w-100 fw-bold d-flex align-items-center justify-content-center shadow-sm">
+                                                    class="btn secondary-color w-100 fw-bold d-flex align-items-center justify-content-center shadow-sm">
                                                     View Result
                                                 </a>
                                             </div>

@@ -54,6 +54,8 @@ try {
     }
 
     // Start transaction
+    $mySQLFunction->con->begin_transaction();
+
     // Insert new enrollment into `enroll` table
     $insertEnrolled = "
     INSERT INTO `enroll` (`stu_lrn`, `section_code`, `semester`, `school_year`, `date_enroll`, `enroll_status`, `current_school`, `school_id`, `school_address`, `school_type`, `requirements_submit`) 
@@ -76,10 +78,18 @@ try {
         $requirements
     );
 
+    if (!$stmt->execute()) {
+        throw new Exception($stmt->error);
+    }
+
+    // Commit the transaction
+    $mySQLFunction->con->commit();
+
     $_SESSION['insert_enrolled'] = true;
     header("Location: ../index.php?page=enrolled");
     exit();
 } catch (Exception $e) {
+    $mySQLFunction->con->rollback();
     // var_dump($e);
     $_SESSION['error_enrolled'] = $e->getMessage();
     header("Location: ../index.php?page=enrolled");

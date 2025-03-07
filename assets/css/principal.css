@@ -1,6 +1,7 @@
 /* General Reset */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: #f1f4f9;
 }
 .navbar {
@@ -11,13 +12,15 @@ body {
   background-color: #ffffff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: all 0.3s;
-  padding: 0.5rem 1rem; /* Adjust the padding to make the navbar shorter */
+  /* padding: 0.5rem 1rem; Adjust the padding to make the navbar shorter */
 }
 
 .color {
   color: #fabc3f;
 }
-
+.primary-color{
+  background-color: #16404D !important;
+}
 .nav-shadow {
   box-shadow: 0 14px 8px rgba(49, 49, 49, 0.2);
 }
@@ -321,4 +324,21 @@ body {
 
 .footer p {
   margin: 0;
+}
+
+/* load effect */
+.fade-in-input {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

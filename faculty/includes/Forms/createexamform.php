@@ -83,8 +83,7 @@
         <div class="question-item mb-4 p-3 border rounded" id="question${questionIndex}">
             <div class="row align-items-center">
                 <div class="col-md-4">
-                                <label class="form-label fw-bold">${questionIndex}. Question</label>
-
+                 <label class="form-label fw-bold">${questionIndex}. Question</label>
                     <select class="form-select question-type" name="exam_type[${questionIndex}]" required onchange="updateQuestionType(${questionIndex})">
                         <option value="1" >Multiple Choice</option>
                         <option value="2" >Enumeration</option>
@@ -106,6 +105,7 @@
 
                 <div id="choicesContainer${questionIndex}">
                     <label class="form-label fw-bold">Choices</label>
+                        <label class="form-label fw-bold">Choices <small class="text-danger"> ( Please select correct answer)</small></label>
                         <div class="d-flex align-items-center mb-2">
                             <input type="radio" name="correct_answer[${questionIndex}]" value="A" class="form-check-input" required>
                             <input type="text" name="choice_a[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice A" required>
@@ -142,7 +142,7 @@
             // Multiple Choice
             container.innerHTML = `
                 <input type="text" name="exam_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
-                <label class="form-label fw-bold">Choices</label>
+                <label class="form-label fw-bold">Choices <small class="text-danger"> ( Please select correct answer)</small></label>
                     <div class="d-flex align-items-center mb-2">
                         <input type="radio" name="correct_answer[${questionIndex}]" value="A" class="form-check-input" required>
                         <input type="text" name="choice_a[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice A" required>
@@ -176,7 +176,8 @@
             // True/False
             container.innerHTML = `
                  <input type="text" name="tf_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
-                <select name="correct_answer[${questionIndex}]" class="form-select">
+                    <label class="text-success">Please select the correct answer</label>
+                    <select name="correct_answer[${questionIndex}]" class="form-select">
                     <option value="True">True</option>
                     <option value="False">False</option>
                 </select>

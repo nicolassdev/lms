@@ -15,16 +15,10 @@ include "../admin/includes/Forms/teacherform.php";
         font-size: 0.8em;
         /* Reduce font size */
     }
-
-    .table th,
-    .table td {
-        padding: 0.1rem;
-        /* Adjust padding */
-    }
 </style>
 
 <!-- TABLE -->
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-1">
 
     <div class="container">
         <div class="row">
@@ -55,7 +49,7 @@ include "../admin/includes/Forms/teacherform.php";
                     <!-- FACULTY TABLE  -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="teacherRecord" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>

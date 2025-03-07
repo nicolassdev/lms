@@ -20,7 +20,7 @@ include "../admin/includes/Forms/syform.php";
 
 <!-- DISPLAY IN HOME  -->
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-4">
         <h5 class="fw-bold ms-3">School Year</h5>
         <!-- Button container for proper alignment -->
@@ -41,18 +41,7 @@ include "../admin/includes/Forms/syform.php";
 
             <!-- NOTFICATION -->
             <?php
-            if (isset($_SESSION['insert'])) {
-                echo '<div class="alert alert-primary alert-dismissible fade show p-2" role="alert" style="font-size: 14px; line-height: 1.2;  max-width:1000px;">';
-                echo '<i class="bi bi-info-square-fill fs-5 me-2"></i>' . $_SESSION['insert'];
-
-                echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
-
-                // Reduced font size for the timestamp
-                echo '<small class="d-block mt-1 text-muted ms-4">Just now.</small>';
-
-                echo '</div>';
-                unset($_SESSION['insert']);
-            } elseif (isset($_SESSION['setactive'])) {
+            if (isset($_SESSION['setactive'])) {
                 echo '<div class="alert alert-success alert-dismissible fade show p-2" role="alert" style="font-size: 14px; line-height: 1.2;  max-width:1000px;">';
                 echo '<i class="bi bi-check-circle-fill fs-5 me-2"></i>' . $_SESSION['setactive'];
 
@@ -74,16 +63,6 @@ include "../admin/includes/Forms/syform.php";
 
                 echo '</div>';
                 unset($_SESSION['deleted']);
-            } elseif (isset($_SESSION['error_insert'])) {
-                echo '<div class="alert alert-danger alert-dismissible fade show p-2" role="alert" style="font-size: 14px; line-height: 1.2;  max-width:1000px;">';
-                echo '<i class="bi bi-exclamation-triangle-fill fs-5 me-2"></i>' . $_SESSION['error_insert'];
-
-                echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
-
-                // Reduced font size for the timestamp
-                echo '<small class="d-block mt-1 text-muted ms-4">Just now.</small>';
-                echo '</div>';
-                unset($_SESSION['error_insert']);
             }
             ?>
 
@@ -103,7 +82,7 @@ include "../admin/includes/Forms/syform.php";
                 </span>
             </div>
 
-            <thead class="table-dark">
+            <thead class="table-info">
                 <tr>
                     <th scope="col">School year</th>
                     <th scope="col">Status</th>

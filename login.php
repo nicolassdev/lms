@@ -43,7 +43,7 @@
    <!-- Font Awesome for Icons -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
- <body style="background-color: #2e2e2e; ">
+ <body style="background-color: #16404D; ">
    <!-- About & Contact Us Links in Upper Right -->
    <div class="position-absolute top-0 start-0 p-3 d-flex gap-3 d-none d-lg-inline ">
      <h5 class="text-white fw-bold text-decoration-none">Learning Management System</h5>
@@ -84,7 +84,7 @@
                  class="img-fluid  d-inline d-lg-none"
                  style="width:50px; border-radius: 1rem 0 0 1rem;" />
                <div class="text-center d-inline d-lg-none ms-2 text-light">
-                 <small class="fw-bold mb-0 d-block">Learning Management System</small>
+                 <small class="fw-bold mb-0 d-block" style="font-size: 13px;">Learning Management System</small>
                  <small class="fw-bold mb-0 d-block">Computer Systems Institute</small>
                </div>
              </div>

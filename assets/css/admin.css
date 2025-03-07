@@ -1,7 +1,7 @@
-/* General Reset */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f9f9f9;
+  font-family: "Poppins", sans-serif;
+  background-color: #f1f4f9;
 }
 
 .navbar {
@@ -12,11 +12,13 @@ body {
   background-color: #ffffff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: all 0.3s;
-  padding: 0.5rem 1rem; /* Adjust the padding to make the navbar shorter */
 }
 
 .color {
   color: #fabc3f;
+}
+.primary-color {
+  background-color: #16404d !important;
 }
 
 .nav-shadow {
@@ -35,15 +37,15 @@ body {
   /* Adjust the logo height */
 }
 .sidebar {
+  background-color: #333; /* Ensure background color matches your theme */
   color: #fff;
   padding: 20px;
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  width: 200px;
+  width: 225px;
   overflow-y: auto;
-  background-color: #333; /* Ensure background color matches your theme */
 }
 
 .sidebar-header {
@@ -72,14 +74,13 @@ body {
 
 .sidebar .active:hover {
   background-color: #444;
-  /* padding: 10px; */
+  padding: 10px;
   border-radius: 5px;
-  color: #fff;
 }
 
 .sidebar .nav-link {
-  padding: 6px 20px;
-  font-size: 12px;
+  padding: 10px 10px;
+  font-size: 11px;
   color: #fff;
   transition: background-color 0.3s ease, color 0.3s ease;
   border-radius: 5px;
@@ -193,17 +194,6 @@ body {
   }
 }
 
-.data-table {
-  font-size: 0.9em;
-  /* Reduce font size */
-}
-
-.table th,
-.table td {
-  padding: 0.1rem;
-  /* Adjust padding */
-}
-
 /* ======================================================== PROFILE =================================================================== */
 
 /* Custom styling for profile */
@@ -312,20 +302,7 @@ body {
   padding: 5px;
   /* Padding inside the input for better appearance */
 }
-.text-sm {
-  font-size: 0.7em;
-}
 
-.data-table {
-  font-size: 0.7em;
-  /* Reduce font size */
-}
-
-.table th,
-.table td {
-  padding: 0.1rem;
-  /* Adjust padding */
-}
 /* =================================== FOOTER ====================================== */
 .footer {
   text-align: center;

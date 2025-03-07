@@ -19,15 +19,12 @@ error_reporting(E_ALL);
     <!-- Custom CSS -->
     <link rel="website icon" type="webp" href="./assets/img/csi.webp">
     <link rel="stylesheet" href="./assets/css/student.css?v=<?php echo time(); ?>" />
-    <style>
-
-    </style>
 
 </head>
 
 <body class="lms-scroll-bar">
     <!-- Top Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark nav-shadow">
+    <nav class="navbar navbar-expand-lg navbar-light primary-color nav-shadow">
         <div class="container-fluid">
             <!-- Sidebar Toggle Button -->
             <button
@@ -106,25 +103,22 @@ error_reporting(E_ALL);
     <header>
         <div class="container-fluid">
             <div class="row mt-5">
-                <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
+                <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block  sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
                     <div class="position-sticky">
                         <!-- <h3 class="mb-4">Dashboard</h3> -->
-                        <div class="text-white ms-2 d-lg-none mt-2">
+                        <small class="text-white ms-2 d-lg-none mt-2">
                             <?php
                             echo ucwords(strtolower($_SESSION['stu_fname'] . ' ' . $_SESSION['stu_lname']));
                             echo '<i class="bi bi-person-circle ms-3 fs-2"></i>';
                             ?>
-                        </div>
+                        </small>
                         <hr class=" d-lg-none">
 
                         <ul class="nav flex-column">
-                            <li class="fw-bold dasboard text-center d-none d-lg-inline mb-2">
+                            <li class="fw-bold dasboard text-center d-none d-lg-inline mb-4">
                                 DASHBOARD
                             </li>
-                            <li>
-                                <br />
-                            </li>
-                            <li class="nav-item">
+                            <li class="nav-item pt-2">
                                 <a class="nav-link active" href="index.php?page=student_home">
                                     <i class="bi bi-house-door me-2"></i> Home
                                 </a>
@@ -172,7 +166,7 @@ error_reporting(E_ALL);
                             <!-- THISI IS THE ROUTE OF EXAM -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#examMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
-                                    <i class="bi bi-book me-2"></i>Exam <i class="bi bi-chevron-down" style="margin-left: 50px;" id="examIcon"></i>
+                                    <i class="bi bi-book me-2"></i>Exam <i class="bi bi-chevron-down" style="margin-left: 48px;" id="examIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="examMenu">
                                     <li class="nav-item mt-2">
@@ -191,7 +185,7 @@ error_reporting(E_ALL);
                             <!-- THISI IS THE FOR EQUIVALENT GRADE OF STUDENT IF EXAM OR QUIZ -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#gradeMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
-                                    <i class="bi bi-bar-chart me-2"></i>Grades <i class="bi bi-chevron-down" style="margin-left: 40px;" id="gradeIcon"></i>
+                                    <i class="bi bi-bar-chart me-2"></i>Grades <i class="bi bi-chevron-down" style="margin-left: 35px;" id="gradeIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="gradeMenu">
                                     <li class="nav-item mt-2">

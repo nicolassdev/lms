@@ -107,14 +107,14 @@ $mySQLFunction->disconnect();
 
 
 <!-- TABLE -->
-<main class="col-md-12 ms-sm-auto col-lg-10">
+<main class="col-md-12 ms-sm-auto col-lg-10 mt-5 pt-3">
     <div class="container">
         <img
             style="position: absolute; top: 55%; right: 10%; transform: translate(-5%, -50%); 
                         width: 500px; opacity: 0.1; z-index: -1;"
             src="../assets/img/csi.webp"
             alt="LMS Logo">
-        <div class="row">
+        <div class="row fade-in-input">
             <div class="col-md-12">
                 <div class="d-flex flex-wrap justify-content-end">
                     <!-- <button class="btn btn-secondary btn-sm me-2 mb-2"

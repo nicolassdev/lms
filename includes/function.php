@@ -55,14 +55,12 @@ class myDataBase
         }
     }
 
-
     // ENCRPYT PASSWORD
     public function encrypt($password)
     {
         $hash = sha1($password);
         return $hash;
     }
-
 
 
     //CHECK USER LOGIN 
@@ -83,7 +81,6 @@ class myDataBase
         }
     }
 
-
     // Function to set session data
     function setSessionData($data)
     {
@@ -92,8 +89,6 @@ class myDataBase
             $_SESSION[$key] = $value;
         }
     }
-
-
 
     //GENERIC RANDOM PRIMARY ID FOR TABLES
     public function generateID($prefix)
@@ -107,7 +102,6 @@ class myDataBase
 
         return $rand;
     }
-
 
     // GENERATE TEACHER ID 
     // FORMAT : LAST 2 DIGIT OF THE YEAR / DOB/ RANDOM 4 DIGIT
@@ -185,15 +179,6 @@ class myDataBase
         return $stored;
     }
 
-    // // GET ADMIN INFORMATIONM
-    // public function getAdminInfo()
-    // {
-    //     $sql = "SELECT * FROM `REGISTRAR`";
-    //     $stored = ($this->con->query($sql))->fetch_assoc();
-    //     return $stored;
-    // }
-
-
     // Get information from a specified table PRINCIPAL | REGISTRAR
     public function getInfo($tableName)
     {
@@ -217,9 +202,7 @@ class myDataBase
         return $stored;
     }
 
-
     //GET STUDENT INFORMATION BY INDIVIDUAL
-
     public function getStudentInfo($studentID)
     {
         $sql = "SELECT * FROM `student` WHERE stu_lrn = ?";
@@ -240,19 +223,6 @@ class myDataBase
         $result = $stmt->get_result()->fetch_assoc();
         return $result;
     }
-
-
-
-
-    // public function getAdminInfo($teacher_id)
-    // {
-    //     $sql = "SELECT * FROM `teacher` WHERE teacher_id = ?";
-    //     $stmt = $this->con->prepare($sql);
-    //     $stmt->bind_param("s", $teacher_id);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result()->fetch_assoc();
-    //     return $result;
-    // }
 
 
     public function getTeacherInfo($teacher_id)
@@ -297,23 +267,16 @@ class myDataBase
         FROM 
             `schedule` sch
         INNER JOIN 
-            `section` sec 
-        ON 
-            sch.section_code = sec.section_code
+            `section` sec ON sch.section_code = sec.section_code
         INNER JOIN 
-            `subject` sub 
-        ON 
-            sch.sub_code = sub.sub_code
+            `subject` sub ON sch.sub_code = sub.sub_code
         LEFT JOIN 
-            `strand` st 
-        ON 
-            sec.strand_code = st.strand_code
+            `strand` st ON sec.strand_code = st.strand_code
         WHERE 
             sch.teacher_id = ?
             AND $activeSemesterCondition
         ORDER BY
-            sub.sub_title ASC
-        ";
+            sub.sub_title ASC";
 
         // Prepare the SQL statement
         $stmt = $this->con->prepare($sql);
@@ -422,7 +385,7 @@ class myDataBase
             AND $activeSemesterCondition
         ORDER BY 
             sched.sched_day, sched.sched_from";
-
+            
         // Prepare the main SQL statement
         $stmt = $this->con->prepare($sql);
 
@@ -457,12 +420,6 @@ class myDataBase
             return []; // No rows found
         }
     }
-
-
-
-
-
-
 
 
     // THIS IS TO GET THE ALL EXAM OF STUDENT IN EVERY SUBJECT
@@ -577,7 +534,6 @@ class myDataBase
             $row['grade_lvl'] = $gradeLevel;
             $row['section_code'] = $sectionCode; // Added section_code in the result
 
-
             $subjects[] = $row;
         }
 
@@ -586,7 +542,7 @@ class myDataBase
 
 
     // THIS IS TO GET THE ALL QUIZZIES OF STUDENT IN EVERY SUBJECT
-    public function getAllStudentSubjectsQuiz($stu_lrn)
+    public function getAllStudentSubjectsQuiz($stu_lrn, $mode = 'take_quiz')
     {
         // Get the active semester
         $activeSemesters = $this->checkSemStatus('semester');
@@ -647,12 +603,9 @@ class myDataBase
                 t.teacher_id,
                 t.image
             FROM schedule sched
-            INNER JOIN 
-                section sec ON sched.section_code = sec.section_code
-            INNER JOIN 
-                subject sub ON sched.sub_code = sub.sub_code
-            INNER JOIN 
-                teacher t ON sched.teacher_id = t.teacher_id
+            INNER JOIN section sec ON sched.section_code = sec.section_code
+            INNER JOIN subject sub ON sched.sub_code = sub.sub_code
+            INNER JOIN teacher t ON sched.teacher_id = t.teacher_id
             WHERE 
                 sec.grade_lvl = ? 
                 AND sec.strand_code = ? 
@@ -675,12 +628,28 @@ class myDataBase
         while ($row = $result->fetch_assoc()) {
             $schedId = $row['sched_id'];
 
-            // Fetch exams related to the schedule
-            $quizQuery = "SELECT quiz_id, quiz_type, quiz_quarter, quiz_duration, 
-                                 quiz_title, quiz_items, quiz_date
-                          FROM quiz WHERE sched_id = ? AND $activeQuarterCondition";
-            $stmtQuiz = $this->con->prepare($quizQuery);
-            $stmtQuiz->bind_param("s", $schedId);
+            // Conditional fetching of quizzes based on mode
+
+            if ($mode === 'take_quiz') {
+                $quizQuery = "SELECT quiz_id, quiz_type, quiz_quarter, quiz_duration, quiz_title, quiz_items, quiz_date
+                              FROM quiz WHERE sched_id = ? AND $activeQuarterCondition";
+                $stmtQuiz = $this->con->prepare($quizQuery);
+                $stmtQuiz->bind_param("s", $schedId);
+            } elseif ($mode === 'view_results') {
+                $quizQuery = "
+                    SELECT DISTINCT q.quiz_id, q.quiz_type, q.quiz_quarter, q.quiz_duration, q.quiz_title, q.quiz_items, q.quiz_date
+                    FROM quiz q
+                    LEFT JOIN student_answers sa ON q.quiz_id = sa.quiz_id AND sa.stu_lrn = ?
+                    LEFT JOIN student_scores ss ON q.quiz_id = ss.quiz_id AND ss.stu_lrn = ?
+                    WHERE q.sched_id = ? 
+                    AND $activeQuarterCondition
+                    AND (sa.quiz_id IS NOT NULL OR ss.quiz_id IS NOT NULL)";
+                $stmtQuiz = $this->con->prepare($quizQuery);
+                $stmtQuiz->bind_param("sss", $stu_lrn, $stu_lrn, $schedId);
+            } else {
+                return []; // Invalid mode
+            }
+
             $stmtQuiz->execute();
             $quizResult = $stmtQuiz->get_result();
 
@@ -689,33 +658,18 @@ class myDataBase
                 $quizzes[] = $quizRow;
             }
 
-            // Add subject details and its quizzes
             $row['quizzes'] = $quizzes;
             $row['strand_code'] = $strandCode;
             $row['strand_name'] = $strandName;
             $row['strand_desc'] = $strandDesc;
             $row['grade_lvl'] = $gradeLevel;
-            $row['section_code'] = $sectionCode; // Added section_code in the result
-
+            $row['section_code'] = $sectionCode;
 
             $subjects[] = $row;
         }
 
         return $subjects;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -893,10 +847,11 @@ class myDataBase
             AND sec.strand_code = ? 
             AND sec.section_code = ?
             AND sub.sub_code = ?
+            AND q.quiz_id = ? 
             ORDER BY sched.sched_day, sched.sched_from";
 
         $stmt = $this->con->prepare($sql);
-        $stmt->bind_param("ssss", $grade_lvl, $strandCode, $section_code, $sub_code);
+        $stmt->bind_param("sssss", $grade_lvl, $strandCode, $section_code, $sub_code, $quiz_id);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -985,7 +940,6 @@ class myDataBase
     }
 
 
-
     //GET TEACHER SECTION HANDLED by id
     public function getTeacherSectionHandled($teacher_id)
     {
@@ -1031,74 +985,7 @@ class myDataBase
     }
 
 
-    // DYNAMIC FUNCTION TO GET THE EQUIVALENT SCORE OF STUDENT - TEACHER SIDE
-    // public function setEquivalentScoreBySubjectOfStudent($teacher_id, $type)
-    // {
-    //     $activeQuarters = $this->checkQuarterStatus('quarterly');
-
-    //     if (empty($activeQuarters)) {
-    //         return false; // No active quarter, no need to check
-    //     }
-
-    //     // Prepare placeholders for the IN clause based on the number of quarters
-    //     $activeQuarterPlaceholders = implode(",", array_fill(0, count($activeQuarters), "?"));
-
-
-
-    //     // Determine whether to fetch exam or quiz data
-    //     $id_column = ($type === 'exam') ? 'sc.exam_id' : 'sc.quiz_id';
-    //     $title_column = ($type === 'exam') ? 'ex.exam_quarter' : 'qz.quiz_quarter';
-    //     $join_table = ($type === 'exam') ? 'exam ex' : 'quiz qz';
-    //     $join_condition = ($type === 'exam') ? 'sc.exam_id = ex.exam_id' : 'sc.quiz_id = qz.quiz_id';
-
-    //     $sql = "
-    //         SELECT 
-    //             b.stu_lrn,
-    //             b.stu_lname,
-    //             b.stu_fname,
-    //             b.stu_mname,
-    //             b.stu_gender,
-    //             b.stu_contact,
-    //             b.stu_address,
-    //             b.stu_email,
-    //             s.section_name, 
-    //             s.grade_lvl,
-    //             sub.sub_title AS subject,
-    //             GROUP_CONCAT(DISTINCT $title_column) AS quarter,
-    //             GROUP_CONCAT(DISTINCT sc.equivalent_score) AS equivalent_scores, 
-    //             GROUP_CONCAT(DISTINCT sc.total_questions) AS total_items,
-    //             GROUP_CONCAT(DISTINCT sc.correct_answers) AS scores
-    //         FROM 
-    //             enroll e
-    //         INNER JOIN 
-    //             section s ON e.section_code = s.section_code
-    //         INNER JOIN 
-    //             student b ON e.stu_lrn = b.stu_lrn
-    //         LEFT JOIN
-    //             student_scores sc ON e.stu_lrn = sc.stu_lrn
-    //         LEFT JOIN
-    //             subject sub ON sc.sub_code = sub.sub_code 
-    //         LEFT JOIN
-    //             $join_table ON $join_condition AND $id_column IS NOT NULL AND $title_column IN ($activeQuarterPlaceholders)
-    //         WHERE 
-    //             s.teacher_id = ?
-    //         GROUP BY 
-    //             b.stu_lrn, b.stu_lname, b.stu_fname, b.stu_gender, 
-    //             b.stu_contact, b.stu_address, b.stu_email,
-    //             s.section_name, s.grade_lvl, sub.sub_title
-    //     ";
-
-    //     $stmt = $this->con->prepare($sql);
-    //     // Bind parameters dynamically
-    //     $types = str_repeat("s", count($activeQuarters)) . "s"; // Add 's' for each quarter + teacher_id
-    //     $params = array_merge($activeQuarters, [$teacher_id]);
-
-    //     $stmt->bind_param($types, ...$params);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-
-    //     return $result;
-    // }
+    // DYNAMIC FUNCTION TO GET THE EQUIVALENT SCORE BOTH QUIZ AND EXAM OF STUDENT - TEACHER SIDE
     public function setEquivalentScoreBySubjectOfStudent($teacher_id, $type)
     {
         $activeQuarters = $this->checkQuarterStatus('quarterly');
@@ -1162,7 +1049,6 @@ class myDataBase
 
         return $result;
     }
-
 
 
     // DYNAMIC FUNCTION TO GET THE EQUIVALENT SCORE BY INDIVIDUAL STUDENT PER SUBJECT - STUDENT SIDE
@@ -1242,7 +1128,7 @@ class myDataBase
     }
 
 
-
+    // Get all student details by section handled of teacher
     public function getAllStudentDetailsBySectionOfTeacher($teacher_id)
     {
         $sql = "
@@ -1280,61 +1166,7 @@ class myDataBase
         return $result;
     }
 
-    // GET ALL STUDENT BY TEACHER HANDLED SUBJECT IN EVERY SECTION
-    // function getAllStudentBySectionAndSubject($teacherId, $subjectId, $sectionCode)
-    // {
-    //     try {
-    //         $sql = "
-    //             SELECT 
-    //                 s.*,   
-    //                 sched.sched_id,
-    //                 sec.section_code, 
-    //                 sec.section_name,
-    //                 sec.grade_lvl, 
-    //                 COUNT(e.stu_lrn) OVER (PARTITION BY sec.section_code) AS enrolled_count
-    //             FROM 
-    //                 STUDENT s
-    //             INNER JOIN  
-    //                 ENROLL e ON s.stu_lrn = e.stu_lrn
-    //             INNER JOIN  
-    //                 SECTION sec ON e.section_code = sec.section_code
-    //             INNER JOIN  
-    //                 SCHEDULE sched ON sec.section_code = sched.section_code
-    //             INNER JOIN  
-    //                 SUBJECT sub ON sched.sub_code = sub.sub_code
-    //             WHERE 
-    //                 sched.sub_code = ? 
-    //                 AND sched.section_code = ?
-    //                 AND sched.teacher_id = ?
-    //         ";
-
-    //         // Prepare the query
-    //         $stmt = $this->con->prepare($sql);
-    //         if (!$stmt) {
-    //             throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
-    //         }
-
-    //         // Bind parameters (use 's' for string, 'i' for integer)
-    //         $stmt->bind_param("sss", $subjectId, $sectionCode, $teacherId); // 'ssi' for string, string, integer
-
-    //         // Execute the statement
-    //         $stmt->execute();
-    //         $result = $stmt->get_result();
-
-    //         // Fetch all matching rows
-    //         $students = $result->fetch_all(MYSQLI_ASSOC);
-
-    //         // Free resources
-    //         $stmt->close();
-
-    //         return $students;
-    //     } catch (Exception $e) {
-    //         // Log the error message
-    //         error_log("Error fetching students: " . $e->getMessage());
-    //         return [];
-    //     }
-    // }
-
+  
     // GET ALL STUDENT BY TEACHER HANDLED SUBJECT IN EVERY same strand and grade lvl
     function getAllStudentBySectionAndSubjectWithModuleUploads($teacherId, $subjectId, $sectionCode)
     {
@@ -1365,12 +1197,14 @@ class myDataBase
                     sched.sched_id,
                     sub.sub_title,
                     sub.sub_semester,
-                    GROUP_CONCAT(ex.exam_quarter) AS quarter,
-                    GROUP_CONCAT(sq.total_questions) AS quiz_items,
-                    GROUP_CONCAT(sq.correct_answers) AS quiz_scores,
-                    GROUP_CONCAT(se.total_questions) AS exam_items,
-                    GROUP_CONCAT(se.correct_answers) AS exam_scores,
-                    GROUP_CONCAT(se.equivalent_score) AS equivalent,
+                    GROUP_CONCAT(DISTINCT q.quiz_quarter ORDER BY q.quiz_quarter) AS quarter_quiz,
+                    GROUP_CONCAT(sq.total_questions ORDER BY q.quiz_quarter, q.quiz_id) AS quiz_items,
+                    GROUP_CONCAT(sq.correct_answers ORDER BY q.quiz_quarter, q.quiz_id) AS quiz_scores,
+                    GROUP_CONCAT(sq.equivalent_score ORDER BY q.quiz_quarter, q.quiz_id) AS equivalent_quiz,
+                    GROUP_CONCAT(DISTINCT ex.exam_quarter ORDER BY ex.exam_quarter) AS quarter_exam,
+                    GROUP_CONCAT(DISTINCT se.total_questions ORDER BY ex.exam_quarter) AS exam_items,
+                    GROUP_CONCAT(DISTINCT se.correct_answers ORDER BY ex.exam_quarter) AS exam_scores,
+                    GROUP_CONCAT(DISTINCT se.equivalent_score ORDER BY ex.exam_quarter) AS equivalent_exam,
                     GROUP_CONCAT(ma.file_name ORDER BY ma.date_uploaded DESC) AS file_names,  -- Concatenate files
                     GROUP_CONCAT(ma.date_uploaded ORDER BY ma.date_uploaded DESC) AS upload_dates,  -- Concatenate dates
                     COUNT(e.stu_lrn) OVER (PARTITION BY sec.section_code) AS enrolled_count 
@@ -1405,8 +1239,6 @@ class myDataBase
                     s.stu_lrn, sec.section_code, sched.sched_id
                 ORDER BY 
                     s.stu_lname, s.stu_fname;
-
-
             ";
 
             // Prepare the query
@@ -1440,9 +1272,7 @@ class myDataBase
         }
     }
 
-
-
-
+   
     public function getAllStudentBySectionAndSubjectOfTeacher($teacher_id)
     {
         $sql = "
@@ -1480,7 +1310,6 @@ class myDataBase
 
         return $result;
     }
-
 
 
     // GET TEACHER SUBJECT HANDLED by id with COUNT
@@ -1555,7 +1384,6 @@ class myDataBase
     }
 
 
-
     //GET STUDENT SECTION HANDLED by id  
     public function getStudentStrandAndSection($student_id)
     {
@@ -1585,7 +1413,6 @@ class myDataBase
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC); // Fetch all rows as an associative array
         return $result;
     }
-
 
 
     // Fetch student section, adviser, and classmates
@@ -1636,17 +1463,6 @@ class myDataBase
         $stmt->execute();
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         return $result;
-    }
-
-
-
-
-    //GET SEMESTER AND SY
-    public function getActiveSy()
-    {
-        $sql = "SELECT * FROM `SY`";
-        $stored = ($this->con->query($sql))->fetch_assoc();
-        return $stored;
     }
 
 
@@ -1701,8 +1517,7 @@ class myDataBase
         FROM `users` u
         JOIN `student` s ON u.username = s.stu_lrn
         WHERE u.role = ? 
-        ORDER BY s.stu_lrn DESC
-    ");
+        ORDER BY s.stu_lrn DESC");
         $stmt->bind_param('s', $role); // 's' denotes the type (string)
         $stmt->execute();
         $stored = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -1731,7 +1546,6 @@ class myDataBase
     }
 
 
-
     // General function for getting credentials
     function getCredential($table, $row, $value)
     {
@@ -1755,26 +1569,6 @@ class myDataBase
         return $result;
     }
 
-    // public function checkExistIDinAssessment($table, $stu_lrn = null, $exam_id = null)
-    // {
-    //     if ($stu_lrn !== null && $exam_id !== null) {
-    //         $stu_lrn = mysqli_real_escape_string($this->con, $stu_lrn);
-    //         $exam_id = mysqli_real_escape_string($this->con, $exam_id);
-    //         $sql = "SELECT 1 FROM `$table` WHERE `stu_lrn` = '$stu_lrn' AND `exam_id` = '$exam_id' LIMIT 1"; // Optimized query
-    //     } else {
-    //         // Handle the case where either stu_lrn or exam_id is missing (if needed)
-    //         return 0; // Or throw an exception, or return all rows if that's your intended behavior
-    //     }
-
-    //     $query = $this->con->query($sql);
-
-    //     if ($query) {
-    //         return $query->num_rows > 0; // Return true/false directly
-    //     } else {
-    //         // Handle query error (e.g., log it)
-    //         return false; // Or throw an exception
-    //     }
-    // }
 
     public function checkExistByMultipleIDs($table, $conditions)
     {
@@ -1818,8 +1612,6 @@ class myDataBase
             return false;
         }
     }
-
-
 
 
     // COUNT THE NUMBER OF ROWS IN TABLE TO VALIDATION SELECTED IN UPDATE
@@ -2012,8 +1804,6 @@ class myDataBase
         return ($row['count'] > 0); // Return true if exam exists, otherwise false
     }
 
-
-
     public function getActiveSemester()
     {
         // Query to get the active semester
@@ -2027,7 +1817,6 @@ class myDataBase
         // Return null if no active semester is found
         return null;
     }
-
 
     public function checkUserExist($username)
     {
@@ -2069,8 +1858,6 @@ class myDataBase
     }
 
 
-
-
     public function checkSectionExist($strand, $section, $adviser)
     {
         $sql = "SELECT * FROM section WHERE strand_code =? AND section_name =? AND  teacher_id =?";
@@ -2094,7 +1881,6 @@ class myDataBase
 
         return $result->fetch_assoc(); // Return the first row if exists
     }
-
 
 
     public function insertSy($table, $sy)
@@ -2133,37 +1919,53 @@ class myDataBase
     }
 
 
-
     // INSERT INTO TABLE SEMESTER
     public function insertSem($table, $sem)
     {
-
         $sql = "UPDATE `semester` SET `status` = 'Inactive'";
         $result = $this->con->query($sql);
 
         if ($result) {
-            $sql = "INSERT INTO `$table` VALUES ('$sem', 'Active');";
-            $result = $this->con->query($sql);
+            // Check if the semester already exists
+            $checkSql = "SELECT * FROM `$table` WHERE `semester_name` = '$sem'";
+            $checkResult = $this->con->query($checkSql);
+    
+            if ($checkResult->num_rows == 0) {
+                // Insert only if the record does not exist
+                $sql = "INSERT INTO `$table` (`semester_name`, `status`) VALUES ('$sem', 'Active')";
+                return $this->con->query($sql);
+            } else {
+                return false; // semester already exists
+            }
         } else {
             return false;
         }
     }
+
     // INSERT INTO TABLE QUARTERLY
     public function insertQuarter($table, $quarter)
     {
-
+        // Set all existing records to Inactive
         $sql = "UPDATE `quarterly` SET `status` = 'Inactive'";
         $result = $this->con->query($sql);
-
+    
         if ($result) {
-            $sql = "INSERT INTO `$table` VALUES ('$quarter', 'Active');";
-            $result = $this->con->query($sql);
+            // Check if the quarter already exists
+            $checkSql = "SELECT * FROM `$table` WHERE `quarterly_name` = '$quarter'";
+            $checkResult = $this->con->query($checkSql);
+    
+            if ($checkResult->num_rows == 0) {
+                // Insert only if the record does not exist
+                $sql = "INSERT INTO `$table` (`quarterly_name`, `status`) VALUES ('$quarter', 'Active')";
+                return $this->con->query($sql);
+            } else {
+                return false; // Quarter already exists
+            }
         } else {
             return false;
         }
     }
-
-
+    
 
     public function checkExistingSem($table, $semester)
     {
@@ -2174,6 +1976,7 @@ class myDataBase
         $result = $stmt->get_result();
         return $result->num_rows > 0; // Returns true if a record exists, false otherwise
     }
+
 
     public function checkExistingQuarter($table, $quarter)
     {
@@ -2195,7 +1998,6 @@ class myDataBase
         $result = $stmt->get_result();
         return $result->num_rows > 0; // Returns true if a record exists, false otherwise
     }
-
 
 
     //UPDATE INTO TABLE ACTIVE SY
@@ -2280,9 +2082,7 @@ class myDataBase
     }
 
 
-
-
-    //  GET ALL USERS PRINCIPAL | FACULTIES | STUDENTS
+    //  DYNAMIC GET ALL USERS PRINCIPAL | FACULTIES | STUDENTS
     public function getUsers($row = null, $value = null, $limit = 16, $offset = 0)
     {
         if ($row != null && $value != null) {
@@ -2339,11 +2139,6 @@ class myDataBase
         }
     }
 
-
-
-
-
-
     // SEARCH USERS IN TABLE
     public function searchUser($value)
     {
@@ -2390,17 +2185,14 @@ class myDataBase
     }
 
 
-
     //GET SCHOOL YEAR
     public function getSchoolyear($row = null, $value = null)
     {
         if ($row != null &&  $value != null) {
-
             $sql = "SELECT * FROM `sy` WHERE `$row` = '$value'";
             $stored = ($this->con->query($sql))->fetch_assoc();
             return $stored;
         } else {
-
             $sql = "SELECT * FROM `sy` ORDER BY `school_year`";
             $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
             return $stored;
@@ -2411,12 +2203,10 @@ class myDataBase
     public function getSemester($row = null, $value = null)
     {
         if ($row != null &&  $value != null) {
-
             $sql = "SELECT * FROM `semester` WHERE `$row` = '$value'";
             $stored = ($this->con->query($sql))->fetch_assoc();
             return $stored;
         } else {
-
             $sql = "SELECT * FROM `semester` ORDER BY `semester_name`";
             $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
             return $stored;
@@ -2427,18 +2217,15 @@ class myDataBase
     public function getQuarter($row = null, $value = null)
     {
         if ($row != null &&  $value != null) {
-
             $sql = "SELECT * FROM `quarterly` WHERE `$row` = '$value'";
             $stored = ($this->con->query($sql))->fetch_assoc();
             return $stored;
         } else {
-
             $sql = "SELECT * FROM `quarterly` ORDER BY `quarterly_name`";
             $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
             return $stored;
         }
     }
-
 
 
     function hasSubjectTimeConflict($section_code, $sub_code, $day, $from, $to)
@@ -2461,60 +2248,30 @@ class myDataBase
 
         // Get the result
         $result = $stmt->get_result();
-
         // If there are conflicts, return the first conflict details (e.g., subject code, time, and section)
         if ($result && $result->num_rows > 0) {
             // Fetch the conflicting schedule
             return $result->fetch_assoc();
         }
-
         // No conflicts found
         return false;
     }
 
 
-
-
-    //GET STRAND NAME
-    // public function getStrand($row = null, $value = null, $limit = 8, $offset = 0)
-    // {
-    //     // Parameterized query to prevent SQL injection
-    //     if ($row != null && $value != null) {
-
-    //         $stmt = $this->con->prepare("SELECT * FROM `strand` WHERE `$row` = ?");
-    //         $stmt->bind_param('s', $value); // 's' denotes the type (string)
-    //         $stmt->execute();
-    //         $stored = $stmt->get_result()->fetch_assoc();
-    //         $stmt->close();
-    //         return $stored;
-    //     } else {
-    //         // Adjust the limit and offset to ensure at least 8 records are fetched
-    //         $stmt = $this->con->prepare("SELECT * FROM `strand` ORDER BY `strand_code` LIMIT ? OFFSET ?");
-    //         $stmt->bind_param('ii', $limit, $offset); // 'ii' denotes the types (integer, integer)
-    //         $stmt->execute();
-    //         $stored = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-    //         $stmt->close();
-    //         return $stored;
-    //     }
-    // }
-
     // GET LIST OF STRAND
     public function getStrand($row = null, $value = null)
     {
         if ($row != null &&  $value != null) {
-
             $sql = "SELECT * FROM `strand` WHERE `$row` = '$value'";
             $stored = ($this->con->query($sql))->fetch_assoc();
             return $stored;
         } else {
-
             $sql = "SELECT * FROM `strand` ORDER BY `strand_name`";
             $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
 
             return $stored;
         }
     }
-
 
     // GET LIST OF SECTION
     public function getSection($row = null, $value = null)
@@ -2551,7 +2308,6 @@ class myDataBase
             return $stored;
         }
     }
-
 
 
     //GET LIST OF SUBJECT
@@ -2608,9 +2364,6 @@ class myDataBase
             }
         }
     }
-
-
-
 
 
     //GET LIST OF SUBJECT BY SEMESTER AND STRAND
@@ -2803,8 +2556,6 @@ class myDataBase
     }
 
 
-
-
     //GET LIST OF SCHEDULE
     public function getSchedule($row = null, $value = null)
     {
@@ -2879,7 +2630,6 @@ class myDataBase
         }
     }
 
-
     function getSectionTitle($section_id)
     {
         // Prepare the SQL query to fetch the section title based on the section_id
@@ -2889,8 +2639,6 @@ class myDataBase
         $stmt = $this->con->prepare($query);
         $stmt->bind_param("s", $section_id);  // Bind the section_id parameter to the query
         $stmt->execute();
-
-        // Get the result
         $result = $stmt->get_result();
 
         // Check if any rows were returned
@@ -2915,8 +2663,6 @@ class myDataBase
         $stmt = $this->con->prepare($query);
         $stmt->bind_param("s", $subject_id);  // Bind the section_id parameter to the query
         $stmt->execute();
-
-        // Get the result
         $result = $stmt->get_result();
 
         // Check if any rows were returned
@@ -2931,11 +2677,6 @@ class myDataBase
             return null;
         }
     }
-
-
-
-
-
 
     // GET TEACHER LIST    
     public function getTeacher($row = null, $value = null)
@@ -2955,7 +2696,6 @@ class myDataBase
     }
 
     //GET STUDENT LIST
-
     public function getStudent($row = null, $value = null)
     {
         if ($row != null &&  $value != null) {
@@ -2973,7 +2713,6 @@ class myDataBase
         }
     }
 
-
     public function getSectionList($row = null, $value = null)
     {
         if ($row != null &&  $value != null) {
@@ -2990,9 +2729,6 @@ class myDataBase
             return $stored;
         }
     }
-
-
-
 
     // SEARCH TEACHER TABLE
     public function searchTeacher($value)
@@ -3055,7 +2791,6 @@ class myDataBase
             throw new mysqli_sql_exception($this->con->error);
         }
     }
-
 
 
     //insert strand with validation
@@ -3128,7 +2863,6 @@ class myDataBase
         }
     }
 
-
     // DELETEE FUNCTION
     public function delete($table, $row, $value) // REFER TO THE PRIMARY KEY TO DELETE
     {
@@ -3141,8 +2875,6 @@ class myDataBase
             return false;
         }
     }
-
-
 
     // Generic Update Function 
     // USERS | ENROLLMENT | STUDENT | TEACHER | SUBJECT | REGISTRAR| PRINCIPAL
@@ -3189,9 +2921,6 @@ class myDataBase
         return $result ? true : false;
     }
 
-
-
-
     // UPDATE SECTION
     public function updateSection($row, $value, $where)
     {
@@ -3219,9 +2948,6 @@ class myDataBase
 
         return $result;
     }
-
-
-
 
     // Function to execute a query and fetch a single row
     public function querySingle($sql, $params = [])
@@ -3252,103 +2978,14 @@ class myDataBase
 
     // =========================================== UPLOAD MODULE  ====================================================
 
-    // // Fetch modules by subject handled by teacher
-    // function getModuleOfStudentBySectionStrandAndGradelevel($stu_lrn, $sub_code, $strand_code, $grade_lvl)
-    // {
-    //     $activeSemesters = $this->checkSemStatus('semester');
-
-    //     // Check if there are any active semesters
-    //     if (empty($activeSemesters)) {
-    //         return []; // Return an empty array if no active semester
-    //     }
-
-    //     // Prepare the active semester condition
-    //     $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
-
-    //     try {
-    //         // Prepare query to get the schedule, related section information, teacher, and module
-    //         $sql = "
-    //         SELECT 
-    //             m.module_id, 
-    //             m.file_name, 
-    //             m.file_size, 
-    //             m.formatted_size, 
-    //             m.file_type, 
-    //             m.date_uploaded AS uploaded_date,
-    //             m.sched_id,
-    //             sec.section_code, 
-    //             sec.grade_lvl, 
-    //             st.strand_code, 
-    //             st.strand_name, 
-    //             sub.sub_code,
-    //             sub.sub_title,
-    //             sub.sub_semester,
-    //             sched.teacher_id,
-    //             t.teacher_fname, 
-    //             t.teacher_lname
-    //         FROM 
-    //             MODULE m
-    //         INNER JOIN  
-    //             SCHEDULE sched ON sched.sched_id = m.sched_id
-    //         INNER JOIN  
-    //             ENROLL en ON en.section_code = sched.section_code
-    //         INNER JOIN  
-    //             SECTION sec ON sec.section_code = sched.section_code
-    //         INNER JOIN  
-    //             STRAND st ON sec.strand_code = st.strand_code
-    //         INNER JOIN  
-    //             SUBJECT sub ON sub.sub_code = sched.sub_code
-    //         INNER JOIN  
-    //             TEACHER t ON t.teacher_id = sched.teacher_id
-    //         WHERE 
-    //             en.stu_lrn = ?
-    //             AND sec.grade_lvl = ? 
-    //             AND sec.strand_code = ? 
-    //             AND sub.sub_code = ?
-    //             AND $activeSemesterCondition
-    //     ";
-
-    //         // Prepare the query
-    //         $stmt = $this->con->prepare($sql);
-    //         if (!$stmt) {
-    //             throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
-    //         }
-
-    //         // Bind parameters
-    //         $stmt->bind_param("ssss", $stu_lrn, $grade_lvl, $strand_code, $sub_code);
-
-    //         // Execute the statement
-    //         $stmt->execute();
-    //         $result = $stmt->get_result();
-
-    //         // Fetch all the module data
-    //         $modules = [];
-    //         while ($row = $result->fetch_assoc()) {
-    //             $modules[] = $row;
-    //         }
-
-    //         // Free resources
-    //         $stmt->close();
-
-    //         return $modules ?: []; // Return an empty array if no data
-    //     } catch (Exception $e) {
-    //         // Log the error message
-    //         error_log("Error fetching student modules: " . $e->getMessage());
-    //         return []; // Return an empty array on error
-    //     }
-    // }
-
-
     // Fetch modules by subject handled by teacher
     function getModuleOfStudentByStrandAndGradelevel($sub_code, $strand_code, $grade_lvl)
     {
         $activeSemesters = $this->checkSemStatus('semester');
-
         // Check if there are any active semesters
         if (empty($activeSemesters)) {
             return []; // Return an empty array if no active semester
         }
-
         // Prepare the active semester condition
         $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
 
@@ -3373,18 +3010,12 @@ class myDataBase
                 sched.teacher_id,
                 t.teacher_fname, 
                 t.teacher_lname
-            FROM 
-                MODULE m
-            INNER JOIN  
-                SCHEDULE sched ON sched.sched_id = m.sched_id
-            INNER JOIN  
-                SECTION sec ON sec.section_code = sched.section_code
-            INNER JOIN  
-                STRAND st ON sec.strand_code = st.strand_code
-            INNER JOIN  
-                SUBJECT sub ON sub.sub_code = sched.sub_code
-            INNER JOIN  
-                TEACHER t ON t.teacher_id = sched.teacher_id
+            FROM module m
+            INNER JOIN schedule sched ON sched.sched_id = m.sched_id
+            INNER JOIN section sec ON sec.section_code = sched.section_code
+            INNER JOIN strand st ON sec.strand_code = st.strand_code
+            INNER JOIN subject sub ON sub.sub_code = sched.sub_code
+            INNER JOIN teacher t ON t.teacher_id = sched.teacher_id
             WHERE 
                 st.strand_code = ?
                 AND sec.grade_lvl = ?
@@ -3397,7 +3028,6 @@ class myDataBase
             if (!$stmt) {
                 throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
             }
-
             // Bind parameters
             $stmt->bind_param("sss", $strand_code, $grade_lvl, $sub_code);
 
@@ -3410,10 +3040,8 @@ class myDataBase
             while ($row = $result->fetch_assoc()) {
                 $modules[] = $row;
             }
-
-            // Free resources
+    
             $stmt->close();
-
             return $modules ?: []; // Return an empty array if no data
         } catch (Exception $e) {
             // Log the error message
@@ -3426,12 +3054,10 @@ class myDataBase
     function getModuleCreatedByTeacher($teacherId, $subjectId, $sectionCode)
     {
         $activeSemesters = $this->checkSemStatus('semester');
-
         // Check if there are any active semesters
         if (empty($activeSemesters)) {
             return []; // Return an empty array if no active semester
         }
-
         // Prepare the active semester condition
         $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
 
@@ -3456,35 +3082,25 @@ class myDataBase
                sched.sched_id,
                sched.teacher_id,
                 CONCAT(t.teacher_fname, ' ', t.teacher_lname) AS teacher
-           FROM 
-               MODULE m
-           INNER JOIN  
-               SCHEDULE sched ON sched.sched_id = m.sched_id
-           INNER JOIN  
-               SECTION sec ON sec.section_code = sched.section_code
-           INNER JOIN  
-               STRAND st ON sec.strand_code = st.strand_code
-           INNER JOIN  
-               SUBJECT sub ON sub.sub_code = sched.sub_code
-           INNER JOIN  
-               TEACHER t ON t.teacher_id = sched.teacher_id
+           FROM module m
+           INNER JOIN schedule sched ON sched.sched_id = m.sched_id
+           INNER JOIN section sec ON sec.section_code = sched.section_code
+           INNER JOIN strand st ON sec.strand_code = st.strand_code
+           INNER JOIN subject sub ON sub.sub_code = sched.sub_code
+           INNER JOIN teacher t ON t.teacher_id = sched.teacher_id
            WHERE 
                 sched.teacher_id = ?
                 AND sched.sub_code = ?
                 AND sched.section_code = ?
-                AND $activeSemesterCondition
-           ";
+                AND $activeSemesterCondition ";
 
             // Prepare the query
             $stmt = $this->con->prepare($sql);
             if (!$stmt) {
                 throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
             }
-
             // Bind parameters
             $stmt->bind_param("sss", $teacherId, $subjectId, $sectionCode);
-
-            // Execute the statement
             $stmt->execute();
             $result = $stmt->get_result();
 
@@ -3493,10 +3109,8 @@ class myDataBase
             while ($row = $result->fetch_assoc()) {
                 $modules[] = $row;
             }
-
             // Free resources
             $stmt->close();
-
             return $modules ?: []; // Return an empty array if no data
         } catch (Exception $e) {
             // Log the error message
@@ -3504,7 +3118,6 @@ class myDataBase
             return []; // Return an empty array on error
         }
     }
-
 
     // Helper function to format file size
     public function formatFileSize($bytes)
@@ -3577,110 +3190,7 @@ class myDataBase
         return $modules;
     }
 
-
-
     // =========================================== EXAM FUNCTION ====================================================
-
-    // GET ALL EXAM CREATED BY TEACHER HANDLED SUBJECT IN EVERY same strand and grade lvl
-    // function getAllExamCreatedByTeacher($teacherId, $subjectId, $sectionCode)
-    // {
-    //     try {
-    //         $sql = "
-    //             SELECT 
-    //                 e.exam_id,
-    //                 e.exam_title,
-    //                 e.exam_type,
-    //                 e.exam_quarter,
-    //                 e.exam_duration,
-    //                 e.exam_items,
-    //                 e.exam_date,
-    //                 sec.section_code,
-    //                 sec.section_name,
-    //                 sec.grade_lvl,
-    //                 str.strand_code,
-    //                 sub.sub_code,
-    //                 sub.sub_semester,
-    //                 sub.sub_title,
-    //                 sched.sched_id,
-    //                 -- Fetch multiple-choice questions
-    //                  (SELECT JSON_ARRAYAGG(
-    //                     JSON_OBJECT(
-    //                         'mul_id', mul_id,
-    //                         'question', mul_question,
-    //                         'A', choice_a,
-    //                         'B', choice_b,
-    //                         'C', choice_c,
-    //                         'D', choice_d,
-    //                         'correct', is_correct
-    //                     )
-    //                 ) FROM exam_multiple WHERE exam_id = e.exam_id) AS multiple_questions,
-
-    //                  -- Fetch enumeration questions
-    //                 (SELECT JSON_ARRAYAGG(
-    //                     JSON_OBJECT(
-    //                         'enum_id', enum_id,
-    //                         'question', enum_question,
-    //                         'answers', enum_answer
-    //                     )
-    //                 ) FROM exam_enumeration WHERE exam_id = e.exam_id) AS enumeration_questions,
-
-    //                 -- Fetch essay questions
-    //                 (SELECT JSON_ARRAYAGG( 
-    //                     JSON_OBJECT(
-    //                         'essay_id', essay_id,
-    //                         'question', essay_question
-    //                     )
-    //                 ) FROM exam_essay WHERE exam_id = e.exam_id) AS essay_questions,
-
-    //                 -- Fetch true/false questions
-    //                 (SELECT JSON_ARRAYAGG(
-    //                             JSON_OBJECT(
-    //                                 'tf_id', tf_id,
-    //                                 'question', tf_question,
-    //                                 'correct', tf_answer
-    //                             )
-    //                         ) 
-    //                 FROM exam_tf 
-    //                 WHERE exam_id = e.exam_id) AS tf_questions
-    //             FROM 
-    //                 exam e
-    //             INNER JOIN 
-    //                 schedule sched ON e.sched_id = sched.sched_id
-    //             INNER JOIN 
-    //                 section sec ON sched.section_code = sec.section_code
-    //             INNER JOIN 
-    //                 strand str ON sec.strand_code = str.strand_code
-    //             INNER JOIN 
-    //                 subject sub ON sched.sub_code = sub.sub_code
-    //             WHERE 
-    //                 sched.teacher_id = ?
-    //                 AND sched.sub_code = ?
-    //                 AND sched.section_code = ?
-    //             ORDER BY 
-    //                 e.exam_date desc, e.exam_title
-    //         ";
-
-    //         // Prepare the query
-    //         $stmt = $this->con->prepare($sql);
-    //         if (!$stmt) {
-    //             throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
-    //         }
-    //         // Bind parameters
-    //         $stmt->bind_param("sss", $teacherId, $subjectId, $sectionCode);
-    //         // Execute the statement
-    //         $stmt->execute();
-    //         $result = $stmt->get_result();
-    //         // Fetch all matching rows
-    //         $exams = $result->fetch_all(MYSQLI_ASSOC);
-    //         // Free resources
-    //         $stmt->close();
-    //         return $exams;
-    //     } catch (Exception $e) {
-    //         // Log the error message
-    //         error_log("Error fetching exams created by teacher: " . $e->getMessage());
-    //         return [];
-    //     }
-    // }
 
     function getAllExamCreatedByTeacher($teacherId, $subjectId, $sectionCode)
     {
@@ -3699,7 +3209,6 @@ class myDataBase
             // Prepare the active semester condition
             $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
             $activeQuarterCondition = " e.exam_quarter IN ('" . implode("','", $activeQuarter) . "')";
-
 
             // Query to fetch exam data and join it with related question tables
             $sql = "
@@ -3763,7 +3272,6 @@ class myDataBase
                     exam_essay ee ON e.exam_id = ee.exam_id
                 LEFT JOIN 
                     exam_tf tf ON e.exam_id = tf.exam_id
-
                 WHERE 
                     sched.teacher_id = ?
                     AND sched.sub_code = ?
@@ -3771,19 +3279,14 @@ class myDataBase
                     AND $activeSemesterCondition 
                     AND $activeQuarterCondition
                 ORDER BY 
-                    e.exam_date DESC, e.exam_title
-            ";
-
+                    e.exam_date DESC, e.exam_title";
             // Prepare the query
             $stmt = $this->con->prepare($sql);
             if (!$stmt) {
                 throw new Exception("Failed to prepare the SQL statement: " . $this->con->error);
             }
-
             // Bind parameters
             $stmt->bind_param("sss", $teacherId, $subjectId, $sectionCode);
-
-            // Execute the statement
             $stmt->execute();
 
             // Fetch raw result set
@@ -4149,8 +3652,7 @@ class myDataBase
             COUNT(DISTINCT ss.stu_lrn) AS students_with_scores
         FROM 
             enroll e
-        INNER JOIN 
-            student s ON e.stu_lrn = s.stu_lrn
+        INNER JOIN student s ON e.stu_lrn = s.stu_lrn
         LEFT JOIN 
             student_scores ss ON e.stu_lrn = ss.stu_lrn 
             AND ss.sub_code = ? 
@@ -4169,17 +3671,6 @@ class myDataBase
         // If all classmates have scores in the active quarter, return true, else false
         return ($result['total_classmates'] > 0) && ($result['total_classmates'] == $result['students_with_scores']);
     }
-
-
-
-
-
-
-
-
-
-
-
 
     //GET ALL SCORE OF STUDENT IN EXAM
     public function getStudentExamScore($stud_id, $exam_id)
@@ -4227,106 +3718,6 @@ class myDataBase
     }
 
 
-
-
-
-
-
-    // public function calculateAndStoreStudentScore($stud_id, $exam_id)
-    // {
-    //     // First, check if the score already exists for the student in the student_scores table
-    //     $sql = "SELECT correct_answers, total_questions, score_percentage
-    //             FROM student_scores
-    //             WHERE stu_lrn = ? AND exam_id = ?";
-
-    //     $stmt = $this->con->prepare($sql);
-    //     $stmt->bind_param("ss", $stud_id, $exam_id);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
-
-    //     // If a score already exists, return it
-    //     if ($row = $result->fetch_assoc()) {
-    //         return [
-    //             'correct_answers' => $row['correct_answers'],
-    //             'total_questions' => $row['total_questions'],
-    //             'score_percentage' => $row['score_percentage']
-    //         ];
-    //     }
-
-    //     // If no score exists, calculate the score by checking student answers
-    //     $total_questions = 0;
-    //     $correct_answers = 0;
-
-    //     $sql = "
-    //         SELECT 
-    //             sea.question_id, sea.question_type, sea.student_answer,
-    //             CASE 
-    //                 WHEN sea.question_type = 'multiple_choice' THEN em.is_correct
-    //                 WHEN sea.question_type = 'enumeration' THEN ee.enum_answer
-    //                 WHEN sea.question_type = 'true_false' THEN et.tf_answer
-    //                 ELSE NULL  
-    //             END AS correct_answer
-    //         FROM student_answers sea
-    //         LEFT JOIN exam_multiple em ON sea.question_id = em.mul_id AND sea.question_type = 'multiple_choice'
-    //         LEFT JOIN exam_enumeration ee ON sea.question_id = ee.enum_id AND sea.question_type = 'enumeration'
-    //         LEFT JOIN exam_tf et ON sea.question_id = et.tf_id AND sea.question_type = 'true_false'
-    //         WHERE sea.stu_lrn = ? AND sea.exam_id = ?";
-
-    //     $stmt = $this->con->prepare($sql);
-    //     $stmt->bind_param("ss", $stud_id, $exam_id);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
-
-    //     while ($row = $result->fetch_assoc()) {
-    //         $total_questions++;
-
-    //         // Convert both answers to lowercase (case-insensitive check)
-    //         $student_answer = strtolower(trim($row['student_answer']));
-    //         $correct_answer = strtolower(trim($row['correct_answer']));
-
-    //         if ($row['question_type'] === 'enumeration') {
-    //             // Split the answers into arrays and remove extra spaces
-    //             $student_answers_array = array_map('trim', explode(',', strtolower($student_answer)));
-    //             $correct_answers_array = array_map('trim', explode(',', strtolower($correct_answer)));
-
-    //             // Sort both arrays to ignore order
-    //             sort($student_answers_array);
-    //             sort($correct_answers_array);
-
-    //             // If sorted arrays match, it's correct
-    //             if ($student_answers_array === $correct_answers_array) {
-    //                 $correct_answers++;
-    //             }
-    //         } else {
-    //             // For other question types (Multiple Choice & True/False)
-    //             if ($student_answer === $correct_answer) {
-    //                 $correct_answers++;
-    //             }
-    //         }
-    //     }
-
-    //     // Compute Score Percentage
-    //     $score_percentage = ($total_questions > 0) ? ($correct_answers / $total_questions) * 100 : 0;
-
-    //     // Store score in student_scores
-    //     $sql = "INSERT INTO student_scores (stu_lrn, exam_id, total_questions, correct_answers, score_percentage)
-    //             VALUES (?, ?, ?, ?, ?)
-    //             ON DUPLICATE KEY UPDATE correct_answers = VALUES(correct_answers), score_percentage = VALUES(score_percentage)";
-
-    //     $stmt = $this->con->prepare($sql);
-    //     $stmt->bind_param("ssiid", $stud_id, $exam_id, $total_questions, $correct_answers, $score_percentage);
-    //     $stmt->execute();
-
-    //     // Return the calculated results
-    //     return [
-    //         'correct_answers' => $correct_answers,
-    //         'total_questions' => $total_questions,
-    //         'score_percentage' => $score_percentage
-    //     ];
-    // }
-
-
-
     // CALCULATE THE EQUIVALENT SCORE OF STUDENT 
     // NOTE : This function is dynamiclly fetch and inserting the equiavalent score of student
     public function calculateEquivalentAndStoreStudentScore($stud_id, $exam_id = null, $quiz_id = null)
@@ -4334,25 +3725,22 @@ class myDataBase
         // Initialize scores
         $total_questions = 0;
         $correct_answers = 0;
-
+    
         // Determine if calculating for an exam or a quiz
         $condition = $exam_id ? "sa.exam_id = ?" : "sa.quiz_id = ?";
-        $param = $exam_id ?: $quiz_id; // Set param to exam_id if provided, otherwise use quiz_id
-
+        $param = $exam_id ?: $quiz_id; 
+    
         // Query to fetch student answers and match them with correct answers
         $sql = "
         SELECT 
             sa.question_id, sa.sub_code, sa.question_type, sa.student_answer, ex.exam_quarter, qz.quiz_quarter,
             CASE 
-                WHEN sa.question_type = 'multiple_choice' 
-                    THEN COALESCE(em.is_correct, qm.is_correct) -- Exam or Quiz Multiple Choice
-                WHEN sa.question_type = 'enumeration' 
-                    THEN COALESCE(ee.enum_answer, qe.q_enum_answer) -- Exam or Quiz Enumeration
-                WHEN sa.question_type = 'true_false' 
-                    THEN COALESCE(et.tf_answer, qtf.q_tf_answer) -- Exam or Quiz True/False
+                WHEN sa.question_type = 'multiple_choice' THEN COALESCE(em.is_correct, qm.is_correct)
+                WHEN sa.question_type = 'enumeration' THEN COALESCE(ee.enum_answer, qe.q_enum_answer)
+                WHEN sa.question_type = 'true_false' THEN COALESCE(et.tf_answer, qtf.q_tf_answer)
                 ELSE NULL  
             END AS correct_answer,
-            COALESCE(ex.exam_items, qz.quiz_items) AS total_items -- Fetch total items dynamically
+            COALESCE(ex.exam_items, qz.quiz_items) AS total_items
         FROM student_answers sa
         LEFT JOIN exam_multiple em ON sa.question_id = em.mul_id AND sa.question_type = 'multiple_choice' AND sa.exam_id IS NOT NULL
         LEFT JOIN exam_enumeration ee ON sa.question_id = ee.enum_id AND sa.question_type = 'enumeration' AND sa.exam_id IS NOT NULL
@@ -4363,80 +3751,63 @@ class myDataBase
         LEFT JOIN exam ex ON sa.exam_id = ex.exam_id 
         LEFT JOIN quiz qz ON sa.quiz_id = qz.quiz_id 
         WHERE sa.stu_lrn = ? AND $condition";
-
+    
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("ss", $stud_id, $param);
         $stmt->execute();
         $result = $stmt->get_result();
-
+    
         $total_items = 0;
-
+    
         while ($row = $result->fetch_assoc()) {
-            $total_items = (int) $row['total_items']; // Get the total items from exam/quiz table
+            $total_items = (int)$row['total_items'];
             $total_questions++;
-
-            //Get subject code for inserting in studen_scores
+    
             $sub_code = trim($row['sub_code']);
-            //Get quarter for inserting in student_scores
-            $quarter = trim($row['exam_quarter']);
-            // Convert both answers to lowercase (case-insensitive check)
+            $quarter = $exam_id ? trim($row['exam_quarter']) : trim($row['quiz_quarter']);
             $student_answer = strtolower(trim($row['student_answer']));
             $correct_answer = strtolower(trim($row['correct_answer']));
-
+    
             if ($row['question_type'] === 'enumeration') {
-                // Split the answers into arrays and remove extra spaces
-                $student_answers_array = array_map('trim', explode(',', strtolower($student_answer)));
-                $correct_answers_array = array_map('trim', explode(',', strtolower($correct_answer)));
-
-                // Count correct enumeration matches
+                $student_answers_array = array_map('trim', explode(',', $student_answer));
+                $correct_answers_array = array_map('trim', explode(',', $correct_answer));
+    
                 $correct_count = 0;
                 foreach ($student_answers_array as $answer) {
-                    if (in_array($answer, $correct_answers_array)) {
-                        $correct_count++;
+                    foreach ($correct_answers_array as $correct) {
+                        if (preg_match("/\b" . preg_quote($answer, '/') . "\b/", $correct)) {
+                            $correct_count++;
+                            break;
+                        }
                     }
                 }
                 $correct_answers += $correct_count;
             } else {
-                // For other question types (Multiple Choice & True/False)
                 if ($student_answer === $correct_answer) {
                     $correct_answers++;
                 }
             }
         }
-
-
-        // Input Validation (important!)
+    
         if ($total_items <= 0 || $correct_answers < 0 || $correct_answers > $total_items) {
-            return "Invalid data in the database for this student.";
+            return "Invalid data for this student.";
         }
-
-        // Calculate the percentage
+    
         $percentage = ($correct_answers / $total_items) * 100;
-        // Define equivalent score range
         $highest_equivalent = 95;
         $lowest_equivalent = 65;
-
-        // Calculate equivalent score using linear interpolation
-        $equivalent_score = round(
-            $lowest_equivalent + ($percentage / 100) * ($highest_equivalent - $lowest_equivalent)
-        );
-
-        // Ensure score stays within the range
+        $equivalent_score = round($lowest_equivalent + ($percentage / 100) * ($highest_equivalent - $lowest_equivalent));
         $equivalent_score = min($highest_equivalent, max($lowest_equivalent, $equivalent_score));
-
-        // Store score in student_scores table, now considering `quiz_id`
+    
         $sql = "INSERT INTO student_scores (stu_lrn, sub_code, exam_id, quiz_id, total_questions, correct_answers, equivalent_score, quarterly)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE correct_answers = VALUES(correct_answers), equivalent_score = VALUES(equivalent_score)";
-
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE correct_answers = VALUES(correct_answers), equivalent_score = VALUES(equivalent_score)";
+    
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("ssssiids", $stud_id, $sub_code, $exam_id, $quiz_id, $total_items, $correct_answers, $equivalent_score, $quarter);
         $stmt->execute();
     }
-
-
-
-
+    
 
 
     // =========================================== QUIZ FUNCTION ====================================================
@@ -4447,15 +3818,17 @@ class myDataBase
         try {
             // Get the active semester
             $activeSemesters = $this->checkSemStatus('semester');
-
+            $activeQuarter = $this->checkQuarterStatus('quarterly');
             // Check if there are any active semesters
             if (empty($activeSemesters)) {
                 return []; // Return an empty array if no active semester
             }
-
+            if (empty($activeQuarter)) {
+                return []; // Return an empty array if no active semester
+            }
             // Prepare the active semester condition
             $activeSemesterCondition = "sub.sub_semester IN ('" . implode("','", $activeSemesters) . "')";
-
+            $activeQuarterCondition = " q.quiz_quarter IN ('" . implode("','", $activeQuarter) . "')";
 
             $sql = "
                 SELECT 
@@ -4500,14 +3873,10 @@ class myDataBase
                     tf.q_tf_answer AS q_tf_correct
                 FROM 
                     quiz q
-                INNER JOIN 
-                    schedule sched ON q.sched_id = sched.sched_id
-                INNER JOIN 
-                    section sec ON sched.section_code = sec.section_code
-                INNER JOIN 
-                    strand str ON sec.strand_code = str.strand_code
-                INNER JOIN 
-                    subject sub ON sched.sub_code = sub.sub_code
+                INNER JOIN schedule sched ON q.sched_id = sched.sched_id
+                INNER JOIN section sec ON sched.section_code = sec.section_code
+                INNER JOIN strand str ON sec.strand_code = str.strand_code
+                INNER JOIN subject sub ON sched.sub_code = sub.sub_code
 
                 -- Left join question tables
                 LEFT JOIN 
@@ -4524,6 +3893,7 @@ class myDataBase
                     AND sched.sub_code = ?
                     AND sched.section_code = ?
                     AND $activeSemesterCondition
+                    AND $activeQuarterCondition
                 ORDER BY 
                     q.quiz_id ASC
             ";
@@ -4535,10 +3905,8 @@ class myDataBase
             }
             // Bind parameters
             $stmt->bind_param("sss", $teacherId, $subjectId, $sectionCode);
-            // Execute the statement
             $stmt->execute();
             $result = $stmt->get_result();
-            // Fetch all matching rows
             $rows = $result->fetch_all(MYSQLI_ASSOC);
 
             // Organize the result set into a structured format
@@ -4634,7 +4002,6 @@ class myDataBase
             return [];
         }
     }
-
 
     public function updateQuizMultipleRecord($table, $row, $value, $whereColumn, $whereValue)
     {

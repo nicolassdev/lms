@@ -17,12 +17,12 @@ if (!isset($_POST["submit"])) {
 
     if ($existingSy) {
         // If the semester already exists, redirect back with an error
-        $_SESSION['error_insert'] = "School year has been already taken.";
+        $_SESSION['error'] = "School year has been already taken.";
         header("Location: ../index.php?page=schoolyear");
     } else {
         $mySQLFunction->insertSy("sy", $syear);
 
-        $_SESSION['insert'] = "School year has been inserted successfuly";
+        $_SESSION['success'] = "School year has been inserted successfuly";
         header("Location: ../index.php?page=schoolyear");
     }
 

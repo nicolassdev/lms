@@ -113,7 +113,7 @@
                 <input type="text" name="quiz_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
 
                 <div id="choicesContainer${questionIndex}">
-                    <label class="form-label fw-bold">Choices</label>
+                    <label class="form-label fw-bold">Choices <small class="text-danger"> ( Please select correct answer)</small></label>
                         <div class="d-flex align-items-center mb-2">
                             <input type="radio" name="quiz_correct_answer[${questionIndex}]" value="A" class="form-check-input" required>
                             <input type="text" name="choice_a[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice A">
@@ -147,7 +147,7 @@
             // Multiple Choice
             container.innerHTML = `
                 <input type="text" name="quiz_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
-                <label class="form-label fw-bold">Choices</label>
+                <label class="form-label fw-bold">Choices <small class="text-danger"> ( Please select correct answer)</small></label>
                     <div class="d-flex align-items-center mb-2">
                         <input type="radio" name="quiz_correct_answer[${questionIndex}]" value="A" class="form-check-input" required>
                         <input type="text" name="choice_a[${questionIndex}]" class="form-control ms-2" placeholder="Enter choice A">
@@ -183,7 +183,8 @@
             // True/False
             container.innerHTML = `
                  <input type="text" name="quiz_tf_question[${questionIndex}]" class="form-control mb-2" placeholder="Enter the question text" required>
-                <select name="quiz_correct_answer[${questionIndex}]" class="form-select">
+                 <label class="text-success">Please select the correct answer</label>
+                 <select name="quiz_correct_answer[${questionIndex}]" class="form-select">
                     <option value="True">True</option>
                     <option value="False">False</option>
                 </select>
