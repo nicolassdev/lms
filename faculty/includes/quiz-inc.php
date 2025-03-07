@@ -102,7 +102,7 @@ try {
 
                     case "4": // True/False
                         $question = $_POST['quiz_tf_question'][$questionIndex] ?? '';
-                        $correctAnswer = $_POST['quiz_correct_answer'][$questionIndex] ?? '';
+                        $correctAnswer =  strtolower($_POST['quiz_correct_answer'][$questionIndex] ?? '');
 
                         // Example: Insert into exam_tf table
                         $stmt = $mySQLFunction->con->prepare("INSERT INTO quiz_tf (quiz_id, q_tf_question, q_tf_answer) VALUES (?, ?, ?)");
