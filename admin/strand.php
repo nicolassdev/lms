@@ -38,8 +38,8 @@ include "../admin/includes/Forms/strandform.php";
   ?>
   <!-- THSI THE STRAND TABLE -->
   <!-- TABLE -->
-  <div class="table-responsive small ms-3 me-3">
-  <div class="row g-3 ms-3 me-3">
+  <div class="table-responsive small ms-3 me-3 fade-in-input">
+  <div class="row g-3 ms-3 me-3 ">
   <?php
   $mySQLFunction->connection();
   if (!isset($_POST["search"])) {

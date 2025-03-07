@@ -13,23 +13,16 @@ include "../includes/dbh-inc.php";
 
 
 
-<!-- 
-<style>
-    .text-sm {
-        font-size: 0.7em;
-    }
 
+<style>
+ 
     .data-table {
-        font-size: 0.7em;
+        font-size: 0.8em;
         /* Reduce font size */
     }
 
-    .table th,
-    .table td {
-        padding: 0.1rem;
-        /* Adjust padding */
-    }
-</style> -->
+ 
+</style>
 
 
 <!-- TABLE -->

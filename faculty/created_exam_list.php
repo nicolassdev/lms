@@ -24,19 +24,6 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
 }
 ?>
 
-<!-- <style>
-    .data-table {
-        font-size: 0.8em;
-        /* Reduce font size */
-    }
-
-    .table th,
-    .table td {
-        padding: 0.1rem;
-        /* Adjust padding */
-    }
-</style> -->
-
 <main class="col-md-12 ms-sm-auto col-lg-10 px-md-3 mt-5 py-4 me-2">
     <div class="container">
         <div class="row">
@@ -215,7 +202,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
                                                     echo '<div class="input-group-text">';
                                                     // KEY CHANGE: Checkbox and array name 
                                                     //NOTE IF RADIO I CAN SELECT ONLY ONE , IF CHECKBOX I CAN SELECT MULTIPLE
-                                                    echo '<input type="radio" name="correct_answer[' . $mcq["mul_id"] . '][]" value="' . $optionLetter . '" ' . ($isCorrect ? 'checked' : '') . ' class="correct-answer-checkbox">';
+                                                    echo '<input type="checkbox" name="correct_answer[' . $mcq["mul_id"] . '][]" value="' . $optionLetter . '" ' . ($isCorrect ? 'checked' : '') . ' class="correct-answer-checkbox">';
                                                     echo '</div>';
                                                     echo '</div>';
                                                     echo '</div>';
