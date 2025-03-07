@@ -121,7 +121,7 @@ include "../admin/includes/Forms/enrollmentform.php";
                                         
                                         <td class="d-flex justify-content-center pt-2 pb-3 ">
                                             <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#edit_enrolled' . urlencode($row['stu_lrn']) . '">
-                                                <i class="bi bi-pencil-square me-1"></i>Edit
+                                                <i class="bi bi-pencil-square"></i>
                                             </button>
                                         
                                         </td>

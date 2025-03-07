@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2025 at 11:28 AM
--- Server version: 10.4.32-MariaDB
+-- Generation Time: Mar 07, 2025 at 04:40 PM
+-- Server version: 8.0.35
 -- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -28,17 +28,17 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `enroll` (
-  `stu_lrn` varchar(12) NOT NULL COMMENT 'STUDENT LRN',
-  `section_code` varchar(50) NOT NULL COMMENT 'SECTION NAME',
-  `semester` varchar(50) NOT NULL COMMENT 'set semester',
-  `school_year` varchar(30) NOT NULL COMMENT 'set school year',
+  `stu_lrn` varchar(12) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'STUDENT LRN',
+  `section_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'SECTION NAME',
+  `semester` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'set semester',
+  `school_year` varchar(30) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'set school year',
   `date_enroll` date DEFAULT NULL,
-  `enroll_status` varchar(30) NOT NULL,
-  `current_school` varchar(70) NOT NULL,
-  `school_id` mediumint(8) UNSIGNED DEFAULT NULL,
-  `school_address` varchar(100) NOT NULL,
-  `school_type` varchar(30) NOT NULL,
-  `requirements_submit` varchar(100) DEFAULT NULL
+  `enroll_status` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `current_school` varchar(70) COLLATE utf8mb4_general_ci NOT NULL,
+  `school_id` mediumint UNSIGNED DEFAULT NULL,
+  `school_address` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `school_type` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `requirements_submit` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -88,13 +88,13 @@ INSERT INTO `enroll` (`stu_lrn`, `section_code`, `semester`, `school_year`, `dat
 --
 
 CREATE TABLE `exam` (
-  `exam_id` varchar(15) NOT NULL,
-  `sched_id` varchar(50) NOT NULL,
-  `exam_type` varchar(50) NOT NULL COMMENT '1: Multi, 2: Enumeration, 3: Essay, 4: True or False',
-  `exam_quarter` varchar(20) NOT NULL,
-  `exam_duration` int(11) NOT NULL,
-  `exam_title` varchar(50) NOT NULL,
-  `exam_items` tinyint(4) NOT NULL,
+  `exam_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `sched_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `exam_type` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT '1: Multi, 2: Enumeration, 3: Essay, 4: True or False',
+  `exam_quarter` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `exam_duration` int NOT NULL,
+  `exam_title` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `exam_items` tinyint NOT NULL,
   `exam_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -106,6 +106,7 @@ INSERT INTO `exam` (`exam_id`, `sched_id`, `exam_type`, `exam_quarter`, `exam_du
 ('EXM-0826', 'SCHED-6388', '1,1,1,1,1,1,1,1,1,1', '1st Quarter', 30, 'Tech Voc 6 Diagnose Computer  EXAMINATION', 10, '2025-02-27'),
 ('EXM-1285', 'SCHED-1913', '1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,', '1st Quarter', 60, 'Understanding Culture, Society, And Politics EXAMI', 30, '2025-02-27'),
 ('EXM-1843', 'SCHED-7588', '4,4,4,4,4,4,4,4,4,4,4,4,4,4,4', '1st Quarter', 40, 'BUSINESS MATHEMATICS', 15, '2025-03-14'),
+('EXM-3680', 'SCHED-1955', '1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1', '1st Quarter', 60, 'KUMUNIKASYON AT PANANALIKSIK', 20, '2025-03-07'),
 ('EXM-4999', 'SCHED-0936', '1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1', '1st Quarter', 60, 'Empowerment Technology Examination', 20, '2025-03-14'),
 ('EXM-5515', 'SCHED-1860', '1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1', '1st Quarter', 60, 'Earth and Life Science', 20, '2025-03-14'),
 ('EXM-7280', 'SCHED-9121', '4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,3,3,3,2,2', '1st Quarter', 60, 'Disaster And Risk Reduction', 24, '2025-03-21'),
@@ -121,10 +122,10 @@ INSERT INTO `exam` (`exam_id`, `sched_id`, `exam_type`, `exam_quarter`, `exam_du
 --
 
 CREATE TABLE `exam_enumeration` (
-  `enum_id` int(11) NOT NULL,
-  `exam_id` varchar(15) NOT NULL,
-  `enum_question` varchar(300) DEFAULT NULL,
-  `enum_answer` varchar(300) DEFAULT NULL
+  `enum_id` int NOT NULL,
+  `exam_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `enum_question` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `enum_answer` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -142,9 +143,9 @@ INSERT INTO `exam_enumeration` (`enum_id`, `exam_id`, `enum_question`, `enum_ans
 --
 
 CREATE TABLE `exam_essay` (
-  `essay_id` int(11) NOT NULL,
-  `exam_id` varchar(15) NOT NULL,
-  `essay_question` varchar(100) NOT NULL
+  `essay_id` int NOT NULL,
+  `exam_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `essay_question` varchar(100) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -154,14 +155,14 @@ CREATE TABLE `exam_essay` (
 --
 
 CREATE TABLE `exam_multiple` (
-  `mul_id` int(11) NOT NULL,
-  `exam_id` varchar(15) NOT NULL,
-  `mul_question` varchar(300) DEFAULT NULL,
-  `choice_a` varchar(300) DEFAULT NULL,
-  `choice_b` varchar(300) DEFAULT NULL,
-  `choice_c` varchar(300) DEFAULT NULL,
-  `choice_d` varchar(300) DEFAULT NULL,
-  `is_correct` varchar(300) DEFAULT NULL
+  `mul_id` int NOT NULL,
+  `exam_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `mul_question` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `choice_a` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `choice_b` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `choice_c` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `choice_d` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `is_correct` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -317,7 +318,27 @@ INSERT INTO `exam_multiple` (`mul_id`, `exam_id`, `mul_question`, `choice_a`, `c
 (166, 'EXM-4999', 'How can you add video?', 'Click insert > choose in video folder > insert', 'Right click > video and choose locate folder then press okay', 'Click insert > video then choose if online view or Video on my PC > choose video folder > okay', 'Click insert > video then choose if online View or Video on my PC> choose video folder > insert', 'Click insert > video then choose if online View or'),
 (167, 'EXM-4999', 'Juan wants to link the slide 1 to slide 3, what action will he do? ', 'Right click > hyperlink > place this link', ' Right click > link > place this hyperlink ', 'Right click > link > create new document ', 'Right click > link > place in this document ', 'Right click > link > place in this document '),
 (168, 'EXM-4999', 'What specific application allows you to create slide presentation for lecture or topic that motivates and persuade the audience?', 'Outlook ', 'Presentation', 'Spreadsheet ', 'Word', 'Presentation'),
-(169, 'EXM-4999', 'Which of the following buttons will you click to insert image?', 'Pictures', 'Videos', 'Audio', 'Online View', 'Pictures');
+(169, 'EXM-4999', 'Which of the following buttons will you click to insert image?', 'Pictures', 'Videos', 'Audio', 'Online View', 'Pictures'),
+(170, 'EXM-3680', 'Bakit mahalagang mahubog ang konsensiya ng tao?', 'Upang makilala nang tao ang katotohan ng kinakailangan niya upang magamit niya nang tama', 'Upang matiyak na hindi na magkakaroon ng pagtatalo sa pagitan ng tam at mali', 'Upang matiyak na palaging ang tamang konsensiya ang gagamitin sa lahat ng pagkakataon', 'Lahat ng nabanggit', 'Lahat ng nabanggit'),
+(171, 'EXM-3680', 'Ang konsesnsiya ang batayan ng isip sa paghuhusga ng mabuti o masama. Ngunit ito pa rin aay subhetibo, personal, at agarang g moralidad ng tao. Ano ang itinuturing na pinakamataas na batayan ng kilos?', 'Ang Sampung Utos ng Diyos', 'Likas na batas moral', 'Bataas ng Diyos', 'Batas Positibo', 'Likas na batas moral'),
+(172, 'EXM-3680', 'Hndi lamang masamang kitilin ang sariling buhay kundi masama ring kitilin ang buhay ng kaniyang kapuwa. Anong prinsipyo ng likas na batas moral ang batayan nito?', 'Gawin ang mabuti, iwasan ang masama', 'Kasama ng lahat ng may buhay, may kahiligan ang taong pangalagan ang kaniyang buhay', 'Kasama ng mga hayop, likas sa tao ang pagpaparami ng uri at papagaralin ang mga anak', 'Bilang rasyonal na nilalang, may likas na kahilingan ang tao na alamin ang katotohanan at mabuhay sa lipunan', 'Kasama ng lahat ng may buhay, may kahiligan ang taong pangalagan ang kaniyang buhay'),
+(173, 'EXM-3680', 'Ano ang pinakamahalagang katangian ng isang mahusay na tagapagsalita?', 'Malakas ang boses', 'Maraming alam sa teknolohiya', 'Marunong makinig at gumalang sa opinyon ng iba', 'Palaging nagsasalita kahit hindi kailangan', 'Marunong makinig at gumalang sa opinyon ng iba'),
+(174, 'EXM-3680', 'May kapatid kang nakapag-asawa ng kasapi ng ibang relihiyon. Nugnit nagpapamalas naman ng kabutihan sa inyo. Paano mo siya pakikisamahan?', 'Balewalain na lamang', 'Hindi na lang siya papansinin', 'Sabihin na sumasanib sa iyong relihiyon upang magkasundo kayo', 'Igagalang ang kanyang paniniwala at pakikisamahan na lang siya', 'Igagalang ang kanyang paniniwala at pakikisamahan na lang siya'),
+(175, 'EXM-3680', 'Malinaw sa atin ang sinabi ng ating konsensiya: gawin mo ang mabuti, iwasan mo ang msasama. Ngunit hindi ito nagbibigay ng katiyakan na ang mabuti ang papipiliin ng tao. Ano ang sinasabi sa pahayag nato?', 'Sa kahat ng pagakakataon tama ang hatl ng atng konsensiya', 'May mga taong pinili ang masama dahil wla silang konsensiya', 'Maaring magkamali sa paghatol ang konsensiya kaya mahalang mahubog ito upang kumiling sa mabuti', 'Kumiilos ang ating konsensiya tuwing nakagagawa tayo ng maling pagpapasiya', 'Kumiilos ang ating konsensiya tuwing nakagagawa tayo ng maling pagpapasiya'),
+(176, 'EXM-3680', 'Minsan, hindi maiiwasan ang mapilitang magsinunganling. Sa sitwasyon na Alam mong dapat sundin. Anong yugto ng konsensiya ang natutukoy sa ganitong sitwasyon?', 'Unang Yugto', 'Pangalawang Yugto', 'Ikatlong Yugto', 'Ikaapat na Yugto', 'Unang Yugto'),
+(177, 'EXM-3680', 'Ang responsibilidad ay ang kakayahang tumugon sa tawag ng pangangailangan ayon sa sitwasyon. Ang pahayag ay:', 'Tama, dahil ang tunay na responsableng kalayaan ay ang pagtulong sa kapwa', 'Tama, dahil may kakayahan ang taong magbigay paliwanag sa kilos na ginawa.', 'Mali, dahil ang responsibilidad ay palaging kakambal ng kalayaa na ginagamit ng tao', 'Mali, dahi ang responsibilidad ay ang pagtanggap sa kahhinatnan ng kilos na ginawa', 'Mali, dahil ang responsibilidad ay palaging kakambal ng kalayaa na ginagamit ng tao'),
+(178, 'EXM-3680', 'Ang konsensiya ay nangangahulugan ng paglilitis sa sarili. Ang ibig sabihin nito ay:', 'Bahala ang tao sa kakanyang kilos', 'Makakabubuti sa tao na kumilos nang tama', 'Obligasyon ng tao na kumilos nang maayos', 'Pag-aralan, unawain at hatulan ng sariling kilos', 'Pag-aralan, unawain at hatulan ng sariling kilos'),
+(179, 'EXM-3680', 'Ang konsensya ay bumubulong na wari sinasabi sa atin. Ito ang mabuti, ang dapat mong gawin. Anong yugto ng konsensiya ang kinapapalooban nito?', 'Alamin at naisin ang mabuti', 'Pagsusuri ng sarili at pagnininlay', 'Paghatol para sa mabuting pasiya at kilos', 'Ang pagkilatis sa partikular na kabutihan sa isang sitwasyon', 'Paghatol para sa mabuting pasiya at kilos'),
+(180, 'EXM-3680', 'Ano ang pangunahing layunin ng komunikasyon sa pagpapakatao?', 'Makipagdebate sa ibang taod', 'Magbigay ng tamang impormasyon', 'Makabuo ng mabuting ugnayan at paggalang sa kapwa', 'Maging popular sa social media', 'Makabuo ng mabuting ugnayan at paggalang sa kapwa'),
+(181, 'EXM-3680', 'Ano ang mahalagang elemento ng mabisang komunikasyon?', 'Pagtatalo', 'Pakikinig', 'Pagbibigay ng opinyon lamang', 'Pagsasawalang-bahala', 'Pakikinig'),
+(182, 'EXM-3680', 'Bakit mahalaga ang non-verbal communication sa pagpapakatao?', 'Dahil mas mabilis ito kaysa sa pagsasalita', 'Ito ay nagdadala ng damdamin at saloobin', 'Para sa pagpapakita ng kasinungalingan', 'Upang iwasan ang pakikipag-usap', 'Ito ay nagdadala ng damdamin at saloobin'),
+(183, 'EXM-3680', 'Ano ang dapat isaalang-alang sa paggamit ng social media bilang kasangkapan ng komunikasyon?', 'Pagtatala ng lahat ng personal na impormasyon', 'Pagpapahayag ng galit sa publiko', 'Paggalang sa karapatan ng iba', 'Pagpapakalat ng pekeng balita', 'Paggalang sa karapatan ng iba'),
+(184, 'EXM-3680', 'Alin sa mga sumusunod ang nagpapakita ng mabuting komunikasyon sa pagpapakatao?', 'Pagputol sa sinasabi ng kausap', 'Pagsigaw upang mapatunayan ang punto', 'Pakikinig nang may paggalang at pag-unawa', 'Pagbalewala sa opinyon ng iba', 'Pakikinig nang may paggalang at pag-unawa'),
+(185, 'EXM-3680', 'Ano ang pangunahing tungkulin ng komunikasyon sa pagkakaunawaan?', 'Makipagtalo upang mapatunayan ang sariling opinyon', 'Magbigay ng impormasyon nang walang pakialam sa nararamdaman ng iba', 'Makapagpahayag ng damdamin nang may respeto', 'Pagpapatawa lamang', 'Makapagpahayag ng damdamin nang may respeto'),
+(186, 'EXM-3680', 'Paano mo maipapakita ang responsableng komunikasyon sa social media?', 'Pag-share ng impormasyon nang hindi muna sinusuri', 'Pagpapahayag ng opinyon nang may paggalang', 'Pagmumura sa komento ng iba', 'Pagpapakalat ng tsismis', 'Pagpapahayag ng opinyon nang may paggalang'),
+(187, 'EXM-3680', 'Ano ang kahulugan ng empatikong pakikinig?', 'Pakikinig habang nagte-text', 'Pakikinig na may pag-unawa at paggalang sa damdamin ng kausap', 'Pakikinig upang makahanap ng mali sa sinasabi ng iba', 'Pakikinig na may layuning sumagot agad', 'Pakikinig na may pag-unawa at paggalang sa damdamin ng kausap'),
+(188, 'EXM-3680', 'Upang higit na mapaunlad ang paghubog ng konsensiya makakabuti na humingi ng paggabay sa sumusunod, maliban sa:', 'Mga magulang at nakakatanda', 'Mga taong nagpapahalaga ng moral', 'Sa mga kaibigan na nagpapahalaga ng sa iyong sarili', 'Sa diyos gamit ang kanyang mga salita at halimbawa', 'Sa mga kaibigan na nagpapahalaga ng sa iyong sarili'),
+(189, 'EXM-3680', 'Alin sa mga sumusunod ang halimbawa ng positibong komunikasyon sa isang grupo?', 'Pagsasawalang-kibo sa opinyon ng iba', 'Paggalang sa opinyon ng bawat isa', 'Pagkakaroon ng matinding argumento', 'Pagpapahiya sa kasamahan', 'Paggalang sa opinyon ng bawat isa');
 
 -- --------------------------------------------------------
 
@@ -326,10 +347,10 @@ INSERT INTO `exam_multiple` (`mul_id`, `exam_id`, `mul_question`, `choice_a`, `c
 --
 
 CREATE TABLE `exam_tf` (
-  `tf_id` int(11) NOT NULL,
-  `exam_id` varchar(15) NOT NULL,
-  `tf_question` varchar(100) DEFAULT NULL,
-  `tf_answer` varchar(50) DEFAULT NULL
+  `tf_id` int NOT NULL,
+  `exam_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `tf_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tf_answer` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -385,13 +406,13 @@ INSERT INTO `exam_tf` (`tf_id`, `exam_id`, `tf_question`, `tf_answer`) VALUES
 --
 
 CREATE TABLE `module` (
-  `module_id` varchar(50) NOT NULL,
-  `file_name` varchar(255) NOT NULL,
-  `file_size` bigint(20) UNSIGNED DEFAULT NULL,
-  `formatted_size` varchar(20) DEFAULT NULL,
-  `file_type` varchar(100) NOT NULL,
-  `sched_id` varchar(50) NOT NULL,
-  `date_uploaded` datetime NOT NULL DEFAULT current_timestamp()
+  `module_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `file_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `file_size` bigint UNSIGNED DEFAULT NULL,
+  `formatted_size` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `file_type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `sched_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `date_uploaded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -401,14 +422,14 @@ CREATE TABLE `module` (
 --
 
 CREATE TABLE `module_answer` (
-  `answer_id` varchar(50) NOT NULL,
-  `module_id` varchar(50) NOT NULL,
-  `stu_lrn` varchar(12) NOT NULL,
-  `file_name` varchar(255) NOT NULL,
-  `file_size` bigint(20) UNSIGNED DEFAULT NULL,
-  `formatted_size` varchar(20) DEFAULT NULL,
-  `file_type` varchar(100) NOT NULL,
-  `date_uploaded` datetime NOT NULL DEFAULT current_timestamp()
+  `answer_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `module_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_lrn` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
+  `file_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `file_size` bigint UNSIGNED DEFAULT NULL,
+  `formatted_size` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `file_type` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `date_uploaded` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -418,16 +439,16 @@ CREATE TABLE `module_answer` (
 --
 
 CREATE TABLE `principal` (
-  `principal_id` varchar(50) NOT NULL,
-  `firstname` varchar(50) NOT NULL,
-  `middlename` varchar(50) DEFAULT NULL,
-  `lastname` varchar(50) NOT NULL,
-  `contact` varchar(15) NOT NULL,
-  `gender` varchar(10) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `address` varchar(50) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `id` varchar(50) NOT NULL
+  `principal_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `firstname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `middlename` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `lastname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `contact` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `gender` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `address` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -444,8 +465,8 @@ INSERT INTO `principal` (`principal_id`, `firstname`, `middlename`, `lastname`, 
 --
 
 CREATE TABLE `quarterly` (
-  `quarterly_name` varchar(15) DEFAULT NULL,
-  `status` varchar(10) DEFAULT NULL
+  `quarterly_name` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -465,13 +486,13 @@ INSERT INTO `quarterly` (`quarterly_name`, `status`) VALUES
 --
 
 CREATE TABLE `quiz` (
-  `quiz_id` varchar(15) NOT NULL,
-  `sched_id` varchar(50) NOT NULL,
-  `quiz_type` tinyint(4) NOT NULL COMMENT '0 : Short Quiz, 1: Long Quiz',
-  `quiz_quarter` varchar(20) NOT NULL,
-  `quiz_duration` int(11) NOT NULL,
-  `quiz_title` varchar(50) NOT NULL,
-  `quiz_items` tinyint(4) NOT NULL,
+  `quiz_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `sched_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `quiz_type` tinyint NOT NULL COMMENT '0 : Short Quiz, 1: Long Quiz',
+  `quiz_quarter` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `quiz_duration` int NOT NULL,
+  `quiz_title` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `quiz_items` tinyint NOT NULL,
   `quiz_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -499,10 +520,10 @@ INSERT INTO `quiz` (`quiz_id`, `sched_id`, `quiz_type`, `quiz_quarter`, `quiz_du
 --
 
 CREATE TABLE `quiz_enumeration` (
-  `q_enum_id` int(11) NOT NULL,
-  `quiz_id` varchar(15) NOT NULL,
-  `q_enum_question` varchar(100) DEFAULT NULL,
-  `q_enum_answer` varchar(200) DEFAULT NULL
+  `q_enum_id` int NOT NULL,
+  `quiz_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `q_enum_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `q_enum_answer` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -521,9 +542,9 @@ INSERT INTO `quiz_enumeration` (`q_enum_id`, `quiz_id`, `q_enum_question`, `q_en
 --
 
 CREATE TABLE `quiz_essay` (
-  `q_essay_id` int(11) NOT NULL,
-  `quiz_id` varchar(15) NOT NULL,
-  `q_essay_question` varchar(100) DEFAULT NULL
+  `q_essay_id` int NOT NULL,
+  `quiz_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `q_essay_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -533,14 +554,14 @@ CREATE TABLE `quiz_essay` (
 --
 
 CREATE TABLE `quiz_multiple` (
-  `q_mul_id` int(11) NOT NULL,
-  `quiz_id` varchar(15) NOT NULL,
-  `q_mul_question` varchar(300) DEFAULT NULL,
-  `q_choice_a` varchar(300) DEFAULT NULL,
-  `q_choice_b` varchar(300) DEFAULT NULL,
-  `q_choice_c` varchar(300) DEFAULT NULL,
-  `q_choice_d` varchar(300) DEFAULT NULL,
-  `is_correct` varchar(300) DEFAULT NULL
+  `q_mul_id` int NOT NULL,
+  `quiz_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `q_mul_question` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `q_choice_a` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `q_choice_b` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `q_choice_c` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `q_choice_d` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `is_correct` varchar(300) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -615,10 +636,10 @@ INSERT INTO `quiz_multiple` (`q_mul_id`, `quiz_id`, `q_mul_question`, `q_choice_
 --
 
 CREATE TABLE `quiz_tf` (
-  `q_tf_id` int(11) NOT NULL,
-  `quiz_id` varchar(15) NOT NULL,
-  `q_tf_question` varchar(100) DEFAULT NULL,
-  `q_tf_answer` varchar(50) DEFAULT NULL
+  `q_tf_id` int NOT NULL,
+  `quiz_id` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `q_tf_question` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `q_tf_answer` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -659,7 +680,8 @@ INSERT INTO `quiz_tf` (`q_tf_id`, `quiz_id`, `q_tf_question`, `q_tf_answer`) VAL
 (31, 'QZ-3811', ' Ang pagmamahal ang pinakamabisang paraan ng komunikasyon.', 'True'),
 (32, 'QZ-3811', 'Ang pagbabago ng ekspresyon ng mukha sa di-berbal ay tinatawag na OCULESICS.', 'False'),
 (33, 'QZ-3811', 'Chronemics ang tawag sa komunikasyon na gumagamit ng oras at petsa.', 'True'),
-(34, 'QZ-3811', ' Haptics ang tawag sa paghaplos, pagkurot at paghawak ng kamay sa paghahatid ng mensahe.', 'True');
+(34, 'QZ-3811', ' Haptics ang tawag sa paghaplos, pagkurot at paghawak ng kamay sa paghahatid ng mensahe.', 'True'),
+(35, 'QZ-3811', ' Ang komunikasyon ay epektibo kahit na hindi isinasaalang-alang ang damdamin ng kausap', 'False');
 
 -- --------------------------------------------------------
 
@@ -668,16 +690,16 @@ INSERT INTO `quiz_tf` (`q_tf_id`, `quiz_id`, `q_tf_question`, `q_tf_answer`) VAL
 --
 
 CREATE TABLE `registrar` (
-  `registrar_id` varchar(50) NOT NULL,
-  `firstname` varchar(50) NOT NULL,
-  `middlename` varchar(50) DEFAULT NULL,
-  `lastname` varchar(50) NOT NULL,
-  `contact` varchar(15) NOT NULL,
-  `gender` varchar(10) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `address` varchar(50) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `id` varchar(50) NOT NULL COMMENT 'User ID'
+  `registrar_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `firstname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `middlename` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `lastname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `contact` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `gender` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `address` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'User ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -694,14 +716,14 @@ INSERT INTO `registrar` (`registrar_id`, `firstname`, `middlename`, `lastname`, 
 --
 
 CREATE TABLE `schedule` (
-  `sched_id` varchar(50) NOT NULL,
-  `teacher_id` varchar(50) NOT NULL,
-  `section_code` varchar(50) NOT NULL,
-  `sub_code` varchar(50) NOT NULL,
-  `sched_day` varchar(10) NOT NULL,
-  `sched_from` varchar(10) NOT NULL,
-  `sched_to` varchar(10) NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp()
+  `sched_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `teacher_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `section_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `sub_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `sched_day` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `sched_from` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `sched_to` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -728,9 +750,9 @@ INSERT INTO `schedule` (`sched_id`, `teacher_id`, `section_code`, `sub_code`, `s
 --
 
 CREATE TABLE `school` (
-  `id` int(11) NOT NULL,
-  `school_name` varchar(200) NOT NULL,
-  `school_address` varchar(150) NOT NULL
+  `id` int NOT NULL,
+  `school_name` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `school_address` varchar(150) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -747,12 +769,12 @@ INSERT INTO `school` (`id`, `school_name`, `school_address`) VALUES
 --
 
 CREATE TABLE `section` (
-  `section_code` varchar(50) NOT NULL,
-  `strand_code` varchar(50) DEFAULT NULL,
-  `grade_lvl` varchar(30) NOT NULL,
-  `section_name` varchar(20) NOT NULL,
-  `school_year` varchar(10) NOT NULL,
-  `teacher_id` varchar(50) NOT NULL,
+  `section_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `strand_code` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `grade_lvl` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
+  `section_name` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `school_year` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `teacher_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `date_created` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -780,8 +802,8 @@ INSERT INTO `section` (`section_code`, `strand_code`, `grade_lvl`, `section_name
 --
 
 CREATE TABLE `semester` (
-  `semester_name` varchar(15) DEFAULT NULL,
-  `status` varchar(10) DEFAULT NULL
+  `semester_name` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -799,9 +821,9 @@ INSERT INTO `semester` (`semester_name`, `status`) VALUES
 --
 
 CREATE TABLE `strand` (
-  `strand_code` varchar(50) NOT NULL,
-  `strand_name` varchar(30) DEFAULT NULL,
-  `strand_desc` varchar(100) DEFAULT NULL
+  `strand_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `strand_name` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `strand_desc` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -823,21 +845,21 @@ INSERT INTO `strand` (`strand_code`, `strand_name`, `strand_desc`) VALUES
 --
 
 CREATE TABLE `student` (
-  `stu_lrn` varchar(12) NOT NULL COMMENT 'STUDENT LRN',
-  `stu_fname` varchar(50) NOT NULL,
-  `stu_mname` varchar(30) DEFAULT NULL,
-  `stu_lname` varchar(50) NOT NULL,
-  `stu_address` varchar(100) NOT NULL,
-  `stu_contact` varchar(15) NOT NULL,
-  `stu_gender` varchar(50) NOT NULL,
-  `stu_email` varchar(100) NOT NULL,
+  `stu_lrn` varchar(12) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'STUDENT LRN',
+  `stu_fname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_mname` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `stu_lname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_address` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_contact` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_gender` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `stu_email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `stu_dob` date NOT NULL,
-  `stu_pob` varchar(70) NOT NULL COMMENT 'Place of birth',
-  `father_name` varchar(250) NOT NULL COMMENT 'Parent name',
-  `mother_name` varchar(250) NOT NULL COMMENT 'Parent Name',
-  `parent_contact` varchar(15) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `id` varchar(50) DEFAULT NULL COMMENT 'User ID'
+  `stu_pob` varchar(70) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Place of birth',
+  `father_name` varchar(250) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Parent name',
+  `mother_name` varchar(250) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Parent Name',
+  `parent_contact` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'User ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -849,7 +871,7 @@ INSERT INTO `student` (`stu_lrn`, `stu_fname`, `stu_mname`, `stu_lname`, `stu_ad
 ('112054130026', 'ANNIKA', 'BERTIZ', 'AMARANTO', 'STO DOMINGO LEGAZPI CITY', '9458525496', 'FEMALE', 'annikaamoranto@gmail.com', '2000-08-05', 'STO DOMINGO ALBAY', 'NILO AMORANTO', 'SALVACION AMORANTO', '9456576232', '', 'USER-6740'),
 ('112059130014', 'DOMINIC', 'BATA', 'BORNASAL', 'SAN FERNANDO LEGAZPI CITY', '9945987564', 'MALE', 'dominicbata@gmail.com', '2000-02-12', 'LEGAZPI CITY', 'CRISTINA BORNASAL', 'CRISTOPER BORNASAL', '9457874221', '', 'USER-5605'),
 ('112345434567', 'JOHN ADRIAN', '', 'ALAMARES', 'CARMONA CITY', '9876545678', 'MALE', 'andie@gmail.com', '2006-08-30', 'CARMONA', 'KARLO ALMARES', 'WINNIE ALMARES', '9767876787', '', 'USER-8841'),
-('113468765456', 'JOHN CARL RONNAN', '', 'ACHA', 'GOGON CITY', '9775432343', 'MALE', 'john@gmail.com', '2005-12-19', 'GOGON', 'GINA ACHA', 'DADO ACHA', '9754334567', '', 'USER-5383'),
+('113468765456', 'JOHN CARL', '', 'ACHA', 'GOGON CITY', '9775432343', 'MALE', 'john@gmail.com', '2005-12-19', 'GOGON', 'GINA ACHA', 'DADO ACHA', '9754334567', '', 'USER-5383'),
 ('113567898767', 'ROHANN', '', 'AGUILAR', 'LEGAZPI CITY', '9655432123', 'MALE', 'rohan@gmail.com', '2008-12-05', 'LEGAZPI CITY', 'WLSON AGUILAR', 'MARRY AGUILAR', '9656777623', '', 'USER-2635'),
 ('114456543456', 'JERMIN', '', 'BALDERAMA', 'CAPANTAWAN LEGAZPI CITY', '9765454323', 'MALE', 'jermin@gmail.com', '2006-07-03', 'Legazpi City', 'CELSO  BALDERAMA', 'ANDIE BALDERAMA', '9765633456', 'student_67ca22605f95b5.91473801.jpg', 'USER-2618'),
 ('114456765456', 'WILT FRANCIS', '', 'APINADO', 'LEGAZPI CITY', '9655432123', 'MALE', 'wilt@gmail.com', '2003-04-11', 'LEGAZPI CITY', 'DANDY APINADO', 'JANISE APINADO', '9677765456', '', 'USER-8997'),
@@ -887,15 +909,15 @@ INSERT INTO `student` (`stu_lrn`, `stu_fname`, `stu_mname`, `stu_lname`, `stu_ad
 --
 
 CREATE TABLE `student_answers` (
-  `answer_id` int(11) NOT NULL,
-  `stu_lrn` varchar(12) NOT NULL,
-  `sub_code` varchar(50) NOT NULL,
-  `exam_id` varchar(15) DEFAULT NULL COMMENT 'Set as Nullable',
-  `quiz_id` varchar(15) DEFAULT NULL COMMENT 'Set as Nullable',
-  `question_id` int(11) NOT NULL,
-  `question_type` enum('multiple_choice','enumeration','essay','true_false') NOT NULL,
-  `student_answer` text NOT NULL,
-  `submitted_at` timestamp NULL DEFAULT current_timestamp()
+  `answer_id` int NOT NULL,
+  `stu_lrn` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
+  `sub_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `exam_id` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Set as Nullable',
+  `quiz_id` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Set as Nullable',
+  `question_id` int NOT NULL,
+  `question_type` enum('multiple_choice','enumeration','essay','true_false') COLLATE utf8mb4_general_ci NOT NULL,
+  `student_answer` text COLLATE utf8mb4_general_ci NOT NULL,
+  `submitted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -905,16 +927,16 @@ CREATE TABLE `student_answers` (
 --
 
 CREATE TABLE `student_scores` (
-  `score_id` int(11) NOT NULL,
-  `stu_lrn` varchar(12) NOT NULL,
-  `sub_code` varchar(50) NOT NULL,
-  `exam_id` varchar(15) DEFAULT NULL COMMENT 'Set as Nullable',
-  `quiz_id` varchar(15) DEFAULT NULL COMMENT 'Set as Nullable',
-  `total_questions` int(11) NOT NULL DEFAULT 0,
-  `correct_answers` int(11) NOT NULL DEFAULT 0,
-  `equivalent_score` decimal(5,2) NOT NULL DEFAULT 0.00,
-  `quarterly` varchar(20) NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp()
+  `score_id` int NOT NULL,
+  `stu_lrn` varchar(12) COLLATE utf8mb4_general_ci NOT NULL,
+  `sub_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `exam_id` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Set as Nullable',
+  `quiz_id` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Set as Nullable',
+  `total_questions` int NOT NULL DEFAULT '0',
+  `correct_answers` int NOT NULL DEFAULT '0',
+  `equivalent_score` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `quarterly` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -924,11 +946,11 @@ CREATE TABLE `student_scores` (
 --
 
 CREATE TABLE `subject` (
-  `sub_code` varchar(50) NOT NULL COMMENT 'PRIMARY KEY',
-  `sub_title` varchar(200) NOT NULL COMMENT 'SUBJECT NAME',
-  `sub_type` varchar(50) NOT NULL,
-  `sub_time` varchar(10) DEFAULT NULL,
-  `sub_semester` varchar(30) NOT NULL
+  `sub_code` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'PRIMARY KEY',
+  `sub_title` varchar(200) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'SUBJECT NAME',
+  `sub_type` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `sub_time` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `sub_semester` varchar(30) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -976,8 +998,8 @@ INSERT INTO `subject` (`sub_code`, `sub_title`, `sub_type`, `sub_time`, `sub_sem
 --
 
 CREATE TABLE `sy` (
-  `school_year` varchar(15) DEFAULT NULL,
-  `status` varchar(10) DEFAULT NULL
+  `school_year` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -995,17 +1017,17 @@ INSERT INTO `sy` (`school_year`, `status`) VALUES
 --
 
 CREATE TABLE `teacher` (
-  `teacher_id` varchar(50) NOT NULL COMMENT 'Primary key',
-  `teacher_fname` varchar(50) NOT NULL,
-  `teacher_mname` varchar(50) DEFAULT NULL,
-  `teacher_lname` varchar(50) NOT NULL,
-  `teacher_contact` varchar(15) NOT NULL,
-  `teacher_gender` varchar(50) NOT NULL,
+  `teacher_id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Primary key',
+  `teacher_fname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `teacher_mname` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `teacher_lname` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `teacher_contact` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `teacher_gender` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `teacher_dob` date NOT NULL,
-  `status` varchar(50) NOT NULL,
-  `teacher_address` varchar(150) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `id` varchar(50) DEFAULT NULL COMMENT 'User ID'
+  `status` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `teacher_address` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'User ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1032,12 +1054,12 @@ INSERT INTO `teacher` (`teacher_id`, `teacher_fname`, `teacher_mname`, `teacher_
 --
 
 CREATE TABLE `users` (
-  `user_num` int(11) NOT NULL,
-  `id` varchar(50) NOT NULL,
-  `username` varchar(50) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL,
-  `role` varchar(50) NOT NULL,
-  `date_added` datetime DEFAULT current_timestamp()
+  `user_num` int NOT NULL,
+  `id` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `username` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `password` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `role` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `date_added` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1287,73 +1309,73 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `exam_enumeration`
 --
 ALTER TABLE `exam_enumeration`
-  MODIFY `enum_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `exam_essay`
 --
 ALTER TABLE `exam_essay`
-  MODIFY `essay_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `essay_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `exam_multiple`
 --
 ALTER TABLE `exam_multiple`
-  MODIFY `mul_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
+  MODIFY `mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
 
 --
 -- AUTO_INCREMENT for table `exam_tf`
 --
 ALTER TABLE `exam_tf`
-  MODIFY `tf_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `tf_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `quiz_enumeration`
 --
 ALTER TABLE `quiz_enumeration`
-  MODIFY `q_enum_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `q_enum_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `quiz_essay`
 --
 ALTER TABLE `quiz_essay`
-  MODIFY `q_essay_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `q_essay_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `quiz_multiple`
 --
 ALTER TABLE `quiz_multiple`
-  MODIFY `q_mul_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `q_mul_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `quiz_tf`
 --
 ALTER TABLE `quiz_tf`
-  MODIFY `q_tf_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `q_tf_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `school`
 --
 ALTER TABLE `school`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `student_answers`
 --
 ALTER TABLE `student_answers`
-  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `answer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
 
 --
 -- AUTO_INCREMENT for table `student_scores`
 --
 ALTER TABLE `student_scores`
-  MODIFY `score_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `score_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
+  MODIFY `user_num` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 
 --
 -- Constraints for dumped tables
