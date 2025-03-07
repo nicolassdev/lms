@@ -257,7 +257,7 @@ $mySQLFunction->disconnect();
                             </div>
 
                             <!-- EXAM TIMER EMELEMENT FOR MOBILE -->
-                            <div class="col-4 col-sm-4 col-md-3 position-fixed end-0 top-50 translate-middle-y d-lg-none">
+                            <div class="col-5 col-sm-4 col-md-3 position-fixed end-0 top-50 translate-middle-y d-lg-none">
                                 <div class="card shadow-sm text-center p-2">
                                     <div class="card-body p-2">
                                         <h6 class="fw-bold mb-1">Timer</h6>

@@ -49,7 +49,7 @@ include "../faculty/includes/Forms/createexamform.php";
                         <!-- Grade Level and Section and Subject-->
                         <div>
                             <!-- Display Subject Title -->
-                            <h6 class="fw-bold text-primary">
+                            <h6 class="fw-bold primary-text">
                                 <!-- Subject: -->
                                 <?php
                                 if (!empty($students)) {
@@ -129,7 +129,7 @@ include "../faculty/includes/Forms/createexamform.php";
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="studenttakeexam" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
                                     <th scope="col" style="width: 100px;">Student Name</th>

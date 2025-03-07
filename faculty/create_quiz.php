@@ -49,7 +49,7 @@ include "../faculty/includes/Forms/createquizform.php";
                         <!-- Grade Level and Section and Subject-->
                         <div>
                             <!-- Display Subject Title -->
-                            <h6 class="fw-bold text-primary">
+                            <h6 class="fw-bold primary-text">
                                 <!-- Subject: -->
                                 <?php
                                 if (!empty($students)) {
@@ -116,7 +116,7 @@ include "../faculty/includes/Forms/createquizform.php";
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="quizTable" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
                                     <th scope="col" style="width: 150px;">Student Name</th>
@@ -174,13 +174,12 @@ include "../faculty/includes/Forms/createquizform.php";
                                             $scores = !empty($scores) ? array_reverse($scores) : [];
                                             $items = !empty($items) ? array_reverse($items) : [];
                                             $equivalents = !empty($equivalents) ? array_reverse($equivalents) : [];
-                                        
+
                                             for ($i = 0; $i < $maxQuiz; $i++) {
                                                 echo '<td class="text-center text-success fw-semibold">' . ($status && isset($scores[$i]) ? htmlspecialchars($scores[$i]) : '-') . '</td>';
                                                 echo '<td class="text-center text-success fw-semibold">' . ($status && isset($items[$i]) ? htmlspecialchars($items[$i]) : '-') . '</td>';
                                                 echo '<td class="text-center text-success fw-semibold">' . ($status && isset($equivalents[$i]) ? htmlspecialchars($equivalents[$i]) : '-') . '</td>';
                                             }
-                                            
                                         } else {
                                             for ($i = 0; $i < $maxQuiz; $i++) {
                                                 echo '<td class="text-center text-muted">-</td>';

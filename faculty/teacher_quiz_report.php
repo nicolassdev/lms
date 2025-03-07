@@ -107,14 +107,13 @@ $numberOfEnrolledInSection = $mySQLFunction->checkEnrolledCountByTeacher($_SESSI
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="student_report" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
 
                                     <th scope="col" style="width: 100px;">Student name</th>
                                     <th scope="col" style="width: 100px;">Subject</th>
                                     <th scope="col" class="text-center" style="width: 100px;">Score</th>
                                     <th scope="col" class="text-center" style="width: 100px;">Total Items</th>
-                                    <!-- <th scope="col" style="width: 100px;">Equivalent Quiz Score</th> -->
                                     <th scope="col" class="text-center" style="width: 100px;">Equivalent Score</th>
                                 </tr>
                             </thead>

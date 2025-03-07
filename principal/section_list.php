@@ -46,17 +46,14 @@ include "../principal/includes/Forms/sectionform.php";
                     <!-- TABLE -->
                     <div class="table-responsive small ms-3 me-3">
                         <table id="sectionRecord" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark ">
+                            <thead class="table-info">
                                 <tr>
-                                    <!-- <th scope="col">#</th> -->
-                                    <!-- <th scope="col" class="small text-center">Section Code</th> -->
                                     <th scope="col" class="small text-center">Section</th>
                                     <th scope="col" class="small text-center">Strand</th>
                                     <th scope="col" class="small text-center">Year level</th>
                                     <th scope="col" class="small text-center">School year</th>
                                     <th scope="col" class="small text-center">Adviser</th>
-                                    <th scope="col" class="text-center">Action</th> <!-- colspan should be 2 -->
-
+                                    <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>

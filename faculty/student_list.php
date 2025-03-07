@@ -49,9 +49,8 @@ $result = $mySQLFunction->checkEnrolledCountByTeacher($_SESSION['teacher_id']);
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="student_list" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
-
                                     <th scope="col" style="width: 50px;">LRN</th>
                                     <th scope="col" style="width: 100px;">Student Name</th>
                                     <th scope="col" style="width: 50px;">Gender</th>

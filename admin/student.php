@@ -69,7 +69,7 @@ include "../admin/includes/Forms/studentform.php";
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="studentRecord" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col" style="width: 50px;">LRN</th>
                                     <th scope="col" style="width: 100px;">Student name</th>

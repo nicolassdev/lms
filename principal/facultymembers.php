@@ -54,7 +54,7 @@ include "../includes/dbh-inc.php";
                     <!-- FACULTY TABLE  -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="facultyMembers" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
@@ -65,8 +65,6 @@ include "../includes/dbh-inc.php";
                                     <th scope="col">Birthday</th>
                                     <th scope="col">Address</th>
                                     <th scope="col" class="text-center">Action</th>
-                                    <!-- colspan should be 2 -->
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,7 +78,6 @@ include "../includes/dbh-inc.php";
                                         $addedDate = new DateTime($row['teacher_dob']);
                                         $formattedBdate = $addedDate->format('F j, Y');
 
-                                        // echo '<td>' . $row["teacher_id"] . '</td>';
                                         echo '<td>' . $count . '</td>';
                                         echo '<td>' . ucwords(strtolower($row["teacher_fname"])) . '</td>';
                                         echo '<td>' .  ucwords(strtolower($row["teacher_mname"])) . '</td>';

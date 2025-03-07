@@ -36,7 +36,7 @@ $mySQLFunction->disconnect();
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="example" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Student name</th>

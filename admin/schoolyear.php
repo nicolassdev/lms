@@ -82,7 +82,7 @@ include "../admin/includes/Forms/syform.php";
                 </span>
             </div>
 
-            <thead class="table-dark">
+            <thead class="table-info">
                 <tr>
                     <th scope="col">School year</th>
                     <th scope="col">Status</th>

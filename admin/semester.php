@@ -81,7 +81,7 @@ include "../admin/includes/Forms/semesterform.php";
                 </span>
             </div>
 
-            <thead class="table-dark">
+            <thead class="table-info">
                 <tr>
                     <th scope="col">Semester</th>
                     <th scope="col">Status</th>

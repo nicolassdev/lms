@@ -59,7 +59,7 @@
            <!-- SUBJECT TABLE -->
            <div class="table-responsive small ms-3 me-3">
              <table id="subjectList" class="table table-bordered table-striped table-sm align-middle ">
-               <thead class="table-dark ">
+               <thead class="table-info">
                  <tr>
                    <!-- <th scope="col">#</th> -->
                    <!-- <th scope="col" class="small text-center">Subject Code</th> -->

@@ -15,13 +15,10 @@ include "../includes/dbh-inc.php";
 
 
 <style>
- 
     .data-table {
         font-size: 0.8em;
         /* Reduce font size */
     }
-
- 
 </style>
 
 
@@ -38,7 +35,7 @@ include "../includes/dbh-inc.php";
                     <div class="table-responsive small ms-3 me-3">
                         <table id="example" class="table table-bordered table-striped table-sm align-middle">
 
-                            <thead class="table-dark text-light">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col" class="small text-center">#</th>
                                     <th scope="col" class="small text-center">Student name</th>
@@ -72,8 +69,8 @@ include "../includes/dbh-inc.php";
                                             : [];
                                         // Determine the background color based on enrollment status
                                         $statusStyle = $row["enroll_status"] !== "Enrolled"
-                                            ? 'background-color: red; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;'
-                                            : 'background-color: green; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;';
+                                            ? 'background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;'
+                                            : 'background-color: #198754; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;';
 
                                         echo '<tr>';
                                         echo '<td>' . $count . '</td>';

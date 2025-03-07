@@ -17,9 +17,10 @@ body {
 .color {
   color: #fabc3f;
 }
-.primary-color{
-  background-color: #16404D !important;
+.primary-color {
+  background-color: #16404d !important;
 }
+
 .nav-shadow {
   box-shadow: 0 14px 8px rgba(49, 49, 49, 0.2);
 }

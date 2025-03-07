@@ -48,7 +48,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                         <!-- Grade Level and Section and Subject-->
                         <div>
                             <!-- Display Subject Title -->
-                            <h6 class="fw-bold text-primary">
+                            <h6 class="fw-bold primary-text">
                                 <!-- Subject: -->
                                 <?php
                                 if (!empty($students)) {
@@ -115,21 +115,11 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="student_subjectlist" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
-                                    <!-- <th scope="col" style="width: 50px;">LRN</th> -->
                                     <th scope="col" class="text-center" style="width: 100px;">Student name</th>
-                                    <!-- <th scope="col" style="width: 50px;">Gender</th>
-                                    <th scope="col" style="width: 150px;">Address</th>
-                                    <th scope="col" style="width: 100px;">Contact</th>
-                                    <th scope="col" style="width: 100px;">Email</th>
-                                    <th scope="col" style="width: 100px;">Year level</th>
-                                    <th scope="col" style="width: 100px;">Section</th> -->
                                     <th scope="col" class="text-center" style="width: 150px;">Module Answer</th>
-
-
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -143,15 +133,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                         // Loop through the file names and generate download links
                                         echo '<tr>';
                                         echo '<td>' . $count . '</td>';
-                                        // echo '<td class="text-center text-primary"><a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">' . $row["stu_lrn"] . '</a></td>';
                                         echo '<td class="small text-center"> ' . $row["stu_lname"] . ', ' .  ucwords(strtolower($row["stu_fname"] .  '')) . '</td>';
-                                        // echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
-                                        // echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
-                                        // echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
-                                        // echo '<td class="small text-center">' . strtolower($row["stu_email"]) . '</td>';
-                                        // echo '<td class="small text-center">' .  $row["grade_lvl"] . '</td>';
-                                        // echo '<td class="small text-center">' .  $row["section_name"] . '</td>';
-
                                         // Check if there are no files uploaded
                                         echo '<td class="text-center">';
                                         if (empty($row['file_names']) || count($fileNames) == 0) {

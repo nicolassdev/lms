@@ -76,7 +76,7 @@ include "../admin/includes/Forms/scheduleform.php";
                     <div class="table-responsive small ms-3 me-3">
                         <table id="subjectSched" class="table table-bordered table-striped table-sm align-middle">
 
-                            <thead class="table-dark text-light">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col" class="small text-center">Subject Teacher</th>
                                     <th scope="col" class="small text-center">Strand</th>

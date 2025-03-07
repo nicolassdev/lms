@@ -68,7 +68,7 @@ $result = $mySQLFunction->getStudentStrandAndSectionaAlsoAdviser($_SESSION['stu_
                             <div class="d-flex flex-column">
                                 <?php
                                 $payload = $result[0];
-                                echo "<h5 class='fw-bold text-muted'>" . htmlspecialchars($payload["grade_lvl"]) . " - " . htmlspecialchars($payload["section_name"]) . "</h5>";
+                                echo "<h5 class='fw-bold primary-text'>" . htmlspecialchars($payload["grade_lvl"]) . " - " . htmlspecialchars($payload["section_name"]) . "</h5>";
                                 echo "<small class='fw-semibold pb-2'>" . htmlspecialchars($payload["strand_desc"]) . " </small>";
 
                                 ?>

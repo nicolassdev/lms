@@ -81,7 +81,7 @@ include "../admin/includes/Forms/quarterlyform.php";
                 </span>
             </div>
 
-            <thead class="table-dark">
+            <thead class="table-info">
                 <tr>
                     <th scope="col">Quarterly</th>
                     <th scope="col">Status</th>

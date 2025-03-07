@@ -49,7 +49,7 @@ include "../admin/includes/Forms/teacherform.php";
                     <!-- FACULTY TABLE  -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="teacherRecord" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>

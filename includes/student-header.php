@@ -19,7 +19,7 @@ error_reporting(E_ALL);
     <!-- Custom CSS -->
     <link rel="website icon" type="webp" href="./assets/img/csi.webp">
     <link rel="stylesheet" href="./assets/css/student.css?v=<?php echo time(); ?>" />
- 
+
 </head>
 
 <body class="lms-scroll-bar">
@@ -166,7 +166,7 @@ error_reporting(E_ALL);
                             <!-- THISI IS THE ROUTE OF EXAM -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#examMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
-                                    <i class="bi bi-book me-2"></i>Exam <i class="bi bi-chevron-down" style="margin-left: 50px;" id="examIcon"></i>
+                                    <i class="bi bi-book me-2"></i>Exam <i class="bi bi-chevron-down" style="margin-left: 48px;" id="examIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="examMenu">
                                     <li class="nav-item mt-2">
@@ -185,7 +185,7 @@ error_reporting(E_ALL);
                             <!-- THISI IS THE FOR EQUIVALENT GRADE OF STUDENT IF EXAM OR QUIZ -->
                             <li class="nav-item">
                                 <a class="nav-link  text-white" href="#gradeMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
-                                    <i class="bi bi-bar-chart me-2"></i>Grades <i class="bi bi-chevron-down" style="margin-left: 40px;" id="gradeIcon"></i>
+                                    <i class="bi bi-bar-chart me-2"></i>Grades <i class="bi bi-chevron-down" style="margin-left: 35px;" id="gradeIcon"></i>
                                 </a>
                                 <ul class="collapse list-unstyled ps-1" id="gradeMenu">
                                     <li class="nav-item mt-2">

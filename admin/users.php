@@ -44,7 +44,7 @@ include "../includes/dbh-inc.php";
 
     <div class="table-responsive ms-3 me-3 fade-in-input">
         <table class="table table-bordered table-striped table-sm align-middle">
-            <thead class="table-dark text-light">
+            <thead class="table-info">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Full name</th>
