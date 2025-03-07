@@ -1922,13 +1922,21 @@ class myDataBase
     // INSERT INTO TABLE SEMESTER
     public function insertSem($table, $sem)
     {
-
         $sql = "UPDATE `semester` SET `status` = 'Inactive'";
         $result = $this->con->query($sql);
 
         if ($result) {
-            $sql = "INSERT INTO `$table` VALUES ('$sem', 'Active');";
-            $result = $this->con->query($sql);
+            // Check if the semester already exists
+            $checkSql = "SELECT * FROM `$table` WHERE `semester_name` = '$sem'";
+            $checkResult = $this->con->query($checkSql);
+    
+            if ($checkResult->num_rows == 0) {
+                // Insert only if the record does not exist
+                $sql = "INSERT INTO `$table` (`semester_name`, `status`) VALUES ('$sem', 'Active')";
+                return $this->con->query($sql);
+            } else {
+                return false; // semester already exists
+            }
         } else {
             return false;
         }
@@ -1937,18 +1945,27 @@ class myDataBase
     // INSERT INTO TABLE QUARTERLY
     public function insertQuarter($table, $quarter)
     {
-
+        // Set all existing records to Inactive
         $sql = "UPDATE `quarterly` SET `status` = 'Inactive'";
         $result = $this->con->query($sql);
-
+    
         if ($result) {
-            $sql = "INSERT INTO `$table` VALUES ('$quarter', 'Active');";
-            $result = $this->con->query($sql);
+            // Check if the quarter already exists
+            $checkSql = "SELECT * FROM `$table` WHERE `quarterly_name` = '$quarter'";
+            $checkResult = $this->con->query($checkSql);
+    
+            if ($checkResult->num_rows == 0) {
+                // Insert only if the record does not exist
+                $sql = "INSERT INTO `$table` (`quarterly_name`, `status`) VALUES ('$quarter', 'Active')";
+                return $this->con->query($sql);
+            } else {
+                return false; // Quarter already exists
+            }
         } else {
             return false;
         }
     }
-
+    
 
     public function checkExistingSem($table, $semester)
     {
