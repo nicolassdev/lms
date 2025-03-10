@@ -1,3 +1,9 @@
 <?php
 include "function.php";
-$mySQLFunction = new myDataBase("localhost", "root", "", "lms_db");
+/* NOTE: IF YOUR USING PASSWORD IN YOUR DATABASE CHANGE MAKE CHANGE THE PASSWORD */
+$mySQLFunction = new myDataBase(
+    "localhost",                     // host
+    "root",                          // Username
+    "",                // Password
+    "lms_db"                        // Database
+);
