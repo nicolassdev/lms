@@ -17,14 +17,16 @@ session_destroy(); // Destroys the session
     <title>Logging Out</title>
     <link rel="website icon" type="webp" href="assets/img/csi.webp">
     <style>
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #212529;
+            font-family: 'Poppins', sans-serif;
+            background-color: #16404D;
             color: #ecf0f1;
         }
 

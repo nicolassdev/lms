@@ -165,7 +165,7 @@ $mySQLFunction->disconnect();
                         <input type="text" class="form-control" name="address" required>
                     </div>
                     <div class="col-md-12">
-                        <label class="form-label">Shool Type</label>
+                        <label class="form-label">School Type</label>
                         <select class="form-select" name="schooltype" required>
                             <option selected disabled value="">Select...</option>
                             <option value="public">Public</option>

@@ -22,12 +22,12 @@ include "../admin/includes/Forms/adminform.php";
 
 
 <!-- Modal to Update Admin Information -->
-<div class="modal fade" id="updateadmininfo" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="updateadmininfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content bg-light shadow">
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title">Update Registrar Information</h5>
-                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" onclick="resetForm()"></button>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" onclick="resetAdminForm()"></button>
             </div>
             <div class="modal-body">
                 <form action="./includes/Operation/updateAdmin.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate id="editAdminInfo">
@@ -80,15 +80,19 @@ include "../admin/includes/Forms/adminform.php";
                             <div class="invalid-feedback">Please enter your address.</div>
                         </div>
 
+                        <!-- Image Preview -->
+                        <div class="mb-3 text-center">
+                            <img id="imagePreview" class="profile-img rounded-circle shadow-sm"
+                                src="#"
+                                alt="Image Preview"
+                                style="display:none; width: 130px; height: 130px; object-fit: cover; border: 2px solid #ddd;">
+                        </div>
+
                         <!-- Profile Image -->
                         <div class="mb-3">
                             <label class="form-label">Profile Image</label>
                             <input type="file" class="form-control" name="profile_image" accept="image/*" onchange="previewImage(event)">
                             <div class="invalid-feedback">Please upload an image.</div>
-                        </div>
-
-                        <div class="mb-3 text-center">
-                            <img id="imagePreview" class="profile-img" src="#" alt="Image Preview" style="display:none;">
                         </div>
 
                         <div class="text-end">
@@ -104,14 +108,14 @@ include "../admin/includes/Forms/adminform.php";
 
 
 <!-- TABLE -->
-<main class="col-md-12 ms-sm-auto col-lg-10">
+<main class="col-md-12 ms-sm-auto col-lg-10 mt-5 pt-3">
     <div class="container">
         <img
             style="position: absolute; top: 50%; right: 10%; transform: translate(-10%, -45%); 
                         width: 500px; opacity: 0.1; z-index: -1;"
             src="../assets/img/csi.webp"
             alt="LMS Logo">
-        <div class="row">
+        <div class="row  fade-in-input">
             <div class="col-md-12">
 
                 <div class="d-flex flex-wrap justify-content-end">
@@ -160,7 +164,7 @@ include "../admin/includes/Forms/adminform.php";
                         <i class="bi bi-patch-check-fill ms-1 text-success" style="font-size: 1.1rem;"></i>
                     </h5>
 
-                    <p class="text-muted"><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
+                    <p class="text-muted"><?php echo ucwords(strtolower($showSchool['school_name'])); ?></p>
                 </div>
 
                 <div class="profile-details">
@@ -207,12 +211,26 @@ include "../admin/includes/Forms/adminform.php";
 
 
 <script>
-    function resetForm() {
+    function resetAdminForm() {
         var form = document.getElementById("editAdminInfo");
         if (form) {
             form.reset(); // Clears the form fields
             form.classList.remove("was-validated"); // Removes the validation styling
         }
+        // Hide image preview
+        var imagePreview = document.getElementById("imagePreview");
+        imagePreview.src = "#";
+        imagePreview.style.display = "none";
+    }
+
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('imagePreview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
     }
 </script>
 <script src="../assets/js/validationform.js"></script>

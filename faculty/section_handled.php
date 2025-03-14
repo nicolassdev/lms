@@ -1,7 +1,22 @@
-<!-- VALIDATION CAN'T ACCESS THE URL -->
 <?php
+// Prevent unauthorized access
 if (!isset($_SESSION['teacher_id'])) {
     header("location:../login.php?error=accessdenied");
+    exit;
+}
+if (!isset($_SESSION['username'])) {
+    header("location:../login.php?error=accessdenied");
+    exit();
+} elseif (isset($_SESSION['user_role'])) {
+
+    $user_role = strtolower($_SESSION['user_role']);
+    if ($user_role !== 'teacher') {
+        header("location:../login.php?error=accessdenied"); // redirect access denied if user role is not admin
+        exit();
+    }
+} else {
+    header("location:../login.php"); // Redirect to login page if user role is not exist 
+    exit();
 }
 ?>
 
@@ -38,11 +53,22 @@ foreach ($numberOfEnrolledInSection as $section) {
 $mySQLFunction->disconnect();
 ?>
 
+<style>
+    .card {
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
 
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+</style>
 
 <body>
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <div class="ms-3">
                 <img
@@ -68,8 +94,6 @@ $mySQLFunction->disconnect();
                                 echo '<div class="alert alert-warning" style="font-size: small;">No active school year and semester found.</div>';
                             }
                             ?>
-                            <!-- Static Data -->
-                            <!-- <p>Logged in as : Principal <i class="bi bi-patch-check-fill text-success ms-1"></i></p> -->
                         </div>
 
                     </div>
@@ -91,7 +115,7 @@ $mySQLFunction->disconnect();
                             <div class="d-flex align-items-center justify-content-between mb-4 mt-4">
                                 <!-- Icon and Title -->
                                 <div class="d-flex align-items-center">
-                                    <i class="bi bi-people-fill display-4 text-danger me-2"></i>
+                                    <i class="bi bi-bank display-4 text-danger me-3"></i>
                                     <div>
                                         <h5 class="fw-bold text-secondary mb-1">
                                             <?php echo htmlspecialchars($teacherSectionHandled["section_name"]); ?>
@@ -103,7 +127,7 @@ $mySQLFunction->disconnect();
                                     </div>
                                 </div>
                                 <!-- Number of Students -->
-                                <div class="text-end">
+                                <div class="text-end me-2">
                                     <h2 class="text-danger fw-bold mb-0">
                                         <?php echo $totalStudentinSection; ?>
                                     </h2>
@@ -128,9 +152,9 @@ $mySQLFunction->disconnect();
                 <div class="col-12 text-center">
                     <div class="py-5 mt-5">
                         <div class="card-body">
-                            <i class="bi bi-exclamation-circle text-danger display-4 mb-3"></i>
+                            <i class="bi bi-info-circle-fill text-danger display-4 mb-3"></i>
                             <h5 class="text-secondary fw-bold">No Section Available</h5>
-                            <p class="text-muted mb-0">There are currently no sections assigned to you.</p>
+                            <p class="text-muted mb-0">There are currently no sections assigned to you. Check with your administrator.</p>
                         </div>
                     </div>
                 </div>

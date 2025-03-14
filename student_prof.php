@@ -43,7 +43,7 @@ $mySQLFunction->disconnect();
 
 
 <!-- Modal to Update STUDENT Information -->
-<div class="modal fade" id="updatestudentinfo" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="updatestudentinfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content bg-light shadow">
             <div class="modal-header bg-primary text-white">
@@ -112,6 +112,13 @@ $mySQLFunction->disconnect();
                             <div class="invalid-feedback">Please enter the first name.</div>
                         </div>
 
+                        <!-- Image Preview -->
+                        <div class="mb-3 text-center">
+                            <img id="imagePreview" class="profile-img rounded-circle shadow-sm"
+                                src="#"
+                                alt="Image Preview"
+                                style="display:none; width: 130px; height: 130px; object-fit: cover; border: 2px solid #ddd;">
+                        </div>
                         <!-- Profile Image -->
                         <div class="mb-3">
                             <label class="form-label">Upload photo</label>
@@ -119,10 +126,6 @@ $mySQLFunction->disconnect();
                             <div class="invalid-feedback">Please upload an image.</div>
                         </div>
 
-
-                        <div class="mb-3 text-center">
-                            <img id="imagePreview" class="profile-img" src="#" alt="Image Preview" style="display:none;">
-                        </div>
 
 
                         <div class="modal-header text-black mb-3">
@@ -175,7 +178,7 @@ $mySQLFunction->disconnect();
                         width: 500px; opacity: 0.1; z-index: -1;"
             src="./assets/img/csi.webp"
             alt="LMS Logo">
-        <div class="row">
+        <div class="row fade-in-input">
 
             <div class="col-md-12">
                 <div class="profile-card">
@@ -184,11 +187,12 @@ $mySQLFunction->disconnect();
                             onclick="location.href='index.php?page=index'">
                             <i class="bi bi-arrow-left-circle me-1"></i> Back
                         </button> -->
-
-                        <button type="button" class="btn btn-primary btn-sm mt-4"
-                            title="Edit" data-bs-toggle="modal" data-bs-target="#updatestudentinfo">
-                            <i class="bi bi-pencil-square me-1"></i>Edit information
-                        </button>
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-primary btn-sm mt-4"
+                                title="Edit" data-bs-toggle="modal" data-bs-target="#updatestudentinfo">
+                                <i class="bi bi-pencil-square me-1"></i>Edit information
+                            </button>
+                        </div>
                     </div>
 
                     <div class="profile-header text-center mb-3">
@@ -232,22 +236,22 @@ $mySQLFunction->disconnect();
 
                     <div class="profile-details">
                         <div class="row mb-1">
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-6">
                                 <strong>Email:</strong>
                                 <p><?php echo strtolower($studentInfo['stu_email']); ?></p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-6">
                                 <strong>Phone:</strong>
                                 <p>+63<?php echo $studentInfo['stu_contact']; ?></p>
                             </div>
                         </div>
 
                         <div class="row mb-1">
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-6">
                                 <strong>Role:</strong>
                                 <p><?php echo ucwords(strtolower($_SESSION["user_role"])); ?></p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-6">
                                 <strong>Gender</strong>
                                 <p><?php echo ucwords(strtolower($studentInfo['stu_gender'])); ?></p>
                             </div>
@@ -255,12 +259,12 @@ $mySQLFunction->disconnect();
 
 
                         <div class="row mb-1">
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-6">
                                 <strong>Date of Birth</strong>
                                 <p><?php echo htmlspecialchars($formattedbirthDate); ?></p>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-6">
                                 <strong>Place of Birth</strong>
                                 <p><?php echo $studentInfo['stu_pob']; ?></p>
                             </div>
@@ -270,7 +274,7 @@ $mySQLFunction->disconnect();
 
 
                         <div class="row mb-1">
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-6">
                                 <strong>Strand and Grade level:</strong>
                                 <p>
                                     <?php
@@ -284,7 +288,7 @@ $mySQLFunction->disconnect();
                                     ?>
                                 </p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-6">
                                 <strong>Section and Adviser:</strong>
                                 <p>
                                     <?php
@@ -304,13 +308,13 @@ $mySQLFunction->disconnect();
 
 
                         <div class="row mb-1">
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-6">
                                 <strong>Parents/ Guardian:</strong>
                                 <p><?php echo ucwords(strtolower($studentInfo['father_name'])); ?></br>
                                     <?php echo ucwords(strtolower($studentInfo['mother_name'])); ?></p>
 
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-6">
                                 <strong>Guardian Contact:</strong>
                                 <p>+63<?php echo  $studentInfo['parent_contact']; ?></p>
 
@@ -321,11 +325,11 @@ $mySQLFunction->disconnect();
 
 
                         <div class="row mb-1">
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-6">
                                 <strong>School Name:</strong>
-                                <p><?php echo ucwords(strtolower($showSchool['SCHOOL_NAME'])); ?></p>
+                                <p><?php echo ucwords(strtolower($showSchool['school_name'])); ?></p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-6">
                                 <strong>Address:</strong>
                                 <p><?php echo ucwords(strtolower($studentInfo['stu_address'])); ?></p>
                             </div>
@@ -334,11 +338,11 @@ $mySQLFunction->disconnect();
 
 
                         <div class="row mb-1">
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-6">
                                 <strong> Status:</strong>
                                 <p>Active</p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 fs-6">
                                 <strong>Joined:</strong>
                                 <p><?php echo htmlspecialchars($_SESSION["STUDENT_added"]); ?></p>
                             </div>
@@ -362,6 +366,20 @@ $mySQLFunction->disconnect();
             form.reset(); // Clears the form fields
             form.classList.remove("was-validated"); // Removes the validation styling
         }
+        // Hide image preview
+        var imagePreview = document.getElementById("imagePreview");
+        imagePreview.src = "#";
+        imagePreview.style.display = "none";
+    }
+
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('imagePreview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
     }
 </script>
 <script src="/lms/assets/js/validationform.js"></script>

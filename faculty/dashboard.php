@@ -42,13 +42,14 @@ $mySQLFunction->disconnect();
 ?>
 
 <style>
-    /* Add card hover effects and modern shadow */
     .card {
-        border: 1px solid #e0e0e0;
-        transition: box-shadow 0.3s ease;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     }
 
     .card:hover {
+        transform: translateY(-5px);
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     }
 </style>
@@ -56,12 +57,12 @@ $mySQLFunction->disconnect();
 
 <body>
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <div class="ms-3">
                 <img
                     style="position: absolute; top: 50%; right: 5%; transform: translate(-0%, -45%); 
-                    width: 700px; opacity: 0.2; z-index: -1;"
+                    width: 750px; opacity: 0.2; z-index: -1;"
                     src="../assets/img/bg-home.webp"
                     alt="LMS Logo">
                 <div class="container">
@@ -91,11 +92,9 @@ $mySQLFunction->disconnect();
                             }
                             ?>
                             <!-- Info name -->
-                            <p>Logged in as :
-                                <?php
-                                echo ucwords(strtolower($_SESSION['teacher_fname'] . ' ' . $_SESSION['teacher_lname']));
-                                ?>
-                            </p>
+                            <div>Logged in as :
+                                <span><?php echo ucwords(strtolower($_SESSION['teacher_fname'] . ' ' . $_SESSION['teacher_lname'])); ?></span>
+                            </div>
                         </div>
 
                     </div>
@@ -103,11 +102,7 @@ $mySQLFunction->disconnect();
             </div>
         </div>
 
-        <div class="row g-1 ">
-
-
-
-
+        <div class="row g-3 fade-in-input">
             <!-- Subject Card -->
             <div class="col-md-4 col-sm-6 col-12">
                 <div class="card shadow-lg h-100">
@@ -116,8 +111,8 @@ $mySQLFunction->disconnect();
                             <!-- Icon and title -->
                             <div class="" style="margin-left:20px">
                                 <i class="bi bi-journal-bookmark-fill display-5 text-primary mb-2"></i>
-                                <h5 class="card-title">Subject</h5>
-                                <p class="card-text">Total number of subject handled</p>
+                                <h5 class="fw-bold">Subject</h5>
+                                <small class="card-text">Total number of subject handled</small>
                             </div>
                             <!-- Number of students -->
                             <div class="text-end">
@@ -134,29 +129,30 @@ $mySQLFunction->disconnect();
             </div>
 
             <!-- Teacher Card -->
-            <div class="col-md-4 col-sm-6 col-12">
+            <!-- <h1 class="text-success fw-bold display-5"></?php echo $numberOfTeacher; ?></h1> -->
+            <!-- <div class="col-md-4 col-sm-6 col-12">
                 <div class="card shadow-lg h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between">
-                            <!-- Icon and title -->
+
                             <div class="" style="margin-left:20px">
                                 <i class="bi bi-people-fill display-5 text-success mb-2"></i>
-                                <h5 class="card-title">Faculty</h5>
+                                <h5 class="fw-bold">Faculty</h5>
                                 <p class="card-text">Total number of faculty members</p>
                             </div>
-                            <!-- Number of Faculty -->
+
                             <div class="text-end">
-                                <h1 class="text-success fw-bold display-5"><?php echo $numberOfTeacher; ?></h1>
+                                dito ilagay h1
                             </div>
                         </div>
                         <hr class="text-muted" />
-                        <!-- View account button -->
+
                         <div class="text-start mt-3 ms-3">
                             <a href="?page=facultymembers" class="btn btn-success w-70">View faculty members</a>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
             <!-- Section Card -->
@@ -167,8 +163,8 @@ $mySQLFunction->disconnect();
                             <!-- Icon and title -->
                             <div class="" style="margin-left:20px">
                                 <i class="bi bi-people-fill display-5 text-danger mb-2"></i>
-                                <h5 class="card-title">Student</h5>
-                                <p class="card-text">Total number of students in section</p>
+                                <h5 class="fw-bold">Student</h5>
+                                <small class="card-text">Total number of students in section</small>
                             </div>
                             <!-- Number of students -->
                             <div class="text-end">
@@ -194,26 +190,3 @@ $mySQLFunction->disconnect();
         </div>
 
     </main>
-
-    <!-- Time and Date Script -->
-    <script>
-        function updateTime() {
-            var now = new Date();
-            var timeString = now.toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-            var dateString = now.toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric',
-                weekday: 'long'
-            });
-
-            document.getElementById('time').innerHTML = 'Time: ' + timeString;
-            document.getElementById('date').innerHTML = 'Today is: ' + dateString;
-        }
-
-        setInterval(updateTime, 1000); // Update time every second
-        updateTime(); // Initial call
-    </script>

@@ -53,17 +53,17 @@ $mySQLFunction->disconnect();
         opacity: 1;
     }
 
-    .dropdown-menu a {
+    .dropdown-css a {
         font-size: 13px;
     }
 </style>
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-3">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="container-fluid">
-                    <h4 class="fw-bold text-muted mb-3">
+                    <h4 class="fw-bold text-muted mb-3 mt-4">
                         Exam Management
                     </h4>
                     <p class="text-muted">Manage subject exams, create tests, and review results seamlessly.</p>
@@ -74,17 +74,22 @@ $mySQLFunction->disconnect();
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="card shadow-sm rounded-4 h-100">
                                         <!-- Card Header -->
-                                        <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center rounded-top-4">
+                                        <div class="card-header secondary-color text-dark d-flex justify-content-between align-items-center rounded-top-4">
                                             <div class="mb-0 fw-bold text-truncate pt-2 pb-2">
-                                                <i class="bi bi-book me-2"></i>
+                                            <i class="bi bi-book-half me-2 text-danger"></i>
                                                 <?php echo htmlspecialchars(ucwords(strtolower($schedule['sub_title'] ?? 'No Title'))); ?>
                                             </div>
                                             <div class="dropdown">
-                                                <i class="bi bi-three-dots-vertical text-white " id="kebabMenu" data-bs-toggle="dropdown" aria-expanded="false" role="button"></i>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="#" onclick="confirmDelete()">Move</a></li>
+                                                <i class="bi bi-three-dots-vertical text-dark " id="kebabMenu" data-bs-toggle="dropdown" aria-expanded="false" role="button"></i>
+                                                <ul class="dropdown-menu dropdown-menu-end dropdown-css">
+                                                    <li>
+                                                        <a href="index.php?page=create_exam&sched_id=<?php echo urlencode($schedule['sched_id']); ?>&sub_code=<?php echo urlencode($schedule['sub_code']); ?>&section_code=<?php echo urlencode($schedule['section_code']); ?>"
+                                                            class="dropdown-item text-black ">
+                                                            <i class="bi bi-people-fill me-2 text-danger"></i>View students
+                                                        </a>
+                                                    </li>
                                                     <hr class="dropdown-divider">
-                                                    <li><a class="dropdown-item" href="#" onclick="cancelAction()">Cancel</a></li>
+                                                    <li><a class="dropdown-item" href="?page=teacher_exam">Cancel</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -93,12 +98,12 @@ $mySQLFunction->disconnect();
                                         <div class="card-body">
                                             <div class="text-muted fw-semibold mb-0">
 
-                                                <div class="fs-5 fw-bold"><?php echo ucwords(strtolower($schedule["grade_lvl"])) . ' ' . htmlspecialchars($schedule["section_name"]); ?></div>
+                                                <div class="fw-bold"><?php echo ucwords(strtolower($schedule["grade_lvl"])) . ' ' . htmlspecialchars($schedule["section_name"]); ?></div>
                                             </div>
-                                            <small class="text-muted fw-semibold mb-3">
-                                                <?php echo  ucwords(strtolower($schedule["strand_desc"])) ?? 'No Strand'; ?>
+                                            <small class="text-sm fw-semibold mb-3">
+                                                <?php echo   $schedule["strand_desc"] ?? 'No Strand'; ?>
                                             </small>
-                                            <div class="text-muted mb-2 mt-3">
+                                            <div class="text-muted mb-2 mt-4 fw-semibold">
                                                 <i class="bi bi-people-fill text-danger"></i> Total Students:
                                                 <?php
                                                 $mySQLFunction->connection();
@@ -115,9 +120,9 @@ $mySQLFunction->disconnect();
                                         </div>
 
                                         <!-- Card Footer -->
-                                        <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
+                                        <div class="card-footer d-flex justify-content-center rounded-bottom-4">
                                             <a href="index.php?page=create_exam&sched_id=<?php echo urlencode($schedule['sched_id']); ?>&sub_code=<?php echo urlencode($schedule['sub_code']); ?>&section_code=<?php echo urlencode($schedule['section_code']); ?>"
-                                                class="btn btn-outline-danger w-100 fw-bold">
+                                                class="btn secondary-color w-100 fw-bold">
                                                 <i class="bi bi-pencil-square me-2"></i> Create Exam
                                             </a>
                                         </div>

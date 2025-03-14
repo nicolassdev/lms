@@ -20,6 +20,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
     // echo "<pre>";
     // print_r($students);
     // echo "</pre>";
+    $activeQuarter = $mySQLFunction->checkQuarterStatus('quarterly');
 }
 
 
@@ -39,7 +40,7 @@ include "../faculty/includes/Forms/createexamform.php";
     }
 </style>
 
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-3">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-3 mt-5 py-4 me-2">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -48,7 +49,7 @@ include "../faculty/includes/Forms/createexamform.php";
                         <!-- Grade Level and Section and Subject-->
                         <div>
                             <!-- Display Subject Title -->
-                            <h6 class="fw-bold text-primary">
+                            <h6 class="fw-bold primary-text">
                                 <!-- Subject: -->
                                 <?php
                                 if (!empty($students)) {
@@ -83,31 +84,43 @@ include "../faculty/includes/Forms/createexamform.php";
 
                         </div>
 
-                        <!-- View exam list to modefied -->
+                        <!-- View Exam Button -->
                         <div class="d-flex gap-2 ms-2">
-                        <div>
-                            <a class="btn btn-primary  fw-bold btn-sm btn-animate" 
-                            href="index.php?page=created_exam_list&sched_id=<?php echo urlencode($sched_id); ?>&sub_code=<?php echo urlencode($sub_code); ?>&section_code=<?php echo urlencode($section_code); ?> "
-                                <span>View exam</span>
-                            </a>
-                        </div>
+                            <div>
+                                <a class="btn btn-primary fw-bold btn-sm btn-animate"
+                                    href="index.php?page=created_exam_list&sched_id=<?php echo urlencode($_GET['sched_id']); ?>&sub_code=<?php echo urlencode($_GET['sub_code']); ?>&section_code=<?php echo urlencode($_GET['section_code']); ?>">
+                                    <span>View Exam</span>
+                                </a>
+                            </div>
 
 
-                        <!-- Upload Button -->
-                        <div>
+
+                            <!-- Upload Button -->
                             <?php
-                            $btnClass = empty($students) ? 'btn-danger' : 'btn-primary';
-                            $disabled = empty($students) ? 'disabled' : '';
+                            // Fetch schedule ID (Make sure you get this from the right context)
+                            $sched_id = $_GET['sched_id']; // Adjust as needed
+
+                            // Check if an exam exists for the schedule in the active quarter
+                            $examExists = $sched_id ? $mySQLFunction->checkExistExam($sched_id) : false;
+                            // Check if students are available
+                            $studentsAvailable = !empty($students);
+                            // Determine button state
+                            $btnClass = ($examExists || !$studentsAvailable) ? 'btn-primary' : 'btn-primary';
+                            $disabled = ($examExists || !$studentsAvailable) ? 'disabled' : '';
                             ?>
-                            <button type="button"
-                                class="btn <?php echo $btnClass; ?> btn-sm fw-bold d-flex align-items-center"
-                                data-bs-toggle="modal"
-                                data-bs-target="#create_exam"
-                                data-bs-whatever="@fat"
-                                <?php echo $disabled; ?>>
-                                <i class="bi-plus-circle me-1"></i>Create Exam
-                            </button>
-                        </div>
+                            <!-- Upload Button -->
+                            <div>
+                                <button type="button"
+                                    class="btn <?php echo $btnClass; ?> btn-sm fw-bold d-flex align-items-center"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#create_exam"
+                                    data-bs-whatever="@fat"
+                                    <?php echo $disabled; ?>>
+                                    <i class="bi-plus-circle me-1"></i> Create Exam
+                                </button>
+                            </div>
+
+
                         </div>
                     </div>
 
@@ -115,20 +128,16 @@ include "../faculty/includes/Forms/createexamform.php";
 
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
-                        <table id="example" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                        <table id="studenttakeexam" class="table table-bordered table-striped table-sm align-middle">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
-                                    <!-- <th scope="col" style="width: 50px;">LRN</th> -->
-                                    <th scope="col" style="width: 100px;">Full name</th>
-                                    <th scope="col" style="width: 50px;">Gender</th>
-                                    <th scope="col" style="width: 150px;">Address</th>
-                                    <th scope="col" style="width: 100px;">Contact</th>
-                                    <th scope="col" style="width: 100px;">Email</th>
-                                    <th scope="col" style="width: 100px;">Year level</th>
-                                    <th scope="col" style="width: 100px;">Section</th>
+                                    <th scope="col" style="width: 100px;">Student Name</th>
+                                    <th scope="col" style="width: 50px;">Quarter</th>
                                     <th scope="col" style="width: 100px;">Status</th>
                                     <th scope="col" style="width: 100px;">Score</th>
+                                    <th scope="col" style="width: 100px;">Total Items</th>
+                                    <th scope="col" style="width: 100px;">Equivalent Grade</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -136,48 +145,53 @@ include "../faculty/includes/Forms/createexamform.php";
                                 if (!empty($students)) {
                                     $count = 1;
                                     foreach ($students as $row) {
-                                        // Split the file names into an array
-                                        $fileNames = explode(',', $row['file_names']); // Split the file names by comma
+                                        // if ($activeQuarter) {
+                                        // }
 
-                                        // Loop through the file names and generate download links
+                                        // Determine if the student's quarter matches the active quarter
+                                        $isCurrentQuarter = in_array($row["quarter_exam"], explode(",", implode(",", $activeQuarter)));
+
+                                        // Determine if an exam was taken (regardless of score)
+                                        $examTaken = !empty($row['exam_items']); // Check if exam_items has a value
+
                                         echo '<tr>';
-                                        echo '<td>' . $count . '</td>';
-                                        // echo '<td class="text-center text-primary"><a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">' . $row["stu_lrn"] . '</a></td>';
-                                        echo '<td class="small text-center"> ' . $row["stu_lname"] . ', ' .  ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"] . '')) . '</td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
-                                        echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
-                                        echo '<td class="small text-center">' . strtolower($row["stu_email"]) . '</td>';
-                                        echo '<td class="small text-center">' .  $row["grade_lvl"] . '</td>';
-                                        echo '<td class="small text-center">' .  $row["section_name"] . '</td>';
+                                        echo '<td class="text-center fw-bold">' . $count . '</td>';
+                                        echo '<td class="text-center">' . $row["stu_lname"] . ', ' . ucwords(strtolower($row["stu_fname"])) . ' </td>';
 
-                                        // Check if there are no files uploaded
-                                        echo '<td>';
-                                        if (empty($row['file_names']) || count($fileNames) == 0) {
-                                            echo '<span class="text-danger mr-2">No Exam</span>';
-                                        } else {
-                                            foreach ($fileNames as $fileName) {
-                                                $fileNameForDownload = htmlspecialchars(trim($fileName)); // Clean up file name
-                                                echo '<a href="includes/download.php?file=' . urlencode($fileNameForDownload) . '" class="btn btn-success btn-sm mb-1">';
-                                                echo '<i class="fas fa-download"></i> Download</a><br>';
+                                        foreach ($activeQuarter as $quarter) {
+                                            echo '<td class="text-center">'  . ucwords(strtolower($quarter)) . ' </td>';
+                                        }
+
+                                        echo '<td class="text-center">';
+                                        if ($isCurrentQuarter) {
+                                            if ($examTaken) {
+                                                echo '<span style="background-color: #198754; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;" title="Exam Completed">Done</span>';
+                                            } else {
+                                                echo '<span style="background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;" title="No Exam Uploaded">No Exam</span>';
                                             }
+                                        } else {
+                                            echo '<span style="background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;" title="No Exam Available">No Exam</span>';
                                         }
                                         echo '</td>';
-                                        echo '<td class="small text-center"> <span class="text-danger mr-2">No Score</span></td>';
+
+                                        // Display scores, items, and equivalent if the quarter matches, regardless of score
+                                        if ($isCurrentQuarter) {
+                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['exam_scores'] ?? '0') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['exam_items'] ?? '0') . '</td>';
+                                            echo '<td class="text-center text-success fw-bold">' . htmlspecialchars($row['equivalent_exam'] ?? '0') . '</td>';
+                                        } else {
+                                            echo '<td class="text-center text-muted">-</td>';
+                                            echo '<td class="text-center text-muted">-</td>';
+                                            echo '<td class="text-center text-muted">-</td>';
+                                        }
+
                                         echo '</tr>';
                                         $count++;
                                     }
-                                } else {
-                                    echo '<tr>
-                                <td colspan="10" class="text-center mt-2 text-danger"><strong>Student not found.</strong>
-                                </td>
-                              </tr>';
                                 }
-
-                                echo '</tbody>';
-                                echo '</table>';
-                                $mySQLFunction->disconnect();
                                 ?>
+                            </tbody>
+                        </table>
 
                     </div>
                 </div>
@@ -189,87 +203,7 @@ include "../faculty/includes/Forms/createexamform.php";
     ?>
 </main>
 <!-- PDF ,EXCEL, PRINT ,CVS -->
+<script src="../assets/js/globaltables.js"></script>
 <script>
-    $(document).ready(function() {
-        $("#example").DataTable({
-            dom: "Bfrtip", // Include buttons in the dom
-            buttons: [
-                "copy",
-                {
-                    extend: "csvHtml5",
-                    text: "CSV",
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 7)
-                            return index !== 9;
-                        },
-                    },
-                },
-                {
-                    extend: "excelHtml5",
-                    text: "Excel",
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 7)
-                            return index !== 9;
-                        },
-                    },
-                },
-                {
-                    extend: "pdfHtml5",
-                    text: "PDF",
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 7)
-                            return index !== 9;
-                        },
-                    },
-                },
-                {
-                    extend: "print",
-                    text: "Print",
-                    autoPrint: true, // This will print in the same tab (no new window)
-                    customize: function(win) {
-                        // Custom styling or adjustments for print can go here
-                        $(win.document.body)
-                            .find('h1:contains("LMS")') // Adjust the selector if needed
-                            .css("display", "none");
-
-                        $(win.document.body)
-                            .css("font-size", "10pt")
-                            .prepend(
-                                // This is the container that holds both left and right aligned text
-                                '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-                                // Left-aligned: List of Enrolled Students
-                                '<div style="text-align:left; flex: 1;">' +
-                                "<h5 style='font-size: 14px;'>Enrolled Students</h5>" +
-                                "</div>" +
-                                // Right-aligned: Computer Systems Institute
-                                '<div style="text-align:right; flex: 1;">' +
-                                "<h6>Computer Systems Institute</h6>" +
-                                "<small>F. Imperial st., Brgy. 36 - Capantawan, Legazpi City</small><br>" +
-                                "</div>" +
-                                "</div>"
-                            );
-
-                        $(win.document.body)
-                            .find("table thead th")
-                            .css("background-color", "#007bff") // Header color
-                            .css("color", "#ffffff")
-                            .css("padding", "10px");
-                        $(win.document.body)
-                            .find("table")
-                            .addClass("compact") // Optional: Compact styling for the table in print view
-                            .css("font-size", "inherit");
-                    },
-                    exportOptions: {
-                        columns: function(index, data, node) {
-                            // Exclude the "Action" column (assuming index 7)
-                            return index !== 9;
-                        },
-                    },
-                },
-            ],
-        });
-    });
+    initializeDataTable("studenttakeexam", 7, "Student taken exam");
 </script>

@@ -42,7 +42,7 @@ $mySQLFunction->disconnect();
 
 <!-- Modal to Update STUDENT Account -->
 
-<main class="col-md-12 ms-sm-auto col-lg-10">
+<main class="col-md-12 ms-sm-auto col-lg-10 mt-5 pt-1">
 
     <div class="container py-4">
         <img
@@ -61,7 +61,7 @@ $mySQLFunction->disconnect();
                 </div>
                 <!-- STUDENT UPDATE FORM -->
                 <div class="container">
-                    <div class="row justify-content-between">
+                    <div class="row justify-content-between  fade-in-input">
                         <!-- Left side: Profile -->
                         <div class="col-md-6 col-12 text-center">
                             <div class="profile-header" style="margin-top: 60px;">
@@ -117,28 +117,28 @@ $mySQLFunction->disconnect();
 
                                 <!-- Username Field -->
                                 <div class="mb-3">
-                                    <small>Username <span class="text-danger">*</span></small>
+                                    <small>Username <b class="text-danger">*</b></small>
                                     <input type="text" name="username" value="<?php echo $account['username']; ?>" class="form-control" required>
                                     <div class="invalid-feedback">Please enter the username.</div>
                                 </div>
 
                                 <!-- Old Password Field -->
                                 <div class="mb-2">
-                                    <small>Enter old password <span class="text-danger">*</span></small>
+                                    <small>Enter old password <b class="text-danger">*</b></small>
                                     <input type="password" name="oldpass" placeholder="Enter the old password" class="form-control" required>
                                     <div class="invalid-feedback">Please enter the old password.</div>
                                 </div>
 
                                 <!-- New Password Field -->
                                 <div class="mb-2">
-                                    <small>New Password <span class="text-danger">*</span></small>
+                                    <small>New Password <b class="text-danger">*</b></small>
                                     <input type="password" name="newpass" placeholder="Enter new password" class="form-control" required>
                                     <div class="invalid-feedback">Please enter the new password.</div>
                                 </div>
 
                                 <!-- Confirm Password Field -->
                                 <div class="mb-3">
-                                    <small>Confirm Password <span class="text-danger">*</span></small>
+                                    <small>Confirm Password <b class="text-danger">*</b></small>
                                     <input type="password" name="confirmpass" placeholder="Confirm your password" class="form-control" required>
                                     <div class="invalid-feedback">Please confirm your password.</div>
                                     <small class="error-message text-danger" style="display: none;">Passwords do not match!</small>

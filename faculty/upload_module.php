@@ -25,7 +25,7 @@ if (!empty($_GET['sched_id']) && !empty($_GET['sub_code']) && !empty($_GET['sect
 
 include "../faculty/includes/Forms/uploadmoduleform.php";
 ?>
-
+<!-- 
 <style>
     .data-table {
         font-size: 0.8em;
@@ -37,9 +37,9 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
         padding: 0.1rem;
         /* Adjust padding */
     }
-</style>
+</style> -->
 
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-3">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-5 py-4 me-2">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -48,7 +48,7 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                         <!-- Grade Level and Section and Subject-->
                         <div>
                             <!-- Display Subject Title -->
-                            <h6 class="fw-bold text-primary">
+                            <h6 class="fw-bold primary-text">
                                 <!-- Subject: -->
                                 <?php
                                 if (!empty($students)) {
@@ -83,20 +83,30 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
 
                         </div>
 
-                        <!-- Upload Button -->
-                        <div>
-                            <?php
-                            $btnClass = empty($students) ? 'btn-danger' : 'btn-primary';
-                            $disabled = empty($students) ? 'disabled' : '';
-                            ?>
-                            <button type="button"
-                                class="btn <?php echo $btnClass; ?> btn-sm fw-bold d-flex align-items-center"
-                                data-bs-toggle="modal"
-                                data-bs-target="#upload_module"
-                                data-bs-whatever="@fat"
-                                <?php echo $disabled; ?>>
-                                <i class="bi bi-cloud-arrow-up me-1"></i>Upload Module
-                            </button>
+                        <!-- View Module Button -->
+                        <div class="d-flex gap-2 ms-2">
+                            <div>
+                                <a class="btn btn-primary fw-bold btn-sm btn-animate"
+                                    href="index.php?page=uploaded_module_list&sched_id=<?php echo urlencode($_GET['sched_id']); ?>&sub_code=<?php echo urlencode($_GET['sub_code']); ?>&section_code=<?php echo urlencode($_GET['section_code']); ?>">
+                                    <span>View Module</span>
+                                </a>
+                            </div>
+
+                            <!-- Upload Button -->
+                            <div>
+                                <?php
+                                $btnClass = empty($students) ? 'btn-primary' : 'btn-primary';
+                                $disabled = empty($students) ? 'disabled' : '';
+                                ?>
+                                <button type="button"
+                                    class="btn <?php echo $btnClass; ?> btn-sm fw-bold d-flex align-items-center"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#upload_module"
+                                    data-bs-whatever="@fat"
+                                    <?php echo $disabled; ?>>
+                                    <i class="bi bi-cloud-arrow-up me-1"></i>Upload Module
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -105,21 +115,11 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                     <!-- STUDENT DETAILS -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="student_subjectlist" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col" style="width: 50px;">#</th>
-                                    <!-- <th scope="col" style="width: 50px;">LRN</th> -->
-                                    <th scope="col" style="width: 100px;">Full name</th>
-                                    <th scope="col" style="width: 50px;">Gender</th>
-                                    <th scope="col" style="width: 150px;">Address</th>
-                                    <th scope="col" style="width: 100px;">Contact</th>
-                                    <th scope="col" style="width: 100px;">Email</th>
-                                    <th scope="col" style="width: 100px;">Year level</th>
-                                    <th scope="col" style="width: 100px;">Section</th>
-                                    <th scope="col" style="width: 100px;">Module Answer</th>
-
-
-
+                                    <th scope="col" class="text-center" style="width: 100px;">Student name</th>
+                                    <th scope="col" class="text-center" style="width: 150px;">Module Answer</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,32 +128,27 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
                                     $count = 1;
                                     foreach ($students as $row) {
                                         // Split the file names into an array
-                                        $fileNames = explode(',', $row['file_names']); // Split the file names by comma
+                                        $fileNames = explode(',', $row['file_names'] ?? ''); // Split the file names by comma
 
                                         // Loop through the file names and generate download links
                                         echo '<tr>';
                                         echo '<td>' . $count . '</td>';
-                                        // echo '<td class="text-center text-primary"><a title="Student Information" data-bs-toggle="modal" data-bs-target="#view_student' . $row['stu_lrn'] . '">' . $row["stu_lrn"] . '</a></td>';
-                                        echo '<td class="small text-center"> ' . $row["stu_lname"] . ', ' .  ucwords(strtolower($row["stu_fname"] . ' ' . $row["stu_mname"] . '')) . '</td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_gender"])) . '</td>';
-                                        echo '<td class="small text-center">' .  ucwords(strtolower($row["stu_address"])) . '</td>';
-                                        echo '<td class="small text-center">+63' . $row["stu_contact"] . '</td>';
-                                        echo '<td class="small text-center">' . strtolower($row["stu_email"]) . '</td>';
-                                        echo '<td class="small text-center">' .  $row["grade_lvl"] . '</td>';
-                                        echo '<td class="small text-center">' .  $row["section_name"] . '</td>';
-
+                                        echo '<td class="small text-center"> ' . $row["stu_lname"] . ', ' .  ucwords(strtolower($row["stu_fname"] .  '')) . '</td>';
                                         // Check if there are no files uploaded
-                                        echo '<td>';
+                                        echo '<td class="text-center">';
                                         if (empty($row['file_names']) || count($fileNames) == 0) {
                                             echo '<span class="text-danger">No file uploaded</span>';
                                         } else {
+                                            echo '<div class="d-flex flex-wrap gap-1">'; // Flex container for row layout
                                             foreach ($fileNames as $fileName) {
                                                 $fileNameForDownload = htmlspecialchars(trim($fileName)); // Clean up file name
-                                                echo '<a href="includes/download.php?file=' . urlencode($fileNameForDownload) . '" class="btn btn-success btn-sm mb-1">';
-                                                echo '<i class="fas fa-download"></i> Download</a><br>';
+                                                echo '<a href="includes/download.php?file=' . urlencode($fileNameForDownload) . '" class="btn btn-success btn-sm">';
+                                                echo '<i class="fas fa-download"></i> Download</a>';
                                             }
+                                            echo '</div>';
                                         }
                                         echo '</td>';
+
 
                                         echo '</tr>';
                                         $count++;
@@ -182,6 +177,5 @@ include "../faculty/includes/Forms/uploadmoduleform.php";
 <!-- PDF ,EXCEL, PRINT ,CVS -->
 <script src="../assets/js/globaltables.js"></script>
 <script>
-    initializeDataTable("student_subjectlist", 8, "List of Students");
+    initializeDataTable("student_subjectlist", 8, "List of Students Who Uploaded Modules");
 </script>
- 

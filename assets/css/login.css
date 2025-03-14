@@ -1,4 +1,5 @@
 /* Reset and Base Styles */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -6,290 +7,18 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* Fullscreen Gradient Background */
-body {
-  height: 100vh; /* Full height */
-  width: 100%; /* Full width */
-  background: url("../img/bgcsi.png") no-repeat center center; /* Background image */
-  background-size: cover; /* Cover entire screen */
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-.header {
-  position: absolute;
-  top: 5%;
-  text-align: center;
-  color: #fff;
-  font-size: 50px;
-  font-weight: bold;
- 
-  background: linear-gradient(to right, #4e6c7f, #2e3b55);
-  -webkit-background-clip: text;
-  background-clip: text;
-  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  letter-spacing: 10px; 
-  text-transform: uppercase; 
-}
-
-
-/* Header Title Styling */
-.header h1 {
-  font-size: 36px;
-  font-weight: bold;
-  color: #1a237e;
-  text-shadow: 0 4px 6px rgba(26, 35, 126, 0.2);
-  animation: fadeIn 1.5s ease-in-out both;
-}
-
-.header h2 {
-  font-size: 20px;
-  font-weight: 300;
-  margin-top: 5px;
-  opacity: 0.8;
-  color: #3b4c7c;
-  animation: fadeIn 1.8s ease-in-out both;
-}
-
-/* Container for the Login Box */
-.container {
-  width: 90%;
-  max-width: 450px;
-  padding: 1px;
-  padding-top: 100px;
-}
-
-/* Enhanced Glassmorphism Login Box */
-.login-box {
-  backdrop-filter: blur(10px) saturate(180%); /* Increased blur and saturation */
-  background: rgba(255, 255, 255, 0.15); /* More transparent background */
-  border: 1px solid rgba(255, 255, 255, 0.6); /* Enhanced border color */
-  border-radius: 20px;
-  padding: 40px 30px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); /* Softer shadow */
-  text-align: center;
-  color: #ffffff;
-  animation: fadeIn 1.5s ease-in-out both;
-}
-
-/* Logo Styling */
-.login-logo {
-  width: 120px;
-  height: auto;
-  margin-bottom: 20px;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
-}
-
-/* Input Box with Soft Glow */
-.input-box {
-  position: relative;
-  margin-bottom: 30px;
-  width: 100%;
-}
-
-.input-box input {
-  width: 100%;
-  padding: 15px 50px;
-  font-size: 16px;
-  border: none;
-  outline: none;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 30px;
-  box-shadow: 0 4px 15px rgba(26, 35, 126, 0.1);
-  transition: 0.4s ease;
-}
-.input-box input::placeholder {
-  color: rgb(50, 49, 49);
-  font-weight: 500;
-}
-.input-box input:hover,
-.input-box input:focus {
-  background: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 0 15px rgba(85, 145, 255, 0.6),
-    inset 0 0 5px rgba(255, 255, 255, 0.5);
-}
-
-/* Icon Positioning */
-.input-box .icon {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
-  opacity: 0.8;
-  color: #000000;
-}
-
-/* Futuristic Button with Light Blue Shine */
-button {
-  width: 100%;
-  padding: 15px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #020202;
-  background: linear-gradient(
-    135deg,
-    #4a90e2,
-    #70b8ff
-  ); /* Soothing blue gradient */
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2),
-    /* Reduced shadow intensity */ inset 0 0 10px rgba(255, 255, 255, 0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%;
-  height: 100%;
-  /* background: rgba(255, 255, 255, 0.2); Softer shine effect */
-  transform: skewX(-45deg);
-  transition: all 0.6s ease;
-}
-
-button:hover::before {
-  left: 100%;
-}
-
-button:hover {
-  transform: translateY(-5px);
-  background: linear-gradient(
-    135deg,
-    #6bb5f5,
-    #8dcdfc
-  ); /* Lighter hover gradient */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Slightly softer hover shadow */
-}
-
-/* Caption Text */
-.text-caption {
-  margin-top: 24px;
-  color: rgba(30, 50, 100, 0.6);
-  font-size: 14px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color: #ffffff;
-}
-
-/* Smooth Fade-In Animation */
-/* @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-} */
-
-/* Screen width for 1366x768 */
-@media (max-width: 1366px) {
-  .container {
-    width: 100%;
-    max-width: 400px;
-    padding: 10px;
-    padding-top: 60px;
-  }
-
-  .login-box {
-    padding: 30px 20px;
-  }
-
-  .login-logo {
-    width: 100px;
-  }
-
-  .header {
-    font-size: 22px;
-    font-weight: 800;
-    color: #1a237e;
-    text-shadow: 0 4px 6px rgba(26, 35, 126, 0.2);
-    animation: fadeIn 1.5s ease-in-out both;
-    /* padding-top: 55px; */
-    letter-spacing: 5px;
-  }
-
-  h2 {
-    font-size: 20px;
-    color: #ffffff;
-    font-family: "Poppins", sans-serif;
-    margin-bottom: 23px;
-    font-weight: 500;
-  }
-
-  button {
-    font-size: 16px;
-    padding: 12px;
-  }
-
-  .input-box input {
-    font-size: 14px;
-    padding: 12px 45px;
-  }
-  .text-caption {
-    color: #ffffff;
-  }
-  .input-box input::placeholder {
-    color: rgb(50, 49, 49);
-    font-weight: 600;
-  }
-}
-
-/* Screen width for mobie */
-/* Screen width for mobile devices */
-@media screen and (max-width: 480px) {
-  .header {
-    font-size: 22px;
-    font-weight: 800;
-    color: #1a237e;
-    text-shadow: 0 4px 6px rgba(26, 35, 126, 0.2);
-    animation: fadeIn 1.5s ease-in-out both;
-    padding-top: 55px;
-    letter-spacing: 5px;
-  }
-  .input-box input::placeholder {
-    color: rgb(50, 49, 49);
-    font-weight: 500;
-  }
-}
-
-/* Additional styles for even smaller screens (e.g., 380px and below) */
-@media screen and (max-width: 380px) {
-  .header {
-    font-size: 18px; /* Reduce the font size for extra small screens */
-    padding-top: 50px; /* Adjust spacing if needed */
-    letter-spacing: 3px; /* Optional: Adjust letter spacing for readability */
-  }
-}
-
-@media screen and (max-width: 768px) {
-  /* General mobile-specific styles */
-}
-
 /* alert modal css */
 .notification-alert {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #d1e7dd;
+  background-color: #ffffff;
   color: #842029;
   padding: 15px 20px;
-  border-left: 5px solid #badbcc;
+  border-left: 5px solid #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-size: 16px;
+  font-size: 13px;
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -302,34 +31,9 @@ button:hover {
   color: #842029;
 }
 
-.notification-alert p {
-  margin: 0;
-  font-weight: bold;
-}
-
-/* Animation */
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  10% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  90% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-}
-
 /* this is success  */
 
-.notification-alert-1 {
+.notification-success {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -339,7 +43,7 @@ button:hover {
   border-left: 5px solid #badbcc;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-size: 16px;
+  font-size: 13px;
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -347,7 +51,7 @@ button:hover {
   animation: fadeInOut 2.5s ease-in-out forwards;
 }
 
-.alert-icon-1 {
+.success-icon {
   font-size: 20px;
   color: #0f5132;
 }
@@ -355,6 +59,35 @@ button:hover {
 .notification-alert p {
   margin: 0;
   font-weight: bold;
+}
+
+.illustration img {
+  max-width: 300px;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+  animation: float 3s infinite ease-in-out;
+  /* margin-right: 50px; */
+}
+
+.login-container {
+  max-width: 800px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes fadeInOut {
@@ -374,4 +107,63 @@ button:hover {
     opacity: 0;
     transform: translateY(20px);
   }
+}
+
+.btn-custom {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-custom a {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 5px;
+  font-size: 14px;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.btn-custom a:hover {
+  color: #17a2b8;
+  transform: scale(1.1);
+}
+
+/* Ensure the input text is also white */
+.form-outline .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid white !important;
+}
+
+/* Change label color */
+.form-outline .form-label {
+  color: white !important;
+}
+
+/* Change the focus effect (outline glow) */
+.form-outline .form-control:focus {
+  border-color: white !important;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.7) !important;
+}
+
+.btn-login {
+  background-color: #17a2b8;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  font-size: 16px;
+  border: none !important;
+  outline: none !important;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-login:hover {
+  background-color: #17a2b8;
+  transform: scale(1.02);
 }

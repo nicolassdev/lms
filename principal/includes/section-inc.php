@@ -13,6 +13,7 @@ if (!isset($_POST["submit"])) {
     $gradelvl = strtoupper(trim($_POST["gradelvl"] ?? null));
     $section = strtoupper(str_replace(' ', '', trim($_POST["section"] ?? null)));
     $advisor = trim($_POST["teacher_id"] ?? null);
+    $sy = trim($_POST["school_year"] ?? null);
     $date_created = date("Ymd");
 
     $mySQLFunction->connection(); // Establish database connection
@@ -34,14 +35,14 @@ if (!isset($_POST["submit"])) {
         }
 
         // Insert Section
-        $sectionColumns = ['section_code', 'strand_code', 'grade_lvl', 'section_name', 'teacher_id', 'date_created'];
-        $sectionValues = [$code, $strandcode, $gradelvl, $section, $advisor, $date_created];
+        $sectionColumns = ['section_code', 'strand_code', 'grade_lvl', 'section_name', 'school_year', 'teacher_id', 'date_created'];
+        $sectionValues = [$code, $strandcode, $gradelvl, $section, $sy, $advisor, $date_created];
         $mySQLFunction->insert("section", $sectionColumns, $sectionValues);
 
 
         // Set session success message
         $_SESSION['success_notify'] = "Section has been created successfully.";
-        header("Location: ../index.php?page=section");
+        header("Location: ../index.php?page=section_list");
         exit();
     } catch (Exception $e) {
         // Rollback the transaction in case of an error
@@ -49,7 +50,7 @@ if (!isset($_POST["submit"])) {
 
         // Set error session message
         $_SESSION['error_section'] = $e->getMessage();
-        header("Location: ../index.php?page=section");
+        header("Location: ../index.php?page=section_list");
         exit();
     } finally {
         // Close the connection

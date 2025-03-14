@@ -4,7 +4,7 @@
          <div class="modal-content">
 
              <div class="modal-header">
-                 <h1 class="modal-title fs-5 text-primary">Create new section</h1>
+                 <h1 class="modal-title fs-5 fw-bold text-primary">Create New Section</h1>
                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="resetFormSection()"></button>
              </div>
 
@@ -12,7 +12,7 @@
                  <form id="sectionForm" action="./includes/section-inc.php" method="POST" autocomplete="off" class="row g-2 needs-validation" novalidate>
 
                      <!-- SECTION SELECTION -->
-                     <div class="col-md-12">
+                     <div class="col-md-12 mb-1">
                          <label class="form-label">Section Name</label>
                          <input type="text" class="form-control" name="section" required>
 
@@ -24,7 +24,7 @@
 
 
                      <!-- STRAND NAME  -->
-                     <div class="col-md-12">
+                     <div class="col-md-12 mb-1">
                          <label class="form-label">Strand Name</label>
                          <select class="form-select" id="strandSelect" name="strand_code" required>
                              <option value="" selected disabled>Select a strand...</option>
@@ -64,7 +64,7 @@
 
 
                      <!-- GRADE LEVEL -->
-                     <div class="col-md-12">
+                     <div class="col-md-12 mb-1">
                          <label class="form-label">Grade Level</label>
                          <select class="form-select" name="gradelvl" id="gradelvl" required>
                              <option selected disabled value="">Select...</option>
@@ -78,7 +78,7 @@
 
 
                      <!-- ADVISOR SELECTION -->
-                     <div class="col-md-12">
+                     <div class="col-md-12 mb-1">
                          <label class="form-label">Adviser</label>
                          <select class="form-select" name="teacher_id" required>
                              <option value="" selected disabled>Choose an adviser...</option>
@@ -113,6 +113,39 @@
                              Please select an advisor.
                          </div>
                      </div>
+
+                     <!-- SCHOOL YEAR SELECTION -->
+                     <div class="col-md-12">
+                         <label class="form-label">School Year</label>
+                         <select class="form-select" name="school_year" required>
+                             <option value="" selected disabled>Select school year ...</option>
+                             <?php
+                                $mySQLFunction->connection();
+                                $result = $mySQLFunction->getSchoolyear();
+                                $hasAvailableSchoolYear = false;
+
+                                // CHECK IF SY IS AVAILABLE
+                                if (empty($result)) {
+                                    echo '<option disabled>No School Year found in the database.</option>';
+                                } else {
+                                    foreach ($result as $row) {
+                                        echo '<option value="' . $row["school_year"] . '">' . $row["school_year"] .  '</option>';
+                                        $hasAvailableSchoolYear = true; // Mark that there is at least one available adviser
+                                    }
+                                }
+                                // Check if no available adviser was found after the loop
+                                if (!$hasAvailableSchoolYear) {
+                                    echo '<option disabled>No School year available for section.</option>';
+                                }
+                                $mySQLFunction->disconnect();
+                                ?>
+
+                         </select>
+                         <div class="invalid-feedback">
+                             Please select an school year.
+                         </div>
+                     </div>
+
 
                      <div class="col-md-12">
                          <button name="submit" class="btn btn-primary w-100 mt-3 mb-2" type="submit">Save</button>

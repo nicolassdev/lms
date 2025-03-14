@@ -1,10 +1,9 @@
 <?php
-ini_set('display_errors', 0);
 ini_set('log_errors', 1);
+ini_set('display_errors', 1); // set 0 to not show the error 
 error_reporting(E_ALL);
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,45 +11,32 @@ error_reporting(E_ALL);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher</title>
-
+    <title>Learning Management System</title>
+    <!-- WEBSITE ICON-->
     <link rel="icon" type="webp" href="../assets/img/csi.webp">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="../assets/css/teacher.css?v=<?php echo time(); ?>" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-
-
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- DataTables CSS -->
     <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- DataTables Buttons CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
-
-
-    <!-- Include Morris.js and jQuery -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    <!-- Include Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/teacher.css?v=<?php echo time(); ?>" />
 
 </head>
 
 <body class="lms-scroll-bar">
     <!-- Top Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light primary-color nav-shadow">
         <div class="container-fluid">
             <!-- Sidebar Toggle Button -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+            <button class="navbar-toggler bg-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle sidebar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="image d-flex align-items-center">
@@ -60,15 +46,17 @@ error_reporting(E_ALL);
                     </span>
                 </a>
 
-                <!-- Desktop LMS Title (Left-aligned on large screens) -->
-                <div class="navbar-brand text-black d-none d-lg-block">
-                    Learning Management System
+                <!-- Small title for mobile view -->
+                <div class="navbar-brand text-white d-none d-lg-inline">
+                    <span class="color">L</span>earning <span class="color">M</span>anagement
+                    <span class="color">S</span>ystem
                 </div>
 
-                <!-- Mobile LMS Title (Centered on mobile screens, hidden on larger screens) -->
-                <div class="navbar-brand text-black mx-auto text-center d-block d-lg-none fs-6">
-                    Learning Management System
-                </div>
+                <!-- Large title for desktop view -->
+                <span class="text-white fs-6 me-3 d-inline d-lg-none">
+                    <span class="color">L</span>earning <span class="color">M</span>anagement
+                    <span class="color">S</span>ystem
+                </span>
             </div>
 
 
@@ -78,9 +66,9 @@ error_reporting(E_ALL);
                     <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="text-black fs-6">
 
-                            <small class="text-primary fw-semibold">Welcome, <?php echo ucwords(strtolower($_SESSION["user_role"])); ?></small>
+                            <small class="text-white fw-semibold">Welcome, <?php echo ucwords(strtolower($_SESSION["user_role"])); ?></small>
 
-                            <i class="bi bi-person-circle ms-1" style="font-size: 1.3rem;"></i>
+                            <i class="bi bi-person-circle ms-1 text-white" style="font-size: 1.3rem;"></i>
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
@@ -104,7 +92,7 @@ error_reporting(E_ALL);
     <div class="side">
         <div class="container-fluid">
             <div class="row">
-                <nav id="sidebar" class="col-md-5 col-lg-2 bg-dark sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
+                <nav id="sidebar" class="col-md-5 col-lg-2 primary-color sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
                     <div class="position-sticky">
                         <div class="text-white ms-4 d-lg-none mt-2">
                             <?php
@@ -116,7 +104,7 @@ error_reporting(E_ALL);
 
 
                         <ul class="nav flex-column">
-                            <div class="nav-link fs-5 text-white fw-bold dasboard d-none d-lg-inline mb-3 ">
+                            <div class="nav-link fs-5 text-white fw-bold dasboard d-none d-lg-inline mb-2">
                                 MENU
                             </div>
 
@@ -162,30 +150,61 @@ error_reporting(E_ALL);
 
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=section_handled">
-                                    <i class="bi bi-buildings me-1"></i>Section Handled
+                                    <i class="bi bi-bank me-2"></i>Section Handled
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="index.php?page=teacher_subject">
-                                    <i class="bi bi-journal-bookmark-fill me-1"></i>Subjects Handled
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=teacher_quiz">
-                                    <i class="bi bi-lightbulb me-2"></i>Quiz
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=teacher_exam">
-                                    <i class="bi bi-book me-2"></i></i>Exam
+                                    <i class="bi bi-journal-bookmark-fill me-2"></i>Subjects Handled
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link active" href="index.php?page=teacher_report">
-                                    <i class="bi bi-bar-chart me-2"></i>Reports
+                                <a class="nav-link active" href="index.php?page=teacher_module">
+                                    <i class="bi bi-book me-2"></i></i>Module
                                 </a>
                             </li>
+
+                            <!-- THISI IS THE ROUTE OF QUIZ -->
+                            <li class="nav-item">
+                                <a class="nav-link  text-white" href="#assessmentMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
+                                    <i class="bi bi-card-heading me-2"></i>Assessment <i class="bi bi-chevron-down" style="margin-left: 5px;" id="assessmentIcon"></i>
+                                </a>
+                                <ul class="collapse list-unstyled ps-1" id="assessmentMenu">
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=teacher_quiz">
+                                            <i class="bi bi-pencil-square me-2"></i>Quiz
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=teacher_exam">
+                                            <i class="bi bi-pencil-square  me-2"></i>Exam
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+
+                            <!-- THISI IS THE ROUTE OF REPORTS QUIZ AND EXAM -->
+                            <li class="nav-item">
+                                <a class="nav-link  text-white" href="#reportMenu" data-bs-toggle="collapse" aria-expanded="false" id="examDropdown">
+                                    <i class="bi bi-bar-chart me-2"></i>Reports <i class="bi bi-chevron-down" style="margin-left: 30px;" id="reportIcon"></i>
+                                </a>
+                                <ul class="collapse list-unstyled ps-1" id="reportMenu">
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=teacher_quiz_report">
+                                            <i class="bi bi-clipboard-check me-2"></i>Quiz Report
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mt-2">
+                                        <a class="nav-link active" href="index.php?page=teacher_exam_report">
+                                            <i class="bi bi-file-earmark-text me-2"></i>Exam Report
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
                             <li class="nav-item">
                                 <a type="button" class="nav-link active" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                     <i class="bi bi-box-arrow-right  me-1"></i> Logout
@@ -220,24 +239,34 @@ error_reporting(E_ALL);
             </div>
         </div>
     </div>
-
     <!-- Bootstrap JS and Dependencies -->
+    <!-- NOTE : DON'T REMOVE THIS DEPENDENCIES  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- THIS IS SIDE BAR SCRIPT TO SHOW TOOGGLE UP AND DOWN  -->
-    <!-- <script>
+    <script>
         // Add event listener to toggle the icon when dropdown is shown/hidden
         document.addEventListener('DOMContentLoaded', function() {
-            const studentMenu = document.getElementById('studentMenu');
-            const studentIcon = document.getElementById('studentIcon');
 
-            studentMenu.addEventListener('show.bs.collapse', function() {
-                studentIcon.classList.remove('bi-chevron-down'); // Original icon
-                studentIcon.classList.add('bi-chevron-up'); // Change to up icon
-            });
+            // Reusable function for handling the icon toggle based on the collapse behavior
+            function toggleCollapseIcon(menuId, iconId) {
+                const menu = document.getElementById(menuId);
+                const icon = document.getElementById(iconId);
 
-            studentMenu.addEventListener('hide.bs.collapse', function() {
-                studentIcon.classList.remove('bi-chevron-up'); // Remove up icon
-                studentIcon.classList.add('bi-chevron-down'); // Change back to original icon
-            });
+                menu.addEventListener('show.bs.collapse', function() {
+                    icon.classList.remove('bi-chevron-down'); // Original icon
+                    icon.classList.add('bi-chevron-up'); // Change to up icon
+                });
+
+                menu.addEventListener('hide.bs.collapse', function() {
+                    icon.classList.remove('bi-chevron-up'); // Remove up icon
+                    icon.classList.add('bi-chevron-down'); // Change back to original icon
+                });
+
+            }
+
+            // Apply the function to different menus and icons
+            toggleCollapseIcon('assessmentMenu', 'assessmentIcon');
+            toggleCollapseIcon('reportMenu', 'reportIcon');
+
         });
-    </script> -->
+    </script>

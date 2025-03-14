@@ -71,12 +71,12 @@ if (!isset($_POST["submit"])) {
         // Insert data into USERS table
         $credentialColumns = ['id', 'username', 'password', 'role', 'date_added'];
         $credentialValues = [$uid, $username, $encryptedPassword, $role, date('Y-m-d H:i:s')];
-        $mySQLFunction->insert("USERS", $credentialColumns, $credentialValues);
+        $mySQLFunction->insert("users", $credentialColumns, $credentialValues);
 
         // Insert data into registrar table
         $registrarColumns = ['registrar_id', 'firstname', 'middlename', 'lastname', 'contact', 'gender', 'email', 'address', 'image', 'id'];
         $registrarValues = [$reg_id, $fname, isset($_POST["middlename"]) ? strtoupper(trim($_POST["middlename"])) : null, $lname, $contact, $gender, $email, $address, $imagePath, $uid];
-        $mySQLFunction->insert("REGISTRAR", $registrarColumns, $registrarValues);
+        $mySQLFunction->insert("registrar", $registrarColumns, $registrarValues);
 
         // Set success session variable and redirect
         $_SESSION['insert_admin'] = true;

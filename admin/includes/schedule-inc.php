@@ -38,8 +38,8 @@ if ($fromTime > $toTime) {
 
 try {
 
-    // Get the strand code and grade level of the current section
-    $query = "SELECT strand_code, grade_lvl FROM section WHERE section_code = ?";
+    // Get the section name  and grade level of the current section
+    $query = "SELECT section_name, grade_lvl FROM section WHERE section_code = ?";
     $sectionInfo = $mySQLFunction->querySingle($query, [$section_id]);
     if (!$sectionInfo) {
         $_SESSION['error'] = "Invalid section selected.";
@@ -47,19 +47,19 @@ try {
         exit();
     }
 
-    $strandCode = $sectionInfo['strand_code'];
+    $sectionName = $sectionInfo['section_name'];
     $gradeLevel = $sectionInfo['grade_lvl'];
 
-    // Check for duplicate subject with the same strand and grade level
+    // Check for duplicate subject with the same section name and grade level
     $duplicateQuery = "
             SELECT COUNT(*) AS count
             FROM schedule
             INNER JOIN section ON schedule.section_code = section.section_code
-            WHERE schedule.sub_code = ? AND section.strand_code = ? AND section.grade_lvl = ? AND schedule.sched_id != ?";
-    $duplicateCount = $mySQLFunction->querySingle($duplicateQuery, [$subject_id, $strandCode, $gradeLevel, $uid]);
+            WHERE schedule.sub_code = ? AND section.section_name = ? AND section.grade_lvl = ? AND schedule.sched_id != ?";
+    $duplicateCount = $mySQLFunction->querySingle($duplicateQuery, [$subject_id, $sectionName, $gradeLevel, $uid]);
 
     if ($duplicateCount['count'] > 0) {
-        $_SESSION['error'] = "<small><b>Duplicate entry detected. </b><br/>The subject is already assigned to the same strand and grade level.</small>";
+        $_SESSION['error'] = "<small><b>Duplicate entry detected. </b><br/>The subject is already assigned to the same section and grade level.</small>";
         header("Location: ../index.php?page=schedule");
         exit();
     }
@@ -104,7 +104,7 @@ try {
     $schedColumns = ['sched_id', 'teacher_id', 'section_code', 'sub_code', 'sched_day', 'sched_from', 'sched_to'];
     $schedValues = [$uid, $teacher_id, $section_id, $subject_id, $day, $from, $to];
 
-    $mySQLFunction->insert("SCHEDULE", $schedColumns, $schedValues);
+    $mySQLFunction->insert("schedule", $schedColumns, $schedValues);
 
     $_SESSION['success'] = "Schedule was inserted successfully";
     header("Location: ../index.php?page=schedule");

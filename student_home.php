@@ -37,14 +37,18 @@ $mySQLFunction->disconnect();
                 <div class="col-md-12">
                     <img
                         style="position: absolute; top: 50%; right: 5%; transform: translate(-0%, -45%); 
-               width: 500px; opacity: 0.1; z-index: -1;"
+                         width: 500px; opacity: 0.1; z-index: -1;"
                         src="./assets/img/csi.webp"
                         alt="LMS Logo">
                     <div class="container-fluid ">
 
                         <!-- <h5 class="text-muted">Here you can manage your exam, quiz, assignments, and view your grades.</h5> -->
                         <!-- School Year and Semester Display -->
-                        <div class="col-md-12 text-muted">
+                        <div class="col-md-12 text-muted ms-3">
+                            <!-- Info name -->
+                            <div class="fs-5">Hello,
+                                <?php echo ucwords(strtolower($_SESSION['stu_fname'] . ' ' . $_SESSION['stu_lname'])); ?><span class="fs-2">👋</span>
+                            </div>
                             <?php
                             if (!empty($activeSchoolYears) && !empty($activeSem)) {
                                 foreach ($activeSchoolYears as $index => $schoolYear) {
@@ -55,15 +59,8 @@ $mySQLFunction->disconnect();
                                 echo '<div class="alert alert-warning">No school year and semester found.</div>';
                             }
                             ?>
-
-                            <!-- Info name -->
-                            <p>Logged in as :
-                                <?php
-                                echo ucwords(strtolower($_SESSION['stu_fname'] . ' ' . $_SESSION['stu_lname']));
-                                ?>
-                            </p>
                         </div>
-                        <div class="row mt-4">
+                        <div class="row mt-4 fade-in-input">
                             <!-- Courses Card -->
                             <div class="col-md-4 mb-4">
                                 <div class="card shadow-sm h-100">
@@ -83,7 +80,7 @@ $mySQLFunction->disconnect();
                                         <i class="bi bi-journal display-4 text-info mb-3"></i>
                                         <h5 class="card-title">Module</h5>
                                         <p class="card-text">Submit and track your Module.</p>
-                                        <a href="#" class="btn btn-info text-black">View Module</a>
+                                        <a href="?page=student_module" class="btn btn-info text-black">View Module</a>
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +91,7 @@ $mySQLFunction->disconnect();
                                         <i class="bi bi-pencil-fill display-4 text-success mb-3"></i>
                                         <h5 class="card-title">Activity</h5>
                                         <p class="card-text">Submit and track your Activity.</p>
-                                        <a href="#" class="btn btn-success">View Activity</a>
+                                        <a href="?page=student_module" class="btn btn-success">View Activity</a>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +104,7 @@ $mySQLFunction->disconnect();
                                         <i class="bi bi-lightbulb display-4 text-danger mb-3"></i>
                                         <h5 class="card-title">Quiz</h5>
                                         <p class="card-text">Check your quiz performance.</p>
-                                        <a href="#" class="btn btn-danger">View Quiz</a>
+                                        <a href="?page=student_quiz_result" class="btn btn-danger">View Quiz</a>
                                     </div>
                                 </div>
                             </div>
@@ -116,10 +113,10 @@ $mySQLFunction->disconnect();
                             <div class="col-md-4 mb-4">
                                 <div class="card shadow-sm h-100">
                                     <div class="card-body text-center">
-                                        <i class="bi bi-book display-4 text-info mb-3"></i>
+                                        <i class="bi bi-book display-4 text-warning mb-3"></i>
                                         <h5 class="card-title">Exam</h5>
                                         <p class="card-text">Check your exam performance.</p>
-                                        <a href="#" class="btn btn-info text-black">View Exam</a>
+                                        <a href="?page=student_exam_result" class="btn btn-warning text-black">View Exam</a>
                                     </div>
                                 </div>
                             </div>
@@ -129,10 +126,10 @@ $mySQLFunction->disconnect();
                             <div class="col-md-4 mb-4">
                                 <div class="card shadow-sm h-100">
                                     <div class="card-body text-center">
-                                        <i class="bi bi-bar-chart-fill display-4 text-warning mb-3"></i>
+                                        <i class="bi bi-bar-chart-fill display-4 text-secondary mb-3"></i>
                                         <h5 class="card-title">Grades</h5>
                                         <p class="card-text">Check your academic performance.</p>
-                                        <a href="#" class="btn btn-warning text-black">View Grades</a>
+                                        <a href="?page=student_exam_grade" class="btn btn-secondary">View Grades</a>
                                     </div>
                                 </div>
                             </div>

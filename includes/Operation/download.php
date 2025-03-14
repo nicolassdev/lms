@@ -72,7 +72,7 @@ if (isset($_GET['file'])) {
                         <p class="fs-5">Files was deleted.<br><?php echo htmlspecialchars($errorModal); ?></p>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <a href="/lms/index.php?page=student_subject" class="btn btn-danger">Go Back</a>
+                        <a href="/lms/index.php?page=student_module" class="btn btn-danger">Go Back</a>
                     </div>
                 </div>
             </div>

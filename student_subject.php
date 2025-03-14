@@ -18,8 +18,18 @@ $mySQLFunction->disconnect();
 ?>
 
 <!-- Style for the cards and layout -->
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    .card:hover {
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        transform: scale(1.05);
+    }
+</style>
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-2">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <div class="ms-3 w-100">
             <div class="container mt-4">
@@ -28,9 +38,9 @@ $mySQLFunction->disconnect();
 
                     <?php
                     if (!empty($studentSubjects)) {
-                        echo "<h5 class='fw-bold text-secondary'>" . count($studentSubjects) . " Subject(s)</h5>";
+                        echo "<h5 class='fw-bold text-muted'>" . count($studentSubjects) . " Subject(s)</h5>";
                     } else {
-                        echo "<h5 class='fw-bold text-secondary'> " . count($studentSubjects) . "  Subject</h5>";
+                        echo "<h5 class='fw-bold text-muted'> " . count($studentSubjects) . "  Subject</h5>";
                     }
                     ?>
 
@@ -40,7 +50,7 @@ $mySQLFunction->disconnect();
                         <div class="input-group input-group-sm">
                             <!-- Search Input -->
                             <input type="text" id="searchBar" class="form-control" placeholder="Search subjects ...">
-                            <i class="bi bi-search me-2 ms-2"></i>
+                            <i class="bi bi-search me-2 ms-2 fs-5"></i>
                         </div>
                     </div>
 
@@ -50,31 +60,23 @@ $mySQLFunction->disconnect();
     </div>
 
 
-
     <!-- Subject Cards -->
-    <div class="row g-4 mb-4" id="subjectContainer">
+    <div class="row g-4 mb-4 ms-2 me-2 fade-in-input" id="subjectContainer">
         <?php if (!empty($studentSubjects)): ?>
             <?php foreach ($studentSubjects as $subject): ?>
                 <div class="col-lg-4 col-md-6 col-sm-12 subject-card" data-title="<?php echo htmlspecialchars(strtolower($subject['sub_title'])); ?>">
                     <div class="card h-100 border-0 shadow-lg rounded-4">
-                        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center rounded-top-4 px-3 py-2">
+                        <div class="card-header secondary-color d-flex justify-content-between align-items-center rounded-top-4 px-3 py-2">
                             <div class="text-truncate">
                                 <h6 class="mb-0 fw-bold text-truncate mt-3">
-                                    <i class="bi bi-book-half me-2"></i>
+                                    <i class="bi bi-book-half me-2 text-danger"></i>
                                     <?php echo htmlspecialchars(ucwords(strtolower($subject['sub_title'] ?? 'No Title'))); ?>
                                 </h6>
-                                <small class="fw-semibold ms-4">
+                                <small class="fw-semibold ms-4 text-sm">
                                     <?php echo htmlspecialchars(ucwords(strtolower($subject['sub_type'] ?? 'No Type'))); ?> Subject
                                 </small>
                             </div>
-                            <div class="dropdown">
-                                <i class="bi bi-three-dots-vertical text-white fs-5" id="kebabMenu" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="cursor: pointer;"></i>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="kebabMenu">
-                                    <li><a class="dropdown-item text-black" href="#" onclick="confirmDelete()">Move</a></li>
-                                    <hr class="dropdown-divider">
-                                    <li><a class="dropdown-item text-black" href="#" onclick="cancelAction()">Cancel</a></li>
-                                </ul>
-                            </div>
+
                         </div>
 
                         <div class="card-body">
@@ -101,12 +103,11 @@ $mySQLFunction->disconnect();
                                 </div>
                             </div>
 
-                            <div class="d-flex align-items-center text-muted">
-                                <i class="bi bi-award text-danger fs-4 me-2"></i>
+                            <div class="d-flex align-items-center text-muted ms-3">
                                 <span class="fw-bold fs-6"><?php echo ucwords(strtolower($subject["grade_lvl"])) . ' ' . htmlspecialchars($subject["strand_name"]); ?></span>
                             </div>
 
-                            <div class="text-secondary ms-4">
+                            <div class="text-secondary ms-3">
                                 <small class="fw-semibold">
                                     <?php
                                     if (!empty($activeSchoolYears) && !empty($activeSem)) {
@@ -128,11 +129,7 @@ $mySQLFunction->disconnect();
                                 </span>
                             </div>
                         </div>
-                        <div class="card-footer bg-light d-flex justify-content-center rounded-bottom-4">
-                            <a href="index.php?page=subject_list&sub_code=<?php echo urlencode($subject['sub_code']); ?> &strand_code=<?php echo urlencode($subject['strand_code']); ?> &grade_lvl=<?php echo urlencode($subject['grade_lvl']); ?>" class="btn btn-outline-success w-100 fw-bold d-flex align-items-center justify-content-center">
-                                <i class="bi bi-journals me-2"></i> View Module
-                            </a>
-                        </div>
+
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -146,6 +143,7 @@ $mySQLFunction->disconnect();
                     </div>
                 </div>
             </div>
+
         <?php else: ?>
             <div class="col-12 text-center">
                 <div class="py-5">
@@ -159,27 +157,29 @@ $mySQLFunction->disconnect();
         <?php endif; ?>
     </div>
 
-    <script>
-        document.getElementById('searchBar').addEventListener('input', function() {
-            const filter = this.value.toLowerCase();
-            const cards = document.querySelectorAll('.subject-card');
-            let found = false;
+</main>
 
-            cards.forEach(card => {
-                const title = card.getAttribute('data-title') || '';
-                const matches = title.includes(filter);
-                card.style.display = matches ? '' : 'none';
-                if (matches) found = true;
-            });
+<script>
+    document.getElementById('searchBar').addEventListener('input', function() {
+        const filter = this.value.toLowerCase();
+        const cards = document.querySelectorAll('.subject-card');
+        let found = false;
 
-            // Show/Hide the "No Results Found" message
-            document.querySelector('.no-results').classList.toggle('d-none', found);
+        cards.forEach(card => {
+            const title = card.getAttribute('data-title') || '';
+            const matches = title.includes(filter);
+            card.style.display = matches ? '' : 'none';
+            if (matches) found = true;
         });
-    </script>
+
+        // Show/Hide the "No Results Found" message
+        document.querySelector('.no-results').classList.toggle('d-none', found);
+    });
+</script>
 
 
-    <!-- This is post method -->
-    <!-- <form action="index.php?page=student_subject_list" method="POST" class="d-inline">
+<!-- This is post method -->
+<!-- <form action="index.php?page=upload_module" method="POST" class="d-inline">
     <input type="hidden" name="sub_code" value=" ">
     <input type="hidden" name="section_code" value=" ">
     <button type="submit" class="btn btn-outline-success w-100 fw-bold">

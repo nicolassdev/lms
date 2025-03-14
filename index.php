@@ -28,21 +28,13 @@ $page = isset($_GET["page"]) ? $_GET["page"] : "student_home";
  This is Student Routes 
  */
 switch ($page) {
-    case "student_module":
-        require_once 'student_module.php';
-        break;
+
     case "student_section":
         require_once 'student_section.php';
         break;
-
     case "student_subject":
         require_once 'student_subject.php';
         break;
-
-    case "subject_list":
-        require_once 'subject_list.php';
-        break;
-
     case "student_prof":
         require_once 'student_prof.php';
         break;
@@ -52,17 +44,59 @@ switch ($page) {
     case "student_exam":
         require_once 'student_exam.php';
         break;
-    case "student_assignment":
-        require_once 'student_assignment.php';
-        break;
-    case "student_grade":
-        require_once 'student_grade.php';
-        break;
     case "student_account":
         require_once 'student_account.php';
         break;
+
+        /** 
+        MODULE Routes 
+         */
+    case "student_module":
+        require_once 'student_module.php';
+        break;
+    case "subject_list":
+        require_once 'subject_list.php';
+        break;
+
+        /** 
+        EXAM Routes 
+         */
     case "student_take_exam":
         require_once 'student_take_exam.php';
+        break;
+
+    case "student_exam_result":
+        require_once 'student_exam_result.php';
+        break;
+
+        /** 
+        QUIZ Routes 
+         */
+    case "student_take_quiz":
+        require_once 'student_take_quiz.php';
+        break;
+
+    case "student_quiz_result":
+        require_once 'student_quiz_result.php';
+        break;
+
+        /** 
+        Grades Routes 
+         */
+    case "student_exam_grade":
+        require_once 'student_exam_grade.php';
+        break;
+
+    case "student_quiz_grade":
+        require_once 'student_quiz_grade.php';
+        break;
+
+
+    case "exam_result":
+        require_once 'exam_result.php';
+        break;
+    case "quiz_result":
+        require_once 'quiz_result.php';
         break;
 
     default:

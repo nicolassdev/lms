@@ -11,8 +11,8 @@ if (isset($_GET["error"]) && $_GET["error"] == "invalidcredentials") {
 
 if (isset($_GET["success"]) && $_GET["success"] == "logout") {
     echo "
-    <div class='notification-alert-1 success'>
-        <span class='alert-icon-1'>&#10004;</span>
+    <div class='notification-success'>
+        <span class='success-icon'>&#10004;</span>
         <strong>You have successfully logged out!</strong>
     </div>";
     header("refresh:1; url=login.php");

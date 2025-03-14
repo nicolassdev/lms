@@ -68,120 +68,124 @@ $result = $mySQLFunction->getStudentStrandAndSectionaAlsoAdviser($_SESSION['stu_
                             <div class="d-flex flex-column">
                                 <?php
                                 $payload = $result[0];
-                                echo "<h5 class='fw-bold text-danger'>" . htmlspecialchars($payload["grade_lvl"]) . " - " . htmlspecialchars($payload["section_name"]) . "</h5>";
+                                echo "<h5 class='fw-bold primary-text'>" . htmlspecialchars($payload["grade_lvl"]) . " - " . htmlspecialchars($payload["section_name"]) . "</h5>";
                                 echo "<small class='fw-semibold pb-2'>" . htmlspecialchars($payload["strand_desc"]) . " </small>";
 
                                 ?>
-                            <?php endif; ?>
                             </div>
-
+                            <div type="button"
+                                class="btn btn-sm fw-bold d-flex align-items-center primary-color text-white">
+                                <a class="nav-link active" href="index.php?page=student_subject"><i class="bi bi-journals"></i>
+                                    View Subjects
+                                </a>
+                            </div>
                         </div>
+                    <?php endif; ?>
 
-                        <!-- Main Student and Adviser Info -->
-                        <div class="row align-items-center  border-bottom pt-3">
-                            <?php if (!empty($result)) : ?>
-                                <h5 class="fw-bold">Adviser</h5>
-                                <div class="col-lg-12 text-center text-sm-start">
-                                    <!-- </div>
+                    <!-- Main Student and Adviser Info -->
+                    <div class="row align-items-center  border-bottom pt-3">
+                        <?php if (!empty($result)) : ?>
+                            <h5 class="fw-bold">Adviser</h5>
+                            <div class="col-lg-12 text-center text-sm-start">
+                                <!-- </div>
                                 <div class="col-lg-4 text-center"> -->
-                                    <?php
-                                    // Define the path to the uploaded images directory
-                                    $uploadDir = "./assets/Upload/";
+                                <?php
+                                // Define the path to the uploaded images directory
+                                $uploadDir = "./assets/Upload/";
 
-                                    // Check if the image path exists and the file is accessible
-                                    if (!empty($payload['image']) && file_exists($uploadDir . $payload['image'])) {
-                                    ?>
-                                        <img src="<?= htmlspecialchars($uploadDir . $payload['image']); ?>" alt="Profile Image" draggable="false" class="classmate-img-circle mb-2">
-                                        <?php
-                                    } else {
-                                        // Fallback to the default image based on gender
-                                        if (!empty($payload['teacher_gender']) && $payload['teacher_gender'] === "MALE") {
-                                        ?>
-                                            <img src="./assets/Upload/resources/default-male.png" alt="Profile Image" draggable="false" class="classmate-img-circle mb-2">
-                                        <?php
-                                        } else {
-                                        ?>
-                                            <img src="./assets/Upload/resources/default-female.png" alt="Profile Image" draggable="false" class="classmate-img-circle mb-2">
+                                // Check if the image path exists and the file is accessible
+                                if (!empty($payload['image']) && file_exists($uploadDir . $payload['image'])) {
+                                ?>
+                                    <img src="<?= htmlspecialchars($uploadDir . $payload['image']); ?>" alt="Profile Image" draggable="false" class="classmate-img-circle mb-2">
                                     <?php
-                                        }
+                                } else {
+                                    // Fallback to the default image based on gender
+                                    if (!empty($payload['teacher_gender']) && $payload['teacher_gender'] === "MALE") {
+                                    ?>
+                                        <img src="./assets/Upload/resources/default-male.png" alt="Profile Image" draggable="false" class="classmate-img-circle mb-2">
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <img src="./assets/Upload/resources/default-female.png" alt="Profile Image" draggable="false" class="classmate-img-circle mb-2">
+                                <?php
+                                    }
+                                }
+                                ?>
+
+                                <h6 class="mb-3"><?= htmlspecialchars(ucwords(strtolower(($payload["teacher_fname"] . " " . $payload["teacher_lname"])))) ?></h6>
+
+                            </div>
+                        <?php else : ?>
+                            <div class="col-12 text-center">
+                                <div class="py-5">
+                                    <div class="card-body">
+                                        <i class="bi bi-exclamation-circle text-danger display-4 mb-3"></i>
+                                        <h5 class="text-secondary fw-bold no-subject">Section Not Available</h5>
+                                        <p class="text-muted mb-0">There are currently no section assigned to you.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+
+                    <!-- Classmates -->
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="fw-bold mb-4 mt-3">Classmates</h4>
+                            <div class="text-end">
+                                <small class="text-muted">
+                                    <?php
+                                    if (!empty($result)) {
+                                        echo (count($result) - 1) . " Student(s)";
                                     }
                                     ?>
+                                </small>
+                            </div>
+                        </div>
 
-                                    <h6 class="mb-3"><?= htmlspecialchars  (ucwords(strtolower(($payload["teacher_fname"] . " " . $payload["teacher_lname"])))) ?></h6>
+                        <div class="row lms-scroll-bar">
+                            <?php if (!empty($result)) : ?>
+                                <?php foreach ($result as $classmate) : ?>
+                                    <?php if ($classmate["classmate_lrn"] !== $_SESSION['stu_lrn']) : ?>
+                                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                                            <div class="card section shadow-sm">
+                                                <?php
+                                                // Define the path to the uploaded images directory
+                                                $uploadDir = "./assets/Upload/";
 
-                                </div>
-                            <?php else : ?>
-                                <div class="col-12 text-center">
-                                    <div class="py-5">
-                                        <div class="card-body">
-                                            <i class="bi bi-exclamation-circle text-danger display-4 mb-3"></i>
-                                            <h5 class="text-secondary fw-bold no-subject">Section Not Available</h5>
-                                            <p class="text-muted mb-0">There are currently no section assigned to you.</p>
+                                                // Check if student_image exists and file path is valid
+                                                $studentImagePath = !empty($classmate['student_image']) ? $uploadDir . $classmate['student_image'] : '';
+                                                if (!empty($studentImagePath) && file_exists($studentImagePath)) {
+                                                    echo '<img src="' . htmlspecialchars($studentImagePath) . '" alt="Profile Image" draggable="false" class="classmate-img-circle mb-2">';
+                                                } else {
+                                                    // Fallback to default image based on gender
+                                                    $defaultImage = $classmate['stu_gender'] === "MALE"
+                                                        ? "./assets/Upload/resources/default-male.png"
+                                                        : "./assets/Upload/resources/default-female.png";
+                                                    echo '<img src="' . htmlspecialchars($defaultImage) . '" alt="Default Profile" draggable="false" class="classmate-img-circle mb-2">';
+                                                }
+                                                ?>
+                                                <div class="card-body">
+                                                    <h6 class="card-title"><?= htmlspecialchars(ucwords(strtolower(($classmate["classmate_fname"] . " " . $classmate["classmate_lname"])))) ?></h6>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <div class="col-12">
+                                    <p class="text-danger">No classmates found.</p>
                                 </div>
                             <?php endif; ?>
                         </div>
-
-
-                        <!-- Classmates -->
-                        <div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h4 class="fw-bold mb-4 mt-3">Classmates</h4>
-                                <div class="text-end">
-                                    <small class="text-muted">
-                                        <?php
-                                        if (!empty($result)) {
-                                            echo (count($result) - 1) . " Student(s)";
-                                        }
-                                        ?>
-                                    </small>
-                                </div>
-                            </div>
-
-                            <div class="row lms-scroll-bar">
-                                <?php if (!empty($result)) : ?>
-                                    <?php foreach ($result as $classmate) : ?>
-                                        <?php if ($classmate["classmate_lrn"] !== $_SESSION['stu_lrn']) : ?>
-                                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                                                <div class="card section shadow-sm">
-                                                    <?php
-                                                    // Define the path to the uploaded images directory
-                                                    $uploadDir = "./assets/Upload/";
-
-                                                    // Check if student_image exists and file path is valid
-                                                    $studentImagePath = !empty($classmate['student_image']) ? $uploadDir . $classmate['student_image'] : '';
-                                                    if (!empty($studentImagePath) && file_exists($studentImagePath)) {
-                                                        echo '<img src="' . htmlspecialchars($studentImagePath) . '" alt="Profile Image" draggable="false" class="classmate-img-circle mb-2">';
-                                                    } else {
-                                                        // Fallback to default image based on gender
-                                                        $defaultImage = $classmate['stu_gender'] === "MALE"
-                                                            ? "./assets/Upload/resources/default-male.png"
-                                                            : "./assets/Upload/resources/default-female.png";
-                                                        echo '<img src="' . htmlspecialchars($defaultImage) . '" alt="Default Profile" draggable="false" class="classmate-img-circle mb-2">';
-                                                    }
-                                                    ?>
-                                                    <div class="card-body">
-                                                        <h6 class="card-title"><?= htmlspecialchars (ucwords(strtolower(($classmate["classmate_fname"] . " " . $classmate["classmate_lname"])))) ?></h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                <?php else : ?>
-                                    <div class="col-12">
-                                        <p class="text-danger">No classmates found.</p>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
+                    </div>
 
                 </div>
             </div>
 
         </div>
     </div>
-
     <?php
     include("./admin/includes/extension.php");
     ?>

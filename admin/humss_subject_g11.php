@@ -24,7 +24,7 @@
 
  </style>
 
- <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+ <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-1">
      <div class="container">
          <div class="row">
              <div class="col-12">
@@ -76,7 +76,7 @@
                              </div>
 
                          </h6>
-                         <h6 class="text-success fw-bold">
+                         <h6 class="text-dark fw-bold">
                              <?php
                                 // Initialize a flag to check if 'GRADE-11' has been displayed
                                 $gradeDisplayed = false;
@@ -102,12 +102,12 @@
                      <!-- SUBJECT TABLE -->
                      <div class="table-responsive small ms-3 me-3">
                          <table id="humssSubject" class="table table-bordered table-striped table-sm align-middle ">
-                             <thead class="table-dark ">
+                             <thead class="table-info">
                                  <tr>
                                      <th scope="col" class="small text-center">Subject</th>
-                                     <th scope="col">Category</th>
-                                     <th scope="col">Day</th>
-                                     <th scope="col">Time</th>
+                                     <th scope="col" class="small text-center">Category</th>
+                                     <th scope="col" class="small text-center">Day</th>
+                                     <th scope="col" class="small text-center">Time</th>
                                      <th scope="col" class="small text-center ">Teacher</th>
                                  </tr>
                              </thead>
@@ -152,8 +152,8 @@
         ?>
  </main>
 
-    <!-- PDF ,EXCEL, PRINT ,CVS -->
-<script src="../assets/js/globaltables.js"></script>
-<script>
-    initializeDataTable("humssSubject", 5, "HUMSS Grade-11 | Subject List");
-</script>
+ <!-- PDF ,EXCEL, PRINT ,CVS -->
+ <script src="../assets/js/globaltables.js"></script>
+ <script>
+     initializeDataTable("humssSubject", 5, "HUMSS Grade-11 | Subject List");
+ </script>

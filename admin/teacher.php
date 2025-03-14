@@ -15,16 +15,10 @@ include "../admin/includes/Forms/teacherform.php";
         font-size: 0.8em;
         /* Reduce font size */
     }
-
-    .table th,
-    .table td {
-        padding: 0.1rem;
-        /* Adjust padding */
-    }
 </style>
 
 <!-- TABLE -->
-<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-12 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-1">
 
     <div class="container">
         <div class="row">
@@ -55,7 +49,7 @@ include "../admin/includes/Forms/teacherform.php";
                     <!-- FACULTY TABLE  -->
                     <div class="table-responsive small ms-3 me-1">
                         <table id="teacherRecord" class="table table-bordered table-striped table-sm align-middle">
-                            <thead class="table-dark">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
@@ -90,13 +84,13 @@ include "../admin/includes/Forms/teacherform.php";
                                         echo '<td>' . $formattedBdate  . '</td>';
                                         echo '<td>' .  ucwords(strtolower($row["teacher_address"])) . '</td>';
                                         echo '
-                      <td class="d-flex justify-content-center">
-                          <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#edit_teacher' . $row['teacher_id'] . '">
-                              <i class="bi bi-pencil-square me-1"></i>Edit
-                          </button>
-                          
-                          </td>
-                          ';
+                                        <td class="d-flex justify-content-center">
+                                        <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#edit_teacher' . $row['teacher_id'] . '">
+                                            <i class="bi bi-pencil-square me-1"></i>Edit
+                                        </button>
+                                        
+                                        </td>
+                                        ';
 
                                         //   THIS IS DELETE BUTTON I WILL LEAVE IT COMMENT IF NEEDED JUST UNCOMMENT I PUT IT BACK IN TOP
                                         //   <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#del_teacher' . $row['teacher_id'] . '">
@@ -220,33 +214,6 @@ include "../admin/includes/Forms/teacherform.php";
                                             }
                                         </script>
                                         ';
-
-
-
-
-
-                                        // Modal for deleting teacher
-                                        echo '
-                                        <div class="modal fade" id="del_teacher' . $row['teacher_id'] . '" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered modal-md">
-                                                <div class="modal-content shadow-lg">
-                                                    <div class="modal-header border-0">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body text-center">
-                                                        <div class="text-danger">
-                                                            <i class="bi bi-trash fs-1 fade-in"></i>
-                                                        </div>
-                                                        <h5 class="mt-4 mb-4 text-dark fw-bold">Are you sure you want to delete "<span class="text-danger">' . ucwords(strtolower($row['teacher_fname'])) . ' ' . ucwords(strtolower($row['teacher_lname'])) . '</span>"?</h5>
-                                                        <p class="text-muted">This action cannot be undone. Please confirm your decision below.</p>
-                                                    </div>
-                                                    <div class="modal-footer justify-content-center border-0 mt-2 mb-4">
-                                                        <a href="includes/Operation/deleteTeacher.php?id=' . $row['id'] . '" class="btn btn-danger px-4 py-2 me-3" style="width: 120px;">Delete</a>
-                                                        <button class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal" style="width: 120px;">Cancel</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>';
                                     }
                                 } else {
                                     echo '<tr>
@@ -272,9 +239,8 @@ include "../admin/includes/Forms/teacherform.php";
 
 </main>
 
- <!-- PDF ,EXCEL, PRINT ,CVS -->
+<!-- PDF ,EXCEL, PRINT ,CVS -->
 <script src="../assets/js/globaltables.js"></script>
 <script>
     initializeDataTable("teacherRecord", 8, "Faculty Records");
 </script>
- 

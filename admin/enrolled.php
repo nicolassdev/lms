@@ -16,29 +16,18 @@ include "../admin/includes/Forms/enrollmentform.php";
 ?>
 
 
-
-
 <style>
-    .text-sm {
-        font-size: 0.7em;
-    }
-
     .data-table {
-        font-size: 0.7em;
+        font-size: 0.8em;
         /* Reduce font size */
-    }
-
-    .table th,
-    .table td {
-        padding: 0.1rem;
-        /* Adjust padding */
     }
 </style>
 
 
+
 <!-- TABLE -->
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-5 pt-1">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -80,9 +69,9 @@ include "../admin/includes/Forms/enrollmentform.php";
                     ?>
 
                     <div class="table-responsive small ms-3 me-3">
-                        <table id="example" class="table table-bordered table-striped table-sm align-middle">
+                        <table id="enrollTable" class="table table-bordered table-striped table-sm align-middle">
 
-                            <thead class="table-dark text-light">
+                            <thead class="table-info">
                                 <tr>
                                     <th scope="col" class="small text-center">Student name</th>
                                     <th scope="col" class="small text-center">Strand</th>
@@ -110,8 +99,8 @@ include "../admin/includes/Forms/enrollmentform.php";
                                             : [];
                                         // Determine the background color based on enrollment status
                                         $statusStyle = $row["enroll_status"] !== "Enrolled"
-                                            ? 'background-color: red; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;'
-                                            : 'background-color: green; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;';
+                                            ? 'background-color:  #dc3545; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;'
+                                            : 'background-color: #198754; color: white; padding: 5px 10px; border-radius: 15px; display: inline-block;';
 
                                         echo '<tr>';
                                         echo '<td>' . ucwords(strtolower($row["student"])) . '</td>';
@@ -132,7 +121,7 @@ include "../admin/includes/Forms/enrollmentform.php";
                                         
                                         <td class="d-flex justify-content-center pt-2 pb-3 ">
                                             <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#edit_enrolled' . urlencode($row['stu_lrn']) . '">
-                                                <i class="bi bi-pencil-square me-1"></i>Edit
+                                                <i class="bi bi-pencil-square"></i>
                                             </button>
                                         
                                         </td>
@@ -142,7 +131,7 @@ include "../admin/includes/Forms/enrollmentform.php";
                                         $count++;
 
 
-                                        // Modal for updating enrolled
+                                        // todo Modal for updating enrolled
                                         echo '
                                                                                     
                                             <div class="modal fade" id="edit_enrolled' . htmlspecialchars($row['stu_lrn']) . '" tabindex="-1" aria-labelledby="editSectionModal" aria-hidden="true">
@@ -151,7 +140,7 @@ include "../admin/includes/Forms/enrollmentform.php";
                                                         <div class="modal-header bg-success text-white">
                                                             <div class="d-flex align-items-center justify-content-between w-100">
                                                             <div class="text-start">
-                                                                <h1 class="modal-title fs-5 text-white">Edit Student Enrolled</h1>
+                                                                <h1 class="modal-title fs-5 text-white">Update Student Requirements</h1>
                                                             </div>
                                                             </div>
                                                             <div class="text-end">
@@ -262,9 +251,17 @@ include "../admin/includes/Forms/enrollmentform.php";
                                     }
                                 } else {
                                     echo '<tr>
-                                <td colspan="10" class="text-center ">Enrolled students not found.<br>
-                                </td>
-                              </tr>';
+                                    <td class="text-center text-danger">No students are enrolled for this semester.</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>
+                                    <td class="text-center text-muted">-</td>    
+                                    <td class="text-center text-muted">-</td>                                         
+                                </tr>';
                                 }
 
                                 echo '</tbody>';
@@ -300,10 +297,9 @@ include "../admin/includes/Forms/enrollmentform.php";
 <!-- PDF ,EXCEL, PRINT ,CVS -->
 <script>
     $(document).ready(function() {
-        $("#example").DataTable({
+        $("#enrollTable").DataTable({
             dom: "Bfrtip", // Include buttons in the dom
-            buttons:
-               [ {
+            buttons: [{
                     extend: "excelHtml5",
                     text: '<i class="fas fa-file-excel"></i>Download Excel',
                     className: "btn btn-sm btn-success",
