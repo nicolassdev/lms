@@ -385,7 +385,7 @@ class myDataBase
             AND $activeSemesterCondition
         ORDER BY 
             sched.sched_day, sched.sched_from";
-            
+
         // Prepare the main SQL statement
         $stmt = $this->con->prepare($sql);
 
@@ -1166,7 +1166,7 @@ class myDataBase
         return $result;
     }
 
-  
+
     // GET ALL STUDENT BY TEACHER HANDLED SUBJECT IN EVERY same strand and grade lvl
     function getAllStudentBySectionAndSubjectWithModuleUploads($teacherId, $subjectId, $sectionCode)
     {
@@ -1272,7 +1272,7 @@ class myDataBase
         }
     }
 
-   
+
     public function getAllStudentBySectionAndSubjectOfTeacher($teacher_id)
     {
         $sql = "
@@ -1517,7 +1517,7 @@ class myDataBase
         FROM `users` u
         JOIN `student` s ON u.username = s.stu_lrn
         WHERE u.role = ? 
-        ORDER BY s.stu_lrn DESC");
+        ORDER BY s.stu_id DESC");
         $stmt->bind_param('s', $role); // 's' denotes the type (string)
         $stmt->execute();
         $stored = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -1929,7 +1929,7 @@ class myDataBase
             // Check if the semester already exists
             $checkSql = "SELECT * FROM `$table` WHERE `semester_name` = '$sem'";
             $checkResult = $this->con->query($checkSql);
-    
+
             if ($checkResult->num_rows == 0) {
                 // Insert only if the record does not exist
                 $sql = "INSERT INTO `$table` (`semester_name`, `status`) VALUES ('$sem', 'Active')";
@@ -1948,12 +1948,12 @@ class myDataBase
         // Set all existing records to Inactive
         $sql = "UPDATE `quarterly` SET `status` = 'Inactive'";
         $result = $this->con->query($sql);
-    
+
         if ($result) {
             // Check if the quarter already exists
             $checkSql = "SELECT * FROM `$table` WHERE `quarterly_name` = '$quarter'";
             $checkResult = $this->con->query($checkSql);
-    
+
             if ($checkResult->num_rows == 0) {
                 // Insert only if the record does not exist
                 $sql = "INSERT INTO `$table` (`quarterly_name`, `status`) VALUES ('$quarter', 'Active')";
@@ -1965,7 +1965,7 @@ class myDataBase
             return false;
         }
     }
-    
+
 
     public function checkExistingSem($table, $semester)
     {
@@ -2128,7 +2128,7 @@ class myDataBase
                 LEFT JOIN teacher t ON u.id = t.id
                 LEFT JOIN student s ON u.id = s.id
                 LEFT JOIN principal p ON u.id = p.id
-                ORDER BY u.id
+                ORDER BY u.user_num DESC
                 LIMIT ? OFFSET ?
             ");
             $stmt->bind_param('ii', $limit, $offset); // 'ii' denotes the types (integer, integer)
@@ -2705,10 +2705,8 @@ class myDataBase
             return $stored;
         } else {
 
-            $sql = "SELECT * FROM `student` ORDER BY `stu_lname` ASC";
-
+            $sql = "SELECT * FROM `student` ORDER BY `stu_id` DESC";
             $stored = ($this->con->query($sql))->fetch_all(MYSQLI_ASSOC);
-
             return $stored;
         }
     }
@@ -3040,7 +3038,7 @@ class myDataBase
             while ($row = $result->fetch_assoc()) {
                 $modules[] = $row;
             }
-    
+
             $stmt->close();
             return $modules ?: []; // Return an empty array if no data
         } catch (Exception $e) {
@@ -3725,11 +3723,11 @@ class myDataBase
         // Initialize scores
         $total_questions = 0;
         $correct_answers = 0;
-    
+
         // Determine if calculating for an exam or a quiz
         $condition = $exam_id ? "sa.exam_id = ?" : "sa.quiz_id = ?";
-        $param = $exam_id ?: $quiz_id; 
-    
+        $param = $exam_id ?: $quiz_id;
+
         // Query to fetch student answers and match them with correct answers
         $sql = "
         SELECT 
@@ -3751,27 +3749,27 @@ class myDataBase
         LEFT JOIN exam ex ON sa.exam_id = ex.exam_id 
         LEFT JOIN quiz qz ON sa.quiz_id = qz.quiz_id 
         WHERE sa.stu_lrn = ? AND $condition";
-    
+
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("ss", $stud_id, $param);
         $stmt->execute();
         $result = $stmt->get_result();
-    
+
         $total_items = 0;
-    
+
         while ($row = $result->fetch_assoc()) {
             $total_items = (int)$row['total_items'];
             $total_questions++;
-    
+
             $sub_code = trim($row['sub_code']);
             $quarter = $exam_id ? trim($row['exam_quarter']) : trim($row['quiz_quarter']);
             $student_answer = strtolower(trim($row['student_answer']));
             $correct_answer = strtolower(trim($row['correct_answer']));
-    
+
             if ($row['question_type'] === 'enumeration') {
                 $student_answers_array = array_map('trim', explode(',', $student_answer));
                 $correct_answers_array = array_map('trim', explode(',', $correct_answer));
-    
+
                 $correct_count = 0;
                 foreach ($student_answers_array as $answer) {
                     foreach ($correct_answers_array as $correct) {
@@ -3788,26 +3786,26 @@ class myDataBase
                 }
             }
         }
-    
+
         if ($total_items <= 0 || $correct_answers < 0 || $correct_answers > $total_items) {
             return "Invalid data for this student.";
         }
-    
+
         $percentage = ($correct_answers / $total_items) * 100;
         $highest_equivalent = 95;
         $lowest_equivalent = 65;
         $equivalent_score = round($lowest_equivalent + ($percentage / 100) * ($highest_equivalent - $lowest_equivalent));
         $equivalent_score = min($highest_equivalent, max($lowest_equivalent, $equivalent_score));
-    
+
         $sql = "INSERT INTO student_scores (stu_lrn, sub_code, exam_id, quiz_id, total_questions, correct_answers, equivalent_score, quarterly)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 ON DUPLICATE KEY UPDATE correct_answers = VALUES(correct_answers), equivalent_score = VALUES(equivalent_score)";
-    
+
         $stmt = $this->con->prepare($sql);
         $stmt->bind_param("ssssiids", $stud_id, $sub_code, $exam_id, $quiz_id, $total_items, $correct_answers, $equivalent_score, $quarter);
         $stmt->execute();
     }
-    
+
 
 
     // =========================================== QUIZ FUNCTION ====================================================

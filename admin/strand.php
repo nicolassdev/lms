@@ -39,66 +39,68 @@ include "../admin/includes/Forms/strandform.php";
   <!-- THSI THE STRAND TABLE -->
   <!-- TABLE -->
   <div class="table-responsive small ms-3 me-3 fade-in-input">
-  <div class="row g-3 ms-3 me-3 ">
-  <?php
-  $mySQLFunction->connection();
-  if (!isset($_POST["search"])) {
-    $result = $mySQLFunction->getStrand();
-  }
+    <div class="row g-3 ms-3 me-3 ">
+      <?php
+      $mySQLFunction->connection();
+      if (!isset($_POST["search"])) {
+        $result = $mySQLFunction->getStrand();
+      }
 
-  if (!empty($result)) {
-    foreach ($result as $row) {
-        echo '
+      if (!empty($result)) {
+        foreach ($result as $row) {
+          echo '
         <div class="col-12 col-sm-6 col-md-4 col-lg-4">
           <div class="card shadow-sm h-100">
             <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
               <h5 class="card-title fw-bold">' . htmlspecialchars($row["strand_name"]) . '</h5>
-              <p class="card-text">' . htmlspecialchars($row["strand_desc"]) . '</p>
               <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#edit_strand' . $row['strand_code'] . '">
-                <i class="bi bi-pencil-square me-1"></i> Edit
+                <i class="bi bi-pencil-square"></i> 
               </button>
+            </div>
+              <small class="card-text">' . htmlspecialchars($row["strand_desc"]) . '</small>
             </div>
           </div>
         </div>
         ';
-      
-    
 
-      // Modal for editing
-      echo '<div class="modal fade" id="edit_strand' . htmlspecialchars($row['strand_code']) . '" tabindex="-1" aria-labelledby="editStrandLabel" aria-hidden="true">';
-      echo '<div class="modal-dialog">';
-      echo '<div class="modal-content">';
-      echo '<div class="modal-header bg-success text-white">';
-      echo '<h5 class="modal-title">Edit Strand</h5>';
-      echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
-      echo '</div>';
-      echo '<div class="modal-body">';
-      echo '<form action="./includes/Operation/updateStrand.php" method="POST">';
-      echo '<input type="hidden" name="strandID" value="' . htmlspecialchars($row['strand_code']) . '">';
-      echo '<div class="mb-3">';
-      echo '<label class="form-label">Strand ACRO</label>';
-      echo '<input type="text" class="form-control" name="strand_acro" value="' . htmlspecialchars($row['strand_name']) . '" required>';
-      echo '</div>';
-      echo '<div class="mb-3">';
-      echo '<label class="form-label">Strand Name</label>';
-      echo '<input type="text" class="form-control" name="strand_name" value="' . htmlspecialchars($row['strand_desc']) . '" required>';
-      echo '</div>';
-      echo '<div class="d-flex justify-content-between">';
-      echo '<button type="submit" name="submit" class="btn btn-success">Update</button>';
-      echo '<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>';
-      echo '</div>';
-      echo '</form>';
-      echo '</div>';
-      echo '</div>';
-      echo '</div>';
-      echo '</div>';
-    }
-  } else {
-    echo '<div class="col-12 text-center">Strand not found.</div>';
-  }
-  $mySQLFunction->disconnect();
-  ?>
-</div>
+
+
+          // Modal for editing
+          echo '<div class="modal fade" id="edit_strand' . htmlspecialchars($row['strand_code']) . '" tabindex="-1" aria-labelledby="editStrandLabel" aria-hidden="true">';
+          echo '<div class="modal-dialog">';
+          echo '<div class="modal-content">';
+          echo '<div class="modal-header bg-success text-white">';
+          echo '<h5 class="modal-title">Edit Strand</h5>';
+          echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+          echo '</div>';
+          echo '<div class="modal-body">';
+          echo '<form action="./includes/Operation/updateStrand.php" method="POST">';
+          echo '<input type="hidden" name="strandID" value="' . htmlspecialchars($row['strand_code']) . '">';
+          echo '<div class="mb-3">';
+          echo '<label class="form-label">Strand ACRO</label>';
+          echo '<input type="text" class="form-control" name="strand_acro" value="' . htmlspecialchars($row['strand_name']) . '" required>';
+          echo '</div>';
+          echo '<div class="mb-3">';
+          echo '<label class="form-label">Strand Name</label>';
+          echo '<input type="text" class="form-control" name="strand_name" value="' . htmlspecialchars($row['strand_desc']) . '" required>';
+          echo '</div>';
+          echo '<div class="d-flex justify-content-between">';
+          echo '<button type="submit" name="submit" class="btn btn-success">Update</button>';
+          echo '<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>';
+          echo '</div>';
+          echo '</form>';
+          echo '</div>';
+          echo '</div>';
+          echo '</div>';
+          echo '</div>';
+        }
+      } else {
+        echo '<div class="col-12 text-center">Strand not found.</div>';
+      }
+      $mySQLFunction->disconnect();
+      ?>
+    </div>
 
 
   </div>
