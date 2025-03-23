@@ -322,12 +322,12 @@ body {
 }
 
 .lms-scroll-bar::-webkit-scrollbar-track {
-  background: #444; /* Track color */
+  background: #1d5566; /* Track color */
   border-radius: 2px; /* Rounded track edges */
 }
 
 .lms-scroll-bar::-webkit-scrollbar-thumb {
-  background: #888; /* Scrollbar thumb color */
+  background: #1d5566; /* Scrollbar thumb color */
   border-radius: 2px; /* Rounded thumb edges */
   transition: background 0.3s; /* Smooth color transition */
 }

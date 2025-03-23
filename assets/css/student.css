@@ -40,12 +40,12 @@ body {
 }
 
 .lms-scroll-bar::-webkit-scrollbar-track {
-  background: #444; /* Track color */
+  background: #1d5566; /* Track color */
   border-radius: 2px; /* Rounded track edges */
 }
 
 .lms-scroll-bar::-webkit-scrollbar-thumb {
-  background: #888; /* Scrollbar thumb color */
+  background: #1d5566; /* Scrollbar thumb color */
   border-radius: 2px; /* Rounded thumb edges */
   transition: background 0.3s; /* Smooth color transition */
 }
@@ -55,7 +55,7 @@ body {
 }
 
 .sidebar {
-  background-color: #16404D !important;
+  background-color: #16404d !important;
   color: #fff;
   padding: 20px;
   height: 100vh;
@@ -66,15 +66,15 @@ body {
   overflow-y: auto;
 }
 
-.secondary-color{
-background-color: #A6CDC6 !important;
+.secondary-color {
+  background-color: #a6cdc6 !important;
 }
- 
-.primary-color{
-  background-color: #16404D !important;
+
+.primary-color {
+  background-color: #16404d !important;
 }
-.primary-text{
-  color: #16404D !important;
+.primary-text {
+  color: #16404d !important;
 }
 .sidebar-header {
   padding: 20px;
