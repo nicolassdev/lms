@@ -103,7 +103,7 @@ error_reporting(E_ALL);
     <header>
         <div class="container-fluid">
             <div class="row mt-5">
-                <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block  sidebar offcanvas-md offcanvas-start" style="max-width: 250px;">
+                <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block  sidebar offcanvas-md offcanvas-start lms-scroll-bar" style="max-width: 250px;">
                     <div class="position-sticky">
                         <!-- <h3 class="mb-4">Dashboard</h3> -->
                         <small class="text-white ms-2 d-lg-none mt-2">
