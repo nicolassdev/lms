@@ -1,30 +1,30 @@
 <?php
 //WRONG PASSWORD OR USERNAME
 if (isset($_GET["error"]) && $_GET["error"] == "invalidcredentials") {
+    header("refresh:2; url=login.php");
     echo "
     <div class='notification-alert'>
         <span class='alert-icon'>&#9888;</span>
         <p>Incorrect username and password</p>
     </div>";
-    header("refresh:2; url=login.php");
 }
 
 if (isset($_GET["success"]) && $_GET["success"] == "logout") {
+    header("refresh:1; url=login.php");
     echo "
     <div class='notification-success'>
         <span class='success-icon'>&#10004;</span>
         <strong>You have successfully logged out!</strong>
     </div>";
-    header("refresh:1; url=login.php");
 }
 
 if (isset($_GET["error"]) && $_GET["error"] == "accessdenied") {
+    header("refresh:2; url=login.php");
     echo "<div class='alert-1'>
         <span class='alert-icon'>&#9888;</span> 
         Access Dismissed!
         Please contact administrator.
         </div>";
-    header("refresh:2; url=login.php");
 }
 
 

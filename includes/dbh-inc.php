@@ -4,6 +4,6 @@ include "function.php";
 $mySQLFunction = new myDataBase(
     "localhost",                     // host
     "root",                          // Username
-    "Nicolas051002",                // Password
+    "",                // Password
     "lms_db"                        // Database
 );
